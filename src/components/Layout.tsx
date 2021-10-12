@@ -22,11 +22,12 @@ const LayoutWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	position: relative;
 `;
 
 const Main = styled.main`
 	flex: 1;
-	padding: 0 1rem;
 	justify-content: center;
 	display: flex;
+	flex-direction: column;
 `;
