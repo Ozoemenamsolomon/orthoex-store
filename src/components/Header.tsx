@@ -16,9 +16,11 @@ const Header: React.FC = () => {
 					justifyContent: 'space-between',
 				}}
 			>
-				<Logo>Orthoex Logo</Logo>
+				<Logo>OEX Logo</Logo>
 				<NavBar>
-					<CTA>Place an order!</CTA>
+					<a href="https://www.orthoex.ng" target="_blank" rel="noref">
+						<CTA>OrthoEx.ng</CTA>
+					</a>
 				</NavBar>
 			</Container>
 		</SooHeader>
