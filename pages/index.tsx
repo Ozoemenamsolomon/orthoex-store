@@ -5,6 +5,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { CTA } from '../src/components/Header';
 import BG from '../src/assets/images/Humboldt-n-5.jpg';
+import React from 'react';
+import SooSection from '../src/components/SooSection';
 
 const Home: NextPage = () => {
 	return (
@@ -43,77 +45,71 @@ const Home: NextPage = () => {
 						top: 0,
 						height: '100%',
 						width: '100%',
+						zIndex: -5,
 					}}
 				>
 					<HeroBg layout="fill" objectFit="contain" src={BG}></HeroBg>
 				</div>
 			</HeroContainer>
 			<Container style={{ margin: 'auto' }}>
-				<SOOSection>
-					<Container>
-						<h2>We are helping to grow your business</h2>
-						<Cards>
-							<Card>
-								<span>👍🏽</span>
-								<p>We offer the right composite material for your projects</p>
-							</Card>
-							<Card>
-								<span>💅🏽</span>
-								<p>High-quality products to keep you satisfied</p>
-							</Card>
-							<Card>
-								<span>💪🏽</span>
-								<p>
-									Durable and abrasion-resistant resins to keep you competitive
-								</p>
-							</Card>
-							<Card>
-								<span>🆖</span>
-								<p>
-									Our materials are represented in hundreds of products across
-									multiple markets in Nigeria
-								</p>
-							</Card>
-						</Cards>
+				<SooSection title="We are helping to grow your business">
+					<Cards>
+						<Card>
+							<CardIcon>👍🏽</CardIcon>
+							<p>We offer the right composite material for your projects</p>
+						</Card>
+						<Card>
+							<CardIcon>💅🏽</CardIcon>
+							<p>High-quality products to keep you satisfied</p>
+						</Card>
+						<Card>
+							<CardIcon>💪🏽</CardIcon>
+							<p>
+								Durable and abrasion-resistant resins to keep you competitive
+							</p>
+						</Card>
+						<Card>
+							<CardIcon>🆖</CardIcon>
+							<p>
+								Our materials are represented in hundreds of products across
+								multiple markets in Nigeria
+							</p>
+						</Card>
+					</Cards>
+				</SooSection>
+				<SooSection title="Experience a new level of performance">
+					<Container style={{ display: 'flex' }}>
+						<div style={{ flex: 1.5 }}>
+							<p>
+								We are committed to delivering superior resins and composite
+								materials that you can trust for your crafts. Take advantage of
+								our high-quality products.
+							</p>
+							<CTA>Learn more</CTA>
+						</div>
+						<div style={{ flex: 1 }}></div>
 					</Container>
-				</SOOSection>
-				<SOOSection>
-					<Container>
-						<h2>Experience a new level of performance</h2>
-						<p>
-							We are committed to delivering superior resins and composite
-							materials that you can trust for your crafts. Take advantage of
-							our high-quality products.
-						</p>
-						<CTA>Learn more</CTA>
-					</Container>
-				</SOOSection>
-				<SOOSection>
-					<Container>
-						<h2>Safe and reliable</h2>
-						<p>
-							With our safe and reliable composite solutions, you can make a
-							wide range of stronger, lighter and tougher products
-						</p>
-					</Container>
-				</SOOSection>
-				<SOOSection>
-					<Container>
-						<h2>Contact Us</h2>
-						<h3>OrthoEx Nigeria Limited</h3>
-						<p>
-							10 Ipakodo Wharf Road, <br />
-							Ebute, Ikorodu,
-							<br />
-							Lagos State, Nigeria.
-						</p>
-						<p>Email: store@orthoex.ng</p>
-						<p>
-							+234-703-032-4696 <br />
-							+234-811-223-0122
-						</p>
-					</Container>
-				</SOOSection>
+				</SooSection>
+				<SooSection title="Safe and reliable">
+					<p>
+						With our safe and reliable composite solutions, you can make a wide
+						range of stronger, lighter and tougher products
+					</p>
+				</SooSection>
+				<SooSection title="Contact Us">
+					<h3>OrthoEx Nigeria Limited</h3>
+					<p>
+						10 Ipakodo Wharf Road, <br />
+						Ebute, Ikorodu,
+						<br />
+						Lagos State, Nigeria.
+					</p>
+					<p>Email: store@orthoex.ng</p>
+					<p>
+						+234-703-032-4696 <br />
+						+234-811-223-0122
+					</p>
+				</SooSection>
 			</Container>
 		</Layout>
 	);
@@ -124,7 +120,12 @@ export default Home;
 export const Container = styled.div`
 	max-width: 1200px;
 	width: 100%;
-	padding: 0 1rem;
+	padding: 0 2rem;
+	@media (max-width: 600) {
+		& {
+			padding: 0 1rem;
+		}
+	}
 `;
 
 const HeroContainer = styled.div`
@@ -145,7 +146,11 @@ const Hero = styled.div`
 	justify-content: center;
 `;
 const HeroContent = styled.div`
-	max-width: 70%;
+	max-width: 60%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
 `;
 
 const HeroTitle = styled.h1``;
@@ -180,7 +185,11 @@ const Cards = styled.div`
 	}
 `;
 
-const SOOSection = styled.section`
+const CardIcon = styled.span`
+	font-size: 3rem;
+`;
+
+const SOOSectionContainer = styled.section`
 	@media (min-width: 600px) {
 		display: flex;
 	}

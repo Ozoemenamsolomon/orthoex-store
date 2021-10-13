@@ -52,6 +52,7 @@ export const CTA = styled.button`
 	background-color: orange;
 	color: white;
 	font-weight: bold;
+	transition: all 0.5s ease;
 	/* text-transform: uppercase; */
 	&:hover {
 		box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.363);

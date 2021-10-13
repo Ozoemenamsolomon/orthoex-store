@@ -4,14 +4,18 @@ import { SooHeader } from './Header';
 
 const Footer = () => {
 	return (
-		<SooHeader>
+		<SooFooter>
 			<Container style={{ display: 'flex', justifyContent: 'center' }}>
 				<p>Copyright &copy; 2021 OrthoEx Nigeria Limited</p>
 			</Container>
-		</SooHeader>
+		</SooFooter>
 	);
 };
 
 export default Footer;
 
-const SooFooter = styled.div``;
+const SooFooter = styled.footer`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
