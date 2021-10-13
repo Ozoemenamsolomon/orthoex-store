@@ -7,6 +7,7 @@ const Header: React.FC = () => {
 			style={{
 				position: 'absolute',
 				width: '100%',
+				zIndex: 5,
 			}}
 		>
 			<Container

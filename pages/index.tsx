@@ -4,38 +4,51 @@ import styled from 'styled-components';
 import Head from 'next/head';
 import Image from 'next/image';
 import { CTA } from '../src/components/Header';
+import BG from '../src/assets/images/Humboldt-n-5.jpg';
 
 const Home: NextPage = () => {
 	return (
 		<Layout>
-			<Hero>
-				<Container style={{ display: 'flex' }}>
-					<HeroContent>
-						<HeroTitle>
-							We are your preferred partner of choice for quality!
-						</HeroTitle>
-						<HeroClaim>
-							OEX Composite is Nigeria’s leading brand of epoxy and polyester
-							resins, fibreglass, carbon reinforcements, RTV silicone,
-							polyurethane foams, and other composite materials. Our products
-							are tailored to the requirements of our customers in the
-							healthcare and manufacturing industries, enabling us to satisfy
-							their needs and helping them reach their business goals. Contact
-							us to know how to fit our solutions to your needs.{' '}
-						</HeroClaim>
-						<CTA>Call Us</CTA>
-					</HeroContent>
-					<HeroImg>
-						<Image
-							layout="intrinsic"
-							height={500}
-							width={500}
-							src="https://upload.wikimedia.org/wikipedia/en/9/97/Resin_on_Almond_tree.jpg"
-						></Image>
-					</HeroImg>
-				</Container>
-			</Hero>
-			<Container>
+			<HeroContainer>
+				<Hero>
+					<Container style={{ display: 'flex' }}>
+						<HeroContent>
+							<HeroTitle>
+								We are your preferred partner of choice for quality!
+							</HeroTitle>
+							<HeroClaim>
+								OEX Composite is Nigeria’s leading brand of epoxy and polyester
+								resins, fibreglass, carbon reinforcements, RTV silicone,
+								polyurethane foams, and other composite materials. Our products
+								are tailored to the requirements of our customers in the
+								healthcare and manufacturing industries, enabling us to satisfy
+								their needs and helping them reach their business goals. Contact
+								us to know how to fit our solutions to your needs.{' '}
+							</HeroClaim>
+							<CTA>Call Us</CTA>
+						</HeroContent>
+						<HeroImg>
+							<Image
+								layout="intrinsic"
+								height={500}
+								width={500}
+								src="https://upload.wikimedia.org/wikipedia/en/9/97/Resin_on_Almond_tree.jpg"
+							></Image>
+						</HeroImg>
+					</Container>
+				</Hero>
+				<div
+					style={{
+						position: 'absolute',
+						top: 0,
+						height: '100%',
+						width: '100%',
+					}}
+				>
+					<HeroBg layout="fill" objectFit="contain" src={BG}></HeroBg>
+				</div>
+			</HeroContainer>
+			<Container style={{ margin: 'auto' }}>
 				<section>
 					<h2>We are helping to grow your business</h2>
 					<Cards>
@@ -106,8 +119,19 @@ export const Container = styled.div`
 	padding: 0 1rem;
 `;
 
+const HeroContainer = styled.div`
+	position: relative;
+	max-height: 70%;
+`;
+const HeroBg = styled(Image)`
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+`;
+
 const Hero = styled.div`
-	background: linear-gradient(45deg, black, red);
+	background-color: #1b120190;
 	display: flex;
 	padding: 2.5em 0em;
 	justify-content: center;
