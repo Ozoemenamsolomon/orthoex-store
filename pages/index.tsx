@@ -9,6 +9,9 @@ import React from 'react';
 import SooSection from '../src/components/SooSection';
 
 const Home: NextPage = () => {
+	const callUs = () => {
+		window.open('tel://+2347030324696', '_self');
+	};
 	return (
 		<Layout>
 			<HeroContainer>
@@ -16,7 +19,7 @@ const Home: NextPage = () => {
 					<Container style={{ display: 'flex' }}>
 						<HeroContent>
 							<HeroTitle>
-								We are your preferred partner of choice for quality!
+								We are your preferred <br /> partner of choice for quality!
 							</HeroTitle>
 							<HeroClaim>
 								OEX Composite is Nigeria’s leading brand of epoxy and polyester
@@ -27,7 +30,7 @@ const Home: NextPage = () => {
 								their needs and helping them reach their business goals. Contact
 								us to know how to fit our solutions to your needs.{' '}
 							</HeroClaim>
-							<CTA>Call Us</CTA>
+							<CTA onClick={callUs}>Call Us</CTA>
 						</HeroContent>
 						<HeroImg>
 							<Image
@@ -53,29 +56,32 @@ const Home: NextPage = () => {
 			</HeroContainer>
 			<Container style={{ margin: 'auto' }}>
 				<SooSection title="We are helping to grow your business">
-					<Cards>
-						<Card>
-							<CardIcon>👍🏽</CardIcon>
-							<p>We offer the right composite material for your projects</p>
-						</Card>
-						<Card>
-							<CardIcon>💅🏽</CardIcon>
-							<p>High-quality products to keep you satisfied</p>
-						</Card>
-						<Card>
-							<CardIcon>💪🏽</CardIcon>
-							<p>
-								Durable and abrasion-resistant resins to keep you competitive
-							</p>
-						</Card>
-						<Card>
-							<CardIcon>🆖</CardIcon>
-							<p>
-								Our materials are represented in hundreds of products across
-								multiple markets in Nigeria
-							</p>
-						</Card>
-					</Cards>
+					<Container>
+						<Cards>
+							<Card>
+								<CardIcon>👍🏽</CardIcon>
+								<p>We offer the right composite material for your projects</p>
+							</Card>
+							<Card>
+								<CardIcon>💅🏽</CardIcon>
+								<p>High-quality products to keep you satisfied</p>
+							</Card>
+							<Card>
+								<CardIcon>💪🏽</CardIcon>
+								<p>
+									Durable and abrasion-resistant resins to keep you competitive
+								</p>
+							</Card>
+							<Card>
+								<CardIcon>🆖</CardIcon>
+								<p>
+									Our materials are represented in hundreds of products across
+									multiple markets in Nigeria
+								</p>
+							</Card>
+						</Cards>
+						<CTA>Chat with us</CTA>
+					</Container>
 				</SooSection>
 				<SooSection title="Experience a new level of performance">
 					<Container style={{ display: 'flex' }}>
@@ -140,24 +146,38 @@ const HeroBg = styled(Image)`
 `;
 
 const Hero = styled.div`
-	background-color: #1b120190;
+	background-color: #000000c6;
+	color: white;
 	display: flex;
-	padding: 2.5em 0em;
+	padding: 4.5em 0em 2em 0em;
 	justify-content: center;
+
+	@media (max-width: 600px) {
+		& > div {
+			flex-direction: column;
+		}
+	}
+`;
+const HeroImg = styled.div`
+	margin-left: 3em;
+	align-self: center;
+	@media (max-width: 600px) {
+		display: none;
+	}
 `;
 const HeroContent = styled.div`
-	max-width: 60%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-start;
+	@media (min-width: 600px) {
+		max-width: 60%;
+	}
 `;
 
 const HeroTitle = styled.h1``;
 
 const HeroClaim = styled.p``;
-
-const HeroImg = styled.div``;
 
 const Card = styled.div`
 	display: flex;
