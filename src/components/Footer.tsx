@@ -5,8 +5,44 @@ import { SooHeader } from './Header';
 const Footer = () => {
 	return (
 		<SooFooter>
-			<Container style={{ display: 'flex', justifyContent: 'center' }}>
+			<Container
+				style={{
+					display: 'flex',
+					justifyContent: 'space-between',
+					flexWrap: 'wrap',
+				}}
+			>
 				<p>Copyright &copy; 2021 OrthoEx Nigeria Limited</p>
+				<div style={{ justifySelf: 'center' }}>
+					<a
+						target="_blank"
+						rel="noopener"
+						href="https://www.facebook.com/oexcomposite/"
+					>
+						F
+					</a>
+					<a
+						target="_blank"
+						rel="noopener"
+						href="https://instagram.com/oexcomposite"
+					>
+						Insta
+					</a>
+					<a
+						target="_blank"
+						rel="noopener"
+						href="https://twitter.com/OrthoExNg"
+					>
+						Tw
+					</a>
+					<a
+						target="_blank"
+						rel="noopener"
+						href="https://www.linkedin.com/company/orthoexnigeria"
+					>
+						LI
+					</a>
+				</div>
 			</Container>
 		</SooFooter>
 	);

@@ -9,6 +9,7 @@ import SooSection from '../src/components/SooSection';
 import { HeroComp as Hero } from '../src/components/Hero';
 import HeroContent from '../src/components/HeroContent';
 import Cards from '../src/components/Cards';
+import Contact from '../src/components/Contact';
 
 const Home: NextPage = () => {
 	return (
@@ -70,22 +71,13 @@ const Home: NextPage = () => {
 					<p>Pigments</p>
 				</Container>
 			</SooSection>
-			<SooSection title="Contact Us">
-				<Container>
-					<h3>OrthoEx Nigeria Limited</h3>
-					<p>
-						10 Ipakodo Wharf Road, <br />
-						Ebute, Ikorodu,
-						<br />
-						Lagos State, Nigeria.
-					</p>
-					<p>Email: store@orthoex.ng</p>
-					<ul>
-						<li>+234-703-032-4696</li>
-						<li>+234-811-223-0122</li>
-					</ul>
-				</Container>
-			</SooSection>
+			<Hero
+				content={
+					<SooSection title="Contact Us">
+						<Contact />
+					</SooSection>
+				}
+			></Hero>
 		</Layout>
 	);
 };
