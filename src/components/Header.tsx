@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { Container } from '../../pages';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import logo from '../assets/images/oex-white-logo.png';
 import orthoExLogo from '../assets/images/orthoex-logo.png';
+import React from 'react';
 
 const Header: React.FC = () => {
 	return (
@@ -21,12 +23,16 @@ const Header: React.FC = () => {
 				}}
 			>
 				<Logo>
-					<Image
-						src={logo}
-						objectPosition="left"
-						objectFit="contain"
-						layout="fill"
-					></Image>
+					<Link href="/">
+						<a>
+							<Image
+								src={logo}
+								objectPosition="left"
+								objectFit="contain"
+								layout="fill"
+							></Image>
+						</a>
+					</Link>
 				</Logo>
 				<NavBar>
 					<a href="https://www.orthoex.ng" target="_blank" rel="noref">
@@ -64,12 +70,13 @@ const NavBar = styled.nav`
 	align-items: center;
 `;
 
-export const CTA = styled.button`
-	padding: 0.5rem 1rem;
+export const CTA = styled.button<{ white?: Boolean }>`
+	padding: 0.8rem 2rem;
 	border-radius: 99999px;
-	border: 2px solid white;
-	background-color: orange;
-	color: white;
+	border: none;
+	cursor: pointer;
+	background-color: ${(prop) => (prop.white ? 'white' : 'var(--oex-orange)')};
+	color: ${(prop) => (prop.white ? 'black' : 'white')};
 	font-weight: bold;
 	transition: all 0.5s ease;
 	/* text-transform: uppercase; */

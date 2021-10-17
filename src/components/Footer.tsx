@@ -13,7 +13,13 @@ const Footer = () => {
 				}}
 			>
 				<p>Copyright &copy; 2021 OrthoEx Nigeria Limited</p>
-				<div style={{ justifySelf: 'center' }}>
+				<div
+					style={{
+						display: 'flex',
+						gap: '.5rem',
+						alignItems: 'center',
+					}}
+				>
 					<a
 						target="_blank"
 						rel="noopener"
@@ -26,7 +32,7 @@ const Footer = () => {
 						rel="noopener"
 						href="https://instagram.com/oexcomposite"
 					>
-						Insta
+						In
 					</a>
 					<a
 						target="_blank"
@@ -54,4 +60,5 @@ const SooFooter = styled.footer`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background-color: var(--oex-gray);
 `;

@@ -2,9 +2,12 @@ import type { NextPage } from 'next';
 import Layout from '../src/components/Layout';
 import styled from 'styled-components';
 import Head from 'next/head';
+import Image from 'next/image';
 import { CTA } from '../src/components/Header';
 import React from 'react';
 import SooSection from '../src/components/SooSection';
+
+import safeAndReliableIcon from '../src/assets/images/safe-and-reliable-icon.png';
 
 import { HeroComp as Hero } from '../src/components/Hero';
 import HeroContent from '../src/components/HeroContent';
@@ -42,17 +45,46 @@ const Home: NextPage = () => {
 						</a>
 					</Container>
 				</SooSection>
-				<SooSection title="Safe and reliable">
-					<Container>
+			</Container>
+			<SooSection container={false} color="var(--oex-orange)">
+				<Container
+					style={{
+						margin: 'auto',
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+						color: 'white',
+						padding: '2rem 0',
+						gap: '2rem',
+					}}
+				>
+					<div
+						style={{
+							flex: 1,
+							width: '8rem',
+							position: 'relative',
+						}}
+					>
+						<Image objectFit="contain" src={safeAndReliableIcon}></Image>
+					</div>
+					<div style={{ flex: 1.5 }}>
+						<h2>Safe and reliable</h2>
 						<p>
 							With our safe and reliable composite solutions, you can make a
 							wide range of stronger, lighter and tougher products
 						</p>
-					</Container>
-				</SooSection>
-			</Container>
+						<a
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://wa.me/2347030324696?text=Hello%2C%0D%0Acould+you+please+tell+me+more+about+the+composite%3F"
+						>
+							<CTA white>Learn more</CTA>
+						</a>
+					</div>
+				</Container>
+			</SooSection>
 
-			<SooSection color="#E6E6E6" container={false}>
+			<SooSection color="var(--oex-gray)" container={false}>
 				<Container
 					style={{
 						display: 'flex',
