@@ -5,15 +5,28 @@ import { Container } from '../../pages';
 type SOOSectionProp = {
 	title?: String;
 	color?: string;
+	container?: Boolean;
 };
 
-const SooSection: FC<SOOSectionProp> = ({ children, title, color }) => {
+const SooSection: FC<SOOSectionProp> = ({
+	children,
+	title,
+	color,
+	container = true,
+}) => {
 	return (
 		<SOOSectionContainer color={color}>
-			<Container>
-				{title ? <h2>{title}</h2> : null}
-				{children}
-			</Container>
+			{container ? (
+				<Container>
+					{title ? <h2>{title}</h2> : null}
+					{children}
+				</Container>
+			) : (
+				<>
+					{title ? <h2>{title}</h2> : null}
+					{children}
+				</>
+			)}
 		</SOOSectionContainer>
 	);
 };
