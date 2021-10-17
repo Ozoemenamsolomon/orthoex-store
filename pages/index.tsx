@@ -26,6 +26,7 @@ const Home: NextPage = () => {
 					<Container
 						style={{
 							display: 'flex',
+							marginBottom: '3rem',
 							flexDirection: 'column',
 							alignItems: 'start',
 						}}
