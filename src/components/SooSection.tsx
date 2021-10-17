@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import { Container } from '../../pages';
 
 type SOOSectionProp = {
-	title: String;
+	title?: String;
+	color?: string;
 };
 
-const SooSection: FC<SOOSectionProp> = ({ children, title }) => {
+const SooSection: FC<SOOSectionProp> = ({ children, title, color }) => {
 	return (
-		<SOOSectionContainer>
+		<SOOSectionContainer color={color}>
 			<Container>
-				<h2>{title}</h2>
+				{title ? <h2>{title}</h2> : null}
 				{children}
 			</Container>
 		</SOOSectionContainer>
@@ -19,7 +20,8 @@ const SooSection: FC<SOOSectionProp> = ({ children, title }) => {
 
 export default SooSection;
 
-const SOOSectionContainer = styled.section`
+const SOOSectionContainer = styled('section')<{ color?: String }>`
+	background-color: ${(prop) => prop.color};
 	padding: 1rem 0;
 	@media (min-width: 600px) {
 		display: flex;

@@ -4,9 +4,14 @@ import styled from 'styled-components';
 import Head from 'next/head';
 import Image from 'next/image';
 import { CTA } from '../src/components/Header';
-import BG from '../src/assets/images/Humboldt-n-5.jpg';
 import React from 'react';
 import SooSection from '../src/components/SooSection';
+
+import composite from '../src/assets/images/composite-material-Icon-1.png';
+import BG from '../src/assets/images/website-backfround-image.jpg';
+import durable from '../src/assets/images/durable-Icon-3.png';
+import quality from '../src/assets/images/high-quality-Icon-2.png';
+import nigeria from '../src/assets/images/multiple-market-Icon-4.png';
 
 const Home: NextPage = () => {
 	const callUs = () => {
@@ -30,16 +35,16 @@ const Home: NextPage = () => {
 								their needs and helping them reach their business goals. Contact
 								us to know how to fit our solutions to your needs.{' '}
 							</HeroClaim>
-							<CTA onClick={callUs}>Call Us</CTA>
+							<CTA onClick={callUs}>Contact Us</CTA>
 						</HeroContent>
-						<HeroImg>
+						{/* <HeroImg>
 							<Image
 								layout="intrinsic"
 								height={500}
 								width={500}
 								src="https://upload.wikimedia.org/wikipedia/en/9/97/Resin_on_Almond_tree.jpg"
 							></Image>
-						</HeroImg>
+						</HeroImg> */}
 					</Container>
 				</Hero>
 				<div
@@ -51,7 +56,7 @@ const Home: NextPage = () => {
 						zIndex: -5,
 					}}
 				>
-					<HeroBg layout="fill" objectFit="contain" src={BG}></HeroBg>
+					<HeroBg layout="fill" objectFit="cover" src={BG}></HeroBg>
 				</div>
 			</HeroContainer>
 			<Container style={{ margin: 'auto' }}>
@@ -59,50 +64,97 @@ const Home: NextPage = () => {
 					<Container>
 						<Cards>
 							<Card>
-								<CardIcon>👍🏽</CardIcon>
+								<CardIcon>
+									<Image src={composite}></Image>
+								</CardIcon>
 								<p>We offer the right composite material for your projects</p>
 							</Card>
 							<Card>
-								<CardIcon>💅🏽</CardIcon>
+								<CardIcon>
+									<Image src={quality}></Image>
+								</CardIcon>
 								<p>High-quality products to keep you satisfied</p>
 							</Card>
 							<Card>
-								<CardIcon>💪🏽</CardIcon>
+								<CardIcon>
+									<Image src={durable}></Image>
+								</CardIcon>
 								<p>
 									Durable and abrasion-resistant resins to keep you competitive
 								</p>
 							</Card>
 							<Card>
-								<CardIcon>🆖</CardIcon>
+								<CardIcon>
+									<Image src={nigeria}></Image>
+								</CardIcon>
 								<p>
 									Our materials are represented in hundreds of products across
 									multiple markets in Nigeria
 								</p>
 							</Card>
 						</Cards>
-						<CTA>Chat with us</CTA>
+						<a
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://wa.me/2347030324696?text=Hello%2C%0D%0AI%27m+interested+in+buying+composite%21"
+						>
+							<CTA>Chat with us</CTA>
+						</a>
 					</Container>
 				</SooSection>
 				<SooSection title="Experience a new level of performance">
-					<Container style={{ display: 'flex' }}>
-						<div style={{ flex: 1.5 }}>
-							<p>
-								We are committed to delivering superior resins and composite
-								materials that you can trust for your crafts. Take advantage of
-								our high-quality products.
-							</p>
+					<Container
+						style={{
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'start',
+						}}
+					>
+						<p>
+							We are committed to delivering superior resins and composite
+							materials that you can trust for your crafts. Take advantage of
+							our high-quality products.
+						</p>
+
+						<a
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://wa.me/2347030324696?text=Hello%2C%0D%0Acould+you+please+tell+me+more+about+the+composite%3F"
+						>
 							<CTA>Learn more</CTA>
-						</div>
-						<div style={{ flex: 1 }}></div>
+						</a>
 					</Container>
 				</SooSection>
 				<SooSection title="Safe and reliable">
-					<p>
-						With our safe and reliable composite solutions, you can make a wide
-						range of stronger, lighter and tougher products
-					</p>
+					<Container>
+						<p>
+							With our safe and reliable composite solutions, you can make a
+							wide range of stronger, lighter and tougher products
+						</p>
+					</Container>
 				</SooSection>
-				<SooSection title="Contact Us">
+			</Container>
+
+			<SooSection color="#E6E6E6">
+				<Container
+					style={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						flexWrap: 'wrap',
+						gap: '1em',
+					}}
+				>
+					<p>Polyester Resin</p>
+					<p>Epoxy Resin</p>
+					<p>Fibre Glass</p>
+					<p>Carbon Fibre</p>
+					<p>Polyurethane Foams</p>
+					<p>RTV Silicone</p>
+					<p>Pigments</p>
+				</Container>
+			</SooSection>
+			<SooSection title="Contact Us">
+				<Container>
 					<h3>OrthoEx Nigeria Limited</h3>
 					<p>
 						10 Ipakodo Wharf Road, <br />
@@ -111,12 +163,12 @@ const Home: NextPage = () => {
 						Lagos State, Nigeria.
 					</p>
 					<p>Email: store@orthoex.ng</p>
-					<p>
-						+234-703-032-4696 <br />
-						+234-811-223-0122
-					</p>
-				</SooSection>
-			</Container>
+					<ul>
+						<li>+234-703-032-4696</li>
+						<li>+234-811-223-0122</li>
+					</ul>
+				</Container>
+			</SooSection>
 		</Layout>
 	);
 };
@@ -127,7 +179,7 @@ export const Container = styled.div`
 	max-width: 1200px;
 	width: 100%;
 	padding: 0 2rem;
-	@media (max-width: 600) {
+	@media (max-width: 600px) {
 		& {
 			padding: 0 1rem;
 		}
@@ -171,7 +223,7 @@ const HeroContent = styled.div`
 	justify-content: center;
 	align-items: flex-start;
 	@media (min-width: 600px) {
-		max-width: 60%;
+		max-width: 70%;
 	}
 `;
 
@@ -196,6 +248,7 @@ const Card = styled.div`
 const Cards = styled.div`
 	display: grid;
 	gap: 0.5rem;
+	margin: 2rem 0;
 	@media (min-width: 300px) {
 		--repeat-count: 2;
 		grid-template-columns: repeat(var(--repeat-count), 1fr);
@@ -207,6 +260,9 @@ const Cards = styled.div`
 
 const CardIcon = styled.span`
 	font-size: 3rem;
+	height: 5rem;
+	width: 5rem;
+	position: relative;
 `;
 
 const SOOSectionContainer = styled.section`

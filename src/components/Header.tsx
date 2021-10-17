@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 import { Container } from '../../pages';
+import Image from 'next/image';
+
+import logo from '../assets/images/oex-white-logo.png';
+import orthoExLogo from '../assets/images/orthoex-logo.png';
 
 const Header: React.FC = () => {
 	return (
@@ -16,10 +20,24 @@ const Header: React.FC = () => {
 					justifyContent: 'space-between',
 				}}
 			>
-				<Logo>OEX Logo</Logo>
+				<Logo>
+					<Image
+						src={logo}
+						objectPosition="left"
+						objectFit="contain"
+						layout="fill"
+					></Image>
+				</Logo>
 				<NavBar>
 					<a href="https://www.orthoex.ng" target="_blank" rel="noref">
-						<CTA>OrthoEx.ng</CTA>
+						<Logo>
+							<Image
+								src={orthoExLogo}
+								objectPosition="left"
+								objectFit="contain"
+								layout="fill"
+							></Image>
+						</Logo>
 					</a>
 				</NavBar>
 			</Container>
@@ -37,8 +55,9 @@ export const SooHeader = styled.header`
 `;
 const Logo = styled.div`
 	padding: 1rem 1rem;
-	font-weight: bold;
-	/* color: white; */
+	height: 4rem;
+	width: 5rem;
+	position: relative;
 `;
 const NavBar = styled.nav`
 	display: flex;
