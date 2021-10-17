@@ -47,7 +47,11 @@ const Home: NextPage = () => {
 					</Container>
 				</SooSection>
 			</Container>
-			<SooSection container={false} color="var(--oex-orange)">
+			<SooSection
+				container={false}
+				color="var(--oex-orange)"
+				style={{ clipPath: 'polygon(0% 29%, 100% 0%, 100% 100%, 0 100%)' }}
+			>
 				<Container
 					style={{
 						margin: 'auto',

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Container } from '../../pages';
 
@@ -6,6 +6,7 @@ type SOOSectionProp = {
 	title?: String;
 	color?: string;
 	container?: Boolean;
+	style?: React.CSSProperties;
 };
 
 const SooSection: FC<SOOSectionProp> = ({
@@ -13,9 +14,10 @@ const SooSection: FC<SOOSectionProp> = ({
 	title,
 	color,
 	container = true,
+	style,
 }) => {
 	return (
-		<SOOSectionContainer color={color}>
+		<SOOSectionContainer style={style} color={color}>
 			{container ? (
 				<Container>
 					{title ? <h2>{title}</h2> : null}
