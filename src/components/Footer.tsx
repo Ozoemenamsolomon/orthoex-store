@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { Container } from '../../pages';
-import { SooHeader } from './Header';
-
+import {
+	Facebook,
+	Instagram,
+	Linkedin,
+	Twitter,
+} from '@styled-icons/bootstrap';
 const Footer = () => {
 	return (
 		<SooFooter>
@@ -25,28 +29,28 @@ const Footer = () => {
 						rel="noopener"
 						href="https://www.facebook.com/oexcomposite/"
 					>
-						F
+						<Facebook size={24} />
 					</a>
 					<a
 						target="_blank"
 						rel="noopener"
 						href="https://instagram.com/oexcomposite"
 					>
-						In
+						<Instagram size={24} />
 					</a>
 					<a
 						target="_blank"
 						rel="noopener"
 						href="https://twitter.com/OrthoExNg"
 					>
-						Tw
+						<Twitter size={24} />
 					</a>
 					<a
 						target="_blank"
 						rel="noopener"
 						href="https://www.linkedin.com/company/orthoexnigeria"
 					>
-						LI
+						<Linkedin size={24} />
 					</a>
 				</div>
 			</Container>
@@ -60,5 +64,6 @@ const SooFooter = styled.footer`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: var(--oex-gray);
+	background-color: black;
+	color: white;
 `;

@@ -106,11 +106,13 @@ const Home: NextPage = () => {
 					<p>Polyurethane Foams</p>
 					<p>RTV Silicone</p>
 					<p>Pigments</p>
+					<p>Accelerator</p>
+					<p>Hardner</p>
 				</Container>
 			</SooSection>
 			<Hero
 				content={
-					<SooSection title="Contact Us">
+					<SooSection style={{ width: '100%' }} title="Contact Us">
 						<Contact />
 					</SooSection>
 				}
@@ -129,11 +131,5 @@ export const Container = styled.div`
 		& {
 			padding: 0 1rem;
 		}
-	}
-`;
-
-const SOOSectionContainer = styled.section`
-	@media (min-width: 600px) {
-		display: flex;
 	}
 `;

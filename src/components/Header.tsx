@@ -9,13 +9,7 @@ import React from 'react';
 
 const Header: React.FC = () => {
 	return (
-		<SooHeader
-			style={{
-				position: 'absolute',
-				width: '100%',
-				zIndex: 5,
-			}}
-		>
+		<SooHeader>
 			<Container
 				style={{
 					display: 'flex',
@@ -53,11 +47,14 @@ const Header: React.FC = () => {
 
 export default Header;
 
-export const SooHeader = styled.header`
+const SooHeader = styled.header`
 	/* background-color: red; */
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: fixed;
+	width: 100%;
+	z-index: 5;
 `;
 const Logo = styled.div`
 	padding: 1rem 1rem;

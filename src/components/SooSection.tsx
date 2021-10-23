@@ -37,7 +37,7 @@ export default SooSection;
 
 const SOOSectionContainer = styled('section')<{ color?: String }>`
 	background-color: ${(prop) => prop.color};
-	padding: 1rem 0;
+	padding: 2rem 0;
 	@media (min-width: 600px) {
 		display: flex;
 	}
