@@ -67,7 +67,6 @@ const Home: NextPage = () => {
 						style={{
 							flex: 1,
 							position: 'relative',
-							padding: '0 10rem',
 						}}
 					>
 						<Image

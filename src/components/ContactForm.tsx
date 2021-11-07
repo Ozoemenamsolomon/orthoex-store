@@ -33,7 +33,7 @@ const ContactForm = () => {
 	};
 
 	return (
-		<div>
+		<div style={{ maxWidth: '100%' }}>
 			<FormTitle>Let's keep in touch!</FormTitle>
 			<form action="https://formspree.io/f/xleayzgl" method="POST">
 				<div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -76,7 +76,6 @@ const ContactForm = () => {
 							name="message"
 							id="message"
 							onChange={handleChange}
-							cols={30}
 							rows={7}
 							value={FormValue.message}
 						></textarea>
