@@ -24,7 +24,7 @@ const Contact = () => {
 					<li>+234-811-223-0122</li>
 				</ul>
 			</div>
-			{/* <ContactForm></ContactForm> */}
+			<ContactForm></ContactForm>
 		</Container>
 	);
 };

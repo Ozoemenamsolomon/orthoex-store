@@ -39,5 +39,7 @@ const HeroContent = styled.div`
 const HeroTitle = styled.h1``;
 
 const HeroClaim = styled.p`
-	text-align: justify;
+	@media (max-width: 600px) {
+		text-align: justify;
+	}
 `;

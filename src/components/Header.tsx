@@ -5,11 +5,24 @@ import Link from 'next/link';
 
 import logo from '../assets/images/oex-white-logo.png';
 import orthoExLogo from '../assets/images/orthoex-logo.png';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Header: React.FC = () => {
+	const [scrolled, setScrolled] = useState(false);
+
+	const handleScroll = () => {
+		const isScrolled = window.scrollY > 10;
+		if (isScrolled !== scrolled) {
+			setScrolled(!scrolled);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('scroll', handleScroll, { passive: true });
+	});
+
 	return (
-		<SooHeader>
+		<SooHeader className={`${scrolled ? 'scrolled' : ''}`}>
 			<Container
 				style={{
 					display: 'flex',
@@ -48,13 +61,16 @@ const Header: React.FC = () => {
 export default Header;
 
 const SooHeader = styled.header`
-	/* background-color: red; */
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	position: fixed;
 	width: 100%;
 	z-index: 5;
+	transition: background-color 0.5s ease;
+	&.scrolled {
+		background-color: black;
+	}
 `;
 const Logo = styled.div`
 	padding: 1rem 1rem;

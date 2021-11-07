@@ -66,11 +66,16 @@ const Home: NextPage = () => {
 					<div
 						style={{
 							flex: 1,
-							width: '8rem',
 							position: 'relative',
+							padding: '0 10rem',
 						}}
 					>
-						<Image objectFit="contain" src={safeAndReliableIcon}></Image>
+						<Image
+							objectFit="contain"
+							layout="intrinsic"
+							height="200"
+							src={safeAndReliableIcon}
+						></Image>
 					</div>
 					<div style={{ flex: 1.5 }}>
 						<h2>Safe and reliable</h2>
