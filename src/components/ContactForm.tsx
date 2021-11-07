@@ -94,6 +94,7 @@ export default ContactForm;
 
 const FormTitle = styled.h3`
 	color: var(--oex-orange);
+	text-align: center;
 `;
 
 const InputLabelDiv = styled.div`
