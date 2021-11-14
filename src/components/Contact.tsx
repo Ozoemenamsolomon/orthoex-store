@@ -8,6 +8,7 @@ const Contact = () => {
 				display: 'flex',
 				justifyContent: 'space-between',
 				flexWrap: 'wrap',
+				alignItems: 'center',
 			}}
 		>
 			<div>

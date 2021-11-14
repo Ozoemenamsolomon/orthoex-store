@@ -59,7 +59,7 @@ const Home: NextPage = () => {
 						justifyContent: 'space-between',
 						alignItems: 'center',
 						color: 'white',
-						padding: '2rem 0',
+						padding: '2rem 1rem',
 						gap: '2rem',
 					}}
 				>
@@ -72,7 +72,6 @@ const Home: NextPage = () => {
 						<Image
 							objectFit="contain"
 							layout="intrinsic"
-							height="200"
 							src={safeAndReliableIcon}
 						></Image>
 					</div>

@@ -33,7 +33,7 @@ const ContactForm = () => {
 	};
 
 	return (
-		<div style={{ maxWidth: '100%' }}>
+		<FormContainer>
 			<FormTitle>Let's keep in touch!</FormTitle>
 			<form action="https://formspree.io/f/xleayzgl" method="POST">
 				<div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -85,11 +85,16 @@ const ContactForm = () => {
 					</CTA>
 				</div>
 			</form>{' '}
-		</div>
+		</FormContainer>
 	);
 };
 
 export default ContactForm;
+
+const FormContainer = styled.div`
+	width: 100%;
+	max-width: 300px;
+`;
 
 const FormTitle = styled.h3`
 	color: var(--oex-orange);
