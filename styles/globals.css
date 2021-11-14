@@ -19,3 +19,8 @@ a {
 * {
 	box-sizing: border-box;
 }
+
+.contact-grid input[type='text'],
+.contact-grid input[type='checkbox'] {
+	margin: 0.5em 0;
+}
