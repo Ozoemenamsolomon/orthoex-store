@@ -1,20 +1,73 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { E } from '@styled-icons/simple-icons';
+import { ChangeEvent, FormEvent, MouseEventHandler, useState } from 'react';
 import styled from 'styled-components';
 import { CTA } from './Header';
 
 type FormValue = {
-	name: string;
-	email: string;
-	phone: string;
-	message: string;
+	from: NeededData[];
+	to: NeededData[];
+	distance: string;
+};
+
+type NeededData = {
+	display_name: string;
+	lon: string;
+	lat: string;
 };
 
 const ContactForm = () => {
+	const [suggestions, setSuggestions] = useState<{
+		from: NeededData[];
+		to: NeededData[];
+	}>({ from: [], to: [] });
+
+	const getAddressSuggestion = async (e: ChangeEvent<HTMLInputElement>) => {
+		try {
+			const inputValue = e.target.value;
+			const parsedInputValue = inputValue
+				.split(' ')
+				.map((str) => str.trim())
+				.join('+');
+			const jsonData = await fetch(
+				`https://nominatim.openstreetmap.org/search.php?q=${parsedInputValue}&format=jsonv2`
+			).then((data) => data.json());
+			if (jsonData.length === 0) {
+				throw new Error("Couldn't get address suggestions");
+			}
+			const neededData = jsonData.map(
+				({ display_name, lon, lat }: NeededData) => {
+					return {
+						display_name,
+						lat,
+						lon,
+					};
+				}
+			);
+			setSuggestions({
+				...suggestions,
+				[e.target.name]: neededData,
+			});
+		} catch (error) {
+			setSuggestions({
+				...suggestions,
+				[e.target.name]: ["Couldn't get address suggestions"],
+			});
+			console.log("couldn't get address suggetstion", e);
+		}
+	};
+	const calculateDistance: MouseEventHandler = (e) => {
+		console.log(e);
+	};
+	// useEffect(() => {
+	//
+	// 	return () => {
+	// 		cleanup
+	// 	}
+	// }, [input])
 	const [FormValue, setFormValue] = useState<FormValue>({
-		name: '',
-		email: '',
-		phone: '',
-		message: '',
+		from: [],
+		to: [],
+		distance: '',
 	});
 
 	const handleChange = (
@@ -29,62 +82,75 @@ const ContactForm = () => {
 		e.preventDefault();
 		const data = FormValue;
 
-		console.log(FormValue);
+		// console.log(FormValue);
 	};
 
 	return (
 		<FormContainer>
-			<FormTitle>Let's keep in touch!</FormTitle>
-			<form action="https://formspree.io/f/xleayzgl" method="POST">
-				<div style={{ display: 'flex', flexDirection: 'column' }}>
-					<InputLabelDiv>
-						{/* <label htmlFor="name">Name</label> */}
-						<input
-							type="text"
-							placeholder="Name"
-							name="name"
-							onChange={handleChange}
-							id="name"
-							value={FormValue.name}
-						/>
-					</InputLabelDiv>
-					<InputLabelDiv>
-						{/* <label htmlFor="email">E-mail</label>{' '} */}
-						<input
-							name="email"
-							placeholder="E-mail"
-							onChange={handleChange}
-							type="text"
-							value={FormValue.email}
-						/>
-					</InputLabelDiv>
-					<InputLabelDiv>
-						{/* <label htmlFor="phone">Phone No.</label>{' '} */}
-						<input
-							name="phone"
-							placeholder="Phone No."
-							onChange={handleChange}
-							type="text"
-							value={FormValue.phone}
-						/>
-					</InputLabelDiv>
-					<InputLabelDiv>
-						{/* <label htmlFor="message" placeholder="Message">
-							Message
-						</label> */}
-						<textarea
-							name="message"
-							id="message"
-							onChange={handleChange}
-							rows={7}
-							value={FormValue.message}
-						></textarea>
-					</InputLabelDiv>
-					<CTA style={{ alignSelf: 'flex-end' }} type="submit">
-						Submit
-					</CTA>
+			<FormTitle>Input your address</FormTitle>
+			<form onSubmit={handleSubmit}>
+				<div style={{ display: 'flex' }}>
+					<div>
+						<div style={{ display: 'flex' }}>
+							<InputLabelDiv>
+								<label htmlFor="from">From</label>
+								<input
+									type="search"
+									list="from-suggestions"
+									placeholder="From"
+									name="from"
+									onChange={getAddressSuggestion}
+									id="from"
+									results={6}
+								/>
+							</InputLabelDiv>
+							<InputLabelDiv>
+								<label htmlFor="to">To</label>{' '}
+								<input
+									id="to"
+									list="to-suggestions"
+									name="to"
+									placeholder="To"
+									onChange={getAddressSuggestion}
+									results={6}
+									type="search"
+								/>
+							</InputLabelDiv>
+						</div>
+						<CTA onClick={calculateDistance}>Calculate Distance</CTA>
+					</div>
+					<div>
+						<InputLabelDiv>
+							<label htmlFor="distance">Distance</label>
+							<output id="distance" name="distance">{`Your Distance is: ${
+								FormValue.from.length - FormValue.to.length
+							}km`}</output>
+						</InputLabelDiv>
+
+						<CTA style={{ alignSelf: 'flex-end' }} type="submit">
+							Book an Appointment
+						</CTA>
+					</div>
 				</div>
-			</form>{' '}
+				<datalist id="from-suggestions">
+					{suggestions.from.map((suggestion, id) => (
+						<option
+							style={{ color: 'green' }}
+							key={id}
+							value={suggestion.display_name}
+						>
+							{`${suggestion.lat} ${suggestion.lon}`}
+						</option>
+					))}
+				</datalist>
+				<datalist id="to-suggestions">
+					{suggestions.to.map((suggestion, id) => (
+						<option key={id} value={suggestion.display_name}>
+							{`${suggestion.lat} ${suggestion.lon}`}
+						</option>
+					))}
+				</datalist>
+			</form>
 		</FormContainer>
 	);
 };
@@ -92,8 +158,8 @@ const ContactForm = () => {
 export default ContactForm;
 
 const FormContainer = styled.div`
-	width: 100%;
-	max-width: 300px;
+	/* width: 100%;
+	max-width: 300px; */
 `;
 
 const FormTitle = styled.h3`
@@ -115,4 +181,14 @@ const InputLabelDiv = styled.div`
 		padding: 0.6rem 0.5rem;
 		resize: vertical;
 	}
+
+	& > input[id='from']:invalid {
+		outline-color: red;
+	}
+
+	& > input[id='from']:valid {
+		outline-color: green;
+	}
 `;
+
+// https://nominatim.openstreetmap.org/search.php?q=universit%C3%A4tsstra%C3%9Fe+essen&format=jsonv2

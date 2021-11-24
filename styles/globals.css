@@ -9,6 +9,8 @@ body {
 :root {
 	--oex-gray: #e6e6e6;
 	--oex-orange: #ff4c00;
+	--text-colour: black;
+	--soo-shadow: 3px 3px 4px 1px #0000002e;
 }
 
 a {

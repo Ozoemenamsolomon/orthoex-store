@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { CTA } from './Header';
+import ContactForm from './ContactForm';
 
 const HeroContentComp: FC = () => {
 	const callUs = () => {
@@ -11,15 +12,10 @@ const HeroContentComp: FC = () => {
 			<HeroTitle>
 				We are your preferred <br /> partner of choice for quality!
 			</HeroTitle>
-			<HeroClaim>
-				OEX Composite is Nigeria’s leading brand of epoxy and polyester resins,
-				fibreglass, carbon reinforcements, RTV silicone, polyurethane foams, and
-				other composite materials. Our products are tailored to the requirements
-				of our customers in the healthcare and manufacturing industries,
-				enabling us to satisfy their needs and helping them reach their business
-				goals. Contact us to know how to fit our solutions to your needs.{' '}
-			</HeroClaim>
 			<CTA onClick={callUs}>Contact Us</CTA>
+			<FormContainer>
+				<ContactForm />
+			</FormContainer>
 		</HeroContent>
 	);
 };
@@ -31,9 +27,9 @@ const HeroContent = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-start;
-	@media (min-width: 600px) {
-		max-width: 70%;
-	}
+	position: relative;
+	width: 100%;
+	gap: 2rem;
 `;
 
 const HeroTitle = styled.h1``;
@@ -41,5 +37,24 @@ const HeroTitle = styled.h1``;
 const HeroClaim = styled.p`
 	@media (max-width: 600px) {
 		text-align: justify;
+	}
+`;
+const FormContainer = styled.div`
+	/* width: min(100%, 300px); */
+	width: 100%;
+	align-self: center;
+	padding: 1rem;
+	background-color: white;
+	box-shadow: var(--soo-shadow);
+	color: var(--text-colour);
+
+	border-radius: 15px;
+	@media (min-width: 600px) {
+		/* position: absolute; */
+		/* right: 5rem;
+		bottom: -10rem; */
+	}
+	@media (max-width: 900px) {
+		bottom: -15rem;
 	}
 `;

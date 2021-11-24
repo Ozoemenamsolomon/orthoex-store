@@ -1,5 +1,4 @@
 import { Container } from '../../pages';
-import ContactForm from './ContactForm';
 
 const Contact = () => {
 	return (
@@ -25,7 +24,6 @@ const Contact = () => {
 					<li>+234-811-223-0122</li>
 				</ul>
 			</div>
-			<ContactForm></ContactForm>
 		</Container>
 	);
 };
