@@ -84,12 +84,15 @@ const NavBar = styled.nav`
 `;
 
 export const CTA = styled.button<{ white?: Boolean }>`
+	--border-radius: 99999px;
+
 	padding: 0.8rem 2rem;
-	border-radius: 99999px;
 	border: none;
+	border-radius: var(--border-radius);
 	cursor: pointer;
 	background-color: ${(prop) => (prop.white ? 'white' : 'var(--oex-orange)')};
-	color: ${(prop) => (prop.white ? 'black' : 'white')};
+	color: ${(prop) =>
+		prop.white ? 'var(--text-colour-dark)' : 'var(--text-colour-light)'};
 	font-weight: bold;
 	transition: all 0.5s ease;
 	/* text-transform: uppercase; */
