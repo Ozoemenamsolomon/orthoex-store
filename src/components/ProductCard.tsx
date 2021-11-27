@@ -28,7 +28,6 @@ const ProductCard: React.FC<ProductCardProp> = ({
 	title,
 }) => {
 	// import e from `../assets/images/composite-ad${imageURL}`
-	console.log({ imageURL, description, price, title });
 	return (
 		<Card>
 			<ImageContainer>
