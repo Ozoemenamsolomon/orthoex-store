@@ -63,11 +63,15 @@ export default ProductCard;
 const Card = styled.div`
 	transition: all 0.3s ease-in-out;
 	display: flex;
+	border-radius: var(--border-radius);
 	flex-direction: column;
 	&:hover {
 		transform: translateY(-3px);
+		box-shadow: 2px 2px 4px rgb(0 0 0 / 19%);
 	}
-	&:hover img,
+	&:hover img {
+		transform: scale(1.051);
+	}
 	&:hover ${CTA} {
 		box-shadow: 2px 2px 4px rgb(0 0 0 / 19%);
 	}
@@ -77,10 +81,11 @@ const ImageContainer = styled.div`
 	position: relative;
 	height: 200px;
 	cursor: pointer;
+	border-radius: var(--border-radius) var(--border-radius) 0rem 0rem;
+	overflow: hidden;
 	& img {
 		width: 100%;
-		transition: all 0.5s ease-in-out;
-		border-radius: var(--border-radius) var(--border-radius) 0rem 0rem;
+		transition: all 0.8s ease-in-out;
 	}
 `;
 const Content = styled.div`

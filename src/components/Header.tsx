@@ -71,7 +71,7 @@ const SooHeader = styled.header`
 	z-index: 5;
 	transition: background-color 0.5s ease;
 	&.scrolled {
-		background-color: black;
+		background-color: #00000092;
 	}
 `;
 const Logo = styled.div`
