@@ -7,7 +7,9 @@ import logo from '../assets/images/oex-white-logo.png';
 import orthoExLogo from '../assets/images/orthoex-logo.png';
 import React, { useEffect, useState } from 'react';
 
-const Header: React.FC = () => {
+interface HeaderProp {}
+
+const Header: React.FC<HeaderProp> = () => {
 	const [scrolled, setScrolled] = useState(false);
 
 	const handleScroll = () => {

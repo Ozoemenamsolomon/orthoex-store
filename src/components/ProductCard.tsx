@@ -12,7 +12,7 @@ export type ProductCardProp = {
 const CTAMod = styled(CTA)`
 	--border-radius: 12px;
 
-	margin-top: 0.5rem;
+	margin-top: auto;
 	width: 100%;
 	transition: all 0.5s ease-in-out;
 	border: 0;
@@ -27,10 +27,17 @@ const ProductCard: React.FC<ProductCardProp> = ({
 	price,
 	title,
 }) => {
-	// import e from `../assets/images/composite-ad${imageURL}`
+	const handleProductPurchase = () => {
+		window.open(
+			`https://wa.me/2347030324696?text=Hello%2C%0D%0A%0D%0AI%27d+love+to+purchase+${title}%2C+I+got+linked+from+the+products+page+of+your+composite+website.`,
+			'_blank',
+			'noopener noreferrer'
+		);
+	};
+
 	return (
 		<Card>
-			<ImageContainer>
+			<ImageContainer onClick={handleProductPurchase}>
 				<Image
 					src={`/composite-ad/${imageURL}`}
 					layout="fill"
@@ -45,7 +52,7 @@ const ProductCard: React.FC<ProductCardProp> = ({
 					{Number(price)}.00
 				</Price>
 				<p className="description">{description}</p>
-				<CTAMod>Purchase product &rarr;</CTAMod>
+				<CTAMod onClick={handleProductPurchase}>Purchase product &rarr;</CTAMod>
 			</Content>
 		</Card>
 	);
@@ -69,6 +76,7 @@ const ImageContainer = styled.div`
 	display: flex;
 	position: relative;
 	height: 200px;
+	cursor: pointer;
 	& img {
 		width: 100%;
 		transition: all 0.5s ease-in-out;
@@ -79,11 +87,15 @@ const Content = styled.div`
 	border: 1px solid var(--oex-orange);
 	border-radius: 0rem 0rem var(--border-radius) var(--border-radius);
 	padding: 1rem 0.5rem;
+	display: flex;
+	flex-direction: column;
 	flex: 1;
 `;
-const Titel = styled.h3``;
+const Titel = styled.h3`
+	margin: 0;
+`;
 const Price = styled.p`
-	margin-bottom: 0.5rem;
+	margin: 0;
 `;
 const DoubleStrikeThrough = styled.span`
 	text-decoration: line-through;
