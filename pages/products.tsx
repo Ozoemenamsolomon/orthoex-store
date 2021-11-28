@@ -38,6 +38,7 @@ const ProductCardsSection = styled(Container)`
 	grid-template-columns: repeat(auto-fit, min(100%, 300px));
 	gap: 1.5rem 1rem;
 	margin: auto;
-	padding: 6rem 0;
+	padding-top: 6rem;
+	padding-bottom: 6rem;
 	justify-content: space-evenly;
 `;
