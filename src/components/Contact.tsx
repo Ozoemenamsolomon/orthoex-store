@@ -1,4 +1,4 @@
-import { Container } from '../../pages';
+import { Container } from '../pages';
 import ContactForm from './ContactForm';
 
 const Contact = () => {

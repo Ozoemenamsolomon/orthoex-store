@@ -5,7 +5,7 @@ import composite from '../assets/images/composite-material-Icon-1.png';
 import durable from '../assets/images/durable-Icon-3.png';
 import quality from '../assets/images/high-quality-Icon-2.png';
 import nigeria from '../assets/images/multiple-market-Icon-4.png';
-import { Container } from '../../pages';
+import { Container } from '../pages';
 import { CTA } from './Header';
 
 const CardsComp = () => {

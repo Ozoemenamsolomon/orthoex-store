@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container } from '.';
-import { HeroComp } from '../src/components/Hero';
-import Layout from '../src/components/Layout';
-import ProductCard from '../src/components/ProductCard';
-import { productsData } from '../src/data/productsData';
+import { HeroComp } from '../components/Hero';
+import Layout from '../components/Layout';
+import ProductCard from '../components/ProductCard';
+import { productsData } from '../data/productsData';
 
 const products = () => {
 	return (

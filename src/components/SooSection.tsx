@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Container } from '../../pages';
+import { Container } from '../pages';
 
 type SOOSectionProp = {
 	title?: String;

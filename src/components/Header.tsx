@@ -1,13 +1,23 @@
 import styled from 'styled-components';
-import { Container } from '../../pages';
+import { Container } from '../pages';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import logo from '../assets/images/oex-white-logo.png';
 import orthoExLogo from '../assets/images/orthoex-logo.png';
 import React, { useEffect, useState } from 'react';
+import NavLink from './NavLink';
 
 interface HeaderProp {}
+
+const navLinks = [
+	{ name: 'Home', to: '/' },
+	{ name: 'Orthopaedics', to: '/orthopaedics' },
+	{ name: 'Composites', to: '/composites' },
+	{ name: 'About us', to: '/about' },
+	{ name: 'Trainings', to: '/trainings' },
+	{ name: 'Careers', to: '/careers' },
+];
 
 const Header: React.FC<HeaderProp> = () => {
 	const [scrolled, setScrolled] = useState(false);
@@ -35,7 +45,7 @@ const Header: React.FC<HeaderProp> = () => {
 					<Link href="/">
 						<a>
 							<Image
-								src={logo}
+								src={orthoExLogo}
 								objectPosition="left"
 								objectFit="contain"
 								layout="fill"
@@ -44,16 +54,9 @@ const Header: React.FC<HeaderProp> = () => {
 					</Link>
 				</Logo>
 				<NavBar>
-					<a href="https://www.orthoex.ng" target="_blank" rel="noref">
-						<Logo>
-							<Image
-								src={orthoExLogo}
-								objectPosition="left"
-								objectFit="contain"
-								layout="fill"
-							></Image>
-						</Logo>
-					</a>
+					{navLinks.map((navLink) => (
+						<NavLink {...navLink} />
+					))}
 				</NavBar>
 			</Container>
 		</SooHeader>
@@ -69,9 +72,11 @@ const SooHeader = styled.header`
 	position: fixed;
 	width: 100%;
 	z-index: 5;
+	color: #fff;
 	transition: background-color 0.5s ease;
 	&.scrolled {
-		background-color: #00000092;
+		background-color: #00000097;
+		backdrop-filter: blur(4px);
 	}
 `;
 const Logo = styled.div`
@@ -82,7 +87,14 @@ const Logo = styled.div`
 `;
 const NavBar = styled.nav`
 	display: flex;
+	gap: 1rem;
 	align-items: center;
+	& > a {
+		padding: 0.35rem 0.5rem;
+	}
+	& > a.active {
+		background-color: var(--oex-orange);
+	}
 `;
 
 export const CTA = styled.button<{ white?: Boolean }>`

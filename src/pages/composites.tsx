@@ -1,23 +1,22 @@
 import type { NextPage } from 'next';
-import Layout from '../src/components/Layout';
+import Layout from '../components/Layout';
 import styled from 'styled-components';
-import Head from 'next/head';
 import Image from 'next/image';
-import { CTA } from '../src/components/Header';
+import { CTA } from '../components/Header';
 import React from 'react';
-import SooSection from '../src/components/SooSection';
+import SooSection from '../components/SooSection';
 
-import safeAndReliableIcon from '../src/assets/images/safe-and-reliable-icon.png';
+import safeAndReliableIcon from '../assets/images/safe-and-reliable-icon.png';
 
-import { HeroComp as Hero } from '../src/components/Hero';
-import HeroContent from '../src/components/HeroContent';
-import Cards from '../src/components/Cards';
-import Contact from '../src/components/Contact';
+import { HeroComp as Hero } from '../components/Hero';
+import HeroContent from '../components/HeroContent';
+import Cards from '../components/Cards';
+import Contact from '../components/Contact';
 
 const Home: NextPage = () => {
 	return (
 		<Layout>
-			<Hero content={HeroContent({})} />
+			<Hero content={<HeroContent />} />
 			<Container style={{ margin: 'auto' }}>
 				<SooSection title="We are helping to grow your business">
 					<Cards />
