@@ -5,24 +5,18 @@ import Image from 'next/image';
 import BG from '../assets/images/website-backfround-image.jpg';
 import React, { FC, ReactElement } from 'react';
 
-type HeroCompProp = {
-	content: FC | ReactElement<any, any> | null;
-};
+type HeroCompProp = {};
 
-export const HeroComp: React.FC<HeroCompProp> = ({ content, children }) => {
+export const HeroComp: React.FC<HeroCompProp> = ({ children }) => {
 	return (
 		<HeroContainer>
 			<Hero>
-				<Container style={{ display: 'flex' }}>
-					{content} <span>{children}</span>
-				</Container>
+				<Container style={{ display: 'flex' }}>{children}</Container>
 			</Hero>
 			<div
 				style={{
 					position: 'absolute',
-					top: 0,
-					height: '100%',
-					width: '100%',
+					inset: 0,
 					zIndex: -5,
 				}}
 			>

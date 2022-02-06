@@ -98,11 +98,8 @@ const NavBar = styled.nav`
 `;
 
 export const CTA = styled.button<{ white?: Boolean }>`
-	--border-radius: 99999px;
-
-	padding: 0.8rem 2rem;
+	padding: 0.8rem 1rem;
 	border: none;
-	border-radius: var(--border-radius);
 	cursor: pointer;
 	background-color: ${(prop) => (prop.white ? 'white' : 'var(--oex-orange)')};
 	color: ${(prop) =>

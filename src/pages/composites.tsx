@@ -16,7 +16,9 @@ import Contact from '../components/Contact';
 const Home: NextPage = () => {
 	return (
 		<Layout>
-			<Hero content={<HeroContent />} />
+			<Hero>
+				<HeroContent />
+			</Hero>
 			<Container style={{ margin: 'auto' }}>
 				<SooSection title="We are helping to grow your business">
 					<Cards />
@@ -112,13 +114,11 @@ const Home: NextPage = () => {
 					<p>Hardner</p>
 				</Container>
 			</SooSection>
-			<Hero
-				content={
-					<SooSection style={{ width: '100%' }} title="Contact Us">
-						<Contact />
-					</SooSection>
-				}
-			></Hero>
+			<Hero>
+				<SooSection style={{ width: '100%' }} title="Contact Us">
+					<Contact />
+				</SooSection>
+			</Hero>
 		</Layout>
 	);
 };

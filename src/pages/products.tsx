@@ -9,7 +9,9 @@ import { productsData } from '../data/productsData';
 const products = () => {
 	return (
 		<Layout>
-			<HeroComp content={<HeroTitle>Products</HeroTitle>} />
+			<HeroComp>
+				<HeroTitle>Products</HeroTitle>
+			</HeroComp>
 
 			<ProductCardsSection>
 				{productsData.map(({ title, img, description, price }, id) => (
