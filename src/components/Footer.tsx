@@ -10,11 +10,12 @@ import { HeroComp as Hero } from './Hero';
 import Link from 'next/link';
 import Image from 'next/image';
 import orthoExLogo from '../assets/images/orthoex-logo.png';
+import FooterBG from '../assets/images/footer-background.png';
 
 const Footer = () => {
 	return (
 		<SooFooter>
-			<Hero>
+			<Hero bg={FooterBG}>
 				<Logo>
 					<Link href="/">
 						<a>

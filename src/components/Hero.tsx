@@ -3,11 +3,11 @@ import { Container } from '../pages';
 import Image from 'next/image';
 
 import BG from '../assets/images/website-backfround-image.jpg';
-import React, { FC, ReactElement } from 'react';
+import React, { FC } from 'react';
 
-type HeroCompProp = {};
+type HeroCompProp = { bg?: StaticImageData };
 
-export const HeroComp: React.FC<HeroCompProp> = ({ children }) => {
+export const HeroComp: FC<HeroCompProp> = ({ children, bg }) => {
 	return (
 		<HeroContainer>
 			<Hero>
@@ -20,7 +20,7 @@ export const HeroComp: React.FC<HeroCompProp> = ({ children }) => {
 					zIndex: -5,
 				}}
 			>
-				<HeroBg layout="fill" objectFit="cover" src={BG}></HeroBg>
+				<HeroBg layout="fill" objectFit="cover" src={bg || BG}></HeroBg>
 			</div>
 		</HeroContainer>
 	);
@@ -38,7 +38,7 @@ const HeroBg = styled(Image)`
 `;
 
 const Hero = styled.div`
-	background-color: #000000c6;
+	/* background-color: #000000c6; */
 	color: white;
 	display: flex;
 	padding: 4.5em 0em 2em 0em;

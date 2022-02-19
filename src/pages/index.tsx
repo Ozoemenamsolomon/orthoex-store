@@ -6,24 +6,40 @@ import { CTA } from '../components/Header';
 import React from 'react';
 import SooSection from '../components/SooSection';
 
-import safeAndReliableIcon from '../assets/images/safe-and-reliable-icon.png';
-
 import { HeroComp as Hero } from '../components/Hero';
 import HeroContent from '../components/HeroContent';
-import Cards from '../components/Cards';
-import Contact from '../components/Contact';
+import Consultancy from '../assets/icons/consultancy ion.png';
+import Procurement from '../assets/icons/procurement icon.png';
+import PandO from '../assets/icons/prosthetics icon.png';
+import Composite from '../assets/icons/composite icon.png';
+import AfterSales from '../assets/icons/after sales support icon.png';
+import Training from '../assets/icons/training icon.png';
+import HeaderBG from '../assets/images/header-background.png';
+import Link from 'next/link';
+
+const services: {
+	name: string;
+	image: StaticImageData;
+}[] = [
+	{ name: 'Prosthetics and Orthotics', image: PandO },
+	{ name: 'Composites', image: Composite },
+	{ name: 'Consultancy', image: Consultancy },
+	{ name: 'After Sales Support.', image: AfterSales },
+	{ name: 'Trainings', image: Training },
+	{ name: 'Procurement And Tendering', image: Procurement },
+];
 
 const Home: NextPage = () => {
 	return (
 		<Layout>
-			<Hero children={<HeroContent />} />
+			<Hero bg={HeaderBG} children={<HeroContent />} />
 			<Container style={{ margin: 'auto' }}>
 				<SooSection>
 					<div
 						style={{
 							display: 'grid',
-							gap: '1rem',
-							gridTemplateColumns: '1fr 1fr',
+							gap: '2rem',
+							gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
 							alignItems: 'center',
 						}}
 					>
@@ -38,56 +54,24 @@ const Home: NextPage = () => {
 								their needs and helping them reach their business goals.
 							</p>
 						</div>
-						<div
-							style={{
-								display: 'grid',
-								gridTemplateColumns: '1fr 1fr 1fr',
-								gap: '1rem',
-							}}
-						>
-							<div
-								style={{ aspectRatio: '.85', backgroundColor: 'greenyellow' }}
-							>
-								<p>Prosthetics and Orthotics</p>
-							</div>
-							<div
-								style={{ aspectRatio: '.85', backgroundColor: 'greenyellow' }}
-							>
-								<p>Composites</p>
-							</div>
-							<div
-								style={{ aspectRatio: '.85', backgroundColor: 'greenyellow' }}
-							>
-								<p>Consultancy</p>
-							</div>
-							<div
-								style={{ aspectRatio: '.85', backgroundColor: 'greenyellow' }}
-							>
-								<p>After Sales Support.</p>
-							</div>
-							<div
-								style={{ aspectRatio: '.85', backgroundColor: 'greenyellow' }}
-							>
-								<p>Trainings</p>
-							</div>
-							<div
-								style={{ aspectRatio: '.85', backgroundColor: 'greenyellow' }}
-							>
-								<p>Procurement And Tendering</p>
-							</div>
-						</div>
+						<ServicesCards>
+							{services.map(({ name, image }) => (
+								<ServiceCardContainer>
+									<ServiceCardImage>
+										<Link href="/">
+											<a>
+												<Image objectFit="contain" layout="fill" src={image} />
+											</a>
+										</Link>
+									</ServiceCardImage>
+									<p>{name}</p>
+								</ServiceCardContainer>
+							))}
+						</ServicesCards>
 					</div>
 				</SooSection>
 				<SooSection>
-					<div
-						style={{
-							display: 'grid',
-							gridTemplateColumns: '1fr 1fr 1fr',
-							gridTemplateRows: '.8fr .5fr 3fr 1fr 2fr 2fr 1fr',
-							gap: '1rem',
-							aspectRatio: '1.5',
-						}}
-					>
+					<ValueCardsContainer>
 						<div
 							style={{
 								gridRow: '2/4',
@@ -140,16 +124,10 @@ const Home: NextPage = () => {
 							</p>
 							<CTA>VIEW PRODUCTS</CTA>
 						</div>
-					</div>
+					</ValueCardsContainer>
 				</SooSection>
 				<SooSection>
-					<div
-						style={{
-							display: 'grid',
-							gridTemplateColumns: '1fr 1fr 1fr',
-							gap: '1rem',
-						}}
-					>
+					<ServicesCards>
 						<div
 							style={{
 								gridColumn: 'span 2',
@@ -182,7 +160,7 @@ const Home: NextPage = () => {
 							<h5>COMPOSITES</h5>
 							<CTA>LEARN MORE</CTA>
 						</div>
-					</div>
+					</ServicesCards>
 				</SooSection>
 				<SooSection title={'Testimonial Section'}>
 					<span>TESTIMONIAL</span>
@@ -205,7 +183,7 @@ const Home: NextPage = () => {
 				<SooSection>
 					<span>LINKEDIN</span>
 					<h2>Latest Posts</h2>
-					<div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+					<PostCardsContainer>
 						{Array(3)
 							.fill('')
 							.map(() => (
@@ -224,7 +202,7 @@ const Home: NextPage = () => {
 									</div>
 								</div>
 							))}
-					</div>
+					</PostCardsContainer>
 				</SooSection>
 			</Container>
 		</Layout>
@@ -241,5 +219,67 @@ export const Container = styled.div`
 		& {
 			padding: 0 1rem;
 		}
+	}
+`;
+
+const ServicesCards = styled.div`
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+	gap: 1rem;
+	/* > div {
+		aspect-ratio: 0.85;
+	} */
+`;
+
+const ServiceCardContainer = styled.div`
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	text-align: center;
+	position: relative;
+	transition: all 0.2s ease-out;
+	&::after {
+		height: 0%;
+		transition: all 0.2s ease-out;
+		content: '';
+		position: absolute;
+		width: 100%;
+		background-color: var(--oex-orange);
+		z-index: 1;
+		bottom: 0;
+		left: 0;
+	}
+	&:hover::after {
+		height: 7%;
+	}
+	&:hover {
+		box-shadow: 1px 6px 8px rgb(0 0 0 / 17%);
+	}
+	p {
+		margin-bottom: 0;
+	}
+`;
+const ServiceCardImage = styled.div`
+	position: relative;
+	aspect-ratio: 1.5;
+`;
+
+const PostCardsContainer = styled.div`
+	@media (min-width: 600px) {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+`;
+const ValueCardsContainer = styled.div`
+	gap: 1rem;
+	aspect-ratio: 1.5;
+	display: flex;
+	flex-direction: column;
+	@media (min-width: 900px) {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 0.8fr 0.5fr 3fr 1fr 2fr 2fr 1fr;
 	}
 `;
