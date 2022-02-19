@@ -8,14 +8,13 @@ import SooSection from '../components/SooSection';
 
 import { HeroComp as Hero } from '../components/Hero';
 import HeroContent from '../components/HeroContent';
-import Consultancy from '../assets/icons/consultancy ion.png';
-import Procurement from '../assets/icons/procurement icon.png';
-import PandO from '../assets/icons/prosthetics icon.png';
-import Composite from '../assets/icons/composite icon.png';
-import AfterSales from '../assets/icons/after sales support icon.png';
-import Training from '../assets/icons/training icon.png';
+import Consultancy from '../assets/icons/consultancy-ion.png';
+import Procurement from '../assets/icons/procurement-icon.png';
+import PandO from '../assets/icons/prosthetics-icon.png';
+import Composite from '../assets/icons/composite-icon.png';
+import AfterSales from '../assets/icons/after-sales-support-icon.png';
+import Training from '../assets/icons/training-icon.png';
 import HeaderBG from '../assets/images/header-background.png';
-import Link from 'next/link';
 import ServiceCard from '../components/ServiceCard';
 
 const services: {
