@@ -16,6 +16,7 @@ import AfterSales from '../assets/icons/after sales support icon.png';
 import Training from '../assets/icons/training icon.png';
 import HeaderBG from '../assets/images/header-background.png';
 import Link from 'next/link';
+import ServiceCard from '../components/ServiceCard';
 
 const services: {
 	name: string;
@@ -55,17 +56,8 @@ const Home: NextPage = () => {
 							</p>
 						</div>
 						<ServicesCards>
-							{services.map(({ name, image }) => (
-								<ServiceCardContainer>
-									<ServiceCardImage>
-										<Link href="/">
-											<a>
-												<Image objectFit="contain" layout="fill" src={image} />
-											</a>
-										</Link>
-									</ServiceCardImage>
-									<p>{name}</p>
-								</ServiceCardContainer>
+							{services.map((service) => (
+								<ServiceCard service={service} />
 							))}
 						</ServicesCards>
 					</div>
@@ -229,40 +221,6 @@ const ServicesCards = styled.div`
 	/* > div {
 		aspect-ratio: 0.85;
 	} */
-`;
-
-const ServiceCardContainer = styled.div`
-	padding: 0.5rem;
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-	text-align: center;
-	position: relative;
-	transition: all 0.2s ease-out;
-	&::after {
-		height: 0%;
-		transition: all 0.2s ease-out;
-		content: '';
-		position: absolute;
-		width: 100%;
-		background-color: var(--oex-orange);
-		z-index: 1;
-		bottom: 0;
-		left: 0;
-	}
-	&:hover::after {
-		height: 7%;
-	}
-	&:hover {
-		box-shadow: 1px 6px 8px rgb(0 0 0 / 17%);
-	}
-	p {
-		margin-bottom: 0;
-	}
-`;
-const ServiceCardImage = styled.div`
-	position: relative;
-	aspect-ratio: 1.5;
 `;
 
 const PostCardsContainer = styled.div`
