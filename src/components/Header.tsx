@@ -103,7 +103,7 @@ export const CTA = styled.button<{ white?: Boolean }>`
 	cursor: pointer;
 	background-color: ${(prop) => (prop.white ? 'white' : 'var(--oex-orange)')};
 	color: ${(prop) =>
-		prop.white ? 'var(--text-colour-dark)' : 'var(--text-colour-light)'};
+		prop.white ? 'var(--oex-orange)' : 'var(--text-colour-light)'};
 	font-weight: bold;
 	transition: all 0.5s ease;
 	/* text-transform: uppercase; */

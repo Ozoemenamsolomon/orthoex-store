@@ -14,6 +14,11 @@ import PandO from '../assets/icons/prosthetics-icon.png';
 import Composite from '../assets/icons/composite-icon.png';
 import AfterSales from '../assets/icons/after-sales-support-icon.png';
 import Training from '../assets/icons/training-icon.png';
+import CoreValue from '../assets/icons/core-values.png';
+import ContactUs from '../assets/icons/contact-us.png';
+import EnableBusiness from '../assets/icons/learn-more.png';
+import ViewProducts from '../assets/icons/view-products.png';
+import KristaTemple from '../assets/images/krista-and-temple.png';
 import HeaderBG from '../assets/images/header-background.png';
 import ServiceCard from '../components/ServiceCard';
 
@@ -66,54 +71,102 @@ const Home: NextPage = () => {
 						<div
 							style={{
 								gridRow: '2/4',
-								backgroundColor: '#00000080',
+								background: 'linear-gradient(135deg,yellow,var(--oex-orange))',
+								color: 'white',
+								padding: '1rem',
+								textAlign: 'center',
 							}}
 						>
+							<div style={{ position: 'relative', aspectRatio: '3' }}>
+								<Image
+									layout="fill"
+									objectFit="contain"
+									src={ContactUs}
+								></Image>
+							</div>
 							<p>
 								Our customer service team is available via email, phone call and
 								WhatsApp
 							</p>
-							<CTA>CONTACT US</CTA>
+							<CTA white>CONTACT US</CTA>
 						</div>
-						<div
-							style={{
-								gridRow: '1 / 5',
-								backgroundColor: '#00000080',
-							}}
-						>
-							<div>
+						<PassionateValueCard>
+							<Image
+								src={KristaTemple}
+								className="krista-temple"
+								layout="fill"
+								objectFit="cover"
+							></Image>
+							<div
+								style={{
+									zIndex: 2,
+									backgroundColor: 'white',
+									padding: '.5rem',
+									borderRadius: '1rem 1rem 0 0',
+									gridRow: '-1',
+								}}
+							>
 								<p>We are passionate about empowering human potentials.</p>
 								<CTA>JOIN US</CTA>
 							</div>
-						</div>
+						</PassionateValueCard>
 						<div
 							style={{
 								gridRow: '3 / 6',
-								backgroundColor: '#00000080',
+								position: 'relative',
+								textAlign: 'center',
+								color: 'var(--oex-orange)',
+								padding: '2rem 0',
 							}}
 						>
 							<h4>Our Core Values</h4>
+							<Image src={CoreValue} />
 						</div>
 						<div
 							style={{
 								gridRow: '4 / 8',
-								backgroundColor: '#00000080',
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center',
+								textAlign: 'center',
+								padding: '1rem',
 							}}
 						>
+							<div
+								style={{
+									position: 'relative',
+									aspectRatio: '3',
+								}}
+							>
+								<Image
+									layout="fill"
+									objectFit="contain"
+									src={EnableBusiness}
+								></Image>
+							</div>
 							<p>We are enabling businesses like yours for success</p>
-							<CTA>LEARN MORE</CTA>
+							<CTA style={{ alignSelf: 'center' }}>LEARN MORE</CTA>
 						</div>
 						<div
 							style={{
 								gridRow: '5 / 7',
-								backgroundColor: '#00000080',
+								padding: '1rem',
+								display: 'flex',
+								flexDirection: 'column',
 							}}
 						>
+							<div style={{ position: 'relative', aspectRatio: '3' }}>
+								<Image
+									layout="fill"
+									objectFit="contain"
+									src={ViewProducts}
+								></Image>
+							</div>
 							<p>
 								Our materials are represented in hundreds of products across
 								multiple markets in Nigeria
 							</p>
-							<CTA>VIEW PRODUCTS</CTA>
+							<CTA style={{ alignSelf: 'center' }}>VIEW PRODUCTS</CTA>
 						</div>
 					</ValueCardsContainer>
 				</SooSection>
@@ -176,21 +229,32 @@ const Home: NextPage = () => {
 					<h2>Latest Posts</h2>
 					<PostCardsContainer>
 						{Array(3)
-							.fill('')
-							.map(() => (
+							.fill({
+								image: {
+									url: 'https://dummyimage.com/600x400/000/fff',
+									alt: '',
+								},
+								time: 'JAN 10, 2022',
+								link: '#',
+								excerpt:
+									'Lorem ipsum dolor sit amet consectetur adipi sicing elit. Expedita, nihil.',
+							})
+							.map(({ image: { url, alt }, time, excerpt, link }) => (
 								<div style={{ flex: '1' }}>
-									<img
-										style={{ width: '100%' }}
-										src="https://dummyimage.com/600x400/000/fff"
-										alt=""
-									/>
-									<div>
-										<p>
-											Lorem ipsum dolor sit amet consectetur adipi sicing elit.
-											Expedita, nihil.
-										</p>
-										<span>JAN 10, 2022</span>
-									</div>
+									<a
+										style={{
+											// height: '100%',
+											flexDirection: 'column',
+											display: 'flex',
+										}}
+										href={link}
+									>
+										<img style={{ width: '100%' }} src={url} alt={alt} />
+										<div>
+											<p>{excerpt}</p>
+											<span>{time}</span>
+										</div>
+									</a>
 								</div>
 							))}
 					</PostCardsContainer>
@@ -230,13 +294,34 @@ const PostCardsContainer = styled.div`
 	}
 `;
 const ValueCardsContainer = styled.div`
-	gap: 1rem;
-	aspect-ratio: 1.5;
+	gap: 1.5rem;
+	/* aspect-ratio: 1.5; */
 	display: flex;
 	flex-direction: column;
 	@media (min-width: 900px) {
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
-		grid-template-rows: 0.8fr 0.5fr 3fr 1fr 2fr 2fr 1fr;
+		grid-template-columns: repeat(3, 1fr);
+		/*grid-template-rows: 0.8fr 0.5fr 3fr 1fr 2fr 2fr 1fr; */
+	}
+	.krista-temple {
+		z-index: -1;
+	}
+	& > div {
+		box-shadow: 1px 6px 8px rgb(0 0 0 / 17%);
+		border-radius: 1rem;
+	}
+`;
+
+const PassionateValueCard = styled.div`
+	grid-row: 1 / 5;
+	display: grid;
+	position: relative;
+	isolation: isolate;
+	align-items: flex-end;
+	text-align: center;
+	overflow: hidden;
+	grid-template-rows: repeat(3, 1fr);
+	@media (max-width: 900px) {
+		grid-auto-rows: 0fr;
 	}
 `;
