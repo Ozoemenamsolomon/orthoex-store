@@ -14,13 +14,10 @@ import PandO from '../assets/icons/prosthetics-icon.png';
 import Composite from '../assets/icons/composite-icon.png';
 import AfterSales from '../assets/icons/after-sales-support-icon.png';
 import Training from '../assets/icons/training-icon.png';
-import CoreValue from '../assets/icons/core-values.png';
-import ContactUs from '../assets/icons/contact-us.png';
-import EnableBusiness from '../assets/icons/learn-more.png';
-import ViewProducts from '../assets/icons/view-products.png';
-import KristaTemple from '../assets/images/krista-and-temple.png';
+import Whatsapp from '../assets/icons/whatsapp-icon.jpg';
 import HeaderBG from '../assets/images/header-background.png';
 import ServiceCard from '../components/ServiceCard';
+import ValuesSection from '../components/ValuesSection';
 
 const services: {
 	name: string;
@@ -66,117 +63,10 @@ const Home: NextPage = () => {
 						</ServicesCards>
 					</div>
 				</SooSection>
+				<ValuesSection />
 				<SooSection>
-					<ValueCardsContainer>
-						<div
-							style={{
-								gridRow: '2/4',
-								background: 'linear-gradient(135deg,yellow,var(--oex-orange))',
-								color: 'white',
-								padding: '1rem',
-								textAlign: 'center',
-							}}
-						>
-							<div style={{ position: 'relative', aspectRatio: '3' }}>
-								<Image
-									layout="fill"
-									objectFit="contain"
-									src={ContactUs}
-								></Image>
-							</div>
-							<p>
-								Our customer service team is available via email, phone call and
-								WhatsApp
-							</p>
-							<CTA white>CONTACT US</CTA>
-						</div>
-						<PassionateValueCard>
-							<Image
-								src={KristaTemple}
-								className="krista-temple"
-								layout="fill"
-								objectFit="cover"
-							></Image>
-							<div
-								style={{
-									zIndex: 2,
-									backgroundColor: 'white',
-									padding: '.5rem',
-									borderRadius: '1rem 1rem 0 0',
-									gridRow: '-1',
-								}}
-							>
-								<p>We are passionate about empowering human potentials.</p>
-								<CTA>JOIN US</CTA>
-							</div>
-						</PassionateValueCard>
-						<div
-							style={{
-								gridRow: '3 / 6',
-								position: 'relative',
-								textAlign: 'center',
-								color: 'var(--oex-orange)',
-								padding: '2rem 0',
-							}}
-						>
-							<h4>Our Core Values</h4>
-							<Image src={CoreValue} />
-						</div>
-						<div
-							style={{
-								gridRow: '4 / 8',
-								display: 'flex',
-								flexDirection: 'column',
-								justifyContent: 'center',
-								textAlign: 'center',
-								padding: '1rem',
-							}}
-						>
-							<div
-								style={{
-									position: 'relative',
-									aspectRatio: '3',
-								}}
-							>
-								<Image
-									layout="fill"
-									objectFit="contain"
-									src={EnableBusiness}
-								></Image>
-							</div>
-							<p>We are enabling businesses like yours for success</p>
-							<CTA style={{ alignSelf: 'center' }}>LEARN MORE</CTA>
-						</div>
-						<div
-							style={{
-								gridRow: '5 / 7',
-								padding: '1rem',
-								display: 'flex',
-								flexDirection: 'column',
-							}}
-						>
-							<div style={{ position: 'relative', aspectRatio: '3' }}>
-								<Image
-									layout="fill"
-									objectFit="contain"
-									src={ViewProducts}
-								></Image>
-							</div>
-							<p>
-								Our materials are represented in hundreds of products across
-								multiple markets in Nigeria
-							</p>
-							<CTA style={{ alignSelf: 'center' }}>VIEW PRODUCTS</CTA>
-						</div>
-					</ValueCardsContainer>
-				</SooSection>
-				<SooSection>
-					<ServicesCards>
-						<div
-							style={{
-								gridColumn: 'span 2',
-							}}
-						>
+					<ServicesCards className="bigger">
+						<div className="wider">
 							<h2>Which of our product vertical is relevant for you?</h2>
 							<p>
 								Take full advantage of our expert knowledge and growing product
@@ -184,26 +74,23 @@ const Home: NextPage = () => {
 								application:{' '}
 							</p>
 						</div>
-						<div
-							style={{
-								gridRow: 'span 2',
+
+						<ServiceCard
+							className="taller"
+							service={{
+								name: 'Do you need to speak with one of our products experts for adviceon the right choice for you? We are happy to support you, takinginto account your intended use.',
+								image: Whatsapp,
 							}}
-						>
-							<p>
-								Do you need to speak with one of our products experts for advice
-								on the right choice for you? We are happy to support you, taking
-								into account your intended use.
-							</p>
-							<CTA>CHAT WITH US</CTA>
-						</div>
-						<div>
-							<h5>PROSTHETICS AND ORTHOTICS</h5>
-							<CTA>LEARN MORE</CTA>
-						</div>
-						<div>
-							<h5>COMPOSITES</h5>
-							<CTA>LEARN MORE</CTA>
-						</div>
+							cta={<CTA>CHAT WITH US</CTA>}
+						/>
+						<ServiceCard
+							service={{ name: 'PROSTHETICS AND ORTHOTICS', image: PandO }}
+							cta={<CTA>LEARN MORE</CTA>}
+						/>
+						<ServiceCard
+							service={{ name: 'COMPOSITES', image: Composite }}
+							cta={<CTA>LEARN MORE</CTA>}
+						/>
 					</ServicesCards>
 				</SooSection>
 				<SooSection title={'Testimonial Section'}>
@@ -278,12 +165,19 @@ export const Container = styled.div`
 `;
 
 const ServicesCards = styled.div`
+	--min-width: 120px;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
 	gap: 1rem;
-	/* > div {
-		aspect-ratio: 0.85;
-	} */
+
+	&.bigger {
+		--min-width: 270px;
+	}
+	@media (min-width: 600px) {
+		& > div.wider {
+			grid-column: span 2;
+		}
+	}
 `;
 
 const PostCardsContainer = styled.div`
@@ -291,37 +185,5 @@ const PostCardsContainer = styled.div`
 		display: flex;
 		flex-wrap: wrap;
 		gap: 1rem;
-	}
-`;
-const ValueCardsContainer = styled.div`
-	gap: 1.5rem;
-	/* aspect-ratio: 1.5; */
-	display: flex;
-	flex-direction: column;
-	@media (min-width: 900px) {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		/*grid-template-rows: 0.8fr 0.5fr 3fr 1fr 2fr 2fr 1fr; */
-	}
-	.krista-temple {
-		z-index: -1;
-	}
-	& > div {
-		box-shadow: 1px 6px 8px rgb(0 0 0 / 17%);
-		border-radius: 1rem;
-	}
-`;
-
-const PassionateValueCard = styled.div`
-	grid-row: 1 / 5;
-	display: grid;
-	position: relative;
-	isolation: isolate;
-	align-items: flex-end;
-	text-align: center;
-	overflow: hidden;
-	grid-template-rows: repeat(3, 1fr);
-	@media (max-width: 900px) {
-		grid-auto-rows: 0fr;
 	}
 `;

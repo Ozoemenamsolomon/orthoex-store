@@ -1,18 +1,23 @@
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const ServiceCard: FC<{
 	service: { name: string; image: StaticImageData };
-}> = ({ service: { name, image } }) => (
-	<ServiceCardContainer>
+	cta?: ReactElement;
+	className?: string;
+}> = ({ service: { name, image }, cta, className }) => (
+	<ServiceCardContainer className={`${!cta ? 'animate' : ''} ${className}`}>
 		<Link href="/">
 			<a>
-				<ServiceCardImage>
-					<Image objectFit="contain" layout="fill" src={image} />
-				</ServiceCardImage>
-				<p>{name}</p>
+				<ImageTitleContainer>
+					<ImageContainer>
+						<Image objectFit="contain" layout="fill" src={image} />
+					</ImageContainer>
+					<p>{name}</p>
+				</ImageTitleContainer>
+				{cta}
 			</a>
 		</Link>
 	</ServiceCardContainer>
@@ -29,6 +34,7 @@ const ServiceCardContainer = styled.div`
 		text-align: center;
 		height: 100%;
 		width: 100%;
+		justify-content: space-between;
 	}
 	position: relative;
 	transition: all 0.2s ease-out;
@@ -44,18 +50,27 @@ const ServiceCardContainer = styled.div`
 		bottom: 0;
 		left: 0;
 	}
-	&:hover::after,
-	&:focus-within::after {
+	&.animate:hover::after,
+	&.animate:focus-within::after {
 		height: 5%;
 	}
 	&:hover {
 		box-shadow: 1px 6px 8px rgb(0 0 0 / 17%);
 	}
+	&.taller {
+		grid-row: span 2;
+	}
 	p {
 		margin-bottom: 0;
 	}
 `;
-const ServiceCardImage = styled.div`
+
+const ImageTitleContainer = styled.div`
+	display: flex;
+	gap: 1rem;
+	flex-direction: column;
+`;
+const ImageContainer = styled.div`
 	position: relative;
 	aspect-ratio: 1.5;
 `;
