@@ -4,10 +4,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const ServiceCard: FC<{
-	service: { name: string; image: StaticImageData };
-	cta?: ReactElement;
+	service: { name: string; image: StaticImageData; cta?: ReactElement };
+	/** class of "taller" makes the card span two rows */
 	className?: string;
-}> = ({ service: { name, image }, cta, className }) => (
+}> = ({ service: { name, image, cta }, className }) => (
 	<ServiceCardContainer className={`${!cta ? 'animate' : ''} ${className}`}>
 		<Link href="/">
 			<a>

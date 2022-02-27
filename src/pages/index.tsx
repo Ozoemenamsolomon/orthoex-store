@@ -80,16 +80,22 @@ const Home: NextPage = () => {
 							service={{
 								name: 'Do you need to speak with one of our products experts for adviceon the right choice for you? We are happy to support you, takinginto account your intended use.',
 								image: Whatsapp,
+								cta: <CTA>CHAT WITH US</CTA>,
 							}}
-							cta={<CTA>CHAT WITH US</CTA>}
 						/>
 						<ServiceCard
-							service={{ name: 'PROSTHETICS AND ORTHOTICS', image: PandO }}
-							cta={<CTA>LEARN MORE</CTA>}
+							service={{
+								name: 'PROSTHETICS AND ORTHOTICS',
+								image: PandO,
+								cta: <CTA>LEARN MORE</CTA>,
+							}}
 						/>
 						<ServiceCard
-							service={{ name: 'COMPOSITES', image: Composite }}
-							cta={<CTA>LEARN MORE</CTA>}
+							service={{
+								name: 'COMPOSITES',
+								image: Composite,
+								cta: <CTA>LEARN MORE</CTA>,
+							}}
 						/>
 					</ServicesCards>
 				</SooSection>
@@ -130,7 +136,6 @@ const Home: NextPage = () => {
 								<div style={{ flex: '1' }}>
 									<a
 										style={{
-											// height: '100%',
 											flexDirection: 'column',
 											display: 'flex',
 										}}
@@ -164,6 +169,7 @@ export const Container = styled.div`
 	}
 `;
 
+/** class of "bigger" makes it's children have a min-width of `270px`*/
 const ServicesCards = styled.div`
 	--min-width: 120px;
 	display: grid;
