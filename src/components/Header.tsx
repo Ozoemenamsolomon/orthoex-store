@@ -3,9 +3,8 @@ import { Container } from '../pages';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import logo from '../assets/images/oex-white-logo.png';
 import orthoExLogo from '../assets/images/orthoex-logo.png';
-import React, { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import NavLink from './NavLink';
 
 interface HeaderProp {}
@@ -21,6 +20,7 @@ const navLinks = [
 
 const Header: React.FC<HeaderProp> = () => {
 	const [scrolled, setScrolled] = useState(false);
+	const [isNavOpen, setIsNavOpen] = useState(false);
 
 	const handleScroll = () => {
 		const isScrolled = window.scrollY > 10;
@@ -31,7 +31,11 @@ const Header: React.FC<HeaderProp> = () => {
 
 	useEffect(() => {
 		document.addEventListener('scroll', handleScroll, { passive: true });
-	});
+
+		return () => {
+			document.removeEventListener('scroll', handleScroll);
+		};
+	}, []);
 
 	return (
 		<SooHeader className={`${scrolled ? 'scrolled' : ''}`}>
@@ -41,19 +45,36 @@ const Header: React.FC<HeaderProp> = () => {
 					justifyContent: 'space-between',
 				}}
 			>
-				<Logo>
-					<Link href="/">
-						<a>
+				<Link href="/">
+					<a>
+						<Logo>
 							<Image
 								src={orthoExLogo}
 								objectPosition="left"
 								objectFit="contain"
 								layout="fill"
 							></Image>
-						</a>
-					</Link>
-				</Logo>
-				<NavBar>
+						</Logo>
+					</a>
+				</Link>
+				<HamburgerButton
+					onClick={() => setIsNavOpen((prevState) => !prevState)}
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						xmlnsXlink="http://www.w3.org/1999/xlink"
+						height="32px"
+						id="Layer_1"
+						version="1.1"
+						viewBox="0 0 32 32"
+						width="32px"
+						xmlSpace="preserve"
+						fill="currentColor"
+					>
+						<path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z" />
+					</svg>
+				</HamburgerButton>
+				<NavBar data-nav-open={isNavOpen}>
 					{navLinks.map((navLink) => (
 						<NavLink {...navLink} />
 					))}
@@ -84,6 +105,11 @@ const Logo = styled.div`
 	height: 4rem;
 	width: 5rem;
 	position: relative;
+	z-index: 1;
+
+	img {
+		filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.363));
+	}
 `;
 const NavBar = styled.nav`
 	display: flex;
@@ -91,9 +117,28 @@ const NavBar = styled.nav`
 	align-items: center;
 	& > a {
 		padding: 0.35rem 0.5rem;
+		text-align: center;
 	}
 	& > a.active {
 		background-color: var(--oex-orange);
+	}
+
+	@media (max-width: 900px) {
+		display: none;
+		position: absolute;
+		right: 0;
+		top: 0;
+		height: 100vh;
+		justify-content: center;
+		flex-direction: column;
+		width: 75%;
+		background: var(--oex-orange);
+		padding: 2rem;
+		align-items: stretch;
+
+		&[data-nav-open='true'] {
+			display: flex;
+		}
 	}
 `;
 
@@ -109,5 +154,15 @@ export const CTA = styled.button<{ white?: Boolean }>`
 	/* text-transform: uppercase; */
 	&:hover {
 		box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.363);
+	}
+`;
+
+const HamburgerButton = styled(CTA)`
+	padding: 0.3rem 0.6rem;
+	align-self: center;
+	z-index: 2;
+
+	@media (min-width: 900px) {
+		display: none;
 	}
 `;
