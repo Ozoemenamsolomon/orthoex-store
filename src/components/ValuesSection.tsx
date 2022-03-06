@@ -14,16 +14,8 @@ const ValuesSection = () => {
 	return (
 		<SooSection>
 			<ValueCardsContainer>
-				<div
-					style={{
-						gridRow: '2/4',
-						background: 'linear-gradient(135deg,yellow,var(--oex-orange))',
-						color: 'white',
-						padding: '1rem',
-						textAlign: 'center',
-					}}
-				>
-					<div style={{ position: 'relative', aspectRatio: '3' }}>
+				<BaseValueCard>
+					<div className="image-container">
 						<Image layout="fill" objectFit="contain" src={ContactUs}></Image>
 					</div>
 					<p>
@@ -31,7 +23,7 @@ const ValuesSection = () => {
 						WhatsApp
 					</p>
 					<CTA white>CONTACT US</CTA>
-				</div>
+				</BaseValueCard>
 				<PassionateValueCard>
 					<Image
 						src={KristaTemple}
@@ -39,39 +31,19 @@ const ValuesSection = () => {
 						layout="fill"
 						objectFit="cover"
 					></Image>
-					<div
-						style={{
-							zIndex: 2,
-							backgroundColor: 'white',
-							padding: '.5rem',
-							borderRadius: '1rem 1rem 0 0',
-							gridRow: '-1',
-						}}
-					>
+					<div className="content">
 						<p>We are passionate about empowering human potentials.</p>
 						<CTA>JOIN US</CTA>
 					</div>
 				</PassionateValueCard>
 				<ValuesTitleCardContainer>
-					<h4>Our Core Values</h4>
-					<Image src={CoreValue} />
+					<div className="image-container">
+						<Image layout="fill" objectFit="contain" src={CoreValue}></Image>
+					</div>
+					<CTA>Our Core Values</CTA>
 				</ValuesTitleCardContainer>
-				<div
-					style={{
-						gridRow: '4 / 8',
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						textAlign: 'center',
-						padding: '1rem',
-					}}
-				>
-					<div
-						style={{
-							position: 'relative',
-							aspectRatio: '3',
-						}}
-					>
+				<BaseValueCard>
+					<div className="image-container">
 						<Image
 							layout="fill"
 							objectFit="contain"
@@ -79,25 +51,18 @@ const ValuesSection = () => {
 						></Image>
 					</div>
 					<p>We are enabling businesses like yours for success</p>
-					<CTA style={{ alignSelf: 'center' }}>LEARN MORE</CTA>
-				</div>
-				<div
-					style={{
-						gridRow: '5 / 7',
-						padding: '1rem',
-						display: 'flex',
-						flexDirection: 'column',
-					}}
-				>
-					<div style={{ position: 'relative', aspectRatio: '3' }}>
+					<CTA>LEARN MORE</CTA>
+				</BaseValueCard>
+				<BaseValueCard>
+					<div className="image-container">
 						<Image layout="fill" objectFit="contain" src={ViewProducts}></Image>
 					</div>
 					<p>
 						Our materials are represented in hundreds of products across
 						multiple markets in Nigeria
 					</p>
-					<CTA style={{ alignSelf: 'center' }}>VIEW PRODUCTS</CTA>
-				</div>
+					<CTA>VIEW PRODUCTS</CTA>
+				</BaseValueCard>
 			</ValueCardsContainer>
 		</SooSection>
 	);
@@ -117,36 +82,70 @@ const ValueCardsContainer = styled.div`
 		grid-template-columns: repeat(3, 1fr);
 		/*grid-template-rows: 0.8fr 0.5fr 3fr 1fr 2fr 2fr 1fr; */
 	}
+`;
 
-	.krista-temple {
-		z-index: -1;
+const BaseValueCard = styled.div`
+	position: relative;
+	padding: 1rem;
+	text-align: center;
+	box-shadow: 1px 6px 8px rgb(0 0 0 / 17%);
+	border-radius: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	${CTA} {
+		align-self: center;
 	}
-	& > div {
-		box-shadow: 1px 6px 8px rgb(0 0 0 / 17%);
-		border-radius: 1rem;
+
+	&:nth-child(1) {
+		grid-row: 2/4;
+		background: linear-gradient(135deg, var(--oex-yellow), var(--oex-orange));
+		color: white;
+	}
+	&:nth-child(4) {
+		grid-row: 4 / 8;
+	}
+	&:nth-child(5) {
+		grid-row: 5 / 7;
+	}
+
+	> .image-container {
+		position: relative;
+		aspect-ratio: 3;
+		margin-bottom: 1rem;
 	}
 `;
 
-const ValuesTitleCardContainer = styled.div`
-	position: relative;
-	text-align: center;
-	color: var(--oex-orange);
-	padding: 2rem 0;
+const ValuesTitleCardContainer = styled(BaseValueCard)`
+	padding-inline: 0;
 	@media (min-width: 900px) {
 		grid-row: 3 / 6;
 	}
+	> .image-container {
+		position: relative;
+		aspect-ratio: 1;
+	}
 `;
-
-const PassionateValueCard = styled.div`
+const PassionateValueCard = styled(BaseValueCard)`
+	padding: 0;
 	grid-row: 1 / 5;
 	display: grid;
-	position: relative;
+	grid-template-columns: 1fr;
 	isolation: isolate;
 	align-items: flex-end;
-	text-align: center;
 	overflow: hidden;
 	grid-template-rows: repeat(3, 1fr);
 	@media (max-width: 900px) {
 		grid-auto-rows: 1fr;
+	}
+	.krista-temple {
+		z-index: -1;
+	}
+	> .content {
+		z-index: 2;
+		background-color: white;
+		padding: 0.5rem;
+		border-radius: 1rem 1rem 0 0;
+		grid-row: -1;
 	}
 `;

@@ -23,10 +23,8 @@ const Header: React.FC<HeaderProp> = () => {
 	const [isNavOpen, setIsNavOpen] = useState(false);
 
 	const handleScroll = () => {
-		const isScrolled = window.scrollY > 10;
-		if (isScrolled !== scrolled) {
-			setScrolled(!scrolled);
-		}
+		const isScrolled = window.scrollY > 0;
+		isScrolled !== scrolled ? setScrolled(!scrolled) : setScrolled(false);
 	};
 
 	useEffect(() => {
@@ -43,6 +41,7 @@ const Header: React.FC<HeaderProp> = () => {
 				style={{
 					display: 'flex',
 					justifyContent: 'space-between',
+					paddingBlock: '1rem',
 				}}
 			>
 				<Link href="/">
@@ -60,19 +59,33 @@ const Header: React.FC<HeaderProp> = () => {
 				<HamburgerButton
 					onClick={() => setIsNavOpen((prevState) => !prevState)}
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						xmlnsXlink="http://www.w3.org/1999/xlink"
-						height="32px"
-						id="Layer_1"
-						version="1.1"
-						viewBox="0 0 32 32"
-						width="32px"
-						xmlSpace="preserve"
-						fill="currentColor"
-					>
-						<path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z" />
-					</svg>
+					{isNavOpen ? (
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							id="Ebene_1"
+							data-name="Ebene 1"
+							viewBox="0 0 48.88 40"
+							height="32px"
+							width="32px"
+							fill="currentColor"
+						>
+							<path d="M28,19.85,39.64,8.18a2.5,2.5,0,0,0-3.53-3.54L24.44,16.31,12.77,4.64A2.5,2.5,0,0,0,9.24,8.18L20.91,19.85,9.24,31.51A2.5,2.5,0,0,0,11,35.78a2.45,2.45,0,0,0,1.76-.73L24.44,23.38,36.11,35.05a2.49,2.49,0,0,0,1.77.73,2.45,2.45,0,0,0,1.76-.73,2.5,2.5,0,0,0,0-3.54Z" />
+						</svg>
+					) : (
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							xmlnsXlink="http://www.w3.org/1999/xlink"
+							height="32px"
+							id="Layer_1"
+							version="1.1"
+							viewBox="0 0 32 32"
+							width="32px"
+							xmlSpace="preserve"
+							fill="currentColor"
+						>
+							<path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z" />
+						</svg>
+					)}
 				</HamburgerButton>
 				<NavBar data-nav-open={isNavOpen}>
 					{navLinks.map((navLink) => (
@@ -103,9 +116,12 @@ const SooHeader = styled.header`
 const Logo = styled.div`
 	padding: 1rem 1rem;
 	height: 4rem;
-	width: 5rem;
 	position: relative;
 	z-index: 1;
+	aspect-ratio: 1.5;
+	@media (min-width: 600px) {
+		aspect-ratio: 2;
+	}
 
 	img {
 		filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.363));

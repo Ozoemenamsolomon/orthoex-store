@@ -18,6 +18,7 @@ import Whatsapp from '../assets/icons/whatsapp-icon.jpg';
 import HeaderBG from '../assets/images/header-background.png';
 import ServiceCard from '../components/ServiceCard';
 import ValuesSection from '../components/ValuesSection';
+import QuotationMark from '../assets/icons/quotation-mark.svg';
 
 const services: {
 	name: string;
@@ -49,11 +50,11 @@ const Home: NextPage = () => {
 							<h2>Our commitment to quality ensures your peace of mind</h2>
 							<p>
 								At OrthoEx Nigeria Limited, we aim at the highest standard of
-								quality in everything we do. This also includes
-								providingqualityproductsand technologies that are tailored to
-								the requirements of our customers in the
-								healthcareandmanufacturing industries, enabling us to satisfy
-								their needs and helping them reach their business goals.
+								quality in everything we do. This also includes providing
+								quality products and technologies that are tailored to the
+								requirements of our customers in the healthcareandmanufacturing
+								industries, enabling us to satisfy their needs and helping them
+								reach their business goals.
 							</p>
 						</div>
 						<ServicesCards>
@@ -76,7 +77,7 @@ const Home: NextPage = () => {
 						</div>
 
 						<ServiceCard
-							className="taller"
+							className="taller shrink-start last"
 							service={{
 								name: 'Do you need to speak with one of our products experts for adviceon the right choice for you? We are happy to support you, takinginto account your intended use.',
 								image: Whatsapp,
@@ -99,24 +100,42 @@ const Home: NextPage = () => {
 						/>
 					</ServicesCards>
 				</SooSection>
-				<SooSection title={'Testimonial Section'}>
-					<span>TESTIMONIAL</span>
-					<h2>Our Client Feedback</h2>
-					<p style={{ backgroundColor: 'red' }}>
-						Please provide me with the mobile version of the site so that I can
-						know how to build the layout
-					</p>
-					<div style={{ backgroundColor: 'green', padding: '1.5rem' }}>
+				<Hero colour="black" col center>
+					<span style={{ color: 'var(--oex-orange)', fontWeight: 'bold' }}>
+						TESTIMONIAL
+					</span>
+					<h2 style={{ margin: 0, textAlign: 'center' }}>
+						Our Client Feedback
+					</h2>
+
+					<TestimonialContainer>
+						<div
+							style={{
+								position: 'absolute',
+								width: '4rem',
+								aspectRatio: '1 / 1',
+								top: '-3rem',
+								transform: 'translateX(-50%)',
+								left: '50%',
+								margin: 'auto',
+							}}
+						>
+							<Image layout="fill" src={QuotationMark} />
+						</div>
 						<p>
 							Lorem ipsum dolor sit amet. Duis vero labore augue dolor. Diam
 							lorem takimata. Voluptua dolor at. Sed consetetur vel dolores.
 							Delenit diam erat ut. Feugiat sea commodo. Vero dolor et takimata
 							ipsum consequat. Justo elitr et sadipscing. Nonumy iriure dolor
 						</p>
-						<p style={{ fontWeight: 'bold' }}>Maxwell Okoro</p>
-						<p>Prosthetist/orthothist</p>
-					</div>
-				</SooSection>
+						<span style={{ fontWeight: 'bold' }}>Maxwell Okoro</span>
+						<p>
+							Prosthetist/
+							<wbr />
+							orthothist
+						</p>
+					</TestimonialContainer>
+				</Hero>
 				<SooSection>
 					<span>LINKEDIN</span>
 					<h2>Latest Posts</h2>
@@ -178,12 +197,28 @@ const ServicesCards = styled.div`
 
 	&.bigger {
 		--min-width: 270px;
+		gap: 1.5rem;
+		.image-container {
+			aspect-ratio: 2.5;
+		}
 	}
 	@media (min-width: 600px) {
 		& > div.wider {
 			grid-column: span 2;
 		}
 	}
+`;
+
+const TestimonialContainer = styled.div`
+	background-color: white;
+	padding: 1.5rem;
+	width: 70%;
+	max-width: 25rem;
+	border-radius: 2em;
+	box-shadow: rgba(0, 0, 0, 0.17) 1px 6px 8px;
+	text-align: center;
+	position: relative;
+	margin-top: 3.5rem;
 `;
 
 const PostCardsContainer = styled.div`

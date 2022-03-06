@@ -3,16 +3,21 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const ServiceCard: FC<{
+type ServiceCardProps = {
 	service: { name: string; image: StaticImageData; cta?: ReactElement };
 	/** class of "taller" makes the card span two rows */
 	className?: string;
-}> = ({ service: { name, image, cta }, className }) => (
+};
+
+const ServiceCard: FC<ServiceCardProps> = ({
+	service: { name, image, cta },
+	className,
+}) => (
 	<ServiceCardContainer className={`${!cta ? 'animate' : ''} ${className}`}>
 		<Link href="/">
 			<a>
 				<ImageTitleContainer>
-					<ImageContainer>
+					<ImageContainer className="image-container">
 						<Image objectFit="contain" layout="fill" src={image} />
 					</ImageContainer>
 					<p>{name}</p>
@@ -30,11 +35,15 @@ const ServiceCardContainer = styled.div`
 		padding: 0.8rem;
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 1rem;
 		text-align: center;
 		height: 100%;
 		width: 100%;
 		justify-content: space-between;
+
+		button {
+			align-self: center;
+		}
 	}
 	position: relative;
 	transition: all 0.2s ease-out;
@@ -60,8 +69,18 @@ const ServiceCardContainer = styled.div`
 	&.taller {
 		grid-row: span 2;
 	}
+
+	&.shrink-start {
+		align-self: start;
+	}
 	p {
 		margin-bottom: 0;
+	}
+
+	@media (max-width: 600px) {
+		&.last {
+			order: 1;
+		}
 	}
 `;
 

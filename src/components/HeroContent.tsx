@@ -30,7 +30,7 @@ const HeroContent = styled.div`
 	justify-content: center;
 	align-items: flex-start;
 	@media (min-width: 600px) {
-		max-width: 60%;
+		max-width: 55%;
 	}
 `;
 

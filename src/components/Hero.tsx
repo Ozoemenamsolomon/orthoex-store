@@ -5,13 +5,36 @@ import Image from 'next/image';
 import BG from '../assets/images/website-backfround-image.jpg';
 import React, { FC } from 'react';
 
-type HeroCompProp = { bg?: StaticImageData };
+type HeroCompProp = {
+	bg?: StaticImageData;
+	col?: boolean;
+	center?: boolean;
+	colour?: 'white' | 'black';
+};
 
-export const HeroComp: FC<HeroCompProp> = ({ children, bg }) => {
+export const HeroComp: FC<HeroCompProp> = ({
+	children,
+	bg,
+	col,
+	center,
+	colour = 'white',
+}) => {
 	return (
 		<HeroContainer>
-			<Hero>
-				<Container style={{ display: 'flex' }}>{children}</Container>
+			<Hero
+				style={{
+					color: colour,
+				}}
+			>
+				<Container
+					style={{
+						display: 'flex',
+						flexDirection: col ? 'column' : undefined,
+						alignItems: center ? 'center' : undefined,
+					}}
+				>
+					{children}
+				</Container>
 			</Hero>
 			<div
 				style={{
@@ -38,8 +61,6 @@ const HeroBg = styled(Image)`
 `;
 
 const Hero = styled.div`
-	/* background-color: #000000c6; */
-	color: white;
 	display: flex;
 	padding: 4.5em 0em 2em 0em;
 	justify-content: center;

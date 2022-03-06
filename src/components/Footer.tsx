@@ -11,6 +11,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import orthoExLogo from '../assets/images/orthoex-logo.png';
 import FooterBG from '../assets/images/footer-background.png';
+import { CTA } from './Header';
 
 const Footer = () => {
 	return (
@@ -28,78 +29,105 @@ const Footer = () => {
 						</a>
 					</Link>
 				</Logo>
-				<div
-					style={{
-						display: 'flex',
-						flexWrap: 'wrap',
-						gap: '1.5rem',
-						flex: '1',
-					}}
-				>
-					<div style={{ flex: '1' }}>
-						<h5>COMPANY</h5>
-						<div style={{ display: 'flex', flexDirection: 'column' }}>
-							{['About us', 'Careers', 'Events', 'Subscribe', 'Contact us'].map(
-								(l) => (
+				<div>
+					<div
+						style={{
+							display: 'flex',
+							flexWrap: 'wrap',
+							gap: '1.5rem',
+							flex: '1',
+						}}
+					>
+						<div style={{ flex: '1' }}>
+							<h5>COMPANY</h5>
+							<div style={{ display: 'flex', flexDirection: 'column' }}>
+								{[
+									'About us',
+									'Careers',
+									'Events',
+									'Subscribe',
+									'Contact us',
+								].map((l) => (
 									<Link href="/">
 										<a>{l}</a>
 									</Link>
-								)
-							)}
+								))}
+							</div>
 						</div>
-					</div>
-					<div style={{ flex: '1' }}>
-						<h5>BUSINESSES</h5>{' '}
-						<div style={{ display: 'flex', flexDirection: 'column' }}>
-							{[
-								'Orthopaedics',
-								'Composites',
-								'Medical',
-								'Consumables',
-								'Partners',
-							].map((l) => (
-								<Link href="/">
-									<a>{l}</a>
-								</Link>
-							))}
-						</div>
-					</div>
-					<div style={{ flex: '1' }}>
-						<h5>SUPPORT</h5>{' '}
-						<div style={{ display: 'flex', flexDirection: 'column' }}>
-							{['FAQ', 'Shipping and delivery', 'Clinical Referrals'].map(
-								(l) => (
+						<div style={{ flex: '1' }}>
+							<h5>BUSINESSES</h5>{' '}
+							<div style={{ display: 'flex', flexDirection: 'column' }}>
+								{[
+									'Orthopaedics',
+									'Composites',
+									'Medical',
+									'Consumables',
+									'Partners',
+								].map((l) => (
 									<Link href="/">
 										<a>{l}</a>
 									</Link>
-								)
-							)}
+								))}
+							</div>
+						</div>
+						<div style={{ flex: '1' }}>
+							<h5>SUPPORT</h5>{' '}
+							<div style={{ display: 'flex', flexDirection: 'column' }}>
+								{['FAQ', 'Shipping and delivery', 'Clinical Referrals'].map(
+									(l) => (
+										<Link href="/">
+											<a>{l}</a>
+										</Link>
+									)
+								)}
+							</div>
+						</div>
+						<div style={{ flex: '1' }}>
+							<h5>RESOURCES</h5>{' '}
+							<div style={{ display: 'flex', flexDirection: 'column' }}>
+								{[
+									'Amputee guide',
+									'Rehab Edge Magazine',
+									'Blog',
+									'Subscribe',
+								].map((l) => (
+									<Link href="/">
+										<a>{l}</a>
+									</Link>
+								))}
+							</div>
+						</div>
+						<div style={{ flex: '1' }}>
+							{' '}
+							<h5>MORE INFO</h5>{' '}
+							<div style={{ display: 'flex', flexDirection: 'column' }}>
+								{['Privacy policy', 'Terms & Conditions', 'Site map'].map(
+									(l) => (
+										<Link href="/">
+											<a>{l}</a>
+										</Link>
+									)
+								)}
+							</div>
 						</div>
 					</div>
-					<div style={{ flex: '1' }}>
-						<h5>RESOURCES</h5>{' '}
-						<div style={{ display: 'flex', flexDirection: 'column' }}>
-							{[
-								'Amputee guide',
-								'Rehab Edge Magazine',
-								'Blog',
-								'Subscribe',
-							].map((l) => (
-								<Link href="/">
-									<a>{l}</a>
-								</Link>
-							))}
-						</div>
-					</div>
-					<div style={{ flex: '1' }}>
-						{' '}
-						<h5>MORE INFO</h5>{' '}
-						<div style={{ display: 'flex', flexDirection: 'column' }}>
-							{['Privacy policy', 'Terms & Conditions', 'Site map'].map((l) => (
-								<Link href="/">
-									<a>{l}</a>
-								</Link>
-							))}
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							alignItems: 'center',
+							marginBlock: '2.5rem',
+							flexWrap: 'wrap',
+							gap: '1rem',
+						}}
+					>
+						<span>Copyright © 2022 - OrthoEx NG</span>
+						<div>
+							<p>Follow OrthoEx NG</p>
+							<CTA>F</CTA>
+							<CTA>In</CTA>
+							<CTA>Li</CTA>
+							<CTA>Tw</CTA>
 						</div>
 					</div>
 				</div>
