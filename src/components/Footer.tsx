@@ -29,7 +29,11 @@ const Footer = () => {
 						</a>
 					</Link>
 				</Logo>
-				<div>
+				<div
+					style={{
+						flex: '1',
+					}}
+				>
 					<div
 						style={{
 							display: 'flex',
