@@ -10,7 +10,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import orthoExLogo from '../assets/images/orthoex-logo.png';
 import FooterBG from '../assets/images/footer-background.png';
-import { CTA } from './Header';
+import { SocialCTA } from './Header';
 
 const Footer = () => {
 	return (
@@ -50,8 +50,8 @@ const Footer = () => {
 									'Events',
 									'Subscribe',
 									'Contact us',
-								].map((l) => (
-									<Link href="/">
+								].map((l, index) => (
+									<Link key={`link-${l}-${index}`} href="/">
 										<a>{l}</a>
 									</Link>
 								))}
@@ -66,8 +66,8 @@ const Footer = () => {
 									'Medical',
 									'Consumables',
 									'Partners',
-								].map((l) => (
-									<Link href="/">
+								].map((l, index) => (
+									<Link key={`link-${l}-${index}`} href="/">
 										<a>{l}</a>
 									</Link>
 								))}
@@ -77,8 +77,8 @@ const Footer = () => {
 							<h5>SUPPORT</h5>{' '}
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
 								{['FAQ', 'Shipping and delivery', 'Clinical Referrals'].map(
-									(l) => (
-										<Link href="/">
+									(l, index) => (
+										<Link key={`link-${l}-${index}`} href="/">
 											<a>{l}</a>
 										</Link>
 									)
@@ -93,8 +93,8 @@ const Footer = () => {
 									'Rehab Edge Magazine',
 									'Blog',
 									'Subscribe',
-								].map((l) => (
-									<Link href="/">
+								].map((l, index) => (
+									<Link key={`link-${l}-${index}`} href="/">
 										<a>{l}</a>
 									</Link>
 								))}
@@ -105,8 +105,8 @@ const Footer = () => {
 							<h5>MORE INFO</h5>{' '}
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
 								{['Privacy policy', 'Terms & Conditions', 'Site map'].map(
-									(l) => (
-										<Link href="/">
+									(l, index) => (
+										<Link key={`link-${l}-${index}`} href="/">
 											<a>{l}</a>
 										</Link>
 									)
@@ -163,11 +163,4 @@ const Logo = styled.div`
 const SocialsContainer = styled.div`
 	display: flex;
 	gap: 0.5rem;
-`;
-
-const SocialCTA = styled(CTA)`
-	padding: 0.5rem;
-	color: black;
-	background-color: white;
-	border-radius: 9999px;
 `;

@@ -71,10 +71,3 @@ const Hero = styled.div`
 		}
 	}
 `;
-const HeroImg = styled.div`
-	margin-left: 3em;
-	align-self: center;
-	@media (max-width: 600px) {
-		display: none;
-	}
-`;

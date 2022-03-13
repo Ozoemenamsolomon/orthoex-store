@@ -88,8 +88,8 @@ const Header: React.FC<HeaderProp> = () => {
 					)}
 				</HamburgerButton>
 				<NavBar data-nav-open={isNavOpen}>
-					{navLinks.map((navLink) => (
-						<NavLink {...navLink} />
+					{navLinks.map((navLink, index) => (
+						<NavLink key={`nav-link-${navLink.name}-${index}`} {...navLink} />
 					))}
 				</NavBar>
 			</Container>
@@ -181,4 +181,11 @@ const HamburgerButton = styled(CTA)`
 	@media (min-width: 900px) {
 		display: none;
 	}
+`;
+
+export const SocialCTA = styled(CTA)`
+	padding: 0.5rem;
+	color: black;
+	background-color: white;
+	border-radius: 9999px;
 `;

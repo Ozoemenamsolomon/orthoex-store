@@ -93,7 +93,7 @@ const BaseValueCard = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	${CTA} {
+	button {
 		align-self: center;
 	}
 

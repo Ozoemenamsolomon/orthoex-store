@@ -73,8 +73,11 @@ const Home: NextPage = () => {
 							</p>
 						</div>
 						<ServicesCards>
-							{services.map((service) => (
-								<ServiceCard service={service} />
+							{services.map((service, index) => (
+								<ServiceCard
+									key={`service-${service.description}-${index}`}
+									service={service}
+								/>
 							))}
 						</ServicesCards>
 					</div>
@@ -137,8 +140,8 @@ const Home: NextPage = () => {
 								excerpt:
 									'Lorem ipsum dolor sit amet consectetur adipi sicing elit. Expedita, nihil.',
 							})
-							.map(({ image: { url, alt }, time, excerpt, link }) => (
-								<div style={{ flex: '1' }}>
+							.map(({ image: { url, alt }, time, excerpt, link }, index) => (
+								<div key={`post-${excerpt}-${index}`} style={{ flex: '1' }}>
 									<a
 										style={{
 											flexDirection: 'column',
