@@ -27,3 +27,11 @@ export const ServicesCards = styled.div<{ minWidth?: string }>`
 		}
 	}
 `;
+
+export const PostCardsContainer = styled.div`
+	@media (min-width: 600px) {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+`;

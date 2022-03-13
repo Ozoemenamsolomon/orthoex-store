@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import Layout from '../components/Layout';
 import styled from 'styled-components';
-import Image from 'next/image';
 import { CTA } from '../components/Header';
 import React from 'react';
 import SooSection from '../components/SooSection';
@@ -18,8 +17,8 @@ import Whatsapp from '../assets/icons/whatsapp-icon.jpg';
 import HeaderBG from '../assets/images/header-background.png';
 import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
 import ValuesSection from '../components/ValuesSection';
-import QuotationMark from '../assets/icons/quotation-mark.svg';
-import { ServicesCards } from '../components/styled';
+import { PostCardsContainer, ServicesCards } from '../components/styled';
+import TestimonialSection from '../components/TestimonialSection';
 
 const services: ServiceCardType[] = [
 	{ description: 'Prosthetics and Orthotics', image: PandO },
@@ -118,45 +117,15 @@ const Home: NextPage = () => {
 						/>
 					</ServicesCards>
 				</SooSection>
-				<Hero colour="black" col center>
-					<span style={{ color: 'var(--oex-orange)', fontWeight: 'bold' }}>
-						TESTIMONIAL
-					</span>
-					<h2 style={{ margin: 0, textAlign: 'center' }}>
-						Our Client Feedback
-					</h2>
+				<TestimonialSection
+					testimony={
+						'Lorem ipsum dolor sit amet. Duis vero labore augue dolor. Diam lorem takimata. Voluptua dolor at. Sed consetetur vel dolores. Delenit diam erat ut. Feugiat sea commodo. Vero dolor et takimata ipsum consequat. Justo elitr et sadipscing. Nonumy iriure dolor'
+					}
+					by={'Maxwell Okoro'}
+					title={'Prosthetist / orthothist'}
+				/>
 
-					<TestimonialContainer>
-						<div
-							style={{
-								position: 'absolute',
-								width: '4rem',
-								aspectRatio: '1 / 1',
-								top: '-3rem',
-								transform: 'translateX(-50%)',
-								left: '50%',
-								margin: 'auto',
-							}}
-						>
-							<Image layout="fill" src={QuotationMark} />
-						</div>
-						<p>
-							Lorem ipsum dolor sit amet. Duis vero labore augue dolor. Diam
-							lorem takimata. Voluptua dolor at. Sed consetetur vel dolores.
-							Delenit diam erat ut. Feugiat sea commodo. Vero dolor et takimata
-							ipsum consequat. Justo elitr et sadipscing. Nonumy iriure dolor
-						</p>
-						<span style={{ fontWeight: 'bold' }}>Maxwell Okoro</span>
-						<p>
-							Prosthetist/
-							<wbr />
-							orthothist
-						</p>
-					</TestimonialContainer>
-				</Hero>
-				<SooSection>
-					<span>LINKEDIN</span>
-					<h2>Latest Posts</h2>
+				<SooSection header={{ first: 'LINKEDIN', second: 'Latest Posts' }}>
 					<PostCardsContainer>
 						{Array<PostType>(3)
 							.fill({
@@ -203,25 +172,5 @@ export const Container = styled.div`
 		& {
 			padding: 0 1rem;
 		}
-	}
-`;
-
-const TestimonialContainer = styled.div`
-	background-color: white;
-	padding: 1.5rem;
-	width: 70%;
-	max-width: 25rem;
-	border-radius: 2em;
-	box-shadow: rgba(0, 0, 0, 0.17) 1px 6px 8px;
-	text-align: center;
-	position: relative;
-	margin-top: 3.5rem;
-`;
-
-const PostCardsContainer = styled.div`
-	@media (min-width: 600px) {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
 	}
 `;
