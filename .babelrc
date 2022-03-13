@@ -9,5 +9,17 @@
 				"preprocess": false
 			}
 		]
-	]
+	],
+	"env": {
+		"development": {
+			"plugins": [
+				[
+					"styled-components",
+					{
+						"displayName": false
+					}
+				]
+			]
+		}
+	}
 }
