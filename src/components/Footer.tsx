@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Container } from '../pages';
 import {
 	Facebook,
 	Instagram,
@@ -128,10 +127,20 @@ const Footer = () => {
 						<span>Copyright © 2022 - OrthoEx NG</span>
 						<div>
 							<p>Follow OrthoEx NG</p>
-							<CTA>F</CTA>
-							<CTA>In</CTA>
-							<CTA>Li</CTA>
-							<CTA>Tw</CTA>
+							<SocialsContainer>
+								<SocialCTA>
+									<Facebook width={18} />
+								</SocialCTA>
+								<SocialCTA>
+									<Instagram width={18} />
+								</SocialCTA>
+								<SocialCTA>
+									<Linkedin width={18} />
+								</SocialCTA>
+								<SocialCTA>
+									<Twitter width={18} />
+								</SocialCTA>
+							</SocialsContainer>
 						</div>
 					</div>
 				</div>
@@ -142,13 +151,7 @@ const Footer = () => {
 
 export default Footer;
 
-const SooFooter = styled.footer`
-	/* display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: black;
-	color: white; */
-`;
+const SooFooter = styled.footer``;
 
 const Logo = styled.div`
 	padding: 1rem 1rem;
@@ -156,4 +159,15 @@ const Logo = styled.div`
 	width: 5rem;
 	position: relative;
 	margin: 1rem;
+`;
+const SocialsContainer = styled.div`
+	display: flex;
+	gap: 0.5rem;
+`;
+
+const SocialCTA = styled(CTA)`
+	padding: 0.5rem;
+	color: black;
+	background-color: white;
+	border-radius: 9999px;
 `;
