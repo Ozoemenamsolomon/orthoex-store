@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 import { CTA } from './Header';
 
@@ -23,13 +23,6 @@ const ContactForm = () => {
 		const value = e.currentTarget.value || '';
 		const name = e.target.name;
 		setFormValue({ ...FormValue, [name]: value });
-	};
-
-	const handleSubmit = (e: FormEvent) => {
-		e.preventDefault();
-		const data = FormValue;
-
-		console.log(FormValue);
 	};
 
 	return (
