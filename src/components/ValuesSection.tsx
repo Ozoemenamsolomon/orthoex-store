@@ -104,6 +104,7 @@ const BaseValueCard = styled.div`
 	}
 	&:nth-child(4) {
 		grid-row: 4 / 8;
+		align-self: start;
 	}
 	&:nth-child(5) {
 		grid-row: 5 / 7;

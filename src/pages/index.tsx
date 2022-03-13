@@ -16,26 +16,43 @@ import AfterSales from '../assets/icons/after-sales-support-icon.png';
 import Training from '../assets/icons/training-icon.png';
 import Whatsapp from '../assets/icons/whatsapp-icon.jpg';
 import HeaderBG from '../assets/images/header-background.png';
-import ServiceCard from '../components/ServiceCard';
+import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
 import ValuesSection from '../components/ValuesSection';
 import QuotationMark from '../assets/icons/quotation-mark.svg';
+import { ServicesCards } from '../components/styled';
 
-const services: {
-	name: string;
-	image: StaticImageData;
-}[] = [
-	{ name: 'Prosthetics and Orthotics', image: PandO },
-	{ name: 'Composites', image: Composite },
-	{ name: 'Consultancy', image: Consultancy },
-	{ name: 'After Sales Support.', image: AfterSales },
-	{ name: 'Trainings', image: Training },
-	{ name: 'Procurement And Tendering', image: Procurement },
+const services: ServiceCardType[] = [
+	{ description: 'Prosthetics and Orthotics', image: PandO },
+	{ description: 'Composites', image: Composite },
+	{ description: 'Consultancy', image: Consultancy },
+	{ description: 'After Sales Support.', image: AfterSales },
+	{ description: 'Trainings', image: Training },
+	{ description: 'Procurement And Tendering', image: Procurement },
 ];
 
+type PostType = {
+	image: {
+		url: string;
+		alt: string;
+	};
+	time: string;
+	link: string;
+	excerpt: string;
+};
+
 const Home: NextPage = () => {
+	const findRep = () => {};
 	return (
 		<Layout>
-			<Hero bg={HeaderBG} children={<HeroContent />} />
+			<Hero bg={HeaderBG}>
+				<HeroContent
+					title={'Your preferred<br />partner of choice'}
+					claim={
+						'We are facilitating Prosthetics, Orthopaedic devices and composite materials distribution in West Africa. <br /> <br /> Speak with an account manager in your region'
+					}
+					cta={<CTA onClick={findRep}>Find a representative</CTA>}
+				/>
+			</Hero>
 			<Container style={{ margin: 'auto' }}>
 				<SooSection>
 					<div
@@ -52,9 +69,9 @@ const Home: NextPage = () => {
 								At OrthoEx Nigeria Limited, we aim at the highest standard of
 								quality in everything we do. This also includes providing
 								quality products and technologies that are tailored to the
-								requirements of our customers in the healthcareandmanufacturing
-								industries, enabling us to satisfy their needs and helping them
-								reach their business goals.
+								requirements of our customers in the health care and
+								manufacturing industries, enabling us to satisfy their needs and
+								helping them reach their business goals.
 							</p>
 						</div>
 						<ServicesCards>
@@ -79,21 +96,22 @@ const Home: NextPage = () => {
 						<ServiceCard
 							className="taller shrink-start last"
 							service={{
-								name: 'Do you need to speak with one of our products experts for adviceon the right choice for you? We are happy to support you, takinginto account your intended use.',
+								description:
+									'Do you need to speak with one of our products experts for advice on the right choice for you? We are happy to support you, taking into account your intended use.',
 								image: Whatsapp,
 								cta: <CTA>CHAT WITH US</CTA>,
 							}}
 						/>
 						<ServiceCard
 							service={{
-								name: 'PROSTHETICS AND ORTHOTICS',
+								description: 'PROSTHETICS AND ORTHOTICS',
 								image: PandO,
 								cta: <CTA>LEARN MORE</CTA>,
 							}}
 						/>
 						<ServiceCard
 							service={{
-								name: 'COMPOSITES',
+								description: 'COMPOSITES',
 								image: Composite,
 								cta: <CTA>LEARN MORE</CTA>,
 							}}
@@ -140,7 +158,7 @@ const Home: NextPage = () => {
 					<span>LINKEDIN</span>
 					<h2>Latest Posts</h2>
 					<PostCardsContainer>
-						{Array(3)
+						{Array<PostType>(3)
 							.fill({
 								image: {
 									url: 'https://dummyimage.com/600x400/000/fff',
@@ -184,27 +202,6 @@ export const Container = styled.div`
 	@media (max-width: 600px) {
 		& {
 			padding: 0 1rem;
-		}
-	}
-`;
-
-/** class of "bigger" makes it's children have a min-width of `270px`*/
-const ServicesCards = styled.div`
-	--min-width: 120px;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
-	gap: 1rem;
-
-	&.bigger {
-		--min-width: 270px;
-		gap: 1.5rem;
-		.image-container {
-			aspect-ratio: 2.5;
-		}
-	}
-	@media (min-width: 600px) {
-		& > div.wider {
-			grid-column: span 2;
 		}
 	}
 `;
