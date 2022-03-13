@@ -1,23 +1,16 @@
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
 import styled from 'styled-components';
-import { CTA } from './Header';
 
-const HeroContentComp: FC = () => {
-	const findRep = () => {};
+const HeroContentComp: FC<{
+	title: string;
+	claim: string;
+	cta: ReactElement;
+}> = ({ title, claim, cta }) => {
 	return (
 		<HeroContent>
-			<HeroTitle>
-				Your preferred
-				<br />
-				partner of choice
-			</HeroTitle>
-			<HeroClaim>
-				We are facilitating Prosthetics, Orthopaedic devices and composite
-				materials distribution in West Africa. <br />
-				<br />
-				Speak with an account manager in your region
-			</HeroClaim>
-			<CTA onClick={findRep}>Find a representative</CTA>
+			<HeroTitle dangerouslySetInnerHTML={{ __html: title }} />
+			<HeroClaim dangerouslySetInnerHTML={{ __html: claim }} />
+			{cta}
 		</HeroContent>
 	);
 };

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import orthoExLogo from '../assets/images/orthoex-logo.png';
-import React, { MouseEventHandler, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavLink from './NavLink';
 
 interface HeaderProp {}
