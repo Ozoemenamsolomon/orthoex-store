@@ -3,24 +3,40 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import Image from 'next/image';
 
+export type ServiceCardType = {
+	description: string;
+	image: StaticImageData;
+	cta?: ReactElement;
+	title?: string;
+};
+
 type ServiceCardProps = {
-	service: { name: string; image: StaticImageData; cta?: ReactElement };
-	/** class of "taller" makes the card span two rows */
+	service: ServiceCardType;
+	/**
+	 * | classes | action |
+	 * |---|---|
+	 * |`last`| orders card to last in mobile |
+	 * |`taller`| spans card two rows |
+	 * |`rounded`| makes the card border rounded |
+	 * |`no-animate`| no line animation |
+	 * |`shrink-start`| shrinks card  |
+	 *  */
 	className?: string;
 };
 
 const ServiceCard: FC<ServiceCardProps> = ({
-	service: { name, image, cta },
+	service: { description, image, cta, title },
 	className,
 }) => (
-	<ServiceCardContainer className={`${!cta ? 'animate' : ''} ${className}`}>
+	<ServiceCardContainer className={`${className}`}>
 		<Link href="/">
 			<a>
 				<ImageTitleContainer>
 					<ImageContainer className="image-container">
 						<Image objectFit="contain" layout="fill" src={image} />
 					</ImageContainer>
-					<p>{name}</p>
+					{title && <h3>{title}</h3>}
+					<p>{description}</p>
 				</ImageTitleContainer>
 				{cta}
 			</a>
@@ -48,7 +64,24 @@ const ServiceCardContainer = styled.div`
 	position: relative;
 	transition: all 0.2s ease-out;
 
-	&::after {
+	&.rounded {
+		border-radius: 1rem;
+		overflow: hidden;
+	}
+
+	&.taller {
+		grid-row: span 2;
+	}
+
+	&.shrink-start {
+		align-self: start;
+	}
+
+	&:not(.no-animate) {
+		padding-bottom: 5%;
+	}
+
+	&:not(.no-animate)::after {
 		height: 0%;
 		transition: all 0.2s ease-out;
 		content: '';
@@ -59,19 +92,12 @@ const ServiceCardContainer = styled.div`
 		bottom: 0;
 		left: 0;
 	}
-	&.animate:hover::after,
-	&.animate:focus-within::after {
+	&:not(.no-animate):hover::after,
+	&:not(.no-animate):focus-within::after {
 		height: 5%;
 	}
 	&:hover {
 		box-shadow: 1px 6px 8px rgb(0 0 0 / 17%);
-	}
-	&.taller {
-		grid-row: span 2;
-	}
-
-	&.shrink-start {
-		align-self: start;
 	}
 	p {
 		margin-bottom: 0;
