@@ -17,6 +17,9 @@ import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
 import SooSection from '../components/SooSection';
 import { PostCardsContainer, ServicesCards } from '../components/styled';
 import TestimonialSection from '../components/TestimonialSection';
+import helpIcon from '../assets/images/help-icon_ImgID1.png';
+import chatIcon from '../assets/images/chat-icon_ImgID1.png';
+import phoneIcon from '../assets/images/phone-icon_ImgID1.png';
 
 const qualities: ServiceCardType[] = [
 	{
@@ -167,83 +170,95 @@ const Home: NextPage = () => {
 					}
 					by={'Maxwell Okoro'}
 					title={'Prosthetist / orthothist'}
-				/>{' '}
-				<h1>To be continued</h1>
-				{/* <SooSection>
-					<Container
-						style={{
-							display: 'flex',
-							marginBottom: '3rem',
-							flexDirection: 'column',
-							alignItems: 'start',
-						}}
-					>
-						<p>
-							We are committed to delivering superior resins and composite
-							materials that you can trust for your crafts. Take advantage of
-							our high-quality products.
-						</p>
-
-						<a
-							target="_blank"
-							rel="noopener noreferrer"
-							href="https://wa.me/2347030324696?text=Hello%2C%0D%0Acould+you+please+tell+me+more+about+the+composite%3F"
-						>
-							<CTA>Learn more</CTA>
-						</a>
-					</Container>
-				</SooSection> */}
-			</Container>
-			{/* <SooSection
-				container={false}
-				color="var(--oex-orange)"
-				style={{ clipPath: 'polygon(0% 29%, 100% 0%, 100% 100%, 0 100%)' }}
-			>
-				<Container
-					style={{
-						margin: 'auto',
-						display: 'flex',
-						justifyContent: 'space-between',
-						alignItems: 'center',
-						color: 'white',
-						padding: '2rem 1rem',
-						gap: '2rem',
-					}}
+				/>
+				<SooSection
+					style={{ display: 'flex', columnGap: '6rem', flexWrap: 'wrap' }}
 				>
-					<div
-						style={{
-							flex: 1,
-							position: 'relative',
-						}}
-					>
-						<Image
-							objectFit="contain"
-							layout="intrinsic"
-							src={safeAndReliableIcon}
-						></Image>
-					</div>
-					<div style={{ flex: 1.5 }}>
-						<h2>Safe and reliable</h2>
+					<div style={{ flex: '1', minWidth: '200px' }}>
+						<h2>Stay tuned!</h2>
 						<p>
-							With our safe and reliable composite solutions, you can make a
-							wide range of stronger, lighter and tougher products
+							Sign up to be the first to know about new products, workshops and
+							special offers
 						</p>
-						<a
-							target="_blank"
-							rel="noopener noreferrer"
-							href="https://wa.me/2347030324696?text=Hello%2C%0D%0Acould+you+please+tell+me+more+about+the+composite%3F"
-						>
-							<CTA white>Learn more</CTA>
-						</a>
 					</div>
-				</Container>
-			</SooSection>
 
-			<Hero>
-				<SooSection style={{ width: '100%' }}>
-					<Contact />
+					<SubscribeForm>
+						<input type="tel" placeholder="Your Whatsapp Number" />
+						<input type="email" placeholder="Your email" />
+						<CTA type="submit">Subscribe</CTA>
+					</SubscribeForm>
 				</SooSection>
-			</Hero> */}
+
+				<SooSection>
+					<div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+						<h2>Do you Need help?</h2>
+						<p>
+							We have several resources available to help you with our products
+						</p>
+					</div>
+
+					<ServicesCards className="bigger">
+						<ServiceCard
+							service={{
+								description:
+									'Talk To A Customer Care Representative \n\n Mon-Fri: 9:00am-5:00pm',
+								image: phoneIcon,
+								cta: <CTA>DIAL NO.</CTA>,
+								title: undefined,
+							}}
+						></ServiceCard>
+						<ServiceCard
+							service={{
+								description: 'Chat with a Product expert',
+								image: chatIcon,
+								cta: <CTA>LIVE CHAT</CTA>,
+								title: undefined,
+							}}
+						></ServiceCard>
+						<ServiceCard
+							service={{
+								description:
+									'Find a list of answers to the mostPopular questions that are asked',
+								image: helpIcon,
+								cta: <CTA>ONLINE HELP</CTA>,
+								title: undefined,
+							}}
+						></ServiceCard>
+					</ServicesCards>
+				</SooSection>
+				<SooSection header={{ first: 'FEATURED', second: 'Articles' }}>
+					<PostCardsContainer>
+						{Array<PostType>(3)
+							.fill({
+								image: {
+									url: 'https://dummyimage.com/600x400/000/fff',
+									alt: '',
+								},
+								time: 'JAN 10, 2022',
+								link: '#',
+								excerpt:
+									'Lorem ipsum dolor sit amet consectetur adipi sicing elit. Expedita, nihil.',
+							})
+							.map(({ image: { url, alt }, time, excerpt, link }) => (
+								<div style={{ flex: '1' }}>
+									<a
+										style={{
+											flexDirection: 'column',
+											display: 'flex',
+										}}
+										href={link}
+									>
+										<img style={{ width: '100%' }} src={url} alt={alt} />
+										<div>
+											<p>{excerpt}</p>
+											<span>{time}</span>
+										</div>
+									</a>
+								</div>
+							))}
+					</PostCardsContainer>
+				</SooSection>
+			</Container>
 		</Layout>
 	);
 };
@@ -270,5 +285,17 @@ const QualitiesSection = styled.section`
 		& > * {
 			flex: 1;
 		}
+	}
+`;
+
+const SubscribeForm = styled.form`
+	display: flex;
+	gap: 1rem;
+	flex: 1;
+	flex-direction: column;
+	max-width: 350px;
+
+	input {
+		padding: 0.51rem;
 	}
 `;
