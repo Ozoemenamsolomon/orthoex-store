@@ -15,7 +15,6 @@ import { useRouter } from 'next/router';
 
 const Footer = () => {
 	const router = useRouter();
-	console.log(router);
 
 	let footerLinks: {
 		title: string;

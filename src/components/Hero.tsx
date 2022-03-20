@@ -26,7 +26,7 @@ export const HeroComp: FC<HeroCompProp> = ({
 			<Hero
 				style={{
 					color: colour,
-					padding: morePadding ? '11em 0em;' : undefined,
+					padding: morePadding ? '11em 0em' : undefined,
 				}}
 			>
 				<Container
