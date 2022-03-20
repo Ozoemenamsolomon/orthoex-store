@@ -95,7 +95,7 @@ const Home: NextPage = () => {
 						</div>
 
 						<ServiceCard
-							className="taller shrink-start last"
+							className="no-animate taller shrink-start last"
 							service={{
 								description:
 									'Do you need to speak with one of our products experts for advice on the right choice for you? We are happy to support you, taking into account your intended use.',
@@ -104,6 +104,7 @@ const Home: NextPage = () => {
 							}}
 						/>
 						<ServiceCard
+							className="no-animate"
 							service={{
 								description: 'PROSTHETICS AND ORTHOTICS',
 								image: PandO,
@@ -111,6 +112,7 @@ const Home: NextPage = () => {
 							}}
 						/>
 						<ServiceCard
+							className="no-animate"
 							service={{
 								description: 'COMPOSITES',
 								image: Composite,

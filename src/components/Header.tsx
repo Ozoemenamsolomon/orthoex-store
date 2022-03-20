@@ -117,14 +117,13 @@ const Logo = styled.div`
 	padding: 1rem 1rem;
 	height: 4rem;
 	position: relative;
-	z-index: 1;
 	aspect-ratio: 1.5;
 	@media (min-width: 600px) {
 		aspect-ratio: 2;
-	}
 
-	img {
-		filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.363));
+		img {
+			filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.363));
+		}
 	}
 `;
 const NavBar = styled.nav`

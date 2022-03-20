@@ -12,6 +12,7 @@ export type ServiceCardType = {
 
 type ServiceCardProps = {
 	service: ServiceCardType;
+	imagePadding?: boolean;
 	/**
 	 * | classes | action |
 	 * |---|---|
@@ -27,12 +28,15 @@ type ServiceCardProps = {
 const ServiceCard: FC<ServiceCardProps> = ({
 	service: { description, image, cta, title },
 	className,
+	imagePadding,
 }) => (
 	<ServiceCardContainer className={`${className}`}>
 		<Link href="/">
 			<a>
 				<ImageTitleContainer>
-					<ImageContainer className="image-container">
+					<ImageContainer
+						className={`image-container ${imagePadding ? 'pad' : ''}`}
+					>
 						<Image objectFit="contain" layout="fill" src={image} />
 					</ImageContainer>
 					{title && <h3>{title}</h3>}
@@ -96,7 +100,7 @@ const ServiceCardContainer = styled.div`
 	&:not(.no-animate):focus-within::after {
 		height: 5%;
 	}
-	&:hover {
+	&:not(.no-animate):hover {
 		box-shadow: 1px 6px 8px rgb(0 0 0 / 17%);
 	}
 	p {
@@ -118,4 +122,7 @@ const ImageTitleContainer = styled.div`
 const ImageContainer = styled.div`
 	position: relative;
 	aspect-ratio: 1.5;
+	&.pad {
+		margin-inline: 2rem;
+	}
 `;

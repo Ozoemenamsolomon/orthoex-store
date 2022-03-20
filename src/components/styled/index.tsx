@@ -13,7 +13,7 @@ export const ServicesCards = styled.div<{ minWidth?: string }>`
 		.image-container {
 			aspect-ratio: 2.5;
 		}
-		> div {
+		> div:not(.wider) {
 			box-shadow: 1px 6px 8px rgb(0 0 0 / 17%);
 		}
 	}

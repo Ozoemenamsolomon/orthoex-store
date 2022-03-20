@@ -3,10 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 import calculator from '../assets/images/Calculator-icon_ImgID1.png';
 import heroBG from '../assets/images/composite-hero-background.jpg';
-import composite from '../assets/images/composite-material-Icon-1.png';
-import durable from '../assets/images/durable-Icon-3.png';
-import quality from '../assets/images/high-quality-Icon-2.png';
-import nigeria from '../assets/images/multiple-market-Icon-4.png';
+import composite from '../assets/images/composite-material-icon_ImgID1.png';
+import durable from '../assets/images/durable-icon_ImgID1.png';
+import quality from '../assets/images/high-quality-icon_ImgID1.png';
+import nigeria from '../assets/images/map-icon_ImgID1.png';
 import newLevel from '../assets/images/new-level-icon_ImgID1.png';
 import safeReliable from '../assets/images/safe-and-reliable-icon_ImgID1.png';
 import { CTA } from '../components/Header';
@@ -41,22 +41,24 @@ const qualities: ServiceCardType[] = [
 
 const expectancies: ServiceCardType[] = [
 	{
-		description: 'We offer the right composite material for your projects',
+		description:
+			'We are committed to delivering superior composite materials that you can trust for your craft. Take advantage of our high quality products.',
 		image: newLevel,
 		title: 'Experience a new level of performance',
 		cta: <CTA>LEARN MORE</CTA>,
 	},
 	{
-		description: 'High quality products to keep you satisfied',
+		description:
+			'With our safe and reliable composite solutions, you can make a wide range of stronger,lighter and tougher products',
 		image: safeReliable,
 		title: 'Safe and reliable',
 		cta: <CTA>LEARN MORE</CTA>,
 	},
 	{
 		description:
-			'Durable and abrasion resistant resins to keep you competitive',
+			'Use our resin calculator to estimate the amount of epoxy resin you will need for your projects',
 		image: calculator,
-		title: 'How much epoxy do I need',
+		title: 'How much epoxy do I need?',
 		cta: <CTA>TRY IT</CTA>,
 	},
 ];
@@ -90,7 +92,11 @@ const Home: NextPage = () => {
 					</h2>
 					<ServicesCards minWidth="200px">
 						{qualities.map((quality) => (
-							<ServiceCard service={quality} />
+							<ServiceCard
+								className="no-animate"
+								imagePadding
+								service={quality}
+							/>
 						))}
 					</ServicesCards>
 				</QualitiesSection>

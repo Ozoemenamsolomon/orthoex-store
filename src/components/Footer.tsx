@@ -11,59 +11,106 @@ import Image from 'next/image';
 import orthoExLogo from '../assets/images/orthoex-logo.png';
 import FooterBG from '../assets/images/footer-background.png';
 import { SocialCTA } from './Header';
-
-const footerLinks: {
-	title: string;
-	links: { title: string; href: string }[];
-}[] = [
-	{
-		title: 'COMPANY',
-		links: [
-			{ title: 'About us', href: '#' },
-			{ title: 'Careers', href: '#' },
-			{ title: 'Events', href: '#' },
-			{ title: 'Subscribe', href: '#' },
-			{ title: 'Contact us', href: '#' },
-		],
-	},
-	{
-		title: 'BUSINESSES',
-		links: [
-			{ title: 'Orthopaedics', href: '#' },
-			{ title: 'Composites', href: '#' },
-			{ title: 'Medical', href: '#' },
-			{ title: 'Consumables', href: '#' },
-			{ title: 'Partners', href: '#' },
-		],
-	},
-	{
-		title: 'SUPPORT',
-		links: [
-			{ title: 'FAQ', href: '#' },
-			{ title: 'Shipping and delivery', href: '#' },
-			{ title: 'Clinical Referrals', href: '#' },
-		],
-	},
-	{
-		title: 'RESOURCES',
-		links: [
-			{ title: 'Amputee guide', href: '#' },
-			{ title: 'Rehab Edge Magazine', href: '#' },
-			{ title: 'Blog', href: '#' },
-			{ title: 'Subscribe', href: '#' },
-		],
-	},
-	{
-		title: 'MORE INFO',
-		links: [
-			{ title: 'Privacy policy', href: '#' },
-			{ title: 'Terms & Conditions', href: '#' },
-			{ title: 'Site map', href: '#' },
-		],
-	},
-];
+import { useRouter } from 'next/router';
 
 const Footer = () => {
+	const router = useRouter();
+	console.log(router);
+
+	let footerLinks: {
+		title: string;
+		links: { title: string; href: string }[];
+	}[] = [
+		{
+			title: 'COMPANY',
+			links: [
+				{ title: 'About us', href: '#' },
+				{ title: 'Careers', href: '#' },
+				{ title: 'Events', href: '#' },
+				{ title: 'Contact us', href: '#' },
+			],
+		},
+		{
+			title: 'BUSINESSES',
+			links: [
+				{ title: 'Orthopaedics', href: '#' },
+				{ title: 'Composites', href: '#' },
+				{ title: 'Medical', href: '#' },
+				{ title: 'Consumables', href: '#' },
+				{ title: 'Partners', href: '#' },
+			],
+		},
+		{
+			title: 'SUPPORT',
+			links: [
+				{ title: 'FAQ', href: '#' },
+				{ title: 'Shipping and delivery', href: '#' },
+				{ title: 'Clinical Referrals', href: '#' },
+			],
+		},
+		{
+			title: 'RESOURCES',
+			links: [
+				{ title: 'Amputee guide', href: '#' },
+				{ title: 'Rehab Edge Magazine', href: '#' },
+				{ title: 'Blog', href: '#' },
+				{ title: 'Subscribe', href: '#' },
+			],
+		},
+		{
+			title: 'MORE INFO',
+			links: [
+				{ title: 'Privacy policy', href: '#' },
+				{ title: 'Terms & Conditions', href: '#' },
+				{ title: 'Site map', href: '#' },
+			],
+		},
+	];
+
+	if (router.pathname === '/composites') {
+		footerLinks = [
+			{
+				title: 'COMPANY',
+				links: [
+					{ title: 'About us', href: '#' },
+					{ title: 'Careers', href: '#' },
+					{ title: 'Events', href: '#' },
+					{ title: 'Contact us', href: '#' },
+				],
+			},
+			{
+				title: 'BUSINESSES',
+				links: [
+					{ title: 'Orthopaedics', href: '#' },
+					{ title: 'Composites', href: '#' },
+					{ title: 'Medical', href: '#' },
+					{ title: 'Consumables', href: '#' },
+					{ title: 'Partners', href: '#' },
+				],
+			},
+			{
+				title: 'SUPPORT',
+				links: [
+					{ title: 'FAQ', href: '#' },
+					{ title: 'Shipping and delivery', href: '#' },
+					{ title: 'Clinical Referrals', href: '#' },
+				],
+			},
+			{
+				title: 'RESOURCES',
+				links: [{ title: 'Blog', href: '#' }],
+			},
+			{
+				title: 'MORE INFO',
+				links: [
+					{ title: 'Privacy policy', href: '#' },
+					{ title: 'Terms & Conditions', href: '#' },
+					{ title: 'Site map', href: '#' },
+				],
+			},
+		];
+	}
+
 	return (
 		<SooFooter>
 			<Hero bg={FooterBG}>
@@ -88,14 +135,20 @@ const Footer = () => {
 						style={{
 							display: 'flex',
 							flexWrap: 'wrap',
-							gap: '1.5rem',
+							gap: '2rem',
 							flex: '1',
 						}}
 					>
 						{footerLinks.map(({ title, links }, indexTop) => (
 							<div style={{ flex: '1' }}>
 								<h5>{title}</h5>
-								<div style={{ display: 'flex', flexDirection: 'column' }}>
+								<div
+									style={{
+										display: 'flex',
+										fontSize: '0.9rem',
+										flexDirection: 'column',
+									}}
+								>
 									{links.map(({ title, href }, index) => (
 										<Link key={`link-${indexTop}-${title}-${index}`} href="/">
 											<a>{title}</a>

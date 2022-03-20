@@ -32,7 +32,7 @@ const HeroTitle = styled.h1`
 `;
 
 const HeroClaim = styled.p`
-	@media (max-width: 600px) {
+	/* @media (max-width: 600px) {
 		text-align: justify;
-	}
+	} */
 `;

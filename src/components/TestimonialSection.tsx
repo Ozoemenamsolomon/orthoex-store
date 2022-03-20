@@ -4,6 +4,7 @@ import { HeroComp as Hero } from './Hero';
 import Image from 'next/image';
 import styled from 'styled-components';
 import QuotationMark from '../assets/icons/quotation-mark.svg';
+import TestimonialBG from '../assets/images/testimonial-bg-2.jpg';
 
 const TestimonialSection: FC<{
 	testimony: string;
@@ -11,7 +12,7 @@ const TestimonialSection: FC<{
 	title: string;
 }> = ({ testimony, by, title }) => {
 	return (
-		<Hero colour="black" col center>
+		<Hero morePadding bg={TestimonialBG} colour="black" col center>
 			<SectionHeader first="TESTIMONIAL" second="Our Client Feedback" />
 
 			<TestimonialContainer>

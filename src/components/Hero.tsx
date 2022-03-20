@@ -10,6 +10,7 @@ type HeroCompProp = {
 	col?: boolean;
 	center?: boolean;
 	colour?: 'white' | 'black';
+	morePadding?: true;
 };
 
 export const HeroComp: FC<HeroCompProp> = ({
@@ -18,12 +19,14 @@ export const HeroComp: FC<HeroCompProp> = ({
 	col,
 	center,
 	colour = 'white',
+	morePadding = false,
 }) => {
 	return (
 		<HeroContainer>
 			<Hero
 				style={{
 					color: colour,
+					padding: morePadding ? '11em 0em;' : undefined,
 				}}
 			>
 				<Container
@@ -61,8 +64,9 @@ const HeroBg = styled(Image)`
 `;
 
 const Hero = styled.div`
+	--hero-padding: 4.5em 0em 2em 0em;
 	display: flex;
-	padding: 4.5em 0em 2em 0em;
+	padding: var(--hero-padding);
 	justify-content: center;
 
 	@media (max-width: 600px) {
