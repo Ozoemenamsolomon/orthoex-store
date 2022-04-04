@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { Container } from '../pages';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import orthoExLogo from '../assets/images/orthoex-logo.png';
 import React, { useEffect, useState } from 'react';
 import NavLink from './NavLink';
+import { Container } from './styled';
 
 interface HeaderProp {}
 

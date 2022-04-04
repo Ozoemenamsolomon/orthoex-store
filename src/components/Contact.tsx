@@ -1,5 +1,5 @@
-import { Container } from '../pages';
 import ContactForm from './ContactForm';
+import { Container } from './styled';
 
 const Contact = () => {
 	return (

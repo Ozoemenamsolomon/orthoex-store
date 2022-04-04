@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import React from 'react';
-import styled from 'styled-components';
 import AfterSales from '../assets/icons/after-sales-support-icon.png';
 import Composite from '../assets/icons/composite-icon.png';
 import Consultancy from '../assets/icons/consultancy-ion.png';
@@ -12,10 +11,13 @@ import HeaderBG from '../assets/images/header-background.png';
 import { CTA } from '../components/Header';
 import { HeroComp as Hero } from '../components/Hero';
 import HeroContent from '../components/HeroContent';
-import Layout from '../components/Layout';
 import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
 import SooSection from '../components/SooSection';
-import { PostCardsContainer, ServicesCards } from '../components/styled';
+import {
+	Container,
+	PostCardsContainer,
+	ServicesCards,
+} from '../components/styled';
 import TestimonialSection from '../components/TestimonialSection';
 import ValuesSection from '../components/ValuesSection';
 
@@ -41,7 +43,7 @@ type PostType = {
 const Home: NextPage = () => {
 	const findRep = () => {};
 	return (
-		<Layout>
+		<>
 			<Hero bg={HeaderBG}>
 				<HeroContent
 					title={'Your preferred<br />partner of choice'}
@@ -51,7 +53,7 @@ const Home: NextPage = () => {
 					cta={<CTA onClick={findRep}>Find a representative</CTA>}
 				/>
 			</Hero>
-			<Container style={{ margin: 'auto' }}>
+			<Container>
 				<SooSection>
 					<div
 						style={{
@@ -162,19 +164,8 @@ const Home: NextPage = () => {
 					</PostCardsContainer>
 				</SooSection>
 			</Container>
-		</Layout>
+		</>
 	);
 };
 
 export default Home;
-
-export const Container = styled.div`
-	max-width: 1200px;
-	width: 100%;
-	padding: 0 2rem;
-	@media (max-width: 600px) {
-		& {
-			padding: 0 1rem;
-		}
-	}
-`;

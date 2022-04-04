@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Container } from '../pages';
+import { Container } from './styled';
 
 type SOOSectionProp = {
 	color?: string;
-	container?: Boolean;
+	container?: false;
 	style?: React.CSSProperties;
 	header?: SectionHeaderProps;
 };
@@ -50,6 +50,7 @@ export const SectionHeader: FC<SectionHeaderProps> = ({ first, second }) => {
 					color: 'var(--oex-orange)',
 					fontWeight: 'bold',
 					textAlign: 'center',
+					display: 'block',
 				}}
 			>
 				{first}

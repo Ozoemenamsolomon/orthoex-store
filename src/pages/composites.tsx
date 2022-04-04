@@ -12,10 +12,13 @@ import safeReliable from '../assets/images/safe-and-reliable-icon_ImgID1.png';
 import { CTA } from '../components/Header';
 import { HeroComp as Hero } from '../components/Hero';
 import HeroContent from '../components/HeroContent';
-import Layout from '../components/Layout';
 import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
 import SooSection from '../components/SooSection';
-import { PostCardsContainer, ServicesCards } from '../components/styled';
+import {
+	Container,
+	PostCardsContainer,
+	ServicesCards,
+} from '../components/styled';
 import TestimonialSection from '../components/TestimonialSection';
 import helpIcon from '../assets/images/help-icon_ImgID1.png';
 import chatIcon from '../assets/images/chat-icon_ImgID1.png';
@@ -66,6 +69,26 @@ const expectancies: ServiceCardType[] = [
 	},
 ];
 
+const helps: ServiceCardType[] = [
+	{
+		description:
+			'Talk To A Customer Care Representative \n\n Mon-Fri: 9:00am-5:00pm',
+		image: phoneIcon,
+		cta: <CTA>DIAL NO.</CTA>,
+	},
+	{
+		description: 'Chat with a Product expert',
+		image: chatIcon,
+		cta: <CTA>LIVE CHAT</CTA>,
+	},
+	{
+		description:
+			'Find a list of answers to the mostPopular questions that are asked',
+		image: helpIcon,
+		cta: <CTA>ONLINE HELP</CTA>,
+	},
+];
+
 type PostType = {
 	image: {
 		url: string;
@@ -78,7 +101,7 @@ type PostType = {
 
 const Home: NextPage = () => {
 	return (
-		<Layout>
+		<>
 			<Hero bg={heroBG}>
 				<HeroContent
 					title={'We are your preferred <br/> partner of choice for quality!'}
@@ -106,7 +129,7 @@ const Home: NextPage = () => {
 				<SooSection>
 					<ServicesCards className="bigger">
 						{expectancies.map((quality) => (
-							<ServiceCard className="rounded" service={quality} />
+							<ServiceCard className="rounded no-animate" service={quality} />
 						))}
 					</ServicesCards>
 				</SooSection>
@@ -198,32 +221,9 @@ const Home: NextPage = () => {
 					</div>
 
 					<ServicesCards className="bigger">
-						<ServiceCard
-							service={{
-								description:
-									'Talk To A Customer Care Representative \n\n Mon-Fri: 9:00am-5:00pm',
-								image: phoneIcon,
-								cta: <CTA>DIAL NO.</CTA>,
-								title: undefined,
-							}}
-						></ServiceCard>
-						<ServiceCard
-							service={{
-								description: 'Chat with a Product expert',
-								image: chatIcon,
-								cta: <CTA>LIVE CHAT</CTA>,
-								title: undefined,
-							}}
-						></ServiceCard>
-						<ServiceCard
-							service={{
-								description:
-									'Find a list of answers to the mostPopular questions that are asked',
-								image: helpIcon,
-								cta: <CTA>ONLINE HELP</CTA>,
-								title: undefined,
-							}}
-						></ServiceCard>
+						{helps.map((quality) => (
+							<ServiceCard className="no-animate" service={quality} />
+						))}
 					</ServicesCards>
 				</SooSection>
 				<SooSection header={{ first: 'FEATURED', second: 'Articles' }}>
@@ -259,22 +259,11 @@ const Home: NextPage = () => {
 					</PostCardsContainer>
 				</SooSection>
 			</Container>
-		</Layout>
+		</>
 	);
 };
 
 export default Home;
-
-export const Container = styled.div`
-	max-width: 1200px;
-	width: 100%;
-	padding: 0 2rem;
-	@media (max-width: 600px) {
-		& {
-			padding: 0 1rem;
-		}
-	}
-`;
 
 const QualitiesSection = styled.section`
 	margin: 5rem 0;

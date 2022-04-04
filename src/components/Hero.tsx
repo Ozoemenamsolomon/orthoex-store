@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { Container } from '../pages';
 import Image from 'next/image';
 
 import BG from '../assets/images/website-backfround-image.jpg';
 import React, { FC } from 'react';
+import { Container } from './styled';
 
 type HeroCompProp = {
 	bg?: StaticImageData;

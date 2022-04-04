@@ -1,14 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container } from '.';
+import { Container } from '../components/styled';
 import { HeroComp } from '../components/Hero';
-import Layout from '../components/Layout';
 import ProductCard from '../components/ProductCard';
 import { productsData } from '../data/productsData';
 
 const products = () => {
 	return (
-		<Layout>
+		<>
 			<HeroComp>
 				<HeroTitle>Products</HeroTitle>
 			</HeroComp>
@@ -24,7 +23,7 @@ const products = () => {
 					/>
 				))}
 			</ProductCardsSection>
-		</Layout>
+		</>
 	);
 };
 

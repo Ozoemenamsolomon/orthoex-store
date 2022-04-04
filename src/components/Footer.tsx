@@ -26,7 +26,7 @@ const Footer = () => {
 				{ title: 'About us', href: '#' },
 				{ title: 'Careers', href: '#' },
 				{ title: 'Events', href: '#' },
-				{ title: 'Contact us', href: '#' },
+				{ title: 'Contact us', href: '/contact' },
 			],
 		},
 		{
@@ -74,7 +74,7 @@ const Footer = () => {
 					{ title: 'About us', href: '#' },
 					{ title: 'Careers', href: '#' },
 					{ title: 'Events', href: '#' },
-					{ title: 'Contact us', href: '#' },
+					{ title: 'Contact us', href: '/contact' },
 				],
 			},
 			{
@@ -149,7 +149,10 @@ const Footer = () => {
 									}}
 								>
 									{links.map(({ title, href }, index) => (
-										<Link key={`link-${indexTop}-${title}-${index}`} href="/">
+										<Link
+											key={`link-${indexTop}-${title}-${index}`}
+											href={href}
+										>
 											<a>{title}</a>
 										</Link>
 									))}
