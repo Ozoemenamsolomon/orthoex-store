@@ -18,7 +18,7 @@ export const ServicesCards = styled.div<{ minWidth?: string }>`
 		}
 	}
 
-	& > div:first-child {
+	& > div.wider:first-child {
 		padding: 0.8rem;
 	}
 	@media (min-width: 600px) {

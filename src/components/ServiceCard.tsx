@@ -39,7 +39,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 					>
 						<Image objectFit="contain" layout="fill" src={image} />
 					</ImageContainer>
-					{title && <h3>{title}</h3>}
+					{title && <p style={{ fontWeight: 'bold' }}>{title}</p>}
 					<p>{description}</p>
 				</ImageTitleContainer>
 				{cta}

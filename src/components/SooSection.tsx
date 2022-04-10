@@ -9,6 +9,14 @@ type SOOSectionProp = {
 	header?: SectionHeaderProps;
 };
 
+// const twoColumnsStyle = {
+// 	gridTemplateRows: 'auto',
+// 	display: 'grid',
+// 	gap: '2rem',
+// 	gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
+// 	alignItems: 'center',
+// };
+
 const SooSection: FC<SOOSectionProp> = ({
 	children,
 	color,

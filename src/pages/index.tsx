@@ -54,35 +54,33 @@ const Home: NextPage = () => {
 				/>
 			</Hero>
 			<Container>
-				<SooSection>
-					<div
-						style={{
-							display: 'grid',
-							gap: '2rem',
-							gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
-							alignItems: 'center',
-						}}
-					>
-						<div>
-							<h2>Our commitment to quality ensures your peace of mind</h2>
-							<p>
-								At OrthoEx Nigeria Limited, we aim at the highest standard of
-								quality in everything we do. This also includes providing
-								quality products and technologies that are tailored to the
-								requirements of our customers in the health care and
-								manufacturing industries, enabling us to satisfy their needs and
-								helping them reach their business goals.
-							</p>
-						</div>
-						<ServicesCards>
-							{services.map((service, index) => (
-								<ServiceCard
-									key={`service-${service.description}-${index}`}
-									service={service}
-								/>
-							))}
-						</ServicesCards>
+				<SooSection
+					style={{
+						display: 'grid',
+						gap: '2rem',
+						gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
+						alignItems: 'center',
+					}}
+				>
+					<div>
+						<h2>Our commitment to quality ensures your peace of mind</h2>
+						<p>
+							At OrthoEx Nigeria Limited, we aim at the highest standard of
+							quality in everything we do. This also includes providing quality
+							products and technologies that are tailored to the requirements of
+							our customers in the health care and manufacturing industries,
+							enabling us to satisfy their needs and helping them reach their
+							business goals.
+						</p>
 					</div>
+					<ServicesCards>
+						{services.map((service, index) => (
+							<ServiceCard
+								key={`service-${service.description}-${index}`}
+								service={service}
+							/>
+						))}
+					</ServicesCards>
 				</SooSection>
 				<ValuesSection />
 				<SooSection>
