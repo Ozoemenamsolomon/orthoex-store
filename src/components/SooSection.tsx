@@ -4,46 +4,44 @@ import { Container } from './styled';
 
 type SOOSectionProp = {
 	color?: string;
-	container?: false;
 	style?: React.CSSProperties;
 	header?: SectionHeaderProps;
+	twoColumns?: boolean;
 };
 
-// const twoColumnsStyle = {
-// 	gridTemplateRows: 'auto',
-// 	display: 'grid',
-// 	gap: '2rem',
-// 	gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
-// 	alignItems: 'center',
-// };
+const twoColumnsStyle = {
+	gridTemplateRows: 'auto',
+	display: 'grid',
+	gap: '2rem',
+	gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
+	alignItems: 'center',
+};
 
 const SooSection: FC<SOOSectionProp> = ({
 	children,
 	color,
-	container = true,
 	style,
 	header,
+	twoColumns,
 }) => {
 	return (
-		<SOOSectionContainer
-			style={!container ? style : { flexDirection: 'column' }}
-			color={color}
-		>
+		<SOOSectionContainer color={color}>
 			{header && <SectionHeader {...header} />}
-			{container ? (
-				<Container style={container ? style : undefined}>{children}</Container>
-			) : (
-				<>{children}</>
-			)}
+			<Container style={!twoColumns ? style : { ...style, ...twoColumnsStyle }}>
+				{children}
+			</Container>
 		</SOOSectionContainer>
 	);
 };
 
 export default SooSection;
 
-const SOOSectionContainer = styled('section')<{ color?: String }>`
+const SOOSectionContainer = styled('section')<{
+	color?: String;
+}>`
 	background-color: ${(prop) => prop.color};
 	margin: 5rem 0;
+	flex-direction: column;
 	@media (min-width: 600px) {
 		display: flex;
 	}

@@ -54,14 +54,7 @@ const Home: NextPage = () => {
 				/>
 			</Hero>
 			<Container>
-				<SooSection
-					style={{
-						display: 'grid',
-						gap: '2rem',
-						gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
-						alignItems: 'center',
-					}}
-				>
+				<SooSection twoColumns>
 					<div>
 						<h2>Our commitment to quality ensures your peace of mind</h2>
 						<p>

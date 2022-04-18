@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import React from 'react';
-import styled from 'styled-components';
 import calculator from '../assets/images/Calculator-icon_ImgID1.png';
 import heroBG from '../assets/images/composite-hero-background.jpg';
 import composite from '../assets/images/composite-material-icon_ImgID1.png';
@@ -20,9 +19,8 @@ import {
 	ServicesCards,
 } from '../components/styled';
 import TestimonialSection from '../components/TestimonialSection';
-import helpIcon from '../assets/images/help-icon_ImgID1.png';
-import chatIcon from '../assets/images/chat-icon_ImgID1.png';
-import phoneIcon from '../assets/images/phone-icon_ImgID1.png';
+import StayTunedSection from '../components/sections/StayTunedSection';
+import NeedHelpSection from '../components/sections/NeedHelpSection';
 
 const qualities: ServiceCardType[] = [
 	{
@@ -69,26 +67,6 @@ const expectancies: ServiceCardType[] = [
 	},
 ];
 
-const helps: ServiceCardType[] = [
-	{
-		description:
-			'Talk To A Customer Care Representative \n\n Mon-Fri: 9:00am-5:00pm',
-		image: phoneIcon,
-		cta: <CTA>DIAL NO.</CTA>,
-	},
-	{
-		description: 'Chat with a Product expert',
-		image: chatIcon,
-		cta: <CTA>LIVE CHAT</CTA>,
-	},
-	{
-		description:
-			'Find a list of answers to the mostPopular questions that are asked',
-		image: helpIcon,
-		cta: <CTA>ONLINE HELP</CTA>,
-	},
-];
-
 type PostType = {
 	image: {
 		url: string;
@@ -111,10 +89,10 @@ const Home: NextPage = () => {
 					cta={<CTA>Contact us</CTA>}
 				/>
 			</Hero>
-			<Container style={{ margin: 'auto' }}>
-				<QualitiesSection>
+			<Container>
+				<SooSection twoColumns>
 					<h2>
-						We empower your creativity with quality productsand expert advise
+						We empower your creativity with quality products and expert advise
 					</h2>
 					<ServicesCards minWidth="200px">
 						{qualities.map((quality) => (
@@ -125,7 +103,7 @@ const Home: NextPage = () => {
 							/>
 						))}
 					</ServicesCards>
-				</QualitiesSection>
+				</SooSection>
 				<SooSection>
 					<ServicesCards className="bigger">
 						{expectancies.map((quality) => (
@@ -194,38 +172,9 @@ const Home: NextPage = () => {
 					by={'Maxwell Okoro'}
 					title={'Prosthetist / orthothist'}
 				/>
-				<SooSection
-					style={{ display: 'flex', columnGap: '6rem', flexWrap: 'wrap' }}
-				>
-					<div style={{ flex: '1', minWidth: '200px' }}>
-						<h2>Stay tuned!</h2>
-						<p>
-							Sign up to be the first to know about new products, workshops and
-							special offers
-						</p>
-					</div>
+				<StayTunedSection />
+				<NeedHelpSection />
 
-					<SubscribeForm>
-						<input type="tel" placeholder="Your Whatsapp Number" />
-						<input type="email" placeholder="Your email" />
-						<CTA type="submit">Subscribe</CTA>
-					</SubscribeForm>
-				</SooSection>
-
-				<SooSection>
-					<div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-						<h2>Do you Need help?</h2>
-						<p>
-							We have several resources available to help you with our products
-						</p>
-					</div>
-
-					<ServicesCards className="bigger">
-						{helps.map((quality) => (
-							<ServiceCard className="no-animate" service={quality} />
-						))}
-					</ServicesCards>
-				</SooSection>
 				<SooSection header={{ first: 'FEATURED', second: 'Articles' }}>
 					<PostCardsContainer>
 						{Array<PostType>(3)
@@ -264,27 +213,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-const QualitiesSection = styled.section`
-	margin: 5rem 0;
-	@media (min-width: 900px) {
-		display: flex;
-		align-items: center;
-		gap: 2rem;
-		& > * {
-			flex: 1;
-		}
-	}
-`;
-
-const SubscribeForm = styled.form`
-	display: flex;
-	gap: 1rem;
-	flex: 1;
-	flex-direction: column;
-	max-width: 350px;
-
-	input {
-		padding: 0.51rem;
-	}
-`;
