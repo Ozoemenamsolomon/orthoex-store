@@ -31,6 +31,99 @@ const qualities: ServiceCardType[] = [
 	},
 ];
 
+const events = [
+	{
+		startDateTimeString: '2022-03-03T13:10',
+		endDateTimeString: '2022-03-07T13:10',
+		location: 'Ikeja,Lagos',
+		courseTitle: 'Resin art workshop',
+		instructor: 'Ciroma Chukwuma',
+		refreshment: true,
+		starterPack: true,
+		spots: 3,
+		registeredParticipant: 12,
+		price: 'N10,000',
+		eventDetails: `
+<h3>About the Workshop</h3>
+					<p>
+						In this workshop, the anatomical basics of modeling are taught on
+						the basis of the eye, nose and ear. The right choice of modelling
+						clay will be another component. Important tools and corresponding
+						techniques are discussed.At the end of the seminar, a certificate
+						of participation will be handed over
+					</p>
+					<h3>About the Workshop</h3>
+					<ul>
+						<li>Attended the school of fine arts and design in berlin</li>
+						<li>Founded his own miniature label "savage feget minis"</li>
+						<li>
+							In 2012 - has since worked for leading companies in the gaming
+							industry
+						</li>
+					</ul>`,
+	},
+	{
+		startDateTimeString: '2022-03-03T13:10',
+		endDateTimeString: '2022-03-07T13:10',
+		location: 'Ikeja,Lagos',
+		courseTitle: 'Resin art workshop',
+		instructor: 'Ciroma Chukwuma',
+		refreshment: true,
+		starterPack: true,
+		spots: 3,
+		registeredParticipant: 12,
+		price: 'N10,000',
+		eventDetails: `
+<h3>About the Workshop</h3>
+					<p>
+						In this workshop, the anatomical basics of modeling are taught on
+						the basis of the eye, nose and ear. The right choice of modelling
+						clay will be another component. Important tools and corresponding
+						techniques are discussed.At the end of the seminar, a certificate
+						of participation will be handed over
+					</p>
+					<h3>About the Workshop</h3>
+					<ul>
+						<li>Attended the school of fine arts and design in berlin</li>
+						<li>Founded his own miniature label "savage feget minis"</li>
+						<li>
+							In 2012 - has since worked for leading companies in the gaming
+							industry
+						</li>
+					</ul>`,
+	},
+	{
+		startDateTimeString: '2022-03-03T13:10',
+		endDateTimeString: '2022-03-07T13:10',
+		location: 'Ikeja,Lagos',
+		courseTitle: 'Resin art workshop',
+		instructor: 'Ciroma Chukwuma',
+		refreshment: true,
+		starterPack: true,
+		spots: 3,
+		registeredParticipant: 12,
+		price: 'N10,000',
+		eventDetails: `
+<h3>About the Workshop</h3>
+					<p>
+						In this workshop, the anatomical basics of modeling are taught on
+						the basis of the eye, nose and ear. The right choice of modelling
+						clay will be another component. Important tools and corresponding
+						techniques are discussed.At the end of the seminar, a certificate
+						of participation will be handed over
+					</p>
+					<h3>About the Workshop</h3>
+					<ul>
+						<li>Attended the school of fine arts and design in berlin</li>
+						<li>Founded his own miniature label "savage feget minis"</li>
+						<li>
+							In 2012 - has since worked for leading companies in the gaming
+							industry
+						</li>
+					</ul>`,
+	},
+];
+
 const Trainings = () => {
 	return (
 		<>
@@ -64,8 +157,14 @@ const Trainings = () => {
 					</ServicesCards>
 				</SooSection>
 				<h1>Open Events</h1>
-				<EventCard />
-				<EventCard disabled />
+				{events.map((trainingEvent, eventIndex) => (
+					<EventCard
+						event={trainingEvent}
+						disabled={eventIndex % 2 !== 0 ? true : undefined}
+					/>
+				))}
+				{/* <EventCard />
+				<EventCard disabled /> */}
 				<StayTunedSection />
 				<NeedHelpSection />
 			</Container>
