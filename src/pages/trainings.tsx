@@ -10,6 +10,7 @@ import SooSection from '../components/SooSection';
 import HeroContent from '../components/HeroContent';
 import { HeroComp as Hero } from '../components/Hero';
 import { CTA } from '../components/Header';
+import EventCard from '../components/EventCard';
 
 const qualities: ServiceCardType[] = [
 	{
@@ -63,6 +64,8 @@ const Trainings = () => {
 					</ServicesCards>
 				</SooSection>
 				<h1>Open Events</h1>
+				<EventCard />
+				<EventCard disabled />
 				<StayTunedSection />
 				<NeedHelpSection />
 			</Container>
