@@ -95,8 +95,9 @@ const Home: NextPage = () => {
 						We empower your creativity with quality products and expert advise
 					</h2>
 					<ServicesCards minWidth="200px">
-						{qualities.map((quality) => (
+						{qualities.map((quality, index) => (
 							<ServiceCard
+								key={index}
 								className="no-animate"
 								imagePadding
 								service={quality}
@@ -106,8 +107,12 @@ const Home: NextPage = () => {
 				</SooSection>
 				<SooSection>
 					<ServicesCards className="bigger">
-						{expectancies.map((quality) => (
-							<ServiceCard className="rounded no-animate" service={quality} />
+						{expectancies.map((quality, index) => (
+							<ServiceCard
+								key={index}
+								className="rounded no-animate"
+								service={quality}
+							/>
 						))}
 					</ServicesCards>
 				</SooSection>
@@ -146,8 +151,8 @@ const Home: NextPage = () => {
 								excerpt:
 									'Lorem ipsum dolor sit amet consectetur adipi sicing elit. Expedita, nihil.',
 							})
-							.map(({ image: { url, alt }, time, excerpt, link }) => (
-								<div style={{ flex: '1' }}>
+							.map(({ image: { url, alt }, time, excerpt, link }, index) => (
+								<div key={index} style={{ flex: '1' }}>
 									<a
 										style={{
 											flexDirection: 'column',
@@ -188,8 +193,8 @@ const Home: NextPage = () => {
 								excerpt:
 									'Lorem ipsum dolor sit amet consectetur adipi sicing elit. Expedita, nihil.',
 							})
-							.map(({ image: { url, alt }, time, excerpt, link }) => (
-								<div style={{ flex: '1' }}>
+							.map(({ image: { url, alt }, time, excerpt, link }, index) => (
+								<div key={index} style={{ flex: '1' }}>
 									<a
 										style={{
 											flexDirection: 'column',

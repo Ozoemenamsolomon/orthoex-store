@@ -11,8 +11,9 @@ const formatDate: (dateTime: Date) => string = (dateTime) => {
 
 const formatTime: (dateTime: Date) => string = (dateTime) => {
 	return dateTime.toLocaleTimeString('en-GB', {
-		formatMatcher: 'basic',
 		hour12: true,
+		hour: '2-digit',
+		minute: '2-digit',
 	});
 };
 

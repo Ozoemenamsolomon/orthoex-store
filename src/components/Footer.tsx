@@ -139,7 +139,7 @@ const Footer = () => {
 						}}
 					>
 						{footerLinks.map(({ title, links }, indexTop) => (
-							<div style={{ flex: '1' }}>
+							<div key={indexTop} style={{ flex: '1' }}>
 								<h5>{title}</h5>
 								<div
 									style={{

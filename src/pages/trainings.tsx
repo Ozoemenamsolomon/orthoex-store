@@ -147,8 +147,9 @@ const Trainings = () => {
 						</p>
 					</div>
 					<ServicesCards minWidth="200px">
-						{qualities.map((quality) => (
+						{qualities.map((quality, index) => (
 							<ServiceCard
+								key={index}
 								className="no-animate"
 								imagePadding
 								service={quality}
@@ -159,12 +160,11 @@ const Trainings = () => {
 				<h1>Open Events</h1>
 				{events.map((trainingEvent, eventIndex) => (
 					<EventCard
+						key={eventIndex}
 						event={trainingEvent}
 						disabled={eventIndex % 2 !== 0 ? true : undefined}
 					/>
 				))}
-				{/* <EventCard />
-				<EventCard disabled /> */}
 				<StayTunedSection />
 				<NeedHelpSection />
 			</Container>

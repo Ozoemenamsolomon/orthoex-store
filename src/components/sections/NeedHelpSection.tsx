@@ -35,8 +35,8 @@ const NeedHelpSection = () => {
 			</div>
 
 			<ServicesCards className="bigger">
-				{helps.map((quality) => (
-					<ServiceCard className="no-animate" service={quality} />
+				{helps.map((help, index) => (
+					<ServiceCard key={index} className="no-animate" service={help} />
 				))}
 			</ServicesCards>
 		</SooSection>

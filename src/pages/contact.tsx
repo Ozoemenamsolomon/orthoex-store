@@ -87,8 +87,9 @@ const Contact = () => {
 						You can contact us through any of this means
 					</h2>
 					<ServicesCards>
-						{contacts.map((quality) => (
+						{contacts.map((quality, index) => (
 							<ServiceCard
+								key={index}
 								imagePadding
 								className="no-animate"
 								service={quality}
@@ -145,8 +146,9 @@ const Contact = () => {
 				</SooSection>
 				<SooSection>
 					<ServicesCards>
-						{connects.map((quality) => (
+						{connects.map((quality, index) => (
 							<ServiceCard
+								key={index}
 								imagePadding
 								className="no-animate"
 								service={quality}
