@@ -12,7 +12,7 @@ export type EventType = {
 	starterPack: boolean;
 	spots: number;
 	registeredParticipant: number;
-	price: string;
+	price: number;
 	eventDetails: string;
 };
 

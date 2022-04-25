@@ -42,7 +42,7 @@ const events = [
 		starterPack: true,
 		spots: 3,
 		registeredParticipant: 12,
-		price: 'N10,000',
+		price: 5_000_000,
 		eventDetails: `
 <h3>About the Workshop</h3>
 					<p>
@@ -72,7 +72,7 @@ const events = [
 		starterPack: true,
 		spots: 3,
 		registeredParticipant: 12,
-		price: 'N10,000',
+		price: 20_000,
 		eventDetails: `
 <h3>About the Workshop</h3>
 					<p>
@@ -102,7 +102,7 @@ const events = [
 		starterPack: true,
 		spots: 3,
 		registeredParticipant: 12,
-		price: 'N10,000',
+		price: 10_000,
 		eventDetails: `
 <h3>About the Workshop</h3>
 					<p>

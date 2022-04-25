@@ -17,6 +17,13 @@ const formatTime: (dateTime: Date) => string = (dateTime) => {
 	});
 };
 
+const formatPrice: (price: number) => string = (price) => {
+	return Intl.NumberFormat('en-NG', {
+		style: 'currency',
+		currency: 'NGN',
+	}).format(price);
+};
+
 const EventMetaData: FC<EventType & { disabled: boolean }> = ({
 	startDateTimeString,
 	endDateTimeString,
@@ -78,7 +85,7 @@ const EventMetaData: FC<EventType & { disabled: boolean }> = ({
 						<br />
 					</>
 				)}
-				{price}
+				{formatPrice(price)}
 				<br />
 				<CTA disabled={disabled}>{disabled ? 'Sold Out' : 'Book Now'}</CTA>
 				<br />
