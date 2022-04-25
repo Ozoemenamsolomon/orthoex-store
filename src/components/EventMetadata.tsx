@@ -1,28 +1,8 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { formatDate, formatPrice, formatTime } from '../utils';
 import { EventType } from './EventCard';
 import { CTA } from './Header';
-
-const formatDate: (dateTime: Date) => string = (dateTime) => {
-	return dateTime.toLocaleDateString('en-GB', {
-		dateStyle: 'long',
-	});
-};
-
-const formatTime: (dateTime: Date) => string = (dateTime) => {
-	return dateTime.toLocaleTimeString('en-GB', {
-		hour12: true,
-		hour: '2-digit',
-		minute: '2-digit',
-	});
-};
-
-const formatPrice: (price: number) => string = (price) => {
-	return Intl.NumberFormat('en-NG', {
-		style: 'currency',
-		currency: 'NGN',
-	}).format(price);
-};
 
 const EventMetaData: FC<EventType & { disabled: boolean }> = ({
 	startDateTimeString,
