@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import EventMetaData from './EventMetadata';
 
-type EventType = {
+export type EventType = {
 	startDateTimeString: string;
 	endDateTimeString: string;
 	location: string;
@@ -24,7 +24,7 @@ const EventCard: FC<{
 		<CardContainer className={disabled ? 'disabled' : ''}>
 			<img src="" alt="" />
 			<CardContent>
-				<EventMetaData {...{ ...event, disabled }} />
+				<EventMetaData {...event} disabled={disabled} />
 
 				<EventDetailsAccordion tabIndex={disabled ? -1 : undefined}>
 					<summary>

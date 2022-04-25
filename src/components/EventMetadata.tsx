@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { EventType } from './EventCard';
 import { CTA } from './Header';
 
 const formatDate: (dateTime: Date) => string = (dateTime) => {
@@ -15,19 +16,7 @@ const formatTime: (dateTime: Date) => string = (dateTime) => {
 	});
 };
 
-const EventMetaData: FC<{
-	startDateTimeString: string;
-	endDateTimeString: string;
-	location: string;
-	courseTitle: string;
-	instructor: string;
-	refreshment: boolean;
-	starterPack: boolean;
-	registeredParticipant: number;
-	disabled: boolean;
-	spots: number;
-	price: string;
-}> = ({
+const EventMetaData: FC<EventType & { disabled: boolean }> = ({
 	startDateTimeString,
 	endDateTimeString,
 	location,
