@@ -40,7 +40,7 @@ const events = [
 		instructor: 'Ciroma Chukwuma',
 		refreshment: true,
 		starterPack: true,
-		spots: 3,
+		spotsLeft: 3,
 		registeredParticipant: 12,
 		price: 5_000_000,
 		eventDetails: `
@@ -70,7 +70,7 @@ const events = [
 		instructor: 'Ciroma Chukwuma',
 		refreshment: true,
 		starterPack: true,
-		spots: 3,
+		spotsLeft: 3,
 		registeredParticipant: 12,
 		price: 20_000,
 		eventDetails: `
@@ -100,7 +100,7 @@ const events = [
 		instructor: 'Ciroma Chukwuma',
 		refreshment: true,
 		starterPack: true,
-		spots: 3,
+		spotsLeft: 3,
 		registeredParticipant: 12,
 		price: 10_000,
 		eventDetails: `

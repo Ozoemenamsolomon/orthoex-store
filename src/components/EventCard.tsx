@@ -10,7 +10,7 @@ export type EventType = {
 	instructor: string;
 	refreshment: boolean;
 	starterPack: boolean;
-	spots: number;
+	spotsLeft: number;
 	registeredParticipant: number;
 	price: number;
 	eventDetails: string;
@@ -28,7 +28,13 @@ const EventCard: FC<{
 
 				<EventDetailsAccordion tabIndex={disabled ? -1 : undefined}>
 					<summary>
-						Please note our COVID-19 Protocol &amp; social distancing measures
+						<div>
+							<span>
+								Please note our COVID-19 Protocol &amp; social distancing
+								measures
+							</span>
+							<button>read more</button>
+						</div>
 					</summary>
 					<div
 						style={{ margin: '1rem' }}
@@ -60,15 +66,25 @@ const CardContent = styled.div`
 
 const EventDetailsAccordion = styled.details`
 	& > summary::marker {
+		content: inherit;
 		margin-right: 4rem;
 	}
 	&[open] > summary::marker {
-		content: 'minimise';
 	}
 	&:not([open]) > summary::marker {
-		content: 'maximise';
 	}
 	> summary {
 		cursor: pointer;
+		> div {
+			display: inline-flex;
+			width: 85%;
+			align-items: center;
+			justify-content: space-between;
+			margin-left: auto;
+			> button {
+				pointer-events: none;
+			}
+		}
+		/* */
 	}
 `;

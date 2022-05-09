@@ -14,7 +14,7 @@ const EventMetaData: FC<EventType & { disabled: boolean }> = ({
 	starterPack,
 	registeredParticipant,
 	disabled,
-	spots,
+	spotsLeft,
 	price,
 }) => {
 	const startDateTime = new Date(startDateTimeString);
@@ -57,19 +57,17 @@ const EventMetaData: FC<EventType & { disabled: boolean }> = ({
 				</div>
 			</CardMetaDataLeft>
 			<CardMetaDataRight>
-				{registeredParticipant} Participants
-				<br />
+				<div>{registeredParticipant} Participants</div>
 				{!disabled && (
-					<>
-						{spots} Spot{spots > 1 && 's'} Remaining!
-						<br />
-					</>
+					<div>
+						{spotsLeft} Spot{spotsLeft > 1 && 's'} Remaining!
+					</div>
 				)}
-				{formatPrice(price)}
-				<br />
-				<CTA disabled={disabled}>{disabled ? 'Sold Out' : 'Book Now'}</CTA>
-				<br />
-				Speak With The Event Team
+				<div>{formatPrice(price)}</div>
+				<div>
+					<CTA disabled={disabled}>{disabled ? 'Sold Out' : 'Book Now'}</CTA>
+				</div>
+				<div>Speak With The Event Team</div>
 			</CardMetaDataRight>
 		</EventMetadataContainer>
 	);
@@ -83,7 +81,12 @@ const EventMetadataContainer = styled.div`
 	flex-wrap: wrap;
 `;
 const CardMetaDataLeft = styled.div``;
-const CardMetaDataRight = styled.div``;
+const CardMetaDataRight = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+`;
 
 const DateContainer = styled.div`
 	display: flex;
