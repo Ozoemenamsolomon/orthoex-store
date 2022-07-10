@@ -1,13 +1,14 @@
 import type { NextPage } from 'next';
+import Image from 'next/image';
 import React from 'react';
-import calculator from '../assets/images/Calculator-icon_ImgID1.png';
+// import calculator from '../assets/images/Calculator-icon_ImgID1.png';
+// import newLevel from '../assets/images/new-level-icon_ImgID1.png';
+// import safeReliable from '../assets/images/safe-and-reliable-icon_ImgID1.png';
 import heroBG from '../assets/images/composite-hero-background.jpg';
-import composite from '../assets/images/composite-material-icon_ImgID1.png';
-import durable from '../assets/images/durable-icon_ImgID1.png';
-import quality from '../assets/images/high-quality-icon_ImgID1.png';
-import nigeria from '../assets/images/map-icon_ImgID1.png';
-import newLevel from '../assets/images/new-level-icon_ImgID1.png';
-import safeReliable from '../assets/images/safe-and-reliable-icon_ImgID1.png';
+// import composite from '../assets/images/composite-material-icon_ImgID1.png';
+// import durable from '../assets/images/durable-icon_ImgID1.png';
+// import quality from '../assets/images/high-quality-icon_ImgID1.png';
+// import nigeria from '../assets/images/map-icon_ImgID1.png';
 import { CTA } from '../components/Header';
 import { HeroComp as Hero } from '../components/Hero';
 import HeroContent from '../components/HeroContent';
@@ -21,6 +22,15 @@ import {
 import TestimonialSection from '../components/TestimonialSection';
 import StayTunedSection from '../components/sections/StayTunedSection';
 import NeedHelpSection from '../components/sections/NeedHelpSection';
+import highPerformanceIcon from '../assets/new/icons/high-performance.svg';
+import handShake from '../assets/new/icons/handshake.svg';
+import calculator from '../assets/new/icons/calculate.svg';
+import product1 from '../assets/new/images/product1.jpg';
+import composite from '../assets/new/icons/composite.svg';
+import quality from '../assets/new/icons/quality.svg';
+import durable from '../assets/new/icons/durable.svg';
+import nigeria from '../assets/new/icons/nigeria.svg';
+import deliveryVan from '../assets/new/icons/delivery-van.svg';
 
 const qualities: ServiceCardType[] = [
 	{
@@ -46,24 +56,24 @@ const qualities: ServiceCardType[] = [
 const expectancies: ServiceCardType[] = [
 	{
 		description:
-			'We are committed to delivering superior composite materials that you can trust for your craft. Take advantage of our high quality products.',
-		image: newLevel,
-		title: 'Experience a new level of performance',
-		cta: <CTA>LEARN MORE</CTA>,
+			'We are committed to delivering superior composite materials that you can trust for your craft. Take advantage of our high quality products',
+		image: highPerformanceIcon,
+		cta: <CTA>View products</CTA>,
+		title: undefined,
 	},
 	{
 		description:
-			'With our safe and reliable composite solutions, you can make a wide range of stronger,lighter and tougher products',
-		image: safeReliable,
-		title: 'Safe and reliable',
-		cta: <CTA>LEARN MORE</CTA>,
+			'With our safe and reliable composite solutions, you can make a wide range of stronger, lighter and tougher products',
+		image: handShake,
+		cta: <CTA>Shop now</CTA>,
+		title: undefined,
 	},
 	{
 		description:
-			'Use our resin calculator to estimate the amount of epoxy resin you will need for your projects',
+			'Use our resin calculator to estimate the amount of epoxy resin you will need for your projects.',
 		image: calculator,
-		title: 'How much epoxy do I need?',
-		cta: <CTA>TRY IT</CTA>,
+		cta: <CTA>Calculate your resin</CTA>,
+		title: undefined,
 	},
 ];
 
@@ -77,7 +87,7 @@ type PostType = {
 	excerpt: string;
 };
 
-const Home: NextPage = () => {
+const CompositePage: NextPage = () => {
 	return (
 		<>
 			<Hero bg={heroBG}>
@@ -90,7 +100,57 @@ const Home: NextPage = () => {
 				/>
 			</Hero>
 			<Container>
-				<SooSection twoColumns>
+				<SooSection>
+					<h2>
+						Experience a new level of performance with our safe and reliable
+						products
+					</h2>
+					<ServicesCards>
+						{expectancies.map((quality, index) => (
+							<ServiceCard
+								key={index}
+								imagePadding
+								className="no-animate"
+								service={quality}
+							/>
+						))}
+					</ServicesCards>
+				</SooSection>
+				<SooSection>
+					<h2>Which of our product vertical is relevant for you?</h2>
+					<p>
+						Take full advantage of our expert knowledge and growing product
+						portfolio in these dormains for your specific field of application:
+					</p>
+					<div
+						style={{
+							display: 'grid',
+							gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))',
+							gap: '1rem',
+						}}
+					>
+						{Array(10)
+							.fill(0)
+							.map((_, index) => (
+								<div
+									style={{
+										border: '1px solid red',
+										borderRadius: '5px',
+										display: 'flex',
+										flexDirection: 'column',
+										alignItems: 'center',
+										position: 'relative',
+									}}
+									key={index}
+								>
+									<p>Cat title</p>
+									<Image src={product1} alt="placeholder" />
+								</div>
+							))}
+					</div>
+				</SooSection>
+
+				<SooSection>
 					<h2>
 						We empower your creativity with quality products and expert advise
 					</h2>
@@ -105,15 +165,26 @@ const Home: NextPage = () => {
 						))}
 					</ServicesCards>
 				</SooSection>
-				<SooSection>
-					<ServicesCards className="bigger">
-						{expectancies.map((quality, index) => (
-							<ServiceCard
-								key={index}
-								className="rounded no-animate"
-								service={quality}
-							/>
-						))}
+				<SooSection
+					style={{
+						backgroundColor: 'var(--oex-orange)',
+					}}
+				>
+					<ServicesCards>
+						{Array(3)
+							.fill(0)
+							.map((_, index) => (
+								<ServiceCard
+									imagePadding
+									className="no-animate"
+									key={`e-comerce-${index}`}
+									service={{
+										description: 'Shipped same day',
+										image: deliveryVan,
+										title: 'Order by 12PM',
+									}}
+								/>
+							))}
 					</ServicesCards>
 				</SooSection>
 				<SooSection
@@ -217,4 +288,4 @@ const Home: NextPage = () => {
 	);
 };
 
-export default Home;
+export default CompositePage;

@@ -48,8 +48,10 @@ const ProductCard: React.FC<ProductCardProp> = ({
 			<Content>
 				<Titel>{title}</Titel>
 				<Price>
-					<DoubleStrikeThrough>N</DoubleStrikeThrough>
-					{Number(price)}.00
+					{Intl.NumberFormat('en-NG', {
+						style: 'currency',
+						currency: 'NGN',
+					}).format(Number(price))}
 				</Price>
 				<p className="description">{description}</p>
 				<CTAMod onClick={handleProductPurchase}>Purchase product &rarr;</CTAMod>
@@ -102,7 +104,7 @@ const Titel = styled.h3`
 const Price = styled.p`
 	margin: 0;
 `;
-const DoubleStrikeThrough = styled.span`
-	text-decoration: line-through;
-	text-decoration-style: double;
-`;
+// const DoubleStrikeThrough = styled.span`
+// 	text-decoration: line-through;
+// 	text-decoration-style: double;
+// `;
