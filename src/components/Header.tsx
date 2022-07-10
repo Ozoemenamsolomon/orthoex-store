@@ -1,21 +1,29 @@
-import styled from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
+import styled from 'styled-components';
 
-import orthoExLogo from '../assets/images/orthoex-logo.png';
 import React, { useEffect, useState } from 'react';
+import orthoExLogo from '../assets/images/orthoex-logo-white.png';
 import NavLink from './NavLink';
 import { Container } from './styled';
+import searchIcon from '../assets/new/icons/search.svg';
+import accountIcon from '../assets/new/icons/account.svg';
+import cartIcon from '../assets/new/icons/shopping-cart.svg';
 
 interface HeaderProp {}
 
 const navLinks = [
 	{ name: 'Home', to: '/' },
-	{ name: 'Orthopaedics', to: '/orthopaedics' },
 	{ name: 'Composites', to: '/composites' },
+	{ name: 'Orthopaedics', to: '/orthopaedics' },
 	{ name: 'About us', to: '/about' },
 	{ name: 'Trainings', to: '/trainings' },
 	{ name: 'Careers', to: '/careers' },
+];
+const rightNavLinks = [
+	{ name: 'Search', to: '/search', icon: searchIcon },
+	{ name: 'Orthopaedics', to: '/account', icon: accountIcon },
+	{ name: 'Composites', to: '/cart', icon: cartIcon },
 ];
 
 const Header: React.FC<HeaderProp> = () => {
@@ -88,9 +96,20 @@ const Header: React.FC<HeaderProp> = () => {
 					)}
 				</HamburgerButton>
 				<NavBar data-nav-open={isNavOpen}>
-					{navLinks.map((navLink, index) => (
-						<NavLink key={`nav-link-${navLink.name}-${index}`} {...navLink} />
-					))}
+					<div>
+						{navLinks.map((navLink, index) => (
+							<NavLink key={`nav-link-${navLink.name}-${index}`} {...navLink} />
+						))}
+					</div>
+					<div
+						style={{
+							display: 'flex',
+						}}
+					>
+						{rightNavLinks.map((navLink, index) => (
+							<NavLink key={`nav-link-${navLink.name}-${index}`} {...navLink} />
+						))}
+					</div>
 				</NavBar>
 			</Container>
 		</SooHeader>
@@ -128,14 +147,24 @@ const Logo = styled.div`
 `;
 const NavBar = styled.nav`
 	display: flex;
+	flex: 1;
+	justify-content: space-evenly;
 	gap: 1rem;
 	align-items: center;
-	& > a {
+	& > div > a {
 		padding: 0.35rem 0.5rem;
 		text-align: center;
 	}
-	& > a.active {
+	& > div > a.active {
+		position: relative;
+	}
+	& > div > a.active::after {
+		content: '';
+		position: absolute;
+		inset-inline: 0;
+		inset-block-end: 0;
 		background-color: var(--oex-orange);
+		height: 10%;
 	}
 
 	@media (max-width: 900px) {
