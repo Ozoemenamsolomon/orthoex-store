@@ -16,6 +16,8 @@ import {
 import calculator from '../assets/new/icons/calculate.svg';
 import composite from '../assets/new/icons/composite.svg';
 import deliveryVan from '../assets/new/icons/delivery-van.svg';
+import creditCard from '../assets/new/icons/credit-card.svg';
+import headphone from '../assets/new/icons/headphone.svg';
 import durable from '../assets/new/icons/durable.svg';
 import handShake from '../assets/new/icons/handshake.svg';
 import highPerformanceIcon from '../assets/new/icons/high-performance.svg';
@@ -143,6 +145,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 	{
 		style: {
 			backgroundColor: 'var(--oex-orange)',
+			paddingBlock: '5rem',
 		},
 		children: (
 			<ServicesCards>
@@ -151,11 +154,16 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 					.map((_, index) => (
 						<ServiceCard
 							imagePadding
-							className="no-animate"
+							className="no-animate white"
 							key={`e-comerce-${index}`}
 							service={{
 								description: 'Shipped same day',
-								image: deliveryVan,
+								image:
+									index === 1
+										? creditCard
+										: index === 2
+										? headphone
+										: deliveryVan,
 								title: 'Order by 12PM',
 							}}
 						/>

@@ -36,8 +36,10 @@ const ServiceCard: FC<ServiceCardProps> = ({
 			>
 				<Image objectFit="contain" layout="fill" src={image} />
 			</ImageContainer>
-			{title && <p style={{ fontWeight: 'bold' }}>{title}</p>}
-			<p>{description}</p>
+			<div>
+				{title && <p style={{ fontWeight: 'bold' }}>{title}</p>}
+				<p>{description}</p>
+			</div>
 		</ImageTitleContainer>
 		{cta}
 	</ServiceCardContainer>
@@ -61,6 +63,10 @@ const ServiceCardContainer = styled.div`
 	&.rounded {
 		border-radius: 1rem;
 		overflow: hidden;
+	}
+
+	&.white {
+		color: white;
 	}
 
 	&.taller {

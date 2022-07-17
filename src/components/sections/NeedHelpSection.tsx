@@ -2,9 +2,9 @@ import { CTA } from '../Header';
 import ServiceCard, { ServiceCardType } from '../ServiceCard';
 import SooSection from '../SooSection';
 import { ServicesCards } from '../styled';
-import helpIcon from '../../assets/images/help-icon_ImgID1.png';
 import chatIcon from '../../assets/new/icons/chat.svg';
-import phoneIcon from '../../assets/images/phone-icon_ImgID1.png';
+import faq from '../../assets/new/icons/faq.svg';
+import phoneIcon from '../../assets/new/icons/telephone.svg';
 
 export const helps: ServiceCardType[] = [
 	{
@@ -21,7 +21,7 @@ export const helps: ServiceCardType[] = [
 	{
 		description:
 			'Find a list of answers to the mostPopular questions that are asked',
-		image: helpIcon,
+		image: faq,
 		cta: <CTA white>View FAQ</CTA>,
 	},
 ];
