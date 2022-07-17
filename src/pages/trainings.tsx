@@ -2,7 +2,7 @@ import NeedHelpSection from '../components/sections/NeedHelpSection';
 import StayTunedSection from '../components/sections/StayTunedSection';
 import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
 import { Container, ServicesCards } from '../components/styled';
-import composite from '../assets/images/composite-material-icon_ImgID1.png';
+import composite from '../assets/new/icons/composite.svg';
 import durable from '../assets/images/durable-icon_ImgID1.png';
 import quality from '../assets/images/high-quality-icon_ImgID1.png';
 import nigeria from '../assets/images/map-icon_ImgID1.png';
