@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import React from 'react';
 import AfterSales from '../assets/icons/after-sales-support-icon.png';
-import Composite from '../assets/icons/composite-icon.png';
+import Composite from '../assets/new/icons/composite.svg';
 import Consultancy from '../assets/icons/consultancy-ion.png';
 import Procurement from '../assets/icons/procurement-icon.png';
 import PandO from '../assets/icons/prosthetics-icon.png';
