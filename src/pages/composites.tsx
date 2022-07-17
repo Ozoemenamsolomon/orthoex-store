@@ -1,36 +1,29 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import React from 'react';
-// import calculator from '../assets/images/Calculator-icon_ImgID1.png';
-// import newLevel from '../assets/images/new-level-icon_ImgID1.png';
-// import safeReliable from '../assets/images/safe-and-reliable-icon_ImgID1.png';
 import heroBG from '../assets/images/composite-hero-background.jpg';
-// import composite from '../assets/images/composite-material-icon_ImgID1.png';
-// import durable from '../assets/images/durable-icon_ImgID1.png';
-// import quality from '../assets/images/high-quality-icon_ImgID1.png';
-// import nigeria from '../assets/images/map-icon_ImgID1.png';
 import { CTA } from '../components/Header';
 import { HeroComp as Hero } from '../components/Hero';
 import HeroContent from '../components/HeroContent';
 import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
-import SooSection from '../components/SooSection';
+import SooSection, { SOOSectionProp } from '../components/SooSection';
 import {
 	Container,
 	PostCardsContainer,
 	ServicesCards,
 } from '../components/styled';
-import TestimonialSection from '../components/TestimonialSection';
-import StayTunedSection from '../components/sections/StayTunedSection';
-import NeedHelpSection from '../components/sections/NeedHelpSection';
-import highPerformanceIcon from '../assets/new/icons/high-performance.svg';
-import handShake from '../assets/new/icons/handshake.svg';
+// import TestimonialSection from '../components/TestimonialSection';
 import calculator from '../assets/new/icons/calculate.svg';
-import product1 from '../assets/new/images/product1.jpg';
 import composite from '../assets/new/icons/composite.svg';
-import quality from '../assets/new/icons/quality.svg';
-import durable from '../assets/new/icons/durable.svg';
-import nigeria from '../assets/new/icons/nigeria.svg';
 import deliveryVan from '../assets/new/icons/delivery-van.svg';
+import durable from '../assets/new/icons/durable.svg';
+import handShake from '../assets/new/icons/handshake.svg';
+import highPerformanceIcon from '../assets/new/icons/high-performance.svg';
+import nigeria from '../assets/new/icons/nigeria.svg';
+import quality from '../assets/new/icons/quality.svg';
+import product1 from '../assets/new/images/product1.jpg';
+import { helps } from '../components/sections/NeedHelpSection';
+import StayTunedSection from '../components/sections/StayTunedSection';
 
 const qualities: ServiceCardType[] = [
 	{
@@ -58,22 +51,173 @@ const expectancies: ServiceCardType[] = [
 		description:
 			'We are committed to delivering superior composite materials that you can trust for your craft. Take advantage of our high quality products',
 		image: highPerformanceIcon,
-		cta: <CTA>View products</CTA>,
+		cta: <CTA white>View products</CTA>,
 		title: undefined,
 	},
 	{
 		description:
 			'With our safe and reliable composite solutions, you can make a wide range of stronger, lighter and tougher products',
 		image: handShake,
-		cta: <CTA>Shop now</CTA>,
+		cta: <CTA white>Shop now</CTA>,
 		title: undefined,
 	},
 	{
 		description:
 			'Use our resin calculator to estimate the amount of epoxy resin you will need for your projects.',
 		image: calculator,
-		cta: <CTA>Calculate your resin</CTA>,
+		cta: <CTA white>Calculate your resin</CTA>,
 		title: undefined,
+	},
+];
+
+const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
+	{
+		header: {
+			title:
+				'Experience a new level of performance with our safe and reliable products',
+		},
+		children: (
+			<ServicesCards>
+				{expectancies.map((quality, index) => (
+					<ServiceCard
+						key={'expectancies_' + index}
+						className="no-animate"
+						service={quality}
+					/>
+				))}
+			</ServicesCards>
+		),
+	},
+	{
+		header: {
+			title: 'Which of our product vertical is relevant for you?',
+			subtitle:
+				'Take full advantage of our expert knowledge and growing product portfolio in these dormains for your specific field of application:',
+		},
+		children: (
+			<div
+				style={{
+					display: 'grid',
+					gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))',
+					gap: '1rem',
+				}}
+			>
+				{Array(10)
+					.fill(0)
+					.map((_, index) => (
+						<div
+							style={{
+								border: '1px solid red',
+								borderRadius: '5px',
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'center',
+								position: 'relative',
+							}}
+							key={index}
+						>
+							<p>Cat title</p>
+							<Image src={product1} alt="placeholder" />
+						</div>
+					))}
+			</div>
+		),
+	},
+	{
+		header: {
+			title:
+				'We empower your creativity with quality products and expert advise',
+		},
+		children: (
+			<ServicesCards minWidth="200px">
+				{qualities.map((quality, index) => (
+					<ServiceCard
+						key={'qualities_' + index}
+						className="no-animate"
+						service={quality}
+					/>
+				))}
+			</ServicesCards>
+		),
+	},
+	{
+		style: {
+			backgroundColor: 'var(--oex-orange)',
+		},
+		children: (
+			<ServicesCards>
+				{Array(3)
+					.fill(0)
+					.map((_, index) => (
+						<ServiceCard
+							imagePadding
+							className="no-animate"
+							key={`e-comerce-${index}`}
+							service={{
+								description: 'Shipped same day',
+								image: deliveryVan,
+								title: 'Order by 12PM',
+							}}
+						/>
+					))}
+			</ServicesCards>
+		),
+	},
+	{
+		children: <StayTunedSection />,
+	},
+	{
+		header: { title: 'Do you Need help?' },
+		children: (
+			<ServicesCards>
+				{helps.map((help, index) => (
+					<ServiceCard
+						key={'helps_' + index}
+						className="no-animate"
+						service={help}
+					/>
+				))}
+			</ServicesCards>
+		),
+	},
+	{
+		header: {
+			title: 'What people say about us',
+			subtitle:
+				'There are many reasons why our partners love to work with us. Hear it from the people for yourself',
+		},
+		children: (
+			<PostCardsContainer>
+				{Array<PostType>(3)
+					.fill({
+						image: {
+							url: 'https://dummyimage.com/600x400/000/fff',
+							alt: '',
+						},
+						time: 'JAN 10, 2022',
+						link: '#',
+						excerpt:
+							'Lorem ipsum dolor sit amet consectetur adipi sicing elit. Expedita, nihil.',
+					})
+					.map(({ image: { url, alt }, time, excerpt, link }, index) => (
+						<div key={'posts_' + index} style={{ flex: '1' }}>
+							<a
+								style={{
+									flexDirection: 'column',
+									display: 'flex',
+								}}
+								href={link}
+							>
+								<img style={{ width: '100%' }} src={url} alt={alt} />
+								<div>
+									<p>{excerpt}</p>
+									<span>{time}</span>
+								</div>
+							</a>
+						</div>
+					))}
+			</PostCardsContainer>
+		),
 	},
 ];
 
@@ -92,197 +236,17 @@ const CompositePage: NextPage = () => {
 		<>
 			<Hero bg={heroBG}>
 				<HeroContent
-					title={'We are your preferred <br/> partner of choice for quality!'}
+					title={'Your preferred <br/> partner of choice'}
 					claim={
-						"OEX Composite is Nigeria's leading supplier of epoxy and polyester resins fibre glass, carbon reinforcements, RTV silicone, polyurethane foams, and other composite materials. Our products are tailored to the needs of our customers in healthcare and manufacturing industries. We pride in satisfying our customers and helping them reach their business goals."
+						"We are Nigeria's leading supplier of epoxy and polyester resins, fibre glass, carbon reinforcements, RTV silicone, polyurethane foams, and other composite materials. Our products are tailored to the needs of our customers in healthcare and manufacturing industries. We pride in satisfying our customers and helping them reach their business goals."
 					}
-					cta={<CTA>Contact us</CTA>}
+					cta={<CTA>Shop now</CTA>}
 				/>
 			</Hero>
 			<Container>
-				<SooSection>
-					<h2>
-						Experience a new level of performance with our safe and reliable
-						products
-					</h2>
-					<ServicesCards>
-						{expectancies.map((quality, index) => (
-							<ServiceCard
-								key={index}
-								imagePadding
-								className="no-animate"
-								service={quality}
-							/>
-						))}
-					</ServicesCards>
-				</SooSection>
-				<SooSection>
-					<h2>Which of our product vertical is relevant for you?</h2>
-					<p>
-						Take full advantage of our expert knowledge and growing product
-						portfolio in these dormains for your specific field of application:
-					</p>
-					<div
-						style={{
-							display: 'grid',
-							gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))',
-							gap: '1rem',
-						}}
-					>
-						{Array(10)
-							.fill(0)
-							.map((_, index) => (
-								<div
-									style={{
-										border: '1px solid red',
-										borderRadius: '5px',
-										display: 'flex',
-										flexDirection: 'column',
-										alignItems: 'center',
-										position: 'relative',
-									}}
-									key={index}
-								>
-									<p>Cat title</p>
-									<Image src={product1} alt="placeholder" />
-								</div>
-							))}
-					</div>
-				</SooSection>
-
-				<SooSection>
-					<h2>
-						We empower your creativity with quality products and expert advise
-					</h2>
-					<ServicesCards minWidth="200px">
-						{qualities.map((quality, index) => (
-							<ServiceCard
-								key={index}
-								className="no-animate"
-								imagePadding
-								service={quality}
-							/>
-						))}
-					</ServicesCards>
-				</SooSection>
-				<SooSection
-					style={{
-						backgroundColor: 'var(--oex-orange)',
-					}}
-				>
-					<ServicesCards>
-						{Array(3)
-							.fill(0)
-							.map((_, index) => (
-								<ServiceCard
-									imagePadding
-									className="no-animate"
-									key={`e-comerce-${index}`}
-									service={{
-										description: 'Shipped same day',
-										image: deliveryVan,
-										title: 'Order by 12PM',
-									}}
-								/>
-							))}
-					</ServicesCards>
-				</SooSection>
-				<SooSection
-					header={{ first: 'SHOP', second: 'Our products' }}
-					style={{
-						backgroundColor: 'var(--oex-gray)',
-						display: 'flex',
-						justifyContent: 'space-between',
-						flexWrap: 'wrap',
-						gap: '1em',
-						paddingBlock: '2rem',
-						margin: 'auto',
-					}}
-				>
-					<p>Polyester Resin</p>
-					<p>Epoxy Resin</p>
-					<p>Fibre Glass</p>
-					<p>Carbon Fibre</p>
-					<p>Polyurethane Foams</p>
-					<p>RTV Silicone</p>
-					<p>Pigments</p>
-					<p>Accelerator</p>
-					<p>Hardner</p>
-				</SooSection>
-				<SooSection header={{ first: 'FEATURED', second: 'Articles' }}>
-					<PostCardsContainer>
-						{Array<PostType>(3)
-							.fill({
-								image: {
-									url: 'https://dummyimage.com/600x400/000/fff',
-									alt: '',
-								},
-								time: 'JAN 10, 2022',
-								link: '#',
-								excerpt:
-									'Lorem ipsum dolor sit amet consectetur adipi sicing elit. Expedita, nihil.',
-							})
-							.map(({ image: { url, alt }, time, excerpt, link }, index) => (
-								<div key={index} style={{ flex: '1' }}>
-									<a
-										style={{
-											flexDirection: 'column',
-											display: 'flex',
-										}}
-										href={link}
-									>
-										<img style={{ width: '100%' }} src={url} alt={alt} />
-										<div>
-											<p>{excerpt}</p>
-											<span>{time}</span>
-										</div>
-									</a>
-								</div>
-							))}
-					</PostCardsContainer>
-				</SooSection>
-				<TestimonialSection
-					testimony={
-						'Lorem ipsum dolor sit amet. Duis vero labore augue dolor. Diam lorem takimata. Voluptua dolor at. Sed consetetur vel dolores. Delenit diam erat ut. Feugiat sea commodo. Vero dolor et takimata ipsum consequat. Justo elitr et sadipscing. Nonumy iriure dolor'
-					}
-					by={'Maxwell Okoro'}
-					title={'Prosthetist / orthothist'}
-				/>
-				<StayTunedSection />
-				<NeedHelpSection />
-
-				<SooSection header={{ first: 'FEATURED', second: 'Articles' }}>
-					<PostCardsContainer>
-						{Array<PostType>(3)
-							.fill({
-								image: {
-									url: 'https://dummyimage.com/600x400/000/fff',
-									alt: '',
-								},
-								time: 'JAN 10, 2022',
-								link: '#',
-								excerpt:
-									'Lorem ipsum dolor sit amet consectetur adipi sicing elit. Expedita, nihil.',
-							})
-							.map(({ image: { url, alt }, time, excerpt, link }, index) => (
-								<div key={index} style={{ flex: '1' }}>
-									<a
-										style={{
-											flexDirection: 'column',
-											display: 'flex',
-										}}
-										href={link}
-									>
-										<img style={{ width: '100%' }} src={url} alt={alt} />
-										<div>
-											<p>{excerpt}</p>
-											<span>{time}</span>
-										</div>
-									</a>
-								</div>
-							))}
-					</PostCardsContainer>
-				</SooSection>
+				{sections.map((section, index) => (
+					<SooSection key={index} {...section} />
+				))}
 			</Container>
 		</>
 	);
