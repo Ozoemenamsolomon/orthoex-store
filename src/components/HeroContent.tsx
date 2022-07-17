@@ -23,7 +23,7 @@ const HeroContent = styled.div`
 	justify-content: center;
 	align-items: flex-start;
 	@media (min-width: 600px) {
-		max-width: 55%;
+		max-width: 31rem;
 	}
 `;
 

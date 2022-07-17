@@ -13,7 +13,7 @@ const TestimonialSection: FC<{
 }> = ({ testimony, by, title }) => {
 	return (
 		<Hero morePadding bg={TestimonialBG} colour="black" col center>
-			<SectionHeader first="TESTIMONIAL" second="Our Client Feedback" />
+			<SectionHeader title="TESTIMONIAL" subtitle="Our Client Feedback" />
 
 			<TestimonialContainer>
 				<div

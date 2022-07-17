@@ -1,6 +1,5 @@
 import { FC, ReactElement } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
 import Image from 'next/image';
 
 export type ServiceCardType = {
@@ -31,40 +30,31 @@ const ServiceCard: FC<ServiceCardProps> = ({
 	imagePadding,
 }) => (
 	<ServiceCardContainer className={`${className}`}>
-		<Link href="/">
-			<a>
-				<ImageTitleContainer>
-					<ImageContainer
-						className={`image-container ${imagePadding ? 'pad' : ''}`}
-					>
-						<Image objectFit="contain" layout="fill" src={image} />
-					</ImageContainer>
-					{title && <p style={{ fontWeight: 'bold' }}>{title}</p>}
-					<p>{description}</p>
-				</ImageTitleContainer>
-				{cta}
-			</a>
-		</Link>
+		<ImageTitleContainer>
+			<ImageContainer
+				className={`image-container ${imagePadding ? 'pad' : ''}`}
+			>
+				<Image objectFit="contain" layout="fill" src={image} />
+			</ImageContainer>
+			{title && <p style={{ fontWeight: 'bold' }}>{title}</p>}
+			<p>{description}</p>
+		</ImageTitleContainer>
+		{cta}
 	</ServiceCardContainer>
 );
 
 export default ServiceCard;
 
 const ServiceCardContainer = styled.div`
-	> a {
-		padding: 0.8rem;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		text-align: center;
-		height: 100%;
-		width: 100%;
-		justify-content: space-between;
+	padding: 0.8rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	text-align: center;
+	height: 100%;
+	width: 100%;
+	justify-content: space-between;
 
-		button {
-			align-self: center;
-		}
-	}
 	position: relative;
 	transition: all 0.2s ease-out;
 
@@ -118,11 +108,13 @@ const ImageTitleContainer = styled.div`
 	display: flex;
 	gap: 1rem;
 	flex-direction: column;
+	align-items: center;
 `;
 const ImageContainer = styled.div`
 	position: relative;
 	aspect-ratio: 1.5;
+	width: 5rem;
 	&.pad {
-		margin-inline: 2rem;
+		width: 3rem;
 	}
 `;

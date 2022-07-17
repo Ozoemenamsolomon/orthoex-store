@@ -187,8 +187,9 @@ const NavBar = styled.nav`
 `;
 
 export const CTA = styled.button<{ white?: Boolean }>`
-	padding: 0.8rem 1rem;
-	border: none;
+	padding: 0.8rem 2rem;
+	border: ${({ white }) => (white ? '1px solid var(--oex-orange)' : 'none')};
+	border-radius: 4px;
 	cursor: pointer;
 	background-color: ${(prop) => (prop.white ? 'white' : 'var(--oex-orange)')};
 	color: ${(prop) =>

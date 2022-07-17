@@ -122,7 +122,7 @@ const Home: NextPage = () => {
 					title={'Prosthetist / orthothist'}
 				/>
 
-				<SooSection header={{ first: 'LINKEDIN', second: 'Latest Posts' }}>
+				<SooSection header={{ title: 'LINKEDIN', subtitle: 'Latest Posts' }}>
 					<PostCardsContainer>
 						{Array<PostType>(3)
 							.fill({

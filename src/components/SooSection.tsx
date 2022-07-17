@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Container } from './styled';
 
-type SOOSectionProp = {
+export type SOOSectionProp = {
 	color?: string;
 	style?: React.CSSProperties;
 	header?: SectionHeaderProps;
@@ -46,24 +46,32 @@ const SOOSectionContainer = styled('section')<{
 		display: flex;
 	}
 `;
-type SectionHeaderProps = { first: string; second: string };
+type SectionHeaderProps = { title: string; subtitle?: string };
 
-export const SectionHeader: FC<SectionHeaderProps> = ({ first, second }) => {
+export const SectionHeader: FC<SectionHeaderProps> = ({ title, subtitle }) => {
 	return (
 		<>
-			<span
-				style={{
-					color: 'var(--oex-orange)',
-					fontWeight: 'bold',
-					textAlign: 'center',
-					display: 'block',
-				}}
-			>
-				{first}
-			</span>
-			<h2 style={{ margin: 0, textAlign: 'center', marginBottom: '1rem' }}>
-				{second}{' '}
-			</h2>
+			<SectionTitle>{title}</SectionTitle>
+			{subtitle && <SectionSubtitle>{subtitle}</SectionSubtitle>}
 		</>
 	);
 };
+
+const SectionTitle = styled.h2`
+	margin: 0px 0px 1rem;
+	text-align: center;
+	align-self: center;
+	@media (min-width: 600px) {
+		max-width: 70%;
+	}
+`;
+
+const SectionSubtitle = styled.span`
+	align-self: center;
+	text-align: center;
+	margin-bottom: 3rem;
+	display: block;
+	@media (min-width: 600px) {
+		max-width: 50%;
+	}
+`;
