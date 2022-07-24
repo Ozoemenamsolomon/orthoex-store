@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import Image from 'next/image';
 import React from 'react';
 import heroBG from '../assets/images/composite-hero-background.jpg';
 import { CTA } from '../components/Header';
@@ -12,7 +11,6 @@ import {
 	PostCardsContainer,
 	ServicesCards,
 } from '../components/styled';
-// import TestimonialSection from '../components/TestimonialSection';
 import calculator from '../assets/new/icons/calculate.svg';
 import composite from '../assets/new/icons/composite.svg';
 import deliveryVan from '../assets/new/icons/delivery-van.svg';
@@ -26,6 +24,7 @@ import quality from '../assets/new/icons/quality.svg';
 import product1 from '../assets/new/images/product1.jpg';
 import { helps } from '../components/sections/NeedHelpSection';
 import StayTunedSection from '../components/sections/StayTunedSection';
+import CategoryCard, { CategoryProps } from '../components/CategoryCard';
 
 const qualities: ServiceCardType[] = [
 	{
@@ -72,6 +71,59 @@ const expectancies: ServiceCardType[] = [
 	},
 ];
 
+const categories: CategoryProps[] = [
+	{
+		title: 'Polyester Resin & Components',
+		slug: 'composite',
+		image: product1,
+	},
+	{
+		title: 'Epoxy Resin & Components',
+		slug: 'composite',
+		image: product1,
+	},
+	{
+		title: 'Silicone & Polyurethane Rubber',
+		slug: 'composite',
+		image: product1,
+	},
+	{
+		title: 'Fabric & Prepreg Reinforcements',
+		slug: 'composite',
+		image: product1,
+	},
+	{
+		title: 'Gelcoats',
+		slug: 'composite',
+		image: product1,
+	},
+	{
+		title: 'Expanding Foams',
+		slug: 'composite',
+		image: product1,
+	},
+	{
+		title: 'Colour Pigments',
+		slug: 'composite',
+		image: product1,
+	},
+	{
+		title: 'Sealants & Adhesives',
+		slug: 'composite',
+		image: product1,
+	},
+	{
+		title: 'Tools, Machines & Supplies',
+		slug: 'composite',
+		image: product1,
+	},
+	{
+		title: 'Mould Release Agents',
+		slug: 'composite',
+		image: product1,
+	},
+];
+
 const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 	{
 		header: {
@@ -100,28 +152,13 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 			<div
 				style={{
 					display: 'grid',
-					gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))',
+					gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
 					gap: '1rem',
 				}}
 			>
-				{Array(10)
-					.fill(0)
-					.map((_, index) => (
-						<div
-							style={{
-								border: '1px solid red',
-								borderRadius: '5px',
-								display: 'flex',
-								flexDirection: 'column',
-								alignItems: 'center',
-								position: 'relative',
-							}}
-							key={index}
-						>
-							<p>Cat title</p>
-							<Image src={product1} alt="placeholder" />
-						</div>
-					))}
+				{categories.map((category, index) => (
+					<CategoryCard category={category} key={`category_${index}`} />
+				))}
 			</div>
 		),
 	},
@@ -242,19 +279,21 @@ type PostType = {
 const CompositePage: NextPage = () => {
 	return (
 		<>
-			<Hero bg={heroBG}>
-				<HeroContent
-					title={'Your preferred <br/> partner of choice'}
-					claim={
-						"We are Nigeria's leading supplier of epoxy and polyester resins, fibre glass, carbon reinforcements, RTV silicone, polyurethane foams, and other composite materials. Our products are tailored to the needs of our customers in healthcare and manufacturing industries. We pride in satisfying our customers and helping them reach their business goals."
-					}
-					cta={<CTA>Shop now</CTA>}
-				/>
-			</Hero>
-			<Container>
-				{sections.map((section, index) => (
-					<SooSection key={index} {...section} />
-				))}
+			<Container bg="white" paddingMultiplier={0}>
+				<Hero bg={heroBG}>
+					<HeroContent
+						title={'Your preferred <br/> partner of choice'}
+						claim={
+							"We are Nigeria's leading supplier of epoxy and polyester resins, fibre glass, carbon reinforcements, RTV silicone, polyurethane foams, and other composite materials. Our products are tailored to the needs of our customers in healthcare and manufacturing industries. We pride in satisfying our customers and helping them reach their business goals."
+						}
+						cta={<CTA>Shop now</CTA>}
+					/>
+				</Hero>
+				<Container>
+					{sections.map((section, index) => (
+						<SooSection key={index} {...section} />
+					))}
+				</Container>
 			</Container>
 		</>
 	);

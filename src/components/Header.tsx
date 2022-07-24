@@ -46,6 +46,7 @@ const Header: React.FC<HeaderProp> = () => {
 	return (
 		<SooHeader className={`${scrolled ? 'scrolled' : ''}`}>
 			<Container
+				paddingMultiplier={2}
 				style={{
 					display: 'flex',
 					justifyContent: 'space-between',
@@ -148,9 +149,15 @@ const Logo = styled.div`
 const NavBar = styled.nav`
 	display: flex;
 	flex: 1;
-	justify-content: space-evenly;
-	gap: 1rem;
+	justify-content: end;
+	gap: 4rem;
 	align-items: center;
+
+	& > div:first-child {
+		display: flex;
+		gap: 1.5rem;
+	}
+
 	& > div > a {
 		padding: 0.35rem 0.5rem;
 		text-align: center;
@@ -187,18 +194,21 @@ const NavBar = styled.nav`
 `;
 
 export const CTA = styled.button<{ white?: Boolean }>`
-	padding: 0.8rem 2rem;
-	border: ${({ white }) => (white ? '1px solid var(--oex-orange)' : 'none')};
+	padding: 1.5rem 3rem;
 	border-radius: 4px;
 	cursor: pointer;
+	font-weight: bold;
+	transition: all 0.5s ease;
+
+	border: ${({ white }) => (white ? '1px solid var(--oex-orange)' : 'none')};
 	background-color: ${(prop) => (prop.white ? 'white' : 'var(--oex-orange)')};
 	color: ${(prop) =>
 		prop.white ? 'var(--oex-orange)' : 'var(--text-colour-light)'};
-	font-weight: bold;
-	transition: all 0.5s ease;
-	/* text-transform: uppercase; */
+
 	&:hover {
-		box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.363);
+		color: ${(prop) =>
+			prop.white ? 'var(--text-colour-light)' : 'var(--oex-orange)'};
+		background-color: ${(prop) => (prop.white ? 'var(--oex-orange)' : 'white')};
 	}
 `;
 

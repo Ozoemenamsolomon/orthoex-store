@@ -35,6 +35,7 @@ export const HeroComp: FC<HeroCompProp> = ({
 						flexDirection: col ? 'column' : undefined,
 						alignItems: center ? 'center' : undefined,
 					}}
+					paddingMultiplier={4}
 				>
 					{children}
 				</Container>
@@ -55,6 +56,7 @@ export const HeroComp: FC<HeroCompProp> = ({
 const HeroContainer = styled.div`
 	position: relative;
 	max-height: 70%;
+	z-index: 1;
 `;
 const HeroBg = styled(Image)`
 	position: absolute;
@@ -64,7 +66,7 @@ const HeroBg = styled(Image)`
 `;
 
 const Hero = styled.div`
-	--hero-padding: 4.5em 0em 2em 0em;
+	--hero-padding: 8em 0em 4em 0em;
 	display: flex;
 	padding: var(--hero-padding);
 	justify-content: center;

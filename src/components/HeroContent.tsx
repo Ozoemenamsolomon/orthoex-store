@@ -22,6 +22,7 @@ const HeroContent = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-start;
+	gap: 2rem;
 	@media (min-width: 600px) {
 		max-width: 31rem;
 	}
