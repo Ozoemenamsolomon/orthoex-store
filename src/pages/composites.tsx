@@ -24,7 +24,8 @@ import quality from '../assets/new/icons/quality.svg';
 import product1 from '../assets/new/images/product1.jpg';
 import { helps } from '../components/sections/NeedHelpSection';
 import StayTunedSection from '../components/sections/StayTunedSection';
-import CategoryCard, { CategoryProps } from '../components/CategoryCard';
+import { CategoryProps } from '../components/CategoryCard';
+import Categories from '../components/Categories';
 
 const qualities: ServiceCardType[] = [
 	{
@@ -71,7 +72,7 @@ const expectancies: ServiceCardType[] = [
 	},
 ];
 
-const categories: CategoryProps[] = [
+export const categories: CategoryProps[] = [
 	{
 		title: 'Polyester Resin & Components',
 		slug: 'composite',
@@ -148,19 +149,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 			subtitle:
 				'Take full advantage of our expert knowledge and growing product portfolio in these dormains for your specific field of application:',
 		},
-		children: (
-			<div
-				style={{
-					display: 'grid',
-					gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
-					gap: '1rem',
-				}}
-			>
-				{categories.map((category, index) => (
-					<CategoryCard category={category} key={`category_${index}`} />
-				))}
-			</div>
-		),
+		children: <Categories categories={categories} />,
 	},
 	{
 		header: {

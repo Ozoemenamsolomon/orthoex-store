@@ -37,6 +37,7 @@ export const PostCardsContainer = styled.div`
 `;
 
 export const Container = styled.div<{
+	verticalPadding?: number;
 	paddingMultiplier?: number;
 	bg?: string;
 }>`
@@ -45,13 +46,16 @@ export const Container = styled.div<{
 	}};
 	max-width: 1500px;
 	width: 100%;
+
+	${({ verticalPadding }) =>
+		verticalPadding ? `padding-block: ${verticalPadding}rem;` : ''}
 	${({ paddingMultiplier }) => {
-		return `padding: 0rem ${
+		return `padding-inline: ${
 			paddingMultiplier !== undefined ? paddingMultiplier * 2 : 2
 		}rem;`;
 	}}
 	margin: auto;
 	@media (max-width: 600px) {
-		padding: 0 1rem;
+		padding-inline: 1rem;
 	}
 `;

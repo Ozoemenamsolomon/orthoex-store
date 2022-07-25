@@ -1,24 +1,29 @@
 import styled from 'styled-components';
 import { CTA } from '../Header';
 import SooSection from '../SooSection';
+import newsletter from '../../assets/new/images/newsletter.png';
+import Image from 'next/image';
+import { Container } from '../styled';
 
 const StayTunedSection = () => {
 	return (
-		<SooSection twoColumns>
-			<div>
-				<h2>Stay tuned!</h2>
-				<p>
-					Sign up to be the first to know about new products, workshops and
-					special offers
-				</p>
-			</div>
-			<div>
-				<SubscribeForm>
-					<input type="tel" placeholder="Your Whatsapp Number" />
-					<input type="email" placeholder="Your email" />
-					<CTA type="submit">Subscribe</CTA>
-				</SubscribeForm>
-			</div>
+		<SooSection>
+			<Container style={{ display: 'flex' }}>
+				<div>
+					<h2>Stay tuned!</h2>
+					<p>
+						Sign up to be the first to know about new products, workshops and
+						special offers
+					</p>
+					<SubscribeForm>
+						<input type="email" placeholder="Your email" />
+						<CTA type="submit">Subscribe</CTA>
+					</SubscribeForm>
+				</div>
+				<div style={{ position: 'relative', height: '100%', flex: 1 }}>
+					<Image objectFit="contain" layout="fill" src={newsletter} />
+				</div>
+			</Container>
 		</SooSection>
 	);
 };
@@ -28,12 +33,11 @@ export default StayTunedSection;
 const SubscribeForm = styled.form`
 	display: flex;
 	gap: 1rem;
-	flex: 1;
-	flex-direction: column;
-	max-width: 350px;
-	margin-inline: auto;
+	/* max-width: 350px; */
+	/* margin-inline: auto; */
 
 	input {
+		flex: 1;
 		padding: 0.51rem;
 	}
 `;
