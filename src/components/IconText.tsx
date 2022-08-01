@@ -1,0 +1,14 @@
+import { FC } from 'react';
+import Image from 'next/image';
+
+const IconText: FC<{ icon: StaticImageData; text: string }> = ({
+	icon,
+	text,
+}) => (
+	<div style={{ display: 'flex', position: 'relative', gap: '1rem' }}>
+		<span>{text}</span>
+		<Image objectFit="contain" src={icon} />
+	</div>
+);
+
+export default IconText;

@@ -8,19 +8,21 @@ import { Container } from '../styled';
 const StayTunedSection = () => {
 	return (
 		<SooSection>
-			<Container style={{ display: 'flex' }}>
-				<div>
-					<h2>Stay tuned!</h2>
-					<p>
-						Sign up to be the first to know about new products, workshops and
-						special offers
-					</p>
+			<Container paddingMultiplier={6} style={{ display: 'flex' }}>
+				<div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+					<div>
+						<h2>Stay tuned!</h2>
+						<p>
+							Sign up to be the first to know about new products, workshops &
+							special offers.
+						</p>
+					</div>
 					<SubscribeForm>
-						<input type="email" placeholder="Your email" />
+						<input type="email" placeholder="Enter your email address here" />
 						<CTA type="submit">Subscribe</CTA>
 					</SubscribeForm>
 				</div>
-				<div style={{ position: 'relative', height: '100%', flex: 1 }}>
+				<div style={{ position: 'relative', flex: 1 }}>
 					<Image objectFit="contain" layout="fill" src={newsletter} />
 				</div>
 			</Container>
@@ -33,6 +35,7 @@ export default StayTunedSection;
 const SubscribeForm = styled.form`
 	display: flex;
 	gap: 1rem;
+
 	/* max-width: 350px; */
 	/* margin-inline: auto; */
 

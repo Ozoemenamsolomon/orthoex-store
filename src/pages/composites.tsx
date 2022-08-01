@@ -8,7 +8,7 @@ import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
 import SooSection, { SOOSectionProp } from '../components/SooSection';
 import {
 	Container,
-	PostCardsContainer,
+	// PostCardsContainer,
 	ServicesCards,
 } from '../components/styled';
 import calculator from '../assets/new/icons/calculate.svg';
@@ -22,10 +22,13 @@ import highPerformanceIcon from '../assets/new/icons/high-performance.svg';
 import nigeria from '../assets/new/icons/nigeria.svg';
 import quality from '../assets/new/icons/quality.svg';
 import product1 from '../assets/new/images/product1.jpg';
+import moreArrow from '../assets/new/icons/more-arrow.svg';
 import { helps } from '../components/sections/NeedHelpSection';
 import StayTunedSection from '../components/sections/StayTunedSection';
 import { CategoryProps } from '../components/CategoryCard';
 import Categories from '../components/Categories';
+import IconText from '../components/IconText';
+import Link from 'next/link';
 
 const qualities: ServiceCardType[] = [
 	{
@@ -149,7 +152,16 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 			subtitle:
 				'Take full advantage of our expert knowledge and growing product portfolio in these dormains for your specific field of application:',
 		},
-		children: <Categories categories={categories} />,
+		children: (
+			<div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+				<Categories categories={categories} />
+				<Link href="/categories">
+					<a style={{ alignSelf: 'flex-end' }}>
+						<IconText icon={moreArrow} text="View more Categories" />
+					</a>
+				</Link>
+			</div>
+		),
 	},
 	{
 		header: {
@@ -214,56 +226,56 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 			</ServicesCards>
 		),
 	},
-	{
-		header: {
-			title: 'What people say about us',
-			subtitle:
-				'There are many reasons why our partners love to work with us. Hear it from the people for yourself',
-		},
-		children: (
-			<PostCardsContainer>
-				{Array<PostType>(3)
-					.fill({
-						image: {
-							url: 'https://dummyimage.com/600x400/000/fff',
-							alt: '',
-						},
-						time: 'JAN 10, 2022',
-						link: '#',
-						excerpt:
-							'Lorem ipsum dolor sit amet consectetur adipi sicing elit. Expedita, nihil.',
-					})
-					.map(({ image: { url, alt }, time, excerpt, link }, index) => (
-						<div key={'posts_' + index} style={{ flex: '1' }}>
-							<a
-								style={{
-									flexDirection: 'column',
-									display: 'flex',
-								}}
-								href={link}
-							>
-								<img style={{ width: '100%' }} src={url} alt={alt} />
-								<div>
-									<p>{excerpt}</p>
-									<span>{time}</span>
-								</div>
-							</a>
-						</div>
-					))}
-			</PostCardsContainer>
-		),
-	},
+	// {
+	// 	header: {
+	// 		title: 'What people say about us',
+	// 		subtitle:
+	// 			'There are many reasons why our partners love to work with us. Hear it from the people for yourself',
+	// 	},
+	// 	children: (
+	// 		<PostCardsContainer>
+	// 			{Array<PostType>(3)
+	// 				.fill({
+	// 					image: {
+	// 						url: 'https://dummyimage.com/600x400/000/fff',
+	// 						alt: '',
+	// 					},
+	// 					time: 'JAN 10, 2022',
+	// 					link: '#',
+	// 					excerpt:
+	// 						'Lorem ipsum dolor sit amet consectetur adipi sicing elit. Expedita, nihil.',
+	// 				})
+	// 				.map(({ image: { url, alt }, time, excerpt, link }, index) => (
+	// 					<div key={'posts_' + index} style={{ flex: '1' }}>
+	// 						<a
+	// 							style={{
+	// 								flexDirection: 'column',
+	// 								display: 'flex',
+	// 							}}
+	// 							href={link}
+	// 						>
+	// 							<img style={{ width: '100%' }} src={url} alt={alt} />
+	// 							<div>
+	// 								<p>{excerpt}</p>
+	// 								<span>{time}</span>
+	// 							</div>
+	// 						</a>
+	// 					</div>
+	// 				))}
+	// 		</PostCardsContainer>
+	// 	),
+	// },
 ];
 
-type PostType = {
-	image: {
-		url: string;
-		alt: string;
-	};
-	time: string;
-	link: string;
-	excerpt: string;
-};
+// type PostType = {
+// 	image: {
+// 		url: string;
+// 		alt: string;
+// 	};
+// 	time: string;
+// 	link: string;
+// 	excerpt: string;
+// };
 
 const CompositePage: NextPage = () => {
 	return (
