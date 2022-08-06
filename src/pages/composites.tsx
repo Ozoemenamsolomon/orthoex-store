@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import React from 'react';
-import heroBG from '../assets/images/composite-hero-background.jpg';
+import heroBG from '../assets/new/images/hero-bg.jpg';
 import { CTA } from '../components/Header';
 import { HeroComp as Hero } from '../components/Hero';
 import HeroContent from '../components/HeroContent';
@@ -8,7 +8,7 @@ import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
 import SooSection, { SOOSectionProp } from '../components/SooSection';
 import {
 	Container,
-	// PostCardsContainer,
+	PostCardsContainer,
 	ServicesCards,
 } from '../components/styled';
 import calculator from '../assets/new/icons/calculate.svg';
@@ -21,7 +21,16 @@ import handShake from '../assets/new/icons/handshake.svg';
 import highPerformanceIcon from '../assets/new/icons/high-performance.svg';
 import nigeria from '../assets/new/icons/nigeria.svg';
 import quality from '../assets/new/icons/quality.svg';
-import product1 from '../assets/new/images/product1.jpg';
+import category1 from '../assets/new/images/category1.jpg';
+import category2 from '../assets/new/images/category2.jpg';
+import category3 from '../assets/new/images/category3.jpg';
+import category4 from '../assets/new/images/category4.jpg';
+import category5 from '../assets/new/images/category5.jpg';
+import category6 from '../assets/new/images/category6.jpg';
+import category7 from '../assets/new/images/category7.jpg';
+import category8 from '../assets/new/images/category8.jpg';
+import category9 from '../assets/new/images/category9.jpg';
+import category10 from '../assets/new/images/category10.jpg';
 import moreArrow from '../assets/new/icons/more-arrow.svg';
 import { helps } from '../components/sections/NeedHelpSection';
 import StayTunedSection from '../components/sections/StayTunedSection';
@@ -79,52 +88,52 @@ export const categories: CategoryProps[] = [
 	{
 		title: 'Polyester Resin & Components',
 		slug: 'composite',
-		image: product1,
+		image: category1,
 	},
 	{
 		title: 'Epoxy Resin & Components',
 		slug: 'composite',
-		image: product1,
+		image: category2,
 	},
 	{
 		title: 'Silicone & Polyurethane Rubber',
 		slug: 'composite',
-		image: product1,
+		image: category3,
 	},
 	{
 		title: 'Fabric & Prepreg Reinforcements',
 		slug: 'composite',
-		image: product1,
+		image: category4,
 	},
 	{
 		title: 'Gelcoats',
 		slug: 'composite',
-		image: product1,
+		image: category5,
 	},
 	{
 		title: 'Expanding Foams',
 		slug: 'composite',
-		image: product1,
+		image: category6,
 	},
 	{
 		title: 'Colour Pigments',
 		slug: 'composite',
-		image: product1,
+		image: category7,
 	},
 	{
 		title: 'Sealants & Adhesives',
 		slug: 'composite',
-		image: product1,
+		image: category8,
 	},
 	{
 		title: 'Tools, Machines & Supplies',
 		slug: 'composite',
-		image: product1,
+		image: category9,
 	},
 	{
 		title: 'Mould Release Agents',
 		slug: 'composite',
-		image: product1,
+		image: category10,
 	},
 ];
 
@@ -226,68 +235,66 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 			</ServicesCards>
 		),
 	},
-	// {
-	// 	header: {
-	// 		title: 'What people say about us',
-	// 		subtitle:
-	// 			'There are many reasons why our partners love to work with us. Hear it from the people for yourself',
-	// 	},
-	// 	children: (
-	// 		<PostCardsContainer>
-	// 			{Array<PostType>(3)
-	// 				.fill({
-	// 					image: {
-	// 						url: 'https://dummyimage.com/600x400/000/fff',
-	// 						alt: '',
-	// 					},
-	// 					time: 'JAN 10, 2022',
-	// 					link: '#',
-	// 					excerpt:
-	// 						'Lorem ipsum dolor sit amet consectetur adipi sicing elit. Expedita, nihil.',
-	// 				})
-	// 				.map(({ image: { url, alt }, time, excerpt, link }, index) => (
-	// 					<div key={'posts_' + index} style={{ flex: '1' }}>
-	// 						<a
-	// 							style={{
-	// 								flexDirection: 'column',
-	// 								display: 'flex',
-	// 							}}
-	// 							href={link}
-	// 						>
-	// 							<img style={{ width: '100%' }} src={url} alt={alt} />
-	// 							<div>
-	// 								<p>{excerpt}</p>
-	// 								<span>{time}</span>
-	// 							</div>
-	// 						</a>
-	// 					</div>
-	// 				))}
-	// 		</PostCardsContainer>
-	// 	),
-	// },
+	{
+		header: {
+			title: 'What people say about us',
+			subtitle:
+				'There are many reasons why our partners love to work with us. Hear it from the people for yourself',
+		},
+		children: (
+			<PostCardsContainer>
+				{Array<PostType>(3)
+					.fill({
+						image: {
+							url: 'https://dummyimage.com/600x400/000/fff',
+							alt: '',
+						},
+						time: 'JAN 10, 2022',
+						link: '#',
+						excerpt:
+							'Lorem ipsum dolor sit amet consectetur adipi sicing elit. Expedita, nihil.',
+					})
+					.map(({ image: { url, alt }, time, excerpt, link }, index) => (
+						<div key={'posts_' + index} style={{ flex: '1' }}>
+							<a
+								style={{
+									flexDirection: 'column',
+									display: 'flex',
+								}}
+								href={link}
+							>
+								<img style={{ width: '100%' }} src={url} alt={alt} />
+								<div>
+									<p>{excerpt}</p>
+									<span>{time}</span>
+								</div>
+							</a>
+						</div>
+					))}
+			</PostCardsContainer>
+		),
+	},
 ];
 
-// type PostType = {
-// 	image: {
-// 		url: string;
-// 		alt: string;
-// 	};
-// 	time: string;
-// 	link: string;
-// 	excerpt: string;
-// };
+type PostType = {
+	image: {
+		url: string;
+		alt: string;
+	};
+	time: string;
+	link: string;
+	excerpt: string;
+};
 
 const CompositePage: NextPage = () => {
 	return (
 		<>
 			<Container bg="white" paddingMultiplier={0}>
-				<Hero bg={heroBG}>
+				<Hero darkenBG bg={heroBG}>
 					<HeroContent
-						title={'Your preferred <br/> partner of choice'}
-						claim={
-							"We are Nigeria's leading supplier of epoxy and polyester resins, fibre glass, carbon reinforcements, RTV silicone, polyurethane foams, and other composite materials. Our products are tailored to the needs of our customers in healthcare and manufacturing industries. We pride in satisfying our customers and helping them reach their business goals."
-						}
-						cta={<CTA>Shop now</CTA>}
+						title="Your preferred <br/> partner of choice"
+						claim="We are Nigeria's leading supplier of epoxy and polyester resins, fibre glass, carbon reinforcements, RTV silicone, polyurethane foams, and other composite materials. Our products are tailored to the needs of our customers in healthcare and manufacturing industries. We pride in satisfying our customers and helping them reach their business goals."
+						cta={<CTA className="no-animate">Shop now</CTA>}
 					/>
 				</Hero>
 				<Container>

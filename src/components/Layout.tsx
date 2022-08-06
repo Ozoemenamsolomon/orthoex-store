@@ -51,7 +51,7 @@ const LayoutWrapper = styled.div`
 
 const Main = styled.main`
 	flex: 1;
-	/* justify-content: center;
 	display: flex;
+	/* justify-content: center;
 	flex-direction: column; */
 `;

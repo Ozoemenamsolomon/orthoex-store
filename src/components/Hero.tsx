@@ -11,6 +11,7 @@ type HeroCompProp = {
 	center?: boolean;
 	colour?: 'white' | 'black';
 	morePadding?: true;
+	darkenBG?: true;
 };
 
 export const HeroComp: FC<HeroCompProp> = ({
@@ -20,6 +21,7 @@ export const HeroComp: FC<HeroCompProp> = ({
 	center,
 	colour = 'white',
 	morePadding = false,
+	darkenBG = false,
 }) => {
 	return (
 		<HeroContainer>
@@ -48,6 +50,14 @@ export const HeroComp: FC<HeroCompProp> = ({
 				}}
 			>
 				<HeroBg layout="fill" objectFit="cover" src={bg || BG}></HeroBg>
+				{darkenBG && (
+					<div
+						style={{
+							height: '100%',
+							backgroundColor: '#00000066',
+						}}
+					/>
+				)}
 			</div>
 		</HeroContainer>
 	);

@@ -205,10 +205,13 @@ export const CTA = styled.button<{ white?: Boolean }>`
 	color: ${(prop) =>
 		prop.white ? 'var(--oex-orange)' : 'var(--text-colour-light)'};
 
-	&:hover {
-		color: ${(prop) =>
-			prop.white ? 'var(--text-colour-light)' : 'var(--oex-orange)'};
-		background-color: ${(prop) => (prop.white ? 'var(--oex-orange)' : 'white')};
+	&:not(.no-animate) {
+		&:hover {
+			color: ${(prop) =>
+				prop.white ? 'var(--text-colour-light)' : 'var(--oex-orange)'};
+			background-color: ${(prop) =>
+				prop.white ? 'var(--oex-orange)' : 'white'};
+		}
 	}
 `;
 
