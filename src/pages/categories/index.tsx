@@ -16,7 +16,7 @@ const composite = () => {
 			<SooSection header={{ title: 'All Categories', align: 'left' }}>
 				<Categories categories={categories} />
 			</SooSection>
-			<SooSection header={{ title: 'Popluar Products' }}>
+			<SooSection header={{ title: 'Popluar Products', align: 'left' }}>
 				<div
 					style={{
 						display: 'grid',

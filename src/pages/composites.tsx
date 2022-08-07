@@ -188,7 +188,6 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 			subtitle:
 				'Take full advantage of our expert knowledge and growing product portfolio in these dormains for your specific field of application:',
 		},
-
 		children: (
 			<div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 				<Categories categories={categories} />
