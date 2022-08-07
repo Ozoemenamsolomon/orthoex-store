@@ -2,13 +2,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import orthoExLogo from '../assets/images/orthoex-logo-white.png';
+import orthoExLogoCol from '../assets/new/images/orthoex-logo-coloured.png';
 import NavLink from './NavLink';
 import { Container } from './styled';
 import searchIcon from '../assets/new/icons/search.svg';
 import accountIcon from '../assets/new/icons/account.svg';
 import cartIcon from '../assets/new/icons/shopping-cart.svg';
+import { useRouter } from 'next/router';
 
 interface HeaderProp {}
 
@@ -43,21 +45,26 @@ const Header: React.FC<HeaderProp> = () => {
 		};
 	}, []);
 
+	const router = useRouter();
+
+	const light = router.pathname === '/categories';
+
 	return (
-		<SooHeader className={`${scrolled ? 'scrolled' : ''}`}>
+		<SooHeader className={`${!light && scrolled ? 'scrolled' : ''}`}>
 			<Container
 				paddingMultiplier={2}
 				style={{
 					display: 'flex',
 					justifyContent: 'space-between',
 					paddingBlock: '1rem',
+					color: light ? 'black' : 'white',
 				}}
 			>
 				<Link href="/">
 					<a>
 						<Logo>
 							<Image
-								src={orthoExLogo}
+								src={light ? orthoExLogoCol : orthoExLogo}
 								objectPosition="left"
 								objectFit="contain"
 								layout="fill"
@@ -193,12 +200,15 @@ const NavBar = styled.nav`
 	}
 `;
 
-export const CTA = styled.button<{ white?: Boolean }>`
+type CTAType = { white?: Boolean };
+
+export const CTA = styled.button<CTAType>`
 	padding: 1.5rem 3rem;
 	border-radius: 4px;
 	cursor: pointer;
 	font-weight: bold;
 	transition: all 0.5s ease;
+	font-size: 1.2rem;
 
 	border: ${({ white }) => (white ? '1px solid var(--oex-orange)' : 'none')};
 	background-color: ${(prop) => (prop.white ? 'white' : 'var(--oex-orange)')};
@@ -214,6 +224,16 @@ export const CTA = styled.button<{ white?: Boolean }>`
 		}
 	}
 `;
+// TODO replace any with the type of CTA Props
+export const CTALink: FC<any & { href: string }> = (props) => {
+	return (
+		<Link href={props.href}>
+			<a>
+				<CTA {...props} className="no-animate" />
+			</a>
+		</Link>
+	);
+};
 
 const HamburgerButton = styled(CTA)`
 	padding: 0.3rem 0.6rem;

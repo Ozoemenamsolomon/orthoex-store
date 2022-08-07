@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import styled from 'styled-components';
 import Categories from '../../components/Categories';
 import { CTA } from '../../components/Header';
@@ -6,17 +7,16 @@ import StayTunedSection from '../../components/sections/StayTunedSection';
 import SooSection from '../../components/SooSection';
 import { Container } from '../../components/styled';
 import { categories } from '../composites';
+import product1 from '../../assets/new/images/product1.jpg';
 
 const composite = () => {
 	return (
 		<Container verticalPadding={7} bg="white">
 			composite
-			<SooSection>
-				<h2>All Categories</h2>
+			<SooSection header={{ title: 'All Categories', align: 'left' }}>
 				<Categories categories={categories} />
 			</SooSection>
-			<SooSection>
-				<h2>Popluar Products</h2>
+			<SooSection header={{ title: 'Popluar Products' }}>
 				<div
 					style={{
 						display: 'grid',
@@ -27,7 +27,12 @@ const composite = () => {
 					{Array.from({ length: 4 }).map((_, index) => (
 						<ProductCardContainer key={`product_${index}`}>
 							<div>
-								<img src="https://via.placeholder.com/260x260" alt="product" />
+								<Image
+									src={product1}
+									layout="fill"
+									objectFit="contain"
+									alt="product"
+								/>
 							</div>
 							<div>
 								<h3>Product Name</h3>
@@ -47,6 +52,11 @@ const composite = () => {
 export default composite;
 
 const ProductCardContainer = styled.div`
+	> div:first-child {
+		aspect-ratio: 210/164;
+		position: relative;
+	}
+
 	> div:nth-child(2) {
 		display: flex;
 		flex-direction: column;
@@ -64,6 +74,15 @@ const ProductCardContainer = styled.div`
 		box-shadow: 8px 8px 13px rgb(0 0 0 / 7%);
 		button {
 			opacity: 1;
+		}
+	}
+	h3 {
+		font-size: 1.1rem;
+		font-weight: normal;
+
+		+ p {
+			font-size: 2rem;
+			font-weight: bold;
 		}
 	}
 `;

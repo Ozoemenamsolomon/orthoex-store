@@ -5,7 +5,7 @@ export const ServicesCards = styled.div<{ minWidth?: string }>`
 	--min-width: ${({ minWidth = '120px' }) => minWidth};
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
-	gap: 1rem;
+	gap: 2.5rem;
 
 	&.bigger {
 		--min-width: 270px;
@@ -16,6 +16,10 @@ export const ServicesCards = styled.div<{ minWidth?: string }>`
 		> div:not(.wider) {
 			box-shadow: 1px 6px 8px rgb(0 0 0 / 17%);
 		}
+	}
+	&.smaller {
+		max-width: 65rem;
+		margin: auto;
 	}
 
 	& > div.wider:first-child {

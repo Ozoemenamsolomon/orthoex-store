@@ -76,7 +76,7 @@ const HeroBg = styled(Image)`
 `;
 
 const Hero = styled.div`
-	--hero-padding: 8em 0em 4em 0em;
+	--hero-padding: 10em 0em 10em 0em;
 	display: flex;
 	padding: var(--hero-padding);
 	justify-content: center;

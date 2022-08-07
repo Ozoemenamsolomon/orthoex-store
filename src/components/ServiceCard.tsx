@@ -38,7 +38,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 			</ImageContainer>
 			<div>
 				{title && <p style={{ fontWeight: 'bold' }}>{title}</p>}
-				<p>{description}</p>
+				<Description>{description}</Description>
 			</div>
 		</ImageTitleContainer>
 		{cta}
@@ -118,9 +118,13 @@ const ImageTitleContainer = styled.div`
 `;
 const ImageContainer = styled.div`
 	position: relative;
-	aspect-ratio: 1.5;
+	aspect-ratio: 1;
 	width: 5rem;
 	&.pad {
 		width: 3rem;
 	}
+`;
+
+const Description = styled.p`
+	font-size: 1.2rem;
 `;

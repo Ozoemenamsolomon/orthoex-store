@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import React from 'react';
 import heroBG from '../assets/new/images/hero-bg.jpg';
-import { CTA } from '../components/Header';
+import { CTA, CTALink } from '../components/Header';
 import { HeroComp as Hero } from '../components/Hero';
 import HeroContent from '../components/HeroContent';
 import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
@@ -65,14 +65,22 @@ const expectancies: ServiceCardType[] = [
 		description:
 			'We are committed to delivering superior composite materials that you can trust for your craft. Take advantage of our high quality products',
 		image: highPerformanceIcon,
-		cta: <CTA white>View products</CTA>,
+		cta: (
+			<CTALink href="#categories" white>
+				View products
+			</CTALink>
+		),
 		title: undefined,
 	},
 	{
 		description:
 			'With our safe and reliable composite solutions, you can make a wide range of stronger, lighter and tougher products',
 		image: handShake,
-		cta: <CTA white>Shop now</CTA>,
+		cta: (
+			<CTALink href="/categories" white>
+				Shop now
+			</CTALink>
+		),
 		title: undefined,
 	},
 	{
@@ -81,6 +89,24 @@ const expectancies: ServiceCardType[] = [
 		image: calculator,
 		cta: <CTA white>Calculate your resin</CTA>,
 		title: undefined,
+	},
+];
+
+const orderBenefits: ServiceCardType[] = [
+	{
+		title: 'Order by 12PM',
+		description: 'Shipped same day',
+		image: deliveryVan,
+	},
+	{
+		title: 'Safe payment',
+		description: 'Trusted SSL protection',
+		image: creditCard,
+	},
+	{
+		title: 'Technical Advice',
+		description: 'We offer helpful tips & tricks to aid your craft',
+		image: headphone,
 	},
 ];
 
@@ -156,16 +182,24 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 		),
 	},
 	{
+		id: 'categories',
 		header: {
 			title: 'Which of our product vertical is relevant for you?',
 			subtitle:
 				'Take full advantage of our expert knowledge and growing product portfolio in these dormains for your specific field of application:',
 		},
+
 		children: (
 			<div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 				<Categories categories={categories} />
 				<Link href="/categories">
-					<a style={{ alignSelf: 'flex-end' }}>
+					<a
+						style={{
+							alignSelf: 'flex-end',
+							textDecoration: 'underline',
+							color: 'var(--oex-orange)',
+						}}
+					>
 						<IconText icon={moreArrow} text="View more Categories" />
 					</a>
 				</Link>
@@ -195,26 +229,15 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 			paddingBlock: '5rem',
 		},
 		children: (
-			<ServicesCards>
-				{Array(3)
-					.fill(0)
-					.map((_, index) => (
-						<ServiceCard
-							imagePadding
-							className="no-animate white"
-							key={`e-comerce-${index}`}
-							service={{
-								description: 'Shipped same day',
-								image:
-									index === 1
-										? creditCard
-										: index === 2
-										? headphone
-										: deliveryVan,
-								title: 'Order by 12PM',
-							}}
-						/>
-					))}
+			<ServicesCards className="smaller">
+				{orderBenefits.map((benefit, index) => (
+					<ServiceCard
+						imagePadding
+						className="no-animate white"
+						key={`e-comerce-${index}`}
+						service={benefit}
+					/>
+				))}
 			</ServicesCards>
 		),
 	},
@@ -294,12 +317,16 @@ const CompositePage: NextPage = () => {
 					<HeroContent
 						title="Your preferred <br/> partner of choice"
 						claim="We are Nigeria's leading supplier of epoxy and polyester resins, fibre glass, carbon reinforcements, RTV silicone, polyurethane foams, and other composite materials. Our products are tailored to the needs of our customers in healthcare and manufacturing industries. We pride in satisfying our customers and helping them reach their business goals."
-						cta={<CTA className="no-animate">Shop now</CTA>}
+						cta={
+							<CTALink href="#categories" className="no-animate">
+								Shop now
+							</CTALink>
+						}
 					/>
 				</Hero>
 				<Container>
 					{sections.map((section, index) => (
-						<SooSection key={index} {...section} />
+						<SooSection key={`section_${index}`} {...section} />
 					))}
 				</Container>
 			</Container>

@@ -24,12 +24,13 @@ const HeroContent = styled.div`
 	align-items: flex-start;
 	gap: 2rem;
 	@media (min-width: 600px) {
-		max-width: 31rem;
+		max-width: 33rem;
 	}
 `;
 
 const HeroTitle = styled.h1`
 	color: var(--oex-orange);
+	font-size: 4rem;
 `;
 
 const HeroClaim = styled.p`
