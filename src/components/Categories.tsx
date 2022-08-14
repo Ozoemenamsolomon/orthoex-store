@@ -7,7 +7,7 @@ const Categories: FC<{ categories: CategoryProps[] }> = ({ categories }) => {
 			style={{
 				display: 'grid',
 				gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
-				gap: '1rem',
+				gap: '1.5rem 1rem',
 			}}
 		>
 			{categories.map((category, index) => (

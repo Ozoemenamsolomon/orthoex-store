@@ -15,7 +15,7 @@ const CategoryCard: FC<CategoryCardProps> = ({
 	category: { title, image, slug },
 }) => {
 	return (
-		<a href={`categories/${slug}`}>
+		<a href={`components/categories/${slug}`}>
 			<CategoryCardContainer>
 				<p>{title}</p>
 				<Image src={image} alt="placeholder" />

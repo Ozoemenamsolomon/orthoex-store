@@ -1,26 +1,27 @@
-import { CTA } from '../Header';
-import ServiceCard, { ServiceCardType } from '../ServiceCard';
-import SooSection from '../SooSection';
-import { ServicesCards } from '../styled';
-import chatIcon from '../../assets/new/icons/chat.svg';
-import faq from '../../assets/new/icons/faq.svg';
-import phoneIcon from '../../assets/new/icons/telephone.svg';
+import chatIcon from '@assets/new/icons/chat.svg';
+import faq from '@assets/new/icons/faq.svg';
+import phoneIcon from '@assets/new/icons/telephone.svg';
+import { CTA } from '@components/Header';
+import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import SooSection from '@components/SooSection';
+import { ServicesCards } from '@components/styled';
 
 export const helps: ServiceCardType[] = [
 	{
+		HTMLDescription: true,
 		description:
-			'Talk To A Customer Care Representative \n\n Mon-Fri: 9:00am-5:00pm',
+			'Talk to a customer care representative <br/> Mon - Fri: 9:00am - 5:00 pm',
 		image: phoneIcon,
 		cta: <CTA white>Dial Number</CTA>,
 	},
 	{
-		description: 'Chat with a Product expert',
+		description: 'Chat with a product expert',
 		image: chatIcon,
 		cta: <CTA white>Live chat</CTA>,
 	},
 	{
 		description:
-			'Find a list of answers to the mostPopular questions that are asked',
+			'Find a list of answers to the most popular questions that are asked',
 		image: faq,
 		cta: <CTA white>View FAQ</CTA>,
 	},

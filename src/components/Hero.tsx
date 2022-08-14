@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Image from 'next/image';
 
-import BG from '../assets/images/website-backfround-image.jpg';
+import DefaultBG from '../assets/images/website-backfround-image.jpg';
 import React, { FC } from 'react';
 import { Container } from './styled';
 
@@ -49,12 +49,12 @@ export const HeroComp: FC<HeroCompProp> = ({
 					zIndex: -5,
 				}}
 			>
-				<HeroBg layout="fill" objectFit="cover" src={bg || BG}></HeroBg>
+				<HeroBg layout="fill" objectFit="cover" src={bg || DefaultBG}></HeroBg>
 				{darkenBG && (
 					<div
 						style={{
 							height: '100%',
-							backgroundColor: '#00000066',
+							backgroundColor: '#000000a8',
 						}}
 					/>
 				)}

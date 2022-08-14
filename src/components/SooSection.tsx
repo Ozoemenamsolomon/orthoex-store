@@ -44,6 +44,8 @@ const SOOSectionContainer = styled('section')<{
 	background-color: ${(prop) => prop.color};
 	margin: 5rem 0;
 	flex-direction: column;
+	/* TODO look into this */
+	scroll-padding-top: 6rem;
 	@media (min-width: 600px) {
 		display: flex;
 	}
@@ -70,6 +72,7 @@ export const SectionHeader: FC<SectionHeaderProps> = ({
 const SectionHeaderContainer = styled.div<{ align?: 'left' | 'right' }>`
 	display: flex;
 	flex-direction: column;
+	gap: 1rem;
 	align-items: ${(prop) => (prop.align === 'left' ? 'flex-start' : 'flex-end')};
 	margin-bottom: 3rem;
 `;
@@ -88,6 +91,7 @@ const SectionSubtitle = styled.span`
 	align-self: center;
 	text-align: center;
 	display: block;
+	font-size: 1.2rem;
 	@media (min-width: 600px) {
 		max-width: 50%;
 	}

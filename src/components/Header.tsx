@@ -147,10 +147,6 @@ const Logo = styled.div`
 	aspect-ratio: 1.5;
 	@media (min-width: 600px) {
 		aspect-ratio: 2;
-
-		img {
-			filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.363));
-		}
 	}
 `;
 const NavBar = styled.nav`
@@ -200,10 +196,14 @@ const NavBar = styled.nav`
 	}
 `;
 
-type CTAType = { white?: Boolean };
+type CTAType = {
+	white?: Boolean;
+	/** class of "no-animate" removes the transition on hover */
+	className?: string;
+};
 
 export const CTA = styled.button<CTAType>`
-	padding: 1.5rem 3rem;
+	padding: 1rem 2rem;
 	border-radius: 4px;
 	cursor: pointer;
 	font-weight: bold;
@@ -224,12 +224,17 @@ export const CTA = styled.button<CTAType>`
 		}
 	}
 `;
-// TODO replace any with the type of CTA Props
-export const CTALink: FC<any & { href: string }> = (props) => {
+
+type CTAProps = React.ComponentProps<typeof CTA>;
+
+export const CTALink: FC<CTAProps & { href: string }> = ({
+	href,
+	...props
+}) => {
 	return (
-		<Link href={props.href}>
-			<a>
-				<CTA {...props} className="no-animate" />
+		<Link href={href}>
+			<a style={{ display: 'contents' }}>
+				<CTA {...props} />
 			</a>
 		</Link>
 	);

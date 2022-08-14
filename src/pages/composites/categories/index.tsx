@@ -1,13 +1,12 @@
-import React from 'react';
+import product1 from '@assets/new/images/product1.jpg';
+import Categories from '@components/Categories';
+import { CTA } from '@components/Header';
+import StayTunedSection from '@components/sections/StayTunedSection';
+import SooSection from '@components/SooSection';
+import { Container } from '@components/styled';
 import Image from 'next/image';
 import styled from 'styled-components';
-import Categories from '../../components/Categories';
-import { CTA } from '../../components/Header';
-import StayTunedSection from '../../components/sections/StayTunedSection';
-import SooSection from '../../components/SooSection';
-import { Container } from '../../components/styled';
-import { categories } from '../composites';
-import product1 from '../../assets/new/images/product1.jpg';
+import { categories } from '..';
 
 const composite = () => {
 	return (

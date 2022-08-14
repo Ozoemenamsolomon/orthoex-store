@@ -7,6 +7,7 @@ export type ServiceCardType = {
 	image: StaticImageData;
 	cta?: ReactElement;
 	title?: string;
+	HTMLDescription?: boolean;
 };
 
 type ServiceCardProps = {
@@ -25,7 +26,7 @@ type ServiceCardProps = {
 };
 
 const ServiceCard: FC<ServiceCardProps> = ({
-	service: { description, image, cta, title },
+	service: { description, image, cta, title, HTMLDescription = false },
 	className,
 	imagePadding,
 }) => (
@@ -38,7 +39,13 @@ const ServiceCard: FC<ServiceCardProps> = ({
 			</ImageContainer>
 			<div>
 				{title && <p style={{ fontWeight: 'bold' }}>{title}</p>}
-				<Description>{description}</Description>
+				<Description
+					dangerouslySetInnerHTML={
+						HTMLDescription ? { __html: description } : undefined
+					}
+				>
+					{!HTMLDescription ? description : undefined}
+				</Description>
 			</div>
 		</ImageTitleContainer>
 		{cta}
@@ -48,7 +55,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 export default ServiceCard;
 
 const ServiceCardContainer = styled.div`
-	padding: 0.8rem;
+	padding: 2rem;
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -56,6 +63,14 @@ const ServiceCardContainer = styled.div`
 	height: 100%;
 	width: 100%;
 	justify-content: space-between;
+	/* background-color: green; */
+
+	&:not(.no-shadow) {
+		box-shadow: 2px 0px 16px rgba(207, 207, 207, 0.1),
+			-2px 0px 4px rgba(207, 207, 207, 0.1),
+			0px 2px 12px rgba(207, 207, 207, 0.1),
+			0px -2px 16px rgba(207, 207, 207, 0.1);
+	}
 
 	position: relative;
 	transition: all 0.2s ease-out;

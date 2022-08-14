@@ -1,43 +1,43 @@
-import type { NextPage } from 'next';
-import React from 'react';
-import heroBG from '../assets/new/images/hero-bg.jpg';
-import { CTA, CTALink } from '../components/Header';
-import { HeroComp as Hero } from '../components/Hero';
-import HeroContent from '../components/HeroContent';
-import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
-import SooSection, { SOOSectionProp } from '../components/SooSection';
+import calculator from '@assets/new/icons/calculate.svg';
+import composite from '@assets/new/icons/composite.svg';
+import creditCard from '@assets/new/icons/credit-card.svg';
+import deliveryVan from '@assets/new/icons/delivery-van.svg';
+import durable from '@assets/new/icons/durable.svg';
+import handShake from '@assets/new/icons/handshake.svg';
+import headphone from '@assets/new/icons/headphone.svg';
+import highPerformanceIcon from '@assets/new/icons/high-performance.svg';
+import moreArrow from '@assets/new/icons/more-arrow.svg';
+import nigeria from '@assets/new/icons/nigeria.svg';
+import quality from '@assets/new/icons/quality.svg';
+import category1 from '@assets/new/images/category1.jpg';
+import category10 from '@assets/new/images/category10.jpg';
+import category2 from '@assets/new/images/category2.jpg';
+import category3 from '@assets/new/images/category3.jpg';
+import category4 from '@assets/new/images/category4.jpg';
+import category5 from '@assets/new/images/category5.jpg';
+import category6 from '@assets/new/images/category6.jpg';
+import category7 from '@assets/new/images/category7.jpg';
+import category8 from '@assets/new/images/category8.jpg';
+import category9 from '@assets/new/images/category9.jpg';
+import heroBG from '@assets/new/images/hero-bg.jpg';
+import Categories from '@components/Categories';
+import { CategoryProps } from '@components/CategoryCard';
+import { CTA, CTALink } from '@components/Header';
+import { HeroComp as Hero } from '@components/Hero';
+import HeroContent from '@components/HeroContent';
+import IconText from '@components/IconText';
+import { helps } from '@components/sections/NeedHelpSection';
+import StayTunedSection from '@components/sections/StayTunedSection';
+import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import SooSection, { SOOSectionProp } from '@components/SooSection';
 import {
 	Container,
 	PostCardsContainer,
 	ServicesCards,
-} from '../components/styled';
-import calculator from '../assets/new/icons/calculate.svg';
-import composite from '../assets/new/icons/composite.svg';
-import deliveryVan from '../assets/new/icons/delivery-van.svg';
-import creditCard from '../assets/new/icons/credit-card.svg';
-import headphone from '../assets/new/icons/headphone.svg';
-import durable from '../assets/new/icons/durable.svg';
-import handShake from '../assets/new/icons/handshake.svg';
-import highPerformanceIcon from '../assets/new/icons/high-performance.svg';
-import nigeria from '../assets/new/icons/nigeria.svg';
-import quality from '../assets/new/icons/quality.svg';
-import category1 from '../assets/new/images/category1.jpg';
-import category2 from '../assets/new/images/category2.jpg';
-import category3 from '../assets/new/images/category3.jpg';
-import category4 from '../assets/new/images/category4.jpg';
-import category5 from '../assets/new/images/category5.jpg';
-import category6 from '../assets/new/images/category6.jpg';
-import category7 from '../assets/new/images/category7.jpg';
-import category8 from '../assets/new/images/category8.jpg';
-import category9 from '../assets/new/images/category9.jpg';
-import category10 from '../assets/new/images/category10.jpg';
-import moreArrow from '../assets/new/icons/more-arrow.svg';
-import { helps } from '../components/sections/NeedHelpSection';
-import StayTunedSection from '../components/sections/StayTunedSection';
-import { CategoryProps } from '../components/CategoryCard';
-import Categories from '../components/Categories';
-import IconText from '../components/IconText';
+} from '@components/styled';
+import type { NextPage } from 'next';
 import Link from 'next/link';
+import React from 'react';
 
 const qualities: ServiceCardType[] = [
 	{
@@ -77,7 +77,7 @@ const expectancies: ServiceCardType[] = [
 			'With our safe and reliable composite solutions, you can make a wide range of stronger, lighter and tougher products',
 		image: handShake,
 		cta: (
-			<CTALink href="/categories" white>
+			<CTALink href="/components/categories" white>
 				Shop now
 			</CTALink>
 		),
@@ -189,9 +189,9 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 				'Take full advantage of our expert knowledge and growing product portfolio in these dormains for your specific field of application:',
 		},
 		children: (
-			<div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+			<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
 				<Categories categories={categories} />
-				<Link href="/categories">
+				<Link href="/composites/categories">
 					<a
 						style={{
 							alignSelf: 'flex-end',
@@ -232,7 +232,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 				{orderBenefits.map((benefit, index) => (
 					<ServiceCard
 						imagePadding
-						className="no-animate white"
+						className="no-animate white no-shadow"
 						key={`e-comerce-${index}`}
 						service={benefit}
 					/>
