@@ -131,7 +131,7 @@ const ImageTitleContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 `;
-const ImageContainer = styled.div`
+export const ImageContainer = styled.div`
 	position: relative;
 	aspect-ratio: 1;
 	width: 5rem;

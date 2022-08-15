@@ -19,7 +19,9 @@ const StayTunedSection = () => {
 					</div>
 					<SubscribeForm>
 						<input type="email" placeholder="Enter your email address here" />
-						<CTA type="submit">Subscribe</CTA>
+						<CTA type="submit" className="no-animate">
+							Subscribe
+						</CTA>
 					</SubscribeForm>
 				</div>
 				<div style={{ position: 'relative', flex: 1 }}>

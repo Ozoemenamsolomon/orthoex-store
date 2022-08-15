@@ -5,7 +5,7 @@ export const ServicesCards = styled.div<{ minWidth?: string }>`
 	--min-width: ${({ minWidth = '120px' }) => minWidth};
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
-	gap: 2.5rem;
+	gap: 5rem;
 
 	&.bigger {
 		--min-width: 270px;
@@ -34,9 +34,9 @@ export const ServicesCards = styled.div<{ minWidth?: string }>`
 
 export const PostCardsContainer = styled.div`
 	@media (min-width: 600px) {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(336px, 1fr));
+		gap: 4rem;
 	}
 `;
 
