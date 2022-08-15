@@ -38,7 +38,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 				<Image objectFit="contain" layout="fill" src={image} />
 			</ImageContainer>
 			<div>
-				{title && <p style={{ fontWeight: 'bold' }}>{title}</p>}
+				{title && <Title>{title}</Title>}
 				<Description
 					dangerouslySetInnerHTML={
 						HTMLDescription ? { __html: description } : undefined
@@ -138,6 +138,11 @@ export const ImageContainer = styled.div`
 	&.pad {
 		width: 3rem;
 	}
+`;
+
+const Title = styled.p`
+	font-size: 1.5rem;
+	font-weight: bold;
 `;
 
 const Description = styled.p`

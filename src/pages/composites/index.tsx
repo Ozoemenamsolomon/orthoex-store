@@ -81,7 +81,7 @@ const expectancies: ServiceCardType[] = [
 			'With our safe and reliable composite solutions, you can make a wide range of stronger, lighter and tougher products',
 		image: handShake,
 		cta: (
-			<CTALink href="/components/categories" white>
+			<CTALink href="/composites/categories" white>
 				Shop now
 			</CTALink>
 		),
