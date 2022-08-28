@@ -148,12 +148,7 @@ const Trainings = () => {
 					</div>
 					<ServicesCards minWidth="200px">
 						{qualities.map((quality, index) => (
-							<ServiceCard
-								key={index}
-								className="no-animate"
-								imagePadding
-								service={quality}
-							/>
+							<ServiceCard key={index} imagePadding service={quality} />
 						))}
 					</ServicesCards>
 				</SooSection>

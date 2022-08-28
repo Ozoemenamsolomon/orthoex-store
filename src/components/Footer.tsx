@@ -115,7 +115,6 @@ const Footer = () => {
 	return (
 		<SooFooter>
 			<Container
-				paddingMultiplier={-2}
 				style={{
 					color: 'white',
 				}}
@@ -190,8 +189,8 @@ const Footer = () => {
 						</SocialsContainer>
 					</div>
 				</div>
-				<hr style={{ marginBottom: '5rem' }} />
 			</Container>
+			<hr style={{ marginBottom: '5rem', background: 'white' }} />
 		</SooFooter>
 	);
 };

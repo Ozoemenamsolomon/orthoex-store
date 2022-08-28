@@ -88,12 +88,7 @@ const Contact = () => {
 					</h2>
 					<ServicesCards>
 						{contacts.map((quality, index) => (
-							<ServiceCard
-								key={index}
-								imagePadding
-								className="no-animate"
-								service={quality}
-							/>
+							<ServiceCard key={index} imagePadding service={quality} />
 						))}
 					</ServicesCards>
 				</SooSection>
@@ -147,12 +142,7 @@ const Contact = () => {
 				<SooSection>
 					<ServicesCards>
 						{connects.map((quality, index) => (
-							<ServiceCard
-								key={index}
-								imagePadding
-								className="no-animate"
-								service={quality}
-							/>
+							<ServiceCard key={index} imagePadding service={quality} />
 						))}
 					</ServicesCards>
 				</SooSection>

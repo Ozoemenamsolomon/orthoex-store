@@ -194,11 +194,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 		children: (
 			<ServicesCards>
 				{expectancies.map((quality, index) => (
-					<ServiceCard
-						key={'expectancies_' + index}
-						className="no-animate"
-						service={quality}
-					/>
+					<ServiceCard key={'expectancies_' + index} service={quality} />
 				))}
 			</ServicesCards>
 		),
@@ -235,11 +231,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 		children: (
 			<ServicesCards minWidth="200px">
 				{qualities.map((quality, index) => (
-					<ServiceCard
-						key={'qualities_' + index}
-						className="no-animate"
-						service={quality}
-					/>
+					<ServiceCard key={'qualities_' + index} service={quality} />
 				))}
 			</ServicesCards>
 		),
@@ -254,7 +246,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 				{orderBenefits.map((benefit, index) => (
 					<ServiceCard
 						imagePadding
-						className="no-animate white no-shadow"
+						className="white no-shadow"
 						key={`e-comerce-${index}`}
 						service={benefit}
 					/>
@@ -270,11 +262,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 		children: (
 			<ServicesCards>
 				{helps.map((help, index) => (
-					<ServiceCard
-						key={'helps_' + index}
-						className="no-animate"
-						service={help}
-					/>
+					<ServiceCard key={'helps_' + index} service={help} />
 				))}
 			</ServicesCards>
 		),

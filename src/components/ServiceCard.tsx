@@ -19,7 +19,6 @@ type ServiceCardProps = {
 	 * |`last`| orders card to last in mobile |
 	 * |`taller`| spans card two rows |
 	 * |`rounded`| makes the card border rounded |
-	 * |`no-animate`| no line animation |
 	 * |`shrink-start`| shrinks card  |
 	 *  */
 	className?: string;
@@ -92,28 +91,6 @@ const ServiceCardContainer = styled.div`
 		align-self: start;
 	}
 
-	&:not(.no-animate) {
-		padding-bottom: 5%;
-	}
-
-	&:not(.no-animate)::after {
-		height: 0%;
-		transition: all 0.2s ease-out;
-		content: '';
-		position: absolute;
-		width: 100%;
-		background-color: var(--oex-orange);
-		z-index: 1;
-		bottom: 0;
-		left: 0;
-	}
-	&:not(.no-animate):hover::after,
-	&:not(.no-animate):focus-within::after {
-		height: 5%;
-	}
-	&:not(.no-animate):hover {
-		box-shadow: 1px 6px 8px rgb(0 0 0 / 17%);
-	}
 	p {
 		margin-bottom: 0;
 	}
