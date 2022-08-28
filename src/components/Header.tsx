@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import React, { FC, useEffect, useState } from 'react';
 import orthoExLogo from '../assets/images/orthoex-logo-white.png';
-import orthoExLogoCol from '../assets/new/images/orthoex-logo-coloured.png';
 import NavLink from './NavLink';
 import { Container } from './styled';
 import searchIcon from '../assets/new/icons/search.svg';
@@ -47,24 +46,24 @@ const Header: React.FC<HeaderProp> = () => {
 
 	const router = useRouter();
 
-	const light = router.pathname === '/categories';
+	const light = router.pathname === '/composites/categories';
 
 	return (
-		<SooHeader className={`${!light && scrolled ? 'scrolled' : ''}`}>
+		<SooHeader className={`${light || scrolled ? 'scrolled' : ''}`}>
 			<Container
 				paddingMultiplier={2}
 				style={{
 					display: 'flex',
 					justifyContent: 'space-between',
 					paddingBlock: '1rem',
-					color: light ? 'black' : 'white',
+					color: 'white',
 				}}
 			>
 				<Link href="/">
 					<a>
 						<Logo>
 							<Image
-								src={light ? orthoExLogoCol : orthoExLogo}
+								src={orthoExLogo}
 								objectPosition="left"
 								objectFit="contain"
 								layout="fill"
