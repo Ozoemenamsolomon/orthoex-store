@@ -11,7 +11,6 @@ import orthoExLogo from '@assets/images/orthoex-logo-white.png';
 import { SocialCTA } from './Header';
 import { useRouter } from 'next/router';
 import { Container } from './styled';
-import { ImageContainer } from './ServiceCard';
 
 const Footer = () => {
 	const router = useRouter();
@@ -115,6 +114,7 @@ const Footer = () => {
 	return (
 		<SooFooter>
 			<Container
+				verticalPaddingInREM={8}
 				style={{
 					color: 'white',
 				}}
@@ -123,42 +123,47 @@ const Footer = () => {
 					style={{
 						display: 'flex',
 						flexWrap: 'wrap',
-						gap: '2rem',
+						gap: '5rem',
 						flex: '1',
 					}}
 				>
-					<Logo>
-						<Link href="/">
-							<a>
-								<ImageContainer>
-									<Image
-										src={orthoExLogo}
-										objectPosition="left"
-										objectFit="contain"
-										layout="fill"
-									></Image>
-								</ImageContainer>
-							</a>
-						</Link>
-					</Logo>
-					{footerLinks.map(({ title, links }, indexTop) => (
-						<div key={indexTop} style={{ flex: '1' }}>
-							<h5>{title}</h5>
-							<div
-								style={{
-									display: 'flex',
-									fontSize: '0.9rem',
-									flexDirection: 'column',
-								}}
-							>
-								{links.map(({ title, href }, index) => (
-									<Link key={`link-${indexTop}-${title}-${index}`} href={href}>
-										<a>{title}</a>
-									</Link>
-								))}
-							</div>
-						</div>
-					))}
+					<Link href="/">
+						<a>
+							<Logo>
+								<Image
+									src={orthoExLogo}
+									objectPosition="left"
+									objectFit="contain"
+									layout="fill"
+								></Image>
+							</Logo>
+						</a>
+					</Link>
+
+					<FooterLinkGroups>
+						{footerLinks.map(({ title, links }, indexTop) => (
+							<FooterLinkGroup key={indexTop}>
+								<h5>{title}</h5>
+								<div
+									style={{
+										display: 'flex',
+										fontSize: '0.9rem',
+										flexDirection: 'column',
+										gap: '1rem',
+									}}
+								>
+									{links.map(({ title, href }, index) => (
+										<Link
+											key={`link-${indexTop}-${title}-${index}`}
+											href={href}
+										>
+											<a>{title}</a>
+										</Link>
+									))}
+								</div>
+							</FooterLinkGroup>
+						))}
+					</FooterLinkGroups>
 				</div>
 				<div
 					style={{
@@ -200,12 +205,27 @@ export default Footer;
 const SooFooter = styled.footer``;
 
 const Logo = styled.div`
-	padding: 1rem 1rem;
-	height: 4rem;
-	width: 5rem;
+	width: 9rem;
+	aspect-ratio: 1.5;
 	position: relative;
-	margin: 1rem;
 `;
+
+const FooterLinkGroups = styled.div`
+	display: flex;
+	flex: 1;
+`;
+
+const FooterLinkGroup = styled.div`
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	> h5 {
+		margin: 0;
+		font-size: 1.2rem;
+	}
+`;
+
 const SocialsContainer = styled.div`
 	display: flex;
 	gap: 0.5rem;
