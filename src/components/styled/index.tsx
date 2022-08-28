@@ -41,7 +41,7 @@ export const PostCardsContainer = styled.div`
 `;
 
 export const Container = styled.div<{
-	verticalPadding?: number;
+	verticalPaddingInREM?: number;
 	paddingMultiplier?: number;
 	bg?: string;
 }>`
@@ -51,7 +51,7 @@ export const Container = styled.div<{
 	max-width: 1500px;
 	width: 100%;
 
-	${({ verticalPadding }) =>
+	${({ verticalPaddingInREM: verticalPadding }) =>
 		verticalPadding ? `padding-block: ${verticalPadding}rem;` : ''}
 	${({ paddingMultiplier }) => {
 		return `padding-inline: ${

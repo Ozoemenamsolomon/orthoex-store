@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Container } from './styled';
 
 export type SOOSectionProp = {
-	color?: string;
+	BGColor?: string;
 	style?: React.CSSProperties;
 	header?: SectionHeaderProps;
 	id?: string;
@@ -20,14 +20,14 @@ const twoColumnsStyle = {
 
 const SooSection: FC<SOOSectionProp> = ({
 	children,
-	color,
+	BGColor,
 	style,
 	header,
 	twoColumns,
 	id,
 }) => {
 	return (
-		<SOOSectionContainer id={id} color={color}>
+		<SOOSectionContainer id={id} BGColor={BGColor}>
 			{header && <SectionHeader {...header} />}
 			<Container style={!twoColumns ? style : { ...style, ...twoColumnsStyle }}>
 				{children}
@@ -39,10 +39,11 @@ const SooSection: FC<SOOSectionProp> = ({
 export default SooSection;
 
 const SOOSectionContainer = styled('section')<{
-	color?: String;
+	BGColor?: String;
 }>`
-	background-color: ${(prop) => prop.color};
-	margin: 5rem 0;
+	background-color: ${(prop) => prop.BGColor};
+	margin-top: 3rem;
+	padding-block: 3rem;
 	flex-direction: column;
 	/* TODO look into this */
 	scroll-padding-top: 6rem;

@@ -231,7 +231,11 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 		children: (
 			<ServicesCards minWidth="200px">
 				{qualities.map((quality, index) => (
-					<ServiceCard key={'qualities_' + index} service={quality} />
+					<ServiceCard
+						key={'qualities_' + index}
+						className="no-shadow"
+						service={quality}
+					/>
 				))}
 			</ServicesCards>
 		),

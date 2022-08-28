@@ -16,10 +16,12 @@ const products = () => {
 				{productsData.map(({ title, img, description, price }, id) => (
 					<ProductCard
 						key={id}
-						title={title}
-						description={description}
-						price={price}
-						imageURL={`${img}`}
+						product={{
+							name: title,
+							description: description,
+							price: price,
+							image: `${img}`,
+						}}
 					/>
 				))}
 			</ProductCardsSection>

@@ -1,110 +1,94 @@
 import styled from 'styled-components';
 import Image from 'next/image';
 import { CTA } from './Header';
+import StarRating from 'react-svg-star-rating';
 
 export type ProductCardProp = {
-	title: string;
-	description: string;
-	price: string | number;
-	imageURL: string;
+	product: {
+		name: string;
+		price: number;
+		image: StaticImageData;
+		rating: {
+			stars: number;
+			count: number;
+		};
+	};
 };
 
-const CTAMod = styled(CTA)`
-	--border-radius: 12px;
-
-	margin-top: auto;
-	width: 100%;
-	transition: all 0.5s ease-in-out;
-	border: 0;
-	&:hover {
-		background-color: var(--oex-orange-dark);
-	}
-`;
+export const priceFormatter = Intl.NumberFormat('en-ng', {
+	currency: 'NGN',
+	style: 'currency',
+});
 
 const ProductCard: React.FC<ProductCardProp> = ({
-	imageURL,
-	description,
-	price,
-	title,
+	product: {
+		image,
+		price,
+		name,
+		rating: { count, stars },
+	},
 }) => {
-	const handleProductPurchase = () => {
-		window.open(
-			`https://wa.me/2347030324696?text=Hello%2C%0D%0A%0D%0AI%27d+love+to+purchase+${title}%2C+I+got+linked+from+the+products+page+of+your+composite+website.`,
-			'_blank',
-			'noopener noreferrer'
-		);
-	};
-
 	return (
-		<Card>
-			<ImageContainer onClick={handleProductPurchase}>
+		<ProductCardContainer>
+			<div>
 				<Image
-					src={`/composite-ad/${imageURL}`}
+					src={image}
 					layout="fill"
-					objectFit="cover"
-					alt=""
+					objectFit="contain"
+					alt="product image"
 				/>
-			</ImageContainer>
-			<Content>
-				<Titel>{title}</Titel>
-				<Price>
-					{Intl.NumberFormat('en-NG', {
-						style: 'currency',
-						currency: 'NGN',
-					}).format(Number(price))}
-				</Price>
-				<p className="description">{description}</p>
-				<CTAMod onClick={handleProductPurchase}>Purchase product &rarr;</CTAMod>
-			</Content>
-		</Card>
+			</div>
+			<ProductCardContent>
+				<h3>{name}</h3>
+				<p>{priceFormatter.format(price)}</p>
+				<div>
+					<StarRating size={16} initialRating={stars} isReadOnly />
+					<span>({count})</span>
+				</div>
+				<CTA>ADD TO CART</CTA>
+			</ProductCardContent>
+		</ProductCardContainer>
 	);
 };
 
 export default ProductCard;
 
-const Card = styled.div`
+const ProductCardContainer = styled.div`
+	border-radius: 4px;
 	transition: all 0.3s ease-in-out;
-	display: flex;
-	border-radius: var(--border-radius);
-	flex-direction: column;
+
+	> div:first-child {
+		aspect-ratio: 210/164;
+		position: relative;
+	}
+
+	button {
+		opacity: 0;
+	}
+
 	&:hover {
-		transform: translateY(-3px);
-		box-shadow: 2px 2px 4px rgb(0 0 0 / 19%);
-	}
-	&:hover img {
-		transform: scale(1.051);
-	}
-	&:hover ${CTA} {
-		box-shadow: 2px 2px 4px rgb(0 0 0 / 19%);
+		box-shadow: 8px 8px 13px rgb(0 0 0 / 7%);
+		button {
+			opacity: 1;
+		}
 	}
 `;
-const ImageContainer = styled.div`
-	display: flex;
-	position: relative;
-	height: 200px;
-	cursor: pointer;
-	border-radius: var(--border-radius) var(--border-radius) 0rem 0rem;
-	overflow: hidden;
-	& img {
-		width: 100%;
-		transition: all 0.8s ease-in-out;
-	}
-`;
-const Content = styled.div`
-	border: 1px solid var(--oex-orange);
-	border-radius: 0rem 0rem var(--border-radius) var(--border-radius);
-	padding: 1rem 0.5rem;
+
+const ProductCardContent = styled.div`
 	display: flex;
 	flex-direction: column;
-	flex: 1;
+	padding: 1rem;
+	gap: 0.51rem;
+
+	h3 {
+		font-weight: normal;
+		font-size: 1.5rem;
+		margin: 0;
+
+		+ p {
+			margin: 0;
+			font-size: 1.2rem;
+			font-weight: 600;
+		}
+	}
 `;
-const Titel = styled.h3`
-	margin: 0;
-`;
-const Price = styled.p`
-	margin: 0;
-`;
-// const DoubleStrikeThrough = styled.span`
-// 	text-decoration: line-through;
-// 	text-decoration-style: double;
-// `;

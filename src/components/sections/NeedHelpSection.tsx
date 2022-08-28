@@ -1,7 +1,7 @@
 import chatIcon from '@assets/new/icons/chat.svg';
 import faq from '@assets/new/icons/faq.svg';
 import phoneIcon from '@assets/new/icons/telephone.svg';
-import { CTA } from '@components/Header';
+import { CTA, CTALink } from '@components/Header';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
 import SooSection from '@components/SooSection';
 import { ServicesCards } from '@components/styled';
@@ -12,12 +12,25 @@ export const helps: ServiceCardType[] = [
 		description:
 			'Talk to a customer care representative <br/> Mon - Fri: 9:00am - 5:00 pm',
 		image: phoneIcon,
-		cta: <CTA white>Dial Number</CTA>,
+		cta: (
+			<CTALink href="tel:+2347030324696" white>
+				Dial Number
+			</CTALink>
+		),
 	},
 	{
 		description: 'Chat with a product expert',
 		image: chatIcon,
-		cta: <CTA white>Live chat</CTA>,
+		cta: (
+			<CTALink
+				target="_blank"
+				href="https://wa.me/2347030324696"
+				rel="noopener noreferrer"
+				white
+			>
+				Live chat
+			</CTALink>
+		),
 	},
 	{
 		description:
