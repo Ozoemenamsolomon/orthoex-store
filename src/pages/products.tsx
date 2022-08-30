@@ -4,6 +4,7 @@ import { Container } from '../components/styled';
 import { HeroComp } from '../components/Hero';
 import ProductCard from '../components/ProductCard';
 import { productsData } from '../data/productsData';
+import product1 from '@assets/new/images/product1.jpg';
 
 const products = () => {
 	return (
@@ -18,9 +19,12 @@ const products = () => {
 						key={id}
 						product={{
 							name: title,
-							description: description,
 							price: price,
-							image: `${img}`,
+							image: product1,
+							rating: {
+								stars: 4.2,
+								count: 16,
+							},
 						}}
 					/>
 				))}

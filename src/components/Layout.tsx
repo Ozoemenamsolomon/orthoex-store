@@ -28,7 +28,7 @@ const Layout: React.FC<LayoutProp> = ({ children }) => {
 					href="/favicon-16x16.png"
 				/>
 				<link rel="manifest" href="/site.webmanifest" />
-				<link rel="mask-icon" href="/safari-pinned-tab.svg" BGColor="#5bbad5" />
+				<link rel="mask-icon" href="/safari-pinned-tab.svg" />
 				<meta name="msapplication-TileColor" content="#00aba9" />
 				<meta name="theme-color" content="#ffffff" />
 			</Head>
@@ -52,6 +52,4 @@ const LayoutWrapper = styled.div`
 const Main = styled.main`
 	flex: 1;
 	display: flex;
-	/* justify-content: center;
-	flex-direction: column; */
 `;
