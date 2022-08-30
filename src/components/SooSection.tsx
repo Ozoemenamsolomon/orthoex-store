@@ -27,7 +27,7 @@ const SooSection: FC<SOOSectionProp> = ({
 	id,
 }) => {
 	return (
-		<SOOSectionContainer id={id} BGColor={BGColor}>
+		<SOOSectionContainer id={id} bgColor={BGColor}>
 			{header && <SectionHeader {...header} />}
 			<Container style={!twoColumns ? style : { ...style, ...twoColumnsStyle }}>
 				{children}
@@ -39,9 +39,9 @@ const SooSection: FC<SOOSectionProp> = ({
 export default SooSection;
 
 const SOOSectionContainer = styled('section')<{
-	BGColor?: String;
+	bgColor?: string;
 }>`
-	background-color: ${(prop) => prop.BGColor};
+	background-color: ${(prop) => prop.bgColor};
 	margin-top: 3rem;
 	padding-block: 3rem;
 	flex-direction: column;
