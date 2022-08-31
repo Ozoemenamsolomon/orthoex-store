@@ -3,8 +3,8 @@ import { SectionHeader } from './SooSection';
 import { HeroComp as Hero } from './Hero';
 import Image from 'next/image';
 import styled from 'styled-components';
-import QuotationMark from '../assets/icons/quotation-mark.svg';
-import TestimonialBG from '../assets/images/testimonial-bg-2.jpg';
+import QuotationMark from '@assets/icons/quotation-mark.svg';
+import TestimonialBG from '@assets/images/testimonial-bg-2.jpg';
 
 const TestimonialSection: FC<{
 	testimony: string;

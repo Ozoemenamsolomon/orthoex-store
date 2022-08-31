@@ -3,12 +3,12 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import React, { FC, useEffect, useState } from 'react';
-import orthoExLogo from '../assets/images/orthoex-logo-white.png';
+import orthoExLogo from '@assets/images/orthoex-logo-white.png';
 import NavLink from './NavLink';
 import { Container } from './styled';
-import searchIcon from '../assets/new/icons/search.svg';
-import accountIcon from '../assets/new/icons/account.svg';
-import cartIcon from '../assets/new/icons/shopping-cart.svg';
+import searchIcon from '@assets/new/icons/search.svg';
+import accountIcon from '@assets/new/icons/account.svg';
+import cartIcon from '@assets/new/icons/shopping-cart.svg';
 import { useRouter } from 'next/router';
 
 interface HeaderProp {}
@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProp> = () => {
 
 	const router = useRouter();
 
-	const light = router.pathname === '/composites/categories';
+	const light = router.pathname.includes('categories');
 
 	return (
 		<SooHeader className={`${light || scrolled ? 'scrolled' : ''}`}>
@@ -253,5 +253,5 @@ export const SocialCTA = styled(CTA)`
 	padding: 0.5rem;
 	color: black;
 	background-color: white;
-	border-radius: 9999px;
+	border-radius: 7px;
 `;

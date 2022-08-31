@@ -4,7 +4,7 @@ import StayTunedSection from '@components/sections/StayTunedSection';
 import SooSection from '@components/SooSection';
 import { Container } from '@components/styled';
 import product1 from '@assets/new/images/product1.jpg';
-import { categories } from '..';
+import { categories } from '@data/categories';
 
 const composite = () => {
 	return (

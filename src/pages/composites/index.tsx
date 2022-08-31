@@ -9,22 +9,11 @@ import highPerformanceIcon from '@assets/new/icons/high-performance.svg';
 import moreArrow from '@assets/new/icons/more-arrow.svg';
 import nigeria from '@assets/new/icons/nigeria.svg';
 import quality from '@assets/new/icons/quality.svg';
-import category1 from '@assets/new/images/category1.jpg';
 import client1 from '@assets/new/images/client1.jpg';
 import client2 from '@assets/new/images/client2.jpg';
 import client3 from '@assets/new/images/client3.jpg';
-import category10 from '@assets/new/images/category10.jpg';
-import category2 from '@assets/new/images/category2.jpg';
-import category3 from '@assets/new/images/category3.jpg';
-import category4 from '@assets/new/images/category4.jpg';
-import category5 from '@assets/new/images/category5.jpg';
-import category6 from '@assets/new/images/category6.jpg';
-import category7 from '@assets/new/images/category7.jpg';
-import category8 from '@assets/new/images/category8.jpg';
-import category9 from '@assets/new/images/category9.jpg';
 import heroBG from '@assets/new/images/hero-bg.jpg';
 import Categories from '@components/Categories';
-import { CategoryProps } from '@components/CategoryCard';
 import { CTA, CTALink } from '@components/Header';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
@@ -39,6 +28,7 @@ import {
 	ServicesCards,
 } from '@components/styled';
 import TestimonialCard, { TestimonialProps } from '@components/TestimonialCard';
+import { categories } from 'data/categories';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import React from 'react';
@@ -111,59 +101,6 @@ const orderBenefits: ServiceCardType[] = [
 		title: 'Technical Advice',
 		description: 'We offer helpful tips & tricks to aid your craft',
 		image: headphone,
-	},
-];
-
-export const categories: CategoryProps[] = [
-	{
-		title: 'Polyester Resin & Components',
-		slug: 'composite',
-		image: category1,
-	},
-	{
-		title: 'Epoxy Resin & Components',
-		slug: 'composite',
-		image: category2,
-	},
-	{
-		title: 'Silicone & Polyurethane Rubber',
-		slug: 'composite',
-		image: category3,
-	},
-	{
-		title: 'Fabric & Prepreg Reinforcements',
-		slug: 'composite',
-		image: category4,
-	},
-	{
-		title: 'Gelcoats',
-		slug: 'composite',
-		image: category5,
-	},
-	{
-		title: 'Expanding Foams',
-		slug: 'composite',
-		image: category6,
-	},
-	{
-		title: 'Colour Pigments',
-		slug: 'composite',
-		image: category7,
-	},
-	{
-		title: 'Sealants & Adhesives',
-		slug: 'composite',
-		image: category8,
-	},
-	{
-		title: 'Tools, Machines & Supplies',
-		slug: 'composite',
-		image: category9,
-	},
-	{
-		title: 'Mould Release Agents',
-		slug: 'composite',
-		image: category10,
 	},
 ];
 
@@ -289,26 +226,24 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 
 const CompositePage: NextPage = () => {
 	return (
-		<>
-			<Container bg="white" paddingMultiplier={0}>
-				<Hero darkenBG bg={heroBG}>
-					<HeroContent
-						title="Your preferred <br/> partner of choice"
-						claim="We are Nigeria's leading supplier of epoxy and polyester resins, fibre glass, carbon reinforcements, RTV silicone, polyurethane foams, and other composite materials. Our products are tailored to the needs of our customers in healthcare and manufacturing industries. We pride in satisfying our customers and helping them reach their business goals."
-						cta={
-							<CTALink href="#categories" className="no-animate">
-								Shop now
-							</CTALink>
-						}
-					/>
-				</Hero>
-				<Container>
-					{sections.map((section, index) => (
-						<SooSection key={`section_${index}`} {...section} />
-					))}
-				</Container>
+		<Container bg="white" paddingMultiplier={0}>
+			<Hero darkenBG bg={heroBG}>
+				<HeroContent
+					title="Your preferred <br/> partner of choice"
+					claim="We are Nigeria's leading supplier of epoxy and polyester resins, fibre glass, carbon reinforcements, RTV silicone, polyurethane foams, and other composite materials. Our products are tailored to the needs of our customers in healthcare and manufacturing industries. We pride in satisfying our customers and helping them reach their business goals."
+					cta={
+						<CTALink href="#categories" className="no-animate">
+							Shop now
+						</CTALink>
+					}
+				/>
+			</Hero>
+			<Container>
+				{sections.map((section, index) => (
+					<SooSection key={`section_${index}`} {...section} />
+				))}
 			</Container>
-		</>
+		</Container>
 	);
 };
 

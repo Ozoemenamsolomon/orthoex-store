@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Image from 'next/image';
 
-import DefaultBG from '../assets/images/website-backfround-image.jpg';
+import DefaultBG from '@assets/images/website-backfround-image.jpg';
 import React, { FC } from 'react';
 import { Container } from './styled';
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { CTA } from '../Header';
 import SooSection from '../SooSection';
-import newsletter from '../../assets/new/images/newsletter.png';
+import newsletter from '@assets/new/images/newsletter.png';
 import Image from 'next/image';
 import { Container } from '../styled';
 

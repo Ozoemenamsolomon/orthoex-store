@@ -114,9 +114,9 @@ const Footer = () => {
 	return (
 		<SooFooter>
 			<Container
-				verticalPaddingInREM={8}
 				style={{
 					color: 'white',
+					paddingBlockStart: '8rem',
 				}}
 			>
 				<div

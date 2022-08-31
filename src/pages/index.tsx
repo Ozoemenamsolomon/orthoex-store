@@ -1,13 +1,13 @@
 import type { NextPage } from 'next';
 import React from 'react';
-import AfterSales from '../assets/icons/after-sales-support-icon.png';
-import Composite from '../assets/new/icons/composite.svg';
-import Consultancy from '../assets/icons/consultancy-ion.png';
-import Procurement from '../assets/icons/procurement-icon.png';
-import PandO from '../assets/icons/prosthetics-icon.png';
-import Training from '../assets/icons/training-icon.png';
-import Whatsapp from '../assets/icons/whatsapp-icon.jpg';
-import HeaderBG from '../assets/images/header-background.png';
+import AfterSales from '@assets/icons/after-sales-support-icon.png';
+import Composite from '@assets/new/icons/composite.svg';
+import Consultancy from '@assets/icons/consultancy-ion.png';
+import Procurement from '@assets/icons/procurement-icon.png';
+import PandO from '@assets/icons/prosthetics-icon.png';
+import Training from '@assets/icons/training-icon.png';
+import Whatsapp from '@assets/icons/whatsapp-icon.jpg';
+import HeaderBG from '@assets/images/header-background.png';
 import { CTA } from '../components/Header';
 import { HeroComp as Hero } from '../components/Hero';
 import HeroContent from '../components/HeroContent';
@@ -43,7 +43,7 @@ type PostType = {
 const Home: NextPage = () => {
 	const findRep = () => {};
 	return (
-		<>
+		<Container bg="white" paddingMultiplier={0}>
 			<Hero bg={HeaderBG}>
 				<HeroContent
 					title={'Your preferred<br />partner of choice'}
@@ -153,7 +153,7 @@ const Home: NextPage = () => {
 					</PostCardsContainer>
 				</SooSection>
 			</Container>
-		</>
+		</Container>
 	);
 };
 
