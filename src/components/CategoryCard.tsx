@@ -27,7 +27,7 @@ const CategoryCard: FC<CategoryCardProps> = ({
 export default CategoryCard;
 
 const CategoryCardContainer = styled.div`
-	border: 1px solid var(--oex-gray);
+	border: 1px solid var(--oex-grey);
 	border-radius: 0.81rem;
 	display: flex;
 	flex-direction: column;

@@ -1,28 +1,29 @@
+import LayoutIcon from '@assets/new/icons/Layout';
+import OrderIcon from '@assets/new/icons/Order';
+import categoryBanner from '@assets/new/images/category-banner.jpg';
+import Breadcrumb, { BreadcrumProps } from '@components/Breadcrumb';
 import { CategoryProps } from '@components/CategoryCard';
-import ProductCard from '@components/ProductCard';
+import ProductCard, { ProductProps } from '@components/ProductCard';
 import { Container } from '@components/styled';
 import { categories } from 'data/categories';
 import { GetStaticProps, NextPage } from 'next';
-import OrderIcon from '@assets/new/icons/Order';
-import LayoutIcon from '@assets/new/icons/Layout';
+import Image from 'next/image';
 
-import React from 'react';
 import styled from 'styled-components';
+const Category: NextPage<{
+	category: CategoryProps;
+	products: ProductProps[];
+}> = ({ category: { title, image }, products }) => {
+	const breadcrumb: BreadcrumProps[] = [
+		{ name: 'Composites', link: '/composites' },
+		{ name: 'All Categories', link: '/composites/categories' },
+		{ name: title, link: '#' },
+	];
 
-const Category: NextPage<{ category: CategoryProps }> = ({
-	category: { title, image },
-}) => {
-	const { productCount } = { productCount: 9 };
 	return (
 		<Container verticalPaddingInREM={7} paddingMultiplier={4} bg="#fafafa">
 			<LayoutDiv>
-				<div>
-					<span>Composites</span>
-					<span>&gt;&gt;</span>
-					<span>All Categories</span>
-					<span>&gt;&gt;</span>
-					<span>{title}</span>
-				</div>
+				<Breadcrumb breadcrumb={breadcrumb} />
 
 				<div>
 					<h2>BRAND</h2>
@@ -63,7 +64,7 @@ const Category: NextPage<{ category: CategoryProps }> = ({
 						</div>
 					</TitleFilterBar>
 					<div>
-						<span>Showing {productCount} Products</span>{' '}
+						<span>Showing {products.length} Products</span>
 						<span>
 							<OrderIcon />
 							<LayoutIcon />
@@ -76,21 +77,24 @@ const Category: NextPage<{ category: CategoryProps }> = ({
 							gap: '2rem',
 						}}
 					>
-						{Array.from({ length: productCount }, () => ({
-							image: image,
-							price: 170000,
-							name: title,
-							rating: {
-								count: 0,
-								stars: 3.5,
-							},
-						})).map((product, index) => (
-							<ProductCard key={`product_${index}`} product={product} />
+						{products.map((product, index) => (
+							<ProductCard
+								key={`product_${index}`}
+								product={{ ...product, name: title, image }}
+							/>
 						))}
-						<div style={{ gridColumn: '1/-1' }}>pagination</div>
+						<div style={{ gridColumn: '1/-1' }}>
+							<button>to beginning</button>
+							<button>previous</button>
+							<button>1</button>
+							<button>2</button>
+							<button>right</button>
+						</div>
 					</div>
 				</div>
-				<div>hello</div>
+				<div>
+					<Image src={categoryBanner} layout="fill" objectFit="contain" />
+				</div>
 			</LayoutDiv>
 		</Container>
 	);
@@ -111,8 +115,21 @@ export const getStaticProps: GetStaticProps = async (context) => {
 		({ slug }) => slug === context.params?.category
 	);
 
+	const products = Array.from({ length: 9 }, () => ({
+		image: categoryBanner,
+		price: 170000,
+		name: 'title',
+		rating: {
+			count: 0,
+			stars: 3.5,
+		},
+	}));
+
 	return {
-		props: { category },
+		props: {
+			category,
+			products,
+		},
 	};
 };
 
@@ -120,10 +137,23 @@ const LayoutDiv = styled.div`
 	display: grid;
 	grid-template-columns: 320px 1fr;
 	gap: 2rem;
+	align-items: start;
 
 	> div:nth-child(1),
 	> div:last-child {
 		grid-column: span 2;
+	}
+
+	> div:nth-child(2),
+	> div:nth-child(3) {
+		background-color: white;
+		padding: 1rem;
+	}
+
+	> div:last-child {
+		position: relative;
+		aspect-ratio: 4.1;
+		background-color: green;
 	}
 `;
 
@@ -131,6 +161,7 @@ const TitleFilterBar = styled.div`
 	display: flex;
 	padding-block: 1rem;
 	justify-content: space-between;
+	gap: 2rem;
 
 	h2 {
 		margin: 0;

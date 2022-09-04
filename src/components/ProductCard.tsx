@@ -3,16 +3,18 @@ import Image from 'next/image';
 import { CTA } from './Header';
 import StarRating from 'react-svg-star-rating';
 
-export type ProductCardProp = {
-	product: {
-		name: string;
-		price: number;
-		image: StaticImageData;
-		rating: {
-			stars: number;
-			count: number;
-		};
+export type ProductProps = {
+	name: string;
+	price: number;
+	image: StaticImageData;
+	rating: {
+		stars: number;
+		count: number;
 	};
+};
+
+type ProductCardProp = {
+	product: ProductProps;
 };
 
 export const priceFormatter = Intl.NumberFormat('en-ng', {

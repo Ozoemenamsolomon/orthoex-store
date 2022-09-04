@@ -5,13 +5,17 @@ import SooSection from '@components/SooSection';
 import { Container } from '@components/styled';
 import product1 from '@assets/new/images/product1.jpg';
 import { categories } from '@data/categories';
+import Breadcrumb from '@components/Breadcrumb';
 
 const composite = () => {
+	const breadcrumb = [
+		{ name: 'Composites', link: '/composites' },
+		{ name: 'All Categories', link: '/composites/categories' },
+	];
+
 	return (
 		<Container verticalPaddingInREM={7} paddingMultiplier={4} bg="#fafafa">
-			<div>
-				Composites <span>&gt;&gt;</span> All Categories
-			</div>
+			<Breadcrumb breadcrumb={breadcrumb} />
 			<SooSection
 				BGColor="white"
 				header={{ title: 'All Categories', align: 'left' }}
