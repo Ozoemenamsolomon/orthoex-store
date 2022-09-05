@@ -27,6 +27,6 @@ export default TestimonialCard;
 
 const TestimonialCardContainer = styled.div`
 	padding: 2rem;
-	border: 1px solid #f3f3f3;
+	border: 1px solid var(--oex-light-grey);
 	border-radius: 4px;
 `;

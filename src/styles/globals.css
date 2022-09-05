@@ -10,6 +10,9 @@ body {
 
 :root {
 	--oex-grey: #cfcfcf;
+	--oex-off-white: #fafafa;
+	--oex-dark-grey: #707070;
+	--oex-light-grey: #f3f3f3;
 	--oex-orange: #fe7624;
 	--oex-yellow: #edbf37;
 	--oex-orange-dark: #e74803;

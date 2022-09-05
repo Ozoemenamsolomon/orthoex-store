@@ -194,8 +194,8 @@ const Footer = () => {
 						</SocialsContainer>
 					</div>
 				</div>
+				<hr style={{ marginBottom: '5rem', background: 'white' }} />
 			</Container>
-			<hr style={{ marginBottom: '5rem', background: 'white' }} />
 		</SooFooter>
 	);
 };

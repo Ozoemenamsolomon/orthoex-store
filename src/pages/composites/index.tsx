@@ -141,7 +141,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 		header: {
 			title: 'Which of our product vertical is relevant for you?',
 			subtitle:
-				'Take full advantage of our expert knowledge and growing product portfolio in these dormains for your specific field of application:',
+				'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
 		},
 		children: (
 			<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -210,7 +210,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 	},
 	{
 		header: {
-			title: 'What people say about us',
+			title: 'What our clients say about us',
 			subtitle:
 				'There are many reasons why our partners love to work with us. Hear it from the people for yourself',
 		},

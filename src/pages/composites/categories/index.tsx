@@ -14,7 +14,11 @@ const composite = () => {
 	];
 
 	return (
-		<Container verticalPaddingInREM={7} paddingMultiplier={4} bg="#fafafa">
+		<Container
+			verticalPaddingInREM={7}
+			paddingMultiplier={4}
+			bg="var(--oex-off-white)"
+		>
 			<Breadcrumb breadcrumb={breadcrumb} />
 			<SooSection
 				BGColor="white"

@@ -1,8 +1,7 @@
-import LayoutIcon from '@assets/new/icons/Layout';
-import OrderIcon from '@assets/new/icons/Order';
 import categoryBanner from '@assets/new/images/category-banner.jpg';
 import Breadcrumb, { BreadcrumProps } from '@components/Breadcrumb';
 import { CategoryProps } from '@components/CategoryCard';
+import { CTA } from '@components/Header';
 import ProductCard, { ProductProps } from '@components/ProductCard';
 import { Container } from '@components/styled';
 import { categories } from 'data/categories';
@@ -10,6 +9,9 @@ import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 
 import styled from 'styled-components';
+import { Dashboard } from 'styled-icons/boxicons-solid';
+import { ArrowPrevious, Filter } from 'styled-icons/fluentui-system-filled';
+import { CheveronLeft, CheveronRight } from 'styled-icons/zondicons';
 const Category: NextPage<{
 	category: CategoryProps;
 	products: ProductProps[];
@@ -21,11 +23,15 @@ const Category: NextPage<{
 	];
 
 	return (
-		<Container verticalPaddingInREM={7} paddingMultiplier={4} bg="#fafafa">
+		<Container
+			verticalPaddingInREM={7}
+			paddingMultiplier={4}
+			bg="var(--oex-off-white)"
+		>
 			<LayoutDiv>
 				<Breadcrumb breadcrumb={breadcrumb} />
 
-				<div>
+				<FilterPanel>
 					<h2>BRAND</h2>
 					<div>
 						<div>
@@ -40,7 +46,7 @@ const Category: NextPage<{
 					<div>
 						<div>
 							<h2>PRICE (₦)</h2>
-							Apply
+							<CTA>Apply</CTA>
 						</div>
 						<div>
 							<input type="range" name="price-filte" id="price-filter" />
@@ -50,7 +56,7 @@ const Category: NextPage<{
 							<output name="price-filter-end">30,000</output>
 						</div>
 					</div>
-				</div>
+				</FilterPanel>
 				<div>
 					<TitleFilterBar>
 						<h2>{title}</h2>
@@ -66,31 +72,31 @@ const Category: NextPage<{
 					<div>
 						<span>Showing {products.length} Products</span>
 						<span>
-							<OrderIcon />
-							<LayoutIcon />
+							<Filter size={24} color="var(--oex-dark-grey)" />
+							<Dashboard size={24} color="var(--oex-orange)" />
 						</span>
 					</div>
-					<div
-						style={{
-							display: 'grid',
-							gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
-							gap: '2rem',
-						}}
-					>
+					<ProductsContainer>
 						{products.map((product, index) => (
 							<ProductCard
 								key={`product_${index}`}
 								product={{ ...product, name: title, image }}
 							/>
 						))}
-						<div style={{ gridColumn: '1/-1' }}>
-							<button>to beginning</button>
-							<button>previous</button>
-							<button>1</button>
-							<button>2</button>
-							<button>right</button>
+						<div>
+							<PaginationButton>
+								<ArrowPrevious size={24} />
+							</PaginationButton>
+							<PaginationButton>
+								<CheveronLeft size={24} />
+							</PaginationButton>
+							<PaginationButton className="active">1</PaginationButton>
+							<PaginationButton>2</PaginationButton>
+							<PaginationButton>
+								<CheveronRight size={24} />
+							</PaginationButton>
 						</div>
-					</div>
+					</ProductsContainer>
 				</div>
 				<div>
 					<Image src={categoryBanner} layout="fill" objectFit="contain" />
@@ -139,13 +145,13 @@ const LayoutDiv = styled.div`
 	gap: 2rem;
 	align-items: start;
 
-	> div:nth-child(1),
-	> div:last-child {
+	> *:nth-child(1),
+	> *:last-child {
 		grid-column: span 2;
 	}
 
-	> div:nth-child(2),
-	> div:nth-child(3) {
+	> *:nth-child(2),
+	> *:nth-child(3) {
 		background-color: white;
 		padding: 1rem;
 	}
@@ -153,25 +159,70 @@ const LayoutDiv = styled.div`
 	> div:last-child {
 		position: relative;
 		aspect-ratio: 4.1;
-		background-color: green;
+	}
+
+	h2 {
+		margin: 0;
+		font-size: 1.5rem;
+	}
+`;
+
+const FilterPanel = styled.aside`
+	> div:nth-of-type(2) {
+		/* background-color: goldenrod; */
+		border-bottom: 1px solid var(--oex-grey);
+		border-top: 1px solid var(--oex-grey);
+		padding-block: 1rem;
+
+		> div:first-child {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
 	}
 `;
 
 const TitleFilterBar = styled.div`
 	display: flex;
-	padding-block: 1rem;
+	padding-bottom: 1rem;
 	justify-content: space-between;
 	gap: 2rem;
 
-	h2 {
-		margin: 0;
+	select {
+		font-size: 1rem;
+		color: var(--oex-dark-grey);
+		border: none;
 	}
 
 	+ div {
-		border-bottom: 1px solid #cfcfcf;
-		border-top: 1px solid #cfcfcf;
+		border-bottom: 1px solid var(--oex-grey);
+		border-top: 1px solid var(--oex-grey);
 		padding-block: 1rem;
 		display: flex;
 		justify-content: space-between;
+	}
+`;
+
+const ProductsContainer = styled.div`
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 2rem;
+
+	> div:last-child {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		grid-column: 1 / -1;
+	}
+`;
+
+const PaginationButton = styled(CTA)`
+	color: black;
+	background-color: white;
+	border: 1px solid var(--oex-grey);
+	border-radius: 4px;
+
+	&.active {
+		border-color: var(--oex-orange);
 	}
 `;

@@ -3,13 +3,14 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import React, { FC, useEffect, useState } from 'react';
-import orthoExLogo from '@assets/images/orthoex-logo-white.png';
+// import orthoExLogo from '@assets/images/orthoex-logo-white.png';
+import orthoExLogo from '@assets/new/images/orthoex-logo-coloured.png';
 import NavLink from './NavLink';
 import { Container } from './styled';
 import searchIcon from '@assets/new/icons/search.svg';
 import accountIcon from '@assets/new/icons/account.svg';
 import cartIcon from '@assets/new/icons/shopping-cart.svg';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 interface HeaderProp {}
 
@@ -44,9 +45,10 @@ const Header: React.FC<HeaderProp> = () => {
 		};
 	}, []);
 
-	const router = useRouter();
+	// const router = useRouter();
 
-	const light = router.pathname.includes('categories');
+	// const light = router.pathname.includes('categories');
+	const light = true;
 
 	return (
 		<SooHeader className={`${light || scrolled ? 'scrolled' : ''}`}>
@@ -56,7 +58,6 @@ const Header: React.FC<HeaderProp> = () => {
 					display: 'flex',
 					justifyContent: 'space-between',
 					paddingBlock: '1rem',
-					color: 'white',
 				}}
 			>
 				<Link href="/">
@@ -134,8 +135,10 @@ const SooHeader = styled.header`
 	z-index: 5;
 	color: #fff;
 	transition: background-color 0.5s ease;
+	box-shadow: 0px 1px 7px #00000059;
 	&.scrolled {
-		background-color: #00000097;
+		background-color: #ffffff;
+		color: black;
 		backdrop-filter: blur(4px);
 	}
 `;
@@ -166,15 +169,16 @@ const NavBar = styled.nav`
 	}
 	& > div > a.active {
 		position: relative;
+		color: var(--oex-orange);
 	}
-	& > div > a.active::after {
+	/* & > div > a.active::after {
 		content: '';
 		position: absolute;
 		inset-inline: 0;
 		inset-block-end: 0;
 		background-color: var(--oex-orange);
 		height: 10%;
-	}
+	} */
 
 	@media (max-width: 900px) {
 		display: none;

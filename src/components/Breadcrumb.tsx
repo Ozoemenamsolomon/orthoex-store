@@ -38,6 +38,7 @@ const Divisor = styled.span`
 const BreadcrumbContainer = styled.div`
 	display: flex;
 	gap: 0.2rem;
+	font-size: 0.8rem;
 
 	> a:last-of-type {
 		color: var(--oex-orange);
