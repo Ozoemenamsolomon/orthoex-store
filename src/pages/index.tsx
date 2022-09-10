@@ -8,18 +8,18 @@ import PandO from '@assets/icons/prosthetics-icon.png';
 import Training from '@assets/icons/training-icon.png';
 import Whatsapp from '@assets/icons/whatsapp-icon.jpg';
 import HeaderBG from '@assets/images/header-background.png';
-import { CTA } from '../components/Header';
-import { HeroComp as Hero } from '../components/Hero';
-import HeroContent from '../components/HeroContent';
-import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
-import SooSection from '../components/SooSection';
+import { CTA } from '@components/Header';
+import { HeroComp as Hero } from '@components/Hero';
+import HeroContent from '@components/HeroContent';
+import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import SooSection from '@components/SooSection';
 import {
 	Container,
 	PostCardsContainer,
 	ServicesCards,
-} from '../components/styled';
-import TestimonialSection from '../components/TestimonialSection';
-import ValuesSection from '../components/ValuesSection';
+} from '@components/styled';
+import TestimonialSection from '@components/TestimonialSection';
+import ValuesSection from '@components/ValuesSection';
 
 const services: ServiceCardType[] = [
 	{ description: 'Prosthetics and Orthotics', image: PandO },
