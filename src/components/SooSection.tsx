@@ -74,14 +74,13 @@ const SectionHeaderContainer = styled.div<{ align?: 'left' | 'right' }>`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
-	align-items: ${(prop) => (prop.align === 'left' ? 'flex-start' : 'flex-end')};
+	align-items: ${(prop) => (prop.align === 'left' ? 'flex-start' : 'center')};
 	margin-bottom: 3rem;
 `;
 
 const SectionTitle = styled.h2`
 	margin: 0px 0px 1rem;
 	text-align: center;
-	align-self: center;
 	font-size: 3.2rem;
 	@media (min-width: 600px) {
 		max-width: 70%;
@@ -89,7 +88,6 @@ const SectionTitle = styled.h2`
 `;
 
 const SectionSubtitle = styled.span`
-	align-self: center;
 	text-align: center;
 	display: block;
 	font-size: 1.2rem;
