@@ -3,14 +3,14 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import React, { FC, useEffect, useState } from 'react';
-// import orthoExLogo from '@assets/images/orthoex-logo-white.png';
-import orthoExLogo from '@assets/new/images/orthoex-logo-coloured.png';
+import orthoExLogo from '@assets/images/orthoex-logo-white.png';
+import orthoExLogoCol from '@assets/new/images/orthoex-logo-coloured.png';
 import NavLink from './NavLink';
 import { Container } from './styled';
-import searchIcon from '@assets/new/icons/search.svg';
-import accountIcon from '@assets/new/icons/account.svg';
-import cartIcon from '@assets/new/icons/shopping-cart.svg';
-// import { useRouter } from 'next/router';
+import SearchIcon from '@assets/new/icons/Search';
+import SccountIcon from '@assets/new/icons/Account';
+import CartIcon from '@assets/new/icons/ShoppingCart';
+import { useRouter } from 'next/router';
 
 interface HeaderProp {}
 
@@ -23,9 +23,9 @@ const navLinks = [
 	{ name: 'Careers', to: '/careers' },
 ];
 const rightNavLinks = [
-	{ name: 'Search', to: '/search', icon: searchIcon },
-	{ name: 'Orthopaedics', to: '/account', icon: accountIcon },
-	{ name: 'Composites', to: '/cart', icon: cartIcon },
+	{ name: 'Search', to: '/search', Icon: SearchIcon },
+	{ name: 'Orthopaedics', to: '/account', Icon: SccountIcon },
+	{ name: 'Composites', to: '/cart', Icon: CartIcon },
 ];
 
 const Header: React.FC<HeaderProp> = () => {
@@ -45,13 +45,12 @@ const Header: React.FC<HeaderProp> = () => {
 		};
 	}, []);
 
-	// const router = useRouter();
+	const router = useRouter();
 
-	// const light = router.pathname.includes('categories');
-	const light = true;
+	const light = router.pathname.includes('categories') || scrolled;
 
 	return (
-		<SooHeader className={`${light || scrolled ? 'scrolled' : ''}`}>
+		<SooHeader className={`${light ? 'scrolled' : ''}`}>
 			<Container
 				paddingMultiplier={2}
 				style={{
@@ -64,7 +63,7 @@ const Header: React.FC<HeaderProp> = () => {
 					<a>
 						<Logo>
 							<Image
-								src={orthoExLogo}
+								src={light ? orthoExLogoCol : orthoExLogo}
 								objectPosition="left"
 								objectFit="contain"
 								layout="fill"
@@ -115,7 +114,11 @@ const Header: React.FC<HeaderProp> = () => {
 						}}
 					>
 						{rightNavLinks.map((navLink, index) => (
-							<NavLink key={`nav-link-${navLink.name}-${index}`} {...navLink} />
+							<NavLink
+								key={`nav-link-${navLink.name}-${index}`}
+								{...navLink}
+								icon={() => <navLink.Icon colour={light ? 'black' : 'white'} />}
+							/>
 						))}
 					</div>
 				</NavBar>
@@ -135,8 +138,8 @@ const SooHeader = styled.header`
 	z-index: 5;
 	color: #fff;
 	transition: background-color 0.5s ease;
-	box-shadow: 0px 1px 7px #00000059;
 	&.scrolled {
+		border-bottom: 2px solid var(--oex-light-grey);
 		background-color: #ffffff;
 		color: black;
 		backdrop-filter: blur(4px);
