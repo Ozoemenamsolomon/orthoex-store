@@ -7,11 +7,110 @@ import { Container } from '@components/styled';
 import { categories } from 'data/categories';
 import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
+import React from 'react';
 
 import styled from 'styled-components';
 import { Dashboard } from 'styled-icons/boxicons-solid';
 import { ArrowPrevious, Filter } from 'styled-icons/fluentui-system-filled';
 import { CheveronLeft, CheveronRight } from 'styled-icons/zondicons';
+// import { useRouter } from 'next/router';
+import StarRating from 'react-svg-star-rating';
+import PriceFilter from '@components/PriceFilter';
+
+// const CategoryRadioOption: React.FC<CategoryProps> = ({ title, slug }) => {
+// 	const router = useRouter();
+
+// 	return (
+// 		<label className="label" htmlFor={slug}>
+// 			<input
+// 				checked={router.asPath === `/composites/categories/${slug}`}
+// 				type="radio"
+// 				name={'category-selector'}
+// 				id={slug}
+// 				onClick={() => {
+// 					router.push(`/composites/categories/${slug}`);
+// 				}}
+// 			/>
+// 			{title}
+// 		</label>
+// 	);
+// };
+
+const filterSections = [
+	// {
+	// 	header: <h2>CATEGORY</h2>,
+	// 	content: (
+	// 		<div>
+	// 			{categories.map((category) => (
+	// 				<CategoryRadioOption {...category} />
+	// 			))}
+	// 		</div>
+	// 	),
+	// },
+	{
+		header: <h2>BRAND</h2>,
+		content: (
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					gap: '.5rem',
+				}}
+			>
+				<label>
+					<input type="checkbox" name="brand" id="brand" />
+					<span>OEX Composite</span>
+				</label>
+				<label>
+					<input type="checkbox" name="brand" id="brand" />
+					<span>Shangaix</span>
+				</label>
+			</div>
+		),
+	},
+	{
+		header: (
+			<div>
+				<h2>PRICE (₦)</h2>
+				<button
+					style={{
+						color: 'var(--oex-orange)',
+						background: 'none',
+						border: 'none',
+					}}
+				>
+					Apply
+				</button>
+			</div>
+		),
+		content: <PriceFilter />,
+	},
+	{
+		header: <h2>PRODUCT RATING</h2>,
+		content: (
+			<div>
+				{new Array(4).fill({}).map((_, index) => (
+					<label style={{ display: 'flex', gap: '.2rem' }}>
+						<input
+							type="radio"
+							name="rating-filter"
+							id={'rating-filter-' + (4 - index).toString()}
+							style={{ margin: '0' }}
+						/>
+						<StarRating
+							size={16}
+							initialRating={4 - index}
+							isReadOnly
+							activeColor="var(--oex-yellow)"
+						/>
+						<span>&amp; above</span>
+					</label>
+				))}
+			</div>
+		),
+	},
+];
+
 const Category: NextPage<{
 	category: CategoryProps;
 	products: ProductProps[];
@@ -32,30 +131,12 @@ const Category: NextPage<{
 				<Breadcrumb breadcrumb={breadcrumb} />
 
 				<FilterPanel>
-					<h2>BRAND</h2>
-					<div>
-						<div>
-							<input type="checkbox" name="brand" id="brand" />
-							<span>OEX Composite</span>
-						</div>
-						<div>
-							<input type="checkbox" name="brand" id="brand" />
-							<span>Shangaix</span>
-						</div>
-					</div>
-					<div>
-						<div>
-							<h2>PRICE (₦)</h2>
-							<CTA>Apply</CTA>
-						</div>
-						<div>
-							<input type="range" name="price-filte" id="price-filter" />
-						</div>
-						<div>
-							<output name="price-filter-start">200</output> -{' '}
-							<output name="price-filter-end">30,000</output>
-						</div>
-					</div>
+					{filterSections.map(({ header, content }) => (
+						<FilterPanelSection>
+							<div>{header}</div>
+							{content}
+						</FilterPanelSection>
+					))}
 				</FilterPanel>
 				<div>
 					<TitleFilterBar>
@@ -169,16 +250,28 @@ const LayoutDiv = styled.div`
 
 const FilterPanel = styled.aside`
 	> div:nth-of-type(2) {
-		/* background-color: goldenrod; */
-		border-bottom: 1px solid var(--oex-grey);
-		border-top: 1px solid var(--oex-grey);
-		padding-block: 1rem;
-
-		> div:first-child {
+		> div:first-child > div {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			flex: 1;
 		}
+	}
+`;
+
+const FilterPanelSection = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	padding-block: 1rem;
+	&:not(:last-child) {
+		border-bottom: 1px solid var(--oex-grey);
+	}
+	&:first-child {
+		padding-block-start: 0rem;
+	}
+	.label {
+		display: block;
 	}
 `;
 
@@ -205,7 +298,7 @@ const TitleFilterBar = styled.div`
 
 const ProductsContainer = styled.div`
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
 	gap: 2rem;
 
 	> div:last-child {

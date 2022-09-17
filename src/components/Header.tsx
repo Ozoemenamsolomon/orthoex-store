@@ -47,7 +47,10 @@ const Header: React.FC<HeaderProp> = () => {
 
 	const router = useRouter();
 
-	const light = router.pathname.includes('categories') || scrolled;
+	const light =
+		router.pathname.includes('categories') ||
+		router.pathname.includes('products') ||
+		scrolled;
 
 	return (
 		<SooHeader className={`${light ? 'scrolled' : ''}`}>

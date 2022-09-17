@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { CTA } from './Header';
 import StarRating from 'react-svg-star-rating';
+import Link from 'next/link';
 
 export type ProductProps = {
 	name: string;
@@ -33,15 +34,23 @@ const ProductCard: React.FC<ProductCardProp> = ({
 	return (
 		<ProductCardContainer>
 			<div>
-				<Image
-					src={image}
-					layout="fill"
-					objectFit="contain"
-					alt="product image"
-				/>
+				<Link href={`/composites/products/polyester-resin`}>
+					<a>
+						<Image
+							src={image}
+							layout="fill"
+							objectFit="contain"
+							alt="product image"
+						/>
+					</a>
+				</Link>
 			</div>
 			<ProductCardContent>
-				<h3>{name}</h3>
+				<Link href={`/composites/products/polyester-resin`}>
+					<a>
+						<h3>{name}</h3>
+					</a>
+				</Link>
 				<p>{priceFormatter.format(price)}</p>
 				<div>
 					<StarRating size={16} initialRating={stars} isReadOnly />
