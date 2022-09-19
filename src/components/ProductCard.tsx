@@ -1,8 +1,8 @@
-import styled from 'styled-components';
 import Image from 'next/image';
-import { CTA } from './Header';
-import StarRating from 'react-svg-star-rating';
 import Link from 'next/link';
+import styled from 'styled-components';
+import { CTA } from './Header';
+import ProductStars from './ProductStars';
 
 export type ProductProps = {
 	name: string;
@@ -24,12 +24,7 @@ export const priceFormatter = Intl.NumberFormat('en-ng', {
 });
 
 const ProductCard: React.FC<ProductCardProp> = ({
-	product: {
-		image,
-		price,
-		name,
-		rating: { count, stars },
-	},
+	product: { image, price, name, rating },
 }) => {
 	return (
 		<ProductCardContainer>
@@ -52,10 +47,7 @@ const ProductCard: React.FC<ProductCardProp> = ({
 					</a>
 				</Link>
 				<p>{priceFormatter.format(price)}</p>
-				<div>
-					<StarRating size={16} initialRating={stars} isReadOnly />
-					<span>({count})</span>
-				</div>
+				<ProductStars {...rating} />
 				<CTA>ADD TO CART</CTA>
 			</ProductCardContent>
 		</ProductCardContainer>

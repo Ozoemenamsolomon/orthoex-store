@@ -4,12 +4,28 @@ import SooSection from '@components/SooSection';
 import { Container } from '@components/styled';
 import product1 from '@assets/new/images/product1.jpg';
 import styled from 'styled-components';
+import ProductStars from '@components/ProductStars';
+import { formatPrice } from 'utils';
 
 const SingleProduct = () => {
-	const { productCaegory, productName, productCaegorySlug } = {
-		productCaegory: 'Polyester Resin & Components',
-		productCaegorySlug: 'Polyester Resin & Components',
-		productName: 'Polyester Resin',
+	const {
+		description,
+		name: productName,
+		price,
+		category: { name: productCategory, slug: productCaegorySlug },
+		brand: { name: brandName },
+		review: { count: reviewCount, average: reviewAverage },
+	} = {
+		name: 'Polyester Resin',
+		price: 50,
+		description:
+			'FLAG Resin is a part our Medium-Viscosity 2:1 Non-Blushing Resin. FLAG stands for filling, laminating and gluing. It is compatible with LV Resin and the Slow.',
+		category: {
+			name: 'Polyester Resin & Components',
+			slug: 'Polyester Resin & Components',
+		},
+		brand: { name: 'OEX' },
+		review: { count: 30, average: 3.5 },
 	};
 
 	return (
@@ -25,16 +41,24 @@ const SingleProduct = () => {
 						{ name: 'Composites', link: '/composites' },
 						{ name: 'All Categories', link: '/composites/categories' },
 						{
-							name: productCaegory,
+							name: productCategory,
 							link: `/composites/categories/${productCaegorySlug}`,
 						},
 						{ name: productName, link: '#' },
 					]}
 				/>
-				<div>1</div>
-				<div>2</div>
-				<div>3</div>
-				<div>4</div>
+				<SooSection BGColor="white">
+					<h3>{productName}</h3>
+					<p>
+						Brand: <span>{brandName}</span>
+					</p>
+					<ProductStars stars={reviewAverage} count={reviewCount} />
+					<p>{formatPrice(price)}</p>
+					<p>{description}</p>
+				</SooSection>
+				<SooSection BGColor="white">2</SooSection>
+				<SooSection BGColor="white">3</SooSection>
+				<SooSection BGColor="white">4</SooSection>
 				<SooSection
 					BGColor="white"
 					header={{ title: 'Recently Viewed', align: 'left' }}
