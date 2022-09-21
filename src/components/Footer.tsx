@@ -116,7 +116,7 @@ const Footer = () => {
 			<Container
 				style={{
 					color: 'white',
-					paddingBlockStart: '8rem',
+					// paddingBlockStart: '8rem',
 				}}
 			>
 				<LogoInfoWrapper>
@@ -158,8 +158,9 @@ const Footer = () => {
 						))}
 					</FooterLinkGroups>
 				</LogoInfoWrapper>
+				{/* <hr style={{ marginBottom: '2rem', background: 'white', fontSize: "10px" }} /> */}
 
-					<CopyirghtLogoWrapper>
+					<CopyrightLogoWrapper>
 						<span>Copyright © 2022 - OrthoEx NG</span>
 						<div>
 							<p>Follow OrthoEx NG</p>
@@ -178,7 +179,7 @@ const Footer = () => {
 								</SocialCTA>
 							</SocialsContainer>
 						</div>
-					</CopyirghtLogoWrapper>
+					</CopyrightLogoWrapper>
 				{/* <hr style={{ marginBottom: '5rem', background: 'white' }} /> */}
 			</Container>
 		</SooFooter>
@@ -187,7 +188,9 @@ const Footer = () => {
 
 export default Footer;
 
-const SooFooter = styled.footer``;
+const SooFooter = styled.footer`
+width: 100%;
+`;
 
 const Logo = styled.div`
 	width: 9rem;
@@ -198,6 +201,7 @@ const Logo = styled.div`
 const FooterLinkGroups = styled.div`
 	display: flex;
 	flex: 1;
+	width: 100%;
 
 	@media(max-width:768px){
 		flex-wrap: wrap;
@@ -205,14 +209,21 @@ const FooterLinkGroups = styled.div`
 `;
 
 const FooterLinkGroup = styled.div`
-	flex: 1;
+	// flex: 1;
 	display: flex;
 	flex-direction: column;
-	gap: 2rem;
+	gap: 3rem;
+	width: 50%;
+
 	> h5 {
 		margin: 0;
 		font-size: 1.2rem;
 	}
+	@media(max-width:768px){
+		width: 50%;
+		margin-bottom: 4rem;
+	}
+
 `;
 
 const SocialsContainer = styled.div`
@@ -221,19 +232,47 @@ const SocialsContainer = styled.div`
 `;
 
 const LogoInfoWrapper = styled.div`
-	display: 'flex';
-	flexWrap: 'wrap';
-	gap: '5rem';
-	flex: '1';
+	display: flex;
+	flex-rap: wrap;
+	gap: 5rem;
+	flex: 1;
+	margin-top: 4rem;
 
+
+	@media(max-width:768px){
+		flex-direction: column;
+	}
 `
 
-const CopyirghtLogoWrapper = styled.div`
-display: 'flex';
-justifyContent: 'space-between';
-alignItems: 'center';
-marginBlock: '2.5rem';
-flexWrap: 'wrap';
-gap: '1rem';
-margin-bottom: 5rem;
+const CopyrightLogoWrapper = styled.div`
+	display: flex;
+	position: relative;
+	justify-content: space-between;
+	align-items: center;
+	// margin-block: 2.5rem;
+	// flex-wrap: wrap;
+	gap: 2rem;
+	margin: 3rem 0 5rem;
+	width: 100%;
+	// padding:;
+
+	@media(min-width: 600px){
+		&:before{
+			content: '';
+			position: absolute;
+			border-top: solid 1px #fff;
+			width: 105%;
+			z-index: 5000;
+			top: -30%;
+			left: -3%;
+			right: -3%;
+		}
+	}
+
+	@media(max-width: 768px){
+		flex-direction: column;
+		align-items: start;
+	}
+
+
 `
