@@ -221,21 +221,19 @@ const SocialsContainer = styled.div`
 `;
 
 const LogoInfoWrapper = styled.div`
-	display: 'flex',
-	flexWrap: 'wrap',
-	gap: '5rem',
-	flex: '1',
+	display: 'flex';
+	flexWrap: 'wrap';
+	gap: '5rem';
+	flex: '1';
 
-	@media(max-width: 768px){
-
-	}
 `
 
 const CopyirghtLogoWrapper = styled.div`
-display: 'flex',
-justifyContent: 'space-between',
-alignItems: 'center',
-marginBlock: '2.5rem',
-flexWrap: 'wrap',
-gap: '1rem',
+display: 'flex';
+justifyContent: 'space-between';
+alignItems: 'center';
+marginBlock: '2.5rem';
+flexWrap: 'wrap';
+gap: '1rem';
+margin-bottom: 2rem;
 `
