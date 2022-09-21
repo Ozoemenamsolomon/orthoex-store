@@ -48,7 +48,7 @@ export const Container = styled.div<{
 	background-color: ${({ bg }) => {
 		return bg || 'unset';
 	}};
-	max-width: 1500px;
+	// max-width: 1500px;
 	width: 100%;
 
 	${({ verticalPaddingInREM: verticalPadding }) =>

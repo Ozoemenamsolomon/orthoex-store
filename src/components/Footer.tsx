@@ -119,14 +119,7 @@ const Footer = () => {
 					paddingBlockStart: '8rem',
 				}}
 			>
-				<div
-					style={{
-						display: 'flex',
-						flexWrap: 'wrap',
-						gap: '5rem',
-						flex: '1',
-					}}
-				>
+				<LogoInfoWrapper>
 					<Link href="/">
 						<a>
 							<Logo>
@@ -164,36 +157,28 @@ const Footer = () => {
 							</FooterLinkGroup>
 						))}
 					</FooterLinkGroups>
-				</div>
-				<div
-					style={{
-						display: 'flex',
-						justifyContent: 'space-between',
-						alignItems: 'center',
-						marginBlock: '2.5rem',
-						flexWrap: 'wrap',
-						gap: '1rem',
-					}}
-				>
-					<span>Copyright © 2022 - OrthoEx NG</span>
-					<div>
-						<p>Follow OrthoEx NG</p>
-						<SocialsContainer>
-							<SocialCTA>
-								<Facebook width={18} />
-							</SocialCTA>
-							<SocialCTA>
-								<Instagram width={18} />
-							</SocialCTA>
-							<SocialCTA>
-								<Linkedin width={18} />
-							</SocialCTA>
-							<SocialCTA>
-								<Twitter width={18} />
-							</SocialCTA>
-						</SocialsContainer>
-					</div>
-				</div>
+				</LogoInfoWrapper>
+
+					<CopyirghtLogoWrapper>
+						<span>Copyright © 2022 - OrthoEx NG</span>
+						<div>
+							<p>Follow OrthoEx NG</p>
+							<SocialsContainer>
+								<SocialCTA>
+									<Facebook width={18} />
+								</SocialCTA>
+								<SocialCTA>
+									<Instagram width={18} />
+								</SocialCTA>
+								<SocialCTA>
+									<Linkedin width={18} />
+								</SocialCTA>
+								<SocialCTA>
+									<Twitter width={18} />
+								</SocialCTA>
+							</SocialsContainer>
+						</div>
+					</CopyirghtLogoWrapper>
 				<hr style={{ marginBottom: '5rem', background: 'white' }} />
 			</Container>
 		</SooFooter>
@@ -213,6 +198,10 @@ const Logo = styled.div`
 const FooterLinkGroups = styled.div`
 	display: flex;
 	flex: 1;
+
+	@media(max-width:768px){
+		flex-wrap: wrap;
+	}
 `;
 
 const FooterLinkGroup = styled.div`
@@ -230,3 +219,23 @@ const SocialsContainer = styled.div`
 	display: flex;
 	gap: 0.5rem;
 `;
+
+const LogoInfoWrapper = styled.div`
+	display: 'flex',
+	flexWrap: 'wrap',
+	gap: '5rem',
+	flex: '1',
+
+	@media(max-width: 768px){
+
+	}
+`
+
+const CopyirghtLogoWrapper = styled.div`
+display: 'flex',
+justifyContent: 'space-between',
+alignItems: 'center',
+marginBlock: '2.5rem',
+flexWrap: 'wrap',
+gap: '1rem',
+`
