@@ -179,7 +179,7 @@ const Footer = () => {
 							</SocialsContainer>
 						</div>
 					</CopyirghtLogoWrapper>
-				<hr style={{ marginBottom: '5rem', background: 'white' }} />
+				{/* <hr style={{ marginBottom: '5rem', background: 'white' }} /> */}
 			</Container>
 		</SooFooter>
 	);
@@ -235,5 +235,5 @@ alignItems: 'center';
 marginBlock: '2.5rem';
 flexWrap: 'wrap';
 gap: '1rem';
-margin-bottom: 2rem;
+margin-bottom: 5rem;
 `
