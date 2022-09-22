@@ -52,8 +52,8 @@ const StyledServiceStandard = styled.div`
   display: flex;
   align-items: center;
   padding: 0.5rem;
-
   gap: 4rem;
+  margin-top: 2rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -66,9 +66,9 @@ const ServiceWriteUp = styled.div`
 
   & > h3 {
     margin-bottom: 2rem;
-    font-size: 2rem;
+    font-size: 3rem;
     line-height: 1.2;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   & > p {
@@ -77,6 +77,12 @@ const ServiceWriteUp = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
+
+    & > h3 {
+      font-size: 2rem;
+      line-height: 1.2;
+      font-weight: 500;
+    }
   }
 `;
 
