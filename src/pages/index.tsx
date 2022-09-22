@@ -20,6 +20,7 @@ import {
 } from '@components/styled';
 import TestimonialSection from '@components/TestimonialSection';
 import ValuesSection from '@components/ValuesSection';
+import ServiceStandard from '@components/ServiceStandard';
 
 const services: ServiceCardType[] = [
 	{ description: 'Prosthetics and Orthotics', image: PandO },
@@ -54,7 +55,8 @@ const Home: NextPage = () => {
 				/>
 			</Hero>
 			<Container>
-				<SooSection twoColumns>
+				<ServiceStandard/>
+				{/* <SooSection twoColumns>
 					<div>
 						<h2>Our commitment to quality ensures your peace of mind</h2>
 						<p>
@@ -74,7 +76,8 @@ const Home: NextPage = () => {
 							/>
 						))}
 					</ServicesCards>
-				</SooSection>
+				</SooSection> */}
+
 				<ValuesSection />
 				<SooSection>
 					<ServicesCards className="bigger">
