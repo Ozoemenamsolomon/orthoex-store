@@ -114,7 +114,7 @@ const filterSections = [
 const Category: NextPage<{
 	category: CategoryProps;
 	products: ProductProps[];
-}> = ({ category: { title, image }, products }) => {
+}> = ({ category: { name: title, image }, products }) => {
 	const breadcrumb: BreadcrumProps[] = [
 		{ name: 'Composites', link: '/composites' },
 		{ name: 'All Categories', link: '/composites/categories' },

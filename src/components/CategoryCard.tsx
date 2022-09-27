@@ -3,7 +3,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 export type CategoryProps = {
-	title: string;
+	name: string;
 	slug: string;
 	image: StaticImageData;
 };
@@ -12,12 +12,12 @@ type CategoryCardProps = {
 };
 
 const CategoryCard: FC<CategoryCardProps> = ({
-	category: { title, image, slug },
+	category: { name, image, slug },
 }) => {
 	return (
 		<a href={`/composites/categories/${slug}`}>
 			<CategoryCardContainer>
-				<p>{title}</p>
+				<p>{name}</p>
 				<Image src={image} alt="placeholder" />
 			</CategoryCardContainer>
 		</a>

@@ -1,4 +1,15 @@
+import { categories } from './categories';
+
 export const productsData = [
+	{
+		name: 'Polyester Resin',
+		price: 50,
+		description:
+			'FLAG Resin is a part our Medium-Viscosity 2:1 Non-Blushing Resin. FLAG stands for filling, laminating and gluing. It is compatible with LV Resin and the Slow.',
+		category: categories[Math.round(Math.random() * 10)],
+		brand: { name: 'OEX' },
+		review: { count: 30, average: 3.5 },
+	},
 	{
 		title: 'Accelerator',
 		img: 'accelerator.png',
