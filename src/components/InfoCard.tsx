@@ -20,12 +20,12 @@ interface Props {
 function InfoCard({ image, description, buttons }: Props) {
   return (
     <InfoCardStyled>
-      <Image width="500" height="500" objectFit="cover" layout="responsive" src={image} />
+      <Image width="100px" height="100px" objectFit="cover" layout="responsive" src={image} />
       <p>{description}</p>
       <ButtonContainer>
       {buttons.map(({icon, link, title}, index) => (
           <Link key={index} href={link}>
-            <ButtonStyled>{icon && <icon />} {title}</ButtonStyled>
+            <ButtonStyled>{title}</ButtonStyled>
           </Link>
       ))}
       </ButtonContainer>

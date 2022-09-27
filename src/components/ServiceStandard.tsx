@@ -59,9 +59,14 @@ const StyledServiceStandard = styled.div`
   padding: 2rem;
   gap: 4rem;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
+    padding: 2rem;
+  }
+
+  @media (max-width: 400px) {
     padding: 0rem;
   }
 `;

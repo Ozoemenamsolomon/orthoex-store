@@ -40,7 +40,7 @@ const InfoSectionData: InfoSectionType[] = [
     image: Imprint,
     description:
       "Our materials are represented in hundreds of products across multiple markets in Nigeria.",
-    buttons: [{ link: "", title: "Read more"}],
+    buttons: [{ link: "", title: "View Products"}],
   },
 ];
 
@@ -63,7 +63,6 @@ export default InfoSection;
 
 export const InfoSectionStyled = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
   gap: 2rem;
   flex: 1;
@@ -71,6 +70,10 @@ export const InfoSectionStyled = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
+    padding: 2rem;
+  }
+  
+  @media (max-width: 400px) {
     padding: 0rem;
   }
 `;
