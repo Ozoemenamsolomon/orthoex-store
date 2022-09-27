@@ -79,6 +79,8 @@ const ServiceWriteUp = styled.div`
 
   & > p {
     line-height: 1.5;
+    color: var(--text-colour-p);
+
   }
 
   @media (max-width: 768px) {
@@ -110,6 +112,10 @@ const ImageDescription = styled.div`
   align-items: center;
   gap: 0.5rem;
   flex: 33%;
+
+  & > p {
+    color: var(--text-colour-p);
+  }
 
   @media (max-width: 768px) {
     flex: 50%;
