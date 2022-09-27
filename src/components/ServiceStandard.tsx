@@ -1,16 +1,21 @@
 import React from "react";
 import { ServiceCardType } from "@components/ServiceCard";
 import styled from "styled-components";
-import Composite from "@assets/new/icons/composite.svg";
+import Prosthetics from "@assets/icons/home/prosthetics.png";
+import Enzymes from "@assets/icons/home/enzyme.png";
+import Training from "@assets/icons/home/training.png";
+import Operator from "@assets/icons/home/operator.png";
+import Briefcase from "@assets/icons/home/briefcase.png";
+import ShoppingCart from "@assets/icons/home/shopping-cart.png";
 import Image from "next/image";
 
 const services: ServiceCardType[] = [
-  { description: "Prosthetics", image: Composite },
-  { description: "Composites", image: Composite },
-  { description: "Trainings", image: Composite },
-  { description: "After Sales", image: Composite },
-  { description: "Consultancy", image: Composite },
-  { description: "Procurement", image: Composite },
+  { description: "Prosthetics", image: Prosthetics },
+  { description: "Composites", image: Enzymes },
+  { description: "Training", image: Training },
+  { description: "After Sales", image: Operator },
+  { description: "Consultancy", image: Briefcase },
+  { description: "Procurement", image: ShoppingCart },
 ];
 
 function ServiceStandard() {
@@ -51,12 +56,13 @@ export default ServiceStandard;
 const StyledServiceStandard = styled.div`
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 2rem;
   gap: 4rem;
   margin-top: 2rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
+    padding: 0rem;
   }
 `;
 

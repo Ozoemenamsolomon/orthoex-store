@@ -54,7 +54,7 @@ const Home: NextPage = () => {
 					cta={<CTA onClick={findRep}>Find a representative</CTA>}
 				/>
 			</Hero>
-			<Container>
+			<Container paddingMultiplier={0}>
 				<ServiceStandard/>
 				{/* <SooSection twoColumns>
 					<div>
