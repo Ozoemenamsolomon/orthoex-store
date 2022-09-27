@@ -19,7 +19,7 @@ interface Props {
 
 function InfoCard({ image, description, buttons }: Props) {
   return (
-    <InfoCardStyled>
+    <StyledInfoCard>
       <Image width="100px" height="100px" objectFit="cover" layout="responsive" src={image} />
       <p>{description}</p>
       <ButtonContainer>
@@ -29,14 +29,14 @@ function InfoCard({ image, description, buttons }: Props) {
           </Link>
       ))}
       </ButtonContainer>
-    </InfoCardStyled>
+    </StyledInfoCard>
   );
 }
 
 export default InfoCard;
 
 
-const InfoCardStyled = styled.div`
+const StyledInfoCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
