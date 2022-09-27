@@ -104,7 +104,7 @@ const orderBenefits: ServiceCardType[] = [
 	},
 ];
 
-const testimonials: TestimonialProps[] = [
+export const testimonials: TestimonialProps[] = [
 	{
 		image: client1,
 		message:
