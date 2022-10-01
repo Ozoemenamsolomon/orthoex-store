@@ -6,7 +6,7 @@ interface Props {
   description: string
 }
 
-function InfoText({title, description}: Props) {
+const InfoText: React.FC<Props> = ({title, description}) => {
   return (
     <InfoTextStyled>
       <h2>{title}</h2>

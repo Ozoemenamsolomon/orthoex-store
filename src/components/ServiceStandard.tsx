@@ -1,12 +1,12 @@
 import React from "react";
 import { ServiceCardType } from "@components/ServiceCard";
 import styled from "styled-components";
-import Prosthetics from "@assets/icons/home/prosthetics.png";
-import Enzymes from "@assets/icons/home/enzyme.png";
-import Training from "@assets/icons/home/training.png";
-import Operator from "@assets/icons/home/operator.png";
-import Briefcase from "@assets/icons/home/briefcase.png";
-import ShoppingCart from "@assets/icons/home/shopping-cart.png";
+import Prosthetics from "@assets/new/icons/home/prosthetics.svg";
+import Enzymes from "@assets/new/icons/home/enzyme.svg";
+import Training from "@assets/new/icons/home/training.svg";
+import Operator from "@assets/new/icons/home/operator.svg";
+import Briefcase from "@assets/new/icons/home/briefcase.svg";
+import ShoppingCart from "@assets/new/icons/home/shopping-cart.svg";
 import Image from "next/image";
 
 const services: ServiceCardType[] = [

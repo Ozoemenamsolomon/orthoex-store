@@ -17,7 +17,7 @@ interface Props {
   buttons: ButtonInfo[];
 }
 
-function InfoCard({ image, description, buttons }: Props) {
+const  InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
   return (
     <StyledInfoCard>
       <Image width="100px" height="100px" objectFit="cover" layout="responsive" src={image} />
