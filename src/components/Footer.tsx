@@ -202,7 +202,6 @@ const FooterLinkGroups = styled.div`
 	display: flex;
 	flex: 1;
 	justify-content: space-between;
-	width: 100%;
 	flex-wrap: wrap;
 
 
@@ -225,7 +224,6 @@ const FooterLinkGroup = styled.div`
 		font-size: 1.2rem;
 	}
 	@media(min-width:768px){
-		width: 40%;
 		margin-bottom: 0rem;
 	}
 
@@ -239,10 +237,10 @@ const SocialsContainer = styled.div`
 const LogoInfoWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	flex-rap: wrap;
+	flex-wrap: wrap;
 	gap: 5rem;
 	flex: 1;
-	margin-top: 4rem;
+	padding-top: 3rem;
 	padding-left: 3rem;
 
 
