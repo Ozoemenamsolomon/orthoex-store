@@ -29,6 +29,7 @@ const InfoSectionData: InfoSectionType[] = [
       { link: "", title: "Call", icon: Call },
       { link: "", title: "Email", icon: Email },
       { link: "", title: "Chat", icon: Whatsapp },
+
     ],
   },
   {
@@ -63,17 +64,14 @@ export default InfoSection;
 
 export const InfoSectionStyled = styled.div`
   display: flex;
-  justify-content: space-between;
-  gap: 2rem;
-  flex: 1;
-  padding: 2rem;
+  justify-content: center;
+  flex-direction: column;
 
-  @media (max-width: 768px) {
-    flex-direction: column;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    flex: 1;
     padding: 2rem;
-  }
-
-  @media (max-width: 400px) {
-    padding: 0rem;
+    gap: 2rem;
   }
 `;

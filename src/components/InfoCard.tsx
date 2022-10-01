@@ -19,8 +19,9 @@ interface Props {
 
 const  InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
   return (
+
     <StyledInfoCard>
-      <Image width="100px" height="100px" objectFit="cover" layout="responsive" src={image} />
+      <Image width="100" height="60" objectFit="cover" layout="responsive"  src={image} />
       <p>{description}</p>
       <ButtonContainer>
       {buttons.map(({icon, link, title}, index) => (
@@ -30,6 +31,7 @@ const  InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
       ))}
       </ButtonContainer>
     </StyledInfoCard>
+
   );
 }
 
@@ -41,7 +43,7 @@ const StyledInfoCard = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
-  flex: 1 1 0;
+  flex: 1 0 0;
   margin-bottom:5rem;
 
   & > p {
@@ -49,10 +51,22 @@ const StyledInfoCard = styled.div`
     line-height: 1rem;
     color: var(--text-colour-p);
   }
+
+  & > div > img {
+    border-radius: 0.5rem;
+  }
+
   &:hover {
     color: white ;
     padding: 0rem;
   }
+
+  @media (min-width: 768px) {
+    & > div > img {
+      border-radius: 0rem;
+    }
+  }
+
 `
 
 const ButtonStyled = styled.button`
@@ -74,4 +88,3 @@ const ButtonContainer = styled.div`
   display: flex;
   gap: 2rem;
 `
-

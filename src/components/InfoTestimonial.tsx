@@ -5,27 +5,27 @@ import TestimonialCard from "./TestimonialCard";
 
 function InfoTestimonial() {
   return (
-    <InfoContainerStyled>
+    <StyledInfoContainer>
       <h2>What our clients say about us</h2>
       <p>
         There are many reasons why our partners love to work with us. Hear it
         from the people for yourself
       </p>
-      <TestimonialCardStyled>
+      <StyledTestimonialCard>
         {testimonials.map((testimonial, index) => (
           <TestimonialCard
             key={`testimonial_${index}`}
             testimonial={testimonial}
           ></TestimonialCard>
         ))}
-      </TestimonialCardStyled>
-    </InfoContainerStyled>
+      </StyledTestimonialCard>
+    </StyledInfoContainer>
   );
 }
 
 export default InfoTestimonial;
 
-const InfoContainerStyled = styled.div`
+const StyledInfoContainer = styled.div`
   margin: 0rem 0;
   padding: 2rem;
 
@@ -45,20 +45,18 @@ const InfoContainerStyled = styled.div`
 
 `;
 
-const TestimonialCardStyled = styled.div`
+const StyledTestimonialCard = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 2rem;
   margin: 4rem 0;
 
-
-  @media(max-width: 768px) {
-    flex-direction: column;
-    flex-wrap: wrap;
-
-    & > h2 {
-      font-size: 2rem;
-    }
+  & > h2 {
+    font-size: 2rem;
   }
-  
+
+  @media(min-width:768px){
+    flex-direction: row;
+  }
 
 `;

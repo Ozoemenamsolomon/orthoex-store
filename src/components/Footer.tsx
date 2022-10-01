@@ -201,27 +201,32 @@ const Logo = styled.div`
 const FooterLinkGroups = styled.div`
 	display: flex;
 	flex: 1;
+	justify-content: space-between;
 	width: 100%;
+	flex-wrap: wrap;
 
-	@media(max-width:768px){
-		flex-wrap: wrap;
+
+	@media(min-width:768px){
+		flex-wrap: nowrap;
+		padding-left: 0rem;
 	}
 `;
 
 const FooterLinkGroup = styled.div`
-	// flex: 1;
 	display: flex;
 	flex-direction: column;
 	gap: 3rem;
 	width: 50%;
+	margin-bottom: 4rem;
+
 
 	> h5 {
 		margin: 0;
 		font-size: 1.2rem;
 	}
-	@media(max-width:768px){
-		width: 50%;
-		margin-bottom: 4rem;
+	@media(min-width:768px){
+		width: 40%;
+		margin-bottom: 0rem;
 	}
 
 `;
@@ -233,30 +238,35 @@ const SocialsContainer = styled.div`
 
 const LogoInfoWrapper = styled.div`
 	display: flex;
+	flex-direction: column;
 	flex-rap: wrap;
 	gap: 5rem;
 	flex: 1;
 	margin-top: 4rem;
+	padding-left: 3rem;
 
 
-	@media(max-width:768px){
-		flex-direction: column;
+	@media(min-width:768px){
+		flex-direction: row;
+		padding-left: 0rem;
+
 	}
 `
 
 const CopyrightLogoWrapper = styled.div`
 	display: flex;
+	flex-direction: column;
 	position: relative;
 	justify-content: space-between;
-	align-items: center;
-	// margin-block: 2.5rem;
-	// flex-wrap: wrap;
+	align-items: start;
 	gap: 2rem;
 	margin: 3rem 0 5rem;
 	width: 100%;
-	// padding:;
+	padding-left: 3rem;
 
-	@media(min-width: 600px){
+
+	@media(min-width: 768px){
+		padding-left: 0rem;
 		&:before{
 			content: '';
 			position: absolute;
@@ -269,9 +279,9 @@ const CopyrightLogoWrapper = styled.div`
 		}
 	}
 
-	@media(max-width: 768px){
-		flex-direction: column;
-		align-items: start;
+	@media(min-width: 768px){
+		flex-direction: row;
+		align-items: center;
 	}
 
 

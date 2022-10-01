@@ -40,7 +40,7 @@ function ServiceStandard() {
                 alt={service.description}
                 objectFit="contain"
                 width="120px"
-                height="200px"
+                height="120px"
               />
               <p>{service.description}</p>
             </ImageDescription>
@@ -55,31 +55,27 @@ export default ServiceStandard;
 
 const StyledServiceStandard = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 2rem;
-  gap: 4rem;
+  gap: 2rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
 
-  @media (max-width: 768px) {
-    flex-direction: column;
+  @media(min-width: 768px) {
+    flex-direction: row;
     padding: 2rem;
-  }
-
-  @media (max-width: 400px) {
-    padding: 0rem;
   }
 `;
 
 const ServiceWriteUp = styled.div`
-  width: 40%;
+  width: 100%;
   flex: 0 1 auto;
 
   & > h3 {
-    margin-bottom: 2rem;
-    font-size: 3rem;
+    font-size: 2rem;
     line-height: 1.2;
-    font-weight: 600;
+    font-weight: 700;
+    margin-bottom: 2rem;
   }
 
   & > p {
@@ -88,43 +84,43 @@ const ServiceWriteUp = styled.div`
 
   }
 
-  @media (max-width: 768px) {
-    width: 100%;
+  @media (min-width: 1028px) {
+    width: 40%;
 
     & > h3 {
-      font-size: 2rem;
+      margin-bottom: 2rem;
+      font-size: 3rem;
       line-height: 1.2;
-      font-weight: 500;
+      font-weight: 600;
     }
   }
 `;
 
 const StyledServiceIcon = styled.div`
-  width: 60%;
+  width: 100%;
   height: 100%;
   flex: 2 1 auto;
 
-  @media (max-width: 768px) {
-    width: 100%;
+  @media (min-width: 1024px) {
+    width: 60%;
   }
 `;
 
 const ImageDescription = styled.div`
-
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  flex: 33%;
+  flex: 50%;
+  margin-bottom: 2rem;
+
 
   & > p {
     color: var(--text-colour-p);
   }
 
-  @media (max-width: 768px) {
-    flex: 50%;
-    width: 10%;
+  @media (min-width: 1028px) {
+    flex: 33%;
   }
 `;
 
@@ -134,10 +130,4 @@ const ImageDescriptionWrapper = styled.div`
   align-items: center;
   width: 100%;
   flex-wrap: wrap;
-
-
-
-  @media (max-width: 768px) {
-    flex-wrap: wrap;
-  }
 `;
