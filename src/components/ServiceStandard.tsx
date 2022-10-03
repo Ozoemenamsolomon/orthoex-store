@@ -3,7 +3,7 @@ import { ServiceCardType } from "@components/ServiceCard";
 import styled from "styled-components";
 import Prosthetics from "@assets/new/icons/home/prosthetics.svg";
 import Enzymes from "@assets/new/icons/home/enzyme.svg";
-import Training from "@assets/new/icons/home/training.svg";
+import Training from "@assets/new/icons/home/training.svg"; 
 import Operator from "@assets/new/icons/home/operator.svg";
 import Briefcase from "@assets/new/icons/home/briefcase.svg";
 import ShoppingCart from "@assets/new/icons/home/shopping-cart.svg";

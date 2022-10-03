@@ -27,7 +27,7 @@ const Home: NextPage = () => {
 					cta={<CTA onClick={findRep}>Find a representative</CTA>}
 				/>
 			</Hero>
-			
+
 				<ServiceStandard/>
 				<InfoSection/>
 				<InfoText title={"At OrthoEx, we enable businesses like yours to succeed"} description={"We are facilitating Prosthetics, Orthopaedic devices and composite materials distribution in West Africa."} />

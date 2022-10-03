@@ -158,7 +158,8 @@ const Footer = () => {
 						))}
 					</FooterLinkGroups>
 				</LogoInfoWrapper>
-				{/* <hr style={{ marginBottom: '2rem', background: 'white', fontSize: "10px" }} /> */}
+
+					<StyledHorionalLine show={router.pathname === "/"}/>			
 
 					<CopyrightLogoWrapper>
 						<span>Copyright © 2022 - OrthoEx NG</span>
@@ -180,7 +181,8 @@ const Footer = () => {
 							</SocialsContainer>
 						</div>
 					</CopyrightLogoWrapper>
-				{/* <hr style={{ marginBottom: '5rem', background: 'white' }} /> */}
+
+					<StyledHorionalLine show={router.pathname !== "/"}/>	
 			</Container>
 		</SooFooter>
 	);
@@ -190,6 +192,7 @@ export default Footer;
 
 const SooFooter = styled.footer`
 width: 100%;
+padding-bottom: 3rem;
 `;
 
 const Logo = styled.div`
@@ -197,6 +200,17 @@ const Logo = styled.div`
 	aspect-ratio: 1.5;
 	position: relative;
 `;
+
+const StyledHorionalLine = styled.hr<{show: boolean}>`
+	margin-block-start: 2rem;	
+	margin-bottom: 2rem;
+	background: white;
+	font-size: 10px;
+	position: absolute;
+	width: 100%;
+	left: 0;
+	display: ${({show}) => !show && "none"};
+`
 
 const FooterLinkGroups = styled.div`
 	display: flex;
@@ -258,23 +272,11 @@ const CopyrightLogoWrapper = styled.div`
 	justify-content: space-between;
 	align-items: start;
 	gap: 2rem;
-	margin: 3rem 0 5rem;
-	width: 100%;
-	padding-left: 3rem;
+	margin-block-start: 3rem;
 
 
 	@media(min-width: 768px){
 		padding-left: 0rem;
-		&:before{
-			content: '';
-			position: absolute;
-			border-top: solid 1px #fff;
-			width: 105%;
-			z-index: 5000;
-			top: -30%;
-			left: -3%;
-			right: -3%;
-		}
 	}
 
 	@media(min-width: 768px){

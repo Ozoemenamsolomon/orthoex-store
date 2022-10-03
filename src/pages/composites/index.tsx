@@ -18,13 +18,13 @@ import { CTA, CTALink } from '@components/Header';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
 import IconText from '@components/IconText';
+import InfoTestimonial from '@components/InfoTestimonial';
 import { helps } from '@components/sections/NeedHelpSection';
 import StayTunedSection from '@components/sections/StayTunedSection';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
 import SooSection, { SOOSectionProp } from '@components/SooSection';
 import {
 	Container,
-	PostCardsContainer,
 	ServicesCards,
 } from '@components/styled';
 import TestimonialCard, { TestimonialProps } from '@components/TestimonialCard';
@@ -207,21 +207,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 				))}
 			</ServicesCards>
 		),
-	},
-	{
-		header: {
-			title: 'What our clients say about us',
-			subtitle:
-				'There are many reasons why our partners love to work with us. Hear it from the people for yourself',
-		},
-		children: (
-			<PostCardsContainer>
-				{testimonials.map((testimonial, index) => (
-					<TestimonialCard testimonial={testimonial}></TestimonialCard>
-				))}
-			</PostCardsContainer>
-		),
-	},
+	}
 ];
 
 const CompositePage: NextPage = () => {
@@ -242,6 +228,7 @@ const CompositePage: NextPage = () => {
 				{sections.map((section, index) => (
 					<SooSection key={`section_${index}`} {...section} />
 				))}
+				<InfoTestimonial/>
 			</Container>
 		</Container>
 	);
