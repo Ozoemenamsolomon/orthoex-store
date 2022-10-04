@@ -27,7 +27,7 @@ import {
 	Container,
 	ServicesCards,
 } from '@components/styled';
-import TestimonialCard, { TestimonialProps } from '@components/TestimonialCard';
+import { TestimonialProps } from '@components/TestimonialCard';
 import { categories } from 'data/categories';
 import type { NextPage } from 'next';
 import Link from 'next/link';

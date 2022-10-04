@@ -4,9 +4,9 @@ import {Whatsapp} from '@styled-icons/bootstrap';
 import {Email} from '@styled-icons/material-outlined';
 import {StyledIcon} from '@styled-icons/styled-icon'
 import {Call} from '@styled-icons/fluentui-system-regular';
-import CustomerService from "@assets/new/images/home/customer-service.svg";
-import Imprint from "@assets/new/images/home/imprint.svg";
-import QuickChange from "@assets/new/images/home/quickchange.svg";
+import CustomerService from "@assets/new/images/home/customer-service.jpg";
+import Imprint from "@assets/new/images/home/imprint.jpg";
+import QuickChange from "@assets/new/images/home/quickchange.jpg";
 import InfoCard from "./InfoCard";
 
 interface InfoSectionType {
