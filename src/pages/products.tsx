@@ -14,11 +14,11 @@ const products = () => {
 			</HeroComp>
 
 			<ProductCardsSection>
-				{productsData.map(({ title, img, description, price }, id) => (
+				{productsData.map(({ name, img, description, price }, id) => (
 					<ProductCard
 						key={id}
 						product={{
-							name: title,
+							name,
 							price: price,
 							image: product1,
 							rating: {

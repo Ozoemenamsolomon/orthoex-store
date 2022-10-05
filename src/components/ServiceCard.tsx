@@ -13,6 +13,7 @@ export type ServiceCardType = {
 type ServiceCardProps = {
 	service: ServiceCardType;
 	imagePadding?: boolean;
+	small?: boolean;
 	/**
 	 * | classes | action |
 	 * |---|---|
@@ -28,17 +29,22 @@ const ServiceCard: FC<ServiceCardProps> = ({
 	service: { description, image, cta, title, HTMLDescription = false },
 	className,
 	imagePadding,
+	small,
 }) => (
 	<ServiceCardContainer className={`${className}`}>
-		<ImageTitleContainer>
+		<ImageTitleContainer className={`${small ? 'small' : ''}`}>
 			<ImageContainer
+				small={small}
 				className={`image-container ${imagePadding ? 'pad' : ''}`}
 			>
 				<Image objectFit="contain" layout="fill" src={image} />
 			</ImageContainer>
 			<div>
-				{title && <Title>{title}</Title>}
+				{title && (
+					<Title className={small ? 'small' : undefined}>{title}</Title>
+				)}
 				<Description
+					className={small ? 'small' : undefined}
 					dangerouslySetInnerHTML={
 						HTMLDescription ? { __html: description } : undefined
 					}
@@ -54,7 +60,6 @@ const ServiceCard: FC<ServiceCardProps> = ({
 export default ServiceCard;
 
 const ServiceCardContainer = styled.div`
-	padding: 2rem;
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -63,6 +68,10 @@ const ServiceCardContainer = styled.div`
 	width: 100%;
 	justify-content: space-between;
 	/* background-color: green; */
+
+	&:not(.no-padding) {
+		padding: 2rem;
+	}
 
 	&:not(.no-shadow) {
 		box-shadow: 2px 0px 16px rgba(207, 207, 207, 0.1),
@@ -107,11 +116,15 @@ const ImageTitleContainer = styled.div`
 	gap: 1rem;
 	flex-direction: column;
 	align-items: center;
+	&.small {
+		gap: 0.5rem;
+	}
 `;
-export const ImageContainer = styled.div`
+export const ImageContainer = styled.div<{ small?: boolean }>`
 	position: relative;
 	aspect-ratio: 1;
-	width: 5rem;
+	width: ${({ small }) => (small ? '2rem' : '5rem')};
+
 	&.pad {
 		width: 3rem;
 	}
@@ -120,8 +133,14 @@ export const ImageContainer = styled.div`
 const Title = styled.p`
 	font-size: 1.5rem;
 	font-weight: bold;
+	&.small {
+		font-size: 1rem;
+	}
 `;
 
 const Description = styled.p`
 	font-size: 1.2rem;
+	&.small {
+		font-size: 0.8rem;
+	}
 `;

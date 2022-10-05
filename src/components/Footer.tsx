@@ -226,7 +226,7 @@ const FooterLinkGroup = styled.div`
 	}
 `;
 
-const SocialsContainer = styled.div`
+export const SocialsContainer = styled.div`
 	display: flex;
 	gap: 0.5rem;
 `;
