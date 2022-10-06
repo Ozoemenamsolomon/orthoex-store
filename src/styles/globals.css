@@ -1,11 +1,9 @@
-@import url('https://db.onlinewebfonts.com/c/bb018e64d01355748d8ddc53553850b9?family=Cerebri+Sans');
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap');
 html,
 body {
 	padding: 0;
 	margin: 0;
-	font-family: 'Cerebri Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
 		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	background-color: black;
 	scroll-behavior: smooth;
