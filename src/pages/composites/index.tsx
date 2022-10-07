@@ -27,7 +27,6 @@ import {
 	Container,
 	ServicesCards,
 } from '@components/styled';
-import { TestimonialProps } from '@components/TestimonialCard';
 import { categories } from 'data/categories';
 import type { NextPage } from 'next';
 import Link from 'next/link';
@@ -101,24 +100,6 @@ const orderBenefits: ServiceCardType[] = [
 		title: 'Technical Advice',
 		description: 'We offer helpful tips & tricks to aid your craft',
 		image: headphone,
-	},
-];
-
-export const testimonials: TestimonialProps[] = [
-	{
-		image: client1,
-		message:
-			'Consectetur sit lacinia odio sed egestas. Habitant ornare risus donec tristique lobortis egestas amet. In aenean in ut risus pulvinar vitae erat mattis sit fusce ac quisque suspendisse.',
-	},
-	{
-		image: client2,
-		message:
-			'A aliquet nibh amet nam sit morbi sagittis. Id id ipsum arcu diam massa lacus. Sit tincidunt gravida lobortis fringilla quam dis elit malesuada. Ipsum blandit mattis vitae viverra leo non.',
-	},
-	{
-		image: client3,
-		message:
-			'Leo felis, sed nec ultrices. Imperdiet quis aliquam id habitasse natoque non. Bibendum pretium ornare at ullamcorper est. Eget tellus turpis tellus dui id diam pharetra. Tempus viverra.',
 	},
 ];
 

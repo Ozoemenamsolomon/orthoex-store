@@ -319,9 +319,6 @@ const StyledCloseIcon = styled.span`
 	}
 `
 
-interface NavLinkType {
-	color: boolean;
-}
 
 const StyledSideBarNavLink = styled.ul`
 	padding: 0;
