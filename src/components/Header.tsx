@@ -326,7 +326,7 @@ const StyledSideBarNavLink = styled.ul`
 
 	& > li {
 		list-style-type: none;
-		margin-bottom: 2rem;
+		margin-bottom: 3rem;
 		padding: 0;
 	}
 `
