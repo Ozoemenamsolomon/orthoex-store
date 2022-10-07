@@ -57,7 +57,6 @@ const StyledInfoCard = styled.div`
   }
 
   &:hover {
-    color: white ;
     padding: 0rem;
   }
 
