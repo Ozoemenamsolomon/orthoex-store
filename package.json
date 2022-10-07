@@ -20,6 +20,7 @@
 	},
 	"devDependencies": {
 		"@types/react": "17.0.27",
+		"@types/react-tabs": "^2.3.4",
 		"@types/styled-components": "^5.1.15",
 		"babel-plugin-styled-components": "^1.13.2",
 		"eslint": "^8.0.0",
