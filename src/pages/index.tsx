@@ -11,6 +11,7 @@ import ServiceStandard from '@components/ServiceStandard';
 import InfoSection from '@components/InfoSection';
 import InfoText from '@components/InfoText';
 import InfoTestmonial from '@components/InfoTestimonial';
+import ProductVertical from '@components/ProductVertical';
 
 
 
@@ -30,6 +31,7 @@ const Home: NextPage = () => {
 
 				<ServiceStandard/>
 				<InfoSection/>
+				<ProductVertical/>
 				<InfoText title={"At OrthoEx, we enable businesses like yours to succeed"} description={"We are facilitating Prosthetics, Orthopaedic devices and composite materials distribution in West Africa."} />
 				<InfoTestmonial />
 
