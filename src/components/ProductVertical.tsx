@@ -9,9 +9,10 @@ import PolyesterResins from "@assets/new/images/home/polyester_resins.jpg";
 import SiliconMould from "@assets/new/images/home/silicon_mould.jpg";
 import SyntheticFibre from "@assets/new/images/home/synthetic_fibre.jpg";
 import Protheses from "@assets/new/images/home/prosthesis.jpg";
+import ProductVerticalCard from './ProductVerticalCard';
 
 
-interface VerticalType {
+export interface VerticalType {
   title: string;
   image: StaticImageData;
   link: string;
@@ -70,7 +71,14 @@ function ProductVertical() {
       }}
   >
     <StyledProductSection>
-
+      {productVerticalData.map((product, index)=> (
+        <ProductVerticalCard 
+        image={product.image} 
+        key={`${index}-${product}`} 
+        link={product.link}
+        title={product.title}
+        />
+      ))}
     </StyledProductSection>
   </SooSection>   
 
@@ -80,5 +88,6 @@ function ProductVertical() {
 export default ProductVertical
 
 const StyledProductSection = styled.div`
-
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 `
