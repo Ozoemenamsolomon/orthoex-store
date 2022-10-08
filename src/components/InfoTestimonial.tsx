@@ -6,7 +6,7 @@ import SooSection from "./SooSection";
 import { PostCardsContainer } from "./styled";
 import TestimonialCard, { TestimonialProps } from "./TestimonialCard";
 
-export const testimonials: TestimonialProps[] = [
+const testimonials: TestimonialProps[] = [
 	{
 		image: client1,
 		message:
