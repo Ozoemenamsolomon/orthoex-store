@@ -89,5 +89,6 @@ export default ProductVertical
 
 const StyledProductSection = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  // grid-template-columns: repeat(4, 1fr);
+  grid-template-columns:repeat(auto-fit, minmax( 20em, 1fr));
 `
