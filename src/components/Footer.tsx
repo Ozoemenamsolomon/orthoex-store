@@ -116,17 +116,10 @@ const Footer = () => {
 			<Container
 				style={{
 					color: 'white',
-					paddingBlockStart: '8rem',
+					// paddingBlockStart: '8rem',
 				}}
 			>
-				<div
-					style={{
-						display: 'flex',
-						flexWrap: 'wrap',
-						gap: '5rem',
-						flex: '1',
-					}}
-				>
+				<LogoInfoWrapper>
 					<Link href="/">
 						<a>
 							<Logo>
@@ -164,37 +157,32 @@ const Footer = () => {
 							</FooterLinkGroup>
 						))}
 					</FooterLinkGroups>
-				</div>
-				<div
-					style={{
-						display: 'flex',
-						justifyContent: 'space-between',
-						alignItems: 'center',
-						marginBlock: '2.5rem',
-						flexWrap: 'wrap',
-						gap: '1rem',
-					}}
-				>
-					<span>Copyright © 2022 - OrthoEx NG</span>
-					<div>
-						<p>Follow OrthoEx NG</p>
-						<SocialsContainer>
-							<SocialCTA>
-								<Facebook width={18} />
-							</SocialCTA>
-							<SocialCTA>
-								<Instagram width={18} />
-							</SocialCTA>
-							<SocialCTA>
-								<Linkedin width={18} />
-							</SocialCTA>
-							<SocialCTA>
-								<Twitter width={18} />
-							</SocialCTA>
-						</SocialsContainer>
-					</div>
-				</div>
-				<hr style={{ marginBottom: '5rem', background: 'white' }} />
+				</LogoInfoWrapper>
+
+					<StyledHorionalLine show={router.pathname === "/"}/>			
+
+					<CopyrightLogoWrapper>
+						<span>Copyright © 2022 - OrthoEx NG</span>
+						<div>
+							<p>Follow OrthoEx NG</p>
+							<SocialsContainer>
+								<SocialCTA>
+									<Facebook width={18} />
+								</SocialCTA>
+								<SocialCTA>
+									<Instagram width={18} />
+								</SocialCTA>
+								<SocialCTA>
+									<Linkedin width={18} />
+								</SocialCTA>
+								<SocialCTA>
+									<Twitter width={18} />
+								</SocialCTA>
+							</SocialsContainer>
+						</div>
+					</CopyrightLogoWrapper>
+
+					<StyledHorionalLine show={router.pathname !== "/"}/>	
 			</Container>
 		</SooFooter>
 	);
@@ -202,7 +190,10 @@ const Footer = () => {
 
 export default Footer;
 
-const SooFooter = styled.footer``;
+const SooFooter = styled.footer`
+width: 100%;
+padding-bottom: 3rem;
+`;
 
 const Logo = styled.div`
 	width: 9rem;
@@ -210,23 +201,88 @@ const Logo = styled.div`
 	position: relative;
 `;
 
+const StyledHorionalLine = styled.hr<{show: boolean}>`
+	margin-block-start: 2rem;	
+	margin-bottom: 2rem;
+	background: white;
+	font-size: 10px;
+	position: absolute;
+	width: 100%;
+	left: 0;
+	display: ${({show}) => !show && "none"};
+`
+
 const FooterLinkGroups = styled.div`
 	display: flex;
 	flex: 1;
+	justify-content: space-between;
+	flex-wrap: wrap;
+
+
+	@media(min-width:768px){
+		flex-wrap: nowrap;
+		padding-left: 0rem;
+	}
 `;
 
 const FooterLinkGroup = styled.div`
-	flex: 1;
 	display: flex;
 	flex-direction: column;
-	gap: 2rem;
+	gap: 3rem;
+	width: 50%;
+	margin-bottom: 4rem;
+
+
 	> h5 {
 		margin: 0;
 		font-size: 1.2rem;
 	}
+	@media(min-width:768px){
+		margin-bottom: 0rem;
+	}
+
 `;
 
 export const SocialsContainer = styled.div`
 	display: flex;
 	gap: 0.5rem;
 `;
+
+const LogoInfoWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	gap: 5rem;
+	flex: 1;
+	padding-top: 3rem;
+	padding-left: 3rem;
+
+
+	@media(min-width:768px){
+		flex-direction: row;
+		padding-left: 0rem;
+
+	}
+`
+
+const CopyrightLogoWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	justify-content: space-between;
+	align-items: start;
+	gap: 2rem;
+	margin-block-start: 3rem;
+
+
+	@media(min-width: 768px){
+		padding-left: 0rem;
+	}
+
+	@media(min-width: 768px){
+		flex-direction: row;
+		align-items: center;
+	}
+
+
+`

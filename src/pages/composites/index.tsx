@@ -9,25 +9,21 @@ import highPerformanceIcon from '@assets/new/icons/high-performance.svg';
 import moreArrow from '@assets/new/icons/more-arrow.svg';
 import nigeria from '@assets/new/icons/nigeria.svg';
 import quality from '@assets/new/icons/quality.svg';
-import client1 from '@assets/new/images/client1.jpg';
-import client2 from '@assets/new/images/client2.jpg';
-import client3 from '@assets/new/images/client3.jpg';
 import heroBG from '@assets/new/images/hero-bg.jpg';
 import Categories from '@components/Categories';
 import { CTA, CTALink } from '@components/Header';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
 import IconText from '@components/IconText';
+import InfoTestimonial from '@components/InfoTestimonial';
 import { helps } from '@components/sections/NeedHelpSection';
 import StayTunedSection from '@components/sections/StayTunedSection';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
 import SooSection, { SOOSectionProp } from '@components/SooSection';
 import {
 	Container,
-	PostCardsContainer,
 	ServicesCards,
 } from '@components/styled';
-import TestimonialCard, { TestimonialProps } from '@components/TestimonialCard';
 import { categories } from 'data/categories';
 import type { NextPage } from 'next';
 import Link from 'next/link';
@@ -101,24 +97,6 @@ const orderBenefits: ServiceCardType[] = [
 		title: 'Technical Advice',
 		description: 'We offer helpful tips & tricks to aid your craft',
 		image: headphone,
-	},
-];
-
-const testimonials: TestimonialProps[] = [
-	{
-		image: client1,
-		message:
-			'Consectetur sit lacinia odio sed egestas. Habitant ornare risus donec tristique lobortis egestas amet. In aenean in ut risus pulvinar vitae erat mattis sit fusce ac quisque suspendisse.',
-	},
-	{
-		image: client2,
-		message:
-			'A aliquet nibh amet nam sit morbi sagittis. Id id ipsum arcu diam massa lacus. Sit tincidunt gravida lobortis fringilla quam dis elit malesuada. Ipsum blandit mattis vitae viverra leo non.',
-	},
-	{
-		image: client3,
-		message:
-			'Leo felis, sed nec ultrices. Imperdiet quis aliquam id habitasse natoque non. Bibendum pretium ornare at ullamcorper est. Eget tellus turpis tellus dui id diam pharetra. Tempus viverra.',
 	},
 ];
 
@@ -207,21 +185,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 				))}
 			</ServicesCards>
 		),
-	},
-	{
-		header: {
-			title: 'What our clients say about us',
-			subtitle:
-				'There are many reasons why our partners love to work with us. Hear it from the people for yourself',
-		},
-		children: (
-			<PostCardsContainer>
-				{testimonials.map((testimonial, index) => (
-					<TestimonialCard testimonial={testimonial}></TestimonialCard>
-				))}
-			</PostCardsContainer>
-		),
-	},
+	}
 ];
 
 const CompositePage: NextPage = () => {
@@ -242,6 +206,7 @@ const CompositePage: NextPage = () => {
 				{sections.map((section, index) => (
 					<SooSection key={`section_${index}`} {...section} />
 				))}
+				<InfoTestimonial/>
 			</Container>
 		</Container>
 	);
