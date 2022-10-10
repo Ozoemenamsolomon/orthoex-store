@@ -24,6 +24,8 @@ import DataSheet from '@assets/new/icons/DataSheet';
 import { helps } from '@components/sections/NeedHelpSection';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 const orderBenefits: ServiceCardType[] = [
 	{
@@ -58,7 +60,10 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 		category: { name: productCategory, slug: productCategorySlug },
 		brand: { name: brandName },
 		review: { count: reviewCount, average: reviewAverage },
+		productDetail,
 	} = product;
+
+	const [productCount, setProductCount] = useState(0);
 
 	return (
 		<Container
@@ -198,6 +203,10 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										alignItems: 'center',
 										justifyContent: 'center',
 									}}
+									onClick={() => {
+										console.log(productCount);
+										setProductCount((prevProductCount) => prevProductCount - 1);
+									}}
 								>
 									-
 								</button>
@@ -208,6 +217,8 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									id="quantity"
 									size={4}
 									maxLength={4}
+									value={productCount}
+									onChange={(e) => setProductCount(Number(e.target.value))}
 								/>
 								<button
 									style={{
@@ -222,6 +233,9 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										alignItems: 'center',
 										justifyContent: 'center',
 									}}
+									onClick={() =>
+										setProductCount((prevProductCount) => prevProductCount + 1)
+									}
 								>
 									+
 								</button>
@@ -266,15 +280,65 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 				<SooSection BGColor="white">
 					<Tabs>
 						<TabList>
-							<Tab>Title 1</Tab>
-							<Tab>Title 2</Tab>
+							<Tab>Product details</Tab>
+							<Tab>Resin Calculator</Tab>
+							<Tab>Product Feedbacks</Tab>
 						</TabList>
 
 						<TabPanel>
-							<h2>Any content 1</h2>
+							<ReactMarkdown>{productDetail}</ReactMarkdown>
 						</TabPanel>
 						<TabPanel>
-							<h2>Any content 2</h2>
+							<h2>Epoxy calculator</h2>
+							<p>
+								Leave out the guesswork. Use our epoxy resin to estimate the
+								amount of resin you will need for your projects!
+							</p>
+							<p>What can you do with our calculator?</p>
+							<ul>
+								<li>Check rectangular surface</li>
+								<li>Check Round or cylinder surface</li>
+								<li>Check the Model of resin</li>
+								<li>Preview the amount resin needed.</li>
+							</ul>
+							<CTA>View Calculator</CTA>
+						</TabPanel>
+						<TabPanel>
+							<h2>Customer Review</h2>
+							<ProductStars stars={0} count={0} />
+							<div
+								style={{
+									display: 'flex',
+									flexDirection: 'column',
+									gap: '.5rem',
+									maxWidth: '300px',
+								}}
+							>
+								{Array.from({ length: 5 }, () => ({
+									starsPercent: Math.random() * 100,
+								})).map(({ starsPercent }, index) => (
+									<button
+										style={{
+											font: 'inherit',
+											border: '0',
+											backgroundColor: 'transparent',
+										}}
+									>
+										<div style={{ display: 'flex', gap: '1rem' }}>
+											<span>{5 - index} stars</span>
+											<div style={{ flex: '1', background: 'orange' }}>
+												<div
+													style={{
+														height: '100%',
+														width: Number(starsPercent) + '%',
+														background: 'red',
+													}}
+												></div>
+											</div>
+										</div>
+									</button>
+								))}
+							</div>
 						</TabPanel>
 					</Tabs>
 				</SooSection>
