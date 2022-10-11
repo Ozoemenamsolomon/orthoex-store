@@ -72,7 +72,7 @@ export const InfoSectionStyled = styled.div`
   @media (min-width: 768px) {
     flex-direction: row;
     flex: 1;
-    padding: 2rem;
+    padding: 3rem;
     gap: 2rem;
   }
 `;
