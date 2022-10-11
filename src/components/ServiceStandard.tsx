@@ -60,10 +60,10 @@ const StyledServiceStandard = styled.div`
   gap: 2rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
+  padding: 2rem;
 
   @media(min-width: 768px) {
     flex-direction: row;
-    padding: 2rem;
   }
 `;
 
