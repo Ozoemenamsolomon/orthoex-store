@@ -26,6 +26,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import StarPercentage from '@components/StarPercentage';
+import CustomerReviewCommentCard from '@components/CustomerReviewCommentCard';
 
 const orderBenefits: ServiceCardType[] = [
 	{
@@ -62,6 +64,24 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 		review: { count: reviewCount, average: reviewAverage },
 		productDetail,
 	} = product;
+
+	const customerReviews = Array.from({ length: 2 }, (_, index) =>
+		index === 0
+			? {
+					reviewer: 'Abdur-rasheed Idris',
+					date: '08-10-2022',
+					comment:
+						'Adipiscing posuere sem non, feugiat sit sapien aliquam, faucibus posuere. Suscipit ',
+					star: 5,
+			  }
+			: {
+					reviewer: 'Solomon Ezra',
+					date: '09-20-2022',
+					comment:
+						'Non ac vel a enim, libero. Nulla auctor senectus amet nulla. Tellus nulla sit risus.',
+					star: 2,
+			  }
+	);
 
 	const [productCount, setProductCount] = useState(0);
 
@@ -322,21 +342,25 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 											font: 'inherit',
 											border: '0',
 											backgroundColor: 'transparent',
+											cursor: 'pointer',
 										}}
 									>
-										<div style={{ display: 'flex', gap: '1rem' }}>
-											<span>{5 - index} stars</span>
-											<div style={{ flex: '1', background: 'orange' }}>
-												<div
-													style={{
-														height: '100%',
-														width: Number(starsPercent) + '%',
-														background: 'red',
-													}}
-												></div>
-											</div>
-										</div>
+										<StarPercentage
+											star={5 - index}
+											percent={starsPercent}
+										></StarPercentage>
 									</button>
+								))}
+							</div>
+							<div
+								style={{
+									display: 'grid',
+									gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr ))',
+									gap: '1rem',
+								}}
+							>
+								{customerReviews.map((comment) => (
+									<CustomerReviewCommentCard {...comment} />
 								))}
 							</div>
 						</TabPanel>
