@@ -66,6 +66,7 @@ export const InfoSectionStyled = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  padding: 2rem;
 
 
   @media (min-width: 768px) {
