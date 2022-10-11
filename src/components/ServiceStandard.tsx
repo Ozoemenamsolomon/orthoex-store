@@ -86,6 +86,7 @@ const ServiceWriteUp = styled.div`
 
   @media (min-width: 1028px) {
     width: 40%;
+    padding-left: 3rem;
 
     & > h3 {
       margin-bottom: 2rem;
