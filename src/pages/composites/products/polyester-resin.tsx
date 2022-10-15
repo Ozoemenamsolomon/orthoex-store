@@ -190,9 +190,15 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 								</div>
 							</div>
 						</div>
-						<div style={{ display: 'flex', gap: '5px' }}>
+						<div style={{ display: 'flex', gap: '1rem' }}>
 							<select
-								style={{ padding: '1rem', fontSize: '1rem' }}
+								style={{
+									padding: '1rem',
+									fontSize: '1rem',
+									flex: '1',
+									border: '1px solid #F3F3F3',
+									borderRadius: '4px',
+								}}
 								name="size"
 								id="size">
 								<option value="Select Size" selected disabled>
@@ -203,7 +209,12 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 								<option value="large">Large</option>
 							</select>
 							<div
-								style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+								style={{
+									display: 'flex',
+									gap: '.5rem',
+									alignItems: 'center',
+									paddingInline: '0.5rem',
+								}}>
 								<button
 									style={{
 										aspectRatio: '1',
@@ -223,13 +234,10 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									}}>
 									-
 								</button>
-								<input
-									style={{ padding: '1rem', fontSize: '1rem' }}
+								<ProductCountInput
 									type="number"
 									name="quantity"
 									id="quantity"
-									size={4}
-									maxLength={4}
 									value={productCount}
 									onChange={e => setProductCount(Number(e.target.value))}
 								/>
@@ -256,7 +264,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 						<div
 							style={{
 								display: 'grid',
-								gap: '1rem',
+								gap: '2rem',
 								gridTemplateColumns: '1fr 1fr',
 							}}>
 							<CTA>Add to cart</CTA>
@@ -288,69 +296,80 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 					</div>
 				</SooSection>
 				<SooSection BGColor="white">
-					<Tabs>
-						<TabList>
-							<Tab>Product details</Tab>
-							<Tab>Resin Calculator</Tab>
-							<Tab>Product Feedbacks</Tab>
-						</TabList>
+					<TabsContainer>
+						<Tabs>
+							<TabList>
+								<Tab>
+									<TabTitle>
+										<DataSheet />
+										Product details
+									</TabTitle>
+								</Tab>
+								<Tab>
+									<TabTitle>Resin Calculator</TabTitle>
+								</Tab>
+								<Tab>
+									<TabTitle>Product Feedbacks</TabTitle>
+								</Tab>
+							</TabList>
 
-						<TabPanel>
-							<ReactMarkdown>{productDetail}</ReactMarkdown>
-						</TabPanel>
-						<TabPanel>
-							<h2>Epoxy calculator</h2>
-							<p>
-								Leave out the guesswork. Use our epoxy resin to estimate the
-								amount of resin you will need for your projects!
-							</p>
-							<p>What can you do with our calculator?</p>
-							<ul>
-								<li>Check rectangular surface</li>
-								<li>Check Round or cylinder surface</li>
-								<li>Check the Model of resin</li>
-								<li>Preview the amount resin needed.</li>
-							</ul>
-							<CTA>View Calculator</CTA>
-						</TabPanel>
-						<TabPanel>
-							<h2>Customer Review</h2>
-							<ProductStars stars={0} count={0} />
-							<div
-								style={{
-									display: 'flex',
-									flexDirection: 'column',
-									gap: '.5rem',
-									maxWidth: '300px',
-								}}>
-								{Array.from({ length: 5 }, () => ({
-									starsPercent: Math.random() * 100,
-								})).map(({ starsPercent }, index) => (
-									<button
-										style={{
-											font: 'inherit',
-											border: '0',
-											backgroundColor: 'transparent',
-											cursor: 'pointer',
-										}}>
-										<StarPercentage
-											star={5 - index}
-											percent={starsPercent}></StarPercentage>
-									</button>
-								))}
-							</div>
-							<div
-								style={{
-									display: 'grid',
-									gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr ))',
-									gap: '1rem',
-								}}>
-								{customerReviews.map(comment => (
-									<CustomerReviewCommentCard {...comment} />
-								))}
-							</div>
-						</TabPanel>
-					</Tabs>
+							<TabPanel>
+								<ReactMarkdown>{productDetail}</ReactMarkdown>
+							</TabPanel>
+							<TabPanel>
+								<h2>Epoxy calculator</h2>
+								<p>
+									Leave out the guesswork. Use our epoxy resin to estimate the
+									amount of resin you will need for your projects!
+								</p>
+								<p>What can you do with our calculator?</p>
+								<ul>
+									<li>Check rectangular surface</li>
+									<li>Check Round or cylinder surface</li>
+									<li>Check the Model of resin</li>
+									<li>Preview the amount resin needed.</li>
+								</ul>
+								<CTA>View Calculator</CTA>
+							</TabPanel>
+							<TabPanel>
+								<h2>Customer Review</h2>
+								<ProductStars stars={0} count={0} />
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'column',
+										gap: '.5rem',
+										maxWidth: '300px',
+									}}>
+									{Array.from({ length: 5 }, () => ({
+										starsPercent: Math.random() * 100,
+									})).map(({ starsPercent }, index) => (
+										<button
+											style={{
+												font: 'inherit',
+												border: '0',
+												backgroundColor: 'transparent',
+												cursor: 'pointer',
+											}}>
+											<StarPercentage
+												star={5 - index}
+												percent={starsPercent}></StarPercentage>
+										</button>
+									))}
+								</div>
+								<div
+									style={{
+										display: 'grid',
+										gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr ))',
+										gap: '1rem',
+									}}>
+									{customerReviews.map(comment => (
+										<CustomerReviewCommentCard {...comment} />
+									))}
+								</div>
+							</TabPanel>
+						</Tabs>
+					</TabsContainer>
 				</SooSection>
 				<SooSection BGColor="white">
 					<Title>Do you need help?</Title>
@@ -431,6 +450,19 @@ const Title = styled.h2`
 	margin-bottom: 1rem;
 	display: flex;
 `;
+const TabsContainer = styled.span`
+	.react-tabs__tab--selected {
+		color: var(--oex-orange);
+		&:has(svg) {
+			bottom: -6px;
+		}
+	}
+`;
+const TabTitle = styled(Title)`
+	margin: 0;
+	padding-bottom: 0;
+	border-bottom: none;
+`;
 
 const LayoutDiv = styled.div`
 	display: grid;
@@ -442,5 +474,23 @@ const LayoutDiv = styled.div`
 	> *:nth-last-child(2),
 	> *:last-child {
 		grid-column: span 2;
+	}
+`;
+
+const ProductCountInput = styled.input`
+	padding-block: 1rem;
+	font-size: 1rem;
+	width: 5ch;
+	border: none;
+	text-align: center;
+
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	&[type='number'] {
+		-moz-appearance: textfield;
 	}
 `;
