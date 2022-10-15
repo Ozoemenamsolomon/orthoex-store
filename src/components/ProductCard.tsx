@@ -43,10 +43,10 @@ const ProductCard: React.FC<ProductCardProp> = ({
 			<ProductCardContent>
 				<Link href={`/composites/products/polyester-resin`}>
 					<a>
-						<h3>{name}</h3>
+						<ProductName>{name}</ProductName>
 					</a>
 				</Link>
-				<p>{priceFormatter.format(price)}</p>
+				<Price>{priceFormatter.format(price)}</Price>
 				<ProductStars {...rating} />
 				<CTA>ADD TO CART</CTA>
 			</ProductCardContent>
@@ -81,17 +81,17 @@ const ProductCardContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 1rem;
-	gap: 0.51rem;
+	gap: 0.5rem;
+`;
 
-	h3 {
-		font-weight: normal;
-		font-size: 1.5rem;
-		margin: 0;
+const ProductName = styled.h3`
+	font-weight: normal;
+	font-size: 1.5rem;
+	margin: 0;
+`;
 
-		+ p {
-			margin: 0;
-			font-size: 1.2rem;
-			font-weight: 600;
-		}
-	}
+const Price = styled.p`
+	font-weight: 600;
+	font-size: 1.2rem;
+	margin-bottom: 0;
 `;

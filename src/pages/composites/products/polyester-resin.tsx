@@ -103,174 +103,160 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 						{ name: productName, link: '#' },
 					]}
 				/>
-				<SooSection BGColor="white" style={{ display: 'flex', gap: '1rem' }}>
-					<div
-						style={{ display: 'flex', gap: '1rem', flexDirection: 'column' }}>
+				<SooSection BGColor="white">
+					<ProductData>
 						<div
-							style={{
-								display: 'flex',
-								gap: '2px',
-								flexDirection: 'column',
-								alignItems: 'center',
-							}}>
-							<div
-								style={{
-									width: '281px',
-									aspectRatio: '0.9',
-									position: 'relative',
-								}}>
-								<Image src={image} objectFit="contain" layout="fill" />
-							</div>
-							<div style={{ display: 'flex', gap: '5px' }}>
-								{previewImages.map(imagei => (
-									<div
-										style={{
-											position: 'relative',
-											aspectRatio: '1',
-											width: '70px',
-										}}>
-										<Image
-											objectFit="contain"
-											layout="fill"
-											src={imagei}></Image>
-									</div>
-								))}
-							</div>
-						</div>
-						<div>
-							<Title>Share this product</Title>
-							<SocialsContainer>
-								<SocialCTA>
-									<Twitter width={18} />
-								</SocialCTA>
-								<SocialCTA>
-									<Facebook width={18} />
-								</SocialCTA>
-								<SocialCTA>
-									<Instagram width={18} />
-								</SocialCTA>
-							</SocialsContainer>
-						</div>
-						<div>
-							<Title>
-								<DataSheet />
-								DATA SHEET
-							</Title>
-
-							<p>Product Data Sheet</p>
-							<p>Safety Data Sheet</p>
-						</div>
-					</div>
-					<div
-						style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-						<div>
-							<h3>{productName}</h3>
-							<p>
-								Brand:{' '}
-								<span style={{ color: 'var(--orthoex-orange)' }}>
-									{brandName}
-								</span>
-							</p>
-							<ProductStars stars={reviewAverage} count={reviewCount} />
-							<p>{formatPrice(price)}</p>
-							<p>{description}</p>
-						</div>
-						<div>
-							<Title>Safe and secure payment </Title>
-							<div style={{ display: 'flex', gap: '5px' }}>
-								<div>
-									<Image src={mastercardLogo}></Image>
-								</div>
-								<div>
-									<Image src={visaLogo}></Image>
-								</div>
-
-								<div>
-									<Image src={bankTransferlogo}></Image>
-								</div>
-							</div>
-						</div>
-						<div style={{ display: 'flex', gap: '1rem' }}>
-							<select
-								style={{
-									padding: '1rem',
-									fontSize: '1rem',
-									flex: '1',
-									border: '1px solid #F3F3F3',
-									borderRadius: '4px',
-								}}
-								name="size"
-								id="size">
-								<option value="Select Size" selected disabled>
-									Select Size
-								</option>
-								<option value="small">Small</option>
-								<option value="medium">Medium</option>
-								<option value="large">Large</option>
-							</select>
+							style={{ display: 'flex', gap: '1rem', flexDirection: 'column' }}>
 							<div
 								style={{
 									display: 'flex',
-									gap: '.5rem',
+									gap: '2px',
+									flexDirection: 'column',
 									alignItems: 'center',
-									paddingInline: '0.5rem',
 								}}>
-								<button
+								<div
 									style={{
-										aspectRatio: '1',
-										height: '2.5rem',
-										borderRadius: '50%',
-										border: 'none',
-										fontSize: '2rem',
-										background: '#F3F3F3',
-										color: '#A0A0A0',
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'center',
-									}}
-									onClick={() => {
-										console.log(productCount);
-										setProductCount(prevProductCount => prevProductCount - 1);
+										width: '281px',
+										aspectRatio: '0.9',
+										position: 'relative',
 									}}>
-									-
-								</button>
-								<ProductCountInput
-									type="number"
-									name="quantity"
-									id="quantity"
-									value={productCount}
-									onChange={e => setProductCount(Number(e.target.value))}
-								/>
-								<button
-									style={{
-										aspectRatio: '1',
-										height: '2.5rem',
-										borderRadius: '50%',
-										border: 'none',
-										fontSize: '2rem',
-										background: '#F3F3F3',
-										color: '#A0A0A0',
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'center',
-									}}
-									onClick={() =>
-										setProductCount(prevProductCount => prevProductCount + 1)
-									}>
-									+
-								</button>
+									<Image src={image} objectFit="contain" layout="fill" />
+								</div>
+								<div style={{ display: 'flex', gap: '5px' }}>
+									{previewImages.map(imagei => (
+										<div
+											style={{
+												position: 'relative',
+												aspectRatio: '1',
+												width: '70px',
+											}}>
+											<Image
+												objectFit="contain"
+												layout="fill"
+												src={imagei}></Image>
+										</div>
+									))}
+								</div>
 							</div>
+							<ShareandDataSheets />
 						</div>
 						<div
-							style={{
-								display: 'grid',
-								gap: '2rem',
-								gridTemplateColumns: '1fr 1fr',
-							}}>
-							<CTA>Add to cart</CTA>
-							<CTA>Buy now</CTA>
+							style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+							<div>
+								<h3>{productName}</h3>
+								<p>
+									Brand:{' '}
+									<span style={{ color: 'var(--oex-orange)' }}>
+										{brandName}
+									</span>
+								</p>
+								<ProductStars stars={reviewAverage} count={reviewCount} />
+								<p
+									style={{
+										fontWeight: '600',
+										fontSize: '32px',
+										marginBlock: '1rem',
+									}}>
+									{formatPrice(price)}
+								</p>
+								<p style={{ color: '#575757' }}> {description}</p>
+							</div>
+							<div>
+								<Title>Safe and secure payment </Title>
+								<div style={{ display: 'flex', gap: '5px' }}>
+									<div>
+										<Image src={mastercardLogo}></Image>
+									</div>
+									<div>
+										<Image src={visaLogo}></Image>
+									</div>
+									<div>
+										<Image src={bankTransferlogo}></Image>
+									</div>
+								</div>
+							</div>
+							<div style={{ display: 'flex', gap: '1rem' }}>
+								<select
+									style={{
+										padding: '1rem',
+										fontSize: '1rem',
+										flex: '1',
+										border: '1px solid #F3F3F3',
+										borderRadius: '4px',
+									}}
+									name="size"
+									id="size">
+									<option value="Select Size" selected disabled>
+										Select Size
+									</option>
+									<option value="small">Small</option>
+									<option value="medium">Medium</option>
+									<option value="large">Large</option>
+								</select>
+								<div
+									style={{
+										display: 'flex',
+										gap: '.5rem',
+										alignItems: 'center',
+										paddingInline: '0.5rem',
+									}}>
+									<button
+										style={{
+											aspectRatio: '1',
+											height: '2.5rem',
+											borderRadius: '50%',
+											border: 'none',
+											fontSize: '2rem',
+											background: 'var(--oex-light-grey)',
+											color: '#A0A0A0',
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center',
+										}}
+										onClick={() => {
+											console.log(productCount);
+											setProductCount(prevProductCount => prevProductCount - 1);
+										}}>
+										-
+									</button>
+									<ProductCountInput
+										type="number"
+										name="quantity"
+										id="quantity"
+										value={productCount}
+										onChange={e => setProductCount(Number(e.target.value))}
+									/>
+									<button
+										style={{
+											aspectRatio: '1',
+											height: '2.5rem',
+											borderRadius: '50%',
+											border: 'none',
+											fontSize: '2rem',
+											background: 'var(--oex-light-grey)',
+											color: '#A0A0A0',
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center',
+										}}
+										onClick={() =>
+											setProductCount(prevProductCount => prevProductCount + 1)
+										}>
+										+
+									</button>
+								</div>
+							</div>
+							<div
+								style={{
+									display: 'grid',
+									gap: '2rem',
+									gridTemplateColumns: '1fr 1fr',
+								}}>
+								<CTA>Add to cart</CTA>
+								<CTA>Buy now</CTA>
+							</div>
 						</div>
-					</div>
+					</ProductData>
 				</SooSection>
 				<SooSection BGColor="white">
 					<Title>Delivery</Title>
@@ -441,6 +427,41 @@ export async function getStaticProps() {
 	};
 }
 
+const ShareandDataSheets = () => (
+	<ShareandDataSheetsContainer>
+		<div>
+			<Title>Share this product</Title>
+			<SocialsContainer>
+				<SocialCTA>
+					<Twitter width={18} />
+				</SocialCTA>
+				<SocialCTA>
+					<Facebook width={18} />
+				</SocialCTA>
+				<SocialCTA>
+					<Instagram width={18} />
+				</SocialCTA>
+			</SocialsContainer>
+		</div>
+		<div>
+			<Title>
+				<DataSheet />
+				DATA SHEET
+			</Title>
+
+			<p>Product Data Sheet</p>
+			<p>Safety Data Sheet</p>
+		</div>
+	</ShareandDataSheetsContainer>
+);
+
+const ShareandDataSheetsContainer = styled.div`
+	/* display: none; */
+	display: flex;
+	gap: 1rem;
+	flex-direction: column;
+`;
+
 const Title = styled.h2`
 	margin: 0;
 	font-weight: 600;
@@ -466,14 +487,25 @@ const TabTitle = styled(Title)`
 
 const LayoutDiv = styled.div`
 	display: grid;
-	grid-template-columns: 1fr 380px;
 	gap: 2rem;
 	align-items: start;
 
-	> *:nth-child(1),
-	> *:nth-last-child(2),
-	> *:last-child {
-		grid-column: span 2;
+	// TODO make the breakpoint variables
+	@media (min-width: 1200px) {
+		grid-template-columns: 2.5fr 1fr;
+		> *:nth-child(1),
+		> *:nth-last-child(2),
+		> *:last-child {
+			grid-column: span 2;
+		}
+	}
+`;
+
+const ProductData = styled.div`
+	// TODO make the breakpoint variables
+	@media (min-width: 700px) {
+		display: flex;
+		gap: 1rem;
 	}
 `;
 
