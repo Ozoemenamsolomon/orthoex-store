@@ -9,63 +9,62 @@ import Link from 'next/link';
 import Image from 'next/image';
 import orthoExLogo from '@assets/images/orthoex-logo-white.png';
 import { SocialCTA } from './Header';
-import { useRouter } from 'next/router';
 import { Container } from './styled';
 
-const Footer = () => {
-	const router = useRouter();
+type FooterProp = { pathname: string };
 
-	let footerLinks: {
-		title: string;
-		links: { title: string; href: string }[];
-	}[] = [
-		{
-			title: 'COMPANY',
-			links: [
-				{ title: 'About us', href: '#' },
-				{ title: 'Careers', href: '#' },
-				{ title: 'Events', href: '#' },
-				{ title: 'Contact us', href: '/contact' },
-			],
-		},
-		{
-			title: 'BUSINESSES',
-			links: [
-				{ title: 'Orthopaedics', href: '#' },
-				{ title: 'Composites', href: '#' },
-				{ title: 'Medical', href: '#' },
-				{ title: 'Consumables', href: '#' },
-				{ title: 'Partners', href: '#' },
-			],
-		},
-		{
-			title: 'SUPPORT',
-			links: [
-				{ title: 'FAQ', href: '#' },
-				{ title: 'Shipping and delivery', href: '#' },
-				{ title: 'Clinical Referrals', href: '#' },
-			],
-		},
-		{
-			title: 'RESOURCES',
-			links: [
-				{ title: 'Amputee guide', href: '#' },
-				{ title: 'Rehab Edge Magazine', href: '#' },
-				{ title: 'Blog', href: '#' },
-				{ title: 'Subscribe', href: '#' },
-			],
-		},
-		{
-			title: 'MORE INFO',
-			links: [
-				{ title: 'Privacy policy', href: '#' },
-				{ title: 'Terms & Conditions', href: '#' },
-				{ title: 'Site map', href: '#' },
-			],
-		},
-	];
+let footerLinks: {
+	title: string;
+	links: { title: string; href: string }[];
+}[] = [
+	{
+		title: 'COMPANY',
+		links: [
+			{ title: 'About us', href: '#' },
+			{ title: 'Careers', href: '#' },
+			{ title: 'Events', href: '#' },
+			{ title: 'Contact us', href: '/contact' },
+		],
+	},
+	{
+		title: 'BUSINESSES',
+		links: [
+			{ title: 'Orthopaedics', href: '#' },
+			{ title: 'Composites', href: '#' },
+			{ title: 'Medical', href: '#' },
+			{ title: 'Consumables', href: '#' },
+			{ title: 'Partners', href: '#' },
+		],
+	},
+	{
+		title: 'SUPPORT',
+		links: [
+			{ title: 'FAQ', href: '#' },
+			{ title: 'Shipping and delivery', href: '#' },
+			{ title: 'Clinical Referrals', href: '#' },
+		],
+	},
+	{
+		title: 'RESOURCES',
+		links: [
+			{ title: 'Amputee guide', href: '#' },
+			{ title: 'Rehab Edge Magazine', href: '#' },
+			{ title: 'Blog', href: '#' },
+			{ title: 'Subscribe', href: '#' },
+		],
+	},
+	{
+		title: 'MORE INFO',
+		links: [
+			{ title: 'Privacy policy', href: '#' },
+			{ title: 'Terms & Conditions', href: '#' },
+			{ title: 'Site map', href: '#' },
+		],
+	},
+];
 
-	if (router.pathname === '/composites') {
+const Footer: React.FC<FooterProp> = ({ pathname }) => {
+	if (pathname === '/composites') {
 		footerLinks = [
 			{
 				title: 'COMPANY',
@@ -116,7 +115,6 @@ const Footer = () => {
 			<Container
 				style={{
 					color: 'white',
-					// paddingBlockStart: '8rem',
 				}}
 			>
 				<LogoInfoWrapper>
@@ -159,30 +157,30 @@ const Footer = () => {
 					</FooterLinkGroups>
 				</LogoInfoWrapper>
 
-					<StyledHorionalLine show={router.pathname === "/"}/>			
+				<StyledHorionalLine show={pathname === '/'} />
 
-					<CopyrightLogoWrapper>
-						<span>Copyright © 2022 - OrthoEx NG</span>
-						<div>
-							<p>Follow OrthoEx NG</p>
-							<SocialsContainer>
-								<SocialCTA>
-									<Facebook width={18} />
-								</SocialCTA>
-								<SocialCTA>
-									<Instagram width={18} />
-								</SocialCTA>
-								<SocialCTA>
-									<Linkedin width={18} />
-								</SocialCTA>
-								<SocialCTA>
-									<Twitter width={18} />
-								</SocialCTA>
-							</SocialsContainer>
-						</div>
-					</CopyrightLogoWrapper>
+				<CopyrightLogoWrapper>
+					<span>Copyright © 2022 - OrthoEx NG</span>
+					<div>
+						<p>Follow OrthoEx NG</p>
+						<SocialsContainer>
+							<SocialCTA>
+								<Facebook width={18} />
+							</SocialCTA>
+							<SocialCTA>
+								<Instagram width={18} />
+							</SocialCTA>
+							<SocialCTA>
+								<Linkedin width={18} />
+							</SocialCTA>
+							<SocialCTA>
+								<Twitter width={18} />
+							</SocialCTA>
+						</SocialsContainer>
+					</div>
+				</CopyrightLogoWrapper>
 
-					<StyledHorionalLine show={router.pathname !== "/"}/>	
+				<StyledHorionalLine show={pathname !== '/'} />
 			</Container>
 		</SooFooter>
 	);
@@ -191,8 +189,8 @@ const Footer = () => {
 export default Footer;
 
 const SooFooter = styled.footer`
-width: 100%;
-padding-bottom: 3rem;
+	width: 100%;
+	padding-bottom: 3rem;
 `;
 
 const Logo = styled.div`
@@ -201,16 +199,16 @@ const Logo = styled.div`
 	position: relative;
 `;
 
-const StyledHorionalLine = styled.hr<{show: boolean}>`
-	margin-block-start: 2rem;	
+const StyledHorionalLine = styled.hr<{ show: boolean }>`
+	margin-block-start: 2rem;
 	margin-bottom: 2rem;
 	background: white;
 	font-size: 10px;
 	position: absolute;
 	width: 100%;
 	left: 0;
-	display: ${({show}) => !show && "none"};
-`
+	display: ${({ show }) => !show && 'none'};
+`;
 
 const FooterLinkGroups = styled.div`
 	display: flex;
@@ -218,8 +216,7 @@ const FooterLinkGroups = styled.div`
 	justify-content: space-between;
 	flex-wrap: wrap;
 
-
-	@media(min-width:768px){
+	@media (min-width: 768px) {
 		flex-wrap: nowrap;
 		padding-left: 0rem;
 	}
@@ -232,15 +229,13 @@ const FooterLinkGroup = styled.div`
 	width: 50%;
 	margin-bottom: 4rem;
 
-
 	> h5 {
 		margin: 0;
 		font-size: 1.2rem;
 	}
-	@media(min-width:768px){
+	@media (min-width: 768px) {
 		margin-bottom: 0rem;
 	}
-
 `;
 
 export const SocialsContainer = styled.div`
@@ -257,13 +252,11 @@ const LogoInfoWrapper = styled.div`
 	padding-top: 3rem;
 	padding-left: 3rem;
 
-
-	@media(min-width:768px){
+	@media (min-width: 768px) {
 		flex-direction: row;
 		padding-left: 0rem;
-
 	}
-`
+`;
 
 const CopyrightLogoWrapper = styled.div`
 	display: flex;
@@ -274,15 +267,12 @@ const CopyrightLogoWrapper = styled.div`
 	gap: 2rem;
 	margin-block-start: 3rem;
 
-
-	@media(min-width: 768px){
+	@media (min-width: 768px) {
 		padding-left: 0rem;
 	}
 
-	@media(min-width: 768px){
+	@media (min-width: 768px) {
 		flex-direction: row;
 		align-items: center;
 	}
-
-
-`
+`;

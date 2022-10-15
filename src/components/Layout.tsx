@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import Head from 'next/head';
 import Footer from './Footer';
 import Header from './Header';
+import { useRouter } from 'next/router';
 
 type LayoutProp = {};
 
 const Layout: React.FC<LayoutProp> = ({ children }) => {
+	const { pathname } = useRouter();
+
 	return (
 		<LayoutWrapper>
 			<Head>
@@ -32,9 +35,9 @@ const Layout: React.FC<LayoutProp> = ({ children }) => {
 				<meta name="msapplication-TileColor" content="#00aba9" />
 				<meta name="theme-color" content="#ffffff" />
 			</Head>
-			<Header />
+			<Header pathname={pathname} />
 			<Main>{children}</Main>
-			<Footer />
+			<Footer pathname={pathname} />
 		</LayoutWrapper>
 	);
 };
