@@ -21,12 +21,10 @@ const CTA = styled.button<CTAType>`
 	color: ${prop =>
 		prop.white ? 'var(--oex-orange)' : 'var(--text-colour-light)'};
 
-	&:not(.no-animate) {
-		&:hover {
-			color: ${prop =>
-				prop.white ? 'var(--text-colour-light)' : 'var(--oex-orange)'};
-			background-color: ${prop => (prop.white ? 'var(--oex-orange)' : 'white')};
-		}
+	&:not(.no-animate):hover {
+		color: ${prop =>
+			prop.white ? 'var(--text-colour-light)' : 'var(--oex-orange)'};
+		background-color: ${prop => (prop.white ? 'var(--oex-orange)' : 'white')};
 	}
 `;
 
