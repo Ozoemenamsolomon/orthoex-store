@@ -36,21 +36,22 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 		const isScrolled = window.scrollY > 0;
 		isScrolled !== scrolled ? setScrolled(!scrolled) : setScrolled(false);
 	};
+	const light =
+		pathname.includes('categories') || pathname.includes('products');
 
 	useEffect(() => {
-		document.addEventListener('scroll', handleScroll, { passive: true });
+		if (!light) {
+			document.addEventListener('scroll', handleScroll, { passive: true });
+		}
 
 		return () => {
 			document.removeEventListener('scroll', handleScroll);
 		};
-	}, []);
-
-	const light =
-		pathname.includes('categories') || pathname.includes('products');
+	}, [pathname]);
 
 	return (
 		<>
-			<SooHeader className={`${scrolled ? 'scrolled' : ''}`}>
+			<SooHeader light={light} className={`${scrolled ? 'scrolled' : ''}`}>
 				<Container
 					paddingMultiplier={2}
 					style={{
@@ -165,7 +166,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 
 export default Header;
 
-const SooHeader = styled.header`
+const SooHeader = styled.header<{ light: boolean }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -174,6 +175,7 @@ const SooHeader = styled.header`
 	z-index: 5;
 	color: #fff;
 	transition: background-color 0.5s ease;
+	background-color: ${({ light }) => light && 'white'};
 	&.scrolled {
 		background-color: #00000089;
 		color: white;
