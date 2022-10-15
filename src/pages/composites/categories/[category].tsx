@@ -1,7 +1,7 @@
 import categoryBanner from '@assets/new/images/category-banner.jpg';
 import Breadcrumb, { BreadcrumProps } from '@components/Breadcrumb';
 import { CategoryProps } from '@components/CategoryCard';
-import { CTA } from '@components/Header';
+import CTA from '@components/CTA';
 import ProductCard, { ProductProps } from '@components/ProductCard';
 import { Container } from '@components/styled';
 import { categories } from 'data/categories';
@@ -55,8 +55,7 @@ const filterSections = [
 					display: 'flex',
 					flexDirection: 'column',
 					gap: '.5rem',
-				}}
-			>
+				}}>
 				<label>
 					<input type="checkbox" name="brand" id="brand" />
 					<span>OEX Composite</span>
@@ -77,8 +76,7 @@ const filterSections = [
 						color: 'var(--oex-orange)',
 						background: 'none',
 						border: 'none',
-					}}
-				>
+					}}>
 					Apply
 				</button>
 			</div>
@@ -125,8 +123,7 @@ const Category: NextPage<{
 		<Container
 			verticalPaddingInREM={7}
 			paddingMultiplier={4}
-			bg="var(--oex-off-white)"
-		>
+			bg="var(--oex-off-white)">
 			<LayoutDiv>
 				<Breadcrumb breadcrumb={breadcrumb} />
 
@@ -197,9 +194,9 @@ export async function getStaticPaths() {
 	};
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async context => {
 	const category = categories.find(
-		({ slug }) => slug === context.params?.category
+		({ slug }) => slug === context.params?.category,
 	);
 
 	const products = Array.from({ length: 9 }, () => ({

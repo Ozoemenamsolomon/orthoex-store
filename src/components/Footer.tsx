@@ -8,8 +8,8 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import orthoExLogo from '@assets/images/orthoex-logo-white.png';
-import { SocialCTA } from './Header';
 import { Container } from './styled';
+import { SocialCTA } from './CTA';
 
 type FooterProp = { pathname: string };
 
@@ -115,8 +115,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 			<Container
 				style={{
 					color: 'white',
-				}}
-			>
+				}}>
 				<LogoInfoWrapper>
 					<Link href="/">
 						<a>
@@ -126,7 +125,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 									objectPosition="left"
 									objectFit="contain"
 									layout="fill"
-								></Image>
+								/>
 							</Logo>
 						</a>
 					</Link>
@@ -141,13 +140,11 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 										fontSize: '0.9rem',
 										flexDirection: 'column',
 										gap: '1rem',
-									}}
-								>
+									}}>
 									{links.map(({ title, href }, index) => (
 										<Link
 											key={`link-${indexTop}-${title}-${index}`}
-											href={href}
-										>
+											href={href}>
 											<a>{title}</a>
 										</Link>
 									))}
@@ -157,7 +154,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 					</FooterLinkGroups>
 				</LogoInfoWrapper>
 
-				<StyledHorionalLine show={pathname === '/'} />
+				<StyledHorionalLine />
 
 				<CopyrightLogoWrapper>
 					<span>Copyright © 2022 - OrthoEx NG</span>
@@ -179,8 +176,6 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 						</SocialsContainer>
 					</div>
 				</CopyrightLogoWrapper>
-
-				<StyledHorionalLine show={pathname !== '/'} />
 			</Container>
 		</SooFooter>
 	);
@@ -199,7 +194,7 @@ const Logo = styled.div`
 	position: relative;
 `;
 
-const StyledHorionalLine = styled.hr<{ show: boolean }>`
+const StyledHorionalLine = styled.hr`
 	margin-block-start: 2rem;
 	margin-bottom: 2rem;
 	background: white;
@@ -207,7 +202,6 @@ const StyledHorionalLine = styled.hr<{ show: boolean }>`
 	position: absolute;
 	width: 100%;
 	left: 0;
-	display: ${({ show }) => !show && 'none'};
 `;
 
 const FooterLinkGroups = styled.div`

@@ -11,7 +11,7 @@ import nigeria from '@assets/new/icons/nigeria.svg';
 import quality from '@assets/new/icons/quality.svg';
 import heroBG from '@assets/new/images/hero-bg.jpg';
 import Categories from '@components/Categories';
-import { CTA, CTALink } from '@components/Header';
+import CTA, { CTALink } from '@components/CTA';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
 import IconText from '@components/IconText';
@@ -127,8 +127,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 							alignSelf: 'flex-end',
 							textDecoration: 'underline',
 							color: 'var(--oex-orange)',
-						}}
-					>
+						}}>
 						<IconText icon={moreArrow} text="View more Categories" />
 					</a>
 				</Link>

@@ -1,16 +1,16 @@
-import NeedHelpSection from '../components/sections/NeedHelpSection';
-import StayTunedSection from '../components/sections/StayTunedSection';
-import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
-import { Container, ServicesCards } from '../components/styled';
+import NeedHelpSection from '@components/sections/NeedHelpSection';
+import StayTunedSection from '@components/sections/StayTunedSection';
+import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import { Container, ServicesCards } from '@components/styled';
 import composite from '@assets/new/icons/composite.svg';
 import durable from '@assets/new/icons/durable.svg';
 import quality from '@assets/new/icons/quality.svg';
 import nigeria from '@assets/new/icons/nigeria.svg';
-import SooSection from '../components/SooSection';
-import HeroContent from '../components/HeroContent';
-import { HeroComp as Hero } from '../components/Hero';
-import { CTA } from '../components/Header';
-import EventCard from '../components/EventCard';
+import SooSection from '@components/SooSection';
+import HeroContent from '@components/HeroContent';
+import { HeroComp as Hero } from '@components/Hero';
+import CTA from '@components/CTA';
+import EventCard from '@components/EventCard';
 
 const qualities: ServiceCardType[] = [
 	{

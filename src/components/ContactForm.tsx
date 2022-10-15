@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
-import { CTA } from './Header';
+import CTA from './CTA';
 
 type FormValue = {
 	name: string;
@@ -18,7 +18,7 @@ const ContactForm = () => {
 	});
 
 	const handleChange = (
-		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 	) => {
 		const value = e.currentTarget.value || '';
 		const name = e.target.name;
@@ -71,7 +71,7 @@ const ContactForm = () => {
 							onChange={handleChange}
 							rows={7}
 							value={FormValue.message}
-						></textarea>
+						/>
 					</InputLabelDiv>
 					<CTA style={{ alignSelf: 'flex-end' }} type="submit">
 						Submit

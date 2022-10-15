@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CTA } from './Header';
 import SooSection from './SooSection';
 import Image from 'next/image';
 
@@ -9,6 +8,7 @@ import ContactUs from '@assets/icons/contact-us.png';
 import EnableBusiness from '@assets/icons/learn-more.png';
 import ViewProducts from '@assets/icons/view-products.png';
 import KristaTemple from '@assets/images/krista-and-temple.png';
+import CTA from './CTA';
 
 const ValuesSection = () => {
 	return (
@@ -30,7 +30,7 @@ const ValuesSection = () => {
 						className="krista-temple"
 						layout="fill"
 						objectFit="cover"
-					></Image>
+					/>
 					<div className="content">
 						<p>We are passionate about empowering human potentials.</p>
 						<CTA>JOIN US</CTA>
@@ -44,11 +44,7 @@ const ValuesSection = () => {
 				</ValuesTitleCardContainer>
 				<BaseValueCard>
 					<div className="image-container">
-						<Image
-							layout="fill"
-							objectFit="contain"
-							src={EnableBusiness}
-						></Image>
+						<Image layout="fill" objectFit="contain" src={EnableBusiness} />
 					</div>
 					<p>We are enabling businesses like yours for success</p>
 					<CTA>LEARN MORE</CTA>

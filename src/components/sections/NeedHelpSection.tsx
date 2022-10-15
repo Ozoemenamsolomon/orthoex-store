@@ -1,7 +1,7 @@
 import chatIcon from '@assets/new/icons/chat.svg';
 import faq from '@assets/new/icons/faq.svg';
 import phoneIcon from '@assets/new/icons/telephone.svg';
-import { CTA, CTALink } from '@components/Header';
+import CTA, { CTALink } from '@components/CTA';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
 import SooSection from '@components/SooSection';
 import { ServicesCards } from '@components/styled';
@@ -26,8 +26,7 @@ export const helps: ServiceCardType[] = [
 				target="_blank"
 				href="https://wa.me/2347030324696"
 				rel="noopener noreferrer"
-				white
-			>
+				white>
 				Live chat
 			</CTALink>
 		),

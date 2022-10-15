@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { CTA } from './Header';
+import CTA from './CTA';
 import ProductStars from './ProductStars';
 
 export type ProductProps = {

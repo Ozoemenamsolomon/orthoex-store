@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { formatDate, formatPrice, formatTime } from '../utils';
+import CTA from './CTA';
 import { EventType } from './EventCard';
-import { CTA } from './Header';
 
 const EventMetaData: FC<EventType & { disabled: boolean }> = ({
 	startDateTimeString,

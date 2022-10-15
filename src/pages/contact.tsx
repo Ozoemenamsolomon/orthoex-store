@@ -9,12 +9,12 @@ import PhoneIcon from '@assets/icons/contact/phone-icon_ImgID1.png';
 import TwitterIcon from '@assets/icons/contact/twitter-icon_ImgID1.png';
 import WhatsappIcon from '@assets/icons/contact/whatsapp-icon_ImgID1.png';
 import ContactBG from '@assets/images/contact-background.jpg';
-import { CTA } from '../components/Header';
-import { HeroComp as Hero } from '../components/Hero';
-import HeroContent from '../components/HeroContent';
-import ServiceCard, { ServiceCardType } from '../components/ServiceCard';
-import SooSection from '../components/SooSection';
-import { Container, ServicesCards } from '../components/styled';
+import CTA from '@components/CTA';
+import { HeroComp as Hero } from '@components/Hero';
+import HeroContent from '@components/HeroContent';
+import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import SooSection from '@components/SooSection';
+import { Container, ServicesCards } from '@components/styled';
 
 const contacts: ServiceCardType[] = [
 	{
@@ -82,8 +82,7 @@ const Contact = () => {
 					<h2
 						style={{
 							textAlign: 'center',
-						}}
-					>
+						}}>
 						You can contact us through any of this means
 					</h2>
 					<ServicesCards>
@@ -98,25 +97,18 @@ const Contact = () => {
 						gap: '2rem',
 						gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
 						alignItems: 'center',
-					}}
-				>
+					}}>
 					<div>
 						<h2
 							style={{
 								textAlign: 'center',
-							}}
-						>
+							}}>
 							Have some questions?
 						</h2>
 						<ContactForm>
 							<input type="tel" placeholder="Your Whatsapp Number" />
 							<input type="email" placeholder="Your email" />
-							<textarea
-								name=""
-								id=""
-								placeholder="Your question"
-								rows={10}
-							></textarea>
+							<textarea name="" id="" placeholder="Your question" rows={10} />
 							<CTA type="submit">Subscribe</CTA>
 						</ContactForm>
 					</div>
