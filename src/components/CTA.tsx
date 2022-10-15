@@ -32,24 +32,25 @@ const CTA = styled.button<CTAType>`
 
 export default CTA;
 
-type CTAProps = React.ComponentProps<typeof CTA>;
-
-export const CTALink: FC<CTAProps & { href: string }> = ({
-	href,
-	...props
-}) => {
-	return (
-		<Link href={href}>
-			<a style={{ display: 'contents' }}>
-				<CTA {...props} />
-			</a>
-		</Link>
-	);
-};
-
 export const SocialCTA = styled(CTA)`
 	padding: 0.5rem;
 	color: black;
 	background-color: white;
 	border-radius: 7px;
 `;
+
+type CTAProps = React.ComponentProps<typeof CTA>;
+
+export const CTALink: FC<CTAProps & { href: string; isSocial?: boolean }> = ({
+	href,
+	isSocial,
+	...props
+}) => {
+	return (
+		<Link href={href}>
+			<a style={{ display: 'contents' }}>
+				{isSocial ? <SocialCTA {...props} /> : <CTA {...props} />}
+			</a>
+		</Link>
+	);
+};

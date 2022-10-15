@@ -9,7 +9,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import orthoExLogo from '@assets/images/orthoex-logo-white.png';
 import { Container } from './styled';
-import { SocialCTA } from './CTA';
+import { CTALink } from './CTA';
 
 type FooterProp = { pathname: string };
 
@@ -161,18 +161,34 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 					<div>
 						<p>Follow OrthoEx NG</p>
 						<SocialsContainer>
-							<SocialCTA>
+							<CTALink
+								isSocial={true}
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://www.facebook.com/orthoexng">
 								<Facebook width={18} />
-							</SocialCTA>
-							<SocialCTA>
+							</CTALink>
+							<CTALink
+								isSocial={true}
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://www.instagram.com/orthoex_nigeria/">
 								<Instagram width={18} />
-							</SocialCTA>
-							<SocialCTA>
+							</CTALink>
+							<CTALink
+								isSocial={true}
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://www.linkedin.com/company/orthoexnigeria/">
 								<Linkedin width={18} />
-							</SocialCTA>
-							<SocialCTA>
+							</CTALink>
+							<CTALink
+								isSocial={true}
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://twitter.com/OrthoExNg">
 								<Twitter width={18} />
-							</SocialCTA>
+							</CTALink>
 						</SocialsContainer>
 					</div>
 				</CopyrightLogoWrapper>

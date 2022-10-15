@@ -215,14 +215,14 @@ const NavBar = styled.nav`
 		color: black;
 	}
 
-	/* & > div > a.active::after {
+	&:not(.light) > div > a.active::after {
 		content: '';
 		position: absolute;
 		inset-inline: 0;
 		inset-block-end: 0;
 		background-color: var(--oex-orange);
 		height: 10%;
-	} */
+	}
 
 	@media (max-width: 900px) {
 		display: none;
