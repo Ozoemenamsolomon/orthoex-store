@@ -10,10 +10,12 @@ import InfoSection from "@components/InfoSection";
 import InfoText from "@components/InfoText";
 import InfoTestmonial from "@components/InfoTestimonial";
 import ProductVertical from "@components/ProductVertical";
+import CallButton from "@components/CallButton";
 
 const Home: NextPage = () => {
   const findRep = () => {};
   return (
+    <>
     <Container bg="white" paddingMultiplier={0}>
       <Hero bg={HeaderBG}>
         <HeroContent
@@ -35,7 +37,11 @@ const Home: NextPage = () => {
         }
       />
       <InfoTestmonial />
+
+      <CallButton />
     </Container>
+    </>
+
   );
 };
 
