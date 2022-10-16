@@ -41,7 +41,7 @@ const InfoSectionData: InfoSectionType[] = [
     image: Imprint,
     description:
       "Our materials are represented in hundreds of products across multiple markets in Nigeria.",
-    buttons: [{ link: "", title: "View Products"}],
+    buttons: [{ link: "#product-vertical", title: "View Products"}],
   },
 ];
 
