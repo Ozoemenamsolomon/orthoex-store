@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import {Whatsapp} from '@styled-icons/bootstrap';
-import {Email} from '@styled-icons/material-outlined';
 import {StyledIcon} from '@styled-icons/styled-icon'
-import {Call} from '@styled-icons/fluentui-system-regular';
+import Call from "@assets/new/icons/call-info.svg";
+import Email from "@assets/new/icons/email-info.svg";
+import Whatsapp from "@assets/new/icons/whatsapp-info.svg";
+
 import CustomerService from "@assets/new/images/home/customer-service.jpg";
 import Imprint from "@assets/new/images/home/imprint.jpg";
 import QuickChange from "@assets/new/images/home/quickchange.jpg";

@@ -2,7 +2,8 @@ import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import Link from "next/link";
-import {StyledIcon} from '@styled-icons/styled-icon'
+import { StyledIcon } from "@styled-icons/styled-icon";
+import Call from "@assets/new/icons/call-info.svg";
 
 
 interface ButtonInfo {
@@ -17,26 +18,40 @@ interface Props {
   buttons: ButtonInfo[];
 }
 
-const  InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
+const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
   return (
-
     <StyledInfoCard>
-      <Image width="100" height="60" objectFit="cover" layout="responsive"  src={image} />
+      <Image
+        width="100"
+        height="60"
+        objectFit="cover"
+        layout="responsive"
+        src={image}
+      />
       <p>{description}</p>
       <ButtonContainer>
-      {buttons.map(({icon, link, title}, index) => (
-          <Link key={index} href={link}>
-            <ButtonStyled>{title}</ButtonStyled>
-          </Link>
-      ))}
+        {buttons.map(({ icon, link, title }, index) => (
+          <>
+            <Link key={index} href={link}>
+              <ButtonStyled>
+                {icon && (
+                  <Image
+                    width="20px"
+                    height="20px"
+                    src={Call}
+                  />
+                )}
+                {title}
+              </ButtonStyled>
+            </Link>
+          </>
+        ))}
       </ButtonContainer>
     </StyledInfoCard>
-
   );
-}
+};
 
 export default InfoCard;
-
 
 const StyledInfoCard = styled.div`
   display: flex;
@@ -65,8 +80,7 @@ const StyledInfoCard = styled.div`
       border-radius: 0rem;
     }
   }
-
-`
+`;
 
 const ButtonStyled = styled.button`
   color: var(--oex-orange);
@@ -76,9 +90,12 @@ const ButtonStyled = styled.button`
   width: 100%;
   border-radius: 0.2rem;
   border: 0.09rem solid var(--oex-orange);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 
   &:hover {
-    color: white ;
+    color: white;
     background-color: var(--oex-orange);
   }
 `;
@@ -86,4 +103,4 @@ const ButtonStyled = styled.button`
 const ButtonContainer = styled.div`
   display: flex;
   gap: 2rem;
-`
+`;
