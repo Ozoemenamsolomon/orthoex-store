@@ -33,11 +33,11 @@ export const ServicesCards = styled.div<{ minWidth?: string }>`
 `;
 
 export const PostCardsContainer = styled.div`
-	@media (min-width: 600px) {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(336px, 1fr));
-		gap: 4rem;
-	}
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(336px, 1fr));
+	gap: 4rem;
+	// moved the above out of 600px media query
+
 `;
 
 export const Container = styled.div<{

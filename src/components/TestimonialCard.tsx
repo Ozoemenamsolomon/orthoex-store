@@ -23,7 +23,7 @@ const TestimonialCard: FC<TestimonialCardProps> = ({
 	);
 };
 
-export default TestimonialCard;
+export default TestimonialCard; 
 
 const TestimonialCardContainer = styled.div`
 	padding: 2rem;
