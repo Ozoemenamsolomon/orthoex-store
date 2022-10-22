@@ -190,7 +190,8 @@ export default Products;
 export const getStaticProps: GetStaticProps = async context => {
 	const products = Array.from(
 		{ length: 16 },
-		() => productsData[Math.round(Math.random() * productsData.length)],
+		(_, index) =>
+			productsData[Math.abs(productsData.length - index) % productsData.length],
 	);
 
 	return {
