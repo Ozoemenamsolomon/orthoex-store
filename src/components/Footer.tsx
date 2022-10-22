@@ -7,7 +7,7 @@ import {
 } from '@styled-icons/bootstrap';
 import Link from 'next/link';
 import Image from 'next/image';
-import orthoExLogo from '@assets/images/orthoex-logo-white.png';
+import orthoExLogo from '@assets/new/logos/orthoex-logo-white.svg';
 import { Container } from './styled';
 import { CTALink } from './CTA';
 

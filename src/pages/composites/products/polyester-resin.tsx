@@ -292,10 +292,16 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									</TabTitle>
 								</Tab>
 								<Tab>
-									<TabTitle>Resin Calculator</TabTitle>
+									<TabTitle>
+										<DataSheet />
+										Resin Calculator
+									</TabTitle>
 								</Tab>
 								<Tab>
-									<TabTitle>Product Feedbacks</TabTitle>
+									<TabTitle>
+										<DataSheet />
+										Product Feedbacks
+									</TabTitle>
 								</Tab>
 							</TabList>
 
@@ -445,7 +451,7 @@ const ShareandDataSheets = () => (
 		</div>
 		<div>
 			<Title>
-				<DataSheet />
+				<DataSheet colour="#707070" />
 				DATA SHEET
 			</Title>
 
@@ -474,9 +480,6 @@ const Title = styled.h2`
 const TabsContainer = styled.span`
 	.react-tabs__tab--selected {
 		color: var(--oex-orange);
-		&:has(svg) {
-			bottom: -6px;
-		}
 	}
 `;
 const TabTitle = styled(Title)`

@@ -22,7 +22,7 @@ export const productsData: ProductDataType[] = [
 		description:
 			'FLAG Resin is a part our Medium-Viscosity 2:1 Non-Blushing Resin. FLAG stands for filling, laminating and gluing. It is compatible with LV Resin and the Slow.',
 		image: product1,
-		previewImages: [product1prev, product1prev, product1prev],
+		previewImages: [product1, product1, product1],
 		name: 'Polyester Resin',
 		productDetail:
 			'- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum morbi ac egestas sed mattis vitae. Phasellus risus, quam eu gravida etiam aliquam pharetra felis. , tellus congue proin amet nunc. Et sagittis, vitae dolor adipiscing dolor enim. Nisl mi congue ipsum mauris risus a, mauris.\n- Nibh elementum in viverra eu pellentesque quis. Semper nibh tellus enim porta. Eu lorem viverra interdum ac ac scelerisque ipsum enim auctor. Nunc urnaque sed enim eleifend volutpat gravida. Cursus habitant scelerisque suspendisse ornare lectus\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget sem nulla integer. Cras sed accumsan sit vitae mattis aliquet viverra cursus magna ut.\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget.',

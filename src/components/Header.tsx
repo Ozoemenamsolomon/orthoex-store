@@ -3,8 +3,8 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import React, { useEffect, useState } from 'react';
-import orthoExLogo from '@assets/images/orthoex-logo-white.png';
-import orthoExLogoCol from '@assets/new/images/orthoex-logo-coloured.png';
+import orthoExLogo from '@assets/new/logos/orthoex-logo-white.svg';
+import orthoExLogoCol from '@assets/new/logos/orthoex-logo-coloured.svg';
 import NavLink from './NavLink';
 import { Container } from './styled';
 import SearchIcon from '@assets/new/icons/Search';
