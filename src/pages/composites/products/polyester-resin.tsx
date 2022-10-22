@@ -181,7 +181,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										padding: '1rem',
 										fontSize: '1rem',
 										flex: '1',
-										border: '1px solid #F3F3F3',
+										border: '1px solid var(--oex-light-grey)',
 										borderRadius: '4px',
 									}}
 									name="size"
@@ -200,25 +200,13 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										alignItems: 'center',
 										paddingInline: '0.5rem',
 									}}>
-									<button
-										style={{
-											aspectRatio: '1',
-											height: '2.5rem',
-											borderRadius: '50%',
-											border: 'none',
-											fontSize: '2rem',
-											background: 'var(--oex-light-grey)',
-											color: '#A0A0A0',
-											display: 'flex',
-											alignItems: 'center',
-											justifyContent: 'center',
-										}}
+									<ProductCountControlButton
 										onClick={() => {
 											console.log(productCount);
 											setProductCount(prevProductCount => prevProductCount - 1);
 										}}>
 										-
-									</button>
+									</ProductCountControlButton>
 									<ProductCountInput
 										type="number"
 										name="quantity"
@@ -226,24 +214,12 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										value={productCount}
 										onChange={e => setProductCount(Number(e.target.value))}
 									/>
-									<button
-										style={{
-											aspectRatio: '1',
-											height: '2.5rem',
-											borderRadius: '50%',
-											border: 'none',
-											fontSize: '2rem',
-											background: 'var(--oex-light-grey)',
-											color: '#A0A0A0',
-											display: 'flex',
-											alignItems: 'center',
-											justifyContent: 'center',
-										}}
+									<ProductCountControlButton
 										onClick={() =>
 											setProductCount(prevProductCount => prevProductCount + 1)
 										}>
 										+
-									</button>
+									</ProductCountControlButton>
 								</div>
 							</div>
 							<div
@@ -468,16 +444,43 @@ const ShareandDataSheetsContainer = styled.div`
 	flex-direction: column;
 `;
 
+const ProductCountControlButton = styled.button`
+	height: 2.5rem;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	border: none;
+	font-size: 2rem;
+	background: var(--oex-light-grey);
+	color: #a0a0a0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
+
 const Title = styled.h2`
 	margin: 0;
 	font-weight: 600;
 	font-size: 1.2rem;
-	border-bottom: 1px solid #f3f3f3;
+	border-bottom: 1px solid var(--oex-light-grey);
 	padding-bottom: 0.5rem;
 	margin-bottom: 1rem;
 	display: flex;
 `;
 const TabsContainer = styled.span`
+	.react-tabs__tab-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+		border-color: var(--oex-grey);
+		padding-bottom: 0.5rem;
+	}
+	.react-tabs__tab {
+		outline: none;
+	}
+	.react-tabs__tab {
+		bottom: 0;
+		border: none;
+		color: var(--oex-grey);
+	}
 	.react-tabs__tab--selected {
 		color: var(--oex-orange);
 	}
