@@ -7,7 +7,7 @@ import { Container } from '@components/styled';
 import { categories } from 'data/categories';
 import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
 import { Dashboard } from 'styled-icons/boxicons-solid';
@@ -15,7 +15,7 @@ import { ArrowPrevious, Filter } from 'styled-icons/fluentui-system-filled';
 import { CheveronLeft, CheveronRight } from 'styled-icons/zondicons';
 import StarRating from 'react-svg-star-rating';
 import PriceFilter from '@components/PriceFilter';
-import { ProductDataType } from '@data/productsData';
+import { ProductDataType, productsData } from '@data/productsData';
 
 const filterSections = [
 	{
@@ -80,15 +80,36 @@ const filterSections = [
 	},
 ];
 
-const Category: NextPage<{
+const Products: NextPage<{
 	category: CategoryProps;
 	products: ProductDataType[];
-}> = ({ category: { name: title, image }, products }) => {
+}> = ({ products }) => {
+	const [categoryFilterSlug, setCategoryFilterSlug] = useState<
+		string | undefined
+	>(undefined);
+
+	const CategoryRadioOption: React.FC<CategoryProps> = ({ name, slug }) => {
+		return (
+			<label className="label" htmlFor={slug}>
+				<input
+					type="radio"
+					name={'category-selector'}
+					id={slug}
+					onClick={() => {
+						setCategoryFilterSlug(slug);
+					}}
+				/>
+				{name}
+			</label>
+		);
+	};
+
 	const breadcrumb: BreadcrumProps[] = [
 		{ name: 'Composites', link: '/composites' },
-		{ name: 'All Categories', link: '/composites/categories' },
-		{ name: title, link: '#' },
+		{ name: 'All Products', link: '#' },
 	];
+
+	console.log({ categoryFilterSlug });
 
 	return (
 		<Container
@@ -99,6 +120,16 @@ const Category: NextPage<{
 				<Breadcrumb breadcrumb={breadcrumb} />
 
 				<FilterPanel>
+					<FilterPanelSection>
+						<div>
+							<h2>CATEGORY</h2>
+						</div>
+						<div>
+							{categories.map(category => (
+								<CategoryRadioOption {...category} />
+							))}
+						</div>
+					</FilterPanelSection>
 					{filterSections.map(({ header, content }) => (
 						<FilterPanelSection>
 							<div>{header}</div>
@@ -108,7 +139,7 @@ const Category: NextPage<{
 				</FilterPanel>
 				<div>
 					<TitleFilterBar>
-						<h2>{title}</h2>
+						<h2>All Products</h2>
 						<div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
 							<h2>Sort by:</h2>
 							<select name="sort-by" id="sort-by">
@@ -126,12 +157,11 @@ const Category: NextPage<{
 						</span>
 					</div>
 					<ProductsContainer>
-						{products.map((product, index) => (
-							<ProductCard
-								key={`product_${index}`}
-								product={{ ...product, name: title, image }}
-							/>
-						))}
+						{products
+							.filter(product => product)
+							.map((product, index) => (
+								<ProductCard key={`product_${index}`} product={product} />
+							))}
 						<div>
 							<PaginationButton>
 								<ArrowPrevious size={24} />
@@ -155,34 +185,16 @@ const Category: NextPage<{
 	);
 };
 
-export default Category;
-
-export async function getStaticPaths() {
-	const paths = categories.map(({ slug }) => ({ params: { category: slug } }));
-	return {
-		paths,
-		fallback: false,
-	};
-}
+export default Products;
 
 export const getStaticProps: GetStaticProps = async context => {
-	const category = categories.find(
-		({ slug }) => slug === context.params?.category,
+	const products = Array.from(
+		{ length: 16 },
+		() => productsData[Math.round(Math.random() * productsData.length)],
 	);
-
-	const products = Array.from({ length: 9 }, () => ({
-		image: categoryBanner,
-		price: 170000,
-		name: 'title',
-		rating: {
-			count: 0,
-			stars: 3.5,
-		},
-	}));
 
 	return {
 		props: {
-			category,
 			products,
 		},
 	};

@@ -6,7 +6,6 @@ import durable from '@assets/new/icons/durable.svg';
 import handShake from '@assets/new/icons/handshake.svg';
 import headphone from '@assets/new/icons/headphone.svg';
 import highPerformanceIcon from '@assets/new/icons/high-performance.svg';
-import moreArrow from '@assets/new/icons/more-arrow.svg';
 import nigeria from '@assets/new/icons/nigeria.svg';
 import quality from '@assets/new/icons/quality.svg';
 import heroBG from '@assets/new/images/hero-bg.jpg';
@@ -14,16 +13,15 @@ import Categories from '@components/Categories';
 import CTA, { CTALink } from '@components/CTA';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
-import IconText from '@components/IconText';
 import InfoTestimonial from '@components/InfoTestimonial';
 import { helps } from '@components/sections/NeedHelpSection';
 import StayTunedSection from '@components/sections/StayTunedSection';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
 import SooSection, { SOOSectionProp } from '@components/SooSection';
 import { Container, ServicesCards } from '@components/styled';
+import ViewMoreLink from '@components/ViewMoreLink';
 import { categories } from 'data/categories';
 import type { NextPage } from 'next';
-import Link from 'next/link';
 import React from 'react';
 
 const qualities: ServiceCardType[] = [
@@ -121,16 +119,10 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 		children: (
 			<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
 				<Categories categories={categories} />
-				<Link href="/composites/categories">
-					<a
-						style={{
-							alignSelf: 'flex-end',
-							textDecoration: 'underline',
-							color: 'var(--oex-orange)',
-						}}>
-						<IconText icon={moreArrow} text="View more Categories" />
-					</a>
-				</Link>
+				<ViewMoreLink
+					href="/composites/categories"
+					text="View more Categories"
+				/>
 			</div>
 		),
 	},

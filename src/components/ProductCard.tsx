@@ -8,8 +8,8 @@ export type ProductProps = {
 	name: string;
 	price: number;
 	image: StaticImageData;
-	rating: {
-		stars: number;
+	review: {
+		average: number;
 		count: number;
 	};
 };
@@ -24,7 +24,7 @@ export const priceFormatter = Intl.NumberFormat('en-ng', {
 });
 
 const ProductCard: React.FC<ProductCardProp> = ({
-	product: { image, price, name, rating },
+	product: { image, price, name, review },
 }) => {
 	return (
 		<ProductCardContainer>
@@ -47,7 +47,7 @@ const ProductCard: React.FC<ProductCardProp> = ({
 					</a>
 				</Link>
 				<Price>{priceFormatter.format(price)}</Price>
-				<ProductStars {...rating} />
+				<ProductStars {...review} />
 				<CTA>ADD TO CART</CTA>
 			</ProductCardContent>
 		</ProductCardContainer>

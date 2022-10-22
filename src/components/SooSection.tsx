@@ -41,7 +41,7 @@ export default SooSection;
 const SOOSectionContainer = styled('section')<{
 	bgColor?: string;
 }>`
-	background-color: ${(prop) => prop.bgColor};
+	background-color: ${prop => prop.bgColor};
 	margin-top: 3rem;
 	padding-block: 3rem;
 	flex-direction: column;
@@ -64,24 +64,28 @@ export const SectionHeader: FC<SectionHeaderProps> = ({
 }) => {
 	return (
 		<SectionHeaderContainer align={align}>
-			<SectionTitle>{title}</SectionTitle>
+			<SectionTitle align={align}>{title}</SectionTitle>
 			{subtitle && <SectionSubtitle>{subtitle}</SectionSubtitle>}
 		</SectionHeaderContainer>
 	);
 };
 
-const SectionHeaderContainer = styled.div<{ align?: 'left' | 'right' }>`
+const SectionHeaderContainer = styled(Container)<{
+	align?: SectionHeaderProps['align'];
+}>`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
-	align-items: ${(prop) => (prop.align === 'left' ? 'flex-start' : 'center')};
+	align-items: ${({ align }) => (align === 'left' ? 'flex-start' : 'center')};
 	margin-bottom: 3rem;
 `;
 
-const SectionTitle = styled.h2`
+const SectionTitle = styled.h2<{
+	align?: SectionHeaderProps['align'];
+}>`
 	margin: 0px 0px 1rem;
 	text-align: center;
-	font-size: 3.2rem;
+	font-size: ${({ align }) => (align === 'left' ? '2rem' : '3.2rem')};
 	@media (min-width: 600px) {
 		max-width: 70%;
 	}

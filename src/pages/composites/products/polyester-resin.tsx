@@ -2,7 +2,6 @@ import Breadcrumb from '@components/Breadcrumb';
 import ProductCard from '@components/ProductCard';
 import SooSection from '@components/SooSection';
 import { Container } from '@components/styled';
-import product1 from '@assets/new/images/product1.jpg';
 import visaLogo from '@assets/new/images/visa-logo.jpg';
 import mastercardLogo from '@assets/new/images/mastercard-logo.jpg';
 import bankTransferlogo from '@assets/new/images/bank-transfer-logo.jpg';
@@ -150,7 +149,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										{brandName}
 									</span>
 								</p>
-								<ProductStars stars={reviewAverage} count={reviewCount} />
+								<ProductStars average={reviewAverage} count={reviewCount} />
 								<p
 									style={{
 										fontWeight: '600',
@@ -301,7 +300,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 							</TabPanel>
 							<TabPanel>
 								<h2>Customer Review</h2>
-								<ProductStars stars={0} count={0} />
+								<ProductStars average={0} count={0} />
 								<div
 									style={{
 										display: 'flex',
@@ -361,17 +360,11 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 							gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
 							gap: '2rem',
 						}}>
-						{Array.from({ length: 4 }, () => ({
-							image: product1,
-							price: 70000,
-							name: 'Polyester Resin',
-							rating: {
-								count: 0,
-								stars: 3.5,
-							},
-						})).map((product, index) => (
-							<ProductCard key={`product_${index}`} product={product} />
-						))}
+						{Array.from({ length: 4 }, () => productsData[0]).map(
+							(product, index) => (
+								<ProductCard key={`product_${index}`} product={product} />
+							),
+						)}
 					</div>
 				</SooSection>
 				<SooSection
@@ -383,17 +376,11 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 							gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
 							gap: '2rem',
 						}}>
-						{Array.from({ length: 4 }, () => ({
-							image: product1,
-							price: 70000,
-							name: 'Polyester Resin',
-							rating: {
-								count: 0,
-								stars: 3.5,
-							},
-						})).map((product, index) => (
-							<ProductCard key={`product_${index}`} product={product} />
-						))}
+						{Array.from({ length: 4 }, () => productsData[2]).map(
+							(product, index) => (
+								<ProductCard key={`product_${index}`} product={product} />
+							),
+						)}
 					</div>
 				</SooSection>
 			</LayoutDiv>
@@ -431,8 +418,8 @@ const ShareandDataSheets = () => (
 				DATA SHEET
 			</Title>
 
-			<p>Product Data Sheet</p>
-			<p>Safety Data Sheet</p>
+			<DataSheetLink>Product Data Sheet</DataSheetLink>
+			<DataSheetLink>Safety Data Sheet</DataSheetLink>
 		</div>
 	</ShareandDataSheetsContainer>
 );
@@ -442,6 +429,10 @@ const ShareandDataSheetsContainer = styled.div`
 	display: flex;
 	gap: 1rem;
 	flex-direction: column;
+`;
+
+const DataSheetLink = styled.p`
+	color: var(--oex-orange);
 `;
 
 const ProductCountControlButton = styled.button`
@@ -495,6 +486,9 @@ const LayoutDiv = styled.div`
 	display: grid;
 	gap: 2rem;
 	align-items: start;
+	& > section {
+		margin-top: 0;
+	}
 
 	// TODO make the breakpoint variables
 	@media (min-width: 1200px) {
