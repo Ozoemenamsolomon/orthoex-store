@@ -37,6 +37,7 @@ export default StayTunedSection;
 const SubscribeForm = styled.form`
 	display: flex;
 	gap: 1rem;
+	flex-wrap: wrap;
 
 	/* max-width: 350px; */
 	/* margin-inline: auto; */

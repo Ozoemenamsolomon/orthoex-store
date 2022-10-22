@@ -16,28 +16,9 @@ import { CheveronLeft, CheveronRight } from 'styled-icons/zondicons';
 import StarRating from 'react-svg-star-rating';
 import PriceFilter from '@components/PriceFilter';
 import { ProductDataType, productsData } from '@data/productsData';
+import { brands } from '@data/brands';
 
 const filterSections = [
-	{
-		header: <h2>BRAND</h2>,
-		content: (
-			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'column',
-					gap: '.5rem',
-				}}>
-				<label>
-					<input type="checkbox" name="brand" id="brand" />
-					<span>OEX Composite</span>
-				</label>
-				<label>
-					<input type="checkbox" name="brand" id="brand" />
-					<span>Shangaix</span>
-				</label>
-			</div>
-		),
-	},
 	{
 		header: (
 			<div>
@@ -88,6 +69,10 @@ const Products: NextPage<{
 		string | undefined
 	>(undefined);
 
+	const [brandFilterSlug, setBrandFilterSlug] = useState<string | undefined>(
+		undefined,
+	);
+
 	const CategoryRadioOption: React.FC<CategoryProps> = ({ name, slug }) => {
 		return (
 			<label className="label" htmlFor={slug}>
@@ -113,7 +98,10 @@ const Products: NextPage<{
 	console.log({ categoryFilterSlug });
 
 	const filteredProducts = products.filter(product =>
-		categoryFilterSlug ? categoryFilterSlug === product.category.slug : true,
+		categoryFilterSlug || brandFilterSlug
+			? categoryFilterSlug === product.category.slug &&
+			  brandFilterSlug === product.brand.slug
+			: true,
 	);
 
 	return (
@@ -132,6 +120,31 @@ const Products: NextPage<{
 						<div>
 							{categories.map(category => (
 								<CategoryRadioOption {...category} />
+							))}
+						</div>
+					</FilterPanelSection>
+					<FilterPanelSection>
+						<div>
+							<h2>BRAND</h2>
+						</div>
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'column',
+								gap: '.5rem',
+							}}>
+							{brands.map(({ slug, name }) => (
+								<label>
+									<input
+										onClick={() => {
+											setBrandFilterSlug(slug);
+										}}
+										type="radio"
+										name="brand"
+										id="brand"
+									/>
+									<span>{name}</span>
+								</label>
 							))}
 						</div>
 					</FilterPanelSection>

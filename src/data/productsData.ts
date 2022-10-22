@@ -2,9 +2,10 @@ import { categories } from './categories';
 import product1 from '@assets/new/images/product1.jpg';
 import product1prev from '@assets/new/images/product1prev.jpg';
 import { CategoryProps } from '@components/CategoryCard';
+import { brands } from './brands';
 
 export type ProductDataType = {
-	brand: { name: string };
+	brand: { name: string; slug: string };
 	category: CategoryProps;
 	description: string;
 	image: StaticImageData;
@@ -17,7 +18,7 @@ export type ProductDataType = {
 
 export const productsData: ProductDataType[] = [
 	{
-		brand: { name: 'OEX' },
+		brand: brands[0],
 		category: categories[1],
 		description:
 			'FLAG Resin is a part our Medium-Viscosity 2:1 Non-Blushing Resin. FLAG stands for filling, laminating and gluing. It is compatible with LV Resin and the Slow.',
@@ -30,7 +31,7 @@ export const productsData: ProductDataType[] = [
 		review: { count: 30, average: 3.5 },
 	},
 	{
-		brand: { name: 'OEX' },
+		brand: brands[1],
 		category: categories[2],
 		description:
 			'This is an Accelerator	Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, dolorem at exercitationem eaque facilis laborum quos dignissimos eius velit, expedita dolores. ',
@@ -43,7 +44,7 @@ export const productsData: ProductDataType[] = [
 		review: { count: 30, average: 3.5 },
 	},
 	{
-		brand: { name: 'OEX' },
+		brand: brands[1],
 		category: categories[3],
 		description:
 			'This is an Epoxy Resin Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, debitis.',
@@ -56,7 +57,7 @@ export const productsData: ProductDataType[] = [
 		review: { count: 30, average: 3.5 },
 	},
 	{
-		brand: { name: 'OEX' },
+		brand: brands[0],
 		category: categories[4],
 		description:
 			'This is Mica Pigment Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, dolorem at exercitationem eaque facilis laborum',
@@ -69,7 +70,7 @@ export const productsData: ProductDataType[] = [
 		review: { count: 30, average: 3.5 },
 	},
 	{
-		brand: { name: 'OEX' },
+		brand: brands[1],
 		category: categories[5],
 		description: 'This is Polyester Resin B',
 		image: product1,
@@ -81,7 +82,7 @@ export const productsData: ProductDataType[] = [
 		review: { count: 30, average: 3.5 },
 	},
 	{
-		brand: { name: 'OEX' },
+		brand: brands[1],
 		category: categories[6],
 		description: 'This is Polyester Resin S',
 		image: product1,
@@ -93,7 +94,7 @@ export const productsData: ProductDataType[] = [
 		review: { count: 30, average: 3.5 },
 	},
 	{
-		brand: { name: 'OEX' },
+		brand: brands[1],
 		category: categories[7],
 		description: 'This is Silicone',
 		image: product1,
