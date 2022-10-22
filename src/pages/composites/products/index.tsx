@@ -92,6 +92,7 @@ const Products: NextPage<{
 		return (
 			<label className="label" htmlFor={slug}>
 				<input
+					checked={slug === categoryFilterSlug}
 					type="radio"
 					name={'category-selector'}
 					id={slug}
@@ -110,6 +111,10 @@ const Products: NextPage<{
 	];
 
 	console.log({ categoryFilterSlug });
+
+	const filteredProducts = products.filter(product =>
+		categoryFilterSlug ? categoryFilterSlug === product.category.slug : true,
+	);
 
 	return (
 		<Container
@@ -150,18 +155,26 @@ const Products: NextPage<{
 						</div>
 					</TitleFilterBar>
 					<div>
-						<span>Showing {products.length} Products</span>
+						<span>Showing {filteredProducts.length} Products</span>
 						<span>
 							<Filter size={24} color="var(--oex-dark-grey)" />
 							<Dashboard size={24} color="var(--oex-orange)" />
 						</span>
 					</div>
 					<ProductsContainer>
-						{products
-							.filter(product => product)
-							.map((product, index) => (
-								<ProductCard key={`product_${index}`} product={product} />
-							))}
+						{filteredProducts.map((product, index) => (
+							<ProductCard key={`product_${index}`} product={product} />
+						))}
+						{filteredProducts.length === 0 && (
+							<h3
+								style={{
+									gridColumn: '1 / -1',
+									textAlign: 'center',
+									color: 'var(--oex-dark-grey)',
+								}}>
+								No product matches your filter
+							</h3>
+						)}
 						<div>
 							<PaginationButton>
 								<ArrowPrevious size={24} />
