@@ -15,7 +15,7 @@ import { ArrowPrevious, Filter } from 'styled-icons/fluentui-system-filled';
 import { CheveronLeft, CheveronRight } from 'styled-icons/zondicons';
 import StarRating from 'react-svg-star-rating';
 import PriceFilter from '@components/PriceFilter';
-import { ProductDataType } from '@data/productsData';
+import { ProductDataType, productsData } from '@data/productsData';
 
 const filterSections = [
 	{
@@ -170,15 +170,7 @@ export const getStaticProps: GetStaticProps = async context => {
 		({ slug }) => slug === context.params?.category,
 	);
 
-	const products = Array.from({ length: 9 }, () => ({
-		image: categoryBanner,
-		price: 170000,
-		name: 'title',
-		rating: {
-			count: 0,
-			stars: 3.5,
-		},
-	}));
+	const products = Array.from({ length: 9 }, () => productsData[0]);
 
 	return {
 		props: {
