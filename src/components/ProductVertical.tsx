@@ -87,8 +87,20 @@ function ProductVertical() {
 
 export default ProductVertical;
 
-const StyledProductSection = styled.div`
+const StyledProductSections = styled.div`
   display: grid;
-  // grid-template-columns: repeat(4, 1fr);
-  grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+  grid-template-rows: repeat(4, 1fr);
+
+  @media(min-width: 768px){
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+`;
+
+
+const StyledProductSection = styled.div`
+  display: flex;
+
+  @media(min-width: 768px){
+
+  }
 `;
