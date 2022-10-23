@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, SetStateAction } from "react";
 import styled from "styled-components";
 
 const AboutInfData = [
@@ -7,15 +7,18 @@ const AboutInfData = [
   { title: "Our businesses", titleId: "business" },
 ];
 
-type ClickedValueType = "overview" | "values" | "business";
+interface AboutInfoProps {
+  setCurrentSelected: React.Dispatch<SetStateAction<string>>
+}
 
-function AboutInfo() {
-  const [active, setActive] = useState(false);
-  const [clickedValue, setclickedValue] = useState<string>("");
+const  AboutInfo: React.FC<AboutInfoProps> = ({setCurrentSelected}) => {
+
+  const [clickedValue, setclickedValue] = useState<string>("overview");
 
   const onListClick = (info: string) => {
-    console.log(info, clickedValue);
     setclickedValue(info);
+    setCurrentSelected(info)
+    
   };
 
   return (
@@ -50,6 +53,7 @@ const StyledAboutInfoLi = styled.li<{ clicked?: boolean }>`
   padding: 0.8rem;
   text-align: center;
   color: ${({ clicked }) => (clicked ? "black" : "var(--oex-dark-grey)")};
+  background-color: ${({ clicked }) => (clicked ? "var(--oex-lightest-grey)" : "")};
   border-radius: 0.4rem;
 `;
 
