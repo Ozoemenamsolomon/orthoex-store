@@ -25,7 +25,7 @@ const StyledAbout = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 80vh;
-  margin-top: 5rem;
+  margin: 5rem 0 5rem;
 
   @media (min-width: 768px) {
     flex-direction: row;
