@@ -42,6 +42,7 @@ const StyledAboutCard = styled.div`
   border-bottom: 0.1rem solid var(--oex-light-grey);
   padding-bottom: 1rem;
   margin-bottom: 1rem;
+  font-weight: 500;
 }
 `;
 const StyledAboutSection = styled.div`
