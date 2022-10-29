@@ -1,21 +1,15 @@
 import categoryBanner from '@assets/new/images/category-banner.jpg';
 import Breadcrumb, { BreadcrumProps } from '@components/Breadcrumb';
 import { CategoryProps } from '@components/CategoryCard';
-import CTA from '@components/CTA';
-import ProductCard from '@components/ProductCard';
+import PriceFilter from '@components/PriceFilter';
+import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
+import { ProductDataType, productsData } from '@data/productsData';
 import { categories } from 'data/categories';
 import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
-import React from 'react';
-
-import styled from 'styled-components';
-import { Dashboard } from 'styled-icons/boxicons-solid';
-import { ArrowPrevious, Filter } from 'styled-icons/fluentui-system-filled';
-import { CheveronLeft, CheveronRight } from 'styled-icons/zondicons';
 import StarRating from 'react-svg-star-rating';
-import PriceFilter from '@components/PriceFilter';
-import { ProductDataType, productsData } from '@data/productsData';
+import styled from 'styled-components';
 
 const filterSections = [
 	{
@@ -106,47 +100,17 @@ const Category: NextPage<{
 						</FilterPanelSection>
 					))}
 				</FilterPanel>
-				<div>
-					<TitleFilterBar>
-						<h2>{title}</h2>
-						<div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-							<h2>Sort by:</h2>
-							<select name="sort-by" id="sort-by">
-								<option value="popularity">Popularity</option>
-								<option value="relevance">Relevance</option>
-								<option value="price">Price</option>
-							</select>
-						</div>
-					</TitleFilterBar>
-					<div>
-						<span>Showing {products.length} Products</span>
-						<span>
-							<Filter size={24} color="var(--oex-dark-grey)" />
-							<Dashboard size={24} color="var(--oex-orange)" />
-						</span>
-					</div>
-					<ProductsContainer>
-						{products.map((product, index) => (
-							<ProductCard
-								key={`product_${index}`}
-								product={{ ...product, name: title, image }}
-							/>
-						))}
-						<div>
-							<PaginationButton>
-								<ArrowPrevious size={24} />
-							</PaginationButton>
-							<PaginationButton>
-								<CheveronLeft size={24} />
-							</PaginationButton>
-							<PaginationButton className="active">1</PaginationButton>
-							<PaginationButton>2</PaginationButton>
-							<PaginationButton>
-								<CheveronRight size={24} />
-							</PaginationButton>
-						</div>
-					</ProductsContainer>
-				</div>
+
+				<ProductsPanel
+					{...{
+						products: products.map(product => ({
+							...product,
+							image,
+							name: title,
+						})),
+						title,
+					}}
+				/>
 				<div>
 					<Image src={categoryBanner} layout="fill" objectFit="contain" />
 				</div>
@@ -232,50 +196,5 @@ const FilterPanelSection = styled.div`
 	}
 	.label {
 		display: block;
-	}
-`;
-
-const TitleFilterBar = styled.div`
-	display: flex;
-	padding-bottom: 1rem;
-	justify-content: space-between;
-	gap: 2rem;
-
-	select {
-		font-size: 1rem;
-		color: var(--oex-dark-grey);
-		border: none;
-	}
-
-	+ div {
-		border-bottom: 1px solid var(--oex-grey);
-		border-top: 1px solid var(--oex-grey);
-		padding-block: 1rem;
-		display: flex;
-		justify-content: space-between;
-	}
-`;
-
-const ProductsContainer = styled.div`
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
-	gap: 2rem;
-
-	> div:last-child {
-		display: flex;
-		gap: 1rem;
-		justify-content: center;
-		grid-column: 1 / -1;
-	}
-`;
-
-const PaginationButton = styled(CTA)`
-	color: black;
-	background-color: white;
-	border: 1px solid var(--oex-grey);
-	border-radius: 4px;
-
-	&.active {
-		border-color: var(--oex-orange);
 	}
 `;

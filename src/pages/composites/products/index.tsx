@@ -1,22 +1,17 @@
 import categoryBanner from '@assets/new/images/category-banner.jpg';
 import Breadcrumb, { BreadcrumProps } from '@components/Breadcrumb';
 import { CategoryProps } from '@components/CategoryCard';
-import CTA from '@components/CTA';
-import ProductCard from '@components/ProductCard';
+import PriceFilter from '@components/PriceFilter';
+import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
+import { brands } from '@data/brands';
+import { ProductDataType, productsData } from '@data/productsData';
 import { categories } from 'data/categories';
 import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import React, { useState } from 'react';
-
-import styled from 'styled-components';
-import { Dashboard } from 'styled-icons/boxicons-solid';
-import { ArrowPrevious, Filter } from 'styled-icons/fluentui-system-filled';
-import { CheveronLeft, CheveronRight } from 'styled-icons/zondicons';
 import StarRating from 'react-svg-star-rating';
-import PriceFilter from '@components/PriceFilter';
-import { ProductDataType, productsData } from '@data/productsData';
-import { brands } from '@data/brands';
+import styled from 'styled-components';
 
 const filterSections = [
 	{
@@ -65,24 +60,21 @@ const Products: NextPage<{
 	category: CategoryProps;
 	products: ProductDataType[];
 }> = ({ products }) => {
-	const [categoryFilterSlug, setCategoryFilterSlug] = useState<
-		string | undefined
-	>(undefined);
-
-	const [brandFilterSlug, setBrandFilterSlug] = useState<string | undefined>(
-		undefined,
-	);
+	const [filter, setFilter] = useState({
+		category: '',
+		brand: '',
+	});
 
 	const CategoryRadioOption: React.FC<CategoryProps> = ({ name, slug }) => {
 		return (
 			<label className="label" htmlFor={slug}>
 				<input
-					checked={slug === categoryFilterSlug}
+					checked={slug === filter.category}
 					type="radio"
 					name={'category-selector'}
 					id={slug}
 					onClick={() => {
-						setCategoryFilterSlug(slug);
+						setFilter(prev => ({ ...prev, category: slug }));
 					}}
 				/>
 				{name}
@@ -95,12 +87,12 @@ const Products: NextPage<{
 		{ name: 'All Products', link: '#' },
 	];
 
-	console.log({ categoryFilterSlug });
+	console.log({ filter });
 
 	const filteredProducts = products.filter(product =>
-		categoryFilterSlug || brandFilterSlug
-			? categoryFilterSlug === product.category.slug &&
-			  brandFilterSlug === product.brand.slug
+		filter.category || filter.brand
+			? filter.category === product.category.slug &&
+			  filter.brand === product.brand.slug
 			: true,
 	);
 
@@ -137,11 +129,12 @@ const Products: NextPage<{
 								<label>
 									<input
 										onClick={() => {
-											setBrandFilterSlug(slug);
+											setFilter(prev => ({ ...prev, brand: slug }));
 										}}
 										type="radio"
 										name="brand"
 										id="brand"
+										checked={slug === filter.brand}
 									/>
 									<span>{name}</span>
 								</label>
@@ -155,54 +148,7 @@ const Products: NextPage<{
 						</FilterPanelSection>
 					))}
 				</FilterPanel>
-				<div>
-					<TitleFilterBar>
-						<h2>All Products</h2>
-						<div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-							<h2>Sort by:</h2>
-							<select name="sort-by" id="sort-by">
-								<option value="popularity">Popularity</option>
-								<option value="relevance">Relevance</option>
-								<option value="price">Price</option>
-							</select>
-						</div>
-					</TitleFilterBar>
-					<div>
-						<span>Showing {filteredProducts.length} Products</span>
-						<span>
-							<Filter size={24} color="var(--oex-dark-grey)" />
-							<Dashboard size={24} color="var(--oex-orange)" />
-						</span>
-					</div>
-					<ProductsContainer>
-						{filteredProducts.map((product, index) => (
-							<ProductCard key={`product_${index}`} product={product} />
-						))}
-						{filteredProducts.length === 0 && (
-							<h3
-								style={{
-									gridColumn: '1 / -1',
-									textAlign: 'center',
-									color: 'var(--oex-dark-grey)',
-								}}>
-								No product matches your filter
-							</h3>
-						)}
-						<div>
-							<PaginationButton>
-								<ArrowPrevious size={24} />
-							</PaginationButton>
-							<PaginationButton>
-								<CheveronLeft size={24} />
-							</PaginationButton>
-							<PaginationButton className="active">1</PaginationButton>
-							<PaginationButton>2</PaginationButton>
-							<PaginationButton>
-								<CheveronRight size={24} />
-							</PaginationButton>
-						</div>
-					</ProductsContainer>
-				</div>
+				<ProductsPanel title="All Products" products={filteredProducts} />
 				<div>
 					<Image src={categoryBanner} layout="fill" objectFit="contain" />
 				</div>
@@ -279,50 +225,5 @@ const FilterPanelSection = styled.div`
 	}
 	.label {
 		display: block;
-	}
-`;
-
-const TitleFilterBar = styled.div`
-	display: flex;
-	padding-bottom: 1rem;
-	justify-content: space-between;
-	gap: 2rem;
-
-	select {
-		font-size: 1rem;
-		color: var(--oex-dark-grey);
-		border: none;
-	}
-
-	+ div {
-		border-bottom: 1px solid var(--oex-grey);
-		border-top: 1px solid var(--oex-grey);
-		padding-block: 1rem;
-		display: flex;
-		justify-content: space-between;
-	}
-`;
-
-const ProductsContainer = styled.div`
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
-	gap: 2rem;
-
-	> div:last-child {
-		display: flex;
-		gap: 1rem;
-		justify-content: center;
-		grid-column: 1 / -1;
-	}
-`;
-
-const PaginationButton = styled(CTA)`
-	color: black;
-	background-color: white;
-	border: 1px solid var(--oex-grey);
-	border-radius: 4px;
-
-	&.active {
-		border-color: var(--oex-orange);
 	}
 `;
