@@ -32,7 +32,7 @@ export const productsData: ProductDataType[] = [
 	},
 	{
 		brand: brands[1],
-		category: categories[2],
+		category: categories[1],
 		description:
 			'This is an Accelerator	Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, dolorem at exercitationem eaque facilis laborum quos dignissimos eius velit, expedita dolores. ',
 		image: product1,
@@ -82,8 +82,8 @@ export const productsData: ProductDataType[] = [
 		review: { count: 30, average: 3.5 },
 	},
 	{
-		brand: brands[1],
-		category: categories[6],
+		brand: brands[0],
+		category: categories[5],
 		description: 'This is Polyester Resin S',
 		image: product1,
 		previewImages: [product1prev, product1prev, product1prev],
