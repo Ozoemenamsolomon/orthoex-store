@@ -66,7 +66,7 @@ const StyledAboutInfoLi = styled.li<{ clicked?: boolean }>`
   border-radius: 0.4rem;
 
   @media(min-width:768px){
-    border-radius: none;
+    border-radius: 0rem;
     border: none;
     padding: 1.2rem;
     text-align: left;
