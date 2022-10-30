@@ -201,6 +201,7 @@ export default Footer;
 
 const SooFooter = styled.footer`
 	width: 100%;
+	background-color: black;
 	padding-bottom: 3rem;
 `;
 
