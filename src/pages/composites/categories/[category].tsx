@@ -1,7 +1,7 @@
 import categoryBanner from '@assets/new/images/category-banner.jpg';
 import Breadcrumb, { BreadcrumProps } from '@components/Breadcrumb';
 import { CategoryProps } from '@components/CategoryCard';
-import FilterPanel from '@components/FilterPanel';
+import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
 import { ProductDataType, productsData } from '@data/productsData';
@@ -15,9 +15,12 @@ const Category: NextPage<{
 	category: CategoryProps;
 	products: ProductDataType[];
 }> = ({ category: { name: categoryName }, products }) => {
-	const [filter, setFilter] = useState({
+	const [filter, setFilter] = useState<FilterType>({
 		category: '',
 		brand: '',
+		priceRange: {
+			min: 0,
+		},
 	});
 
 	const breadcrumb: BreadcrumProps[] = [

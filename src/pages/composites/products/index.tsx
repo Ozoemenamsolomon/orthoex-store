@@ -1,6 +1,6 @@
 import categoryBanner from '@assets/new/images/category-banner.jpg';
 import Breadcrumb, { BreadcrumProps } from '@components/Breadcrumb';
-import FilterPanel from '@components/FilterPanel';
+import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
 import { ProductDataType, productsData } from '@data/productsData';
@@ -12,12 +12,15 @@ import styled from 'styled-components';
 const Products: NextPage<{
 	products: ProductDataType[];
 }> = ({ products }) => {
-	const [filter, setFilter] = useState({
+	const [filter, setFilter] = useState<FilterType>({
 		category: '',
 		brand: '',
+		priceRange: {
+			min: 0,
+		},
 	});
 
-	const title = "'All Products'";
+	const title = 'All Products';
 
 	const breadcrumb: BreadcrumProps[] = [
 		{ name: 'Composites', link: '/composites' },
@@ -30,6 +33,12 @@ const Products: NextPage<{
 		)
 		.filter(product =>
 			filter.brand ? filter.brand === product.brand.slug : true,
+		)
+		.filter(product =>
+			!filter.priceRange.max
+				? true
+				: product.price >= filter.priceRange.min &&
+				  product.price <= filter.priceRange.max,
 		);
 
 	return (

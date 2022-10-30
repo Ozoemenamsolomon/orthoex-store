@@ -1,60 +1,34 @@
 import { CategoryProps } from '@components/CategoryCard';
-import PriceFilter from '@components/PriceFilter';
+import PriceFilter, { PriceRange } from '@components/PriceFilter';
 import { brands } from '@data/brands';
 import { categories } from 'data/categories';
 import StarRating from 'react-svg-star-rating';
 import styled from 'styled-components';
 
-const filterSections = [
-	{
-		header: (
-			<>
-				<h2>PRICE (₦)</h2>
-				<button
-					style={{
-						color: 'var(--oex-orange)',
-						background: 'none',
-						border: 'none',
-					}}>
-					Apply
-				</button>
-			</>
-		),
-		content: <PriceFilter />,
-	},
-	{
-		header: <h2>PRODUCT RATING</h2>,
-		content: (
-			<div>
-				{new Array(4).fill({}).map((_, index) => (
-					<label style={{ display: 'flex', gap: '.2rem' }}>
-						<input
-							type="radio"
-							name="rating-filter"
-							id={'rating-filter-' + (4 - index).toString()}
-							style={{ margin: '0' }}
-						/>
-						<StarRating
-							size={16}
-							initialRating={4 - index}
-							isReadOnly
-							activeColor="var(--oex-yellow)"
-						/>
-						<span>&amp; above</span>
-					</label>
-				))}
-			</div>
-		),
-	},
-];
+export type FilterType = {
+	category: string;
+	brand: string;
+	priceRange: PriceRange;
+};
 
 const FilterPanel: React.FC<{
-	filter: { category: string; brand: string };
-	setFilter: React.Dispatch<
-		React.SetStateAction<{ category: string; brand: string }>
-	>;
+	filter: FilterType;
+	setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
 	noCategory?: boolean;
 }> = ({ filter, setFilter, noCategory }) => {
+	const setHighPriceRange: React.ChangeEventHandler<HTMLInputElement> = e => {
+		setFilter(prev => ({
+			...prev,
+			priceRange: { ...prev.priceRange, max: Number(e.target.value) },
+		}));
+	};
+	const setLowPriceRange: React.ChangeEventHandler<HTMLInputElement> = e => {
+		setFilter(prev => ({
+			...prev,
+			priceRange: { ...prev.priceRange, min: Number(e.target.value) },
+		}));
+	};
+
 	const resetBrandFilter = () => setFilter(prev => ({ ...prev, brand: '' }));
 	const resetCategoryFilter = () =>
 		setFilter(prev => ({ ...prev, category: '' }));
@@ -137,12 +111,50 @@ const FilterPanel: React.FC<{
 					))}
 				</div>
 			</FilterPanelSectionContainer>
-			{filterSections.map(({ header, content }) => (
-				<FilterPanelSectionContainer>
-					<FilterPanelSectionHeader>{header}</FilterPanelSectionHeader>
-					{content}
-				</FilterPanelSectionContainer>
-			))}
+			<FilterPanelSectionContainer>
+				<FilterPanelSectionHeader>
+					<h2>PRICE (₦)</h2>
+					<button
+						style={{
+							color: 'var(--oex-orange)',
+							background: 'none',
+							border: 'none',
+						}}>
+						Apply
+					</button>
+				</FilterPanelSectionHeader>
+				<PriceFilter
+					{...{
+						priceRange: filter.priceRange,
+						setHighPriceRange,
+						setLowPriceRange,
+					}}
+				/>
+			</FilterPanelSectionContainer>
+			<FilterPanelSectionContainer>
+				<FilterPanelSectionHeader>
+					<h2>PRODUCT RATING</h2>
+				</FilterPanelSectionHeader>
+				<div>
+					{new Array(4).fill({}).map((_, index) => (
+						<label style={{ display: 'flex', gap: '.2rem' }}>
+							<input
+								type="radio"
+								name="rating-filter"
+								id={'rating-filter-' + (4 - index).toString()}
+								style={{ margin: '0' }}
+							/>
+							<StarRating
+								size={16}
+								initialRating={4 - index}
+								isReadOnly
+								activeColor="var(--oex-yellow)"
+							/>
+							<span>&amp; above</span>
+						</label>
+					))}
+				</div>
+			</FilterPanelSectionContainer>
 		</FilterPanelContainer>
 	);
 };

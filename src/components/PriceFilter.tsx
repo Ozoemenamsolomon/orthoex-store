@@ -1,8 +1,15 @@
-import { useState } from 'react';
+import styled from 'styled-components';
 
-const PriceFilter = () => {
-	const [priceRangeHigh, setPriceRangeHigh] = useState(20000);
+export type PriceRange = {
+	min: number;
+	max?: number;
+};
 
+const PriceFilter: React.FC<{
+	priceRange: PriceRange;
+	setHighPriceRange: React.ChangeEventHandler<HTMLInputElement>;
+	setLowPriceRange: React.ChangeEventHandler<HTMLInputElement>;
+}> = ({ priceRange, setHighPriceRange, setLowPriceRange }) => {
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 			<input
@@ -10,33 +17,44 @@ const PriceFilter = () => {
 				type="range"
 				name="price-filter"
 				id="price-filter"
-				value={priceRangeHigh}
+				value={priceRange.max}
 				max={21000}
-				onChange={(e) => {
-					setPriceRangeHigh(Number(e.target.value));
-				}}
+				min={priceRange.min}
+				onChange={setHighPriceRange}
 			/>
 			<div style={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
-				<input
-					style={{ flex: '1', contain: 'strict', padding: '.5rem' }}
+				<PriceInput
 					type="number"
 					name="price-filter-start"
-					value={200}
-				></input>
+					value={priceRange.min}
+					max={priceRange.max}
+					placeholder="Min"
+					onChange={setLowPriceRange}></PriceInput>
 				<span>-</span>
-				<input
-					style={{ flex: '1', contain: 'strict', padding: '.5rem' }}
+				<PriceInput
 					type="number"
 					name="price-filter-end"
 					max={21000}
-					value={priceRangeHigh}
-					onChange={(e) => {
-						setPriceRangeHigh(Number(e.target.value));
-					}}
-				></input>
+					value={priceRange.max}
+					min={priceRange.min}
+					placeholder="Max"
+					onChange={setHighPriceRange}></PriceInput>
 			</div>
 		</div>
 	);
 };
 
 export default PriceFilter;
+
+const PriceInput = styled.input`
+	flex: 1;
+	contain: strict;
+	padding: 0.5rem;
+	border: 1px solid #f3f3f3;
+	border-radius: 4px;
+
+	&:focus {
+		border-color: var(--oex-orange);
+		outline-color: var(--oex-orange);
+	}
+`;
