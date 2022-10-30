@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { DescriptionInfoType } from "./AboutDetail";
 // import OurMission from "@assets/new/icons/about/our-mission.svg"
 
-
 interface AboutCardType {
   heading: string;
   title?: string;
@@ -30,7 +29,10 @@ const AboutCard: React.FC<AboutCardType> = ({
       {descriptionInfo && (
         <StyledAboutWrapper largeList={largeList}>
           {descriptionInfo.map((info, index) => (
-            <StyledAboutSection largeList={largeList} key={`${info.title}-${index}`}>
+            <StyledAboutSection
+              largeList={largeList}
+              key={`${info.title}-${index}`}
+            >
               <Image src={info.image} alt={info.title} />
               <h4>{info.title}</h4>
               <p>{info.description}</p>
@@ -45,7 +47,7 @@ const AboutCard: React.FC<AboutCardType> = ({
 export default AboutCard;
 
 type LargeListProps = {
-  largeList?: boolean
+  largeList?: boolean;
 };
 
 const StyledAboutCard = styled.div<LargeListProps>`
@@ -54,8 +56,6 @@ const StyledAboutCard = styled.div<LargeListProps>`
   & > h1 {
     font-size: 1.5rem;
     border-bottom: 0.1rem solid var(--oex-lighter-grey);
-    border-top: ${({largeList}) => largeList === true ? "0.1rem solid var(--oex-lighter-grey)": ""};
-    padding-top: ${({largeList}) => largeList === true ? "3rem": ""};
     padding-bottom: 2rem;
     margin-bottom: 1rem;
     font-weight: 500;
@@ -69,10 +69,11 @@ const StyledAboutCard = styled.div<LargeListProps>`
     & > h1 {
       font-size: 2.5rem;
       text-align: left;
+      border-top: ${({ largeList }) => largeList === true ? "0.1rem solid var(--oex-lighter-grey)" : ""};
+      padding-top: ${({ largeList }) => (largeList === true ? "3rem" : "")};
       font-weight: 500;
     }
   }
-
 `;
 const StyledAboutSection = styled.div<LargeListProps>`
   display: flex;
@@ -81,7 +82,6 @@ const StyledAboutSection = styled.div<LargeListProps>`
   align-items: center;
   gap: 1rem;
 
-
   & > h4 {
     font-size: 1.1rem;
     font-weight: 600;
@@ -89,25 +89,24 @@ const StyledAboutSection = styled.div<LargeListProps>`
   }
   & > p {
     text-align: center;
-    font-size: 0.9rem; 
+    font-size: 0.9rem;
     padding: 0rem 2.8rem;
     color: var(--oex-dark-grey);
   }
 
-  @media(min-width:768px){
-    width: ${({largeList}) => largeList === true ? "30%": ""};
+  @media (min-width: 768px) {
+    width: ${({ largeList }) => (largeList === true ? "30%" : "")};
 
-    & > h4{
-    font-size: 1.2rem;
+    & > h4 {
+      font-size: 1.2rem;
     }
 
     & > p {
       text-align: center;
-      font-size: 0.9rem; 
+      font-size: 0.9rem;
       padding: 0rem;
       color: var(--oex-dark-grey);
     }
-
   }
 `;
 
@@ -116,23 +115,22 @@ const StyledAboutWrapper = styled.div<LargeListProps>`
   flex-direction: column;
   gap: 2rem;
   padding-top: 3rem;
-  
+
   @media (min-width: 768px) {
     flex-direction: row;
-    flex-wrap: ${({largeList}) => largeList === true ? "wrap": ""};
+    flex-wrap: ${({ largeList }) => (largeList === true ? "wrap" : "")};
     align-items: center;
     justify-content: space-around;
     padding-top: 2rem;
-    padding-bottom: ${({largeList}) => largeList === true ? "3rem": ""};
+    padding-bottom: ${({ largeList }) => (largeList === true ? "3rem" : "")};
   }
-
 `;
 
 const Text = styled.p`
   color: var(--oex-dark-grey);
   font-size: 0.9rem;
 
-  @media(min-width:768px){
+  @media (min-width: 768px) {
     font-size: 1.1rem;
   }
 `;

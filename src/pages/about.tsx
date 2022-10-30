@@ -26,6 +26,7 @@ const StyledAbout = styled.div`
   flex-direction: column;
   min-height: 80vh;
   margin-top: 5rem;
+  padding: 1rem;
 
   @media (min-width: 768px) {
     flex-direction: row;
