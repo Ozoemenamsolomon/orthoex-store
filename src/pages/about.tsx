@@ -25,9 +25,12 @@ const StyledAbout = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 80vh;
-  margin: 5rem 0 5rem;
+  margin-top: 5rem;
 
   @media (min-width: 768px) {
     flex-direction: row;
+    padding: 3rem 5rem 5rem;
+    background-color: var(--oex-lightest-grey);
   }
 `;
+

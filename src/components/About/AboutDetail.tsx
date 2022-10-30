@@ -68,6 +68,11 @@ export default AboutDetail;
 
 const StyledAboutDetail = styled.div`
   margin-top: 2rem;
+
   @media (min-width: 768px) {
+    background-color: white;
+    margin-top: 0rem;
+    width: 75%; 
+
   }
 `;

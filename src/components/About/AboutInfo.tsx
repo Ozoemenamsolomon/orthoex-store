@@ -2,7 +2,7 @@ import React, { useState, SetStateAction } from "react";
 import styled from "styled-components";
 
 const AboutInfData = [
-  { title: "Company Overview", titleId: "overview" },
+  { title: "Company overview", titleId: "overview" },
   { title: "Culture and values", titleId: "values" },
   { title: "Our businesses", titleId: "business" },
 ];
@@ -18,7 +18,6 @@ const  AboutInfo: React.FC<AboutInfoProps> = ({setCurrentSelected}) => {
   const onListClick = (info: string) => {
     setclickedValue(info);
     setCurrentSelected(info)
-    
   };
 
   return (
@@ -38,13 +37,23 @@ const  AboutInfo: React.FC<AboutInfoProps> = ({setCurrentSelected}) => {
 
 export default AboutInfo;
 
-const StyledAboutInfo = styled.div``;
+const StyledAboutInfo = styled.div`
+
+  @media (min-width: 768px) {
+    background-color: white; 
+    width: 25%; 
+    padding-left: 1.5rem;
+    border-right: 0.1rem solid var(--oex-lighter-grey);
+    padding-top: 1.7rem;
+  }
+`;
 
 const StyledAboutInfoUl = styled.ul`
   list-style-type: none;
   padding: 0rem;
 
   @media (min-width: 768px) {
+
   }
 `;
 
@@ -55,6 +64,15 @@ const StyledAboutInfoLi = styled.li<{ clicked?: boolean }>`
   color: ${({ clicked }) => (clicked ? "black" : "var(--oex-dark-grey)")};
   background-color: ${({ clicked }) => (clicked ? "var(--oex-lightest-grey)" : "")};
   border-radius: 0.4rem;
+
+  @media(min-width:768px){
+    border-radius: none;
+    border: none;
+    padding: 1.2rem;
+    text-align: left;
+    font-size: 1.2rem;
+
+  }
 `;
 
 //onClick={(e) => setActive(!active)}
