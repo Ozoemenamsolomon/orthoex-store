@@ -36,12 +36,12 @@ const missionData: DescriptionInfoType[] = [
 
 const businessData: DescriptionInfoType[] = [
   {image: Orthopeadeics,title: "Orthopaedics", description: "We continually enable our clients to achieve efficiency and increased effectiveness of biomedical devices designed for their patients."},
-  {image: Composites, title: "Composites", description: "We collaborate with our clients to help them adapt to changing market conditions and stay ahead of the competition"},
+  {image: Composites, title: "Composites", description: "We collaborate with our clients to help them adapt to changing market conditions and stay ahead of the competition."},
 ]
 const valuesData: DescriptionInfoType[] = [
   {image: CustomerFirst,title: "Customer-first", description: "Our customers are the centre of our corporate decisions. "},
   {image: HumanPotential,title: "Empower human potentials", description: "We challenge and inspire our customers and employees to make an impact through their work"},
-  {image: Excellence,title: "Excellence and dependable", description: "We surpass our customers' expecta tions in a caring and professional manner. "},
+  {image: Excellence,title: "Excellence and dependable", description: "We surpass our customers' expecta tions in a caring and professional manner."},
   {image: PositivePassionate,title: "Positive & passionate", description: "We are a cheerful people, passionate about our brand and mission. We believe in possibilities!"},
   {image: SwiftResponsive,title: "Swift and Responsive", description: "We are swift and responsive by design. We prioritize a personalized customer experience."},
   {image: Innovative,title: "Innovative", description: "We encourage collaborations and constantly seek new innovative solutions to our challenges."},
@@ -51,11 +51,11 @@ const AboutDetail: React.FC<AboutDetailProp> = ({ currentSelected }) => {
   return (
     <StyledAboutDetail>
       {currentSelected === "overview" ? (
-        <AboutCard heading={"Company Overview"} descriptionList={overviewDescription}/>
+        <AboutCard heading={"Company overview"} descriptionList={overviewDescription}/>
       ) : currentSelected === "values" ? (
         <>
         <AboutCard heading={"Mission & Vision"} descriptionInfo={missionData} />
-        <AboutCard heading={"Values"} descriptionInfo={valuesData} />
+        <AboutCard heading={"Values"} largeList={true} descriptionInfo={valuesData} />
         </>
       ) : currentSelected === "business" ? (
         <AboutCard heading={"Our businesses"} descriptionInfo={businessData} />
