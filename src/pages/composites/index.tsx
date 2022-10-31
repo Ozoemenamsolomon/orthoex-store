@@ -178,7 +178,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 
 const CompositePage: NextPage = () => {
 	return (
-		<Container bg="white" paddingMultiplier={0}>
+		<>
 			<Hero darkenBG bg={heroBG}>
 				<HeroContent
 					title="Your preferred <br/> partner of choice"
@@ -190,13 +190,15 @@ const CompositePage: NextPage = () => {
 					}
 				/>
 			</Hero>
-			<Container>
-				{sections.map((section, index) => (
-					<SooSection key={`section_${index}`} {...section} />
-				))}
-				<InfoTestimonial />
+			<Container bg="white" paddingMultiplier={0}>
+				<Container>
+					{sections.map((section, index) => (
+						<SooSection key={`section_${index}`} {...section} />
+					))}
+					<InfoTestimonial />
+				</Container>
 			</Container>
-		</Container>
+		</>
 	);
 };
 

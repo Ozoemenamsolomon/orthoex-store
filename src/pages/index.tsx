@@ -14,7 +14,7 @@ import ProductVertical from '@components/ProductVertical';
 const Home: NextPage = () => {
 	const findRep = () => {};
 	return (
-		<Container bg="white" paddingMultiplier={0}>
+		<>
 			<Hero bg={HeaderBG}>
 				<HeroContent
 					title={'Your preferred<br />partner of choice'}
@@ -24,18 +24,19 @@ const Home: NextPage = () => {
 					cta={<CTA onClick={findRep}>Find a representative</CTA>}
 				/>
 			</Hero>
-
-			<ServiceStandard />
-			<InfoSection />
-			<ProductVertical />
-			<InfoText
-				title={'At OrthoEx, we enable businesses like yours to succeed'}
-				description={
-					'We are facilitating Prosthetics, Orthopaedic devices and composite materials distribution in West Africa.'
-				}
-			/>
-			<InfoTestmonial />
-		</Container>
+			<Container bg="white" paddingMultiplier={0}>
+				<ServiceStandard />
+				<InfoSection />
+				<ProductVertical />
+				<InfoText
+					title={'At OrthoEx, we enable businesses like yours to succeed'}
+					description={
+						'We are facilitating Prosthetics, Orthopaedic devices and composite materials distribution in West Africa.'
+					}
+				/>
+				<InfoTestmonial />
+			</Container>
+		</>
 	);
 };
 
