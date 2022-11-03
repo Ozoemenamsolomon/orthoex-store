@@ -1,14 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import {StyledIcon} from '@styled-icons/styled-icon'
-import Call from "@assets/new/icons/call-info.svg";
-import Email from "@assets/new/icons/email-info.svg";
-import Whatsapp from "@assets/new/icons/whatsapp-info.svg";
-
 import CustomerService from "@assets/new/images/home/customer-service.jpg";
 import Imprint from "@assets/new/images/home/imprint.jpg";
 import QuickChange from "@assets/new/images/home/quickchange.jpg";
 import InfoCard from "./InfoCard";
+import WhatsappIcon from "@assets/new/icons/WhatsappIcon";
+import EmailIcon from "@assets/new/icons/EmailIcon";
+import CallIcon from "@assets/new/icons/CallIcon";
+
+export type CustomIcon = ({ color }: {
+  color?: string | undefined;
+}) => JSX.Element;
 
 interface InfoSectionType {
   image: StaticImageData;
@@ -16,7 +18,9 @@ interface InfoSectionType {
   buttons: {
     link: string;
     title: string;
-    icon?: StyledIcon;
+    Icon?:  ({ color }: {
+      color?: string | undefined;
+    }) => JSX.Element;
   }[];
 }
 [];
@@ -27,9 +31,9 @@ const InfoSectionData: InfoSectionType[] = [
     description:
       "Our customer service team is available via email, phone call and WhatsApp.",
     buttons: [
-      { link: "", title: "Call", icon: Call },
-      { link: "", title: "Email", icon: Email },
-      { link: "", title: "Chat", icon: Whatsapp },
+      { link: "", title: "Call", Icon: CallIcon },
+      { link: "", title: "Email", Icon: EmailIcon },
+      { link: "", title: "Chat", Icon: WhatsappIcon },
 
     ],
   },

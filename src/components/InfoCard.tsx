@@ -1,15 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
-import Link from "next/link";
-import { StyledIcon } from "@styled-icons/styled-icon";
-import Call from "@assets/new/icons/call-info.svg";
-
+import { CTALink } from "./Header";
 
 interface ButtonInfo {
   link: string;
   title: string;
-  icon?: StyledIcon;
+  Icon?: ({ color }: { color?: string | undefined }) => JSX.Element;
 }
 
 interface Props {
@@ -27,23 +24,35 @@ const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
         objectFit="cover"
         layout="responsive"
         src={image}
+        alt={description}
       />
       <p>{description}</p>
       <ButtonContainer>
-        {buttons.map(({ icon, link, title }, index) => (
+        {buttons.map(({ Icon, link, title }, index) => (
           <>
-            <Link key={index} href={link}>
+            {/* <Link  key={index} href={link}>
               <ButtonStyled>
                 {icon && (
                   <Image
                     width="20px"
                     height="20px"
-                    src={Call}
+                    src={icon}
+                    alt={title}
                   />
                 )}
                 {title}
               </ButtonStyled>
-            </Link>
+            </Link> */}
+            <CTALink href={link} white>
+              {Icon ? (
+                <StyledButtonFlex>
+                  <Icon />
+                  {title}
+                </StyledButtonFlex>
+              ) : (
+                title 
+              )}
+            </CTALink>
           </>
         ))}
       </ButtonContainer>
@@ -59,7 +68,7 @@ const StyledInfoCard = styled.div`
   justify-content: space-between;
   gap: 1rem;
   flex: 1 0 0;
-  margin-bottom:5rem;
+  margin-bottom: 5rem;
 
   & > p {
     font-size: 0.9rem;
@@ -103,4 +112,10 @@ const ButtonStyled = styled.button`
 const ButtonContainer = styled.div`
   display: flex;
   gap: 2rem;
+`;
+
+const StyledButtonFlex = styled.span`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
