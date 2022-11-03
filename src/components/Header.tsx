@@ -243,6 +243,50 @@ const NavBar = styled.nav`
 	}
 `;
 
+type CTAType = {
+	white?: Boolean;
+	/** class of "no-animate" removes the transition on hover */
+	className?: string;
+};
+
+export const CTA = styled.button<CTAType>`
+	padding: 1rem 2rem;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: bold;
+	transition: all 0.5s ease;
+	font-size: 1.2rem;
+
+	border: ${({ white }) => (white ? '1px solid var(--oex-orange)' : 'none')};
+	background-color: ${(prop) => (prop.white ? 'white' : 'var(--oex-orange)')};
+	color: ${(prop) =>
+		prop.white ? 'var(--oex-orange)' : 'var(--text-colour-light)'};
+
+	&:not(.no-animate) {
+		&:hover {
+			color: ${(prop) =>
+				prop.white ? 'var(--text-colour-light)' : 'var(--oex-orange)'};
+			background-color: ${(prop) =>
+				prop.white ? 'var(--oex-orange)' : 'white'};
+		}
+	}
+`;
+
+type CTAProps = React.ComponentProps<typeof CTA>;
+
+export const CTALink: FC<CTAProps & { href: string }> = ({
+	href,
+	...props
+}) => {
+	return (
+		<Link href={href}>
+			<a style={{ display: 'contents' }}>
+				<CTA {...props} />
+			</a>
+		</Link>
+	);
+};
+
 const HamburgerButton = styled(CTA)`
 	padding: 0.3rem 0.6rem;
 	align-self: center;

@@ -1,4 +1,7 @@
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation, Pagination, A11y, Scrollbar } from "swiper";
+
 import styled from "styled-components";
 import SooSection from "./SooSection";
 import ColorPigment from "@assets/new/images/home/color_pigment.jpg";
@@ -11,11 +14,19 @@ import SyntheticFibre from "@assets/new/images/home/synthetic_fibre.jpg";
 import Protheses from "@assets/new/images/home/prosthesis.jpg";
 import ProductVerticalCard from "./ProductVerticalCard";
 
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/grid";
+import "swiper/css/pagination";
+import "./styles/ProductVertical.module.css";
+
 export interface VerticalType {
   title: string;
   image: StaticImageData;
   link: string;
 }
+
+SwiperCore.use([Pagination,Navigation,Scrollbar, A11y])
 
 const productVerticalData: VerticalType[] = [
   {
@@ -70,7 +81,7 @@ function ProductVertical() {
             "Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:",
         }}
       >
-        <StyledProductSection>
+        {/* <StyledProductSection>
           {productVerticalData.map((product, index) => (
             <ProductVerticalCard
               image={product.image}
@@ -79,8 +90,28 @@ function ProductVertical() {
               title={product.title}
             />
           ))}
-        </StyledProductSection>
-      </SooSection>
+        </StyledProductSection> */}
+
+        <Swiper
+        navigation={true}
+        className="mySwiper"
+        pagination={{clickable: true}}
+        grid={{rows: 2}} spaceBetween={30} slidesPerView={3}
+        >
+          <StyledProductSection>
+            {productVerticalData.map((product, index) => (
+              <SwiperSlide key={index}>
+                <ProductVerticalCard
+                image={product.image}
+                key={`${index}-${product}`}
+                link={product.link}
+                title={product.title}
+              />
+              </SwiperSlide>
+            ))}
+          </StyledProductSection>
+        </Swiper>
+        </SooSection>
     </div>
   );
 }
@@ -91,16 +122,14 @@ const StyledProductSections = styled.div`
   display: grid;
   grid-template-rows: repeat(4, 1fr);
 
-  @media(min-width: 768px){
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 `;
-
 
 const StyledProductSection = styled.div`
   display: flex;
 
-  @media(min-width: 768px){
-
+  @media (min-width: 768px) {
   }
 `;

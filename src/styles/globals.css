@@ -15,6 +15,7 @@ body {
 	--oex-lighter-grey: #e5e5e5;
 	--oex-lightest-grey: #f2f0f0;
 	--oex-orange: #fe7624;
+	--oex-light-orange: #e1996c;
 	--oex-orange-mute: #ffe8da;
 	--oex-yellow: #edbf37;
 	--oex-orange-dark: #e74803;
@@ -74,3 +75,22 @@ p {
 	margin-top: 0;
 	margin-bottom: 1rem;
 }
+
+/* This is the css section for swiper used in the home page */
+
+.swiper-pagination-bullet-active{
+  background: var(--oex-orange) !important;
+}
+
+.swiper-pagination {
+  margin-top: 2rem !important;
+  position: relative !important;
+}
+
+.swiper-pagination-bullet{
+	opacity: var(--oex-light-orange, 0.2) !important;
+}
+
+
+
+/* This is the css section ends here swiper */
