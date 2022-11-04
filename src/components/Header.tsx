@@ -71,6 +71,7 @@ const Header: React.FC<HeaderProp> = () => {
 								objectPosition="left"
 								objectFit="contain"
 								layout="fill"
+								alt='image'
 							></Image>
 						</Logo>
 					</a>

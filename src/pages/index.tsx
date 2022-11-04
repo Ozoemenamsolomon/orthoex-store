@@ -23,7 +23,7 @@ const Home: NextPage = () => {
           claim={
             "We are facilitating Prosthetics, Orthopaedic devices and composite materials distribution in West Africa. <br /> <br /> Speak with an account manager in your region"
           }
-          cta={<CTA onClick={findRep}>Find a representative</CTA>}
+          cta={<CTA onClick={findRep}>Talk to us</CTA>}
         />
       </Hero>
 
