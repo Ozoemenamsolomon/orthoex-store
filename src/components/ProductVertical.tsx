@@ -1,6 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Pagination, A11y, Scrollbar } from "swiper";
+import SwiperCore, { Navigation, Pagination, A11y, Scrollbar, Grid } from "swiper";
 
 import styled from "styled-components";
 import SooSection from "./SooSection";
@@ -18,7 +18,7 @@ import ProductVerticalCard from "./ProductVerticalCard";
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/pagination";
-import "./styles/ProductVertical.module.css";
+
 
 export interface VerticalType {
   title: string;
@@ -26,7 +26,7 @@ export interface VerticalType {
   link: string;
 }
 
-SwiperCore.use([Pagination,Navigation,Scrollbar, A11y])
+SwiperCore.use([Pagination,Navigation,Scrollbar, A11y, Grid])
 
 const productVerticalData: VerticalType[] = [
   {
@@ -81,22 +81,12 @@ function ProductVertical() {
             "Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:",
         }}
       >
-        {/* <StyledProductSection>
-          {productVerticalData.map((product, index) => (
-            <ProductVerticalCard
-              image={product.image}
-              key={`${index}-${product}`}
-              link={product.link}
-              title={product.title}
-            />
-          ))}
-        </StyledProductSection> */}
-
         <Swiper
-        navigation={true}
         className="mySwiper"
+        navigation={true}
         pagination={{clickable: true}}
-        grid={{rows: 2}} spaceBetween={30} slidesPerView={3}
+        slidesPerView={3}
+        grid={{rows: 1}}
         >
           <StyledProductSection>
             {productVerticalData.map((product, index) => (
@@ -118,17 +108,9 @@ function ProductVertical() {
 
 export default ProductVertical;
 
-const StyledProductSections = styled.div`
-  display: grid;
-  grid-template-rows: repeat(4, 1fr);
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-`;
 
 const StyledProductSection = styled.div`
-  display: flex;
+  // display: flex;
 
   @media (min-width: 768px) {
   }

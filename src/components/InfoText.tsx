@@ -24,7 +24,7 @@ const InfoTextStyled = styled.div`
   text-align: left;  
   
   & > h2{
-    font-weight: 500;
+    font-weight: 300;
     font-size: 2rem;
     margin-bottom: 1rem;
   }
@@ -37,7 +37,7 @@ const InfoTextStyled = styled.div`
 
   @media (min-width: 768px) {
     text-align: center;
-    padding: 4rem 22rem;
+    padding: 4rem 10rem;
 
     & > p {
       padding: 0rem 6rem;

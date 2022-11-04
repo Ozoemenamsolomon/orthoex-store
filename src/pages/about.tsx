@@ -4,7 +4,7 @@ import AboutDetail from "../components/About/AboutDetail";
 import AboutInfo from "../components/About/AboutInfo";
 import { Container } from "@components/styled";
 
-function about() {
+function About() {
   const [currentSelected, setcurrentSelected] = useState<string>("overview");
 
   return (
@@ -17,7 +17,7 @@ function about() {
   );
 }
 
-export default about;
+export default About;
 
 // remove min-height below
 

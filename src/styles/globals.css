@@ -87,10 +87,4 @@ p {
   position: relative !important;
 }
 
-.swiper-pagination-bullet{
-	opacity: var(--oex-light-orange, 0.2) !important;
-}
-
-
-
 /* This is the css section ends here swiper */

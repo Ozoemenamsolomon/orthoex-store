@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
-import { CTALink } from "./Header";
+import Link from "next/link"
 
 interface ButtonInfo {
   link: string;
@@ -19,8 +19,8 @@ const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
   return (
     <StyledInfoCard>
       <Image
-        width="100"
-        height="60"
+        width="100px"
+        height="60px"
         objectFit="cover"
         layout="responsive"
         src={image}
@@ -30,29 +30,14 @@ const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
       <ButtonContainer>
         {buttons.map(({ Icon, link, title }, index) => (
           <>
-            {/* <Link  key={index} href={link}>
-              <ButtonStyled>
-                {icon && (
-                  <Image
-                    width="20px"
-                    height="20px"
-                    src={icon}
-                    alt={title}
-                  />
+            <Link  key={index} href={link} passHref>
+              <StyledButton>
+                {Icon && (
+                  <Icon/>
                 )}
                 {title}
-              </ButtonStyled>
-            </Link> */}
-            <CTALink href={link} white>
-              {Icon ? (
-                <StyledButtonFlex>
-                  <Icon />
-                  {title}
-                </StyledButtonFlex>
-              ) : (
-                title 
-              )}
-            </CTALink>
+              </StyledButton>
+            </Link>
           </>
         ))}
       </ButtonContainer>
@@ -85,13 +70,15 @@ const StyledInfoCard = styled.div`
   }
 
   @media (min-width: 768px) {
+    margin-bottom: 0rem;
+
     & > div > img {
       border-radius: 0rem;
     }
   }
 `;
 
-const ButtonStyled = styled.button`
+const StyledButton = styled.button`
   color: var(--oex-orange);
   background-color: white;
   font: inherit;
@@ -101,21 +88,28 @@ const ButtonStyled = styled.button`
   border: 0.09rem solid var(--oex-orange);
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 1rem;
 
   &:hover {
     color: white;
     background-color: var(--oex-orange);
   }
+
+  @media(min-width: 768px){
+    gap: 2rem;
+  }
+
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  gap: 2rem;
-`;
-
-const StyledButtonFlex = styled.span`
-  display: flex;
-  justify-content: space-between;
+  gap: 0.5rem;
   align-items: center;
+  justify-content: center;
+  width:100%;
+
+  @media(min-width: 768px){
+    gap: 2rem;
+  }
 `;
