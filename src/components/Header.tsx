@@ -259,7 +259,7 @@ export const CTA = styled.button<CTAType>`
 	padding: 1rem 2rem;
 	border-radius: 4px;
 	cursor: pointer;
-	font-weight: bold;
+	// font-weight: bold;
 	transition: all 0.5s ease;
 	font-size: 1.2rem;
 
