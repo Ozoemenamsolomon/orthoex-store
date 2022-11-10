@@ -78,7 +78,7 @@ const StyledInfoCard = styled.div`
   }
 `;
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   color: var(--oex-orange);
   background-color: white;
   font: inherit;
