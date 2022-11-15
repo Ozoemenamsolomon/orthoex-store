@@ -1,17 +1,16 @@
 import React, { useState, SetStateAction } from "react";
 import styled from "styled-components";
 
-const AboutInfData = [
-  { title: "Company overview", titleId: "overview" },
-  { title: "Culture and values", titleId: "values" },
-  { title: "Our businesses", titleId: "business" },
-];
+
+type AboutDataType = { title: string, titleId: string }
+
 
 interface AboutInfoProps {
-  setCurrentSelected: React.Dispatch<SetStateAction<string>>
+  setCurrentSelected: React.Dispatch<SetStateAction<string>>,
+  data: AboutDataType[]
 }
 
-const  AboutInfo: React.FC<AboutInfoProps> = ({setCurrentSelected}) => {
+const  AboutInfo: React.FC<AboutInfoProps> = ({setCurrentSelected, data}) => {
 
   const [clickedValue, setclickedValue] = useState<string>("overview");
 
@@ -22,7 +21,7 @@ const  AboutInfo: React.FC<AboutInfoProps> = ({setCurrentSelected}) => {
 
   return (
     <StyledAboutInfo>
-      {AboutInfData.map((info, index) => (
+      {data?.map((info, index) => (
         <StyledAboutInfoUl key={`${info.titleId}-${index}`}>
           <StyledAboutInfoLi clicked={clickedValue === info.titleId}
             onClick={() => onListClick(info.titleId)}

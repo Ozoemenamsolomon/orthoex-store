@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
 import { DescriptionInfoType } from "./AboutDetail";
-// import OurMission from "@assets/new/icons/about/our-mission.svg"
 
 interface AboutCardType {
   heading: string;
