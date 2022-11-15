@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import Link from "next/link"
+import CTA from "./CTA";
 
 interface ButtonInfo {
   link: string;
@@ -31,12 +32,12 @@ const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
         {buttons.map(({ Icon, link, title }, index) => (
           <>
             <Link  key={index} href={link} passHref>
-              <StyledButton>
+              <CTA white>
                 {Icon && (
-                  <Icon/>
-                )}
-                {title}
-              </StyledButton>
+                    <Icon/>
+                  )}
+                  {title}
+              </CTA>
             </Link>
           </>
         ))}
@@ -78,38 +79,46 @@ const StyledInfoCard = styled.div`
   }
 `;
 
-export const StyledButton = styled.button`
-  color: var(--oex-orange);
-  background-color: white;
-  font: inherit;
-  padding: 1rem;
-  width: 100%;
-  border-radius: 0.2rem;
-  border: 0.09rem solid var(--oex-orange);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-
-  &:hover {
-    color: white;
-    background-color: var(--oex-orange);
-  }
-
-  @media(min-width: 768px){
-    gap: 2rem;
-  }
-
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
   width:100%;
+  font: inherit;
+  padding: 0rem;
+  width: 100%;
+
+  & > button {
+    background-color: white;
+    font: inherit;
+    padding: 0.5rem;
+    width: 100%;
+    border-radius: 0.2rem;
+    border: 0.09rem solid var(--oex-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
 
   @media(min-width: 768px){
-    gap: 2rem;
+    padding: 0rem;
+
+    & > button {
+      padding: 0.3rem 0.1rem;
+      gap: 0.1rem;
+      font-size: 0.7rem;
+    }
+  }
+
+  @media(min-width: 900px){
+    padding: 0rem;
+
+    & > button {
+      padding: 0.5rem 0.5rem;
+      gap: 0.7rem;
+      font-size: 1rem;
+    }
   }
 `;
