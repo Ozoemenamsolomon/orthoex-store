@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import Link from "next/link"
-import CTA from "./CTA";
+import { CTAFlex } from "./CTA";
 
 interface ButtonInfo {
   link: string;
@@ -31,12 +31,12 @@ const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
       <ButtonContainer>
         {buttons.map(({ Icon, link, title }, index) => (
             <Link  key={index} href={link} passHref>
-              <CTA white>
+              <CTAFlex white>
                 {Icon && (
                     <Icon/>
                   )}
                   {title}
-              </CTA>
+              </CTAFlex>
             </Link>
         ))}
       </ButtonContainer>
@@ -87,34 +87,7 @@ const ButtonContainer = styled.div`
   padding: 0rem;
   width: 100%;
 
-  & > button {
-    font: inherit;
-    padding: 0.5rem;
-    width: 100%;
-    border-radius: 0.2rem;
-    border: 0.09rem solid var(--oex-orange);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-
   @media(min-width: 768px){
     padding: 0rem;
-
-    & > button {
-      padding: 0.3rem 0.1rem;
-      gap: 0.1rem;
-      font-size: 0.7rem;
-    }
-  }
-
-  @media(min-width: 900px){
-
-    & > button {
-      padding: 0.5rem 0.5rem;
-      gap: 0.7rem;
-      font-size: 1rem;
-    }
   }
 `;
