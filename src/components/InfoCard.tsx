@@ -88,7 +88,6 @@ const ButtonContainer = styled.div`
   width: 100%;
 
   & > button {
-    background-color: white;
     font: inherit;
     padding: 0.5rem;
     width: 100%;
@@ -111,7 +110,6 @@ const ButtonContainer = styled.div`
   }
 
   @media(min-width: 900px){
-    padding: 0rem;
 
     & > button {
       padding: 0.5rem 0.5rem;
