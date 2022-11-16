@@ -10,7 +10,7 @@ const ProductVerticalCard: React.FC<VerticalType> = ({image,link, title}) => {
   return (
     <StyledProductVertical>
       <StyledImageWrapper>
-        <Image quality={100} objectFit="cover" layout="fill" src={image} alt="title" />
+        <Image quality={100} objectFit="cover" layout="fill" src={image} alt={title} />
       </StyledImageWrapper>
       <StyledContent>
         <p>{title.toLocaleUpperCase()}</p>
