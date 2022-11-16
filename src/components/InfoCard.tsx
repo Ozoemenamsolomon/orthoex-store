@@ -30,7 +30,6 @@ const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
       <p>{description}</p>
       <ButtonContainer>
         {buttons.map(({ Icon, link, title }, index) => (
-          <>
             <Link  key={index} href={link} passHref>
               <CTA white>
                 {Icon && (
@@ -39,7 +38,6 @@ const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
                   {title}
               </CTA>
             </Link>
-          </>
         ))}
       </ButtonContainer>
     </StyledInfoCard>
