@@ -38,8 +38,6 @@ z-index: 10;
   justify-content: center;
   gap: 0.5rem;
   padding: 0.8rem 1.5rem;
-  background-color: var(--oex-orange);
-  border: 0.09rem solid var(--oex-orange);
   color: white;
   font: inherit;
 }
