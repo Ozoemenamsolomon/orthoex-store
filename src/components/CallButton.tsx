@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import CTA from "./CTA";
+import { CTAFlex } from "./CTA";
 
 const CallButton = () => {
   return (
     <StyledCallButtonDiv>
-      <CTA>
+      <CTAFlex>
       <svg
         width="14"
         height="20"
@@ -18,7 +18,7 @@ const CallButton = () => {
         />
       </svg>
       Call
-      </CTA>
+      </CTAFlex>
       </StyledCallButtonDiv>
   );
 };
@@ -30,17 +30,7 @@ position: fixed;
 left: 0;
 bottom: 2%;
 z-index: 10;
-
-& > button {
-  border-radius: 0.3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.8rem 1.5rem;
-  color: white;
-  font: inherit;
-}
+width: 15%;
 
   @media (min-width: 768px) {
     display: none;
