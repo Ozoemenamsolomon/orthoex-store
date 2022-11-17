@@ -36,8 +36,10 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 		const isScrolled = window.scrollY > 0;
 		isScrolled !== scrolled ? setScrolled(!scrolled) : setScrolled(false);
 	};
+
 	const light =
-		pathname.includes('categories') || pathname.includes('products');
+		['products', 'about', 'careers'].includes(pathname.split('/')[1]) ||
+		pathname.includes('categories');
 
 	useEffect(() => {
 		if (!light) {
