@@ -4,6 +4,7 @@ import { CategoryProps } from '@components/CategoryCard';
 import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
+import FilterProductContainer from '@components/styled/FIlterProductContainer';
 import { ProductDataType, productsData } from '@data/productsData';
 import { categories } from 'data/categories';
 import { GetStaticProps, NextPage } from 'next';
@@ -29,10 +30,6 @@ const Category: NextPage<{
 		{ name: categoryName, link: '#' },
 	];
 
-	// const filteredProducts = products.filter(product =>
-	// 	filter.brand ? filter.brand === product.brand.slug : true,
-	// )
-
 	return (
 		<Container
 			verticalPaddingInREM={7}
@@ -40,11 +37,13 @@ const Category: NextPage<{
 			bg="var(--oex-off-white)">
 			<LayoutDiv>
 				<Breadcrumb breadcrumb={breadcrumb} />
-				<FilterPanel {...{ filter, setFilter, noCategory: true }} />
-				<ProductsPanel {...{ products, title: categoryName }} />
-				<div>
+				<FilterProductContainer>
+					<FilterPanel {...{ filter, setFilter, noCategory: true }} />
+					<ProductsPanel {...{ products, title: categoryName }} />
+				</FilterProductContainer>
+				<ImageContainer>
 					<Image src={categoryBanner} layout="fill" objectFit="contain" />
-				</div>
+				</ImageContainer>
 			</LayoutDiv>
 		</Container>
 	);
@@ -80,29 +79,13 @@ export const getStaticProps: GetStaticProps = async context => {
 };
 
 const LayoutDiv = styled.div`
-	display: grid;
-	grid-template-columns: 320px 1fr;
+	display: flex;
+	flex-direction: column;
 	gap: 2rem;
-	align-items: start;
+`;
 
-	> *:nth-child(1),
-	> *:last-child {
-		grid-column: span 2;
-	}
-
-	> *:nth-child(2),
-	> *:nth-child(3) {
-		background-color: white;
-		padding: 1rem;
-	}
-
-	> div:last-child {
-		position: relative;
-		aspect-ratio: 4.1;
-	}
-
-	h2 {
-		margin: 0;
-		font-size: 1.5rem;
-	}
+const ImageContainer = styled.div`
+	position: relative;
+	aspect-ratio: 4.1;
+	grid-column: span 2;
 `;

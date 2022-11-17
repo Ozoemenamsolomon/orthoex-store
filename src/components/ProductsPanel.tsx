@@ -10,7 +10,7 @@ const ProductsPanel: React.FC<{
 	products: ProductDataType[];
 	title: string;
 }> = ({ title, products }) => (
-	<article>
+	<ProductPanelContainer>
 		<TitleFilterBar>
 			<h2>{title}</h2>
 			<SortSelectContainer>
@@ -51,10 +51,15 @@ const ProductsPanel: React.FC<{
 				</div>
 			)}
 		</ProductsContainer>
-	</article>
+	</ProductPanelContainer>
 );
 
 export default ProductsPanel;
+
+const ProductPanelContainer = styled.article`
+	background-color: white;
+	padding: 1rem;
+`;
 
 const TitleFilterBar = styled.div`
 	display: flex;

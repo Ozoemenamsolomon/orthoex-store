@@ -162,10 +162,10 @@ const FilterPanel: React.FC<{
 export default FilterPanel;
 
 const FilterPanelContainer = styled.aside`
-	/* TODO needs to be looked in to more */
 	position: sticky;
 	top: 7rem;
-	z-index: 5;
+	background-color: white;
+	padding: 1rem;
 
 	> div:nth-of-type(2) {
 		> div:first-child > div {

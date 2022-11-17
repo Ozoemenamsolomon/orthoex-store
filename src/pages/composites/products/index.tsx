@@ -3,6 +3,7 @@ import Breadcrumb, { BreadcrumProps } from '@components/Breadcrumb';
 import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
+import FilterProductContainer from '@components/styled/FIlterProductContainer';
 import { ProductDataType, productsData } from '@data/productsData';
 import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
@@ -48,11 +49,13 @@ const Products: NextPage<{
 			bg="var(--oex-off-white)">
 			<LayoutDiv>
 				<Breadcrumb breadcrumb={breadcrumb} />
-				<FilterPanel {...{ filter, setFilter }} />
-				<ProductsPanel title={title} products={filteredProducts} />
-				<div>
+				<FilterProductContainer>
+					<FilterPanel {...{ filter, setFilter }} />
+					<ProductsPanel title={title} products={filteredProducts} />
+				</FilterProductContainer>
+				<ImageContainer>
 					<Image src={categoryBanner} layout="fill" objectFit="contain" />
-				</div>
+				</ImageContainer>
 			</LayoutDiv>
 		</Container>
 	);
@@ -75,29 +78,13 @@ export const getStaticProps: GetStaticProps = async context => {
 };
 
 const LayoutDiv = styled.div`
-	display: grid;
-	grid-template-columns: 320px 1fr;
+	display: flex;
+	flex-direction: column;
 	gap: 2rem;
-	align-items: start;
+`;
 
-	> *:nth-child(1),
-	> *:last-child {
-		grid-column: span 2;
-	}
-
-	> *:nth-child(2),
-	> *:nth-child(3) {
-		background-color: white;
-		padding: 1rem;
-	}
-
-	> div:last-child {
-		position: relative;
-		aspect-ratio: 4.1;
-	}
-
-	h2 {
-		margin: 0;
-		font-size: 1.5rem;
-	}
+const ImageContainer = styled.div`
+	position: relative;
+	aspect-ratio: 4.1;
+	grid-column: span 2;
 `;
