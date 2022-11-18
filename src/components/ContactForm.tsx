@@ -27,7 +27,7 @@ const ContactForm = () => {
 
 	return (
 		<FormContainer>
-			<FormTitle>Let's keep in touch!</FormTitle>
+			<FormTitle>Let&apos;s keep in touch!</FormTitle>
 			<form action="https://formspree.io/f/xleayzgl" method="POST">
 				<div style={{ display: 'flex', flexDirection: 'column' }}>
 					<InputLabelDiv>
