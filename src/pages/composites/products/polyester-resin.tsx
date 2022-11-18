@@ -127,8 +127,9 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									/>
 								</div>
 								<div style={{ display: 'flex', gap: '5px' }}>
-									{previewImages.map(imagei => (
+									{previewImages.map((imagei, index) => (
 										<div
+											key={`image-preview-${index}`}
 											style={{
 												position: 'relative',
 												aspectRatio: '1',
@@ -322,6 +323,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										starsPercent: Math.random() * 100,
 									})).map(({ starsPercent }, index) => (
 										<button
+											key={`star-percentage-${index}`}
 											style={{
 												font: 'inherit',
 												border: '0',
@@ -340,8 +342,11 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr ))',
 										gap: '1rem',
 									}}>
-									{customerReviews.map(comment => (
-										<CustomerReviewCommentCard {...comment} />
+									{customerReviews.map((comment, index) => (
+										<CustomerReviewCommentCard
+											key={`customer-review-${index}`}
+											{...comment}
+										/>
 									))}
 								</div>
 							</TabPanel>

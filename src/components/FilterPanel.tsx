@@ -77,8 +77,8 @@ const FilterPanel: React.FC<{
 						)}
 					</FilterPanelSectionHeader>
 					<div>
-						{categories.map(category => (
-							<CategoryRadioOption {...category} />
+						{categories.map((category, index) => (
+							<CategoryRadioOption key={`cat-option-${index}`} {...category} />
 						))}
 					</div>
 				</FilterPanelSectionContainer>
@@ -97,7 +97,7 @@ const FilterPanel: React.FC<{
 						gap: '.5rem',
 					}}>
 					{brands.map(({ slug, name }) => (
-						<label>
+						<label key={`brand-select-radio-${index}`}>
 							<input
 								checked={slug === filter.brand}
 								onChange={selectBrandFilter}
@@ -137,7 +137,9 @@ const FilterPanel: React.FC<{
 				</FilterPanelSectionHeader>
 				<div>
 					{new Array(4).fill({}).map((_, index) => (
-						<label style={{ display: 'flex', gap: '.2rem' }}>
+						<label
+							key={`rating-filter-${index}`}
+							style={{ display: 'flex', gap: '.2rem' }}>
 							<input
 								type="radio"
 								name="rating-filter"
