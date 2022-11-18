@@ -1,17 +1,17 @@
-import { ServiceCardType } from '@components/ServiceCard';
-import styled from 'styled-components';
-import Composite from '@assets/new/icons/composite.svg';
-import Image from 'next/image';
+import { ServiceCardType } from "@components/ServiceCard";
+import styled from "styled-components";
+import Composite from "@assets/new/icons/composite.svg";
+import Image from "next/image";
 
 // Get the  main svgs for this files
 
 const services: ServiceCardType[] = [
-	{ description: 'Prosthetics', image: Composite },
-	{ description: 'Composites', image: Composite },
-	{ description: 'Trainings', image: Composite },
-	{ description: 'After Sales', image: Composite },
-	{ description: 'Consultancy', image: Composite },
-	{ description: 'Procurement', image: Composite },
+	{ description: "Prosthetics", image: Composite },
+	{ description: "Composites", image: Composite },
+	{ description: "Trainings", image: Composite },
+	{ description: "After Sales", image: Composite },
+	{ description: "Consultancy", image: Composite },
+	{ description: "Procurement", image: Composite },
 ];
 
 function ServiceStandardDetail() {

@@ -1,6 +1,6 @@
-import React from 'react';
-import StarRating from 'react-svg-star-rating';
-import styled from 'styled-components';
+import React from "react";
+import StarRating from "react-svg-star-rating";
+import styled from "styled-components";
 
 const ProductStars: React.FC<{ average: number; count: number }> = ({
 	average,
@@ -8,7 +8,7 @@ const ProductStars: React.FC<{ average: number; count: number }> = ({
 }) => (
 	<ProductStarsContainer>
 		<StarRating size={16} initialRating={average} isReadOnly />
-		<Count>({count || 'No Reviews'})</Count>
+		<Count>({count || "No Reviews"})</Count>
 	</ProductStarsContainer>
 );
 

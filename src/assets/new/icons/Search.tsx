@@ -1,4 +1,4 @@
-const Search = ({ colour = 'black' }) => (
+const Search = ({ colour = "black" }) => (
 	<svg
 		width="24"
 		height="24"

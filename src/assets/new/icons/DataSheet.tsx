@@ -1,4 +1,4 @@
-const DataSheet = ({ colour = 'currentColor' }) => (
+const DataSheet = ({ colour = "currentColor" }) => (
 	<svg
 		width="20"
 		height="25"

@@ -1,14 +1,14 @@
-import ContactForm from './ContactForm';
-import { Container } from './styled';
+import ContactForm from "./ContactForm";
+import { Container } from "./styled";
 
 const Contact = () => {
 	return (
 		<Container
 			style={{
-				display: 'flex',
-				justifyContent: 'space-between',
-				flexWrap: 'wrap',
-				alignItems: 'center',
+				display: "flex",
+				justifyContent: "space-between",
+				flexWrap: "wrap",
+				alignItems: "center",
 			}}
 		>
 			<div>

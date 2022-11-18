@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import Image from 'next/image';
+import { FC } from "react";
+import Image from "next/image";
 
 const IconText: FC<{ icon: StaticImageData; text: string }> = ({
 	icon,
@@ -7,10 +7,10 @@ const IconText: FC<{ icon: StaticImageData; text: string }> = ({
 }) => (
 	<div
 		style={{
-			display: 'flex',
-			position: 'relative',
-			gap: '1rem',
-			color: 'var(--oex-orange)',
+			display: "flex",
+			position: "relative",
+			gap: "1rem",
+			color: "var(--oex-orange)",
 		}}
 	>
 		<span>{text}</span>

@@ -1,8 +1,8 @@
-import { FC } from 'react';
-import styled from 'styled-components';
-import { formatDate, formatPrice, formatTime } from '../utils';
-import CTA from './CTA';
-import { EventType } from './EventCard';
+import { FC } from "react";
+import styled from "styled-components";
+import { formatDate, formatPrice, formatTime } from "../utils";
+import CTA from "./CTA";
+import { EventType } from "./EventCard";
 
 const EventMetaData: FC<EventType & { disabled: boolean }> = ({
 	startDateTimeString,
@@ -23,9 +23,9 @@ const EventMetaData: FC<EventType & { disabled: boolean }> = ({
 	return (
 		<EventMetadataContainer>
 			<CardMetaDataLeft>
-				<div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap' }}>
+				<div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap" }}>
 					<div>
-						<h4 style={{ margin: 'unset' }}>OEX</h4>
+						<h4 style={{ margin: "unset" }}>OEX</h4>
 						<p>composite</p>
 					</div>
 					<img src="" alt="" />
@@ -51,21 +51,21 @@ const EventMetaData: FC<EventType & { disabled: boolean }> = ({
 					<br />
 					Instructor: {instructor}
 					<br />
-					Refreshment: {refreshment ? 'Yes' : 'NO'}
+					Refreshment: {refreshment ? "Yes" : "NO"}
 					<br />
-					Starter Pack: {starterPack ? 'Yes' : 'NO'}
+					Starter Pack: {starterPack ? "Yes" : "NO"}
 				</div>
 			</CardMetaDataLeft>
 			<CardMetaDataRight>
 				<div>{registeredParticipant} Participants</div>
 				{!disabled && (
 					<div>
-						{spotsLeft} Spot{spotsLeft > 1 && 's'} Remaining!
+						{spotsLeft} Spot{spotsLeft > 1 && "s"} Remaining!
 					</div>
 				)}
 				<div>{formatPrice(price)}</div>
 				<div>
-					<CTA disabled={disabled}>{disabled ? 'Sold Out' : 'Book Now'}</CTA>
+					<CTA disabled={disabled}>{disabled ? "Sold Out" : "Book Now"}</CTA>
 				</div>
 				<div>Speak With The Event Team</div>
 			</CardMetaDataRight>

@@ -1,4 +1,4 @@
-const Account = ({ colour = 'black' }) => (
+const Account = ({ colour = "black" }) => (
 	<svg
 		width="25"
 		height="24"

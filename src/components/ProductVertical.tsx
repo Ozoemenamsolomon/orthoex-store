@@ -1,15 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
-import SooSection from './SooSection';
-import ColorPigment from '@assets/new/images/home/color_pigment.jpg';
-import EpoxyResins from '@assets/new/images/home/epoxy_resin.jpg';
-import Fabrication from '@assets/new/images/home/fabrication_materials.jpg';
-import Orthoses from '@assets/new/images/home/orthoses.jpg';
-import PolyesterResins from '@assets/new/images/home/polyester_resins.jpg';
-import SiliconMould from '@assets/new/images/home/silicon_mould.jpg';
-import SyntheticFibre from '@assets/new/images/home/synthetic_fibre.jpg';
-import Protheses from '@assets/new/images/home/prosthesis.jpg';
-import ProductVerticalCard from './ProductVerticalCard';
+import React from "react";
+import styled from "styled-components";
+import SooSection from "./SooSection";
+import ColorPigment from "@assets/new/images/home/color_pigment.jpg";
+import EpoxyResins from "@assets/new/images/home/epoxy_resin.jpg";
+import Fabrication from "@assets/new/images/home/fabrication_materials.jpg";
+import Orthoses from "@assets/new/images/home/orthoses.jpg";
+import PolyesterResins from "@assets/new/images/home/polyester_resins.jpg";
+import SiliconMould from "@assets/new/images/home/silicon_mould.jpg";
+import SyntheticFibre from "@assets/new/images/home/synthetic_fibre.jpg";
+import Protheses from "@assets/new/images/home/prosthesis.jpg";
+import ProductVerticalCard from "./ProductVerticalCard";
 
 export interface VerticalType {
 	title: string;
@@ -19,44 +19,44 @@ export interface VerticalType {
 
 const productVerticalData: VerticalType[] = [
 	{
-		title: 'synthetic fibre',
+		title: "synthetic fibre",
 		image: SyntheticFibre,
-		link: '',
+		link: "",
 	},
 	{
-		title: 'epoxy resin',
+		title: "epoxy resin",
 		image: EpoxyResins,
-		link: '',
+		link: "",
 	},
 	{
-		title: 'color pigment',
+		title: "color pigment",
 		image: ColorPigment,
-		link: '',
+		link: "",
 	},
 	{
-		title: 'silicon mould',
+		title: "silicon mould",
 		image: SiliconMould,
-		link: '',
+		link: "",
 	},
 	{
-		title: 'orthoses',
+		title: "orthoses",
 		image: Orthoses,
-		link: '',
+		link: "",
 	},
 	{
-		title: 'prostheses',
+		title: "prostheses",
 		image: Protheses,
-		link: '',
+		link: "",
 	},
 	{
-		title: 'fabrication materials',
+		title: "fabrication materials",
 		image: Fabrication,
-		link: '',
+		link: "",
 	},
 	{
-		title: 'polyester resin',
+		title: "polyester resin",
 		image: PolyesterResins,
-		link: '',
+		link: "",
 	},
 ];
 
@@ -64,9 +64,9 @@ function ProductVertical() {
 	return (
 		<SooSection
 			header={{
-				title: 'Which of our product vertical is relevant for you?',
+				title: "Which of our product vertical is relevant for you?",
 				subtitle:
-					'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
+					"Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:",
 			}}
 		>
 			<StyledProductSection>

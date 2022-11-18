@@ -1,6 +1,6 @@
-import { FC, ReactElement } from 'react';
-import styled from 'styled-components';
-import Image from 'next/image';
+import { FC, ReactElement } from "react";
+import styled from "styled-components";
+import Image from "next/image";
 
 export type ServiceCardType = {
 	description: string;
@@ -32,19 +32,19 @@ const ServiceCard: FC<ServiceCardProps> = ({
 	small,
 }) => (
 	<ServiceCardContainer className={`${className}`}>
-		<ImageTitleContainer className={`${small ? 'small' : ''}`}>
+		<ImageTitleContainer className={`${small ? "small" : ""}`}>
 			<ImageContainer
 				small={small}
-				className={`image-container ${imagePadding ? 'pad' : ''}`}
+				className={`image-container ${imagePadding ? "pad" : ""}`}
 			>
 				<Image objectFit="contain" layout="fill" src={image} />
 			</ImageContainer>
 			<div>
 				{title && (
-					<Title className={small ? 'small' : undefined}>{title}</Title>
+					<Title className={small ? "small" : undefined}>{title}</Title>
 				)}
 				<Description
-					className={small ? 'small' : undefined}
+					className={small ? "small" : undefined}
 					dangerouslySetInnerHTML={
 						HTMLDescription ? { __html: description } : undefined
 					}
@@ -123,7 +123,7 @@ const ImageTitleContainer = styled.div`
 export const ImageContainer = styled.div<{ small?: boolean }>`
 	position: relative;
 	aspect-ratio: 1;
-	width: ${({ small }) => (small ? '2rem' : '5rem')};
+	width: ${({ small }) => (small ? "2rem" : "5rem")};
 
 	&.pad {
 		width: 3rem;

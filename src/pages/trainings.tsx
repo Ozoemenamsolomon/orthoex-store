@@ -1,43 +1,43 @@
-import NeedHelpSection from '@components/sections/NeedHelpSection';
-import StayTunedSection from '@components/sections/StayTunedSection';
-import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
-import { Container, ServicesCards } from '@components/styled';
-import composite from '@assets/new/icons/composite.svg';
-import durable from '@assets/new/icons/durable.svg';
-import quality from '@assets/new/icons/quality.svg';
-import nigeria from '@assets/new/icons/nigeria.svg';
-import SooSection from '@components/SooSection';
-import HeroContent from '@components/HeroContent';
-import { HeroComp as Hero } from '@components/Hero';
-import CTA from '@components/CTA';
-import EventCard from '@components/EventCard';
+import NeedHelpSection from "@components/sections/NeedHelpSection";
+import StayTunedSection from "@components/sections/StayTunedSection";
+import ServiceCard, { ServiceCardType } from "@components/ServiceCard";
+import { Container, ServicesCards } from "@components/styled";
+import composite from "@assets/new/icons/composite.svg";
+import durable from "@assets/new/icons/durable.svg";
+import quality from "@assets/new/icons/quality.svg";
+import nigeria from "@assets/new/icons/nigeria.svg";
+import SooSection from "@components/SooSection";
+import HeroContent from "@components/HeroContent";
+import { HeroComp as Hero } from "@components/Hero";
+import CTA from "@components/CTA";
+import EventCard from "@components/EventCard";
 
 const qualities: ServiceCardType[] = [
 	{
-		description: 'Small classes',
+		description: "Small classes",
 		image: composite,
 	},
 	{
-		description: 'Hands-on learning',
+		description: "Hands-on learning",
 		image: quality,
 	},
 	{
-		description: 'Technical advice',
+		description: "Technical advice",
 		image: durable,
 	},
 	{
-		description: 'Learn from real professionals',
+		description: "Learn from real professionals",
 		image: nigeria,
 	},
 ];
 
 const events = [
 	{
-		startDateTimeString: '2022-03-03T13:10',
-		endDateTimeString: '2022-03-07T13:10',
-		location: 'Ikeja,Lagos',
-		courseTitle: 'Resin art workshop',
-		instructor: 'Ciroma Chukwuma',
+		startDateTimeString: "2022-03-03T13:10",
+		endDateTimeString: "2022-03-07T13:10",
+		location: "Ikeja,Lagos",
+		courseTitle: "Resin art workshop",
+		instructor: "Ciroma Chukwuma",
 		refreshment: true,
 		starterPack: true,
 		spotsLeft: 3,
@@ -63,11 +63,11 @@ const events = [
 					</ul>`,
 	},
 	{
-		startDateTimeString: '2022-03-03T13:10',
-		endDateTimeString: '2022-03-07T13:10',
-		location: 'Ikeja,Lagos',
-		courseTitle: 'Resin art workshop',
-		instructor: 'Ciroma Chukwuma',
+		startDateTimeString: "2022-03-03T13:10",
+		endDateTimeString: "2022-03-07T13:10",
+		location: "Ikeja,Lagos",
+		courseTitle: "Resin art workshop",
+		instructor: "Ciroma Chukwuma",
 		refreshment: true,
 		starterPack: true,
 		spotsLeft: 3,
@@ -93,11 +93,11 @@ const events = [
 					</ul>`,
 	},
 	{
-		startDateTimeString: '2022-03-03T13:10',
-		endDateTimeString: '2022-03-07T13:10',
-		location: 'Ikeja,Lagos',
-		courseTitle: 'Resin art workshop',
-		instructor: 'Ciroma Chukwuma',
+		startDateTimeString: "2022-03-03T13:10",
+		endDateTimeString: "2022-03-07T13:10",
+		location: "Ikeja,Lagos",
+		courseTitle: "Resin art workshop",
+		instructor: "Ciroma Chukwuma",
 		refreshment: true,
 		starterPack: true,
 		spotsLeft: 3,
@@ -130,7 +130,7 @@ const Trainings = () => {
 			<Hero>
 				<HeroContent
 					claim={
-						'Join OEX workshop and learn how to work with our materials. We offer workshops on silicone mould making, Epoxy River Tables, Lifecasting, Glass Fibre Reinforced Concrete, jewellery making, modelling, sculptures, Resin Art, e.t.c. Immerse yourself in a world of unlimited possibilities!'
+						"Join OEX workshop and learn how to work with our materials. We offer workshops on silicone mould making, Epoxy River Tables, Lifecasting, Glass Fibre Reinforced Concrete, jewellery making, modelling, sculptures, Resin Art, e.t.c. Immerse yourself in a world of unlimited possibilities!"
 					}
 					cta={<CTA>Register Now</CTA>}
 				/>

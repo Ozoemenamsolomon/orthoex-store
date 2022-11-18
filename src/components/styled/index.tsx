@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 /** class of "bigger" makes it's children have a min-width of `270px`*/
 export const ServicesCards = styled.div<{ minWidth?: string }>`
-	--min-width: ${({ minWidth = '120px' }) => minWidth};
+	--min-width: ${({ minWidth = "120px" }) => minWidth};
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
 	gap: 5rem;
@@ -47,7 +47,7 @@ export const Container = styled.div<{
 	paddingMultiplier?: number;
 	bg?: string;
 }>`
-	background-color: ${({ bg }) => bg || 'unset'};
+	background-color: ${({ bg }) => bg || "unset"};
 	max-width: 1500px;
 	width: 100%;
 	margin: auto;
@@ -56,7 +56,7 @@ export const Container = styled.div<{
 	// TODO make the breakpoint variables
 	@media (min-width: 900px) {
 		${({ verticalPaddingInREM: verticalPadding }) =>
-			verticalPadding ? `padding-block: ${verticalPadding}rem;` : ''}
+			verticalPadding ? `padding-block: ${verticalPadding}rem;` : ""}
 		${({ paddingMultiplier }) => {
 			return `padding-inline: ${
 				paddingMultiplier !== undefined ? paddingMultiplier * 2 : 2

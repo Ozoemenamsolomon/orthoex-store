@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
-import { SectionHeader } from './SooSection';
-import { HeroComp as Hero } from './Hero';
-import Image from 'next/image';
-import styled from 'styled-components';
-import QuotationMark from '@assets/icons/quotation-mark.svg';
-import TestimonialBG from '@assets/images/testimonial-bg-2.jpg';
+import React, { FC } from "react";
+import { SectionHeader } from "./SooSection";
+import { HeroComp as Hero } from "./Hero";
+import Image from "next/image";
+import styled from "styled-components";
+import QuotationMark from "@assets/icons/quotation-mark.svg";
+import TestimonialBG from "@assets/images/testimonial-bg-2.jpg";
 
 const TestimonialSection: FC<{
 	testimony: string;
@@ -18,19 +18,19 @@ const TestimonialSection: FC<{
 			<TestimonialContainer>
 				<div
 					style={{
-						position: 'absolute',
-						width: '4rem',
-						aspectRatio: '1 / 1',
-						top: '-3rem',
-						transform: 'translateX(-50%)',
-						left: '50%',
-						margin: 'auto',
+						position: "absolute",
+						width: "4rem",
+						aspectRatio: "1 / 1",
+						top: "-3rem",
+						transform: "translateX(-50%)",
+						left: "50%",
+						margin: "auto",
 					}}
 				>
 					<Image layout="fill" src={QuotationMark} />
 				</div>
 				<p>{testimony}</p>
-				<span style={{ fontWeight: 'bold' }}>{by}</span>
+				<span style={{ fontWeight: "bold" }}>{by}</span>
 				<p>{title}</p>
 			</TestimonialContainer>
 		</Hero>

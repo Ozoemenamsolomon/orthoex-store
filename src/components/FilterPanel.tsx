@@ -1,9 +1,9 @@
-import { CategoryProps } from '@components/CategoryCard';
-import PriceFilter, { PriceRange } from '@components/PriceFilter';
-import { brands } from '@data/brands';
-import { categories } from 'data/categories';
-import StarRating from 'react-svg-star-rating';
-import styled from 'styled-components';
+import { CategoryProps } from "@components/CategoryCard";
+import PriceFilter, { PriceRange } from "@components/PriceFilter";
+import { brands } from "@data/brands";
+import { categories } from "data/categories";
+import StarRating from "react-svg-star-rating";
+import styled from "styled-components";
 
 export type FilterType = {
 	category: string;
@@ -29,14 +29,14 @@ const FilterPanel: React.FC<{
 		}));
 	};
 
-	const resetBrandFilter = () => setFilter(prev => ({ ...prev, brand: '' }));
+	const resetBrandFilter = () => setFilter(prev => ({ ...prev, brand: "" }));
 	const resetCategoryFilter = () =>
-		setFilter(prev => ({ ...prev, category: '' }));
+		setFilter(prev => ({ ...prev, category: "" }));
 
 	const selectBrandFilter: React.ChangeEventHandler<HTMLInputElement> = e => {
 		setFilter(prev => ({
 			...prev,
-			brand: e.target.dataset.brand || '',
+			brand: e.target.dataset.brand || "",
 		}));
 	};
 	const selectCategoryFilter: React.ChangeEventHandler<
@@ -44,7 +44,7 @@ const FilterPanel: React.FC<{
 	> = e => {
 		setFilter(prev => ({
 			...prev,
-			category: e.target.dataset.category || '',
+			category: e.target.dataset.category || "",
 		}));
 	};
 
@@ -56,7 +56,7 @@ const FilterPanel: React.FC<{
 				<input
 					checked={slug === filter.category}
 					type="radio"
-					name={'category-selector'}
+					name={"category-selector"}
 					id={slug}
 					data-category={slug}
 					onChange={selectCategoryFilter}
@@ -92,9 +92,9 @@ const FilterPanel: React.FC<{
 				</FilterPanelSectionHeader>
 				<div
 					style={{
-						display: 'flex',
-						flexDirection: 'column',
-						gap: '.5rem',
+						display: "flex",
+						flexDirection: "column",
+						gap: ".5rem",
 					}}
 				>
 					{brands.map(({ slug, name }) => (
@@ -117,9 +117,9 @@ const FilterPanel: React.FC<{
 					<h2>PRICE (₦)</h2>
 					<button
 						style={{
-							color: 'var(--oex-orange)',
-							background: 'none',
-							border: 'none',
+							color: "var(--oex-orange)",
+							background: "none",
+							border: "none",
 						}}
 					>
 						Apply
@@ -139,12 +139,12 @@ const FilterPanel: React.FC<{
 				</FilterPanelSectionHeader>
 				<div>
 					{new Array(4).fill({}).map((_, index) => (
-						<label style={{ display: 'flex', gap: '.2rem' }}>
+						<label style={{ display: "flex", gap: ".2rem" }}>
 							<input
 								type="radio"
 								name="rating-filter"
-								id={'rating-filter-' + (4 - index).toString()}
-								style={{ margin: '0' }}
+								id={"rating-filter-" + (4 - index).toString()}
+								style={{ margin: "0" }}
 							/>
 							<StarRating
 								size={16}
