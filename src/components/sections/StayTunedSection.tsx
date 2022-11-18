@@ -25,7 +25,12 @@ const StayTunedSection = () => {
 					</SubscribeForm>
 				</div>
 				<div style={{ position: 'relative', flex: 1 }}>
-					<Image objectFit="contain" layout="fill" src={newsletter} />
+					<Image
+						alt="newsletter image"
+						object-fit="contain"
+						layout="fill"
+						src={newsletter}
+					/>
 				</div>
 			</Container>
 		</SooSection>

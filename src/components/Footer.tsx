@@ -118,14 +118,15 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 				}}
 			>
 				<LogoInfoWrapper>
-					<Link href="/">
+					<Link href="/" legacyBehavior>
 						<a>
 							<Logo>
 								<Image
 									src={orthoExLogo}
 									objectPosition="left"
-									objectFit="contain"
+									object-fit="contain"
 									layout="fill"
+									alt="OrthoEx Logo"
 								/>
 							</Logo>
 						</a>
@@ -145,6 +146,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 								>
 									{links.map(({ title, href }, index) => (
 										<Link
+											legacyBehavior
 											key={`link-${indexTop}-${title}-${index}`}
 											href={href}
 										>

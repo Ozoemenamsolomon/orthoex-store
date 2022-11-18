@@ -55,7 +55,12 @@ const Products: NextPage<{
 					<ProductsPanel title={title} products={filteredProducts} />
 				</FilterProductContainer>
 				<ImageContainer>
-					<Image src={categoryBanner} layout="fill" objectFit="contain" />
+					<Image
+						alt="banner"
+						src={categoryBanner}
+						layout="fill"
+						object-fit="contain"
+					/>
 				</ImageContainer>
 			</LayoutDiv>
 		</Container>

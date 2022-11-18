@@ -49,7 +49,7 @@ export const HeroComp: FC<HeroCompProp> = ({
 					zIndex: -5,
 				}}
 			>
-				<HeroBg layout="fill" objectFit="cover" src={bg || DefaultBG}></HeroBg>
+				<HeroBg layout="fill" object-fit="cover" src={bg || DefaultBG}></HeroBg>
 				{darkenBG && (
 					<div
 						style={{

@@ -123,7 +123,12 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										position: 'relative',
 									}}
 								>
-									<Image src={image} objectFit="contain" layout="fill" />
+									<Image
+										alt="product image"
+										src={image}
+										object-fit="contain"
+										layout="fill"
+									/>
 								</div>
 								<div style={{ display: 'flex', gap: '5px' }}>
 									{previewImages.map(imagei => (
@@ -135,9 +140,10 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 											}}
 										>
 											<Image
-												objectFit="contain"
+												object-fit="contain"
 												layout="fill"
 												src={imagei}
+												alt="product image preview"
 											></Image>
 										</div>
 									))}
@@ -172,13 +178,19 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 								<Title>Safe and secure payment </Title>
 								<div style={{ display: 'flex', gap: '5px' }}>
 									<div>
-										<Image src={mastercardLogo}></Image>
+										<Image
+											alt="payment processor logo"
+											src={mastercardLogo}
+										></Image>
 									</div>
 									<div>
-										<Image src={visaLogo}></Image>
+										<Image alt="payment processor logo" src={visaLogo}></Image>
 									</div>
 									<div>
-										<Image src={bankTransferlogo}></Image>
+										<Image
+											alt="payment processor logo"
+											src={bankTransferlogo}
+										></Image>
 									</div>
 								</div>
 							</div>

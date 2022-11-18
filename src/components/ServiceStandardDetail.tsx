@@ -19,7 +19,7 @@ function ServiceStandardDetail() {
 		<ImageDescriptionWrapper>
 			{services.map((service, index) => (
 				<ImageDescription key={index}>
-					<Image src={service.image} alt={service.description} />
+					<Image src={service.image} alt="service standard image" />
 					<p>{service.description}</p>
 				</ImageDescription>
 			))}

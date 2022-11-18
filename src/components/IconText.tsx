@@ -14,7 +14,7 @@ const IconText: FC<{ icon: StaticImageData; text: string }> = ({
 		}}
 	>
 		<span>{text}</span>
-		<Image objectFit="contain" src={icon} />
+		<Image alt="icon" object-fit="contain" src={icon} />
 	</div>
 );
 

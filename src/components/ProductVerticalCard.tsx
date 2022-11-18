@@ -13,17 +13,18 @@ const ProductVerticalCard: React.FC<VerticalType> = ({
 		<StyledProductVertical>
 			<StyledImageWrapper>
 				<Image
-					width="100"
-					height="100"
 					quality={100}
-					objectFit="cover"
+					object-fit="cover"
 					layout="fill"
 					src={image}
+					alt="product vertical card image"
 				/>
 			</StyledImageWrapper>
 			<StyledContent>
 				<p>{title.toLocaleUpperCase()}</p>
-				<Link href={link}>View Product</Link>
+				<Link href={link} legacyBehavior>
+					View Product
+				</Link>
 			</StyledContent>
 		</StyledProductVertical>
 	);

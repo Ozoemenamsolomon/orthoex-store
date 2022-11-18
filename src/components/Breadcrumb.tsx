@@ -12,7 +12,7 @@ const Breadcrumb: React.FC<{ breadcrumb: BreadcrumProps[] }> = ({
 	<BreadcrumbContainer>
 		{breadcrumb.map(({ name, link }) => (
 			<>
-				<Link href={link}>
+				<Link href={link} legacyBehavior>
 					<a>
 						<Name>{name}</Name>
 					</a>

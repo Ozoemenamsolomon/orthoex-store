@@ -22,14 +22,15 @@ const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
 			<Image
 				width="100"
 				height="60"
-				objectFit="cover"
+				object-fit="cover"
 				layout="responsive"
 				src={image}
+				alt="info card image"
 			/>
 			<p>{description}</p>
 			<ButtonContainer>
 				{buttons.map(({ icon, link, title }, index) => (
-					<Link key={index} href={link}>
+					<Link key={index} href={link} legacyBehavior>
 						<ButtonStyled>{title}</ButtonStyled>
 					</Link>
 				))}

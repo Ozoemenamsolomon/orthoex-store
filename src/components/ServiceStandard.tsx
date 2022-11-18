@@ -37,8 +37,8 @@ function ServiceStandard() {
 						<ImageDescription key={index}>
 							<Image
 								src={service.image}
-								alt={service.description}
-								objectFit="contain"
+								alt="service icon"
+								object-fit="contain"
 								width="120px"
 								height="120px"
 							/>

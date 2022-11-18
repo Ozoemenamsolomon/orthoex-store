@@ -10,7 +10,7 @@ const NavLink: FC<{
 	const router = useRouter();
 
 	return to.startsWith('/') ? (
-		<Link href={to}>
+		<Link href={to} legacyBehavior>
 			<a className={router.pathname == to ? 'active' : ''}>
 				{Icon ? <Icon /> : name}
 			</a>

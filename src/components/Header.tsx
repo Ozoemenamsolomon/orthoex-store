@@ -62,13 +62,14 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 						paddingBlock: '1rem',
 					}}
 				>
-					<Link href="/">
+					<Link href="/" legacyBehavior>
 						<a>
 							<Logo>
 								<Image
 									src={light ? orthoExLogoCol : orthoExLogo}
 									objectPosition="left"
-									objectFit="contain"
+									object-fit="contain"
+									alt="OrthoEx Logo"
 									layout="fill"
 								></Image>
 							</Logo>
@@ -162,7 +163,9 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 									key={`nav-link-${navLink.name}-${index}`}
 									onClick={() => setIsNavOpen(prev => !prev)}
 								>
-									<Link href={navLink.to}>{navLink.name}</Link>
+									<Link href={navLink.to} legacyBehavior>
+										{navLink.name}
+									</Link>
 								</li>
 							))}
 						</StyledSideBarNavLink>

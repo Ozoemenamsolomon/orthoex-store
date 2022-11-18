@@ -16,7 +16,7 @@ const TestimonialCard: FC<TestimonialCardProps> = ({
 	return (
 		<TestimonialCardContainer>
 			<ImageContainer>
-				<Image src={image}></Image>
+				<Image alt="client logo" src={image}></Image>
 			</ImageContainer>
 			<p>{message}</p>
 		</TestimonialCardContainer>

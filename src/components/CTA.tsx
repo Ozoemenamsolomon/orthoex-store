@@ -45,7 +45,7 @@ export const CTALink: FC<CTAProps & { href: string; isSocial?: boolean }> = ({
 	...props
 }) => {
 	return (
-		<Link href={href}>
+		<Link href={href} legacyBehavior>
 			<a style={{ display: 'contents' }}>
 				{isSocial ? <SocialCTA {...props} /> : <CTA {...props} />}
 			</a>

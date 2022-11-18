@@ -37,7 +37,12 @@ const ServiceCard: FC<ServiceCardProps> = ({
 				small={small}
 				className={`image-container ${imagePadding ? 'pad' : ''}`}
 			>
-				<Image objectFit="contain" layout="fill" src={image} />
+				<Image
+					object-fit="contain"
+					layout="fill"
+					src={image}
+					alt="service card image"
+				/>
 			</ImageContainer>
 			<div>
 				{title && (

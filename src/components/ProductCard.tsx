@@ -29,19 +29,19 @@ const ProductCard: React.FC<ProductCardProp> = ({
 	return (
 		<ProductCardContainer>
 			<div>
-				<Link href={`/composites/products/polyester-resin`}>
+				<Link href={`/composites/products/polyester-resin`} legacyBehavior>
 					<a>
 						<Image
 							src={image}
 							layout="fill"
-							objectFit="contain"
+							object-fit="contain"
 							alt="product image"
 						/>
 					</a>
 				</Link>
 			</div>
 			<ProductCardContent>
-				<Link href={`/composites/products/polyester-resin`}>
+				<Link href={`/composites/products/polyester-resin`} legacyBehavior>
 					<a>
 						<ProductName>{name}</ProductName>
 					</a>

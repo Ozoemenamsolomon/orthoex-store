@@ -6,7 +6,7 @@ const ViewMoreLink: React.FC<{ href: string; text: string }> = ({
 	href,
 	text,
 }) => (
-	<Link href={href}>
+	<Link href={href} legacyBehavior>
 		<a
 			style={{
 				alignSelf: 'flex-end',

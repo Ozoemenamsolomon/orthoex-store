@@ -43,7 +43,12 @@ const Category: NextPage<{
 					<ProductsPanel {...{ products, title: categoryName }} />
 				</FilterProductContainer>
 				<ImageContainer>
-					<Image src={categoryBanner} layout="fill" objectFit="contain" />
+					<Image
+						alt="category banner"
+						src={categoryBanner}
+						layout="fill"
+						object-fit="contain"
+					/>
 				</ImageContainer>
 			</LayoutDiv>
 		</Container>
