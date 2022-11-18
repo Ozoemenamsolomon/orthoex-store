@@ -1,31 +1,31 @@
-import Image from "next/image";
-import Link from "next/link";
-import styled from "styled-components";
+import Image from 'next/image';
+import Link from 'next/link';
+import styled from 'styled-components';
 
-import React, { useEffect, useState } from "react";
-import orthoExLogo from "@assets/new/logos/orthoex-logo-white.svg";
-import orthoExLogoCol from "@assets/new/logos/orthoex-logo-coloured.svg";
-import NavLink from "./NavLink";
-import { Container } from "./styled";
-import SearchIcon from "@assets/new/icons/Search";
-import SccountIcon from "@assets/new/icons/Account";
-import CartIcon from "@assets/new/icons/ShoppingCart";
-import CTA from "./CTA";
+import React, { useEffect, useState } from 'react';
+import orthoExLogo from '@assets/new/logos/orthoex-logo-white.svg';
+import orthoExLogoCol from '@assets/new/logos/orthoex-logo-coloured.svg';
+import NavLink from './NavLink';
+import { Container } from './styled';
+import SearchIcon from '@assets/new/icons/Search';
+import SccountIcon from '@assets/new/icons/Account';
+import CartIcon from '@assets/new/icons/ShoppingCart';
+import CTA from './CTA';
 
 type HeaderProp = { pathname: string };
 
 const navLinks = [
-	{ name: "Home", to: "/" },
-	{ name: "Composites", to: "/composites" },
-	{ name: "Orthopaedics", to: "/orthopaedics" },
-	{ name: "About us", to: "/about" },
-	{ name: "Trainings", to: "/trainings" },
-	{ name: "Careers", to: "/careers" },
+	{ name: 'Home', to: '/' },
+	{ name: 'Composites', to: '/composites' },
+	{ name: 'Orthopaedics', to: '/orthopaedics' },
+	{ name: 'About us', to: '/about' },
+	{ name: 'Trainings', to: '/trainings' },
+	{ name: 'Careers', to: '/careers' },
 ];
 const rightNavLinks = [
-	{ name: "Search", to: "/search", Icon: SearchIcon },
-	{ name: "Orthopaedics", to: "/account", Icon: SccountIcon },
-	{ name: "Composites", to: "/cart", Icon: CartIcon },
+	{ name: 'Search', to: '/search', Icon: SearchIcon },
+	{ name: 'Orthopaedics', to: '/account', Icon: SccountIcon },
+	{ name: 'Composites', to: '/cart', Icon: CartIcon },
 ];
 
 const Header: React.FC<HeaderProp> = ({ pathname }) => {
@@ -38,28 +38,28 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	};
 
 	const light =
-		["products", "about", "careers"].includes(pathname.split("/")[1]) ||
-		pathname.includes("categories");
+		['products', 'about', 'careers'].includes(pathname.split('/')[1]) ||
+		pathname.includes('categories');
 
 	useEffect(() => {
 		if (!light) {
-			document.addEventListener("scroll", handleScroll, { passive: true });
+			document.addEventListener('scroll', handleScroll, { passive: true });
 		}
 
 		return () => {
-			document.removeEventListener("scroll", handleScroll);
+			document.removeEventListener('scroll', handleScroll);
 		};
 	}, [pathname]);
 
 	return (
 		<>
-			<SooHeader light={light} className={`${scrolled ? "scrolled" : ""}`}>
+			<SooHeader light={light} className={`${scrolled ? 'scrolled' : ''}`}>
 				<Container
 					paddingMultiplier={2}
 					style={{
-						display: "flex",
-						justifyContent: "space-between",
-						paddingBlock: "1rem",
+						display: 'flex',
+						justifyContent: 'space-between',
+						paddingBlock: '1rem',
 					}}
 				>
 					<Link href="/">
@@ -106,7 +106,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 						)}
 					</HamburgerButton>
 
-					<NavBar className={light ? "light" : undefined}>
+					<NavBar className={light ? 'light' : undefined}>
 						<div>
 							{navLinks.map((navLink, index) => (
 								<NavLink
@@ -117,7 +117,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 						</div>
 						<div
 							style={{
-								display: "flex",
+								display: 'flex',
 							}}
 						>
 							{rightNavLinks.map((navLink, index) => (
@@ -125,7 +125,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 									key={`nav-link-${navLink.name}-${index}`}
 									{...navLink}
 									icon={() => (
-										<navLink.Icon colour={light ? "black" : "white"} />
+										<navLink.Icon colour={light ? 'black' : 'white'} />
 									)}
 								/>
 							))}
@@ -156,7 +156,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 								<li
 									style={{
 										color: `${
-											navLink.to === pathname ? "var(--oex-orange)" : ""
+											navLink.to === pathname ? 'var(--oex-orange)' : ''
 										}`,
 									}}
 									key={`nav-link-${navLink.name}-${index}`}
@@ -185,7 +185,7 @@ const SooHeader = styled.header<{ light: boolean }>`
 	z-index: 5;
 	color: #fff;
 	transition: background-color 0.5s ease;
-	background-color: ${({ light }) => light && "white"};
+	background-color: ${({ light }) => light && 'white'};
 	&.scrolled {
 		background-color: #00000089;
 		color: white;
@@ -226,7 +226,7 @@ const NavBar = styled.nav`
 	}
 
 	&:not(.light) > div > a.active::after {
-		content: "";
+		content: '';
 		position: absolute;
 		inset-inline: 0;
 		inset-block-end: 0;
@@ -247,7 +247,7 @@ const NavBar = styled.nav`
 		padding: 2rem;
 		align-items: stretch;
 
-		&[data-nav-open="true"] {
+		&[data-nav-open='true'] {
 			display: flex;
 		}
 	}

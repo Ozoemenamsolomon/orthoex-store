@@ -1,5 +1,5 @@
-import { FC } from "react";
-import styled from "styled-components";
+import { FC } from 'react';
+import styled from 'styled-components';
 
 const StarPercentage: FC<{ star: number; percent: number }> = ({
 	star,
@@ -23,7 +23,7 @@ const StarPercentageRest = styled.div`
 `;
 const StarPercentageIndicator = styled.div<{ starPercent: number }>`
 	height: 100%;
-	width: ${({ starPercent }) => starPercent + "%"};
+	width: ${({ starPercent }) => starPercent + '%'};
 	background: var(--oex-orange);
 `;
 

@@ -1,8 +1,8 @@
-import React from "react";
-import Image from "next/image";
-import styled from "styled-components";
-import Link from "next/link";
-import { StyledIcon } from "@styled-icons/styled-icon";
+import React from 'react';
+import Image from 'next/image';
+import styled from 'styled-components';
+import Link from 'next/link';
+import { StyledIcon } from '@styled-icons/styled-icon';
 
 interface ButtonInfo {
 	link: string;

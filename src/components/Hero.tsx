@@ -1,15 +1,15 @@
-import styled from "styled-components";
-import Image from "next/image";
+import styled from 'styled-components';
+import Image from 'next/image';
 
-import DefaultBG from "@assets/images/website-backfround-image.jpg";
-import React, { FC } from "react";
-import { Container } from "./styled";
+import DefaultBG from '@assets/images/website-backfround-image.jpg';
+import React, { FC } from 'react';
+import { Container } from './styled';
 
 type HeroCompProp = {
 	bg?: StaticImageData;
 	col?: boolean;
 	center?: boolean;
-	colour?: "white" | "black";
+	colour?: 'white' | 'black';
 	morePadding?: true;
 	darkenBG?: true;
 };
@@ -19,7 +19,7 @@ export const HeroComp: FC<HeroCompProp> = ({
 	bg,
 	col,
 	center,
-	colour = "white",
+	colour = 'white',
 	morePadding = false,
 	darkenBG = false,
 }) => {
@@ -28,14 +28,14 @@ export const HeroComp: FC<HeroCompProp> = ({
 			<Hero
 				style={{
 					color: colour,
-					padding: morePadding ? "11em 0em" : undefined,
+					padding: morePadding ? '11em 0em' : undefined,
 				}}
 			>
 				<Container
 					style={{
-						display: "flex",
-						flexDirection: col ? "column" : undefined,
-						alignItems: center ? "center" : undefined,
+						display: 'flex',
+						flexDirection: col ? 'column' : undefined,
+						alignItems: center ? 'center' : undefined,
 					}}
 					paddingMultiplier={4}
 				>
@@ -44,7 +44,7 @@ export const HeroComp: FC<HeroCompProp> = ({
 			</Hero>
 			<div
 				style={{
-					position: "absolute",
+					position: 'absolute',
 					inset: 0,
 					zIndex: -5,
 				}}
@@ -53,8 +53,8 @@ export const HeroComp: FC<HeroCompProp> = ({
 				{darkenBG && (
 					<div
 						style={{
-							height: "100%",
-							backgroundColor: "#000000a8",
+							height: '100%',
+							backgroundColor: '#000000a8',
 						}}
 					/>
 				)}

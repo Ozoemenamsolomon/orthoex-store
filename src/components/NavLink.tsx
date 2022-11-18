@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { FC } from "react";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { FC } from 'react';
 
 const NavLink: FC<{
 	to: string;
@@ -9,9 +9,9 @@ const NavLink: FC<{
 }> = ({ name, to, icon: Icon }) => {
 	const router = useRouter();
 
-	return to.startsWith("/") ? (
+	return to.startsWith('/') ? (
 		<Link href={to}>
-			<a className={router.pathname == to ? "active" : ""}>
+			<a className={router.pathname == to ? 'active' : ''}>
 				{Icon ? <Icon /> : name}
 			</a>
 		</Link>

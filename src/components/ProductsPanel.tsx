@@ -1,10 +1,10 @@
-import CTA from "@components/CTA";
-import ProductCard from "@components/ProductCard";
-import { ProductDataType } from "@data/productsData";
-import styled from "styled-components";
-import { Dashboard } from "styled-icons/boxicons-solid";
-import { ArrowPrevious, Filter } from "styled-icons/fluentui-system-filled";
-import { CheveronLeft, CheveronRight } from "styled-icons/zondicons";
+import CTA from '@components/CTA';
+import ProductCard from '@components/ProductCard';
+import { ProductDataType } from '@data/productsData';
+import styled from 'styled-components';
+import { Dashboard } from 'styled-icons/boxicons-solid';
+import { ArrowPrevious, Filter } from 'styled-icons/fluentui-system-filled';
+import { CheveronLeft, CheveronRight } from 'styled-icons/zondicons';
 
 const ProductsPanel: React.FC<{
 	products: ProductDataType[];

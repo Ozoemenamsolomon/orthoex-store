@@ -1,6 +1,6 @@
-import { ChangeEvent, useState } from "react";
-import styled from "styled-components";
-import CTA from "./CTA";
+import { ChangeEvent, useState } from 'react';
+import styled from 'styled-components';
+import CTA from './CTA';
 
 type FormValue = {
 	name: string;
@@ -11,16 +11,16 @@ type FormValue = {
 
 const ContactForm = () => {
 	const [FormValue, setFormValue] = useState<FormValue>({
-		name: "",
-		email: "",
-		phone: "",
-		message: "",
+		name: '',
+		email: '',
+		phone: '',
+		message: '',
 	});
 
 	const handleChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 	) => {
-		const value = e.currentTarget.value || "";
+		const value = e.currentTarget.value || '';
 		const name = e.target.name;
 		setFormValue({ ...FormValue, [name]: value });
 	};
@@ -29,7 +29,7 @@ const ContactForm = () => {
 		<FormContainer>
 			<FormTitle>Let's keep in touch!</FormTitle>
 			<form action="https://formspree.io/f/xleayzgl" method="POST">
-				<div style={{ display: "flex", flexDirection: "column" }}>
+				<div style={{ display: 'flex', flexDirection: 'column' }}>
 					<InputLabelDiv>
 						{/* <label htmlFor="name">Name</label> */}
 						<input
@@ -73,11 +73,11 @@ const ContactForm = () => {
 							value={FormValue.message}
 						/>
 					</InputLabelDiv>
-					<CTA style={{ alignSelf: "flex-end" }} type="submit">
+					<CTA style={{ alignSelf: 'flex-end' }} type="submit">
 						Submit
 					</CTA>
 				</div>
-			</form>{" "}
+			</form>{' '}
 		</FormContainer>
 	);
 };

@@ -1,8 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-import styled from "styled-components";
-import CTA from "./CTA";
-import ProductStars from "./ProductStars";
+import Image from 'next/image';
+import Link from 'next/link';
+import styled from 'styled-components';
+import CTA from './CTA';
+import ProductStars from './ProductStars';
 
 export type ProductProps = {
 	name: string;
@@ -18,9 +18,9 @@ type ProductCardProp = {
 	product: ProductProps;
 };
 
-export const priceFormatter = Intl.NumberFormat("en-ng", {
-	currency: "NGN",
-	style: "currency",
+export const priceFormatter = Intl.NumberFormat('en-ng', {
+	currency: 'NGN',
+	style: 'currency',
 });
 
 const ProductCard: React.FC<ProductCardProp> = ({

@@ -1,6 +1,6 @@
-import React, { FC } from "react";
-import styled from "styled-components";
-import EventMetaData from "./EventMetadata";
+import React, { FC } from 'react';
+import styled from 'styled-components';
+import EventMetaData from './EventMetadata';
 
 export type EventType = {
 	startDateTimeString: string;
@@ -21,7 +21,7 @@ const EventCard: FC<{
 	event: EventType;
 }> = ({ disabled = false, event }) => {
 	return (
-		<CardContainer className={disabled ? "disabled" : ""}>
+		<CardContainer className={disabled ? 'disabled' : ''}>
 			<img src="" alt="" />
 			<CardContent>
 				<EventMetaData {...event} disabled={disabled} />
@@ -37,7 +37,7 @@ const EventCard: FC<{
 						</div>
 					</summary>
 					<div
-						style={{ margin: "1rem" }}
+						style={{ margin: '1rem' }}
 						dangerouslySetInnerHTML={{ __html: event.eventDetails }}
 					></div>
 				</EventDetailsAccordion>

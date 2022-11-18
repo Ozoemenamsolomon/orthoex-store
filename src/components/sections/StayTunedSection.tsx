@@ -1,15 +1,15 @@
-import styled from "styled-components";
-import CTA from "../CTA";
-import SooSection from "../SooSection";
-import newsletter from "@assets/new/images/newsletter.png";
-import Image from "next/image";
-import { Container } from "../styled";
+import styled from 'styled-components';
+import CTA from '../CTA';
+import SooSection from '../SooSection';
+import newsletter from '@assets/new/images/newsletter.png';
+import Image from 'next/image';
+import { Container } from '../styled';
 
 const StayTunedSection = () => {
 	return (
 		<SooSection>
-			<Container paddingMultiplier={6} style={{ display: "flex" }}>
-				<div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
+			<Container paddingMultiplier={6} style={{ display: 'flex' }}>
+				<div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
 					<div>
 						<h2>Stay tuned!</h2>
 						<p>
@@ -24,7 +24,7 @@ const StayTunedSection = () => {
 						</CTA>
 					</SubscribeForm>
 				</div>
-				<div style={{ position: "relative", flex: 1 }}>
+				<div style={{ position: 'relative', flex: 1 }}>
 					<Image objectFit="contain" layout="fill" src={newsletter} />
 				</div>
 			</Container>

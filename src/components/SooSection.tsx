@@ -1,6 +1,6 @@
-import React, { FC } from "react";
-import styled from "styled-components";
-import { Container } from "./styled";
+import React, { FC } from 'react';
+import styled from 'styled-components';
+import { Container } from './styled';
 
 export type SOOSectionProp = {
 	BGColor?: string;
@@ -11,11 +11,11 @@ export type SOOSectionProp = {
 };
 
 const twoColumnsStyle = {
-	gridTemplateRows: "auto",
-	display: "grid",
-	gap: "2rem",
-	gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
-	alignItems: "center",
+	gridTemplateRows: 'auto',
+	display: 'grid',
+	gap: '2rem',
+	gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
+	alignItems: 'center',
 };
 
 const SooSection: FC<SOOSectionProp> = ({
@@ -38,7 +38,7 @@ const SooSection: FC<SOOSectionProp> = ({
 
 export default SooSection;
 
-const SOOSectionContainer = styled("section")<{
+const SOOSectionContainer = styled('section')<{
 	bgColor?: string;
 }>`
 	background-color: ${prop => prop.bgColor};
@@ -54,7 +54,7 @@ const SOOSectionContainer = styled("section")<{
 type SectionHeaderProps = {
 	title: string;
 	subtitle?: string;
-	align?: "left" | "right";
+	align?: 'left' | 'right';
 };
 
 export const SectionHeader: FC<SectionHeaderProps> = ({
@@ -71,21 +71,21 @@ export const SectionHeader: FC<SectionHeaderProps> = ({
 };
 
 const SectionHeaderContainer = styled(Container)<{
-	align?: SectionHeaderProps["align"];
+	align?: SectionHeaderProps['align'];
 }>`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
-	align-items: ${({ align }) => (align === "left" ? "flex-start" : "center")};
+	align-items: ${({ align }) => (align === 'left' ? 'flex-start' : 'center')};
 	margin-bottom: 3rem;
 `;
 
 const SectionTitle = styled.h2<{
-	align?: SectionHeaderProps["align"];
+	align?: SectionHeaderProps['align'];
 }>`
 	margin: 0px 0px 1rem;
 	text-align: center;
-	font-size: ${({ align }) => (align === "left" ? "2rem" : "3.2rem")};
+	font-size: ${({ align }) => (align === 'left' ? '2rem' : '3.2rem')};
 	@media (min-width: 600px) {
 		max-width: 70%;
 	}

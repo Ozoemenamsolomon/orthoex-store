@@ -1,52 +1,52 @@
-import Breadcrumb from "@components/Breadcrumb";
-import ProductCard from "@components/ProductCard";
-import SooSection from "@components/SooSection";
-import { Container } from "@components/styled";
-import visaLogo from "@assets/new/images/visa-logo.jpg";
-import mastercardLogo from "@assets/new/images/mastercard-logo.jpg";
-import bankTransferlogo from "@assets/new/images/bank-transfer-logo.jpg";
-import headphone from "@assets/new/icons/headphone-black.svg";
-import creditCard from "@assets/new/icons/credit-card-black.svg";
-import deliveryVan from "@assets/new/icons/delivery-van-black.svg";
-import nigeriaMap from "@assets/new/icons/nigeria.svg";
-import styled from "styled-components";
-import ProductStars from "@components/ProductStars";
-import { formatPrice } from "utils";
-import { NextPage } from "next";
-import Image from "next/image";
-import { ProductDataType, productsData } from "@data/productsData";
-import ServiceCard, { ServiceCardType } from "@components/ServiceCard";
-import { SocialsContainer } from "@components/Footer";
-import CTA, { SocialCTA } from "@components/CTA";
-import { Facebook, Instagram, Twitter } from "@styled-icons/bootstrap";
-import DataSheet from "@assets/new/icons/DataSheet";
-import { helps } from "@components/sections/NeedHelpSection";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
-import { useState } from "react";
-import ReactMarkdown from "react-markdown";
-import StarPercentage from "@components/StarPercentage";
-import CustomerReviewCommentCard from "@components/CustomerReviewCommentCard";
+import Breadcrumb from '@components/Breadcrumb';
+import ProductCard from '@components/ProductCard';
+import SooSection from '@components/SooSection';
+import { Container } from '@components/styled';
+import visaLogo from '@assets/new/images/visa-logo.jpg';
+import mastercardLogo from '@assets/new/images/mastercard-logo.jpg';
+import bankTransferlogo from '@assets/new/images/bank-transfer-logo.jpg';
+import headphone from '@assets/new/icons/headphone-black.svg';
+import creditCard from '@assets/new/icons/credit-card-black.svg';
+import deliveryVan from '@assets/new/icons/delivery-van-black.svg';
+import nigeriaMap from '@assets/new/icons/nigeria.svg';
+import styled from 'styled-components';
+import ProductStars from '@components/ProductStars';
+import { formatPrice } from 'utils';
+import { NextPage } from 'next';
+import Image from 'next/image';
+import { ProductDataType, productsData } from '@data/productsData';
+import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import { SocialsContainer } from '@components/Footer';
+import CTA, { SocialCTA } from '@components/CTA';
+import { Facebook, Instagram, Twitter } from '@styled-icons/bootstrap';
+import DataSheet from '@assets/new/icons/DataSheet';
+import { helps } from '@components/sections/NeedHelpSection';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import StarPercentage from '@components/StarPercentage';
+import CustomerReviewCommentCard from '@components/CustomerReviewCommentCard';
 
 const orderBenefits: ServiceCardType[] = [
 	{
-		title: "Order by 12PM",
-		description: "Shipped same day",
+		title: 'Order by 12PM',
+		description: 'Shipped same day',
 		image: deliveryVan,
 	},
 	{
-		title: "Safe payment",
-		description: "Trusted SSL protection",
+		title: 'Safe payment',
+		description: 'Trusted SSL protection',
 		image: creditCard,
 	},
 	{
-		title: "Technical Advice",
-		description: "We offer helpful tips & tricks to aid your craft",
+		title: 'Technical Advice',
+		description: 'We offer helpful tips & tricks to aid your craft',
 		image: headphone,
 	},
 	{
-		title: "Nationwide delivery",
-		description: "We deliver to all cities in Nigeria",
+		title: 'Nationwide delivery',
+		description: 'We deliver to all cities in Nigeria',
 		image: nigeriaMap,
 	},
 ];
@@ -67,17 +67,17 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 	const customerReviews = Array.from({ length: 2 }, (_, index) =>
 		index === 0
 			? {
-					reviewer: "Abdur-rasheed Idris",
-					date: "08-10-2022",
+					reviewer: 'Abdur-rasheed Idris',
+					date: '08-10-2022',
 					comment:
-						"Adipiscing posuere sem non, feugiat sit sapien aliquam, faucibus posuere. Suscipit ",
+						'Adipiscing posuere sem non, feugiat sit sapien aliquam, faucibus posuere. Suscipit ',
 					star: 5,
 			  }
 			: {
-					reviewer: "Solomon Ezra",
-					date: "09-20-2022",
+					reviewer: 'Solomon Ezra',
+					date: '09-20-2022',
 					comment:
-						"Non ac vel a enim, libero. Nulla auctor senectus amet nulla. Tellus nulla sit risus.",
+						'Non ac vel a enim, libero. Nulla auctor senectus amet nulla. Tellus nulla sit risus.',
 					star: 2,
 			  },
 	);
@@ -89,49 +89,49 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 			verticalPaddingInREM={7}
 			paddingMultiplier={4}
 			bg="var(--oex-off-white)"
-			style={{ minHeight: "100vh" }}
+			style={{ minHeight: '100vh' }}
 		>
 			<LayoutDiv>
 				<Breadcrumb
 					breadcrumb={[
-						{ name: "Composites", link: "/composites" },
-						{ name: "All Categories", link: "/composites/categories" },
+						{ name: 'Composites', link: '/composites' },
+						{ name: 'All Categories', link: '/composites/categories' },
 						{
 							name: productCategory,
 							link: `/composites/categories/${productCategorySlug}`,
 						},
-						{ name: productName, link: "#" },
+						{ name: productName, link: '#' },
 					]}
 				/>
 				<SooSection BGColor="white">
 					<ProductData>
 						<div
-							style={{ display: "flex", gap: "1rem", flexDirection: "column" }}
+							style={{ display: 'flex', gap: '1rem', flexDirection: 'column' }}
 						>
 							<div
 								style={{
-									display: "flex",
-									gap: "2px",
-									flexDirection: "column",
-									alignItems: "center",
+									display: 'flex',
+									gap: '2px',
+									flexDirection: 'column',
+									alignItems: 'center',
 								}}
 							>
 								<div
 									style={{
-										width: "281px",
-										aspectRatio: "0.9",
-										position: "relative",
+										width: '281px',
+										aspectRatio: '0.9',
+										position: 'relative',
 									}}
 								>
 									<Image src={image} objectFit="contain" layout="fill" />
 								</div>
-								<div style={{ display: "flex", gap: "5px" }}>
+								<div style={{ display: 'flex', gap: '5px' }}>
 									{previewImages.map(imagei => (
 										<div
 											style={{
-												position: "relative",
-												aspectRatio: "1",
-												width: "70px",
+												position: 'relative',
+												aspectRatio: '1',
+												width: '70px',
 											}}
 										>
 											<Image
@@ -146,31 +146,31 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 							<ShareandDataSheets />
 						</div>
 						<div
-							style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+							style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
 						>
 							<div>
 								<h3>{productName}</h3>
 								<p>
-									Brand:{" "}
-									<span style={{ color: "var(--oex-orange)" }}>
+									Brand:{' '}
+									<span style={{ color: 'var(--oex-orange)' }}>
 										{brandName}
 									</span>
 								</p>
 								<ProductStars average={reviewAverage} count={reviewCount} />
 								<p
 									style={{
-										fontWeight: "600",
-										fontSize: "32px",
-										marginBlock: "1rem",
+										fontWeight: '600',
+										fontSize: '32px',
+										marginBlock: '1rem',
 									}}
 								>
 									{formatPrice(price)}
 								</p>
-								<p style={{ color: "#575757" }}> {description}</p>
+								<p style={{ color: '#575757' }}> {description}</p>
 							</div>
 							<div>
 								<Title>Safe and secure payment </Title>
-								<div style={{ display: "flex", gap: "5px" }}>
+								<div style={{ display: 'flex', gap: '5px' }}>
 									<div>
 										<Image src={mastercardLogo}></Image>
 									</div>
@@ -182,14 +182,14 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									</div>
 								</div>
 							</div>
-							<div style={{ display: "flex", gap: "1rem" }}>
+							<div style={{ display: 'flex', gap: '1rem' }}>
 								<select
 									style={{
-										padding: "1rem",
-										fontSize: "1rem",
-										flex: "1",
-										border: "1px solid var(--oex-light-grey)",
-										borderRadius: "4px",
+										padding: '1rem',
+										fontSize: '1rem',
+										flex: '1',
+										border: '1px solid var(--oex-light-grey)',
+										borderRadius: '4px',
 									}}
 									name="size"
 									id="size"
@@ -203,10 +203,10 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 								</select>
 								<div
 									style={{
-										display: "flex",
-										gap: ".5rem",
-										alignItems: "center",
-										paddingInline: "0.5rem",
+										display: 'flex',
+										gap: '.5rem',
+										alignItems: 'center',
+										paddingInline: '0.5rem',
 									}}
 								>
 									<ProductCountControlButton
@@ -235,9 +235,9 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 							</div>
 							<div
 								style={{
-									display: "grid",
-									gap: "2rem",
-									gridTemplateColumns: "1fr 1fr",
+									display: 'grid',
+									gap: '2rem',
+									gridTemplateColumns: '1fr 1fr',
 								}}
 							>
 								<CTA>Add to cart</CTA>
@@ -252,12 +252,12 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 					<Title>Our Advantages</Title>
 					<div
 						style={{
-							display: "grid",
-							gridTemplateColumns: "1fr 1fr",
-							gap: "2rem 0.5rem",
-							border: "1px solid #F3F3F3",
-							borderRadius: "6px",
-							padding: "1rem",
+							display: 'grid',
+							gridTemplateColumns: '1fr 1fr',
+							gap: '2rem 0.5rem',
+							border: '1px solid #F3F3F3',
+							borderRadius: '6px',
+							padding: '1rem',
 						}}
 					>
 						{orderBenefits.map((benefit, index) => (
@@ -317,10 +317,10 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 								<ProductStars average={0} count={0} />
 								<div
 									style={{
-										display: "flex",
-										flexDirection: "column",
-										gap: ".5rem",
-										maxWidth: "300px",
+										display: 'flex',
+										flexDirection: 'column',
+										gap: '.5rem',
+										maxWidth: '300px',
 									}}
 								>
 									{Array.from({ length: 5 }, () => ({
@@ -328,10 +328,10 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									})).map(({ starsPercent }, index) => (
 										<button
 											style={{
-												font: "inherit",
-												border: "0",
-												backgroundColor: "transparent",
-												cursor: "pointer",
+												font: 'inherit',
+												border: '0',
+												backgroundColor: 'transparent',
+												cursor: 'pointer',
 											}}
 										>
 											<StarPercentage
@@ -343,9 +343,9 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 								</div>
 								<div
 									style={{
-										display: "grid",
-										gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr ))",
-										gap: "1rem",
+										display: 'grid',
+										gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr ))',
+										gap: '1rem',
 									}}
 								>
 									{customerReviews.map(comment => (
@@ -358,11 +358,11 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 				</SooSection>
 				<SooSection BGColor="white">
 					<Title>Do you need help?</Title>
-					<div style={{ display: "grid", gap: "2rem" }}>
+					<div style={{ display: 'grid', gap: '2rem' }}>
 						{helps.map((help, index) => (
 							<ServiceCard
 								small
-								key={"helps_" + index}
+								key={'helps_' + index}
 								className="no-shadow no-padding"
 								service={help}
 							/>
@@ -371,13 +371,13 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 				</SooSection>
 				<SooSection
 					BGColor="white"
-					header={{ title: "Recently Viewed", align: "left" }}
+					header={{ title: 'Recently Viewed', align: 'left' }}
 				>
 					<div
 						style={{
-							display: "grid",
-							gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
-							gap: "2rem",
+							display: 'grid',
+							gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+							gap: '2rem',
 						}}
 					>
 						{Array.from({ length: 4 }, () => productsData[0]).map(
@@ -389,13 +389,13 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 				</SooSection>
 				<SooSection
 					BGColor="white"
-					header={{ title: "Popular Products", align: "left" }}
+					header={{ title: 'Popular Products', align: 'left' }}
 				>
 					<div
 						style={{
-							display: "grid",
-							gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
-							gap: "2rem",
+							display: 'grid',
+							gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+							gap: '2rem',
 						}}
 					>
 						{Array.from({ length: 4 }, () => productsData[2]).map(
@@ -544,7 +544,7 @@ const ProductCountInput = styled.input`
 		margin: 0;
 	}
 
-	&[type="number"] {
+	&[type='number'] {
 		-moz-appearance: textfield;
 	}
 `;

@@ -1,15 +1,15 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import {
 	Facebook,
 	Instagram,
 	Linkedin,
 	Twitter,
-} from "@styled-icons/bootstrap";
-import Link from "next/link";
-import Image from "next/image";
-import orthoExLogo from "@assets/new/logos/orthoex-logo-white.svg";
-import { Container } from "./styled";
-import { CTALink } from "./CTA";
+} from '@styled-icons/bootstrap';
+import Link from 'next/link';
+import Image from 'next/image';
+import orthoExLogo from '@assets/new/logos/orthoex-logo-white.svg';
+import { Container } from './styled';
+import { CTALink } from './CTA';
 
 type FooterProp = { pathname: string };
 
@@ -18,93 +18,93 @@ let footerLinks: {
 	links: { title: string; href: string }[];
 }[] = [
 	{
-		title: "COMPANY",
+		title: 'COMPANY',
 		links: [
-			{ title: "About us", href: "#" },
-			{ title: "Careers", href: "#" },
-			{ title: "Events", href: "#" },
-			{ title: "Contact us", href: "/contact" },
+			{ title: 'About us', href: '#' },
+			{ title: 'Careers', href: '#' },
+			{ title: 'Events', href: '#' },
+			{ title: 'Contact us', href: '/contact' },
 		],
 	},
 	{
-		title: "BUSINESSES",
+		title: 'BUSINESSES',
 		links: [
-			{ title: "Orthopaedics", href: "#" },
-			{ title: "Composites", href: "#" },
-			{ title: "Medical", href: "#" },
-			{ title: "Consumables", href: "#" },
-			{ title: "Partners", href: "#" },
+			{ title: 'Orthopaedics', href: '#' },
+			{ title: 'Composites', href: '#' },
+			{ title: 'Medical', href: '#' },
+			{ title: 'Consumables', href: '#' },
+			{ title: 'Partners', href: '#' },
 		],
 	},
 	{
-		title: "SUPPORT",
+		title: 'SUPPORT',
 		links: [
-			{ title: "FAQ", href: "#" },
-			{ title: "Shipping and delivery", href: "#" },
-			{ title: "Clinical Referrals", href: "#" },
+			{ title: 'FAQ', href: '#' },
+			{ title: 'Shipping and delivery', href: '#' },
+			{ title: 'Clinical Referrals', href: '#' },
 		],
 	},
 	{
-		title: "RESOURCES",
+		title: 'RESOURCES',
 		links: [
-			{ title: "Amputee guide", href: "#" },
-			{ title: "Rehab Edge Magazine", href: "#" },
-			{ title: "Blog", href: "#" },
-			{ title: "Subscribe", href: "#" },
+			{ title: 'Amputee guide', href: '#' },
+			{ title: 'Rehab Edge Magazine', href: '#' },
+			{ title: 'Blog', href: '#' },
+			{ title: 'Subscribe', href: '#' },
 		],
 	},
 	{
-		title: "MORE INFO",
+		title: 'MORE INFO',
 		links: [
-			{ title: "Privacy policy", href: "#" },
-			{ title: "Terms & Conditions", href: "#" },
-			{ title: "Site map", href: "#" },
+			{ title: 'Privacy policy', href: '#' },
+			{ title: 'Terms & Conditions', href: '#' },
+			{ title: 'Site map', href: '#' },
 		],
 	},
 ];
 
 const Footer: React.FC<FooterProp> = ({ pathname }) => {
-	if (pathname === "/composites") {
+	if (pathname === '/composites') {
 		footerLinks = [
 			{
-				title: "COMPANY",
+				title: 'COMPANY',
 				links: [
-					{ title: "About us", href: "#" },
-					{ title: "Careers", href: "#" },
-					{ title: "Events", href: "#" },
-					{ title: "Contact us", href: "/contact" },
+					{ title: 'About us', href: '#' },
+					{ title: 'Careers', href: '#' },
+					{ title: 'Events', href: '#' },
+					{ title: 'Contact us', href: '/contact' },
 				],
 			},
 			{
-				title: "BUSINESSES",
+				title: 'BUSINESSES',
 				links: [
-					{ title: "Orthopaedics", href: "#" },
-					{ title: "Composites", href: "#" },
-					{ title: "Medical", href: "#" },
-					{ title: "Consumables", href: "#" },
-					{ title: "Partners", href: "#" },
+					{ title: 'Orthopaedics', href: '#' },
+					{ title: 'Composites', href: '#' },
+					{ title: 'Medical', href: '#' },
+					{ title: 'Consumables', href: '#' },
+					{ title: 'Partners', href: '#' },
 				],
 			},
 			{
-				title: "RESOURCES",
+				title: 'RESOURCES',
 				links: [
-					{ title: "Blog", href: "#" },
-					{ title: "Subscribe", href: "#" },
+					{ title: 'Blog', href: '#' },
+					{ title: 'Subscribe', href: '#' },
 				],
 			},
 			{
-				title: "SUPPORT",
+				title: 'SUPPORT',
 				links: [
-					{ title: "FAQ", href: "#" },
-					{ title: "Shipping and delivery", href: "#" },
+					{ title: 'FAQ', href: '#' },
+					{ title: 'Shipping and delivery', href: '#' },
 				],
 			},
 			{
-				title: "MORE INFO",
+				title: 'MORE INFO',
 				links: [
-					{ title: "Privacy policy", href: "#" },
-					{ title: "Terms & Conditions", href: "#" },
-					{ title: "Site map", href: "#" },
+					{ title: 'Privacy policy', href: '#' },
+					{ title: 'Terms & Conditions', href: '#' },
+					{ title: 'Site map', href: '#' },
 				],
 			},
 		];
@@ -114,7 +114,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 		<SooFooter>
 			<Container
 				style={{
-					color: "white",
+					color: 'white',
 				}}
 			>
 				<LogoInfoWrapper>
@@ -137,10 +137,10 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 								<h5>{title}</h5>
 								<div
 									style={{
-										display: "flex",
-										fontSize: "0.9rem",
-										flexDirection: "column",
-										gap: "1rem",
+										display: 'flex',
+										fontSize: '0.9rem',
+										flexDirection: 'column',
+										gap: '1rem',
 									}}
 								>
 									{links.map(({ title, href }, index) => (

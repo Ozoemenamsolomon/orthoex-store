@@ -1,14 +1,14 @@
-import React from "react";
-import styled from "styled-components";
-import SooSection from "./SooSection";
-import Image from "next/image";
+import React from 'react';
+import styled from 'styled-components';
+import SooSection from './SooSection';
+import Image from 'next/image';
 
-import CoreValue from "@assets/icons/core-values.png";
-import ContactUs from "@assets/icons/contact-us.png";
-import EnableBusiness from "@assets/icons/learn-more.png";
-import ViewProducts from "@assets/icons/view-products.png";
-import KristaTemple from "@assets/images/krista-and-temple.png";
-import CTA from "./CTA";
+import CoreValue from '@assets/icons/core-values.png';
+import ContactUs from '@assets/icons/contact-us.png';
+import EnableBusiness from '@assets/icons/learn-more.png';
+import ViewProducts from '@assets/icons/view-products.png';
+import KristaTemple from '@assets/images/krista-and-temple.png';
+import CTA from './CTA';
 
 const ValuesSection = () => {
 	return (

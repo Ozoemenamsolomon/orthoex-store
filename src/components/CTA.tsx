@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { FC } from "react";
-import styled from "styled-components";
+import Link from 'next/link';
+import { FC } from 'react';
+import styled from 'styled-components';
 
 type CTAType = {
 	white?: Boolean;
@@ -16,15 +16,15 @@ const CTA = styled.button<CTAType>`
 	transition: all 0.5s ease;
 	font-size: 1.2rem;
 
-	border: ${({ white }) => (white ? "1px solid var(--oex-orange)" : "none")};
-	background-color: ${prop => (prop.white ? "white" : "var(--oex-orange)")};
+	border: ${({ white }) => (white ? '1px solid var(--oex-orange)' : 'none')};
+	background-color: ${prop => (prop.white ? 'white' : 'var(--oex-orange)')};
 	color: ${prop =>
-		prop.white ? "var(--oex-orange)" : "var(--text-colour-light)"};
+		prop.white ? 'var(--oex-orange)' : 'var(--text-colour-light)'};
 
 	&:not(.no-animate):hover {
 		color: ${prop =>
-			prop.white ? "var(--text-colour-light)" : "var(--oex-orange)"};
-		background-color: ${prop => (prop.white ? "var(--oex-orange)" : "white")};
+			prop.white ? 'var(--text-colour-light)' : 'var(--oex-orange)'};
+		background-color: ${prop => (prop.white ? 'var(--oex-orange)' : 'white')};
 	}
 `;
 
@@ -46,7 +46,7 @@ export const CTALink: FC<CTAProps & { href: string; isSocial?: boolean }> = ({
 }) => {
 	return (
 		<Link href={href}>
-			<a style={{ display: "contents" }}>
+			<a style={{ display: 'contents' }}>
 				{isSocial ? <SocialCTA {...props} /> : <CTA {...props} />}
 			</a>
 		</Link>

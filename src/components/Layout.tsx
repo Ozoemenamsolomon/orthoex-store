@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import Head from "next/head";
-import Footer from "./Footer";
-import Header from "./Header";
-import { useRouter } from "next/router";
+import React from 'react';
+import styled from 'styled-components';
+import Head from 'next/head';
+import Footer from './Footer';
+import Header from './Header';
+import { useRouter } from 'next/router';
 
 type LayoutProp = {};
 

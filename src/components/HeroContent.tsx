@@ -1,11 +1,11 @@
-import { FC, ReactElement } from "react";
-import styled from "styled-components";
+import { FC, ReactElement } from 'react';
+import styled from 'styled-components';
 
 const HeroContentComp: FC<{
 	title?: string;
 	claim: string;
 	cta?: ReactElement;
-}> = ({ title = "&nbsp;", claim, cta }) => {
+}> = ({ title = '&nbsp;', claim, cta }) => {
 	return (
 		<HeroContent>
 			<HeroTitle dangerouslySetInnerHTML={{ __html: title }} />

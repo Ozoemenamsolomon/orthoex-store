@@ -1,8 +1,8 @@
-import React from "react";
-import Image from "next/image";
-import styled from "styled-components";
-import Link from "next/link";
-import { VerticalType } from "./ProductVertical";
+import React from 'react';
+import Image from 'next/image';
+import styled from 'styled-components';
+import Link from 'next/link';
+import { VerticalType } from './ProductVertical';
 
 const ProductVerticalCard: React.FC<VerticalType> = ({
 	image,

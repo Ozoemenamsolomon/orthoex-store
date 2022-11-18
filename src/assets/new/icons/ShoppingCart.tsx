@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const ShoppingCart = ({ colour = "black" }) => (
+const ShoppingCart = ({ colour = 'black' }) => (
 	<svg
 		width="26"
 		height="24"

@@ -1,31 +1,31 @@
-import categoryBanner from "@assets/new/images/category-banner.jpg";
-import Breadcrumb, { BreadcrumProps } from "@components/Breadcrumb";
-import FilterPanel, { FilterType } from "@components/FilterPanel";
-import ProductsPanel from "@components/ProductsPanel";
-import { Container } from "@components/styled";
-import FilterProductContainer from "@components/styled/FIlterProductContainer";
-import { ProductDataType, productsData } from "@data/productsData";
-import { GetStaticProps, NextPage } from "next";
-import Image from "next/image";
-import { useState } from "react";
-import styled from "styled-components";
+import categoryBanner from '@assets/new/images/category-banner.jpg';
+import Breadcrumb, { BreadcrumProps } from '@components/Breadcrumb';
+import FilterPanel, { FilterType } from '@components/FilterPanel';
+import ProductsPanel from '@components/ProductsPanel';
+import { Container } from '@components/styled';
+import FilterProductContainer from '@components/styled/FIlterProductContainer';
+import { ProductDataType, productsData } from '@data/productsData';
+import { GetStaticProps, NextPage } from 'next';
+import Image from 'next/image';
+import { useState } from 'react';
+import styled from 'styled-components';
 
 const Products: NextPage<{
 	products: ProductDataType[];
 }> = ({ products }) => {
 	const [filter, setFilter] = useState<FilterType>({
-		category: "",
-		brand: "",
+		category: '',
+		brand: '',
 		priceRange: {
 			min: 0,
 		},
 	});
 
-	const title = "All Products";
+	const title = 'All Products';
 
 	const breadcrumb: BreadcrumProps[] = [
-		{ name: "Composites", link: "/composites" },
-		{ name: title, link: "#" },
+		{ name: 'Composites', link: '/composites' },
+		{ name: title, link: '#' },
 	];
 
 	const filteredProducts = products

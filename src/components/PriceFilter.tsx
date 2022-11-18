@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export type PriceRange = {
 	min: number;
@@ -11,9 +11,9 @@ const PriceFilter: React.FC<{
 	setLowPriceRange: React.ChangeEventHandler<HTMLInputElement>;
 }> = ({ priceRange, setHighPriceRange, setLowPriceRange }) => {
 	return (
-		<div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+		<div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 			<input
-				style={{ accentColor: "var(--oex-orange)" }}
+				style={{ accentColor: 'var(--oex-orange)' }}
 				type="range"
 				name="price-filter"
 				id="price-filter"
@@ -22,7 +22,7 @@ const PriceFilter: React.FC<{
 				min={priceRange.min}
 				onChange={setHighPriceRange}
 			/>
-			<div style={{ display: "flex", gap: ".5rem", alignItems: "center" }}>
+			<div style={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
 				<PriceInput
 					type="number"
 					name="price-filter-start"
