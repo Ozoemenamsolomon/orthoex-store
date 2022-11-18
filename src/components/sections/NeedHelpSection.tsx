@@ -26,7 +26,8 @@ export const helps: ServiceCardType[] = [
 				target="_blank"
 				rel="noopener noreferrer"
 				href="https://wa.me/2347030324696"
-				white>
+				white
+			>
 				Live chat
 			</CTALink>
 		),

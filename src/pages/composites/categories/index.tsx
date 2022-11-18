@@ -18,23 +18,27 @@ const composite = () => {
 		<Container
 			verticalPaddingInREM={7}
 			paddingMultiplier={4}
-			bg="var(--oex-off-white)">
+			bg="var(--oex-off-white)"
+		>
 			<Breadcrumb breadcrumb={breadcrumb} />
 			<SooSection
 				BGColor="white"
-				header={{ title: 'All Categories', align: 'left' }}>
+				header={{ title: 'All Categories', align: 'left' }}
+			>
 				<Categories categories={categories} />
 				<ViewMoreLink href="/composites/products" text="View more Products" />
 			</SooSection>
 			<SooSection
 				BGColor="white"
-				header={{ title: 'Popular Products', align: 'left' }}>
+				header={{ title: 'Popular Products', align: 'left' }}
+			>
 				<div
 					style={{
 						display: 'grid',
 						gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
 						gap: '2rem',
-					}}>
+					}}
+				>
 					{Array.from({ length: 4 }, () => productsData[0]).map(
 						(product, index) => (
 							<ProductCard key={`product_${index}`} product={product} />

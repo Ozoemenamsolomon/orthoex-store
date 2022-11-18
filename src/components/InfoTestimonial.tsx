@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 import client1 from '@assets/new/images/client1.jpg';
 import client2 from '@assets/new/images/client2.jpg';
 import client3 from '@assets/new/images/client3.jpg';
-import SooSection from "./SooSection";
-import { PostCardsContainer } from "./styled";
-import TestimonialCard, { TestimonialProps } from "./TestimonialCard";
+import SooSection from './SooSection';
+import { PostCardsContainer } from './styled';
+import TestimonialCard, { TestimonialProps } from './TestimonialCard';
 
 const testimonials: TestimonialProps[] = [
 	{
@@ -24,26 +24,25 @@ const testimonials: TestimonialProps[] = [
 	},
 ];
 
-
 function InfoTestimonial() {
-  return (
-    <SooSection
-      header={{
-        title: "What our clients say about us",
-        subtitle:
-          "There are many reasons why our partners love to work with us. Hear it from the people for yourself.",
-      }}
-    >
-      <PostCardsContainer>
-        {testimonials.map((testimonial, index) => (
-          <TestimonialCard
-            key={`testimonial_${index}`}
-            testimonial={testimonial}
-          ></TestimonialCard>
-        ))}
-      </PostCardsContainer>
-    </SooSection>
-  );
+	return (
+		<SooSection
+			header={{
+				title: 'What our clients say about us',
+				subtitle:
+					'There are many reasons why our partners love to work with us. Hear it from the people for yourself.',
+			}}
+		>
+			<PostCardsContainer>
+				{testimonials.map((testimonial, index) => (
+					<TestimonialCard
+						key={`testimonial_${index}`}
+						testimonial={testimonial}
+					></TestimonialCard>
+				))}
+			</PostCardsContainer>
+		</SooSection>
+	);
 }
 
 export default InfoTestimonial;

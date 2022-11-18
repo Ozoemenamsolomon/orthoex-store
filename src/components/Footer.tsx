@@ -115,7 +115,8 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 			<Container
 				style={{
 					color: 'white',
-				}}>
+				}}
+			>
 				<LogoInfoWrapper>
 					<Link href="/">
 						<a>
@@ -140,11 +141,13 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 										fontSize: '0.9rem',
 										flexDirection: 'column',
 										gap: '1rem',
-									}}>
+									}}
+								>
 									{links.map(({ title, href }, index) => (
 										<Link
 											key={`link-${indexTop}-${title}-${index}`}
-											href={href}>
+											href={href}
+										>
 											<a>{title}</a>
 										</Link>
 									))}
@@ -165,28 +168,32 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 								isSocial={true}
 								target="_blank"
 								rel="noopener noreferrer"
-								href="https://www.facebook.com/orthoexng">
+								href="https://www.facebook.com/orthoexng"
+							>
 								<Facebook width={18} />
 							</CTALink>
 							<CTALink
 								isSocial={true}
 								target="_blank"
 								rel="noopener noreferrer"
-								href="https://www.instagram.com/orthoex_nigeria/">
+								href="https://www.instagram.com/orthoex_nigeria/"
+							>
 								<Instagram width={18} />
 							</CTALink>
 							<CTALink
 								isSocial={true}
 								target="_blank"
 								rel="noopener noreferrer"
-								href="https://www.linkedin.com/company/orthoexnigeria/">
+								href="https://www.linkedin.com/company/orthoexnigeria/"
+							>
 								<Linkedin width={18} />
 							</CTALink>
 							<CTALink
 								isSocial={true}
 								target="_blank"
 								rel="noopener noreferrer"
-								href="https://twitter.com/OrthoExNg">
+								href="https://twitter.com/OrthoExNg"
+							>
 								<Twitter width={18} />
 							</CTALink>
 						</SocialsContainer>

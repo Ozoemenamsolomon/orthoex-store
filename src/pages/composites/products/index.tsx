@@ -46,7 +46,8 @@ const Products: NextPage<{
 		<Container
 			verticalPaddingInREM={7}
 			paddingMultiplier={4}
-			bg="var(--oex-off-white)">
+			bg="var(--oex-off-white)"
+		>
 			<LayoutDiv>
 				<Breadcrumb breadcrumb={breadcrumb} />
 				<FilterProductContainer>

@@ -6,10 +6,10 @@ const dir = path.dirname(__filename);
 fs.readdir(dir, (err, files) => {
 	if (err) throw err;
 
-	files.forEach((file) => {
+	files.forEach(file => {
 		const oldFileName = path.join(dir, file);
-		fs.rename(oldFileName, oldFileName.replace('product', 'category'), (err) =>
-			console.log({ err })
+		fs.rename(oldFileName, oldFileName.replace('product', 'category'), err =>
+			console.log({ err }),
 		);
 	});
 });

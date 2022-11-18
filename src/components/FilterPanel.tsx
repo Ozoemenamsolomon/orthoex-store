@@ -95,7 +95,8 @@ const FilterPanel: React.FC<{
 						display: 'flex',
 						flexDirection: 'column',
 						gap: '.5rem',
-					}}>
+					}}
+				>
 					{brands.map(({ slug, name }) => (
 						<label>
 							<input
@@ -119,7 +120,8 @@ const FilterPanel: React.FC<{
 							color: 'var(--oex-orange)',
 							background: 'none',
 							border: 'none',
-						}}>
+						}}
+					>
 						Apply
 					</button>
 				</FilterPanelSectionHeader>
