@@ -29,16 +29,14 @@ export const HeroComp: FC<HeroCompProp> = ({
 				style={{
 					color: colour,
 					padding: morePadding ? '11em 0em' : undefined,
-				}}
-			>
+				}}>
 				<Container
 					style={{
 						display: 'flex',
 						flexDirection: col ? 'column' : undefined,
 						alignItems: center ? 'center' : undefined,
 					}}
-					paddingMultiplier={4}
-				>
+					paddingMultiplier={4}>
 					{children}
 				</Container>
 			</Hero>
@@ -47,9 +45,8 @@ export const HeroComp: FC<HeroCompProp> = ({
 					position: 'absolute',
 					inset: 0,
 					zIndex: -5,
-				}}
-			>
-				<HeroBg layout="fill" object-fit="cover" src={bg || DefaultBG}></HeroBg>
+				}}>
+				<HeroBg fill object-fit="cover" src={bg || DefaultBG}></HeroBg>
 				{darkenBG && (
 					<div
 						style={{

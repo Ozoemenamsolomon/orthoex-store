@@ -31,12 +31,7 @@ const ProductCard: React.FC<ProductCardProp> = ({
 			<div>
 				<Link href={`/composites/products/polyester-resin`} legacyBehavior>
 					<a>
-						<Image
-							src={image}
-							layout="fill"
-							object-fit="contain"
-							alt="product image"
-						/>
+						<Image src={image} fill object-fit="contain" alt="product image" />
 					</a>
 				</Link>
 			</div>

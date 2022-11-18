@@ -16,6 +16,8 @@ interface Props {
 	buttons: ButtonInfo[];
 }
 
+// TODO layout is deprecated
+
 const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
 	return (
 		<StyledInfoCard>

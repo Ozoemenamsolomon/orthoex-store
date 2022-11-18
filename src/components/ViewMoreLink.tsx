@@ -12,8 +12,7 @@ const ViewMoreLink: React.FC<{ href: string; text: string }> = ({
 				alignSelf: 'flex-end',
 				textDecoration: 'underline',
 				color: 'var(--oex-orange)',
-			}}
-		>
+			}}>
 			<IconText icon={moreArrow} text={text} />
 		</a>
 	</Link>

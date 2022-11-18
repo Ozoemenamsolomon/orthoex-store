@@ -35,14 +35,8 @@ const ServiceCard: FC<ServiceCardProps> = ({
 		<ImageTitleContainer className={`${small ? 'small' : ''}`}>
 			<ImageContainer
 				small={small}
-				className={`image-container ${imagePadding ? 'pad' : ''}`}
-			>
-				<Image
-					object-fit="contain"
-					layout="fill"
-					src={image}
-					alt="service card image"
-				/>
+				className={`image-container ${imagePadding ? 'pad' : ''}`}>
+				<Image object-fit="contain" fill src={image} alt="service card image" />
 			</ImageContainer>
 			<div>
 				{title && (
@@ -52,8 +46,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 					className={small ? 'small' : undefined}
 					dangerouslySetInnerHTML={
 						HTMLDescription ? { __html: description } : undefined
-					}
-				>
+					}>
 					{!HTMLDescription ? description : undefined}
 				</Description>
 			</div>

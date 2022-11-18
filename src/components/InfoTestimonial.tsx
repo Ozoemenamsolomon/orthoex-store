@@ -31,14 +31,12 @@ function InfoTestimonial() {
 				title: 'What our clients say about us',
 				subtitle:
 					'There are many reasons why our partners love to work with us. Hear it from the people for yourself.',
-			}}
-		>
+			}}>
 			<PostCardsContainer>
 				{testimonials.map((testimonial, index) => (
 					<TestimonialCard
 						key={`testimonial_${index}`}
-						testimonial={testimonial}
-					></TestimonialCard>
+						testimonial={testimonial}></TestimonialCard>
 				))}
 			</PostCardsContainer>
 		</SooSection>

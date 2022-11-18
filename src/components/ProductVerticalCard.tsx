@@ -15,7 +15,7 @@ const ProductVerticalCard: React.FC<VerticalType> = ({
 				<Image
 					quality={100}
 					object-fit="cover"
-					layout="fill"
+					fill
 					src={image}
 					alt="product vertical card image"
 				/>

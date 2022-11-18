@@ -67,8 +67,7 @@ function ProductVertical() {
 				title: 'Which of our product vertical is relevant for you?',
 				subtitle:
 					'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
-			}}
-		>
+			}}>
 			<StyledProductSection>
 				{productVerticalData.map((product, index) => (
 					<ProductVerticalCard

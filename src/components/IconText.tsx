@@ -11,8 +11,7 @@ const IconText: FC<{ icon: StaticImageData; text: string }> = ({
 			position: 'relative',
 			gap: '1rem',
 			color: 'var(--oex-orange)',
-		}}
-	>
+		}}>
 		<span>{text}</span>
 		<Image alt="icon" object-fit="contain" src={icon} />
 	</div>

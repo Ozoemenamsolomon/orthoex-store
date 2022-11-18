@@ -38,8 +38,7 @@ const EventCard: FC<{
 					</summary>
 					<div
 						style={{ margin: '1rem' }}
-						dangerouslySetInnerHTML={{ __html: event.eventDetails }}
-					></div>
+						dangerouslySetInnerHTML={{ __html: event.eventDetails }}></div>
 				</EventDetailsAccordion>
 			</CardContent>
 		</CardContainer>

@@ -46,8 +46,7 @@ const Products: NextPage<{
 		<Container
 			verticalPaddingInREM={7}
 			paddingMultiplier={4}
-			bg="var(--oex-off-white)"
-		>
+			bg="var(--oex-off-white)">
 			<LayoutDiv>
 				<Breadcrumb breadcrumb={breadcrumb} />
 				<FilterProductContainer>
@@ -55,12 +54,7 @@ const Products: NextPage<{
 					<ProductsPanel title={title} products={filteredProducts} />
 				</FilterProductContainer>
 				<ImageContainer>
-					<Image
-						alt="banner"
-						src={categoryBanner}
-						layout="fill"
-						object-fit="contain"
-					/>
+					<Image alt="banner" src={categoryBanner} fill object-fit="contain" />
 				</ImageContainer>
 			</LayoutDiv>
 		</Container>

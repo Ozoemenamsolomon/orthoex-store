@@ -8,7 +8,9 @@ import { Container } from '../styled';
 const StayTunedSection = () => {
 	return (
 		<SooSection>
-			<Container paddingMultiplier={6} style={{ display: 'flex' }}>
+			<Container
+				paddingMultiplier={6}
+				style={{ display: 'flex', alignItems: 'flex-end' }}>
 				<div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
 					<div>
 						<h2>Stay tuned!</h2>
@@ -24,11 +26,17 @@ const StayTunedSection = () => {
 						</CTA>
 					</SubscribeForm>
 				</div>
-				<div style={{ position: 'relative', flex: 1 }}>
+				<div
+					style={{
+						position: 'relative',
+						flex: '1 ',
+						aspectRatio: '1',
+						marginLeft: '6rem',
+					}}>
 					<Image
 						alt="newsletter image"
 						object-fit="contain"
-						layout="fill"
+						fill
 						src={newsletter}
 					/>
 				</div>
@@ -50,5 +58,6 @@ const SubscribeForm = styled.form`
 	input {
 		flex: 1;
 		padding: 0.51rem;
+		border: 0.5px solid var(--oex-light-grey);
 	}
 `;

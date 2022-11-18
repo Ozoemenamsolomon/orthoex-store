@@ -34,8 +34,7 @@ const Category: NextPage<{
 		<Container
 			verticalPaddingInREM={7}
 			paddingMultiplier={4}
-			bg="var(--oex-off-white)"
-		>
+			bg="var(--oex-off-white)">
 			<LayoutDiv>
 				<Breadcrumb breadcrumb={breadcrumb} />
 				<FilterProductContainer>
@@ -46,7 +45,7 @@ const Category: NextPage<{
 					<Image
 						alt="category banner"
 						src={categoryBanner}
-						layout="fill"
+						fill
 						object-fit="contain"
 					/>
 				</ImageContainer>

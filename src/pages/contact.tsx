@@ -82,8 +82,7 @@ const Contact = () => {
 					<h2
 						style={{
 							textAlign: 'center',
-						}}
-					>
+						}}>
 						You can contact us through any of this means
 					</h2>
 					<ServicesCards>
@@ -98,14 +97,12 @@ const Contact = () => {
 						gap: '2rem',
 						gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
 						alignItems: 'center',
-					}}
-				>
+					}}>
 					<div>
 						<h2
 							style={{
 								textAlign: 'center',
-							}}
-						>
+							}}>
 							Have some questions?
 						</h2>
 						<ContactForm>
@@ -130,9 +127,9 @@ const Contact = () => {
 				</SooSection>
 				<SooSection style={{ maxWidth: '700px', textAlign: 'center' }}>
 					<h2>Stay Connected</h2>
-					Are you following us on our social media channels? We're constantly
-					sharing product news and event updates. Click the icon below to follow
-					your favorite brand.
+					Are you following us on our social media channels? We&apos;re
+					constantly sharing product news and event updates. Click the icon
+					below to follow your favorite brand.
 				</SooSection>
 				<SooSection>
 					<ServicesCards>

@@ -25,9 +25,8 @@ const TestimonialSection: FC<{
 						transform: 'translateX(-50%)',
 						left: '50%',
 						margin: 'auto',
-					}}
-				>
-					<Image alt="client icon" layout="fill" src={QuotationMark} />
+					}}>
+					<Image alt="client icon" fill src={QuotationMark} />
 				</div>
 				<p>{testimony}</p>
 				<span style={{ fontWeight: 'bold' }}>{by}</span>

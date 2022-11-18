@@ -9,8 +9,7 @@ const Contact = () => {
 				justifyContent: 'space-between',
 				flexWrap: 'wrap',
 				alignItems: 'center',
-			}}
-		>
+			}}>
 			<div>
 				<h3>OrthoEx Nigeria Limited</h3>
 				<p>

@@ -89,8 +89,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 			verticalPaddingInREM={7}
 			paddingMultiplier={4}
 			bg="var(--oex-off-white)"
-			style={{ minHeight: '100vh' }}
-		>
+			style={{ minHeight: '100vh' }}>
 			<LayoutDiv>
 				<Breadcrumb
 					breadcrumb={[
@@ -106,28 +105,25 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 				<SooSection BGColor="white">
 					<ProductData>
 						<div
-							style={{ display: 'flex', gap: '1rem', flexDirection: 'column' }}
-						>
+							style={{ display: 'flex', gap: '1rem', flexDirection: 'column' }}>
 							<div
 								style={{
 									display: 'flex',
 									gap: '2px',
 									flexDirection: 'column',
 									alignItems: 'center',
-								}}
-							>
+								}}>
 								<div
 									style={{
 										width: '281px',
 										aspectRatio: '0.9',
 										position: 'relative',
-									}}
-								>
+									}}>
 									<Image
 										alt="product image"
 										src={image}
 										object-fit="contain"
-										layout="fill"
+										fill
 									/>
 								</div>
 								<div style={{ display: 'flex', gap: '5px' }}>
@@ -137,14 +133,12 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 												position: 'relative',
 												aspectRatio: '1',
 												width: '70px',
-											}}
-										>
+											}}>
 											<Image
 												object-fit="contain"
-												layout="fill"
+												fill
 												src={imagei}
-												alt="product image preview"
-											></Image>
+												alt="product image preview"></Image>
 										</div>
 									))}
 								</div>
@@ -152,8 +146,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 							<ShareandDataSheets />
 						</div>
 						<div
-							style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-						>
+							style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 							<div>
 								<h3>{productName}</h3>
 								<p>
@@ -168,8 +161,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										fontWeight: '600',
 										fontSize: '32px',
 										marginBlock: '1rem',
-									}}
-								>
+									}}>
 									{formatPrice(price)}
 								</p>
 								<p style={{ color: '#575757' }}> {description}</p>
@@ -180,8 +172,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									<div>
 										<Image
 											alt="payment processor logo"
-											src={mastercardLogo}
-										></Image>
+											src={mastercardLogo}></Image>
 									</div>
 									<div>
 										<Image alt="payment processor logo" src={visaLogo}></Image>
@@ -189,8 +180,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									<div>
 										<Image
 											alt="payment processor logo"
-											src={bankTransferlogo}
-										></Image>
+											src={bankTransferlogo}></Image>
 									</div>
 								</div>
 							</div>
@@ -204,8 +194,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										borderRadius: '4px',
 									}}
 									name="size"
-									id="size"
-								>
+									id="size">
 									<option value="Select Size" selected disabled>
 										Select Size
 									</option>
@@ -219,14 +208,12 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										gap: '.5rem',
 										alignItems: 'center',
 										paddingInline: '0.5rem',
-									}}
-								>
+									}}>
 									<ProductCountControlButton
 										onClick={() => {
 											console.log(productCount);
 											setProductCount(prevProductCount => prevProductCount - 1);
-										}}
-									>
+										}}>
 										-
 									</ProductCountControlButton>
 									<ProductCountInput
@@ -239,8 +226,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									<ProductCountControlButton
 										onClick={() =>
 											setProductCount(prevProductCount => prevProductCount + 1)
-										}
-									>
+										}>
 										+
 									</ProductCountControlButton>
 								</div>
@@ -250,8 +236,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									display: 'grid',
 									gap: '2rem',
 									gridTemplateColumns: '1fr 1fr',
-								}}
-							>
+								}}>
 								<CTA>Add to cart</CTA>
 								<CTA>Buy now</CTA>
 							</div>
@@ -270,8 +255,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 							border: '1px solid #F3F3F3',
 							borderRadius: '6px',
 							padding: '1rem',
-						}}
-					>
+						}}>
 						{orderBenefits.map((benefit, index) => (
 							<ServiceCard
 								small
@@ -333,8 +317,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										flexDirection: 'column',
 										gap: '.5rem',
 										maxWidth: '300px',
-									}}
-								>
+									}}>
 									{Array.from({ length: 5 }, () => ({
 										starsPercent: Math.random() * 100,
 									})).map(({ starsPercent }, index) => (
@@ -344,12 +327,10 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 												border: '0',
 												backgroundColor: 'transparent',
 												cursor: 'pointer',
-											}}
-										>
+											}}>
 											<StarPercentage
 												star={5 - index}
-												percent={starsPercent}
-											></StarPercentage>
+												percent={starsPercent}></StarPercentage>
 										</button>
 									))}
 								</div>
@@ -358,8 +339,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										display: 'grid',
 										gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr ))',
 										gap: '1rem',
-									}}
-								>
+									}}>
 									{customerReviews.map(comment => (
 										<CustomerReviewCommentCard {...comment} />
 									))}
@@ -383,15 +363,13 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 				</SooSection>
 				<SooSection
 					BGColor="white"
-					header={{ title: 'Recently Viewed', align: 'left' }}
-				>
+					header={{ title: 'Recently Viewed', align: 'left' }}>
 					<div
 						style={{
 							display: 'grid',
 							gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
 							gap: '2rem',
-						}}
-					>
+						}}>
 						{Array.from({ length: 4 }, () => productsData[0]).map(
 							(product, index) => (
 								<ProductCard key={`product_${index}`} product={product} />
@@ -401,15 +379,13 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 				</SooSection>
 				<SooSection
 					BGColor="white"
-					header={{ title: 'Popular Products', align: 'left' }}
-				>
+					header={{ title: 'Popular Products', align: 'left' }}>
 					<div
 						style={{
 							display: 'grid',
 							gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
 							gap: '2rem',
-						}}
-					>
+						}}>
 						{Array.from({ length: 4 }, () => productsData[2]).map(
 							(product, index) => (
 								<ProductCard key={`product_${index}`} product={product} />

@@ -115,8 +115,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 			<Container
 				style={{
 					color: 'white',
-				}}
-			>
+				}}>
 				<LogoInfoWrapper>
 					<Link href="/" legacyBehavior>
 						<a>
@@ -125,7 +124,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 									src={orthoExLogo}
 									objectPosition="left"
 									object-fit="contain"
-									layout="fill"
+									fill
 									alt="OrthoEx Logo"
 								/>
 							</Logo>
@@ -142,14 +141,12 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 										fontSize: '0.9rem',
 										flexDirection: 'column',
 										gap: '1rem',
-									}}
-								>
+									}}>
 									{links.map(({ title, href }, index) => (
 										<Link
 											legacyBehavior
 											key={`link-${indexTop}-${title}-${index}`}
-											href={href}
-										>
+											href={href}>
 											<a>{title}</a>
 										</Link>
 									))}
@@ -170,32 +167,28 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 								isSocial={true}
 								target="_blank"
 								rel="noopener noreferrer"
-								href="https://www.facebook.com/orthoexng"
-							>
+								href="https://www.facebook.com/orthoexng">
 								<Facebook width={18} />
 							</CTALink>
 							<CTALink
 								isSocial={true}
 								target="_blank"
 								rel="noopener noreferrer"
-								href="https://www.instagram.com/orthoex_nigeria/"
-							>
+								href="https://www.instagram.com/orthoex_nigeria/">
 								<Instagram width={18} />
 							</CTALink>
 							<CTALink
 								isSocial={true}
 								target="_blank"
 								rel="noopener noreferrer"
-								href="https://www.linkedin.com/company/orthoexnigeria/"
-							>
+								href="https://www.linkedin.com/company/orthoexnigeria/">
 								<Linkedin width={18} />
 							</CTALink>
 							<CTALink
 								isSocial={true}
 								target="_blank"
 								rel="noopener noreferrer"
-								href="https://twitter.com/OrthoExNg"
-							>
+								href="https://twitter.com/OrthoExNg">
 								<Twitter width={18} />
 							</CTALink>
 						</SocialsContainer>
@@ -225,9 +218,9 @@ const StyledHorionalLine = styled.hr`
 	margin-bottom: 2rem;
 	background: white;
 	font-size: 10px;
-	position: absolute;
-	width: 100%;
-	left: 0;
+	/* position: absolute; */
+	/* width: 100%; */
+	/* left: 0; */
 `;
 
 const FooterLinkGroups = styled.div`

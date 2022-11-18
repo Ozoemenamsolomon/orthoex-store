@@ -29,8 +29,7 @@ const PriceFilter: React.FC<{
 					value={priceRange.min}
 					max={priceRange.max}
 					placeholder="Min"
-					onChange={setLowPriceRange}
-				></PriceInput>
+					onChange={setLowPriceRange}></PriceInput>
 				<span>-</span>
 				<PriceInput
 					type="number"
@@ -39,8 +38,7 @@ const PriceFilter: React.FC<{
 					value={priceRange.max}
 					min={priceRange.min}
 					placeholder="Max"
-					onChange={setHighPriceRange}
-				></PriceInput>
+					onChange={setHighPriceRange}></PriceInput>
 			</div>
 		</div>
 	);
