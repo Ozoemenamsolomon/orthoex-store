@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
 const IconText: FC<{ icon: StaticImageData; text: string }> = ({
 	icon,

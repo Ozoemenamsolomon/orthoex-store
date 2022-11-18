@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
 import DefaultBG from '@assets/images/website-backfround-image.jpg';
 import React, { FC } from 'react';
@@ -46,7 +46,11 @@ export const HeroComp: FC<HeroCompProp> = ({
 					inset: 0,
 					zIndex: -5,
 				}}>
-				<HeroBg fill object-fit="cover" src={bg || DefaultBG}></HeroBg>
+				<HeroBg
+					alt="hero background"
+					fill
+					object-fit="cover"
+					src={bg || DefaultBG}></HeroBg>
 				{darkenBG && (
 					<div
 						style={{

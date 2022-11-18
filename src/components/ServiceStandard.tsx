@@ -39,8 +39,8 @@ function ServiceStandard() {
 								src={service.image}
 								alt="service icon"
 								object-fit="contain"
-								width="120px"
-								height="120px"
+								width="120"
+								height="120"
 							/>
 							<p>{service.description}</p>
 						</ImageDescription>

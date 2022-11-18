@@ -8,6 +8,7 @@ import CustomerService from '@assets/new/images/home/customer-service.jpg';
 import Imprint from '@assets/new/images/home/imprint.jpg';
 import QuickChange from '@assets/new/images/home/quickchange.jpg';
 import InfoCard from './InfoCard';
+import { StaticImageData } from 'next/image';
 
 interface InfoSectionType {
 	image: StaticImageData;

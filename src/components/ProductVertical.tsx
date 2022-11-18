@@ -10,6 +10,7 @@ import SiliconMould from '@assets/new/images/home/silicon_mould.jpg';
 import SyntheticFibre from '@assets/new/images/home/synthetic_fibre.jpg';
 import Protheses from '@assets/new/images/home/prosthesis.jpg';
 import ProductVerticalCard from './ProductVerticalCard';
+import { StaticImageData } from 'next/image';
 
 export interface VerticalType {
 	title: string;

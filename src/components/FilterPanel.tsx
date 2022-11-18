@@ -96,7 +96,7 @@ const FilterPanel: React.FC<{
 						flexDirection: 'column',
 						gap: '.5rem',
 					}}>
-					{brands.map(({ slug, name }) => (
+					{brands.map(({ slug, name }, index) => (
 						<label key={`brand-select-radio-${index}`}>
 							<input
 								checked={slug === filter.brand}
