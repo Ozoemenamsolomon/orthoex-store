@@ -48,8 +48,6 @@ const FilterPanel: React.FC<{
 		}));
 	};
 
-	console.log({ filter });
-
 	const CategoryRadioOption: React.FC<CategoryProps> = ({ name, slug }) => {
 		return (
 			<label className="label" htmlFor={slug}>

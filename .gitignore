@@ -34,3 +34,4 @@ yarn-error.log*
 .vercel
 src/assets/images/website-information/
 src/assets/icons/Orthoex-search-icon.zip
+test.js
