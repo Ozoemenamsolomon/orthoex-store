@@ -21,6 +21,7 @@ type ServiceCardProps = {
 	 * |`taller`| spans card two rows |
 	 * |`rounded`| makes the card border rounded |
 	 * |`shrink-start`| shrinks card  |
+	 * |`no-shadow`| removes card shadow  |
 	 *  */
 	className?: string;
 };
@@ -35,8 +36,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 		<ImageTitleContainer className={`${small ? 'small' : ''}`}>
 			<ImageContainer
 				small={small}
-				className={`image-container ${imagePadding ? 'pad' : ''}`}
-			>
+				className={`image-container ${imagePadding ? 'pad' : ''}`}>
 				<Image objectFit="contain" layout="fill" src={image} />
 			</ImageContainer>
 			<div>
@@ -47,8 +47,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 					className={small ? 'small' : undefined}
 					dangerouslySetInnerHTML={
 						HTMLDescription ? { __html: description } : undefined
-					}
-				>
+					}>
 					{!HTMLDescription ? description : undefined}
 				</Description>
 			</div>
@@ -119,6 +118,12 @@ const ImageTitleContainer = styled.div`
 	&.small {
 		gap: 0.5rem;
 	}
+
+	 > div:last-of-type{
+		display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+	 }
 `;
 export const ImageContainer = styled.div<{ small?: boolean }>`
 	position: relative;

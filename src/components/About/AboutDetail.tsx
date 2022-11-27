@@ -1,38 +1,33 @@
+import { AboutDataType } from "@data/aboutPageData";
 import React from "react";
 import styled from "styled-components";
-import AboutCard from "./AboutCard";
+import AboutCardSection from "./AboutCardSection";
 
-export type AboutDetailDataType = {
-  description: string[],
-  mission: DescriptionInfoType[],
-  business: DescriptionInfoType[],
-  values: DescriptionInfoType[]
- }
+// export type AboutDetailDataType = {
+//   description: string[],
+//   mission: DescriptionInfoType[],
+//   business: DescriptionInfoType[],
+//   values: DescriptionInfoType[]
+//  }
 interface AboutDetailProp {
-  currentSelected: string;
-  data: AboutDetailDataType
+  currentSelected: number;
+  data: AboutDataType[]
 }
 
-export interface DescriptionInfoType {
-  image: StaticImageData,
-  title: string,
-  description: string
-}
+
 
 const AboutDetail: React.FC<AboutDetailProp> = ({ currentSelected, data }) => {
-  const {description, mission, business, values} = data
   return (
-    <StyledAboutDetail>
-      {currentSelected === "overview" ? (
-        <AboutCard heading={"Company overview"} descriptionList={description}/>
-      ) : currentSelected === "values" ? (
-        <>
-        <AboutCard heading={"Mission & Vision"} descriptionInfo={mission} />
-        <AboutCard heading={"Values"} largeList={true} descriptionInfo={values} />
-        </>
-      ) : currentSelected === "business" ? (
-        <AboutCard heading={"Our businesses"} descriptionInfo={business} />
-      ) : null}
+    <StyledAboutDetail>       
+      
+       {data.map(({sections}, index) => (
+        
+        currentSelected === index &&
+        <AboutCardSection sections={sections} key={`about-tab-${index}`} />
+
+       ))}
+
+    
     </StyledAboutDetail>
   );
 };

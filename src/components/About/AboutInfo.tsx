@@ -1,30 +1,24 @@
-import React, { useState, SetStateAction } from "react";
+import React, { SetStateAction } from "react";
 import styled from "styled-components";
 
 
-type AboutDataType = { title: string, titleId: string }
+type AboutDataType = { title: string }
 
 
 interface AboutInfoProps {
-  setCurrentSelected: React.Dispatch<SetStateAction<string>>,
+  setCurrentSelected: React.Dispatch<SetStateAction<number>>,
+  currentSelected: number;
   data: AboutDataType[]
 }
 
-const  AboutInfo: React.FC<AboutInfoProps> = ({setCurrentSelected, data}) => {
-
-  const [clickedValue, setclickedValue] = useState<string>("overview");
-
-  const onListClick = (info: string) => {
-    setclickedValue(info);
-    setCurrentSelected(info)
-  };
+const  AboutInfo: React.FC<AboutInfoProps> = ({setCurrentSelected,currentSelected, data}) => {
 
   return (
     <StyledAboutInfo>
       {data?.map((info, index) => (
-        <StyledAboutInfoUl key={`${info.titleId}-${index}`}>
-          <StyledAboutInfoLi clicked={clickedValue === info.titleId}
-            onClick={() => onListClick(info.titleId)}
+        <StyledAboutInfoUl key={`about-tab-nav-${index}`}>
+          <StyledAboutInfoLi clicked={currentSelected === index}
+            onClick={() => setCurrentSelected(index)}
           >
             {info.title}
           </StyledAboutInfoLi>
