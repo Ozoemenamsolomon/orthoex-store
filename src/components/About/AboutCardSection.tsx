@@ -58,7 +58,7 @@ const AboutCardSection: React.FC<{ sections: AboutCardSectionType[] }> = ({
 							) : (
 								<ServicesCards>
 									{cards?.map((card, index) => (
-										<ServiceCard small
+										<ServiceCard small greyFont
 											className="no-shadow"
 											key={`service-card-${index}`}
 											service={card}
@@ -77,9 +77,9 @@ export default AboutCardSection;
 
 const StyledAboutCard = styled.div`
 	margin-bottom: 6rem;
-  >div{
 
-    --min-width: 170px;
+  >div{
+    --min-width: 190px;
   }
 
 	& > h1 {

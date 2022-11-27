@@ -9,6 +9,9 @@ import CustomerFirst from '@assets/new/icons/about/customer-first.svg';
 import Orthopeadeics from '@assets/new/icons/about/orthopaedics.svg';
 import Composites from '@assets/new/icons/about/composites.svg';
 import { AboutCardSectionType } from '@components/About/AboutCardSection';
+import Prosthetics from "@assets/new/icons/new-prosthetics.svg";
+import Prosthetics2 from "@assets/new/icons/try-prosthetics.svg";
+import Enzymes from "@assets/new/icons/home/enzyme.svg";
 
 export interface AboutDataType {
 	title: string;
@@ -20,7 +23,7 @@ export const aboutData: AboutDataType[] = [
 		title: 'Company overview',
 		sections: [
 			{
-				heading: 'Company Overview Section',
+				heading: 'Company Overview',
 				description:
 					"OrthoEx is a leading prosthetic, orthotic components, and composite materials supplier. Since 2014, we have served thousands of professionals in both the private and public sectors. Our products are designed for our customers' needs across multiple markets in the healthcare and manufacturing industries. In addition, we work closely with prosthetists who provide free artificial limbs to amputees in Nigeria. \n As the market leader, we collaborate with top brands across the globe and offer technical training and consultancy to professionals and organizations on our range of products and technologies.\n We pride ourselves on satisfying our customers and helping them reach their business goals. OrthoEx is on a mission to empower human potential! \n There are many reasons our partners love to work with us. Join us and take advantage of the growing benefits as we continue to grow our competence, quality, and customer experience.",
 			},
@@ -30,7 +33,7 @@ export const aboutData: AboutDataType[] = [
 		title: 'Culture and values',
 		sections: [
 			{
-				heading: 'Mission & Vision Section',
+				heading: 'Mission & Vision',
 				cards: [
 					{
 						description: 'To empower human potential.',
@@ -45,7 +48,7 @@ export const aboutData: AboutDataType[] = [
 				],
 			},
 			{
-				heading: 'Values Section',
+				heading: 'Values',
 				cards: [
 					{
 						image: CustomerFirst,
@@ -91,10 +94,10 @@ export const aboutData: AboutDataType[] = [
 		title: 'Our businesses',
 		sections: [
 			{
-				heading: 'Our businesses Section',
+				heading: 'Our businesses',
 				cards: [
 					{
-						image: Orthopeadeics,
+						image: Prosthetics2,
 						title: 'Orthopaedics',
 						description:
 							'We continually enable our clients to achieve efficiency and increased effectiveness of biomedical devices designed for their patients.',

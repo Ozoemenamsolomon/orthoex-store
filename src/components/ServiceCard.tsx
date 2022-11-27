@@ -14,6 +14,7 @@ type ServiceCardProps = {
 	service: ServiceCardType;
 	imagePadding?: boolean;
 	small?: boolean;
+	greyFont?: boolean
 	/**
 	 * | classes | action |
 	 * |---|---|
@@ -31,6 +32,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 	className,
 	imagePadding,
 	small,
+	greyFont
 }) => (
 	<ServiceCardContainer className={`${className}`}>
 		<ImageTitleContainer className={`${small ? 'small' : ''}`}>
@@ -43,7 +45,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 				{title && (
 					<Title className={small ? 'small' : undefined}>{title}</Title>
 				)}
-				<Description
+				<Description greyFont
 					className={small ? 'small' : undefined}
 					dangerouslySetInnerHTML={
 						HTMLDescription ? { __html: description } : undefined
@@ -143,8 +145,9 @@ const Title = styled.p`
 	}
 `;
 
-const Description = styled.p`
+const Description = styled.p<{greyFont?: boolean}>`
 	font-size: 1.2rem;
+	color: ${({greyFont})=> greyFont ? "var(--oex-dark-grey)" : "" };
 	&.small {
 		font-size: 0.8rem;
 	}
