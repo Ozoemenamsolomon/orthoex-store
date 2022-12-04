@@ -21,19 +21,18 @@ interface Props {
 const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
 	return (
 		<StyledInfoCard>
+			<div style={{ position: "relative", aspectRatio: 16/9}}>
 			<Image
-				width="100"
-				height="60"
-				// objectFit="cover"
-        layout="responsive"
-				style={{objectFit: "cover"}}
+				style={{objectFit: "cover", maxWidth: "100%"}}
+				fill
 				src={image}
 				alt="info card image"
 			/>
+			</div>
 			<p>{description}</p>
 			<ButtonContainer>
 			{buttons.map(({ Icon, link, title }, index) => (
-            <Link  key={index} href={link} >
+            <Link style={{flex: 1}} key={index} href={link} >
               <CTAFlex white>
                 {Icon && (
                     <Icon/>
