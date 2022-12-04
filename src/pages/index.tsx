@@ -10,6 +10,7 @@ import InfoSection from '@components/InfoSection';
 import InfoText from '@components/InfoText';
 import InfoTestmonial from '@components/InfoTestimonial';
 import ProductVertical from '@components/ProductVertical';
+import CallButton from '@components/CallButton';
 
 const Home: NextPage = () => {
 	const findRep = () => {};
@@ -31,10 +32,11 @@ const Home: NextPage = () => {
 				<InfoText
 					title={'At OrthoEx, we enable businesses like yours to succeed'}
 					description={
-						'We are facilitating Prosthetics, Orthopaedic devices and composite materials distribution in West Africa.'
+						'We collaborate with our clients every day, delivering solutions and technologies to help them adapt to changing market conditions and stay ahead of the competition.'
 					}
 				/>
 				<InfoTestmonial />
+				<CallButton />
 			</Container>
 		</>
 	);

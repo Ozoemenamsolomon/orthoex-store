@@ -20,21 +20,30 @@ export default InfoText;
 const InfoTextStyled = styled.div`
 	background-color: var(--oex-orange);
 	color: white;
-	padding: 3rem;
+	padding: 2rem;
 	text-align: left;
 
 	& > h2 {
-		font-weight: bold;
+		font-weight: 300;
 		font-size: 2rem;
 		margin-bottom: 1rem;
 	}
 
+	& > p {
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+  }
+
 	@media (min-width: 768px) {
 		text-align: center;
-		padding: 9rem;
-	}
-	& > h2 {
-		font-weight: bold;
-		font-size: 3rem;
+		padding: 4rem 10rem;
+
+		& > p {
+      padding: 0rem 6rem;
+    }
+    & > h2{
+      font-weight: 500;
+      font-size: 2rem;
+    }
 	}
 `;
