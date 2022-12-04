@@ -30,7 +30,7 @@ position: fixed;
 left: 0;
 bottom: 2%;
 z-index: 10;
-width: 15%;
+width: 20%;
   @media (min-width: 768px) {
     display: none;
   }
