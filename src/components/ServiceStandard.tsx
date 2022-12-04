@@ -60,10 +60,10 @@ const StyledServiceStandard = styled.div`
 	gap: 2rem;
 	margin-top: 2rem;
 	margin-bottom: 2rem;
+	padding: 2rem;
 
 	@media (min-width: 768px) {
 		flex-direction: row;
-		padding: 2rem;
 	}
 `;
 
@@ -85,6 +85,7 @@ const ServiceWriteUp = styled.div`
 
 	@media (min-width: 1028px) {
 		width: 40%;
+		padding-left: 3rem;
 
 		& > h3 {
 			margin-bottom: 2rem;

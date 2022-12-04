@@ -14,11 +14,12 @@ const ProductVerticalCard: React.FC<VerticalType> = ({
 			<StyledImageWrapper>
 				<Image
 					quality={100}
-					object-fit="cover"
+					style={{objectFit: "cover", maxWidth: "100%"}}
 					fill
 					src={image}
 					alt="product vertical card image"
 				/>
+				
 			</StyledImageWrapper>
 			<StyledContent>
 				<p>{title.toLocaleUpperCase()}</p>
@@ -59,23 +60,17 @@ const StyledContent = styled.div`
 	z-index: 1;
 
 	& > p,
-	a {
+	& > a {
 		display: none;
 	}
 
-	&:hover {
-		background-color: rgba(0, 0, 0, 0.4);
-	}
-
-	&:hover > p {
-		display: block;
+	& > p {
 		color: white;
 		font-size: 1rem;
 		padding-top: 2rem;
 	}
 
-	&:hover > a {
-		display: block;
+	& > a {
 		color: white;
 		background-color: var(--oex-bg-grey);
 		font-size: 1rem;
@@ -83,5 +78,13 @@ const StyledContent = styled.div`
 		text-align: center;
 		width: 80%;
 		border-radius: 0.5rem;
+	}
+
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.4);
+		& > p,
+		& > a {
+			display: block;
+		}
 	}
 `;

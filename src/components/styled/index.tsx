@@ -35,11 +35,9 @@ export const ServicesCards = styled.div<{ minWidth?: string }>`
 
 export const PostCardsContainer = styled.div`
 	// TODO make the breakpoint variables
-	@media (min-width: 600px) {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(336px, 1fr));
-		gap: 4rem;
-	}
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(336px, 1fr));
+	gap: 4rem;
 `;
 
 export const Container = styled.div<{

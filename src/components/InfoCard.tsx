@@ -1,13 +1,13 @@
 import React from 'react';
-import Image, { StaticImageData } from 'next/image';
+import Image , { StaticImageData } from 'next/image';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { StyledIcon } from '@styled-icons/styled-icon';
+import { CTAFlex } from "./CTA";
 
 interface ButtonInfo {
 	link: string;
 	title: string;
-	icon?: StyledIcon;
+	Icon?: ({ color }: { color?: string | undefined }) => JSX.Element;
 }
 
 interface Props {
@@ -21,21 +21,26 @@ interface Props {
 const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
 	return (
 		<StyledInfoCard>
+			<div style={{ position: "relative", aspectRatio: 16/9}}>
 			<Image
-				width="100"
-				height="60"
-				object-fit="cover"
-				layout="responsive"
+				style={{objectFit: "cover", maxWidth: "100%"}}
+				fill
 				src={image}
 				alt="info card image"
 			/>
+			</div>
 			<p>{description}</p>
 			<ButtonContainer>
-				{buttons.map(({ icon, link, title }, index) => (
-					<Link key={index} href={link} legacyBehavior>
-						<ButtonStyled>{title}</ButtonStyled>
-					</Link>
-				))}
+			{buttons.map(({ Icon, link, title }, index) => (
+            <Link style={{flex: 1}} key={index} href={link} >
+              <CTAFlex white>
+                {Icon && (
+                    <Icon/>
+                  )}
+                  {title}
+              </CTAFlex>
+            </Link>
+        ))}
 			</ButtonContainer>
 		</StyledInfoCard>
 	);
@@ -72,22 +77,18 @@ const StyledInfoCard = styled.div`
 	}
 `;
 
-const ButtonStyled = styled.button`
-	color: var(--oex-orange);
-	background-color: white;
-	font: inherit;
-	padding: 1rem;
-	width: 100%;
-	border-radius: 0.2rem;
-	border: 0.09rem solid var(--oex-orange);
-
-	&:hover {
-		color: white;
-		background-color: var(--oex-orange);
-	}
-`;
 
 const ButtonContainer = styled.div`
-	display: flex;
-	gap: 2rem;
+display: flex;
+gap: 0.5rem;
+align-items: center;
+justify-content: center;
+width:100%;
+font: inherit;
+padding: 0rem;
+width: 100%;
+
+@media(min-width: 768px){
+	padding: 0rem;
+}
 `;
