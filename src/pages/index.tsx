@@ -29,12 +29,14 @@ const Home: NextPage = () => {
 				<ServiceStandard />
 				<InfoSection />
 				<ProductVertical />
-				<InfoText
-					title={'At OrthoEx, we enable businesses like yours to succeed'}
-					description={
-						'We collaborate with our clients every day, delivering solutions and technologies to help them adapt to changing market conditions and stay ahead of the competition.'
-					}
-				/>
+			</Container>
+			<InfoText
+				title={'At OrthoEx, we enable businesses like yours to succeed'}
+				description={
+					'We collaborate with our clients every day, delivering solutions and technologies to help them adapt to changing market conditions and stay ahead of the competition.'
+				}
+			/>
+			<Container bg="white" paddingMultiplier={0}>
 				<InfoTestmonial />
 				<CallButton />
 			</Container>
