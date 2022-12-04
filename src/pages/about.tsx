@@ -1,10 +1,8 @@
+import { aboutData } from '@data/aboutPageData';
 import { useState } from 'react';
 import styled from 'styled-components';
 import AboutDetail from '../components/About/AboutCardDetail';
 import AboutInfo from '../components/About/AboutInfo';
-import { Container } from '@components/styled';
-import { aboutData } from '@data/aboutPageData';
-
 function About() {
 	const [currentSelected, setcurrentSelected] = useState(0);
 
