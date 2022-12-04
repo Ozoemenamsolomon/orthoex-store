@@ -1,8 +1,8 @@
 import React from 'react';
-import Image , { StaticImageData } from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { CTAFlex } from "./CTA";
+import { CTAFlex } from './CTA';
 
 interface ButtonInfo {
 	link: string;
@@ -21,26 +21,24 @@ interface Props {
 const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
 	return (
 		<StyledInfoCard>
-			<div style={{ position: "relative", aspectRatio: 16/9}}>
-			<Image
-				style={{objectFit: "cover", maxWidth: "100%"}}
-				fill
-				src={image}
-				alt="info card image"
-			/>
+			<div style={{ position: 'relative', aspectRatio: 16 / 9 }}>
+				<Image
+					style={{ objectFit: 'cover', maxWidth: '100%' }}
+					fill
+					src={image}
+					alt="info card image"
+				/>
 			</div>
 			<p>{description}</p>
 			<ButtonContainer>
-			{buttons.map(({ Icon, link, title }, index) => (
-            <Link style={{flex: 1}} key={index} href={link} >
-              <CTAFlex white>
-                {Icon && (
-                    <Icon/>
-                  )}
-                  {title}
-              </CTAFlex>
-            </Link>
-        ))}
+				{buttons.map(({ Icon, link, title }, index) => (
+					<Link style={{ flex: 1 }} key={index} href={link}>
+						<CTAFlex white>
+							{Icon && <Icon />}
+							{title}
+						</CTAFlex>
+					</Link>
+				))}
 			</ButtonContainer>
 		</StyledInfoCard>
 	);
@@ -77,18 +75,17 @@ const StyledInfoCard = styled.div`
 	}
 `;
 
-
 const ButtonContainer = styled.div`
-display: flex;
-gap: 0.5rem;
-align-items: center;
-justify-content: center;
-width:100%;
-font: inherit;
-padding: 0rem;
-width: 100%;
-
-@media(min-width: 768px){
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	font: inherit;
 	padding: 0rem;
-}
+	width: 100%;
+
+	@media (min-width: 768px) {
+		padding: 0rem;
+	}
 `;

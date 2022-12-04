@@ -12,28 +12,29 @@ export type AboutCardSectionType = {
 const AboutCardSection: React.FC<{ sections: AboutCardSectionType[] }> = ({
 	sections,
 }) => {
-
 	return (
 		<>
 			{sections.map((section, index) => {
 				const { heading, description, cards } = section;
 				return (
-						<StyledAboutCard key={`heading-${index}`}>
-							<h1>{heading}</h1>
-							{description ? (
-								<div>{description}</div>
-							) : (
-								<ServicesCards>
-									{cards?.map((card, index) => (
-										<ServiceCard small greyFont
-											className="no-shadow"
-											key={`service-card-${index}`}
-											service={card}
-										/>
-									))}
-								</ServicesCards>
-							)}
-						</StyledAboutCard>
+					<StyledAboutCard key={`heading-${index}`}>
+						<h1>{heading}</h1>
+						{description ? (
+							<div>{description}</div>
+						) : (
+							<ServicesCards>
+								{cards?.map((card, index) => (
+									<ServiceCard
+										small
+										greyFont
+										className="no-shadow"
+										key={`service-card-${index}`}
+										service={card}
+									/>
+								))}
+							</ServicesCards>
+						)}
+					</StyledAboutCard>
 				);
 			})}
 		</>
@@ -69,4 +70,3 @@ const StyledAboutCard = styled.div`
 
 	}
  `;
-

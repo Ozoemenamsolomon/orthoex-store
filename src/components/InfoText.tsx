@@ -30,20 +30,20 @@ const InfoTextStyled = styled.div`
 	}
 
 	& > p {
-    font-size: 0.8rem;
-    line-height: 1.2rem;
-  }
+		font-size: 0.8rem;
+		line-height: 1.2rem;
+	}
 
 	@media (min-width: 768px) {
 		text-align: center;
 		padding: 4rem 10rem;
 
 		& > p {
-      padding: 0rem 6rem;
-    }
-    & > h2{
-      font-weight: 500;
-      font-size: 2rem;
-    }
+			padding: 0rem 6rem;
+		}
+		& > h2 {
+			font-weight: 500;
+			font-size: 2rem;
+		}
 	}
 `;

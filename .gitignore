@@ -35,3 +35,6 @@ yarn-error.log*
 src/assets/images/website-information/
 src/assets/icons/Orthoex-search-icon.zip
 test.js
+
+# Local Netlify folder
+.netlify

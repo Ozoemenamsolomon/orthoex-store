@@ -1,8 +1,14 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Pagination, A11y, Scrollbar, Grid } from "swiper";
-import styled from "styled-components";
-import SooSection from "./SooSection";
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, {
+	Navigation,
+	Pagination,
+	A11y,
+	Scrollbar,
+	Grid,
+} from 'swiper';
+import styled from 'styled-components';
+import SooSection from './SooSection';
 import ColorPigment from '@assets/new/images/home/color_pigment.jpg';
 import EpoxyResins from '@assets/new/images/home/epoxy_resin.jpg';
 import Fabrication from '@assets/new/images/home/fabrication_materials.jpg';
@@ -13,9 +19,9 @@ import SyntheticFibre from '@assets/new/images/home/synthetic_fibre.jpg';
 import Protheses from '@assets/new/images/home/prosthesis.jpg';
 import ProductVerticalCard from './ProductVerticalCard';
 import { StaticImageData } from 'next/image';
-import "swiper/css";
-import "swiper/css/grid";
-import "swiper/css/pagination";
+import 'swiper/css';
+import 'swiper/css/grid';
+import 'swiper/css/pagination';
 
 export interface VerticalType {
 	title: string;
@@ -23,8 +29,7 @@ export interface VerticalType {
 	link: string;
 }
 
-SwiperCore.use([Pagination,Navigation,Scrollbar, A11y, Grid])
-
+SwiperCore.use([Pagination, Navigation, Scrollbar, A11y, Grid]);
 
 const productVerticalData: VerticalType[] = [
 	{
@@ -71,41 +76,37 @@ const productVerticalData: VerticalType[] = [
 
 function ProductVertical() {
 	return (
-    <div id="product-vertical">
-      <SooSection
-        header={{
-          title: "Which of our product vertical is relevant for you?",
-          subtitle:
-            "Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:",
-        }}
-      >
-        <Swiper
-        className="mySwiper"
-        navigation={true}
-        pagination={{clickable: true}}
-        slidesPerView={3}
-        grid={{rows: 1}}
-        >
-          <StyledProductSection>
-            {productVerticalData.map((product, index) => (
-              <SwiperSlide key={index}>
-                <ProductVerticalCard
-                image={product.image}
-                key={`${index}-${product}`}
-                link={product.link}
-                title={product.title}
-              />
-              </SwiperSlide>
-            ))}
-          </StyledProductSection>
-        </Swiper>
-        </SooSection>
-    </div>
-  );
+		<div id="product-vertical">
+			<SooSection
+				header={{
+					title: 'Which of our product vertical is relevant for you?',
+					subtitle:
+						'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
+				}}>
+				<Swiper
+					className="mySwiper"
+					navigation={true}
+					pagination={{ clickable: true }}
+					slidesPerView={3}
+					grid={{ rows: 1 }}>
+					<StyledProductSection>
+						{productVerticalData.map((product, index) => (
+							<SwiperSlide key={index}>
+								<ProductVerticalCard
+									image={product.image}
+									key={`${index}-${product}`}
+									link={product.link}
+									title={product.title}
+								/>
+							</SwiperSlide>
+						))}
+					</StyledProductSection>
+				</Swiper>
+			</SooSection>
+		</div>
+	);
 }
 
 export default ProductVertical;
 
-const StyledProductSection = styled.div`
-
-`;
+const StyledProductSection = styled.div``;

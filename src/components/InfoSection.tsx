@@ -5,13 +5,15 @@ import Imprint from '@assets/new/images/home/imprint.jpg';
 import QuickChange from '@assets/new/images/home/quickchange.jpg';
 import InfoCard from './InfoCard';
 import { StaticImageData } from 'next/image';
-import WhatsappIcon from "@assets/new/icons/WhatsappIcon";
-import EmailIcon from "@assets/new/icons/EmailIcon";
-import CallIcon from "@assets/new/icons/CallIcon";
+import WhatsappIcon from '@assets/new/icons/WhatsappIcon';
+import EmailIcon from '@assets/new/icons/EmailIcon';
+import CallIcon from '@assets/new/icons/CallIcon';
 
 // TODO: check what files use this export
-export type CustomIcon = ({ color }: {
-  color?: string | undefined;
+export type CustomIcon = ({
+	color,
+}: {
+	color?: string | undefined;
 }) => JSX.Element;
 
 interface InfoSectionType {
@@ -20,9 +22,7 @@ interface InfoSectionType {
 	buttons: {
 		link: string;
 		title: string;
-		Icon?:  ({ color }: {
-      color?: string | undefined;
-    }) => JSX.Element;
+		Icon?: ({ color }: { color?: string | undefined }) => JSX.Element;
 	}[];
 }
 [];
@@ -33,9 +33,9 @@ const InfoSectionData: InfoSectionType[] = [
 		description:
 			'Our customer service team is available via email, phone call and WhatsApp.',
 		buttons: [
-      { link: "", title: "Call", Icon: CallIcon },
-      { link: "", title: "Email", Icon: EmailIcon },
-      { link: "", title: "Chat", Icon: WhatsappIcon },
+			{ link: '', title: 'Call', Icon: CallIcon },
+			{ link: '', title: 'Email', Icon: EmailIcon },
+			{ link: '', title: 'Chat', Icon: WhatsappIcon },
 		],
 	},
 	{

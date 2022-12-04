@@ -14,12 +14,11 @@ const ProductVerticalCard: React.FC<VerticalType> = ({
 			<StyledImageWrapper>
 				<Image
 					quality={100}
-					style={{objectFit: "cover", maxWidth: "100%"}}
+					style={{ objectFit: 'cover', maxWidth: '100%' }}
 					fill
 					src={image}
 					alt="product vertical card image"
 				/>
-				
 			</StyledImageWrapper>
 			<StyledContent>
 				<p>{title.toLocaleUpperCase()}</p>

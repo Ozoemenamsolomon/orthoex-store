@@ -14,7 +14,7 @@ type ServiceCardProps = {
 	service: ServiceCardType;
 	imagePadding?: boolean;
 	small?: boolean;
-	greyFont?: boolean
+	greyFont?: boolean;
 	/**
 	 * | classes | action |
 	 * |---|---|
@@ -32,7 +32,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 	className,
 	imagePadding,
 	small,
-	greyFont
+	greyFont,
 }) => (
 	<ServiceCardContainer className={`${className}`}>
 		<ImageTitleContainer className={`${small ? 'small' : ''}`}>
@@ -45,7 +45,8 @@ const ServiceCard: FC<ServiceCardProps> = ({
 				{title && (
 					<Title className={small ? 'small' : undefined}>{title}</Title>
 				)}
-				<Description  greyFont
+				<Description
+					greyFont
 					className={small ? 'small' : undefined}
 					dangerouslySetInnerHTML={
 						HTMLDescription ? { __html: description } : undefined
@@ -120,11 +121,11 @@ const ImageTitleContainer = styled.div`
 	&.small {
 		gap: 0.5rem;
 	}
-	> div:last-of-type{
+	> div:last-of-type {
 		display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-	 }
+		flex-direction: column;
+		gap: 0.7rem;
+	}
 `;
 export const ImageContainer = styled.div<{ small?: boolean }>`
 	position: relative;
@@ -144,9 +145,9 @@ const Title = styled.p`
 	}
 `;
 
-const Description = styled.p<{greyFont?: boolean}>`
+const Description = styled.p<{ greyFont?: boolean }>`
 	font-size: 1.2rem;
-	color: ${({greyFont})=> greyFont ? "var(--oex-dark-grey)" : "" };
+	color: ${({ greyFont }) => (greyFont ? 'var(--oex-dark-grey)' : '')};
 	&.small {
 		font-size: 0.8rem;
 	}

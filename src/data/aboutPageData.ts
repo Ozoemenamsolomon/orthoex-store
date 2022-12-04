@@ -8,7 +8,7 @@ import Excellence from '@assets/new/icons/about/excellence-and-dependable.svg';
 import CustomerFirst from '@assets/new/icons/about/customer-first.svg';
 import Composites from '@assets/new/icons/about/composites.svg';
 import { AboutCardSectionType } from '@components/About/AboutCardSection';
-import Prosthetics2 from "@assets/new/icons/home/prosthetics.svg";
+import Prosthetics2 from '@assets/new/icons/home/prosthetics.svg';
 
 export interface AboutDataType {
 	title: string;

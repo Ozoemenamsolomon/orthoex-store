@@ -42,10 +42,7 @@ const StyledAbout = styled.div`
 
 	@media (min-width: 2000px) {
 		padding: 3rem 25rem 5rem;
-
 	}
 `;
 
-const StyledAboutWrapper = styled.div`
-
-`;
+const StyledAboutWrapper = styled.div``;
