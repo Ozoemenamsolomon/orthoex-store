@@ -20,7 +20,7 @@ const AboutCardSection: React.FC<{ sections: AboutCardSectionType[] }> = ({
 					<StyledAboutCard key={`heading-${index}`}>
 						<h1>{heading}</h1>
 						{description ? (
-							<div>{description}</div>
+							<p style={{ whiteSpace: 'pre-line' }}>{description}</p>
 						) : (
 							<ServicesCards>
 								{cards?.map((card, index) => (
@@ -46,9 +46,9 @@ export default AboutCardSection;
 const StyledAboutCard = styled.div`
 	margin-bottom: 6rem;
 
-  >div{
-    --min-width: 190px;
-  }
+	> div {
+		--min-width: 190px;
+	}
 
 	& > h1 {
 		font-size: 1.5rem;
@@ -67,6 +67,6 @@ const StyledAboutCard = styled.div`
 			font-size: 2.5rem;
 			text-align: left;
 			font-weight: 500;
-
+		}
 	}
- `;
+`;
