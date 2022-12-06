@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 
 type CTAType = {
@@ -12,7 +12,7 @@ const CTA = styled.button<CTAType>`
 	padding: 1rem 2rem;
 	border-radius: 4px;
 	cursor: pointer;
-	font-weight: bold;
+	font-weight: 300;
 	transition: all 0.5s ease;
 	font-size: 1.2rem;
 
@@ -25,6 +25,7 @@ const CTA = styled.button<CTAType>`
 		color: ${prop =>
 			prop.white ? 'var(--text-colour-light)' : 'var(--oex-orange)'};
 		background-color: ${prop => (prop.white ? 'var(--oex-orange)' : 'white')};
+		border: 1px solid var(--oex-orange);
 	}
 `;
 

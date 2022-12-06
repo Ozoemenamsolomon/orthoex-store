@@ -62,3 +62,27 @@ export const Container = styled.div<{
 		}}
 	}
 `;
+
+interface StyledButtonProps {
+	white?: boolean;
+}
+
+export const StyledCustomButton = styled.button<StyledButtonProps>`
+	color: ${({ white }) => (white === true ? 'var(--oex-orange)' : 'white')};
+	background-color: ${({ white }) =>
+		white === true ? 'white' : 'var(--oex-orange)'};
+	font: inherit;
+	padding: 1rem;
+	// width: 100%;
+	border-radius: 0.2rem;
+	border: ${({ white }) =>
+		white === true
+			? ' 0.09rem solid var(--oex-orange)'
+			: '0.09rem solid white'};
+
+	&:hover {
+		color: white;
+		background-color: ${({ white }) =>
+			white === true ? 'var(--oex-orange)' : 'white'};
+	}
+`;
