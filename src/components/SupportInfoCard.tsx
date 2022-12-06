@@ -12,9 +12,9 @@ const SupportInfoCard: React.FC<SupportInfoCardType> = ({ data }) => {
 	const { title: cardTitle, CardIcon, paragraph, buttons } = data;
 	return (
 		<StyledSupportInfoCard>
-      <StyledIconWrapper>
-			  <CardIcon />
-      </StyledIconWrapper>
+			<StyledIconWrapper>
+				<CardIcon />
+			</StyledIconWrapper>
 			<h4>{cardTitle}</h4>
 			<p>{paragraph}</p>
 			<StyledBtnContainer>
@@ -67,13 +67,16 @@ const StyledBtnContainer = styled.div`
 	padding: 0rem;
 	width: 100%;
 
+	& > a {
+		flex: 1;
+	}
+
 	@media (min-width: 768px) {
 		padding: 0rem;
 	}
 `;
 
-
 const StyledIconWrapper = styled.span`
-  display: inline-block;
-  text-align: center;
-`
+	display: inline-block;
+	text-align: center;
+`;
