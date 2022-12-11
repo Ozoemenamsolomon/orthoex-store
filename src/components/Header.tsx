@@ -38,8 +38,8 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	};
 
 	const light =
-		['products', 'about', 'careers'].includes(pathname.split('/')[1]) ||
-		pathname.includes('categories');
+		['products', 'about', 'careers', 'cart'].includes(pathname.split('/')[1]) ||
+		/\/composites\/(\w)+/.test(pathname);
 
 	useEffect(() => {
 		if (!light) {
@@ -175,8 +175,8 @@ const SooHeader = styled.header<{ light: boolean }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: fixed;
-	width: 100%;
+	position: ${({ light }) => (light ? 'sticky' : 'fixed')};
+	${({ light }) => (light ? `top:0;` : 'width: 100%;')}
 	z-index: 5;
 	color: #fff;
 	transition: background-color 0.5s ease;
