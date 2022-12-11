@@ -178,8 +178,8 @@ const SooHeader = styled.header<{ light: boolean }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: fixed;
-	width: 100%;
+	position: ${({ light }) => (light ? 'sticky' : 'fixed')};
+	${({ light }) => (light ? `top:0;` : 'width: 100%;')}
 	z-index: 5;
 	color: #fff;
 	transition: background-color 0.5s ease;
