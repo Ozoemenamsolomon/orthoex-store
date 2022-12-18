@@ -77,8 +77,6 @@ function careers() {
 				</StyledImageContentDiv>
 			</Container>
 
-			{/* Hiring process */}
-
 			<StyledHiringProcess>
 				<h2>Our Hiring Process</h2>
 
@@ -97,8 +95,6 @@ function careers() {
 				</StyledHiringContent>
 			</StyledHiringProcess>
 
-			{/* Info Content */}
-
 			<InfoText
 				title={'We are empowering human potentials'}
 				description={
@@ -110,8 +106,6 @@ function careers() {
 					color={'var(--oex-orange)'}
 				/>
 			</InfoText>
-
-			{/* Open positions */}
 
 			<StyledOpenPositons id="openPositions">
 				<h2>Our Open Positions</h2>
@@ -127,10 +121,6 @@ export default careers;
 
 const StyledCareerWrapper = styled.div`
 	margin: 7rem 0rem 0rem;
-
-	@media (min-width: 768px) {
-		// padding: 2rem;
-	}
 `;
 
 export const StyledComponentHeading = styled.h2`
@@ -289,15 +279,8 @@ const StyledHiringContentCard = styled.div`
 
 	@media (min-width: 768px) {
 		padding-left: 0rem;
-
 		flex-direction: row;
 		align-items: start;
-
-		& > h3 {
-		}
-
-		& > p {
-		}
 	}
 `;
 
@@ -331,9 +314,6 @@ const StyledContentCardDiv = styled.div`
 		display: flex;
 		flex-direction: column;
 		gap: 5rem;
-
-		& > h2 {
-		}
 	}
 `;
 

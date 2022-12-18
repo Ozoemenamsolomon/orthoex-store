@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
 /** class of "bigger" makes it's children have a min-width of `270px`*/
-export const ServicesCards = styled.div<{ minWidth?: string }>`
+export const ServicesCards = styled.div<{
+	minWidth?: string;
+	minWidthLargeScreen?: string;
+}>`
 	--min-width: ${({ minWidth = '120px' }) => minWidth};
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
@@ -30,6 +33,10 @@ export const ServicesCards = styled.div<{ minWidth?: string }>`
 		& > div.wider {
 			grid-column: span 2;
 		}
+	}
+
+	@media (min-width: 900px) {
+		--min-width: ${({ minWidthLargeScreen = '200px' }) => minWidthLargeScreen};
 	}
 `;
 
@@ -60,29 +67,5 @@ export const Container = styled.div<{
 				paddingMultiplier !== undefined ? paddingMultiplier * 2 : 2
 			}rem;`;
 		}}
-	}
-`;
-
-interface StyledButtonProps {
-	white?: boolean;
-}
-
-export const StyledCustomButton = styled.button<StyledButtonProps>`
-	color: ${({ white }) => (white === true ? 'var(--oex-orange)' : 'white')};
-	background-color: ${({ white }) =>
-		white === true ? 'white' : 'var(--oex-orange)'};
-	font: inherit;
-	padding: 1rem;
-	// width: 100%;
-	border-radius: 0.2rem;
-	border: ${({ white }) =>
-		white === true
-			? ' 0.09rem solid var(--oex-orange)'
-			: '0.09rem solid white'};
-
-	&:hover {
-		color: white;
-		background-color: ${({ white }) =>
-			white === true ? 'var(--oex-orange)' : 'white'};
 	}
 `;

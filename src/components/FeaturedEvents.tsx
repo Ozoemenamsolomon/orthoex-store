@@ -2,16 +2,16 @@ import { featuredEvents } from '@data/eventsData';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import FeaturedEventCard from './FeaturedEventCard';
-import { Container, StyledCustomButton } from './styled';
+import { Container } from './styled';
+import CTA from './CTA';
 
 const FeaturedEvents = () => {
 	const [displayElements, setdisplayElements] = useState(2);
-	const [increment] = useState(1);
 	// increment is how many more you add to the displayed list.
 	// displayElements is how many to render on mount.
 
-	const onClickLoad = () => {
-		setdisplayElements(prev => prev + increment);
+	const LoadMoreEvent = () => {
+		setdisplayElements(prev => prev + 1);
 	};
 
 	return (
@@ -24,9 +24,9 @@ const FeaturedEvents = () => {
 
 				{featuredEvents.length !== displayElements && (
 					<StyledLoadMore>
-						<StyledCustomButton onClick={onClickLoad} white>
+						<CTA className="btn-width" onClick={LoadMoreEvent} white>
 							Load more events
-						</StyledCustomButton>
+						</CTA>
 					</StyledLoadMore>
 				)}
 			</Container>
@@ -39,15 +39,6 @@ export default FeaturedEvents;
 const StyledWrapperDiv = styled.div`
 	background-color: var(--oex-off-white);
 	padding: 3rem 0rem;
-
-	& > button {
-		display: block;
-		margin: 3rem 0;
-	}
-
-	@media (min-width: 768px) {
-		// padding: 4rem;
-	}
 `;
 
 export const StyledHeading = styled.h3`
@@ -67,7 +58,8 @@ const StyledLoadMore = styled.div`
 	text-align: center;
 	margin: 3rem 0;
 
-	& > button {
-		width: 16rem;
+	& .btn-width {
+		display: block;
+		margin: 3rem auto;
 	}
 `;

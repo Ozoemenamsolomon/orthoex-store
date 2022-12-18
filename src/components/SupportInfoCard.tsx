@@ -19,7 +19,11 @@ const SupportInfoCard: React.FC<SupportInfoCardType> = ({ data }) => {
 			<p>{paragraph}</p>
 			<StyledBtnContainer>
 				{buttons.map(({ title, Icon, link }, index) => (
-					<Link target="_blank" key={index} href={link} passHref>
+					<Link
+						target="_blank"
+						key={`button-link-${index}`}
+						href={link}
+						passHref>
 						<CTAFlex white key={index}>
 							<Icon /> {title}
 						</CTAFlex>

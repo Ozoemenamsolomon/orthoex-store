@@ -11,7 +11,6 @@ import { priceFormatter } from './ProductCard';
 import ArrowDownUp from '@assets/new/icons/ArrowDownUp';
 import Call from '@assets/new/icons/Call';
 import Whatsapp from '@assets/new/icons/Whatsapp';
-// import People
 
 interface FeaturedEventProp {
 	event: EventDataType;
@@ -23,10 +22,9 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ event }) => {
 	return (
 		<StyledWrapperDiv>
 			<StyledDetailsSection>
-				{/* left content */}
 				<StyledLeftContent>
-					<StyledCourseFormat type={event.event_format}>
-						{event.event_format}
+					<StyledCourseFormat type={event.eventFormat}>
+						{event.eventFormat}
 					</StyledCourseFormat>
 					<h4>{event.title}</h4>
 					<StyledInfoDiv>
@@ -42,10 +40,10 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ event }) => {
 
 					<StyledInfoDiv>
 						<Location />
-						<span>Ikeja, LAGOS</span>
+						<span>{`${event.location.city}, ${event.location.state}`}</span>
 					</StyledInfoDiv>
 				</StyledLeftContent>
-				{/* Right content */}
+
 				<StyledRightContent>
 					<StyledInfoDiv>
 						<People />
@@ -54,7 +52,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ event }) => {
 					</StyledInfoDiv>
 
 					<StyledPrice>
-						<p>{priceFormatter.format(10000)}</p>
+						<p>{priceFormatter.format(event.price)}</p>
 						<CTALink href={'/'}>Book now</CTALink>
 					</StyledPrice>
 					<StyledIconText>Speak with the Event Team</StyledIconText>
@@ -78,17 +76,17 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ event }) => {
 
 				<StyledCourseInfo open={panelOpen}>
 					<h4>About the Course</h4>
-					<StyledText>{event.course_info.course}</StyledText>
+					<StyledText>{event.courseInfo.course}</StyledText>
 
 					<h4>About the Instructor(s)</h4>
 					<StyledList>
-						{event.course_info.instructor.map((info, index) => (
+						{event.courseInfo.instructor.map((info, index) => (
 							<li key={index}>{info}</li>
 						))}
 					</StyledList>
 
 					<p>Refreshment: {event.refreshment === true ? 'Yes' : 'No'}</p>
-					<p>Starter Pack: {event.starter_pack === true ? 'Yes' : 'No'}</p>
+					<p>Starter Pack: {event.starterPack === true ? 'Yes' : 'No'}</p>
 					<StyledSpanLink>
 						Please note our{' '}
 						<Link href="/">COVID-19 Protocol & social distancing measures</Link>
@@ -119,7 +117,7 @@ const StyledWrapperDiv = styled.div`
 	}
 `;
 
-const StyledDetailsSection = styled.section`
+const StyledDetailsSection = styled.div`
 	@media (min-width: 768px) {
 		display: flex;
 		align-items: flex-start;
@@ -256,7 +254,7 @@ const StyledButtonGroup = styled.div`
 	}
 `;
 
-const StyledInfoSection = styled.section``;
+const StyledInfoSection = styled.div``;
 
 const StyledCourseInfo = styled.div<{ open: boolean }>`
 	display: ${({ open }) => (open === true ? 'block' : 'none')};

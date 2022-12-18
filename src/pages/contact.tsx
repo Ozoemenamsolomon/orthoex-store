@@ -11,7 +11,6 @@ import FaqSingle from '@assets/new/icons/contact/FaqSingle';
 import Message from '@assets/new/icons/contact/Message';
 import Email from '@assets/new/icons/contact/Email';
 import Partner from '@assets/new/icons/contact/Partner';
-// import MapImage from '@assets/new/images/contact/map-image.jpg';
 import InfoText from '@components/InfoText';
 import { Container } from '@components/styled';
 import HeaderParagraph, {
@@ -28,6 +27,10 @@ import SocialMediaButtons from '@components/shared/SocialMediaButtons';
 import SupportInfo, { SupportInfoType } from '@components/SupportInfo';
 import CallIcon from '@assets/new/icons/CallIcon';
 import WhatsappIcon from '@assets/new/icons/WhatsappIcon';
+
+type InputChangeType =
+	| React.ChangeEvent<HTMLInputElement>
+	| React.ChangeEvent<HTMLTextAreaElement>;
 
 const data: ImageInfoHeaderType = {
 	image: LadyImage,
@@ -81,17 +84,14 @@ const supportInfoData: SupportInfoType = {
 
 const Contact = () => {
 	const [formData, setformData] = useState({
-		fullname: '',
+		fullName: '',
 		email: '',
 		phone: '',
 		message: '',
 	});
 
-	const { fullname, email, message, phone } = formData;
+	const { fullName, email, message, phone } = formData;
 
-	type InputChangeType =
-		| React.ChangeEvent<HTMLInputElement>
-		| React.ChangeEvent<HTMLTextAreaElement>;
 	const onInputChange = (e: InputChangeType) => {
 		setformData(prev => ({ ...prev, [e.target.id]: e.target.value }));
 	};
@@ -130,7 +130,7 @@ const Contact = () => {
 										name="fullname"
 										onChange={onInputChange}
 										placeholder="Enter your full name here"
-										value={fullname}
+										value={fullName}
 									/>
 								</StyledFormControl>
 
@@ -148,7 +148,7 @@ const Contact = () => {
 								<StyledFormControl>
 									<label htmlFor="phone">Phone Number</label>
 									<input
-										type="text"
+										type="tel"
 										id="phone"
 										name="phone"
 										onChange={onInputChange}

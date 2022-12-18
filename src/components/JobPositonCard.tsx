@@ -28,7 +28,7 @@ const JobPositonCard: React.FC<JobPositionProp> = ({ data }) => {
 
 export default JobPositonCard;
 
-export const StyledJobPositionCard = styled.div`
+const StyledJobPositionCard = styled.div`
 	padding: 2rem 1rem;
 	display: flex;
 	margin: 0rem auto 3rem;
@@ -51,7 +51,7 @@ export const StyledJobPositionCard = styled.div`
 	}
 `;
 
-export const StyledJobPositionCardContent = styled.div`
+const StyledJobPositionCardContent = styled.div`
 	& > h3 {
 		font-size: 1.5rem;
 		font-weight: 400;
@@ -67,7 +67,7 @@ export const StyledJobPositionCardContent = styled.div`
 	}
 `;
 
-export const StyledContentDiv = styled.div`
+const StyledContentDiv = styled.div`
 	margin: 2rem 0rem;
 	font-size: 0.8rem;
 

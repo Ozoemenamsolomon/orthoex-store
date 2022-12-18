@@ -1,7 +1,7 @@
 import React from 'react';
-import { ServiceCardType } from '@components/ServiceCard';
+import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
 import styled from 'styled-components';
-import Image from 'next/image';
+import { ServicesCards } from './styled';
 
 interface ServiceStandardType {
 	heading: string;
@@ -22,20 +22,16 @@ const ServiceStandard: React.FC<ServiceStandardProps> = ({ data }) => {
 				<p>{paragraph}</p>
 			</ServiceWriteUp>
 			<StyledServiceIcon>
-				<ImageDescriptionWrapper>
+				<ServicesCards minWidthLargeScreen="220px">
 					{servicesIcon.map((service, index) => (
-						<ImageDescription length={servicesIcon.length} key={index}>
-							<Image
-								src={service.image}
-								alt={service.description}
-								style={{ objectFit: 'contain' }}
-								width="120"
-								height="120"
-							/>
-							<p>{service.description}</p>
-						</ImageDescription>
+						<ServiceCard
+							greyFont
+							className="no-shadow"
+							key={`image-desc-${index}`}
+							service={service}
+						/>
 					))}
-				</ImageDescriptionWrapper>
+				</ServicesCards>
 			</StyledServiceIcon>
 		</StyledServiceStandard>
 	);
@@ -88,36 +84,9 @@ const ServiceWriteUp = styled.div`
 const StyledServiceIcon = styled.div`
 	width: 100%;
 	height: 100%;
-	flex: 2 1 auto;
+	// flex: 2 1 auto;
 
 	@media (min-width: 1024px) {
 		width: 60%;
 	}
-`;
-
-const ImageDescription = styled.div<{ length: number }>`
-	display: flex;
-	justify-content: space-between;
-	flex-direction: column;
-	align-items: center;
-	width: 50%;
-	margin-bottom: 2rem;
-
-	& > p {
-		color: var(--text-colour-grey);
-		width: 50%;
-		text-align: center;
-	}
-
-	@media (min-width: 1028px) {
-		width: ${({ length }) => (length > 5 ? '33%' : '50%')};
-	}
-`;
-
-const ImageDescriptionWrapper = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-	flex-wrap: wrap;
 `;

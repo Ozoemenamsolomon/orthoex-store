@@ -57,7 +57,6 @@ const StyledImageDiv = styled.div`
 	margin-bottom: 4rem;
 	overflow: hidden;
 	border-radius: 0.5rem;
-	width: 100%;
 	aspect-ratio: 1;
 	box-shadow: 0.9rem 0.9rem var(--oex-orange);
 	max-height: 25rem;
