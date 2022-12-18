@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Message = ({color = "currentColor"}) => (
+const Message = ({ color = 'currentColor' }) => (
 	<svg
 		width="25"
 		height="23"

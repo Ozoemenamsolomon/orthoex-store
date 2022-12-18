@@ -1,5 +1,4 @@
-
-const Email = ({color = "currentColor"}) => (
+const Email = ({ color = 'currentColor' }) => (
 	<svg
 		width="21"
 		height="16"

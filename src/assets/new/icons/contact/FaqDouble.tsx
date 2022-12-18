@@ -1,4 +1,4 @@
-const FaqDouble = ({color = "currentColor"}) => (
+const FaqDouble = ({ color = 'currentColor' }) => (
 	<svg
 		width="72"
 		height="64"

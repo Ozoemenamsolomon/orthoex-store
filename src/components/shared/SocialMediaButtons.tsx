@@ -16,7 +16,7 @@ type SocialMediaButtonsType = {
 
 const SocialMediaButtons: React.FC<SocialMediaButtonsType> = ({
 	width,
-  height,
+	height,
 	color,
 }) => {
 	return (
@@ -59,7 +59,7 @@ export const SocialsContainer = styled.div<{ color?: string }>`
 
 	& > a > button {
 		color: ${({ color }) => (color ? color : '')};
-    padding: 0.rem;
+		padding: 0rem;
 	}
 `;
 

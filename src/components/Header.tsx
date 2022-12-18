@@ -118,7 +118,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 							}}>
 							{rightNavLinks.map((navLink, index) => (
 								<NavLink
-									key={`nav-link-${navLink.name}-${index}`}
+									key={`nav-link-2-${navLink.name}-${index}`}
 									{...navLink}
 									icon={() => (
 										<navLink.Icon colour={light ? 'black' : 'white'} />
@@ -154,7 +154,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 											navLink.to === pathname ? 'var(--oex-orange)' : ''
 										}`,
 									}}
-									key={`nav-link-${navLink.name}-${index}`}
+									key={`nav-link-3-${navLink.name}-${index}`}
 									onClick={() => setIsNavOpen(prev => !prev)}>
 									<Link href={navLink.to} legacyBehavior>
 										{navLink.name}

@@ -1,6 +1,4 @@
-
-
-const Call = ({color = "currentColor"}) => (
+const Call = ({ color = 'currentColor' }) => (
 	<svg
 		width="16"
 		height="21"

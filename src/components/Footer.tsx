@@ -133,7 +133,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 
 					<FooterLinkGroups>
 						{footerLinks.map(({ title, links }, indexTop) => (
-							<FooterLinkGroup key={indexTop}>
+							<FooterLinkGroup key={'2' + indexTop}>
 								<h5>{title}</h5>
 								<div
 									style={{

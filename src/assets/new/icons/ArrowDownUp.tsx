@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ArrowDownUp: React.FC<{rotate: boolean}> = ({rotate}) => (
+const ArrowDownUp: React.FC<{ rotate: boolean }> = ({ rotate }) => (
 	<svg
-  style={{transform: rotate === true ? "rotate(180deg)" : "" }}
+		style={{ transform: rotate === true ? 'rotate(180deg)' : '' }}
 		width="14"
 		height="8"
 		viewBox="0 0 14 8"

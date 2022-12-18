@@ -10,15 +10,15 @@ const Breadcrumb: React.FC<{ breadcrumb: BreadcrumProps[] }> = ({
 	breadcrumb,
 }) => (
 	<BreadcrumbContainer>
-		{breadcrumb.map(({ name, link }) => (
-			<>
+		{breadcrumb.map(({ name, link }, index) => (
+			<span key={`breadcrumb-${index}`}>
 				<Link href={link} legacyBehavior>
 					<a>
 						<Name>{name}</Name>
 					</a>
 				</Link>
 				<Divisor>&gt;&gt;</Divisor>
-			</>
+			</span>
 		))}
 	</BreadcrumbContainer>
 );

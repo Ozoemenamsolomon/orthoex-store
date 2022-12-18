@@ -11,5 +11,5 @@ const Partner = ({ color = 'currentColor' }) => (
 		/>
 	</svg>
 );
- 
+
 export default Partner;
