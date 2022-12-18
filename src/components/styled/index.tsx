@@ -36,7 +36,7 @@ export const ServicesCards = styled.div<{
 	}
 
 	@media (min-width: 900px) {
-		--min-width: ${({ minWidthLargeScreen = '200px' }) => minWidthLargeScreen};
+		--min-width: ${({ minWidthLargeScreen = '186px' }) => minWidthLargeScreen};
 	}
 `;
 

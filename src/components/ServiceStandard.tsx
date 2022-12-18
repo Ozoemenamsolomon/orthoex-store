@@ -22,11 +22,11 @@ const ServiceStandard: React.FC<ServiceStandardProps> = ({ data }) => {
 				<p>{paragraph}</p>
 			</ServiceWriteUp>
 			<StyledServiceIcon>
-				<ServicesCards minWidthLargeScreen="220px">
+				<ServicesCards>
 					{servicesIcon.map((service, index) => (
 						<ServiceCard
 							greyFont
-							className="no-shadow"
+							className="no-shadow no-padding shrink-start"
 							key={`image-desc-${index}`}
 							service={service}
 						/>
@@ -50,6 +50,7 @@ const StyledServiceStandard = styled.div`
 	@media (min-width: 768px) {
 		flex-direction: row;
 		padding: 2rem;
+		gap: 5rem;
 	}
 `;
 
