@@ -19,7 +19,7 @@ const JobPositonCard: React.FC<JobPositionProp> = ({ data }) => {
 					<span>{data.department}</span>
 				</StyledContentDiv>
 			</StyledJobPositionCardContent>
-			<CTALink clasname="btn" href={data.applyLink}>
+			<CTALink className="no-animate" href={data.applyLink}>
 				Apply Now
 			</CTALink>
 		</StyledJobPositionCard>
@@ -81,8 +81,5 @@ export const StyledContentDiv = styled.div`
 		border-radius: 7.5px;
 		background-color: var(--oex-grey);
 		margin: 0rem 0.5rem;
-	}
-
-	@media (min-width: 768px) {
 	}
 `;

@@ -22,7 +22,7 @@ const careerData: ImageInfoHeaderType = {
 	heading: 'Inspired by Quality',
 	paragraph:
 		'We are driven by a desire to deliver quality products and technologies to our customers to empower them for success.',
-	cta: { link: '', text: 'View Open roles' },
+	cta: { link: '#openPositions', text: 'View Open roles' },
 };
 
 function careers() {
@@ -113,7 +113,7 @@ function careers() {
 
 			{/* Open positions */}
 
-			<StyledOpenPositons>
+			<StyledOpenPositons id="openPositions">
 				<h2>Our Open Positions</h2>
 				{openJobPositions.map((job, index) => (
 					<JobPositonCard data={job} key={`job-position-${index}`} />

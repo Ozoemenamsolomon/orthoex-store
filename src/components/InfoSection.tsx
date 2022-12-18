@@ -33,15 +33,19 @@ const InfoSectionData: InfoSectionType[] = [
 		description:
 			'Our customer service team is available via email, phone call and WhatsApp.',
 		buttons: [
-			{ link: '', title: 'Call', Icon: CallIcon },
-			{ link: '', title: 'Email', Icon: EmailIcon },
-			{ link: '', title: 'Chat', Icon: WhatsappIcon },
+			{ link: 'tel:+2347030324696', title: 'Call', Icon: CallIcon },
+			{ link: 'mailto:store@orthoex.ng', title: 'Email', Icon: EmailIcon },
+			{
+				link: 'https://wa.me/+2347030324696',
+				title: 'Chat',
+				Icon: WhatsappIcon,
+			},
 		],
 	},
 	{
 		image: QuickChange,
 		description: 'We are passionate about empowering human potentials.',
-		buttons: [{ link: '', title: 'Read more' }],
+		buttons: [{ link: 'about', title: 'Read more' }],
 	},
 	{
 		image: Imprint,

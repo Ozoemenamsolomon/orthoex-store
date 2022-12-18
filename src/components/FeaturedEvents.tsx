@@ -52,11 +52,12 @@ const StyledWrapperDiv = styled.div`
 
 export const StyledHeading = styled.h3`
 	text-align: center;
-	font-size: 2.5rem;
+	font-size: 2rem;
 	margin-bottom: 2rem;
-	font-weight: 700;
+	font-weight: 500;
 
 	@media (min-width: 768px) {
+		font-weight: 700;
 		font-size: 3rem;
 		margin-bottom: 5rem;
 	}

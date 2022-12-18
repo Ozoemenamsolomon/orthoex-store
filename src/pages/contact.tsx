@@ -26,6 +26,8 @@ import CTA from '@components/CTA';
 import Address from '@components/shared/Address';
 import SocialMediaButtons from '@components/shared/SocialMediaButtons';
 import SupportInfo, { SupportInfoType } from '@components/SupportInfo';
+import CallIcon from '@assets/new/icons/CallIcon';
+import WhatsappIcon from '@assets/new/icons/WhatsappIcon';
 
 const data: ImageInfoHeaderType = {
 	image: LadyImage,
@@ -49,8 +51,8 @@ const supportInfoData: SupportInfoType = {
 			paragraph:
 				'Interested in any of our products? We’d love to hear from you! Contact our product experts',
 			buttons: [
-				{ title: 'Call', link: '#', Icon: Message },
-				{ title: 'Chat', link: '#', Icon: Message },
+				{ title: 'Call', link: 'tel:+2347030324696', Icon: CallIcon },
+				{ title: 'Chat', link: 'https://wa.me/+2347030324696', Icon: Message },
 			],
 		},
 		{
@@ -59,8 +61,12 @@ const supportInfoData: SupportInfoType = {
 			paragraph:
 				'We welcome interested brands around the world for possible partnerships with us. ',
 			buttons: [
-				{ title: 'Email', link: '', Icon: Email },
-				{ title: 'Whatsapp', link: '', Icon: Email },
+				{ title: 'Email', link: 'mailto:store@orthoex.ng', Icon: Email },
+				{
+					title: 'Whatsapp',
+					link: 'https://wa.me/+2347030324696',
+					Icon: WhatsappIcon,
+				},
 			],
 		},
 		{

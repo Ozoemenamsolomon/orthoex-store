@@ -25,7 +25,11 @@ const ImageInfoHeader: React.FC<ImageInfoHeaderProps> = ({ data }) => {
 			<StyledContentDiv>
 				<h2>{heading}</h2>
 				<p>{paragraph}</p>
-				{cta && <CTALink href={cta.link}>{cta.text}</CTALink>}
+				{cta && (
+					<CTALink className="no-animate" href={cta.link}>
+						{cta.text}
+					</CTALink>
+				)}
 			</StyledContentDiv>
 		</StyledDiv>
 	);

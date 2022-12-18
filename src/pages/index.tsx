@@ -40,7 +40,7 @@ const Home: NextPage = () => {
 				<HeroContent
 					title={'Your preferred<br />partner of choice'}
 					claim={
-						'We are facilitating Prosthetics, Orthopaedic devices and composite materials distribution in West Africa. <br /> <br /> Speak with an account manager in your region'
+						'We are facilitating prosthetics, orthopaedic devices and composite materials distribution in West Africa. <br /> <br /> Speak with an account manager in your region'
 					}
 					cta={<CTA onClick={findRep}>Find Us</CTA>}
 				/>

@@ -23,27 +23,36 @@ const StyledInfoText = styled.div`
 	background-color: var(--oex-orange);
 	color: white;
 	padding: 2rem;
-	text-align: left;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
 
 	& > h2 {
 		font-weight: 500;
-		text-align: center;
 		font-size: 1.75rem;
 		margin-bottom: 1rem;
 	}
 
 	& > p {
 		font-weight: 300;
-		font-size: 0.8rem;
-		text-align: center;
+		font-size: 0.9rem;
 	}
 
 	@media (min-width: 768px) {
 		text-align: center;
-		padding: 3rem 9rem;
+		padding: 4rem 0rem;
+
+		& > p {
+			font-weight: 300;
+			font-size: 1rem;
+			max-width: 40%;
+		}
 
 		& > h2 {
 			font-weight: 550;
+			max-width: 40%;
 			text-align: center;
 			font-size: 2.5rem;
 			margin: 0rem 0rem 1rem;
@@ -52,7 +61,7 @@ const StyledInfoText = styled.div`
 `;
 
 const StyledInfoChildren = styled.div`
-	text-align: center;
+	//text-align: center;
 	display: flex;
 	justify-content: center;
 	align-items: center;

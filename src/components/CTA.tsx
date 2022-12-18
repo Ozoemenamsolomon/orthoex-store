@@ -25,7 +25,6 @@ const CTA = styled.button<CTAType>`
 		color: ${prop =>
 			prop.white ? 'var(--text-colour-light)' : 'var(--oex-orange)'};
 		background-color: ${prop => (prop.white ? 'var(--oex-orange)' : 'white')};
-		border: 1px solid var(--oex-orange);
 	}
 `;
 
