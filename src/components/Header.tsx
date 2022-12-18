@@ -40,7 +40,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	const light =
 		['products', 'about', 'careers', 'contact', 'trainings'].includes(
 			pathname.split('/')[1],
-		) || pathname.includes('categories');
+		) || /\/composites\/(\w)+/.test(pathname);
 
 	useEffect(() => {
 		if (!light) {
