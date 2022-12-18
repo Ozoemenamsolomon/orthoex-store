@@ -85,8 +85,10 @@ const SectionTitle = styled.h2<{
 }>`
 	margin: 0px 0px 1rem;
 	text-align: center;
-	font-size: ${({ align }) => (align === 'left' ? '2rem' : '3.2rem')};
+	font-size: 2rem;
+
 	@media (min-width: 600px) {
+		font-size: ${({ align }) => (align === 'left' ? '2rem' : '3.2rem')};
 		max-width: 70%;
 	}
 `;

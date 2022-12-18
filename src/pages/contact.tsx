@@ -1,161 +1,252 @@
-import React from 'react';
+import ImageInfoHeader, {
+	ImageInfoHeaderType,
+} from '@components/ImageInfoHeader';
+import React, { useState } from 'react';
+import Image from 'next/image';
 import styled from 'styled-components';
-import EmailIcon from '@assets/icons/contact/email-icon_ImgID1.png';
-import FacebookIcon from '@assets/icons/contact/facebook-icon_ImgID1.png';
-import InstagramIcon from '@assets/icons/contact/instagram-icon_ImgID1.png';
-import LinkedInIcon from '@assets/icons/contact/linkedin-icon_ImgID1.png';
-import LocationIcon from '@assets/icons/contact/Location-icon_ImgID1.png';
-import PhoneIcon from '@assets/icons/contact/phone-icon_ImgID1.png';
-import TwitterIcon from '@assets/icons/contact/twitter-icon_ImgID1.png';
-import WhatsappIcon from '@assets/icons/contact/whatsapp-icon_ImgID1.png';
-import ContactBG from '@assets/images/contact-background.jpg';
+import LadyImage from '@assets/new/images/home/customer-service.jpg';
+import CallAgent from '@assets/new/icons/contact/CallAgent';
+import FaqDouble from '@assets/new/icons/contact/FaqDouble';
+import FaqSingle from '@assets/new/icons/contact/FaqSingle';
+import Message from '@assets/new/icons/contact/Message';
+import Email from '@assets/new/icons/contact/Email';
+import Partner from '@assets/new/icons/contact/Partner';
+import InfoText from '@components/InfoText';
+import { Container } from '@components/styled';
+import HeaderParagraph, {
+	HeaderParagraphType,
+} from '@components/shared/HeaderParagraph';
+import {
+	StyledFormButtonControl,
+	StyledFormControl,
+	StyledFormWrapper,
+} from '@components/styled/Forms';
 import CTA from '@components/CTA';
-import { HeroComp as Hero } from '@components/Hero';
-import HeroContent from '@components/HeroContent';
-import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
-import SooSection from '@components/SooSection';
-import { Container, ServicesCards } from '@components/styled';
+import Address from '@components/shared/Address';
+import SocialMediaButtons from '@components/shared/SocialMediaButtons';
+import SupportInfo, { SupportInfoType } from '@components/SupportInfo';
+import CallIcon from '@assets/new/icons/CallIcon';
+import WhatsappIcon from '@assets/new/icons/WhatsappIcon';
 
-const contacts: ServiceCardType[] = [
-	{
-		description: '10, Ipakodo, Wharf-road, Off Ebute Ikorodu Lagos Nigeria',
-		image: LocationIcon,
-		title: 'OUR HEAD OFFICE',
-		cta: <CTA>ROUTE</CTA>,
-	},
-	{
-		description: '+2347030324696',
-		image: PhoneIcon,
-		title: 'PHONE NUMBER',
-		cta: <CTA>DIAL NO.</CTA>,
-	},
-	{
-		description: '+2347030324696',
-		image: WhatsappIcon,
-		title: 'WHATSAPP',
-		cta: <CTA>LIVE CHAT</CTA>,
-	},
-	{
-		description: 'info@orthoex.ng',
-		image: EmailIcon,
-		title: 'EMAIL',
-		cta: <CTA>SEND</CTA>,
-	},
-];
+type InputChangeType =
+	| React.ChangeEvent<HTMLInputElement>
+	| React.ChangeEvent<HTMLTextAreaElement>;
 
-const connects: ServiceCardType[] = [
-	{
-		description: '@orthoex',
-		image: FacebookIcon,
-		cta: <CTA>CONNECT</CTA>,
-	},
-	{
-		description: '@orthoex_nigeria',
-		image: InstagramIcon,
-		cta: <CTA>CONNECT</CTA>,
-	},
-	{
-		description: '@orthoex nigeria',
-		image: LinkedInIcon,
-		cta: <CTA>CONNECT</CTA>,
-	},
-	{
-		description: '@OrthoExNg',
-		image: TwitterIcon,
-		cta: <CTA>CONNECT</CTA>,
-	},
-];
+const data: ImageInfoHeaderType = {
+	image: LadyImage,
+	heading: "We'd love to hear from you!",
+	paragraph:
+		'Whether you are curious about our products or excited about a career with us, or even press - We are happy to answer all your questions.',
+};
+
+const headingData: HeaderParagraphType = {
+	heading: 'For other inquiries',
+	paragraph:
+		"Let's get the conversation started. We'd get back to you as soon as we recieve your message",
+};
+
+const supportInfoData: SupportInfoType = {
+	header: 'Our teams are here to help',
+	cardDetail: [
+		{
+			CardIcon: CallAgent,
+			title: 'Sales and Product support',
+			paragraph:
+				'Interested in any of our products? We’d love to hear from you! Contact our product experts',
+			buttons: [
+				{ title: 'Call', link: 'tel:+2347030324696', Icon: CallIcon },
+				{ title: 'Chat', link: 'https://wa.me/+2347030324696', Icon: Message },
+			],
+		},
+		{
+			CardIcon: Partner,
+			title: 'New partnerships',
+			paragraph:
+				'We welcome interested brands around the world for possible partnerships with us. ',
+			buttons: [
+				{ title: 'Email', link: 'mailto:store@orthoex.ng', Icon: Email },
+				{
+					title: 'Whatsapp',
+					link: 'https://wa.me/+2347030324696',
+					Icon: WhatsappIcon,
+				},
+			],
+		},
+		{
+			CardIcon: FaqDouble,
+			title: 'Product FAQs',
+			paragraph:
+				'Find a list of answers to the most popular questions that are asked',
+			buttons: [{ title: 'View FAQ', link: '', Icon: FaqSingle }],
+		},
+	],
+};
 
 const Contact = () => {
+	const [formData, setformData] = useState({
+		fullName: '',
+		email: '',
+		phone: '',
+		message: '',
+	});
+
+	const { fullName, email, message, phone } = formData;
+
+	const onInputChange = (e: InputChangeType) => {
+		setformData(prev => ({ ...prev, [e.target.id]: e.target.value }));
+	};
+
 	return (
-		<>
-			<Hero bg={ContactBG}>
-				<HeroContent
-					title={"We'd love to hear from you!"}
-					claim={
-						'Whether you are curious about our products or excited about a career with us, or even press - We are happy to answer all your questions.'
-					}
-				/>
-			</Hero>
-			<Container>
-				<SooSection>
-					<h2
-						style={{
-							textAlign: 'center',
-						}}>
-						You can contact us through any of this means
-					</h2>
-					<ServicesCards>
-						{contacts.map((quality, index) => (
-							<ServiceCard key={index} imagePadding service={quality} />
-						))}
-					</ServicesCards>
-				</SooSection>
-				<SooSection
-					style={{
-						display: 'grid',
-						gap: '2rem',
-						gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
-						alignItems: 'center',
-					}}>
-					<div>
-						<h2
-							style={{
-								textAlign: 'center',
-							}}>
-							Have some questions?
-						</h2>
-						<ContactForm>
-							<input type="tel" placeholder="Your Whatsapp Number" />
-							<input type="email" placeholder="Your email" />
-							<textarea name="" id="" placeholder="Your question" rows={10} />
-							<CTA type="submit">Subscribe</CTA>
-						</ContactForm>
-					</div>
-					<div>
-						<h2>Find us</h2>
-						<p>MON-FRI: 9:00AM-5:00PM</p>
-						<iframe
-							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.2395778088708!2d3.4731817140660928!3d6.617130095214905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bec34b48667c3%3A0x9186383a9ee62db4!2sOrthoEx%20Nigeria%20Limited!5e0!3m2!1sen!2sde!4v1649617894026!5m2!1sen!2sde"
-							width="100%"
-							style={{ border: 0, aspectRatio: '6/5' }}
-							allowFullScreen
-							loading="lazy"
-							referrerPolicy="no-referrer-when-downgrade"
-						/>
-					</div>
-				</SooSection>
-				<SooSection style={{ maxWidth: '700px', textAlign: 'center' }}>
-					<h2>Stay Connected</h2>
-					Are you following us on our social media channels? We&apos;re
-					constantly sharing product news and event updates. Click the icon
-					below to follow your favorite brand.
-				</SooSection>
-				<SooSection>
-					<ServicesCards>
-						{connects.map((quality, index) => (
-							<ServiceCard key={index} imagePadding service={quality} />
-						))}
-					</ServicesCards>
-				</SooSection>
+		<StyledContactWrapper>
+			<Container paddingMultiplier={0}>
+				<ImageInfoHeader data={data} />
+				<SupportInfo data={supportInfoData} />
+				<HeaderParagraph data={headingData} />
+
+				<StyledMapForm>
+					<StyledMapSection>
+						<StyledMapHolder>
+							<Image
+								src={LadyImage}
+								style={{
+									objectFit: 'cover',
+								}}
+								fill
+								alt="map image"
+							/>
+							<CTA>View on map</CTA>
+						</StyledMapHolder>
+						<Address />
+					</StyledMapSection>
+
+					<StyledFormSection>
+						<StyledFormWrapper>
+							<form action="">
+								<StyledFormControl>
+									<label htmlFor="fullName">Full Name</label>
+									<input
+										type="text"
+										id="fullname"
+										name="fullname"
+										onChange={onInputChange}
+										placeholder="Enter your full name here"
+										value={fullName}
+									/>
+								</StyledFormControl>
+
+								<StyledFormControl>
+									<label htmlFor="email">Email Address</label>
+									<input
+										type="text"
+										id="email"
+										name="email"
+										onChange={onInputChange}
+										placeholder="Enter your email address here"
+										value={email}
+									/>
+								</StyledFormControl>
+								<StyledFormControl>
+									<label htmlFor="phone">Phone Number</label>
+									<input
+										type="tel"
+										id="phone"
+										name="phone"
+										onChange={onInputChange}
+										placeholder="Enter your phone number here"
+										value={phone}
+									/>
+								</StyledFormControl>
+
+								<StyledFormControl>
+									<label htmlFor="message">Message</label>
+									<textarea
+										name="message"
+										id="message"
+										placeholder="Enter your message here"
+										onChange={onInputChange}
+										value={message}
+										cols={30}
+										rows={10}
+									/>
+								</StyledFormControl>
+
+								<StyledFormButtonControl>
+									<CTA>Send message</CTA>
+								</StyledFormButtonControl>
+							</form>
+						</StyledFormWrapper>
+					</StyledFormSection>
+				</StyledMapForm>
 			</Container>
-		</>
+			<InfoText
+				title={"Let's stay connected"}
+				description={
+					'Are you following us on our social media channels? We’re constantly sharing product news and event updates. Click the icon below to follow your favourite brand.'
+				}>
+				<SocialMediaButtons
+					height={20}
+					width={15}
+					color={'var(--oex-orange)'}
+				/>
+			</InfoText>
+		</StyledContactWrapper>
 	);
 };
 
 export default Contact;
 
-const ContactForm = styled.form`
-	display: flex;
-	gap: 1rem;
-	flex: 1;
-	flex-direction: column;
-	max-width: 350px;
-	margin: auto;
+const StyledContactWrapper = styled.div`
+	margin: 7rem 0rem 0rem;
+`;
 
-	input,
-	textarea {
-		padding: 0.51rem;
-		resize: vertical;
+const StyledMapForm = styled.div`
+	margin-bottom: 2rem;
+
+	@media (min-width: 768px) {
+		padding: 2rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 5rem;
+		flex-direction: row-reverse;
+	}
+`;
+
+const StyledFormSection = styled.div`
+	@media (min-width: 768px) {
+		width: 50%;
+	}
+`;
+
+const StyledMapSection = styled.div`
+	margin-bottom: 2rem;
+
+	@media (min-width: 768px) {
+		width: 50%;
+	}
+`;
+
+const StyledMapHolder = styled.div`
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+
+	& > button {
+		font-size: 0.7rem;
+		width: 80%;
+		padding: 0.7rem 1rem;
+		position: absolute;
+		top: 45%;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+	}
+
+	@media (min-width: 768px) {
+		& > button {
+			width: 50%;
+			margin: 0 auto;
+		}
 	}
 `;

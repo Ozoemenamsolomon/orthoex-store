@@ -15,15 +15,21 @@ body {
 	--oex-lighter-grey: #e5e5e5;
 	--oex-lightest-grey: #f2f0f0;
 	--oex-orange: #fe7624;
-	--oex-light-orange: #e1996c;
+	--oex-light-orange: #fef9f5;
+	--oex-danger: #ea4237;
+	--oex-bg-danger: #fcf6f5;
+	--oex-success: #3f845f;
+	--oex-light-success: #f1fffa;
+	--oex-light-orange: #fdf6f2;
 	--oex-orange-mute: #ffe8da;
 	--oex-yellow: #edbf37;
 	--oex-orange-dark: #e74803;
 	--oex-bg-grey: #2e2e2e;
 	--border-radius: 12px;
 	--text-colour-light: white;
-	--text-colour-dark: black;
+	--text-colour-dark: #202020;
 	--text-colour-grey: #6d6a6a;
+	--text-colour-light-grey: #cfcfcf;
 }
 
 a {
@@ -79,16 +85,3 @@ p {
 img[object-fit='contain'] {
 	object-fit: contain;
 }
-
-/* This is the css section for swiper used in the home page */
-
-.swiper-pagination-bullet-active{
-  background: var(--oex-orange) !important;
-}
-
-.swiper-pagination {
-  margin-top: 2rem !important;
-  position: relative !important;
-}
-
-/* This is the css section ends here swiper */

@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 /** class of "bigger" makes it's children have a min-width of `270px`*/
-export const ServicesCards = styled.div<{ minWidth?: string }>`
+export const ServicesCards = styled.div<{
+	minWidth?: string;
+}>`
 	--min-width: ${({ minWidth = '120px' }) => minWidth};
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));

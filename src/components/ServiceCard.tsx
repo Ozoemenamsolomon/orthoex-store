@@ -46,7 +46,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 					<Title className={small ? 'small' : undefined}>{title}</Title>
 				)}
 				<Description
-					greyFont
+					greyFont={greyFont}
 					className={small ? 'small' : undefined}
 					dangerouslySetInnerHTML={
 						HTMLDescription ? { __html: description } : undefined
@@ -147,7 +147,7 @@ const Title = styled.p`
 
 const Description = styled.p<{ greyFont?: boolean }>`
 	font-size: 1.2rem;
-	color: ${({ greyFont }) => (greyFont ? 'var(--oex-dark-grey)' : '')};
+	color: ${({ greyFont }) => (greyFont ? 'var(--oex-dark-grey)' : 'inherit')};
 	&.small {
 		font-size: 0.8rem;
 	}

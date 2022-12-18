@@ -32,7 +32,7 @@ const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
 			<p>{description}</p>
 			<ButtonContainer>
 				{buttons.map(({ Icon, link, title }, index) => (
-					<Link style={{ flex: 1 }} key={index} href={link}>
+					<Link target="_blank" style={{ flex: 1 }} key={index} href={link}>
 						<CTAFlex white>
 							{Icon && <Icon />}
 							{title}
@@ -55,8 +55,8 @@ const StyledInfoCard = styled.div`
 	margin-bottom: 5rem;
 
 	& > p {
-		font-size: 0.9rem;
-		line-height: 1rem;
+		font-size: 1rem;
+		line-height: 1.1rem;
 		color: var(--text-colour-p);
 	}
 
@@ -69,6 +69,11 @@ const StyledInfoCard = styled.div`
 	}
 
 	@media (min-width: 768px) {
+		& > p {
+			font-size: 1.2rem;
+			line-height: 1.3rem;
+		}
+
 		& > div > img {
 			border-radius: 0rem;
 		}

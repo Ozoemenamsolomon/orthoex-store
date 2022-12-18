@@ -6,7 +6,7 @@ import SwiftResponsive from '@assets/new/icons/about/swift-and-responsive.svg';
 import PositivePassionate from '@assets/new/icons/about/positive-and-pastionate.svg';
 import Excellence from '@assets/new/icons/about/excellence-and-dependable.svg';
 import CustomerFirst from '@assets/new/icons/about/customer-first.svg';
-import Composites from '@assets/new/icons/about/composites.svg';
+import Composites from '@assets/new/icons/home/composites.svg';
 import { AboutCardSectionType } from '@components/About/AboutCardSection';
 import Prosthetics2 from '@assets/new/icons/home/prosthetics.svg';
 

@@ -76,7 +76,7 @@ const productVerticalData: VerticalType[] = [
 
 function ProductVertical() {
 	return (
-		<div id="product-vertical">
+		<ProductVerticalWrapper id="product-vertical">
 			<SooSection
 				header={{
 					title: 'Which of our product vertical is relevant for you?',
@@ -103,10 +103,20 @@ function ProductVertical() {
 					</StyledProductSection>
 				</Swiper>
 			</SooSection>
-		</div>
+		</ProductVerticalWrapper>
 	);
 }
 
 export default ProductVertical;
 
 const StyledProductSection = styled.div``;
+const ProductVerticalWrapper = styled.div`
+	.swiper-pagination-bullet-active {
+		background: var(--oex-orange) !important;
+	}
+
+	.swiper-pagination {
+		margin-top: 2rem !important;
+		position: relative !important;
+	}
+`;
