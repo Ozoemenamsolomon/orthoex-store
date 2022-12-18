@@ -1,4 +1,4 @@
-import { EventDataType } from '@data/eventsData';
+import { EventDataType, EventFormat } from '@data/eventsData';
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -136,11 +136,13 @@ const StyledRightContent = styled.div``;
 const StyledCourseFormat = styled.p<{ type: string }>`
 	padding: 0.6rem 0.9rem;
 	color: ${({ type }) =>
-		type == 'Onsite' ? 'var(--oex-orange)' : 'var(--oex-success)'};
+		type == EventFormat.ONSITE ? 'var(--oex-orange)' : 'var(--oex-success)'};
 	background-color: ${({ type }) =>
-		type == 'Onsite' ? 'var(--oex-light-orange)' : 'var(--oex-light-success)'};
+		type == EventFormat.ONSITE
+			? 'var(--oex-light-orange)'
+			: 'var(--oex-light-success)'};
 	border: ${({ type }) =>
-		type == 'Onsite'
+		type == EventFormat.ONSITE
 			? '1px solid var(--oex-orange)'
 			: '1px solid var(--oex-success)'};
 	border-radius: 0.3rem;

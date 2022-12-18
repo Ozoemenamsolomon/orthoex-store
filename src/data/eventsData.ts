@@ -1,7 +1,11 @@
+export enum EventFormat {
+	ONLINE = 'ONLINE',
+	ONSITE = 'ONSITE',
+}
 export interface EventDataType {
 	id: number;
 	title: string;
-	eventFormat: string;
+	eventFormat: EventFormat;
 	startDateTime: string; // TODO make the date format using ISO 2007-04-05T12:30−02:00
 	endDateTime: string;
 	location: { city: string; state: string };
@@ -21,7 +25,7 @@ export const featuredEvents: EventDataType[] = [
 	{
 		id: 1,
 		title: 'Working with the glass fibre reinforced concrete',
-		eventFormat: 'Online',
+		eventFormat: EventFormat.ONLINE,
 		startDateTime: '',
 		endDateTime: '',
 		location: { city: 'Ikeja', state: 'Lagos' },
@@ -44,7 +48,7 @@ export const featuredEvents: EventDataType[] = [
 	{
 		id: 2,
 		title: 'Working with the glass fibre reinforced concrete',
-		eventFormat: 'Onsite',
+		eventFormat: EventFormat.ONSITE,
 		startDateTime: '',
 		endDateTime: '',
 		location: { city: 'Badagry', state: 'Lagos' },
@@ -67,7 +71,7 @@ export const featuredEvents: EventDataType[] = [
 	{
 		id: 1,
 		title: 'Working with the glass fibre reinforced concrete',
-		eventFormat: 'Online',
+		eventFormat: EventFormat.ONLINE,
 		startDateTime: '',
 		endDateTime: '',
 		location: { city: 'Ikeja', state: 'Lagos' },
@@ -90,7 +94,7 @@ export const featuredEvents: EventDataType[] = [
 	{
 		id: 1,
 		title: 'Working with the glass fibre reinforced concrete',
-		eventFormat: 'Online',
+		eventFormat: EventFormat.ONLINE,
 		startDateTime: '',
 		endDateTime: '',
 		location: { city: 'Ikeja', state: 'Lagos' },

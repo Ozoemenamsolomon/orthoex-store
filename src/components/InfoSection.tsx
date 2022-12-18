@@ -45,7 +45,7 @@ const InfoSectionData: InfoSectionType[] = [
 	{
 		image: QuickChange,
 		description: 'We are passionate about empowering human potentials.',
-		buttons: [{ link: 'about', title: 'Read more' }],
+		buttons: [{ link: '/about', title: 'Read more' }],
 	},
 	{
 		image: Imprint,

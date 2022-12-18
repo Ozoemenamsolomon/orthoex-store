@@ -6,23 +6,21 @@ import { Container } from './styled';
 import CTA from './CTA';
 
 const FeaturedEvents = () => {
-	const [displayElements, setdisplayElements] = useState(2);
-	// increment is how many more you add to the displayed list.
-	// displayElements is how many to render on mount.
+	const [eventCount, setEventCount] = useState(2);
 
 	const LoadMoreEvent = () => {
-		setdisplayElements(prev => prev + 1);
+		setEventCount(prev => prev + 1);
 	};
 
 	return (
 		<StyledWrapperDiv>
 			<Container>
 				<StyledHeading>Featured Events</StyledHeading>
-				{featuredEvents.slice(0, displayElements).map(event => (
+				{featuredEvents.slice(0, eventCount).map(event => (
 					<FeaturedEventCard key={event.id} event={event} />
 				))}
 
-				{featuredEvents.length !== displayElements && (
+				{featuredEvents.length !== eventCount && (
 					<StyledLoadMore>
 						<CTA className="btn-width" onClick={LoadMoreEvent} white>
 							Load more events

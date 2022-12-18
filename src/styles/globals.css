@@ -85,16 +85,3 @@ p {
 img[object-fit='contain'] {
 	object-fit: contain;
 }
-
-/* This is the css section for swiper used in the home page */
-
-.swiper-pagination-bullet-active {
-	background: var(--oex-orange) !important;
-}
-
-.swiper-pagination {
-	margin-top: 2rem !important;
-	position: relative !important;
-}
-
-/* This is the css section ends here swiper */

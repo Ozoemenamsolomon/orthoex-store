@@ -22,7 +22,7 @@ const ServiceStandard: React.FC<ServiceStandardProps> = ({ data }) => {
 				<p>{paragraph}</p>
 			</ServiceWriteUp>
 			<StyledServiceIcon>
-				<ServicesCards>
+				<StyledServiceCards>
 					{servicesIcon.map((service, index) => (
 						<ServiceCard
 							greyFont
@@ -31,7 +31,7 @@ const ServiceStandard: React.FC<ServiceStandardProps> = ({ data }) => {
 							service={service}
 						/>
 					))}
-				</ServicesCards>
+				</StyledServiceCards>
 			</StyledServiceIcon>
 		</StyledServiceStandard>
 	);
@@ -55,7 +55,6 @@ const StyledServiceStandard = styled.div`
 `;
 
 const ServiceWriteUp = styled.div`
-	width: 100%;
 	flex: 0 1 auto;
 
 	& > h3 {
@@ -89,5 +88,11 @@ const StyledServiceIcon = styled.div`
 
 	@media (min-width: 1024px) {
 		width: 60%;
+	}
+`;
+
+const StyledServiceCards = styled(ServicesCards)`
+	@media (min-width: 1024px) {
+		--min-width: 128px;
 	}
 `;
