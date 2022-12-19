@@ -29,7 +29,9 @@ const SooSection: FC<SOOSectionProp> = ({
 	return (
 		<SOOSectionContainer id={id} bgColor={BGColor}>
 			{header && <SectionHeader {...header} />}
-			<Container style={!twoColumns ? style : { ...style, ...twoColumnsStyle }}>
+			<Container
+				paddingMultiplierSmall={0}
+				style={!twoColumns ? style : { ...style, ...twoColumnsStyle }}>
 				{children}
 			</Container>
 		</SOOSectionContainer>
@@ -42,12 +44,13 @@ const SOOSectionContainer = styled('section')<{
 	bgColor?: string;
 }>`
 	background-color: ${prop => prop.bgColor};
-	margin-top: 3rem;
+	margin-top: 1rem;
 	padding-block: 3rem;
 	flex-direction: column;
 	/* TODO look into this */
 	scroll-padding-top: 6rem;
 	@media (min-width: 600px) {
+		margin-top: 3rem;
 		display: flex;
 	}
 `;

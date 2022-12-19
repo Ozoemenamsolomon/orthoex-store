@@ -190,13 +190,11 @@ const CompositePage: NextPage = () => {
 					}
 				/>
 			</Hero>
-			<Container bg="white" paddingMultiplier={0}>
-				<Container>
-					{sections.map((section, index) => (
-						<SooSection key={`section_${index}`} {...section} />
-					))}
-					<InfoTestimonial />
-				</Container>
+			<Container bg="white">
+				{sections.map((section, index) => (
+					<SooSection key={`section_${index}`} {...section} />
+				))}
+				<InfoTestimonial />
 			</Container>
 		</>
 	);

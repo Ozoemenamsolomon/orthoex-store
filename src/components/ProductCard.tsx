@@ -60,8 +60,11 @@ const ProductCardContainer = styled.div`
 		position: relative;
 	}
 
-	button {
-		opacity: 0;
+	// media queries for mouse hover effect
+	@media (hover: hover) and (pointer: fine) {
+		button {
+			opacity: 0;
+		}
 	}
 
 	&:hover {

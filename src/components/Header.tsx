@@ -1,16 +1,15 @@
+import SccountIcon from '@assets/new/icons/Account';
+import SearchIcon from '@assets/new/icons/Search';
+import CartIcon from '@assets/new/icons/ShoppingCart';
+import orthoExLogoCol from '@assets/new/logos/orthoex-logo-coloured.svg';
+import orthoExLogo from '@assets/new/logos/orthoex-logo-white.svg';
 import Image from 'next/image';
 import Link from 'next/link';
-import styled from 'styled-components';
-
 import React, { useEffect, useState } from 'react';
-import orthoExLogo from '@assets/new/logos/orthoex-logo-white.svg';
-import orthoExLogoCol from '@assets/new/logos/orthoex-logo-coloured.svg';
+import styled from 'styled-components';
+import CTA from './CTA';
 import NavLink from './NavLink';
 import { Container } from './styled';
-import SearchIcon from '@assets/new/icons/Search';
-import SccountIcon from '@assets/new/icons/Account';
-import CartIcon from '@assets/new/icons/ShoppingCart';
-import CTA from './CTA';
 
 type HeaderProp = { pathname: string };
 
@@ -45,11 +44,11 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	useEffect(() => {
 		if (!light) {
 			document.addEventListener('scroll', handleScroll, { passive: true });
-		}
 
-		return () => {
-			document.removeEventListener('scroll', handleScroll);
-		};
+			return () => {
+				document.removeEventListener('scroll', handleScroll);
+			};
+		}
 	}, [pathname]);
 
 	return (

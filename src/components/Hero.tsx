@@ -46,11 +46,7 @@ export const HeroComp: FC<HeroCompProp> = ({
 					inset: 0,
 					zIndex: -5,
 				}}>
-				<HeroBg
-					alt="hero background"
-					fill
-					object-fit="cover"
-					src={bg || DefaultBG}></HeroBg>
+				<HeroBg alt="hero background" fill src={bg || DefaultBG}></HeroBg>
 				{darkenBG && (
 					<div
 						style={{
@@ -74,15 +70,17 @@ const HeroBg = styled(Image)`
 	top: 0;
 	left: 0;
 	z-index: -1;
+	object-fit: cover;
 `;
 
 const Hero = styled.div`
-	--hero-padding: 10em 0em 10em 0em;
+	--hero-padding: 10em 0em;
 	display: flex;
 	padding: var(--hero-padding);
 	justify-content: center;
 
 	@media (max-width: 600px) {
+		--hero-padding: 3em 0em;
 		& > div {
 			flex-direction: column;
 		}

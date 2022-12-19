@@ -4,10 +4,10 @@ import styled from 'styled-components';
 export const ServicesCards = styled.div<{
 	minWidth?: string;
 }>`
-	--min-width: ${({ minWidth = '120px' }) => minWidth};
+	--min-width: ${({ minWidth = '170px' }) => minWidth};
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
-	gap: 5rem;
+	gap: 1rem;
 
 	&.bigger {
 		--min-width: 270px;
@@ -29,6 +29,8 @@ export const ServicesCards = styled.div<{
 	}
 	// TODO make the breakpoint variables
 	@media (min-width: 600px) {
+		gap: 5rem;
+		--min-width: 120px;
 		& > div.wider {
 			grid-column: span 2;
 		}
@@ -36,31 +38,29 @@ export const ServicesCards = styled.div<{
 `;
 
 export const PostCardsContainer = styled.div`
-	// TODO make the breakpoint variables
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(336px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 	gap: 4rem;
 `;
 
 export const Container = styled.div<{
 	verticalPaddingInREM?: number;
 	paddingMultiplier?: number;
+	paddingMultiplierSmall?: number;
 	bg?: string;
 }>`
 	background-color: ${({ bg }) => bg || 'unset'};
 	max-width: 1500px;
 	width: 100%;
 	margin: auto;
-	padding-inline: 2rem;
+	padding-inline: ${({ paddingMultiplierSmall }) =>
+		(paddingMultiplierSmall ?? 1) * 2}rem;
 
 	// TODO make the breakpoint variables
 	@media (min-width: 900px) {
 		${({ verticalPaddingInREM: verticalPadding }) =>
 			verticalPadding ? `padding-block: ${verticalPadding}rem;` : ''}
-		${({ paddingMultiplier }) => {
-			return `padding-inline: ${
-				paddingMultiplier !== undefined ? paddingMultiplier * 2 : 2
-			}rem;`;
-		}}
+		padding-inline: ${({ paddingMultiplier }) =>
+			(paddingMultiplier ?? 1) * 2}rem;
 	}
 `;

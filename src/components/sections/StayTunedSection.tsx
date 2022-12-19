@@ -26,26 +26,32 @@ const StayTunedSection = () => {
 						</CTA>
 					</SubscribeForm>
 				</div>
-				<div
-					style={{
-						position: 'relative',
-						flex: '1 ',
-						aspectRatio: '1',
-						marginLeft: '6rem',
-					}}>
+				<ImageContainer>
 					<Image
 						alt="newsletter image"
 						object-fit="contain"
 						fill
 						src={newsletter}
 					/>
-				</div>
+				</ImageContainer>
 			</Container>
 		</SooSection>
 	);
 };
 
 export default StayTunedSection;
+
+const ImageContainer = styled.div`
+	position: relative;
+	flex: 1;
+	aspect-ratio: 1;
+	margin-left: 6rem;
+	display: none;
+
+	@media (min-width: 600px) {
+		display: block;
+	}
+`;
 
 const SubscribeForm = styled.form`
 	display: flex;
