@@ -28,19 +28,20 @@ const rightNavLinks = [
 ];
 
 const Header: React.FC<HeaderProp> = ({ pathname }) => {
-	const [scrolled, setScrolled] = useState(false);
+	const [scrollOffset, setScrollOffset] = useState(0);
 	const [isNavOpen, setIsNavOpen] = useState(false);
-
-	const light =
-		['products', 'about', 'careers', 'contact', 'trainings'].includes(
-			pathname.split('/')[1],
-		) || /\/composites\/(\w)+/.test(pathname);
+	const [light, setLight] = useState(false);
 
 	useEffect(() => {
 		const handleScroll = () => {
-			const isScrolled = window.scrollY > 0;
-			isScrolled !== scrolled ? setScrolled(!scrolled) : setScrolled(false);
+			setScrollOffset(window.scrollY);
 		};
+
+		setLight(
+			['products', 'about', 'careers', 'contact', 'trainings'].includes(
+				pathname.split('/')[1],
+			) || /\/composites\/(\w)+/.test(pathname),
+		);
 
 		if (!light) {
 			document.addEventListener('scroll', handleScroll, { passive: true });
@@ -53,7 +54,9 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 
 	return (
 		<>
-			<SooHeader light={light} className={`${scrolled ? 'scrolled' : ''}`}>
+			<SooHeader
+				light={light}
+				className={`${scrollOffset > 0 ? 'scrolled' : ''}`}>
 				<Container
 					paddingMultiplier={2}
 					style={{

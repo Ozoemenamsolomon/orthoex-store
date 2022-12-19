@@ -36,7 +36,7 @@ const Home: NextPage = () => {
 	const findRep = () => {};
 	return (
 		<>
-			<Hero bg={HeaderBG}>
+			<Hero darkenBG bg={HeaderBG}>
 				<HeroContent
 					title={'Your preferred<br />partner of choice'}
 					claim={
