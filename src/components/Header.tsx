@@ -31,17 +31,17 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	const [scrolled, setScrolled] = useState(false);
 	const [isNavOpen, setIsNavOpen] = useState(false);
 
-	const handleScroll = () => {
-		const isScrolled = window.scrollY > 0;
-		isScrolled !== scrolled ? setScrolled(!scrolled) : setScrolled(false);
-	};
-
 	const light =
 		['products', 'about', 'careers', 'contact', 'trainings'].includes(
 			pathname.split('/')[1],
 		) || /\/composites\/(\w)+/.test(pathname);
 
 	useEffect(() => {
+		const handleScroll = () => {
+			const isScrolled = window.scrollY > 0;
+			isScrolled !== scrolled ? setScrolled(!scrolled) : setScrolled(false);
+		};
+
 		if (!light) {
 			document.addEventListener('scroll', handleScroll, { passive: true });
 
