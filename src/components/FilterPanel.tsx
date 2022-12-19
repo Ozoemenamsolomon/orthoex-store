@@ -2,7 +2,7 @@ import { CategoryProps } from '@components/CategoryCard';
 import PriceFilter, { PriceRange } from '@components/PriceFilter';
 import { brands } from '@data/brands';
 import { categories } from 'data/categories';
-import StarRating from 'react-svg-star-rating';
+import { Rating as StarRating } from 'react-simple-star-rating';
 import styled from 'styled-components';
 
 export type FilterType = {
@@ -146,9 +146,9 @@ const FilterPanel: React.FC<{
 							/>
 							<StarRating
 								size={16}
-								initialRating={4 - index}
-								isReadOnly
-								activeColor="var(--oex-yellow)"
+								initialValue={4 - index}
+								readonly
+								fillColor="var(--oex-yellow)"
 							/>
 							<span>&amp; above</span>
 						</label>
