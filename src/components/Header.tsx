@@ -33,6 +33,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	const [light, setLight] = useState(false);
 
 	useEffect(() => {
+<<<<<<< HEAD
 		setLight(
 			['products', 'about', 'careers', 'contact', 'trainings', 'cart'].includes(
 				pathname.split('/')[1],
@@ -60,9 +61,24 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 =======
 >>>>>>> 5383fee (header works better, I think)
 
+=======
+>>>>>>> acac9c2 (initial setup)
 		const handleScroll = () => {
 			setScrollOffset(window.scrollY);
 		};
+
+		setLight(
+			[
+				'products',
+				'about',
+				'careers',
+				'contact',
+				'trainings',
+				'cart',
+				'calculator',
+			].includes(pathname.split('/')[1]) ||
+				/\/composites\/(\w)+/.test(pathname),
+		);
 
 		if (light) {
 			return;
