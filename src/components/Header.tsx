@@ -34,9 +34,15 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 
 	useEffect(() => {
 		setLight(
-			['products', 'about', 'careers', 'contact', 'trainings', 'cart'].includes(
-				pathname.split('/')[1],
-			) || /\/composites\/(\w)+/.test(pathname),
+			[
+				'products',
+				'about',
+				'careers',
+				'contact',
+				'trainings',
+				'calculator',
+			].includes(pathname.split('/')[1]) ||
+				/\/composites\/(\w)+/.test(pathname),
 		);
 
 		const handleScroll = () => {
