@@ -44,6 +44,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 			].includes(pathname.split('/')[1]) ||
 				/\/composites\/(\w)+/.test(pathname),
 		);
+<<<<<<< HEAD
 
 		const handleScroll = () => {
 			setScrollOffset(window.scrollY);
@@ -58,6 +59,24 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 			document.removeEventListener('scroll', handleScroll);
 		};
 	}, [pathname, light]);
+=======
+	}, [pathname]);
+>>>>>>> 42b8534 (fix:header bug)
+
+	useEffect(() => {
+		const handleScroll = () => {
+			setScrollOffset(window.scrollY);
+		};
+
+		if (light) {
+			return;
+		}
+		document.addEventListener('scroll', handleScroll, { passive: true });
+
+		return () => {
+			document.removeEventListener('scroll', handleScroll);
+		};
+	}, [light]);
 
 	return (
 		<>
