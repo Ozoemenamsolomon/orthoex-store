@@ -33,24 +33,27 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	const [light, setLight] = useState(false);
 
 	useEffect(() => {
-		const handleScroll = () => {
-			setScrollOffset(window.scrollY);
-		};
-
 		setLight(
 			['products', 'about', 'careers', 'contact', 'trainings'].includes(
 				pathname.split('/')[1],
 			) || /\/composites\/(\w)+/.test(pathname),
 		);
-
-		if (!light) {
-			document.addEventListener('scroll', handleScroll, { passive: true });
-
-			return () => {
-				document.removeEventListener('scroll', handleScroll);
-			};
-		}
 	}, [pathname]);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			setScrollOffset(window.scrollY);
+		};
+
+		if (light) {
+			return;
+		}
+		document.addEventListener('scroll', handleScroll, { passive: true });
+
+		return () => {
+			document.removeEventListener('scroll', handleScroll);
+		};
+	}, [light]);
 
 	return (
 		<>

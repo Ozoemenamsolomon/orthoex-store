@@ -32,7 +32,7 @@ const Category: NextPage<{
 
 	return (
 		<Container
-			verticalPaddingInREM={7}
+			verticalPaddingInREM={2}
 			paddingMultiplier={4}
 			bg="var(--oex-off-white)">
 			<LayoutDiv>

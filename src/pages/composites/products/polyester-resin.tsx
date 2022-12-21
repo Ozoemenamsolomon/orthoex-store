@@ -86,7 +86,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 
 	return (
 		<Container
-			verticalPaddingInREM={7}
+			verticalPaddingInREM={2}
 			paddingMultiplier={4}
 			bg="var(--oex-off-white)"
 			style={{ minHeight: '100vh' }}>
