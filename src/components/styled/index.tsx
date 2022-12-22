@@ -30,7 +30,7 @@ export const ServicesCards = styled.div<{
 	// TODO make the breakpoint variables
 	@media (min-width: 600px) {
 		gap: 5rem;
-		--min-width: 120px;
+		--min-width: 130px;
 		& > div.wider {
 			grid-column: span 2;
 		}

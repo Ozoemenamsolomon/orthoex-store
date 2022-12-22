@@ -157,14 +157,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									</span>
 								</p>
 								<ProductStars average={reviewAverage} count={reviewCount} />
-								<p
-									style={{
-										fontWeight: '600',
-										fontSize: '32px',
-										marginBlock: '1rem',
-									}}>
-									{formatPrice(price)}
-								</p>
+								<Price>{formatPrice(price)}</Price>
 								<p style={{ color: '#575757' }}> {description}</p>
 							</div>
 							<div>
@@ -208,7 +201,6 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										display: 'flex',
 										gap: '.5rem',
 										alignItems: 'center',
-										paddingInline: '0.5rem',
 									}}>
 									<ProductCountControlButton
 										onClick={() => {
@@ -450,7 +442,7 @@ const DataSheetLink = styled.p`
 	color: var(--oex-orange);
 `;
 
-const ProductCountControlButton = styled.button`
+export const ProductCountControlButton = styled.button`
 	height: 2.5rem;
 	aspect-ratio: 1;
 	border-radius: 50%;
@@ -461,6 +453,12 @@ const ProductCountControlButton = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+`;
+
+const Price = styled.p`
+	font-weight: 600;
+	font-size: 32px;
+	margin-block: 1rem;
 `;
 
 const Title = styled.h2`
@@ -524,7 +522,7 @@ const ProductData = styled.div`
 	}
 `;
 
-const ProductCountInput = styled.input`
+export const ProductCountInput = styled.input`
 	padding-block: 1rem;
 	font-size: 1rem;
 	width: 5ch;

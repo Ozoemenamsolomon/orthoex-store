@@ -34,13 +34,11 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 
 	useEffect(() => {
 		setLight(
-			['products', 'about', 'careers', 'contact', 'trainings'].includes(
+			['products', 'about', 'careers', 'contact', 'trainings', 'cart'].includes(
 				pathname.split('/')[1],
 			) || /\/composites\/(\w)+/.test(pathname),
 		);
-	}, [pathname]);
 
-	useEffect(() => {
 		const handleScroll = () => {
 			setScrollOffset(window.scrollY);
 		};
@@ -53,7 +51,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 		return () => {
 			document.removeEventListener('scroll', handleScroll);
 		};
-	}, [light]);
+	}, [pathname, light]);
 
 	return (
 		<>
@@ -181,17 +179,25 @@ const SooHeader = styled.header<{ light: boolean }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: ${({ light }) => (light ? 'sticky' : 'fixed')};
-	${({ light }) => (light ? `top:0;` : 'width: 100%;')}
 	z-index: 5;
 	color: #fff;
 	transition: background-color 0.5s ease;
-	background-color: ${({ light }) => light && 'white'};
-	&.scrolled {
-		background-color: #00000089;
-		color: white;
-		backdrop-filter: blur(4px);
-	}
+	${({ light }) =>
+		light
+			? `
+			position: sticky;
+			top:0; 
+			background-color: white;
+    		box-shadow: 0px 1px 3px #d6d6d6;
+			`
+			: `
+			position: fixed;
+			width: 100%;
+			&.scrolled {
+				background-color: #00000089;
+				color: white;
+				backdrop-filter: blur(4px);
+			}`}
 `;
 const Logo = styled.div`
 	padding: 1rem 1rem;
