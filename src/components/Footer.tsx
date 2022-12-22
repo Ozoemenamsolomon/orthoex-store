@@ -229,7 +229,7 @@ const FooterLinkGroups = styled.div`
 	justify-content: space-between;
 	flex-wrap: wrap;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-wrap: nowrap;
 		padding-left: 0rem;
 	}
@@ -246,7 +246,7 @@ const FooterLinkGroup = styled.div`
 		margin: 0;
 		font-size: 1.2rem;
 	}
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		margin-bottom: 0rem;
 	}
 `;
@@ -263,9 +263,8 @@ const LogoInfoWrapper = styled.div`
 	gap: 5rem;
 	flex: 1;
 	padding-top: 3rem;
-	padding-left: 3rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
 		padding-left: 0rem;
 	}
@@ -280,11 +279,11 @@ const CopyrightLogoWrapper = styled.div`
 	gap: 2rem;
 	margin-block-start: 3rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding-left: 0rem;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
 		align-items: center;
 	}

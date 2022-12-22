@@ -44,12 +44,13 @@ const SOOSectionContainer = styled('section')<{
 	bgColor?: string;
 }>`
 	background-color: ${prop => prop.bgColor};
+	${({ bgColor }) => bgColor && `margin-inline: -2rem;`}
 	margin-top: 1rem;
 	padding-block: 3rem;
 	flex-direction: column;
 	/* TODO look into this */
 	scroll-padding-top: 6rem;
-	@media (min-width: 600px) {
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		margin-top: 3rem;
 		display: flex;
 	}
@@ -90,7 +91,7 @@ const SectionTitle = styled.h2<{
 	text-align: center;
 	font-size: 2rem;
 
-	@media (min-width: 600px) {
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		font-size: ${({ align }) => (align === 'left' ? '2rem' : '3.2rem')};
 		max-width: 70%;
 	}
@@ -100,7 +101,7 @@ const SectionSubtitle = styled.span`
 	text-align: center;
 	display: block;
 	font-size: 1.2rem;
-	@media (min-width: 600px) {
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		max-width: 50%;
 	}
 `;

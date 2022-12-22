@@ -79,8 +79,8 @@ const Hero = styled.div`
 	padding: var(--hero-padding);
 	justify-content: center;
 
-	@media (max-width: 600px) {
-		--hero-padding: 3em 0em;
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		--hero-padding: 4em 0em;
 		& > div {
 			flex-direction: column;
 		}

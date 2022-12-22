@@ -175,7 +175,7 @@ const FilterPanelContainer = styled.aside`
 			flex: 1;
 		}
 	}
-	@media (max-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		display: none;
 	}
 `;
