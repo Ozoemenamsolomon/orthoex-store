@@ -34,16 +34,11 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 
 	useEffect(() => {
 		setLight(
-			[
-				'products',
-				'about',
-				'careers',
-				'contact',
-				'trainings',
-				'calculator',
-			].includes(pathname.split('/')[1]) ||
-				/\/composites\/(\w)+/.test(pathname),
+			['products', 'about', 'careers', 'contact', 'trainings', 'cart'].includes(
+				pathname.split('/')[1],
+			) || /\/composites\/(\w)+/.test(pathname),
 		);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		const handleScroll = () => {
@@ -62,8 +57,9 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 =======
 	}, [pathname]);
 >>>>>>> 42b8534 (fix:header bug)
+=======
+>>>>>>> 5383fee (header works better, I think)
 
-	useEffect(() => {
 		const handleScroll = () => {
 			setScrollOffset(window.scrollY);
 		};
@@ -76,7 +72,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 		return () => {
 			document.removeEventListener('scroll', handleScroll);
 		};
-	}, [light]);
+	}, [pathname, light]);
 
 	return (
 		<>
