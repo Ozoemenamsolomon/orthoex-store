@@ -1,7 +1,7 @@
 import Breadcrumb from '@components/Breadcrumb';
 import ProductCard from '@components/ProductCard';
 import SooSection from '@components/SooSection';
-import { Container } from '@components/styled';
+import { Container, ProductCards } from '@components/styled';
 import visaLogo from '@assets/new/images/visa-logo.jpg';
 import mastercardLogo from '@assets/new/images/mastercard-logo.jpg';
 import bankTransferlogo from '@assets/new/images/bank-transfer-logo.jpg';
@@ -361,34 +361,24 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 				<SooSection
 					BGColor="white"
 					header={{ title: 'Recently Viewed', align: 'left' }}>
-					<div
-						style={{
-							display: 'grid',
-							gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
-							gap: '2rem',
-						}}>
+					<ProductCards>
 						{Array.from({ length: 4 }, () => productsData[0]).map(
 							(product, index) => (
 								<ProductCard key={`product_${index}`} product={product} />
 							),
 						)}
-					</div>
+					</ProductCards>
 				</SooSection>
 				<SooSection
 					BGColor="white"
 					header={{ title: 'Popular Products', align: 'left' }}>
-					<div
-						style={{
-							display: 'grid',
-							gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
-							gap: '2rem',
-						}}>
+					<ProductCards>
 						{Array.from({ length: 4 }, () => productsData[2]).map(
 							(product, index) => (
 								<ProductCard key={`product_${index}`} product={product} />
 							),
 						)}
-					</div>
+					</ProductCards>
 				</SooSection>
 			</LayoutDiv>
 		</Container>

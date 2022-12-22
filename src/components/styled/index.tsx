@@ -65,3 +65,14 @@ export const Container = styled.div<{
 			(paddingMultiplier ?? 1) * 2}rem;
 	}
 `;
+
+export const ProductCards = styled.div`
+	--child-width: 150px;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(var(--child-width), 1fr));
+	gap: 1rem;
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		gap: 2rem;
+		--child-width: 182px;
+	}
+`;

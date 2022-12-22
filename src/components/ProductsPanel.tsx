@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Dashboard } from 'styled-icons/boxicons-solid';
 import { ArrowPrevious, Filter } from 'styled-icons/fluentui-system-filled';
 import { CheveronLeft, CheveronRight } from 'styled-icons/zondicons';
+import { ProductCards } from './styled';
 
 const ProductsPanel: React.FC<{
 	products: ProductDataType[];
@@ -29,28 +30,28 @@ const ProductsPanel: React.FC<{
 				<Dashboard size={24} color="var(--oex-orange)" />
 			</span>
 		</div>
-		<ProductsContainer>
+		<ProductCards>
 			{products.map((product, index) => (
 				<ProductCard key={`product_${index}`} product={product} />
 			))}
-			{products.length === 0 ? (
-				<EmptyProducts>No product to display</EmptyProducts>
-			) : (
-				<div>
-					<PaginationButton>
-						<ArrowPrevious size={24} />
-					</PaginationButton>
-					<PaginationButton>
-						<CheveronLeft size={24} />
-					</PaginationButton>
-					<PaginationButton className="active">1</PaginationButton>
-					<PaginationButton>2</PaginationButton>
-					<PaginationButton>
-						<CheveronRight size={24} />
-					</PaginationButton>
-				</div>
-			)}
-		</ProductsContainer>
+		</ProductCards>
+		{products.length === 0 ? (
+			<EmptyProducts>No product to display</EmptyProducts>
+		) : (
+			<PaginationBar>
+				<PaginationButton>
+					<ArrowPrevious size={24} />
+				</PaginationButton>
+				<PaginationButton>
+					<CheveronLeft size={24} />
+				</PaginationButton>
+				<PaginationButton className="active">1</PaginationButton>
+				<PaginationButton>2</PaginationButton>
+				<PaginationButton>
+					<CheveronRight size={24} />
+				</PaginationButton>
+			</PaginationBar>
+		)}
 	</ProductPanelContainer>
 );
 
@@ -58,7 +59,9 @@ export default ProductsPanel;
 
 const ProductPanelContainer = styled.article`
 	background-color: white;
-	padding: 1rem;
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		padding: 1rem;
+	}
 `;
 
 const TitleFilterBar = styled.div`
@@ -88,17 +91,12 @@ const EmptyProducts = styled.h3`
 	color: var(--oex-dark-grey);
 `;
 
-const ProductsContainer = styled.div`
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
-	gap: 2rem;
-
-	> div:last-child {
-		display: flex;
-		gap: 1rem;
-		justify-content: center;
-		grid-column: 1 / -1;
-	}
+const PaginationBar = styled.div`
+	display: flex;
+	gap: 1rem;
+	justify-content: center;
+	padding: 1rem 0;
+	margin-top: 1rem;
 `;
 
 const PaginationButton = styled(CTA)`

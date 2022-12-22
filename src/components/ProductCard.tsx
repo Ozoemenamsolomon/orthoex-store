@@ -60,8 +60,7 @@ const ProductCardContainer = styled.div`
 		position: relative;
 	}
 
-	// media queries for mouse hover effect
-	@media (hover: hover) and (pointer: fine) {
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		button {
 			opacity: 0;
 		}
@@ -78,8 +77,10 @@ const ProductCardContainer = styled.div`
 const ProductCardContent = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: 1rem;
 	gap: 0.5rem;
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		padding: 1rem;
+	}
 `;
 
 const ProductName = styled.h3`

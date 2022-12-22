@@ -2,7 +2,7 @@ import Categories from '@components/Categories';
 import ProductCard from '@components/ProductCard';
 import StayTunedSection from '@components/sections/StayTunedSection';
 import SooSection from '@components/SooSection';
-import { Container } from '@components/styled';
+import { Container, ProductCards } from '@components/styled';
 import { categories } from '@data/categories';
 import Breadcrumb from '@components/Breadcrumb';
 import ViewMoreLink from '@components/ViewMoreLink';
@@ -29,18 +29,13 @@ const composite = () => {
 			<SooSection
 				BGColor="white"
 				header={{ title: 'Popular Products', align: 'left' }}>
-				<div
-					style={{
-						display: 'grid',
-						gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
-						gap: '2rem',
-					}}>
+				<ProductCards>
 					{Array.from({ length: 4 }, () => productsData[0]).map(
 						(product, index) => (
 							<ProductCard key={`product_${index}`} product={product} />
 						),
 					)}
-				</div>
+				</ProductCards>
 			</SooSection>
 			<StayTunedSection />
 		</Container>
