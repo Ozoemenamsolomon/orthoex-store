@@ -77,7 +77,11 @@ export const CTALink: FC<
 		href.startsWith('mailto') ||
 		href.startsWith('tel') ||
 		isSocial ? (
-		<a href={href} target="_blank" rel={rel} style={{ display: 'contents' }}>
+		<a
+			href={href}
+			target="_blank"
+			rel="noreferrer"
+			style={{ display: 'contents' }}>
 			{isSocial ? <SocialCTA {...props} /> : <CTA {...props} />}
 		</a>
 	) : (
