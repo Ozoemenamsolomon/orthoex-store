@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 function Calculator() {
 	return (
-		<PageWrapper>
+		<>
 			<PageHeading>
 				<BackButtonWrapper>
 					<Link href="/composites">Back</Link>
@@ -12,8 +12,10 @@ function Calculator() {
 					<span>Calculator</span>
 				</PageHeadingWrapper>
 			</PageHeading>
-			<PageContainer>Here</PageContainer>
-		</PageWrapper>
+			<PageWrapper>
+				<PageContainer>Here</PageContainer>
+			</PageWrapper>
+		</>
 	);
 }
 
@@ -21,16 +23,30 @@ export default Calculator;
 
 const PageWrapper = styled.div`
 	background-color: var(--oex-lightest-grey);
+	// background-color: red;
 	margin-top: 5rem;
+	padding-top: 7rem;
+`;
 
-	// margin: 5rem auto 0rem;
+const PageHeading = styled.div`
+	display: flex;
+	// align-items: center;
+	// justify-content: center;
+	position: fixed;
+	top: 6rem;
+	z-index: 2;
+	background-color: white;
+	width: 100%;
+	min-height: 3rem;
+	border-bottom: 1px solid var(--oex-lightest-grey);
 `;
 
 const BackButtonWrapper = styled.div`
-	border-right: 1px solid black;
+	border-right: 1px solid var(--oex-dark-grey);
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
+	padding: 1rem;
 `;
 
 const PageHeadingWrapper = styled.div`
@@ -40,35 +56,17 @@ const PageHeadingWrapper = styled.div`
 	padding-left: 4rem;
 `;
 
-const PageHeading = styled.div`
-	display: flex;
-	align-items: center;
-	// justify-content: center;
-	position: fixed;
-	top: 6rem;
-	z-index: 2;
-	background-color: white;
-	width: 100%;
-	min-height: 3rem;
-
-	& > .backLink {
-		border-right: 1px solid black;
-	}
-`;
-
 const PageContainer = styled.div`
-	// display: flex;
-	// flex-direction: column;
+	background-color: white;
 	min-height: 50vh;
 	padding: 1rem;
-	margin-top: 9rem;
+	// margin-top: 11rem;
 
 	@media (min-width: 768px) {
 		// flex-direction: row;
-		padding: 3rem 10rem 5rem;
 	}
 
 	@media (min-width: 2000px) {
-		padding: 3rem 25rem 5rem;
+		// padding: 3rem 25rem 5rem;
 	}
 `;
