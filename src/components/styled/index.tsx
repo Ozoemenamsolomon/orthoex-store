@@ -53,6 +53,7 @@ export const Container = styled.div<{
 	max-width: 1500px;
 	width: 100%;
 	margin: auto;
+	margin-top: 1rem;
 	padding-inline: ${({ paddingMultiplierSmall }) =>
 		(paddingMultiplierSmall ?? 1) * 2}rem;
 

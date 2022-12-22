@@ -10,6 +10,7 @@ const StayTunedSection = () => {
 		<SooSection>
 			<Container
 				paddingMultiplier={6}
+				paddingMultiplierSmall={0}
 				style={{ display: 'flex', alignItems: 'flex-end' }}>
 				<div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
 					<div>

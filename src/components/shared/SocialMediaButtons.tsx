@@ -22,6 +22,7 @@ const SocialMediaButtons: React.FC<SocialMediaButtonsType> = ({
 	return (
 		<SocialsContainer color={color}>
 			<CTALink
+				className="no-animate"
 				isSocial={true}
 				target="_blank"
 				rel="noopener noreferrer"
@@ -29,6 +30,7 @@ const SocialMediaButtons: React.FC<SocialMediaButtonsType> = ({
 				<Facebook width={width ? width : 18} height={height ? height : 18} />
 			</CTALink>
 			<CTALink
+				className="no-animate"
 				isSocial={true}
 				target="_blank"
 				rel="noopener noreferrer"
@@ -37,12 +39,14 @@ const SocialMediaButtons: React.FC<SocialMediaButtonsType> = ({
 			</CTALink>
 			<CTALink
 				isSocial={true}
+				className="no-animate"
 				target="_blank"
 				rel="noopener noreferrer"
 				href="https://www.linkedin.com/company/orthoexnigeria/">
 				<Linkedin width={width ? width : 18} height={height ? height : 20} />
 			</CTALink>
 			<CTALink
+				className="no-animate"
 				isSocial={true}
 				target="_blank"
 				rel="noopener noreferrer"
@@ -58,8 +62,9 @@ export const SocialsContainer = styled.div<{ color?: string }>`
 	gap: 1.2rem;
 
 	& > a > button {
-		color: ${({ color }) => (color ? color : '')};
+		color: white;
 		padding: 0rem;
+		background-color: transparent;
 	}
 `;
 

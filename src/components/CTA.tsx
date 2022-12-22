@@ -9,12 +9,12 @@ type CTAType = {
 };
 
 const CTA = styled.button<CTAType>`
-	padding: 1rem 2rem;
+	padding: 1rem 1rem;
 	border-radius: 4px;
 	cursor: pointer;
 	font-weight: 300;
 	transition: all 0.5s ease;
-	font-size: 1.2rem;
+	font-size: 1rem;
 
 	border: ${({ white }) => (white ? '1px solid var(--oex-orange)' : 'none')};
 	background-color: ${prop => (prop.white ? 'white' : 'var(--oex-orange)')};
@@ -25,6 +25,10 @@ const CTA = styled.button<CTAType>`
 		color: ${prop =>
 			prop.white ? 'var(--text-colour-light)' : 'var(--oex-orange)'};
 		background-color: ${prop => (prop.white ? 'var(--oex-orange)' : 'white')};
+	}
+	@media ${prop => prop.theme.breakpoints.above.sm} {
+		padding: 1rem 2rem;
+		font-size: 1.2rem;
 	}
 `;
 
@@ -59,18 +63,19 @@ export const CTAFlex = styled(CTA)`
 	}
 `;
 
-type CTAProps = React.ComponentProps<typeof CTA>;
+type CTAProps = React.ButtonHTMLAttributes<HTMLButtonElement> & CTAType;
 
-export const CTALink: FC<CTAProps & { href: string; isSocial?: boolean }> = ({
-	href,
-	isSocial,
-	...props
-}) => {
+export const CTALink: FC<
+	CTAProps & {
+		href: string;
+		isSocial?: boolean;
+		target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
+		rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
+	}
+> = ({ href, isSocial, target, rel, ...props }) => {
 	return (
-		<Link href={href} legacyBehavior>
-			<a style={{ display: 'contents' }}>
-				{isSocial ? <SocialCTA {...props} /> : <CTA {...props} />}
-			</a>
+		<Link target={target} href={href} rel={rel} style={{ display: 'contents' }}>
+			{isSocial ? <SocialCTA {...props} /> : <CTA {...props} />}
 		</Link>
 	);
 };

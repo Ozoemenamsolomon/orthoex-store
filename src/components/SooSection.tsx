@@ -44,7 +44,7 @@ const SOOSectionContainer = styled('section')<{
 	bgColor?: string;
 }>`
 	background-color: ${prop => prop.bgColor};
-	${({ bgColor }) => bgColor && `margin-inline: -2rem;`}
+	${({ bgColor }) => bgColor && `margin-inline: -2rem; padding-inline: 2rem;`}
 	margin-top: 1rem;
 	padding-block: 3rem;
 	flex-direction: column;

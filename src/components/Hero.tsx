@@ -1,8 +1,7 @@
-import styled from 'styled-components';
-import Image, { StaticImageData } from 'next/image';
-
 import DefaultBG from '@assets/images/website-backfround-image.jpg';
-import React, { FC } from 'react';
+import Image, { StaticImageData } from 'next/image';
+import { FC } from 'react';
+import styled from 'styled-components';
 import { Container } from './styled';
 
 type HeroCompProp = {
@@ -74,13 +73,12 @@ const HeroBg = styled(Image)`
 `;
 
 const Hero = styled.div`
-	--hero-padding: 10em 0em;
+	--hero-padding: 6em 0em;
 	display: flex;
 	padding: var(--hero-padding);
 	justify-content: center;
 
 	@media ${({ theme }) => theme.breakpoints.above.sm} {
-		--hero-padding: 4em 0em;
 		& > div {
 			flex-direction: column;
 		}

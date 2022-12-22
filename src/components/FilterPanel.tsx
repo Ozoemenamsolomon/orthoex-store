@@ -166,6 +166,7 @@ const FilterPanelContainer = styled.aside`
 	top: 7rem;
 	background-color: white;
 	padding: 1rem;
+	display: none;
 
 	> div:nth-of-type(2) {
 		> div:first-child > div {
@@ -176,7 +177,7 @@ const FilterPanelContainer = styled.aside`
 		}
 	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		display: none;
+		display: block;
 	}
 `;
 

@@ -153,15 +153,15 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 							{navLinks.map((navLink, index) => (
 								<li
 									style={{
+										display: 'flex',
+										flexDirection: 'column',
 										color: `${
 											navLink.to === pathname ? 'var(--oex-orange)' : ''
 										}`,
 									}}
 									key={`nav-link-3-${navLink.name}-${index}`}
 									onClick={() => setIsNavOpen(prev => !prev)}>
-									<Link href={navLink.to} legacyBehavior>
-										{navLink.name}
-									</Link>
+									<Link href={navLink.to}>{navLink.name}</Link>
 								</li>
 							))}
 						</StyledSideBarNavLink>
