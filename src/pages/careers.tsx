@@ -25,7 +25,7 @@ const careerData: ImageInfoHeaderType = {
 	cta: { link: '#openPositions', text: 'View Open roles' },
 };
 
-function careers() {
+function Careers() {
 	const [highlightBiggest, setHighlightBiggest] = useState(true);
 	return (
 		<>
@@ -119,7 +119,7 @@ function careers() {
 	);
 }
 
-export default careers;
+export default Careers;
 
 export const StyledComponentHeading = styled.h2`
 	font-size: 2rem;

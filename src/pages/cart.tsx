@@ -51,7 +51,7 @@ const Cart: NextPage<{
 						}}>
 						<Title>Your cart (3 items)</Title>
 						{products.map(({ previewImages, ...product }, index) => (
-							<CartItemWrapper>
+							<CartItemWrapper key={`cart-item-${index}`}>
 								<div>
 									<div>
 										<ImageContainer>
