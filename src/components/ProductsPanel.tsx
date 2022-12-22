@@ -106,6 +106,7 @@ const PaginationButton = styled(CTA)`
 	background-color: white;
 	border: 1px solid var(--oex-grey);
 	border-radius: 4px;
+	padding: 0;
 
 	&.active {
 		border-color: var(--oex-orange);

@@ -23,18 +23,17 @@ const HeroContent = styled.div`
 	justify-content: center;
 	align-items: flex-start;
 	gap: 2rem;
-	@media (min-width: 600px) {
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		max-width: 33rem;
 	}
 `;
 
 const HeroTitle = styled.h1`
 	color: var(--oex-orange);
-	font-size: 4rem;
+	font-size: 3rem;
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		font-size: 4rem;
+	}
 `;
 
-const HeroClaim = styled.p`
-	/* @media (max-width: 600px) {
-		text-align: justify;
-	} */
-`;
+const HeroClaim = styled.p``;

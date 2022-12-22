@@ -145,9 +145,9 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 	},
 	{
 		style: {
-			backgroundColor: 'var(--oex-orange)',
 			paddingBlock: '5rem',
 		},
+		BGColor: 'var(--oex-orange)',
 		children: (
 			<ServicesCards className="smaller">
 				{orderBenefits.map((benefit, index) => (

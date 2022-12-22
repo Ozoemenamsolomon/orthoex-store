@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { Container } from '@components/styled';
@@ -26,13 +26,15 @@ const careerData: ImageInfoHeaderType = {
 };
 
 function careers() {
+	const [highlightBiggest, setHighlightBiggest] = useState(true);
 	return (
-		<StyledCareerWrapper>
+		<>
 			<Container paddingMultiplier={0}>
 				<ImageInfoHeader data={careerData} />
-
 				<StyledComponentHeading>Build a future with us</StyledComponentHeading>
-				<StyledImageContentDiv>
+				<StyledImageContentDiv
+					onMouseOver={() => setHighlightBiggest(false)}
+					onMouseLeave={() => setHighlightBiggest(true)}>
 					<StyledImageSmallDiv>
 						<Image
 							src={WomanOne}
@@ -41,7 +43,7 @@ function careers() {
 							alt="career image"
 						/>
 					</StyledImageSmallDiv>
-					<StyledImageLargeDiv>
+					<StyledImageSmallDiv className={highlightBiggest ? 'selected' : ''}>
 						{/* TOD0: Set the image to be darker */}
 						<Image
 							src={CareerManAndWoman}
@@ -57,7 +59,7 @@ function careers() {
 								employee is essential.{' '}
 							</p>
 						</StyledContentInfo>
-					</StyledImageLargeDiv>
+					</StyledImageSmallDiv>
 					<StyledImageSmallDiv>
 						<Image
 							src={WomanTwo}
@@ -113,15 +115,11 @@ function careers() {
 					<JobPositonCard data={job} key={`job-position-${index}`} />
 				))}
 			</StyledOpenPositons>
-		</StyledCareerWrapper>
+		</>
 	);
 }
 
 export default careers;
-
-const StyledCareerWrapper = styled.div`
-	margin: 7rem 0rem 0rem;
-`;
 
 export const StyledComponentHeading = styled.h2`
 	font-size: 2rem;
@@ -142,50 +140,19 @@ export const StyledComponentHeading = styled.h2`
 const StyledImageContentDiv = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 1rem;
+	gap: 0.2rem;
 	height: 10rem;
 	margin-bottom: 2rem;
 
 	@media (min-width: 768px) {
 		height: 30rem;
 		padding: 2rem;
-	}
-`;
-
-const StyledImageSmallDiv = styled.div`
-	width: 9%;
-	height: 100%;
-	position: relative;
-	overflow: hidden;
-
-	@media (min-width: 768px) {
-		width: 15%;
-	}
-`;
-
-const StyledImageLargeDiv = styled.div`
-	width: 70%;
-	height: 100%;
-	position: relative;
-	overflow: hidden;
-	// opacity: 0.5;
-	// background-color: var(--oex-orange);
-
-	&::before {
-		background-image: linear-gradient(to top right, #1a1a1a, transparent);
-		content: '';
-		height: 100%;
-		position: absolute;
-		width: 100%;
-		z-index: 1;
-	}
-
-	@media (min-width: 768px) {
-		width: 60%;
+		gap: 1rem;
 	}
 `;
 
 const StyledContentInfo = styled.div`
+	display: none;
 	position: absolute;
 	color: white;
 	padding: 0.5rem;
@@ -218,7 +185,36 @@ const StyledContentInfo = styled.div`
 
 		& > p {
 			font-size: 0.8rem;
-			// margin-bottom: 0rem;
+		}
+	}
+`;
+
+const StyledImageSmallDiv = styled.div`
+	flex: 1;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+	transition: flex 0.3s ease-in-out;
+
+	&::before {
+		background-image: linear-gradient(to top right, #1a1a1a, transparent);
+		content: '';
+		height: 100%;
+		position: absolute;
+		width: 100%;
+		z-index: 1;
+		opacity: 0;
+		transition: opacity 0.3s ease-in-out;
+	}
+
+	&:hover,
+	&.selected {
+		flex: 4;
+		&::before {
+			opacity: 1;
+		}
+		${StyledContentInfo} {
+			display: block;
 		}
 	}
 `;

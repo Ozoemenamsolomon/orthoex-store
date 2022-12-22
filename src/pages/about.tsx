@@ -1,3 +1,4 @@
+import { Container } from '@components/styled';
 import { aboutData } from '@data/aboutPageData';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -7,7 +8,7 @@ function About() {
 	const [currentSelected, setcurrentSelected] = useState(0);
 
 	return (
-		<StyledAboutWrapper>
+		<Container>
 			<StyledAbout>
 				<AboutInfo
 					data={aboutData}
@@ -16,7 +17,7 @@ function About() {
 				/>
 				<AboutDetail data={aboutData} currentSelected={currentSelected} />
 			</StyledAbout>
-		</StyledAboutWrapper>
+		</Container>
 	);
 }
 
@@ -28,19 +29,11 @@ const StyledAbout = styled.div`
 	display: flex;
 	flex-direction: column;
 	min-height: 80vh;
-	// margin-top: 5rem;
 	padding: 1rem;
-	margin: 5rem auto 0rem;
 
 	@media (min-width: 768px) {
 		flex-direction: row;
 		padding: 3rem 10rem 5rem;
 		background-color: var(--oex-lightest-grey);
 	}
-
-	@media (min-width: 2000px) {
-		padding: 3rem 25rem 5rem;
-	}
 `;
-
-const StyledAboutWrapper = styled.div``;

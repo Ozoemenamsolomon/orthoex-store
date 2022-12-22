@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import LadyImage from '@assets/new/images/orangeshirt-lady.jpg';
 import ImageInfoHeader, {
 	ImageInfoHeaderType,
@@ -35,19 +34,13 @@ const serviceStandardData = {
 const trainings = () => {
 	return (
 		<>
-			<StyledTraining>
-				<Container bg="white" paddingMultiplier={0}>
-					<ImageInfoHeader data={data} />
-					<ServiceStandard data={serviceStandardData} />
-				</Container>
-				<FeaturedEvents />
-			</StyledTraining>
+			<Container bg="white" paddingMultiplier={0}>
+				<ImageInfoHeader data={data} />
+				<ServiceStandard data={serviceStandardData} />
+			</Container>
+			<FeaturedEvents />
 		</>
 	);
 };
 
 export default trainings;
-
-const StyledTraining = styled.div`
-	margin-top: 7rem;
-`;

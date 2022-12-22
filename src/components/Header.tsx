@@ -33,24 +33,25 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	const [light, setLight] = useState(false);
 
 	useEffect(() => {
-		const handleScroll = () => {
-			setScrollOffset(window.scrollY);
-		};
-
 		setLight(
-			['products', 'about', 'careers', 'contact', 'trainings'].includes(
+			['products', 'about', 'careers', 'contact', 'trainings', 'cart'].includes(
 				pathname.split('/')[1],
 			) || /\/composites\/(\w)+/.test(pathname),
 		);
 
-		if (!light) {
-			document.addEventListener('scroll', handleScroll, { passive: true });
+		const handleScroll = () => {
+			setScrollOffset(window.scrollY);
+		};
 
-			return () => {
-				document.removeEventListener('scroll', handleScroll);
-			};
+		if (light) {
+			return;
 		}
-	}, [pathname]);
+		document.addEventListener('scroll', handleScroll, { passive: true });
+
+		return () => {
+			document.removeEventListener('scroll', handleScroll);
+		};
+	}, [pathname, light]);
 
 	return (
 		<>
@@ -178,17 +179,25 @@ const SooHeader = styled.header<{ light: boolean }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: fixed;
-	width: 100%;
 	z-index: 5;
 	color: #fff;
 	transition: background-color 0.5s ease;
-	background-color: ${({ light }) => light && 'white'};
-	&.scrolled {
-		background-color: #00000089;
-		color: white;
-		backdrop-filter: blur(4px);
-	}
+	${({ light }) =>
+		light
+			? `
+			position: sticky;
+			top:0; 
+			background-color: white;
+    		box-shadow: 0px 1px 3px #d6d6d6;
+			`
+			: `
+			position: fixed;
+			width: 100%;
+			&.scrolled {
+				background-color: #00000089;
+				color: white;
+				backdrop-filter: blur(4px);
+			}`}
 `;
 const Logo = styled.div`
 	padding: 1rem 1rem;
