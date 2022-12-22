@@ -73,9 +73,16 @@ export const CTALink: FC<
 		rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
 	}
 > = ({ href, isSocial, target, rel, ...props }) => {
-	return (
-		<Link target={target} href={href} rel={rel} style={{ display: 'contents' }}>
+	return href.startsWith('http') ||
+		href.startsWith('mailto') ||
+		href.startsWith('tel') ||
+		isSocial ? (
+		<a href={href} target="_blank" rel={rel} style={{ display: 'contents' }}>
 			{isSocial ? <SocialCTA {...props} /> : <CTA {...props} />}
+		</a>
+	) : (
+		<Link href={href} rel={rel} style={{ display: 'contents' }}>
+			{<CTA {...props} />}
 		</Link>
 	);
 };

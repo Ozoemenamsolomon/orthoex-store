@@ -16,8 +16,6 @@ interface Props {
 	buttons: ButtonInfo[];
 }
 
-// TODO layout is deprecated
-
 const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
 	return (
 		<StyledInfoCard>
@@ -32,7 +30,7 @@ const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
 			<p>{description}</p>
 			<ButtonContainer>
 				{buttons.map(({ Icon, link, title }, index) => (
-					<Link target="_blank" style={{ flex: 1 }} key={index} href={link}>
+					<Link style={{ flex: 1 }} key={index} href={link}>
 						<CTAFlex white>
 							{Icon && <Icon />}
 							{title}
