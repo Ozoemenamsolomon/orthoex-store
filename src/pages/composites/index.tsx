@@ -10,7 +10,7 @@ import nigeria from '@assets/new/icons/nigeria.svg';
 import quality from '@assets/new/icons/quality.svg';
 import heroBG from '@assets/new/images/hero-bg.jpg';
 import Categories from '@components/Categories';
-import CTA, { CTALink } from '@components/CTA';
+import { CTALink } from '@components/CTA';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
 import InfoTestimonial from '@components/InfoTestimonial';
@@ -72,7 +72,11 @@ const expectancies: ServiceCardType[] = [
 		description:
 			'Use our resin calculator to estimate the amount of epoxy resin you will need for your projects.',
 		image: calculator,
-		cta: <CTA white>Calculate your resin</CTA>,
+		cta: (
+			<CTALink href="/calculator" white>
+				Calculate your resin
+			</CTALink>
+		),
 		title: undefined,
 	},
 ];

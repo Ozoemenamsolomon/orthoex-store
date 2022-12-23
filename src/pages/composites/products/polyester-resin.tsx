@@ -1,32 +1,33 @@
-import Breadcrumb from '@components/Breadcrumb';
-import ProductCard from '@components/ProductCard';
-import SooSection from '@components/SooSection';
-import { Container, ProductCards } from '@components/styled';
-import visaLogo from '@assets/new/images/visa-logo.jpg';
-import mastercardLogo from '@assets/new/images/mastercard-logo.jpg';
-import bankTransferlogo from '@assets/new/images/bank-transfer-logo.jpg';
-import headphone from '@assets/new/icons/headphone-black.svg';
 import creditCard from '@assets/new/icons/credit-card-black.svg';
+import DataSheet from '@assets/new/icons/DataSheet';
 import deliveryVan from '@assets/new/icons/delivery-van-black.svg';
+import headphone from '@assets/new/icons/headphone-black.svg';
 import nigeriaMap from '@assets/new/icons/nigeria.svg';
-import styled from 'styled-components';
+import bankTransferlogo from '@assets/new/images/bank-transfer-logo.jpg';
+import mastercardLogo from '@assets/new/images/mastercard-logo.jpg';
+import visaLogo from '@assets/new/images/visa-logo.jpg';
+import Breadcrumb from '@components/Breadcrumb';
+import CTA, { CTALink } from '@components/CTA';
+import CustomerReviewCommentCard from '@components/CustomerReviewCommentCard';
+import { SocialsContainer } from '@components/Footer';
+import ProductCard from '@components/ProductCard';
 import ProductStars from '@components/ProductStars';
-import { formatPrice } from 'utils';
+import { helps } from '@components/sections/NeedHelpSection';
+import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import SooSection from '@components/SooSection';
+import StarPercentage from '@components/StarPercentage';
+import { Container, ProductCards } from '@components/styled';
+import { ProductDataType, productsData } from '@data/productsData';
+import { Facebook, Instagram, Twitter } from '@styled-icons/bootstrap';
 import { NextPage } from 'next';
 import Image from 'next/image';
-import { ProductDataType, productsData } from '@data/productsData';
-import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
-import { SocialsContainer } from '@components/Footer';
-import CTA, { SocialCTA } from '@components/CTA';
-import { Facebook, Instagram, Twitter } from '@styled-icons/bootstrap';
-import DataSheet from '@assets/new/icons/DataSheet';
-import { helps } from '@components/sections/NeedHelpSection';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import StarPercentage from '@components/StarPercentage';
-import CustomerReviewCommentCard from '@components/CustomerReviewCommentCard';
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import styled from 'styled-components';
+import { formatPrice } from 'utils';
 
 const orderBenefits: ServiceCardType[] = [
 	{
@@ -159,6 +160,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 								<ProductStars average={reviewAverage} count={reviewCount} />
 								<Price>{formatPrice(price)}</Price>
 								<p style={{ color: '#575757' }}> {description}</p>
+								<ShareProduct forSmall />
 							</div>
 							<div>
 								<Title>Safe and secure payment </Title>
@@ -395,20 +397,7 @@ export async function getStaticProps() {
 
 const ShareandDataSheets = () => (
 	<ShareandDataSheetsContainer>
-		<div>
-			<Title>Share this product</Title>
-			<SocialsContainer>
-				<SocialCTA>
-					<Twitter width={18} />
-				</SocialCTA>
-				<SocialCTA>
-					<Facebook width={18} />
-				</SocialCTA>
-				<SocialCTA>
-					<Instagram width={18} />
-				</SocialCTA>
-			</SocialsContainer>
-		</div>
+		<ShareProduct />
 		<div>
 			<Title>
 				<DataSheet colour="#707070" />
@@ -421,11 +410,54 @@ const ShareandDataSheets = () => (
 	</ShareandDataSheetsContainer>
 );
 
+const ShareProduct = ({ forSmall = false }) => {
+	const router = useRouter();
+
+	const { asPath } = router;
+
+	const shareOnTwitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+		'Check out this product',
+	)}&url=${encodeURIComponent(asPath)}`;
+
+	const shareOnFacebookLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+		asPath,
+	)}`;
+
+	const shareOnInstagramLink = `https://www.instagram.com/?url=${encodeURIComponent(
+		asPath,
+	)}`;
+
+	return (
+		<ShareProductContainer forSmall={forSmall}>
+			<Title>Share this product</Title>
+			<SocialsContainer>
+				<CTALink isSocial href={shareOnTwitterLink}>
+					<Twitter width={18} />
+				</CTALink>
+				<CTALink isSocial href={shareOnFacebookLink}>
+					<Facebook width={18} />
+				</CTALink>
+				<CTALink isSocial href={shareOnInstagramLink}>
+					<Instagram width={18} />
+				</CTALink>
+			</SocialsContainer>
+		</ShareProductContainer>
+	);
+};
+
+const ShareProductContainer = styled.div<{ forSmall: boolean }>`
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		display: ${({ forSmall }) => forSmall && 'none'};
+	}
+`;
+
 const ShareandDataSheetsContainer = styled.div`
-	/* display: none; */
-	display: flex;
+	display: none;
 	gap: 1rem;
 	flex-direction: column;
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		display: flex;
+	}
 `;
 
 const DataSheetLink = styled.p`
@@ -493,8 +525,7 @@ const LayoutDiv = styled.div`
 		margin-top: 0;
 	}
 
-	// TODO make the breakpoint variables
-	@media (min-width: 1200px) {
+	@media ${({ theme }) => theme.breakpoints.above.xl} {
 		grid-template-columns: 2.5fr 1fr;
 		> *:nth-child(1),
 		> *:nth-last-child(2),
@@ -505,8 +536,7 @@ const LayoutDiv = styled.div`
 `;
 
 const ProductData = styled.div`
-	// TODO make the breakpoint variables
-	@media (min-width: 700px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		display: flex;
 		gap: 1rem;
 	}

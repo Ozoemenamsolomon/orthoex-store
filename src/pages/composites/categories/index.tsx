@@ -22,6 +22,7 @@ const composite = () => {
 			<Breadcrumb breadcrumb={breadcrumb} />
 			<SooSection
 				BGColor="white"
+				style={{ display: 'flex', flexDirection: 'column' }}
 				header={{ title: 'All Categories', align: 'left' }}>
 				<Categories categories={categories} />
 				<ViewMoreLink href="/composites/products" text="View more Products" />

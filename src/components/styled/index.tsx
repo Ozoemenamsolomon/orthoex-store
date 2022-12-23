@@ -27,8 +27,7 @@ export const ServicesCards = styled.div<{
 	& > div.wider:first-child {
 		padding: 0.8rem;
 	}
-	// TODO make the breakpoint variables
-	@media (min-width: 600px) {
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		gap: 5rem;
 		--min-width: 130px;
 		& > div.wider {
@@ -53,12 +52,11 @@ export const Container = styled.div<{
 	max-width: 1500px;
 	width: 100%;
 	margin: auto;
-	margin-top: 1rem;
+	padding-top: 1rem;
 	padding-inline: ${({ paddingMultiplierSmall }) =>
 		(paddingMultiplierSmall ?? 1) * 2}rem;
 
-	// TODO make the breakpoint variables
-	@media (min-width: 900px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		${({ verticalPaddingInREM: verticalPadding }) =>
 			verticalPadding ? `padding-block: ${verticalPadding}rem;` : ''}
 		padding-inline: ${({ paddingMultiplier }) =>
