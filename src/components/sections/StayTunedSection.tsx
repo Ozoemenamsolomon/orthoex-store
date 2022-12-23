@@ -10,7 +10,6 @@ import { useRouter } from 'next/router';
 const StayTunedSection = () => {
 	const [formState, handleSubmit] = useForm('mvonpbje');
 	const { asPath } = useRouter();
-	console.log({ asPath: useRouter() });
 
 	return formState.succeeded ? (
 		<ThankYouContainer>
@@ -60,7 +59,7 @@ const StayTunedSection = () => {
 								type="email"
 								name="email"
 								required
-								placeholder="Enter your email address here"
+								placeholder="john@mail.com"
 							/>
 							<ValidationError
 								prefix="Email"
@@ -97,6 +96,8 @@ const ThankYouContainer = styled.div`
 	align-items: center;
 	gap: 1rem;
 	text-align: center;
+	justify-content: center;
+	aspect-ratio: 5.5;
 	.wrapper {
 		display: flex;
 		justify-content: center;

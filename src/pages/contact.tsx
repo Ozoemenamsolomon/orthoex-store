@@ -129,7 +129,7 @@ const Contact = () => {
 										id="fullname"
 										name="fullname"
 										onChange={onInputChange}
-										placeholder="Enter your full name here"
+										placeholder="John Doe"
 										value={fullName}
 									/>
 								</StyledFormControl>
@@ -141,7 +141,7 @@ const Contact = () => {
 										id="email"
 										name="email"
 										onChange={onInputChange}
-										placeholder="Enter your email address here"
+										placeholder="john@email.com"
 										value={email}
 									/>
 								</StyledFormControl>
@@ -152,7 +152,7 @@ const Contact = () => {
 										id="phone"
 										name="phone"
 										onChange={onInputChange}
-										placeholder="Enter your phone number here"
+										placeholder="+2347000000000"
 										value={phone}
 									/>
 								</StyledFormControl>
@@ -171,7 +171,7 @@ const Contact = () => {
 								</StyledFormControl>
 
 								<StyledFormButtonControl>
-									<CTA>Send message</CTA>
+									<CTA type="submit">Send message</CTA>
 								</StyledFormButtonControl>
 							</form>
 						</StyledFormWrapper>
