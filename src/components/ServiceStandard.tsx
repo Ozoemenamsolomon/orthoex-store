@@ -47,7 +47,7 @@ const StyledServiceStandard = styled.div`
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
 		padding: 2rem;
 		gap: 5rem;
@@ -69,7 +69,7 @@ const ServiceWriteUp = styled.div`
 		color: var(--text-colour-grey);
 	}
 
-	@media (min-width: 1028px) {
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		width: 40%;
 
 		& > h3 {
@@ -84,15 +84,14 @@ const ServiceWriteUp = styled.div`
 const StyledServiceIcon = styled.div`
 	width: 100%;
 	height: 100%;
-	// flex: 2 1 auto;
 
-	@media (min-width: 1024px) {
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		width: 60%;
 	}
 `;
 
 const StyledServiceCards = styled(ServicesCards)`
-	@media (min-width: 1024px) {
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		--min-width: 128px;
 	}
 `;

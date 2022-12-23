@@ -66,7 +66,7 @@ const StyledInfoCard = styled.div`
 		padding: 0rem;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		& > p {
 			font-size: 1.2rem;
 			line-height: 1.3rem;
@@ -88,7 +88,7 @@ const ButtonContainer = styled.div`
 	padding: 0rem;
 	width: 100%;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 0rem;
 	}
 `;

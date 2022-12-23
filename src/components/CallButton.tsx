@@ -30,7 +30,7 @@ const StyledCallButtonDiv = styled.div`
 	bottom: 2%;
 	z-index: 10;
 	width: 20%;
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		display: none;
 	}
 `;

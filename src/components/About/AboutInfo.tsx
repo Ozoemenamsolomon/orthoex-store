@@ -16,15 +16,16 @@ const AboutInfo: React.FC<AboutInfoProps> = ({
 }) => {
 	return (
 		<StyledAboutInfo>
-			{data?.map((info, index) => (
-				<StyledAboutInfoUl key={`about-tab-nav-${index}`}>
+			<StyledAboutInfoUl>
+				{data?.map((info, index) => (
 					<StyledAboutInfoLi
-						clicked={currentSelected === index}
+						key={`about-tab-nav-${index}`}
+						selected={currentSelected === index}
 						onClick={() => setCurrentSelected(index)}>
 						{info.title}
 					</StyledAboutInfoLi>
-				</StyledAboutInfoUl>
-			))}
+				))}
+			</StyledAboutInfoUl>
 		</StyledAboutInfo>
 	);
 };
@@ -32,7 +33,7 @@ const AboutInfo: React.FC<AboutInfoProps> = ({
 export default AboutInfo;
 
 const StyledAboutInfo = styled.div`
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		background-color: white;
 		width: 25%;
 		padding-left: 1.5rem;
@@ -44,19 +45,18 @@ const StyledAboutInfo = styled.div`
 const StyledAboutInfoUl = styled.ul`
 	list-style-type: none;
 	padding: 0rem;
-	@media (min-width: 768px) {
-	}
 `;
 
-const StyledAboutInfoLi = styled.li<{ clicked?: boolean }>`
+const StyledAboutInfoLi = styled.li<{ selected?: boolean }>`
 	border: 0.1rem solid var(--oex-light-grey);
 	padding: 0.8rem;
 	text-align: center;
-	color: ${({ clicked }) => (clicked ? 'black' : 'var(--oex-dark-grey)')};
-	background-color: ${({ clicked }) =>
-		clicked ? 'var(--oex-lightest-grey)' : ''};
+	cursor: pointer;
+	color: ${({ selected }) => (selected ? 'black' : 'var(--oex-dark-grey)')};
+	background-color: ${({ selected }) =>
+		selected ? 'var(--oex-lightest-grey)' : ''};
 	border-radius: 0.4rem;
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		border-radius: 0rem;
 		border: none;
 		padding: 1.2rem;

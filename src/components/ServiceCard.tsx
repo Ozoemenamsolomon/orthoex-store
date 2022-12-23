@@ -18,7 +18,6 @@ type ServiceCardProps = {
 	/**
 	 * | classes | action |
 	 * |---|---|
-	 * |`last`| orders card to last in mobile |
 	 * |`taller`| spans card two rows |
 	 * |`rounded`| makes the card border rounded |
 	 * |`shrink-start`| shrinks card  |
@@ -69,7 +68,6 @@ const ServiceCardContainer = styled.div`
 	height: 100%;
 	width: 100%;
 	justify-content: space-between;
-	/* background-color: green; */
 
 	&:not(.no-padding) {
 		padding: 2rem;
@@ -104,12 +102,6 @@ const ServiceCardContainer = styled.div`
 
 	p {
 		margin-bottom: 0;
-	}
-
-	@media (max-width: 600px) {
-		&.last {
-			order: 1;
-		}
 	}
 `;
 

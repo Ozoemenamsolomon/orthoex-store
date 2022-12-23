@@ -34,13 +34,20 @@ const CTA = styled.button<CTAType>`
 
 export default CTA;
 
-export const SocialCTA = styled(CTA)`
+const SocialCTA = styled(CTA)`
 	padding: 0.5rem;
 	color: black;
 	background-color: white;
 	border-radius: 7px;
 `;
 
+// TODO: remove,
+/**
+ * new CTAs should be based on functionality not on styling
+ *
+ * @deprecated use CTALink or CTA
+ * use a span within if you need advanced styling that cannot be extended
+ */
 export const CTAFlex = styled(CTA)`
 	font: inherit;
 	padding: 0.5rem;

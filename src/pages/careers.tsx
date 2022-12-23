@@ -128,7 +128,7 @@ export const StyledComponentHeading = styled.h2`
 	text-align: left;
 	margin-bottom: 2rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		font-size: 3rem;
 		font-weight: 400;
 		line-height: 3rem;
@@ -144,7 +144,7 @@ const StyledImageContentDiv = styled.div`
 	height: 10rem;
 	margin-bottom: 2rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		height: 30rem;
 		padding: 2rem;
 		gap: 1rem;
@@ -173,7 +173,7 @@ const StyledContentInfo = styled.div`
 		margin-bottom: 0rem;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 2rem;
 		width: 55%;
 
@@ -229,7 +229,7 @@ const StyledHiringProcess = styled.div`
 		font-weight: 400;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 3rem;
 
 		& > h2 {
@@ -247,13 +247,12 @@ const StyledHiringContent = styled.div`
 	justify-content: center;
 	gap: 2rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
 	}
 `;
 
 const StyledHiringContentCard = styled.div`
-	// padding-left: 3rem;
 	position: relative;
 	display: flex;
 
@@ -273,7 +272,7 @@ const StyledHiringContentCard = styled.div`
 		font-size: 1rem;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding-left: 0rem;
 		flex-direction: row;
 		align-items: start;
@@ -306,7 +305,7 @@ const StyledContentCardDiv = styled.div`
 		margin: 0;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		display: flex;
 		flex-direction: column;
 		gap: 5rem;
@@ -324,7 +323,7 @@ const StyledOpenPositons = styled.div`
 		font-weight: 400;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 3rem 5rem;
 
 		& > h2 {

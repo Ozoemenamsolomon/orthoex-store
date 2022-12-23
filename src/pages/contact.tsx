@@ -52,7 +52,7 @@ const supportInfoData: SupportInfoType = {
 			CardIcon: CallAgent,
 			title: 'Sales and Product support',
 			paragraph:
-				'Interested in any of our products? We’d love to hear from you! Contact our product experts',
+				"Interested in any of our products? We'd love to hear from you! Contact our product experts",
 			buttons: [
 				{ title: 'Call', link: 'tel:+2347030324696', Icon: CallIcon },
 				{ title: 'Chat', link: 'https://wa.me/+2347030324696', Icon: Message },
@@ -181,7 +181,7 @@ const Contact = () => {
 			<InfoText
 				title={"Let's stay connected"}
 				description={
-					'Are you following us on our social media channels? We’re constantly sharing product news and event updates. Click the icon below to follow your favourite brand.'
+					"Are you following us on our social media channels? We're constantly sharing product news and event updates. Click the icon below to follow your favourite brand."
 				}>
 				<SocialMediaButtons
 					height={20}
@@ -202,7 +202,7 @@ const StyledContactWrapper = styled.div`
 const StyledMapForm = styled.div`
 	margin-bottom: 2rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 2rem;
 		display: flex;
 		align-items: center;
@@ -213,7 +213,7 @@ const StyledMapForm = styled.div`
 `;
 
 const StyledFormSection = styled.div`
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		width: 50%;
 	}
 `;
@@ -221,7 +221,7 @@ const StyledFormSection = styled.div`
 const StyledMapSection = styled.div`
 	margin-bottom: 2rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		width: 50%;
 	}
 `;
@@ -243,7 +243,7 @@ const StyledMapHolder = styled.div`
 		margin: 0 auto;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		& > button {
 			width: 50%;
 			margin: 0 auto;

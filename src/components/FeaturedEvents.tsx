@@ -45,7 +45,7 @@ export const StyledHeading = styled.h3`
 	margin-bottom: 2rem;
 	font-weight: 500;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		font-weight: 700;
 		font-size: 3rem;
 		margin-bottom: 5rem;

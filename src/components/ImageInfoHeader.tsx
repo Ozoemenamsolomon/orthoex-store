@@ -41,10 +41,9 @@ const StyledDiv = styled.div`
 	padding: 1rem 0rem;
 	margin-bottom: 1rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		display: flex;
 		flex-direction: row-reverse;
-		// justify-content: space-between;
 		align-items: center;
 		padding: 2rem;
 		margin-bottom: 4rem;
@@ -61,7 +60,7 @@ const StyledImageDiv = styled.div`
 	box-shadow: 0.9rem 0.9rem var(--oex-orange);
 	max-height: 25rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		width: 32%;
 		margin-bottom: 0rem;
 	}
@@ -85,7 +84,7 @@ const StyledContentDiv = styled.div`
 		margin-bottom: 2rem;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		width: 50%;
 
 		& > h2 {

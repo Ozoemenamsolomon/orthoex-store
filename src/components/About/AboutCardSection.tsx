@@ -59,7 +59,7 @@ const StyledAboutCard = styled.div`
 		text-align: center;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 2rem;
 		margin-bottom: 0rem;
 

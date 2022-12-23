@@ -108,17 +108,17 @@ const StyledWrapperDiv = styled.div`
 		-2px 0px 4px rgba(207, 207, 207, 0.1), 0px 2px 12px rgba(207, 207, 207, 0.1),
 		0px -2px 16px rgba(207, 207, 207, 0.1);
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 2rem 2rem 1rem;
 	}
 
-	@media (min-width: 1028px) {
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		padding: 4rem 3rem 1rem;
 	}
 `;
 
 const StyledDetailsSection = styled.div`
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		display: flex;
 		align-items: flex-start;
 		justify-content: space-between;
@@ -165,7 +165,7 @@ const StyledDays = styled.span`
 	padding: 0.4rem 0.2rem;
 	font-size: 0.6rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 0.4rem 0.6rem;
 		font-size: 1rem;
 	}
@@ -195,7 +195,7 @@ const StyledPrice = styled.div`
 		padding: 0.7rem 1.2rem;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		gap: 2rem;
 		flex-direction: column;
 		align-items: flex-start;
@@ -219,7 +219,7 @@ const StyledIconText = styled.p`
 		cursor: pointer;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		font-size: 1.2rem;
 	}
 `;
@@ -238,7 +238,7 @@ const StyledButtonGroup = styled.div`
 		gap: 0.5rem;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		margin: 0;
 		justify-content: space-between;
 		gap: 1rem;
@@ -268,7 +268,7 @@ const StyledCourseInfo = styled.div<{ open: boolean }>`
 		font-weight: 500;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		color: black;
 		padding: 1rem;
 
@@ -283,7 +283,7 @@ const StyledText = styled.p`
 	line-height: 1.5;
 	margin: 1rem 0;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		font-size: 1.2rem;
 		color: black;
 	}
@@ -293,7 +293,7 @@ const StyledList = styled.ul`
 	color: var(--text-colour-grey);
 	line-height: 1.8;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		font-size: 1.2rem;
 		color: black;
 	}
@@ -305,7 +305,7 @@ const StyledSpanLink = styled.span`
 		color: var(--oex-orange);
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		color: black;
 	}
 `;

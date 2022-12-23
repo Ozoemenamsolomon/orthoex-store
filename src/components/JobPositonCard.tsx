@@ -42,7 +42,7 @@ const StyledJobPositionCard = styled.div`
 		font-size: 1rem;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		max-width: 1000px;
 		box-sizing: border-box;
 		flex-direction: row;
@@ -62,7 +62,7 @@ const StyledJobPositionCardContent = styled.div`
 		line-height: 1.6;
 		color: var(--text-colour-grey);
 	}
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		width: 70%;
 	}
 `;

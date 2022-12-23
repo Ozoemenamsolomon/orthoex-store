@@ -56,7 +56,7 @@ const StyledSupportInfoCard = styled.div`
 		color: var(--text-colour-p);
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		margin-bottom: 0rem;
 	}
 `;
@@ -75,7 +75,7 @@ const StyledBtnContainer = styled.div`
 		flex: 1;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 0rem;
 	}
 `;

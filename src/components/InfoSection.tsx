@@ -78,7 +78,7 @@ export const InfoSectionStyled = styled.div`
 	flex-direction: column;
 	padding: 2rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
 		flex: 1;
 		padding: 3rem;

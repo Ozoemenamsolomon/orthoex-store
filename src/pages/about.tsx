@@ -23,15 +23,13 @@ function About() {
 
 export default About;
 
-// remove min-height below
-
 const StyledAbout = styled.div`
 	display: flex;
 	flex-direction: column;
 	min-height: 80vh;
 	padding: 1rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
 		padding: 3rem 10rem 5rem;
 		background-color: var(--oex-lightest-grey);

@@ -43,7 +43,7 @@ const SupportInfo: React.FC<SupportInfoProps> = ({ data }) => {
 export default SupportInfo;
 
 export const StyledSupportWrapper = styled.div`
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 2rem;
 	}
 `;
@@ -54,7 +54,7 @@ export const StyledSupportInfo = styled.div`
 	flex-direction: column;
 	margin-bottom: 5rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
 		flex: 1;
 		gap: 2rem;

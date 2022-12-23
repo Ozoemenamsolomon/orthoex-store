@@ -40,7 +40,7 @@ const StyledInfoText = styled.div`
 		font-size: 0.9rem;
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		text-align: center;
 		padding: 4rem 0rem;
 

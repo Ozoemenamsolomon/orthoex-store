@@ -40,7 +40,7 @@ const StyledHeaderDiv = styled.div`
 		color: var(--text-colour-grey);
 	}
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		text-align: center;
 
 		& > h2 {
