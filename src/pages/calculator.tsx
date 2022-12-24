@@ -1,7 +1,23 @@
+import CTA from '@components/CTA';
+import {
+	FormInput,
+	FormInputWrapper,
+	FormRadioGroup,
+	FormRadioLabel,
+	FormRadioWrapper,
+} from '@components/styled/Forms';
 import Link from 'next/link';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 function Calculator() {
+	const [formData, setFormData] = useState({
+		shape: '',
+		length: '',
+		width: '',
+		thickness,
+	});
+
 	return (
 		<>
 			<PageHeading>
@@ -13,7 +29,71 @@ function Calculator() {
 				</PageHeadingWrapper>
 			</PageHeading>
 			<PageWrapper>
-				<PageContainer>Here</PageContainer>
+				<PageContainer>
+					<CalculateContent>
+						<h4>Epoxy Resin Calculator</h4>
+						<p>
+							Leave out the guesswork. Use our epoxy resin to estimate the
+							amount of resin you would need for your project!
+						</p>
+						<form action="">
+							<p>What is the shape of your project?</p>
+							<FormRadioWrapper>
+								<FormRadioGroup>
+									<FormRadioLabel>
+										<input
+											type="radio"
+											id="shapeRectangle"
+											name="shape"
+											value="rectangle"
+										/>
+										Rectangular surface
+									</FormRadioLabel>
+								</FormRadioGroup>
+
+								<FormRadioGroup>
+									<FormRadioLabel>
+										<input
+											type="radio"
+											id="shapeCylinder"
+											name="shape"
+											value="cylinder"
+										/>
+										Round surfaces and Cylinders
+									</FormRadioLabel>
+								</FormRadioGroup>
+							</FormRadioWrapper>
+
+							<p>What are the dimensions of your project?</p>
+							<FormInputWrapper>
+								<FormInput
+									type="number"
+									id="length"
+									name="length"
+									value=""
+									placeholder="Length"
+								/>
+								<FormInput
+									type="number"
+									id="width"
+									name="width"
+									value=""
+									placeholder="Width"
+								/>
+								<FormInput
+									type="number"
+									id="thickness"
+									name="thickness"
+									value=""
+									placeholder="Coating Thickness"
+								/>
+							</FormInputWrapper>
+
+							<StyledCTA type="submit">Calculate</StyledCTA>
+						</form>
+					</CalculateContent>
+					<ResultsContent></ResultsContent>
+				</PageContainer>
 			</PageWrapper>
 		</>
 	);
@@ -69,4 +149,11 @@ const PageContainer = styled.div`
 	@media (min-width: 2000px) {
 		// padding: 3rem 25rem 5rem;
 	}
+`;
+
+const CalculateContent = styled.div``;
+const ResultsContent = styled.div``;
+
+const StyledCTA = styled(CTA)`
+	width: 100%;
 `;
