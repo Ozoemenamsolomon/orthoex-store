@@ -155,3 +155,42 @@ export const FormInputWrapper = styled.div`
 		flex-direction: row;
 	}
 `;
+
+export const FormSelect = styled.select`
+	// appearance: none;
+	width: 100%;
+	border: 1px solid var(--text-colour-light-grey);
+	padding: 0.8rem;
+	outline: none;
+	margin-bottom: 2rem;
+	background-color: transparent;
+	font-family: inherit;
+	font-size: inherit;
+	cursor: inherit;
+	line-height: inherit;
+
+	& > ::placeholder {
+		color: var(--oex-bg-grey);
+	}
+
+	&::-ms-expand {
+		display: none;
+	}
+
+	& > option {
+		background: white;
+		color: red;
+	}
+`;
+export const FormSelect1 = styled.select`
+	width: 100%;
+	border: 1px solid var(--text-colour-light-grey);
+	padding: 0.8rem;
+	outline: none;
+	margin-bottom: 2rem;
+	font: inherit;
+
+	& > ::placeholder {
+		color: var(--oex-bg-grey);
+	}
+`;

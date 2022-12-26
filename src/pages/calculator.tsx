@@ -1,3 +1,4 @@
+import FinalAmount from '@components/calculator/FinalAmount';
 import CTA from '@components/CTA';
 import {
 	FormInput,
@@ -5,18 +6,55 @@ import {
 	FormRadioGroup,
 	FormRadioLabel,
 	FormRadioWrapper,
+	FormSelect,
 } from '@components/styled/Forms';
 import Link from 'next/link';
 import { useState } from 'react';
 import styled from 'styled-components';
 
+type OnChangeType =
+	| React.ChangeEvent<HTMLInputElement>
+	| React.ChangeEvent<HTMLSelectElement>;
+
+type FormDataType = {
+	shape: 'cylinder' | 'rectangle';
+	diameter: string;
+	length: string;
+	width: string;
+	thickness: string;
+	unit: string;
+};
+
+const dataOne = {
+	productType: 'OEX5302',
+	ratio: 2,
+	partA: 40,
+	partB: 10,
+};
+const dataTwo = {
+	productType: 'OEX5311',
+	ratio: 1,
+	partA: 30,
+	partB: 30,
+};
+
 function Calculator() {
-	const [formData, setFormData] = useState({
-		shape: '',
+	const [formData, setFormData] = useState<FormDataType>({
+		shape: 'cylinder',
+		diameter: '',
 		length: '',
 		width: '',
-		thickness,
+		thickness: '',
+		unit: '',
 	});
+
+	const { shape, length, width, thickness, diameter, unit } = formData;
+
+	const onInputChange = (e: OnChangeType) => {
+		setFormData(prev => {
+			return { ...prev, [e.target.id]: e.target.value };
+		});
+	};
 
 	return (
 		<>
@@ -42,10 +80,12 @@ function Calculator() {
 								<FormRadioGroup>
 									<FormRadioLabel>
 										<input
+											checked
 											type="radio"
-											id="shapeRectangle"
+											id="shape"
 											name="shape"
 											value="rectangle"
+											onChange={onInputChange}
 										/>
 										Rectangular surface
 									</FormRadioLabel>
@@ -55,9 +95,10 @@ function Calculator() {
 									<FormRadioLabel>
 										<input
 											type="radio"
-											id="shapeCylinder"
+											id="shape"
 											name="shape"
 											value="cylinder"
+											onChange={onInputChange}
 										/>
 										Round surfaces and Cylinders
 									</FormRadioLabel>
@@ -66,33 +107,73 @@ function Calculator() {
 
 							<p>What are the dimensions of your project?</p>
 							<FormInputWrapper>
-								<FormInput
-									type="number"
-									id="length"
-									name="length"
-									value=""
-									placeholder="Length"
-								/>
-								<FormInput
-									type="number"
-									id="width"
-									name="width"
-									value=""
-									placeholder="Width"
-								/>
+								{shape === 'rectangle' ? (
+									<>
+										<FormInput
+											min="0"
+											type="number"
+											id="length"
+											name="length"
+											value={length}
+											placeholder="Length"
+											onChange={onInputChange}
+										/>
+										<FormInput
+											type="number"
+											id="width"
+											name="width"
+											value={width}
+											placeholder="Width"
+											onChange={onInputChange}
+										/>
+									</>
+								) : (
+									<FormInput
+										type="number"
+										id="diameter"
+										name="diameter"
+										value={diameter}
+										placeholder="Diameter"
+										onChange={onInputChange}
+									/>
+								)}
+
 								<FormInput
 									type="number"
 									id="thickness"
 									name="thickness"
-									value=""
+									value={thickness}
 									placeholder="Coating Thickness"
+									onChange={onInputChange}
 								/>
 							</FormInputWrapper>
 
-							<StyledCTA type="submit">Calculate</StyledCTA>
+							<FormSelect
+								onChange={onInputChange}
+								name="unit"
+								id="unit"
+								defaultValue={'default'}
+								placeholder="Choose your unit">
+								<option disabled value="default">
+									Choose your unit
+								</option>
+								<option value="CM">Centimeter (CM)</option>
+								<option value="M">Meter (M)</option>
+								<option value="In">Inches (In)</option>
+								<option value="Ft">Feet (Ft)</option>
+							</FormSelect>
+
+							<StyledCTA className="no-animate" type="submit">
+								Calculate
+							</StyledCTA>
 						</form>
 					</CalculateContent>
-					<ResultsContent></ResultsContent>
+					<ResultsContent>
+						<h3>Preview Final Amount</h3>
+						<p>Here is the amount of resin you will need for your project.</p>
+						<FinalAmount data={dataOne} />
+						<FinalAmount data={dataTwo} />
+					</ResultsContent>
 				</PageContainer>
 			</PageWrapper>
 		</>
@@ -151,9 +232,31 @@ const PageContainer = styled.div`
 	}
 `;
 
-const CalculateContent = styled.div``;
-const ResultsContent = styled.div``;
+const CalculateContent = styled.div`
+	margin-bottom: 3rem;
+`;
+
+const ResultsContent = styled.div`
+	border: 1px solid var(--text-colour-light-grey);
+	padding: 1rem;
+	border-radius: 0.5rem;
+
+	& > h3 {
+		margin: 0;
+		font-size: 1rem;
+		font-weight: 400;
+	}
+
+	& > p {
+		color: var(--text-colour-grey);
+		margin: 1rem 0;
+	}
+`;
 
 const StyledCTA = styled(CTA)`
 	width: 100%;
+
+	// &:hover {
+	// 	transform: scale(0.95);
+	// }
 `;
