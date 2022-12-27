@@ -108,26 +108,15 @@ export const FormRadioLabel = styled.label`
 	}
 `;
 
-export const FormRadioLabeled = styled.label`
-	// color: var(--text-colour-grey);
-	// font-size: 1.1rem;
-	// padding-left: 1rem;
+export const FormRadioWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
 
-	// input[type='radio'] {
-	// 	-webkit-appearance: none;
-	// 	appearance: none;
-	// 	background-color: #fff;
-	// 	margin: 0;
-	// 	color: var(--oex-orange);
-	// 	width: 1.15em;
-	// 	height: 1.15em;
-	// 	border: 0.15em solid var(--oex-orange);
-	// 	border-radius: 50%;
-	// 	transform: translateY(-0.075em);
-	// }
+	@media (min-width: 768px) {
+		flex-direction: row;
+		gap: 2rem;
+	}
 `;
-
-export const FormRadioWrapper = styled.div``;
 
 export const FormRadioGroup = styled.div`
 	margin-bottom: 1rem;
@@ -153,6 +142,7 @@ export const FormInputWrapper = styled.div`
 
 	@media (min-width: 768px) {
 		flex-direction: row;
+		justify-content: space-between;
 	}
 `;
 
