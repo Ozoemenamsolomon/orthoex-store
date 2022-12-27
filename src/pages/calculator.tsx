@@ -40,7 +40,7 @@ const dataTwo = {
 
 function Calculator() {
 	const [formData, setFormData] = useState<FormDataType>({
-		shape: '',
+		shape: 'cylinder',
 		diameter: '',
 		length: '',
 		width: '',
@@ -48,11 +48,9 @@ function Calculator() {
 		unit: '',
 	});
 
-	const { shape, length, width, thickness, diameter, unit } = formData;
-	console.log(shape && shape);
+	const { shape, length, width, thickness, diameter } = formData;
 
 	const onInputChange = (e: OnChangeType) => {
-		console.log(e.target.value);
 		setFormData(prev => {
 			return { ...prev, [e.target.id]: e.target.value };
 		});
@@ -85,13 +83,11 @@ function Calculator() {
 									<FormRadioGroup>
 										<FormRadioLabel>
 											<input
-												checked
 												type="radio"
 												id="shape"
 												name="shape"
 												value="rectangle"
-												onChange={e => console.log(e.target.value)}
-												// onChange={onInputChange}
+												onChange={onInputChange}
 											/>
 											Rectangular surface
 										</FormRadioLabel>
@@ -104,8 +100,7 @@ function Calculator() {
 												id="shape"
 												name="shape"
 												value="cylinder"
-												// onChange={onInputChange}
-												onChange={e => console.log(e.target.value)}
+												onChange={onInputChange}
 											/>
 											Round surfaces and Cylinders
 										</FormRadioLabel>

@@ -143,6 +143,11 @@ export const FormInputWrapper = styled.div`
 	@media (min-width: 768px) {
 		flex-direction: row;
 		justify-content: space-between;
+
+		& > input {
+			flex: 1;
+			width: 33%;
+		}
 	}
 `;
 
