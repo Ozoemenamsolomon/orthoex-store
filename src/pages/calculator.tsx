@@ -61,7 +61,7 @@ function Calculator() {
 
 	const { shape, length, width, thickness, diameter, unit } = formData;
 
-	const calculateDisabled = Object.values(formData).includes(0 || '');
+	// const calculateDisabled = Object.values(formData).includes(0 || '');
 
 	const onInputChange = (e: OnChangeType) => {
 		setFormData(prev => {
