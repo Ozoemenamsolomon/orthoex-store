@@ -243,7 +243,7 @@ const PageWrapper = styled.div`
 	margin-top: 5rem;
 	padding-top: 7rem;
 
-	@media (min-width: 768px) {
+	@media (${({ theme }) => theme.breakpoints.above.md}) {
 		padding: 7rem;
 	}
 `;
@@ -260,7 +260,7 @@ const PageHeading = styled.div`
 	min-height: 3rem;
 	border-bottom: 1px solid var(--oex-lightest-grey);
 
-	@media (min-width: 768px) {
+	@media (${({ theme }) => theme.breakpoints.above.md}) {
 		display: none;
 	}
 `;
@@ -291,7 +291,7 @@ const CalculatorWrapper = styled.div`
 	background-color: white;
 	padding: 1rem;
 
-	@media (min-width: 768px) {
+	@media (${({ theme }) => theme.breakpoints.above.md}) {
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
@@ -302,7 +302,7 @@ const CalculatorWrapper = styled.div`
 `;
 
 const ParagraphText = styled.p`
-	@media (min-width: 768px) {
+	@media (${({ theme }) => theme.breakpoints.above.md}) {
 		font-size: 1.2rem;
 		margin-bottom: 2rem;
 	}
@@ -323,7 +323,7 @@ const CalculateContent = styled.div`
 		color: var(--text-colour-grey);
 	}
 
-	@media (min-width: 768px) {
+	@media (${({ theme }) => theme.breakpoints.above.md}) {
 		width: 42%;
 
 		& > h3 {
@@ -349,7 +349,7 @@ const ResultsContent = styled.div`
 		margin: 1rem 0;
 	}
 
-	@media (min-width: 768px) {
+	@media (${({ theme }) => theme.breakpoints.above.md}) {
 		width: 42%;
 
 		& > h3 {
@@ -371,7 +371,7 @@ const ResinProducts = styled.div`
 	padding: 1rem;
 	margin-top: 3rem;
 
-	@media (min-width: 768px) {
+	@media (${({ theme }) => theme.breakpoints.above.md}) {
 		margin: 5rem auto 0rem;
 	}
 `;

@@ -113,14 +113,10 @@ export const FormRadioWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
 		gap: 2rem;
 	}
-	// @media (${({ theme }) => theme.breakpoints.above.md}) {
-	// 	flex-direction: row;
-	// 	gap: 2rem;
-	// }
 `;
 
 export const FormRadioGroup = styled.div`
@@ -145,7 +141,7 @@ export const FormInputWrapper = styled.div`
 	gap: 1.2rem;
 	margin-bottom: 2rem;
 
-	@media (min-width: 768px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
 		justify-content: space-between;
 
