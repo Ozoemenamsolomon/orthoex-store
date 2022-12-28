@@ -33,20 +33,20 @@ const calculateRectangularVolumeUnits = (
 	return convertedLength * convertedWidth * convertedThickness;
 };
 
-const calculateCylinderVolumeUnits = (
-	diameter: number,
-	thickness: number,
-	unit: string,
-) => {
-	let convertedDiameter: number;
-	let convertedThickness: number;
+// const calculateCylinderVolumeUnits = (
+// 	diameter: number,
+// 	thickness: number,
+// 	unit: string,
+// ) => {
+// 	let convertedDiameter: number;
+// 	let convertedThickness: number;
 
-	const unitInMeters = convertToMetre(unit);
-	convertedDiameter = diameter * unitInMeters;
-	convertedThickness = thickness * unitInMeters;
+// 	const unitInMeters = convertToMetre(unit);
+// 	convertedDiameter = diameter * unitInMeters;
+// 	convertedThickness = thickness * unitInMeters;
 
-	return Math.PI * (convertedDiameter / 2) * convertedThickness;
-};
+// 	return Math.PI * (convertedDiameter / 2) * convertedThickness;
+// };
 
 const checkAndReturnDivsisibleByThree = (value: number) => {
 	if (value % 3 === 0) {
