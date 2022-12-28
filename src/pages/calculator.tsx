@@ -11,49 +11,84 @@ import {
 import Link from 'next/link';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { calculateRectangularResinInKg } from 'utils/calculator';
+
+export enum PRODUCTTYPE {
+	OEX5302 = 'OEX5302',
+	OEX5311 = 'OEX5311',
+}
+export enum SHAPETYPE {
+	RECTANGLE = 'RECTANGLE',
+	CYLINDER = 'CYLINDER',
+}
+
+export enum UNITSTYPE {
+	CENTIMETRE = 'CM',
+	METRE = 'M',
+	INCHES = 'IN',
+	FEET = 'FT',
+}
 
 type OnChangeType =
 	| React.ChangeEvent<HTMLInputElement>
 	| React.ChangeEvent<HTMLSelectElement>;
 
 type FormDataType = {
-	shape: string;
-	diameter: string;
-	length: string;
-	width: string;
-	thickness: string;
+	shape: SHAPETYPE;
+	diameter: number;
+	length: number;
+	width: number;
+	thickness: number;
 	unit: string;
-};
-
-const dataOne = {
-	productType: 'OEX5302',
-	ratio: 2,
-	partA: 40,
-	partB: 10,
-};
-const dataTwo = {
-	productType: 'OEX5311',
-	ratio: 1,
-	partA: 30,
-	partB: 30,
 };
 
 function Calculator() {
 	const [formData, setFormData] = useState<FormDataType>({
-		shape: 'cylinder',
-		diameter: '',
-		length: '',
-		width: '',
-		thickness: '',
+		shape: SHAPETYPE.RECTANGLE,
+		diameter: 0,
+		length: 0,
+		width: 0,
+		thickness: 0,
 		unit: '',
 	});
 
-	const { shape, length, width, thickness, diameter } = formData;
+	const [productOne, setProductOne] = useState({
+		partA: 0,
+		partB: 0,
+	});
+
+	const [productTwo, setProductTwo] = useState(0);
+
+	const { shape, length, width, thickness, diameter, unit } = formData;
+
+	const calculateDisabled = Object.values(formData).includes(0 || '');
 
 	const onInputChange = (e: OnChangeType) => {
 		setFormData(prev => {
-			return { ...prev, [e.target.id]: e.target.value };
+			return { ...prev, [e.target.name]: e.target.value };
 		});
+	};
+
+	const onCalculate = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		console.log(formData);
+		if (formData.shape === SHAPETYPE.RECTANGLE) {
+			const resinInKg = calculateRectangularResinInKg(
+				length,
+				width,
+				thickness,
+				unit,
+			);
+			const partA = (2 / 3) * resinInKg;
+			const partB = (1 / 3) * resinInKg;
+			setProductOne({
+				partA,
+				partB,
+			});
+			setProductTwo(resinInKg / 2);
+		} else if (formData.shape === SHAPETYPE.CYLINDER) {
+			console.log(diameter, unit);
+		}
 	};
 
 	return (
@@ -75,7 +110,7 @@ function Calculator() {
 								Leave out the guesswork. Use our epoxy resin to estimate the
 								amount of resin you would need for your project!
 							</p>
-							<form action="">
+							<form action="" onSubmit={onCalculate}>
 								<ParagraphText>
 									What is the shape of your project?
 								</ParagraphText>
@@ -84,9 +119,9 @@ function Calculator() {
 										<FormRadioLabel>
 											<input
 												type="radio"
-												id="shape"
+												id="shapeCylinder"
 												name="shape"
-												value="rectangle"
+												value={SHAPETYPE.RECTANGLE}
 												onChange={onInputChange}
 											/>
 											Rectangular surface
@@ -97,9 +132,9 @@ function Calculator() {
 										<FormRadioLabel>
 											<input
 												type="radio"
-												id="shape"
+												id="shapeRectangle"
 												name="shape"
-												value="cylinder"
+												value={SHAPETYPE.CYLINDER}
 												onChange={onInputChange}
 											/>
 											Round surfaces and Cylinders
@@ -111,14 +146,14 @@ function Calculator() {
 									What are the dimensions of your project?
 								</ParagraphText>
 								<FormInputWrapper>
-									{shape === 'rectangle' ? (
+									{shape === SHAPETYPE.RECTANGLE ? (
 										<>
 											<FormInput
 												min="0"
 												type="number"
 												id="length"
 												name="length"
-												value={length}
+												value={length || ''}
 												placeholder="Length"
 												onChange={onInputChange}
 											/>
@@ -126,7 +161,7 @@ function Calculator() {
 												type="number"
 												id="width"
 												name="width"
-												value={width}
+												value={width || ''}
 												placeholder="Width"
 												onChange={onInputChange}
 											/>
@@ -136,7 +171,7 @@ function Calculator() {
 											type="number"
 											id="diameter"
 											name="diameter"
-											value={diameter}
+											value={diameter || ''}
 											placeholder="Diameter"
 											onChange={onInputChange}
 										/>
@@ -146,7 +181,7 @@ function Calculator() {
 										type="number"
 										id="thickness"
 										name="thickness"
-										value={thickness}
+										value={thickness || ''}
 										placeholder="Coating Thickness"
 										onChange={onInputChange}
 									/>
@@ -161,13 +196,16 @@ function Calculator() {
 									<option disabled value="default">
 										Choose your unit
 									</option>
-									<option value="CM">Centimeter (CM)</option>
-									<option value="M">Meter (M)</option>
-									<option value="In">Inches (In)</option>
-									<option value="Ft">Feet (Ft)</option>
+									<option value={UNITSTYPE.CENTIMETRE}>Centimetre (CM)</option>
+									<option value={UNITSTYPE.METRE}>Metre (M)</option>
+									<option value={UNITSTYPE.INCHES}>Inches (In)</option>
+									<option value={UNITSTYPE.FEET}>Feet (Ft)</option>
 								</FormSelect>
 
-								<StyledCTA className="no-animate" type="submit">
+								<StyledCTA
+									// disabled={calculateDisabled}
+									className="no-animate"
+									type="submit">
 									Calculate
 								</StyledCTA>
 							</form>
@@ -175,8 +213,18 @@ function Calculator() {
 						<ResultsContent>
 							<h3>Preview Final Amount</h3>
 							<p>Here is the amount of resin you will need for your project.</p>
-							<FinalAmount data={dataOne} />
-							<FinalAmount data={dataTwo} />
+							<FinalAmount
+								productType={PRODUCTTYPE.OEX5302}
+								ratio={2}
+								partA={productOne.partA}
+								partB={productOne.partB}
+							/>
+							<FinalAmount
+								productType={PRODUCTTYPE.OEX5311}
+								ratio={1}
+								partA={productTwo}
+								partB={productTwo}
+							/>
 						</ResultsContent>
 					</CalculatorWrapper>
 				</PageContainer>
@@ -267,7 +315,7 @@ const CalculateContent = styled.div`
 	& > h3 {
 		margin: 0;
 		font-size: 1rem;
-		font-weight: 400;
+		font-weight: null0;
 		margin-bottom: 1rem;
 	}
 
@@ -312,8 +360,10 @@ const ResultsContent = styled.div`
 	}
 `;
 
-const StyledCTA = styled(CTA)`
+const StyledCTA = styled(CTA)<{ disabled?: boolean }>`
 	width: 100%;
+	background-color: ${({ disabled }) => disabled && 'var(--oex-light-orange)'};
+	pointer-events: ${({ disabled }) => disabled && 'none'};
 `;
 
 const ResinProducts = styled.div`

@@ -1,29 +1,33 @@
+import { PRODUCTTYPE } from 'pages/calculator';
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-interface FinalAmountType {
-	data: {
-		productType: string;
-		ratio: number;
-		partA: number;
-		partB: number;
-	};
+interface FinalAmountProps {
+	productType: PRODUCTTYPE;
+	ratio: number;
+	partA: number;
+	partB: number;
 }
 
-export const FinalAmount: FC<FinalAmountType> = ({ data }) => {
+export const FinalAmount: FC<FinalAmountProps> = ({
+	productType,
+	ratio,
+	partA,
+	partB,
+}) => {
 	return (
 		<FinalAmountWrapper>
 			<ProductRatio>
-				<Product type={data.productType}>{data.productType}</Product>
-				<Ratio>{data.ratio === 2 ? '(2:1)' : '(1:1)'}</Ratio>
+				<Product type={productType}>{productType}</Product>
+				<Ratio>{ratio === 2 ? '(2:1)' : '(1:1)'}</Ratio>
 			</ProductRatio>
 			<Parts>
 				<span>Part A</span>
-				<span>{`${data.partA}Kg`}</span>
+				<span>{`${partA ? partA : '--'}Kg`}</span>
 			</Parts>
 			<Parts>
 				<span>Part B</span>
-				<span>{`${data.partB}Kg`}</span>
+				<span>{`${partB ? partB : '--'}Kg`}</span>
 			</Parts>
 		</FinalAmountWrapper>
 	);
@@ -45,11 +49,13 @@ const ProductRatio = styled.div`
 
 const Product = styled.span<{ type: string }>`
 	background-color: ${({ type }) =>
-		type === 'OEX5302'
+		type === PRODUCTTYPE.OEX5302
 			? 'var(--oex-light-success)'
 			: 'var(--oex-light-orange)'};
 	color: ${({ type }) =>
-		type === 'OEX5302' ? 'var(--oex-success)' : 'var(--oex-yellow)'};);
+		type === PRODUCTTYPE.OEX5302
+			? 'var(--oex-success)'
+			: 'var(--oex-yellow)'};);
 	padding: 0.5rem;
 `;
 

@@ -74,6 +74,7 @@ export const FormRadioLabel = styled.label`
 	display: grid;
 	grid-template-columns: 1em auto;
 	gap: 0.5em;
+	cursor: pointer;
 
 	input[type='radio'] {
 		-webkit-appearance: none;
@@ -116,6 +117,10 @@ export const FormRadioWrapper = styled.div`
 		flex-direction: row;
 		gap: 2rem;
 	}
+	// @media (${({ theme }) => theme.breakpoints.above.md}) {
+	// 	flex-direction: row;
+	// 	gap: 2rem;
+	// }
 `;
 
 export const FormRadioGroup = styled.div`
@@ -175,17 +180,5 @@ export const FormSelect = styled.select`
 	& > option {
 		background: white;
 		color: red;
-	}
-`;
-export const FormSelect1 = styled.select`
-	width: 100%;
-	border: 1px solid var(--text-colour-light-grey);
-	padding: 0.8rem;
-	outline: none;
-	margin-bottom: 2rem;
-	font: inherit;
-
-	& > ::placeholder {
-		color: var(--oex-bg-grey);
 	}
 `;
