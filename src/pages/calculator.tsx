@@ -11,7 +11,10 @@ import {
 import Link from 'next/link';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { calculateRectangularResinInKg } from 'utils/calculator';
+import {
+	calculateCylinderResinInKg,
+	calculateRectangularResinInKg,
+} from 'utils/calculator';
 
 export enum PRODUCTTYPE {
 	OEX5302 = 'OEX5302',
@@ -86,7 +89,14 @@ function Calculator() {
 			});
 			setProductTwo(resinInKg / 2);
 		} else if (formData.shape === SHAPETYPE.CYLINDER) {
-			console.log(diameter, unit);
+			const resinInKg = calculateCylinderResinInKg(diameter, thickness, unit);
+			const partA = (2 / 3) * resinInKg;
+			const partB = (1 / 3) * resinInKg;
+			setProductOne({
+				partA,
+				partB,
+			});
+			setProductTwo(resinInKg / 2);
 		}
 	};
 

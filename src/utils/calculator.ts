@@ -33,20 +33,21 @@ const calculateRectangularVolumeUnits = (
 	return convertedLength * convertedWidth * convertedThickness;
 };
 
-// const calculateCylinderVolumeUnits = (
-// 	diameter: number,
-// 	thickness: number,
-// 	unit: string,
-// ) => {
-// 	let convertedDiameter: number;
-// 	let convertedThickness: number;
+const calculateCylinderVolumeUnits = (
+	diameter: number,
+	thickness: number,
+	unit: string,
+) => {
+	let convertedDiameter: number;
+	let convertedThickness: number;
 
-// 	const unitInMeters = convertToMetre(unit);
-// 	convertedDiameter = diameter * unitInMeters;
-// 	convertedThickness = thickness * unitInMeters;
+	const unitInMeters = convertToMetre(unit);
+	convertedDiameter = diameter * unitInMeters;
+	convertedThickness = thickness * unitInMeters;
+	const dividedDiameter = convertedDiameter / 2;
 
-// 	return Math.PI * (convertedDiameter / 2) * convertedThickness;
-// };
+	return Math.PI * dividedDiameter * dividedDiameter * convertedThickness;
+};
 
 const checkAndReturnDivsisibleByThree = (value: number) => {
 	if (value % 3 === 0) {
@@ -80,8 +81,19 @@ export const calculateRectangularResinInKg = (
 };
 
 export const calculateCylinderResinInKg = (
-	length: number,
-	width: number,
+	diameter: number,
 	thickness: number,
 	unit: string,
-) => {};
+) => {
+	const calculatedVolume = calculateCylinderVolumeUnits(
+		diameter,
+		thickness,
+		unit,
+	);
+	const calculatedResinInKgM3 = Math.trunc(
+		calculatedVolume * densityOfResinInKg,
+	);
+	console.log(calculatedResinInKgM3);
+
+	return checkAndReturnDivsisibleByThree(calculatedResinInKgM3);
+};
