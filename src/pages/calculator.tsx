@@ -71,7 +71,6 @@ function Calculator() {
 
 	const onCalculate = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(formData);
 		if (formData.shape === SHAPETYPE.RECTANGLE) {
 			const resinInKg = calculateRectangularResinInKg(
 				length,
