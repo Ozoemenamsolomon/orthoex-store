@@ -5,7 +5,17 @@ const inchesToMetre = 0.0254;
 const feetToMetre = 0.3048;
 const densityOfResinInKg = 1110;
 
-const convertUnits = (
+const convertToMetre = (unit: string) => {
+	return unit === UNITSTYPE.CENTIMETRE
+		? centimetreToMetre
+		: unit === UNITSTYPE.INCHES
+		? inchesToMetre
+		: unit === UNITSTYPE.FEET
+		? feetToMetre
+		: 1;
+};
+
+const calculateRectangularVolumeUnits = (
 	length: number,
 	width: number,
 	thickness: number,
@@ -14,20 +24,28 @@ const convertUnits = (
 	let convertedWidth: number;
 	let convertedLength: number;
 	let convertedThickness: number;
-	let convertToMetre =
-		unit === UNITSTYPE.CENTIMETRE
-			? centimetreToMetre
-			: unit === UNITSTYPE.INCHES
-			? inchesToMetre
-			: unit === UNITSTYPE.FEET
-			? feetToMetre
-			: 1;
 
-	convertedLength = length * convertToMetre;
-	convertedWidth = width * convertToMetre;
-	convertedThickness = thickness * convertToMetre;
-	// console.log({ convertedLength, convertedWidth, convertedThickness });
-	return { convertedLength, convertedWidth, convertedThickness };
+	const unitInMeters = convertToMetre(unit);
+
+	convertedLength = length * unitInMeters;
+	convertedWidth = width * unitInMeters;
+	convertedThickness = thickness * unitInMeters;
+	return convertedLength * convertedWidth * convertedThickness;
+};
+
+const calculateCylinderVolumeUnits = (
+	diameter: number,
+	thickness: number,
+	unit: string,
+) => {
+	let convertedDiameter: number;
+	let convertedThickness: number;
+
+	const unitInMeters = convertToMetre(unit);
+	convertedDiameter = diameter * unitInMeters;
+	convertedThickness = thickness * unitInMeters;
+
+	return Math.PI * (convertedDiameter / 2) * convertedThickness;
 };
 
 const checkAndReturnDivsisibleByThree = (value: number) => {
@@ -48,7 +66,7 @@ export const calculateRectangularResinInKg = (
 	thickness: number,
 	unit: string,
 ) => {
-	const { convertedLength, convertedWidth, convertedThickness } = convertUnits(
+	const calculatedVolume = calculateRectangularVolumeUnits(
 		length,
 		width,
 		thickness,
@@ -56,9 +74,8 @@ export const calculateRectangularResinInKg = (
 	);
 
 	const calculatedResinInKgM3 = Math.trunc(
-		convertedLength * convertedWidth * convertedThickness * densityOfResinInKg,
+		calculatedVolume * densityOfResinInKg,
 	);
-	// console.log(checkAndReturnDivsisibleByThree(calculatedResinInKgM3));
 	return checkAndReturnDivsisibleByThree(calculatedResinInKgM3);
 };
 
@@ -67,17 +84,4 @@ export const calculateCylinderResinInKg = (
 	width: number,
 	thickness: number,
 	unit: string,
-) => {
-	const { convertedLength, convertedWidth, convertedThickness } = convertUnits(
-		length,
-		width,
-		thickness,
-		unit,
-	);
-
-	const calculatedResinInKgM3 = Math.trunc(
-		convertedLength * convertedWidth * convertedThickness * densityOfResinInKg,
-	);
-	// console.log(checkAndReturnDivsisibleByThree(calculatedResinInKgM3));
-	return checkAndReturnDivsisibleByThree(calculatedResinInKgM3);
-};
+) => {};

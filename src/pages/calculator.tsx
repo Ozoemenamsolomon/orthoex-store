@@ -148,7 +148,6 @@ function Calculator() {
 									{shape === SHAPETYPE.RECTANGLE ? (
 										<>
 											<FormInput
-												min="0"
 												type="number"
 												id="length"
 												name="length"
@@ -214,13 +213,12 @@ function Calculator() {
 							<p>Here is the amount of resin you will need for your project.</p>
 							<FinalAmount
 								productType={PRODUCTTYPE.OEX5302}
-								ratio={2}
 								partA={productOne.partA}
 								partB={productOne.partB}
 							/>
+							<hr />
 							<FinalAmount
 								productType={PRODUCTTYPE.OEX5311}
-								ratio={1}
 								partA={productTwo}
 								partB={productTwo}
 							/>
@@ -240,11 +238,11 @@ export default Calculator;
 
 const PageWrapper = styled.div`
 	background-color: var(--oex-lightest-grey);
-	margin-top: 5rem;
-	padding-top: 7rem;
+	// margin-top: 5rem;
+	padding-top: 4rem;
 
 	@media (${({ theme }) => theme.breakpoints.above.md}) {
-		padding: 7rem;
+		padding: 4rem;
 	}
 `;
 
@@ -298,6 +296,7 @@ const CalculatorWrapper = styled.div`
 		gap: 5rem;
 		margin: 0rem auto;
 		padding: 1rem 2rem;
+		border-radius: 0.5rem;
 	}
 `;
 
