@@ -95,11 +95,11 @@ const ProductCardContent = styled.div`
 
 const ProductName = styled.h3`
 	font-weight: 400;
-	font-size: 0.8rem;
+	font-size: 0.7rem;
 	margin: 0;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		font-size: 1.5rem;
+		font-size: 1.2rem;
 	}
 `;
 
@@ -109,7 +109,7 @@ const Price = styled.p`
 	margin-bottom: 0;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		font-weight: 600;
+		font-weight: 400;
 		font-size: 1.2rem;
 	}
 `;

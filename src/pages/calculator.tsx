@@ -137,7 +137,7 @@ function Calculator() {
 					</BreadCrumbWrapper>
 					<CalculatorWrapper>
 						<CalculateContent>
-							<h3>Epoxy Calculator</h3>
+							<h3>Epoxy Resin Calculator</h3>
 							<p>
 								Leave out the guesswork. Use our epoxy resin to estimate the
 								amount of resin you would need for your project!
@@ -294,7 +294,7 @@ const PageWrapper = styled.div`
 	padding-top: 4rem;
 
 	@media (${({ theme }) => theme.breakpoints.above.md}) {
-		padding: 4rem;
+		padding: 3rem;
 	}
 `;
 
@@ -430,7 +430,7 @@ const ResinProducts = styled.div`
 	margin-top: 3rem;
 
 	@media (${({ theme }) => theme.breakpoints.above.md}) {
-		margin: 5rem auto 0rem;
+		// margin: 5rem auto 0rem;
 		border-radius: 0.5rem;
 	}
 `;
@@ -449,7 +449,19 @@ export const ProductCards = styled.div`
 	overflow-x: scroll;
 	gap: 2rem;
 	justify-content: space-between;
+	padding: 2rem;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
+		padding: 0rem;
+
+		/* Hide scrollbar for Chrome, Safari and Opera */
+		::-webkit-scrollbar {
+			display: none;
+		}
+
+		/* Hide scrollbar for IE, Edge and Firefox */
+
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
 	}
 `;
