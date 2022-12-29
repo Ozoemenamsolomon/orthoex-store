@@ -94,7 +94,7 @@ function Calculator() {
 				unit,
 			);
 			if (resinInKg < 1) {
-				toast.error('measurments less than 1Kg, enter different values');
+				toast.error('Measurments less than 1Kg, enter different values');
 			}
 			const partA = (2 / 3) * resinInKg;
 			const partB = (1 / 3) * resinInKg;
@@ -106,7 +106,7 @@ function Calculator() {
 		} else if (formData.shape === SHAPETYPE.CYLINDER) {
 			const resinInKg = calculateCylinderResinInKg(diameter, thickness, unit);
 			if (resinInKg < 1) {
-				toast.error('measurments less than 1, enter different values');
+				toast.error('Measurments less than 1Kg, enter different values');
 			}
 			const partA = (2 / 3) * resinInKg;
 			const partB = (1 / 3) * resinInKg;
@@ -452,7 +452,7 @@ export const ProductCards = styled.div`
 	padding: 2rem;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		padding: 0rem;
+		padding: 2rem 0rem;
 
 		/* Hide scrollbar for Chrome, Safari and Opera */
 		::-webkit-scrollbar {
