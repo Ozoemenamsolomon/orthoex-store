@@ -1,6 +1,7 @@
 import FinalAmount, { PRODUCTTYPE } from '@components/calculator/FinalAmount';
 import CTA from '@components/CTA';
 import { toast } from 'react-toastify';
+import ProductCard from '@components/ProductCard';
 import {
 	FormInput,
 	FormInputWrapper,
@@ -18,6 +19,9 @@ import {
 	SHAPETYPE,
 	UNITSTYPE,
 } from 'utils/calculator';
+import { productsData } from '@data/productsData';
+import { Arrow90degLeft } from 'styled-icons/bootstrap';
+import ArrowBack from '@assets/new/icons/ArrowBack';
 
 type OnChangeType =
 	| React.ChangeEvent<HTMLInputElement>
@@ -113,7 +117,9 @@ function Calculator() {
 		<>
 			<PageHeading>
 				<BackButtonWrapper>
-					<Link href="/composites">Back</Link>
+					<Link href="/composites">
+						<ArrowBack />
+					</Link>
 				</BackButtonWrapper>
 				<PageHeadingWrapper>
 					<span>Calculator</span>
@@ -256,7 +262,16 @@ function Calculator() {
 				</PageContainer>
 
 				<PageContainer>
-					<ResinProducts>Make</ResinProducts>
+					<ResinProducts>
+						<ResinProductTitle>Selected Products</ResinProductTitle>
+						<ProductCards>
+							{Array.from({ length: 4 }, () => productsData[0]).map(
+								(product, index) => (
+									<ProductCard key={`product_${index}`} product={product} />
+								),
+							)}
+						</ProductCards>
+					</ResinProducts>
 				</PageContainer>
 			</PageWrapper>
 		</>
@@ -277,8 +292,6 @@ const PageWrapper = styled.div`
 
 const PageHeading = styled.div`
 	display: flex;
-	// align-items: center;
-	// justify-content: center;
 	position: fixed;
 	top: 6rem;
 	z-index: 2;
@@ -395,12 +408,31 @@ const StyledCTA = styled(CTA)<{ disabled?: boolean }>`
 `;
 
 const ResinProducts = styled.div`
-	height: 20vh;
 	background: white;
-	padding: 1rem;
+	padding: 2rem;
 	margin-top: 3rem;
 
 	@media (${({ theme }) => theme.breakpoints.above.md}) {
 		margin: 5rem auto 0rem;
+		border-radius: 0.5rem;
+	}
+`;
+
+const ResinProductTitle = styled.h4`
+	font-size: 1.2rem;
+	margin: 0;
+
+	@media (${({ theme }) => theme.breakpoints.above.md}) {
+		font-size: 2rem;
+	}
+`;
+
+export const ProductCards = styled.div`
+	display: flex;
+	overflow-x: scroll;
+	gap: 2rem;
+	justify-content: space-between;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 	}
 `;

@@ -43,7 +43,7 @@ const ProductCard: React.FC<ProductCardProp> = ({
 				</Link>
 				<Price>{priceFormatter.format(price)}</Price>
 				<ProductStars {...review} />
-				<CTA>ADD TO CART</CTA>
+				<StyledCTA>ADD TO CART</StyledCTA>
 			</ProductCardContent>
 		</ProductCardContainer>
 	);
@@ -74,6 +74,16 @@ const ProductCardContainer = styled.div`
 	}
 `;
 
+const StyledCTA = styled(CTA)`
+	padding: 0.5rem;
+	font-size: 0.6rem;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		padding: 1rem;
+		font-size: 1rem;
+	}
+`;
+
 const ProductCardContent = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -84,13 +94,22 @@ const ProductCardContent = styled.div`
 `;
 
 const ProductName = styled.h3`
-	font-weight: normal;
-	font-size: 1.5rem;
+	font-weight: 400;
+	font-size: 0.8rem;
 	margin: 0;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		font-size: 1.5rem;
+	}
 `;
 
 const Price = styled.p`
-	font-weight: 600;
-	font-size: 1.2rem;
+	font-weight: 300;
+	font-size: 0.9rem;
 	margin-bottom: 0;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		font-weight: 600;
+		font-size: 1.2rem;
+	}
 `;

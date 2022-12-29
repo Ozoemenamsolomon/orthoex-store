@@ -66,4 +66,8 @@ const Parts = styled.div`
 	padding: 2rem 1rem;
 	// margin-top: 2rem;
 	color: var(--text-colour-grey);
+
+	@media (${({ theme }) => theme.breakpoints.above.md}) {
+		font-size: 1.2rem;
+	}
 `;
