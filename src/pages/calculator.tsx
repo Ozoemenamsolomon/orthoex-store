@@ -289,7 +289,7 @@ function Calculator() {
 export default Calculator;
 
 const PageWrapper = styled.div`
-	background-color: var(--oex-lightest-grey);
+	background-color: var(--oex-off-white);
 	// margin-top: 5rem;
 	padding-top: 4rem;
 
@@ -395,7 +395,7 @@ const ResultsContent = styled.div`
 	border: 1px solid var(--text-colour-light-grey);
 	padding: 1rem;
 	border-radius: 0.5rem;
-	background: var(--oex-lightest-grey);
+	background: var(--oex-off-white);
 
 	& > h3 {
 		margin: 0;
