@@ -59,6 +59,7 @@ export default ProductsPanel;
 
 const ProductPanelContainer = styled.article`
 	background-color: white;
+	flex: 2.5;
 	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		padding: 1rem;
 	}
