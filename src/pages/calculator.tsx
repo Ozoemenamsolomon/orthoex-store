@@ -18,7 +18,6 @@ import {
 	SHAPETYPE,
 	UNITSTYPE,
 } from 'utils/calculator';
-import { T } from 'styled-icons/fa-solid';
 
 type OnChangeType =
 	| React.ChangeEvent<HTMLInputElement>
