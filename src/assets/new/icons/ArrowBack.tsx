@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ArrowBack: React.FC<{ rotate: boolean }> = ({ rotate }) => (
+const ArrowBack: React.FC<{ rotate?: boolean }> = ({ rotate }) => (
 	<svg
 		style={{ transform: rotate === true ? 'rotate(180deg)' : '' }}
 		width="16"
