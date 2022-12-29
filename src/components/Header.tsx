@@ -33,36 +33,6 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	const [light, setLight] = useState(false);
 
 	useEffect(() => {
-<<<<<<< HEAD
-		setLight(
-			['products', 'about', 'careers', 'contact', 'trainings', 'cart'].includes(
-				pathname.split('/')[1],
-			) || /\/composites\/(\w)+/.test(pathname),
-		);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-		const handleScroll = () => {
-			setScrollOffset(window.scrollY);
-		};
-
-		if (light) {
-			return;
-		}
-		document.addEventListener('scroll', handleScroll, { passive: true });
-
-		return () => {
-			document.removeEventListener('scroll', handleScroll);
-		};
-	}, [pathname, light]);
-=======
-	}, [pathname]);
->>>>>>> 42b8534 (fix:header bug)
-=======
->>>>>>> 5383fee (header works better, I think)
-
-=======
->>>>>>> acac9c2 (initial setup)
 		const handleScroll = () => {
 			setScrollOffset(window.scrollY);
 		};

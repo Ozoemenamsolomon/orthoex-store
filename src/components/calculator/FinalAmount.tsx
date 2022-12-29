@@ -1,6 +1,10 @@
-import { PRODUCTTYPE } from 'pages/calculator';
 import React, { FC } from 'react';
 import styled from 'styled-components';
+
+export enum PRODUCTTYPE {
+	OEX5302 = 'OEX5302',
+	OEX5311 = 'OEX5311',
+}
 
 interface FinalAmountProps {
 	productType: PRODUCTTYPE;

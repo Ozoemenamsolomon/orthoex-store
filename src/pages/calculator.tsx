@@ -1,4 +1,4 @@
-import FinalAmount from '@components/calculator/FinalAmount';
+import FinalAmount, { PRODUCTTYPE } from '@components/calculator/FinalAmount';
 import CTA from '@components/CTA';
 import {
 	FormInput,
@@ -11,30 +11,12 @@ import {
 import Link from 'next/link';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { calculateAndSetProduct } from 'utils/calculator';
-
-export enum PRODUCTTYPE {
-	OEX5302 = 'OEX5302',
-	OEX5311 = 'OEX5311',
-}
-
-export enum SHAPETYPE {
-	RECTANGLE = 'RECTANGLE',
-	CYLINDER = 'CYLINDER',
-}
-
-export enum UNITSTYPE {
-	CENTIMETRE = 'CM',
-	METRE = 'M',
-	INCHES = 'IN',
-	FEET = 'FT',
-}
-
-type ResinInfoType = {
-	partA: number;
-	partB: number;
-	halfResinInKg: number;
-};
+import {
+	calculateCylinderResinInKg,
+	calculateRectangularResinInKg,
+	SHAPETYPE,
+	UNITSTYPE,
+} from 'utils/calculator';
 
 type OnChangeType =
 	| React.ChangeEvent<HTMLInputElement>
@@ -46,7 +28,7 @@ type FormDataType = {
 	length: number;
 	width: number;
 	thickness: number;
-	unit: string;
+	unit: UNITSTYPE;
 };
 
 function Calculator() {
@@ -56,7 +38,7 @@ function Calculator() {
 		length: 0,
 		width: 0,
 		thickness: 0,
-		unit: '',
+		unit: UNITSTYPE.CENTIMETRE,
 	});
 
 	const [productOne, setProductOne] = useState({
@@ -79,33 +61,30 @@ function Calculator() {
 	const onCalculate = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		let resinInfo: ResinInfoType = {
-			partA: 0,
-			partB: 0,
-			halfResinInKg: 0,
-		};
 		if (formData.shape === SHAPETYPE.RECTANGLE) {
-			resinInfo = calculateAndSetProduct(
-				SHAPETYPE.RECTANGLE,
-				thickness,
-				unit,
+			const resinInKg = calculateRectangularResinInKg(
 				length,
 				width,
-			);
-		} else if (formData.shape === SHAPETYPE.CYLINDER) {
-			resinInfo = calculateAndSetProduct(
-				SHAPETYPE.CYLINDER,
 				thickness,
 				unit,
-				diameter,
 			);
+			const partA = (2 / 3) * resinInKg;
+			const partB = (1 / 3) * resinInKg;
+			setProductOne({
+				partA,
+				partB,
+			});
+			setProductTwo(resinInKg / 2);
+		} else if (formData.shape === SHAPETYPE.CYLINDER) {
+			const resinInKg = calculateCylinderResinInKg(diameter, thickness, unit);
+			const partA = (2 / 3) * resinInKg;
+			const partB = (1 / 3) * resinInKg;
+			setProductOne({
+				partA,
+				partB,
+			});
+			setProductTwo(resinInKg / 2);
 		}
-		const { partA, partB, halfResinInKg } = resinInfo;
-		setProductOne({
-			partA,
-			partB,
-		});
-		setProductTwo(halfResinInKg);
 	};
 
 	return (
