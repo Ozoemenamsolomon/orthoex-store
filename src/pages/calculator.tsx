@@ -1,5 +1,6 @@
 import FinalAmount, { PRODUCTTYPE } from '@components/calculator/FinalAmount';
 import CTA from '@components/CTA';
+import { toast } from 'react-toastify';
 import {
 	FormInput,
 	FormInputWrapper,
@@ -17,6 +18,7 @@ import {
 	SHAPETYPE,
 	UNITSTYPE,
 } from 'utils/calculator';
+import { T } from 'styled-icons/fa-solid';
 
 type OnChangeType =
 	| React.ChangeEvent<HTMLInputElement>
@@ -83,6 +85,9 @@ function Calculator() {
 				thickness,
 				unit,
 			);
+			if (resinInKg < 1) {
+				toast.error('measurments less than 1Kg, enter different values');
+			}
 			const partA = (2 / 3) * resinInKg;
 			const partB = (1 / 3) * resinInKg;
 			setProductOne({
@@ -92,6 +97,9 @@ function Calculator() {
 			setProductTwo(resinInKg / 2);
 		} else if (formData.shape === SHAPETYPE.CYLINDER) {
 			const resinInKg = calculateCylinderResinInKg(diameter, thickness, unit);
+			if (resinInKg < 1) {
+				toast.error('measurments less than 1, enter different values');
+			}
 			const partA = (2 / 3) * resinInKg;
 			const partB = (1 / 3) * resinInKg;
 			setProductOne({
@@ -129,8 +137,9 @@ function Calculator() {
 									<FormRadioGroup>
 										<FormRadioLabel>
 											<input
+												checked={shape === SHAPETYPE.RECTANGLE}
 												type="radio"
-												id="shapeCylinder"
+												id="shapeRectangle"
 												name="shape"
 												value={SHAPETYPE.RECTANGLE}
 												onChange={onRadioButtonChange}
@@ -142,8 +151,9 @@ function Calculator() {
 									<FormRadioGroup>
 										<FormRadioLabel>
 											<input
+												checked={shape === SHAPETYPE.CYLINDER}
 												type="radio"
-												id="shapeRectangle"
+												id="shapeCylinder"
 												name="shape"
 												value={SHAPETYPE.CYLINDER}
 												onChange={onRadioButtonChange}
@@ -167,6 +177,7 @@ function Calculator() {
 												value={length || ''}
 												placeholder="Length"
 												onChange={onInputChange}
+												required={shape === SHAPETYPE.RECTANGLE}
 											/>
 											<FormInput
 												min={0}
@@ -176,6 +187,7 @@ function Calculator() {
 												value={width || ''}
 												placeholder="Width"
 												onChange={onInputChange}
+												required={shape === SHAPETYPE.RECTANGLE}
 											/>
 										</>
 									) : (
@@ -187,6 +199,7 @@ function Calculator() {
 											value={diameter || ''}
 											placeholder="Diameter"
 											onChange={onInputChange}
+											required={shape === SHAPETYPE.CYLINDER}
 										/>
 									)}
 
@@ -198,6 +211,7 @@ function Calculator() {
 										value={thickness || ''}
 										placeholder="Coating Thickness/Height"
 										onChange={onInputChange}
+										required={true}
 									/>
 								</FormInputWrapper>
 
@@ -352,6 +366,7 @@ const ResultsContent = styled.div`
 	border: 1px solid var(--text-colour-light-grey);
 	padding: 1rem;
 	border-radius: 0.5rem;
+	background: var(--oex-lightest-grey);
 
 	& > h3 {
 		margin: 0;
