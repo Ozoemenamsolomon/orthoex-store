@@ -141,6 +141,18 @@ export const FormInputWrapper = styled.div`
 	gap: 1.2rem;
 	margin-bottom: 2rem;
 
+	/* Chrome, Safari, Edge, Opera, remove arrow */
+	& > input::-webkit-outer-spin-button,
+	& > input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	/* Firefox */
+	input[type='number'] {
+		-moz-appearance: textfield;
+	}
+
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
 		justify-content: space-between;

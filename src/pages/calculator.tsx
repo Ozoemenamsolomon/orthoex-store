@@ -54,8 +54,23 @@ function Calculator() {
 
 	const onInputChange = (e: OnChangeType) => {
 		setFormData(prev => {
-			return { ...prev, [e.target.name]: e.target.value };
+			return {
+				...prev,
+				[e.target.name]: e.target.value,
+			};
 		});
+	};
+
+	const onRadioButtonChange = (e: OnChangeType) => {
+		if (e.target.value === SHAPETYPE.RECTANGLE) {
+			setFormData(prev => {
+				return { ...prev, diameter: 0, shape: SHAPETYPE.RECTANGLE };
+			});
+		} else {
+			setFormData(prev => {
+				return { ...prev, length: 0, width: 0, shape: SHAPETYPE.CYLINDER };
+			});
+		}
 	};
 
 	const onCalculate = (e: React.FormEvent<HTMLFormElement>) => {
@@ -118,7 +133,7 @@ function Calculator() {
 												id="shapeCylinder"
 												name="shape"
 												value={SHAPETYPE.RECTANGLE}
-												onChange={onInputChange}
+												onChange={onRadioButtonChange}
 											/>
 											Rectangular surface
 										</FormRadioLabel>
@@ -131,7 +146,7 @@ function Calculator() {
 												id="shapeRectangle"
 												name="shape"
 												value={SHAPETYPE.CYLINDER}
-												onChange={onInputChange}
+												onChange={onRadioButtonChange}
 											/>
 											Round surfaces and Cylinders
 										</FormRadioLabel>
@@ -145,6 +160,7 @@ function Calculator() {
 									{shape === SHAPETYPE.RECTANGLE ? (
 										<>
 											<FormInput
+												min={0}
 												type="number"
 												id="length"
 												name="length"
@@ -153,6 +169,7 @@ function Calculator() {
 												onChange={onInputChange}
 											/>
 											<FormInput
+												min={0}
 												type="number"
 												id="width"
 												name="width"
@@ -163,6 +180,7 @@ function Calculator() {
 										</>
 									) : (
 										<FormInput
+											min={0}
 											type="number"
 											id="diameter"
 											name="diameter"
@@ -173,6 +191,7 @@ function Calculator() {
 									)}
 
 									<FormInput
+										min={0}
 										type="number"
 										id="thickness"
 										name="thickness"
