@@ -166,6 +166,7 @@ const FilterPanelContainer = styled.aside`
 	background-color: white;
 	padding: 1rem;
 	display: none;
+	flex: 1;
 
 	> div:nth-of-type(2) {
 		> div:first-child > div {

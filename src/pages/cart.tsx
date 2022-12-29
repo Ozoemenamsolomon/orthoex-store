@@ -1,8 +1,9 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
-import FilterPanel, { FilterType } from '@components/FilterPanel';
+import CartTotalPanel from '@components/CartTotalPanel';
 import ProductCard from '@components/ProductCard';
 import SooSection from '@components/SooSection';
 import { Container } from '@components/styled';
+import FilterProductContainer from '@components/styled/FIlterProductContainer';
 import { ProductDataType, productsData } from '@data/productsData';
 import { NextPage } from 'next';
 import Image from 'next/image';
@@ -17,14 +18,6 @@ import {
 const Cart: NextPage<{
 	products?: ProductDataType[];
 }> = ({ products }) => {
-	const [filter, setFilter] = useState<FilterType>({
-		category: '',
-		brand: '',
-		priceRange: {
-			min: 0,
-		},
-	});
-
 	const isInStock = false;
 
 	const [productCount, setProductCount] = useState(0);
@@ -36,10 +29,10 @@ const Cart: NextPage<{
 	return (
 		<Container>
 			<div>
-				<div style={{ display: 'flex' }}>
+				<FilterProductContainer>
 					<div
 						style={{
-							flex: 1,
+							flex: 2.5,
 						}}>
 						<Title>Your cart (3 items)</Title>
 						{products?.map(({ previewImages, ...product }, index) => (
@@ -112,12 +105,9 @@ const Cart: NextPage<{
 							</CartItemWrapper>
 						))}
 					</div>
-					<FilterPanel {...{ filter, setFilter, noCategory: true }} />
-				</div>
+					<CartTotalPanel />
+				</FilterProductContainer>
 			</div>
-			{/* <FilterProductContainer>
-				<ProductsPanel {...{ products, title: 'categoryName' }} />
-			</FilterProductContainer> */}
 			<SooSection
 				BGColor="white"
 				header={{ title: 'Popular Products', align: 'left' }}>
