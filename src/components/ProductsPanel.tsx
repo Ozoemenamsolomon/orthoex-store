@@ -58,7 +58,10 @@ export default ProductsPanel;
 
 const ProductPanelContainer = styled.article`
 	background-color: white;
-	padding: 1rem;
+	flex: 2.5;
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		padding: 1rem;
+	}
 `;
 
 const TitleFilterBar = styled.div`
