@@ -11,6 +11,9 @@
 		"prepare": "husky install",
 		"format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
 	},
+	"engines": {
+		"node": ">=14.0.0"
+	},
 	"dependencies": {
 		"@formspree/react": "^2.4.1",
 		"next": "^13.0.4",
