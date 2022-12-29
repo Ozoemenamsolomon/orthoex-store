@@ -20,7 +20,6 @@ import {
 	UNITSTYPE,
 } from 'utils/calculator';
 import { productsData } from '@data/productsData';
-import { Arrow90degLeft } from 'styled-icons/bootstrap';
 import ArrowBack from '@assets/new/icons/ArrowBack';
 
 type OnChangeType =
