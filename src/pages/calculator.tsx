@@ -21,6 +21,7 @@ import {
 } from 'utils/calculator';
 import { productsData } from '@data/productsData';
 import ArrowBack from '@assets/new/icons/ArrowBack';
+import Breadcrumb from '@components/Breadcrumb';
 
 type OnChangeType =
 	| React.ChangeEvent<HTMLInputElement>
@@ -34,6 +35,11 @@ type FormDataType = {
 	thickness: number;
 	unit: UNITSTYPE;
 };
+
+const breadcrumb = [
+	{ name: 'Composites', link: '/composites' },
+	{ name: 'Resin Calculator', link: '/calculator' },
+];
 
 function Calculator() {
 	const [formData, setFormData] = useState<FormDataType>({
@@ -125,6 +131,10 @@ function Calculator() {
 				</PageHeadingWrapper>
 			</PageHeading>
 			<PageWrapper>
+				<BreadCrumbWrapper>
+					<Breadcrumb breadcrumb={breadcrumb} />
+				</BreadCrumbWrapper>
+
 				<PageContainer>
 					<CalculatorWrapper>
 						<CalculateContent>
@@ -286,6 +296,15 @@ const PageWrapper = styled.div`
 
 	@media (${({ theme }) => theme.breakpoints.above.md}) {
 		padding: 4rem;
+	}
+`;
+
+const BreadCrumbWrapper = styled.div`
+	display: none;
+	margin-bottom: 2rem;
+
+	@media (${({ theme }) => theme.breakpoints.above.md}) {
+		display: block;
 	}
 `;
 
