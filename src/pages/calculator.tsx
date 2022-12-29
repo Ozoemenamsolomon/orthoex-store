@@ -131,11 +131,10 @@ function Calculator() {
 				</PageHeadingWrapper>
 			</PageHeading>
 			<PageWrapper>
-				<BreadCrumbWrapper>
-					<Breadcrumb breadcrumb={breadcrumb} />
-				</BreadCrumbWrapper>
-
 				<PageContainer>
+					<BreadCrumbWrapper>
+						<Breadcrumb breadcrumb={breadcrumb} />
+					</BreadCrumbWrapper>
 					<CalculatorWrapper>
 						<CalculateContent>
 							<h3>Epoxy Calculator</h3>
