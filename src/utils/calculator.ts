@@ -1,4 +1,4 @@
-import { UNITSTYPE } from 'pages/calculator';
+import { SHAPETYPE, UNITSTYPE } from 'pages/calculator';
 
 const centimetreToMetre = 0.01;
 const inchesToMetre = 0.0254;
@@ -15,40 +15,6 @@ const convertToMetre = (unit: string) => {
 		: 1;
 };
 
-const calculateRectangularVolumeUnits = (
-	length: number,
-	width: number,
-	thickness: number,
-	unit: string,
-) => {
-	let convertedWidth: number;
-	let convertedLength: number;
-	let convertedThickness: number;
-
-	const unitInMeters = convertToMetre(unit);
-
-	convertedLength = length * unitInMeters;
-	convertedWidth = width * unitInMeters;
-	convertedThickness = thickness * unitInMeters;
-	return convertedLength * convertedWidth * convertedThickness;
-};
-
-const calculateCylinderVolumeUnits = (
-	diameter: number,
-	thickness: number,
-	unit: string,
-) => {
-	let convertedDiameter: number;
-	let convertedThickness: number;
-
-	const unitInMeters = convertToMetre(unit);
-	convertedDiameter = diameter * unitInMeters;
-	convertedThickness = thickness * unitInMeters;
-	const dividedDiameter = convertedDiameter / 2;
-
-	return Math.PI * dividedDiameter * dividedDiameter * convertedThickness;
-};
-
 const checkAndReturnDivsisibleByThree = (value: number) => {
 	if (value % 3 === 0) {
 		return value;
@@ -61,39 +27,90 @@ const checkAndReturnDivsisibleByThree = (value: number) => {
 	}
 };
 
-export const calculateRectangularResinInKg = (
-	length: number,
-	width: number,
+const calculateVolumeUnits = (
+	shape: SHAPETYPE,
 	thickness: number,
 	unit: string,
+	length?: number,
+	width?: number,
+	diameter?: number,
 ) => {
-	const calculatedVolume = calculateRectangularVolumeUnits(
-		length,
-		width,
-		thickness,
-		unit,
-	);
+	let calculatedVolume: number;
+	let convertedLength: number;
+	let convertedWidth: number;
+	let convertedThickness: number;
+	let convertedDiameter: number;
+
+	const unitInMeters = convertToMetre(unit);
+
+	if (shape === SHAPETYPE.RECTANGLE) {
+		convertedLength = length! * unitInMeters;
+		convertedWidth = width! * unitInMeters;
+		convertedThickness = thickness * unitInMeters;
+		calculatedVolume = convertedLength * convertedWidth * convertedThickness;
+	} else {
+		convertedDiameter = diameter! * unitInMeters;
+		convertedThickness = thickness * unitInMeters;
+		const dividedDiameter = convertedDiameter / 2;
+		calculatedVolume =
+			Math.PI * dividedDiameter * dividedDiameter * convertedThickness;
+	}
+
+	return calculatedVolume;
+};
+
+export const calculateResinInKg = (
+	shape: SHAPETYPE,
+	thickness: number,
+	unit: string,
+	length?: number,
+	width?: number,
+	diameter?: number,
+) => {
+	let calculatedVolume: number;
+	if (shape === SHAPETYPE.RECTANGLE) {
+		calculatedVolume = calculateVolumeUnits(
+			SHAPETYPE.RECTANGLE,
+			thickness,
+			unit,
+			length,
+			width,
+		);
+	} else {
+		calculatedVolume = calculateVolumeUnits(
+			SHAPETYPE.CYLINDER,
+			thickness,
+			unit,
+			diameter,
+		);
+	}
 
 	const calculatedResinInKgM3 = Math.trunc(
 		calculatedVolume * densityOfResinInKg,
 	);
+
 	return checkAndReturnDivsisibleByThree(calculatedResinInKgM3);
 };
 
-export const calculateCylinderResinInKg = (
-	diameter: number,
+export const calculateAndSetProduct = (
+	shape: SHAPETYPE,
 	thickness: number,
 	unit: string,
+	length?: number,
+	width?: number,
+	diameter?: number,
 ) => {
-	const calculatedVolume = calculateCylinderVolumeUnits(
-		diameter,
+	const resinInKg = calculateResinInKg(
+		shape,
 		thickness,
 		unit,
+		length,
+		width,
+		diameter,
 	);
-	const calculatedResinInKgM3 = Math.trunc(
-		calculatedVolume * densityOfResinInKg,
-	);
-	console.log(calculatedResinInKgM3);
+	const partA = (2 / 3) * resinInKg;
+	const partB = (1 / 3) * resinInKg;
+	const halfResinInKg = resinInKg / 2;
 
-	return checkAndReturnDivsisibleByThree(calculatedResinInKgM3);
+	return { partA, partB, halfResinInKg };
 };

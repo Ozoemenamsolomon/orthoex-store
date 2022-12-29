@@ -11,15 +11,13 @@ import {
 import Link from 'next/link';
 import { useState } from 'react';
 import styled from 'styled-components';
-import {
-	calculateCylinderResinInKg,
-	calculateRectangularResinInKg,
-} from 'utils/calculator';
+import { calculateAndSetProduct } from 'utils/calculator';
 
 export enum PRODUCTTYPE {
 	OEX5302 = 'OEX5302',
 	OEX5311 = 'OEX5311',
 }
+
 export enum SHAPETYPE {
 	RECTANGLE = 'RECTANGLE',
 	CYLINDER = 'CYLINDER',
@@ -31,6 +29,12 @@ export enum UNITSTYPE {
 	INCHES = 'IN',
 	FEET = 'FT',
 }
+
+type ResinInfoType = {
+	partA: number;
+	partB: number;
+	halfResinInKg: number;
+};
 
 type OnChangeType =
 	| React.ChangeEvent<HTMLInputElement>
@@ -74,30 +78,34 @@ function Calculator() {
 
 	const onCalculate = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		let resinInfo: ResinInfoType = {
+			partA: 0,
+			partB: 0,
+			halfResinInKg: 0,
+		};
 		if (formData.shape === SHAPETYPE.RECTANGLE) {
-			const resinInKg = calculateRectangularResinInKg(
-				length,
-				width,
+			resinInfo = calculateAndSetProduct(
+				SHAPETYPE.RECTANGLE,
 				thickness,
 				unit,
+				length,
+				width,
 			);
-			const partA = (2 / 3) * resinInKg;
-			const partB = (1 / 3) * resinInKg;
-			setProductOne({
-				partA,
-				partB,
-			});
-			setProductTwo(resinInKg / 2);
 		} else if (formData.shape === SHAPETYPE.CYLINDER) {
-			const resinInKg = calculateCylinderResinInKg(diameter, thickness, unit);
-			const partA = (2 / 3) * resinInKg;
-			const partB = (1 / 3) * resinInKg;
-			setProductOne({
-				partA,
-				partB,
-			});
-			setProductTwo(resinInKg / 2);
+			resinInfo = calculateAndSetProduct(
+				SHAPETYPE.CYLINDER,
+				thickness,
+				unit,
+				diameter,
+			);
 		}
+		const { partA, partB, halfResinInKg } = resinInfo;
+		setProductOne({
+			partA,
+			partB,
+		});
+		setProductTwo(halfResinInKg);
 	};
 
 	return (
@@ -190,7 +198,7 @@ function Calculator() {
 										id="thickness"
 										name="thickness"
 										value={thickness || ''}
-										placeholder="Coating Thickness"
+										placeholder="Coating Thickness/Height"
 										onChange={onInputChange}
 									/>
 								</FormInputWrapper>
