@@ -170,7 +170,7 @@ export const FormSelect = styled.select`
 	border: 1px solid var(--text-colour-light-grey);
 	padding: 0.8rem;
 	outline: none;
-	margin-bottom: 2rem;
+	margin: 2rem 0rem;
 	background-color: transparent;
 	font-family: inherit;
 	font-size: inherit;

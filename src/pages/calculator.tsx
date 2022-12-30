@@ -21,7 +21,6 @@ import {
 } from 'utils/calculator';
 import { productsData } from '@data/productsData';
 import ArrowBack from '@assets/new/icons/ArrowBack';
-import Breadcrumb from '@components/Breadcrumb';
 
 type OnChangeType =
 	| React.ChangeEvent<HTMLInputElement>
@@ -35,11 +34,6 @@ type FormDataType = {
 	thickness: number;
 	unit: UNITSTYPE;
 };
-
-const breadcrumb = [
-	{ name: 'Composites', link: '/composites' },
-	{ name: 'Resin Calculator', link: '/calculator' },
-];
 
 function Calculator() {
 	const [formData, setFormData] = useState<FormDataType>({
@@ -132,15 +126,12 @@ function Calculator() {
 			</PageHeading>
 			<PageWrapper>
 				<PageContainer>
-					<BreadCrumbWrapper>
-						<Breadcrumb breadcrumb={breadcrumb} />
-					</BreadCrumbWrapper>
 					<CalculatorWrapper>
 						<CalculateContent>
 							<h3>Epoxy Resin Calculator</h3>
 							<p>
-								Leave out the guesswork. Use our epoxy resin to estimate the
-								amount of resin you would need for your project!
+								Leave out the guesswork. Use our epoxy resin calculator to
+								estimate the amount of resin you would need for your project!
 							</p>
 							<form action="" onSubmit={onCalculate}>
 								<ParagraphText>
@@ -175,6 +166,21 @@ function Calculator() {
 										</FormRadioLabel>
 									</FormRadioGroup>
 								</FormRadioWrapper>
+
+								<FormSelect
+									onChange={onInputChange}
+									name="unit"
+									id="unit"
+									defaultValue={'default'}
+									placeholder="Choose your unit">
+									<option disabled value="default">
+										Choose your unit
+									</option>
+									<option value={UNITSTYPE.CENTIMETRE}>Centimetre (CM)</option>
+									<option value={UNITSTYPE.METRE}>Metre (M)</option>
+									<option value={UNITSTYPE.INCHES}>Inches (In)</option>
+									<option value={UNITSTYPE.FEET}>Feet (Ft)</option>
+								</FormSelect>
 
 								<ParagraphText>
 									What are the dimensions of your project?
@@ -228,21 +234,6 @@ function Calculator() {
 									/>
 								</FormInputWrapper>
 
-								<FormSelect
-									onChange={onInputChange}
-									name="unit"
-									id="unit"
-									defaultValue={'default'}
-									placeholder="Choose your unit">
-									<option disabled value="default">
-										Choose your unit
-									</option>
-									<option value={UNITSTYPE.CENTIMETRE}>Centimetre (CM)</option>
-									<option value={UNITSTYPE.METRE}>Metre (M)</option>
-									<option value={UNITSTYPE.INCHES}>Inches (In)</option>
-									<option value={UNITSTYPE.FEET}>Feet (Ft)</option>
-								</FormSelect>
-
 								<StyledCTA
 									// disabled={calculateDisabled}
 									className="no-animate"
@@ -295,15 +286,6 @@ const PageWrapper = styled.div`
 
 	@media (${({ theme }) => theme.breakpoints.above.md}) {
 		padding: 3rem;
-	}
-`;
-
-const BreadCrumbWrapper = styled.div`
-	display: none;
-	margin-bottom: 2rem;
-
-	@media (${({ theme }) => theme.breakpoints.above.md}) {
-		display: block;
 	}
 `;
 
