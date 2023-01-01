@@ -426,7 +426,7 @@ const ResinProductTitle = styled.h4`
 	}
 `;
 
-export const ProductCards = styled.div`
+const ProductCards = styled.div`
 	display: flex;
 	overflow-x: scroll;
 	gap: 2rem;
