@@ -58,7 +58,7 @@ export const CTAFlex = styled(CTA)`
 	align-items: center;
 	justify-content: center;
 	gap: 0.5rem;
-	@media (min-width: 768px) {
+	@media (${({ theme }) => theme.breakpoints.above.md}) {
 		padding: 0.3rem 0.1rem;
 		gap: 0.1rem;
 		font-size: 0.7rem;

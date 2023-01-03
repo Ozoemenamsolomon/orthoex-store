@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
 import Image, { StaticImageData } from 'next/image';
+import { FC } from 'react';
 import styled from 'styled-components';
 
 export type CategoryProps = {
@@ -33,6 +33,9 @@ const CategoryCardContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	position: relative;
+	p {
+		text-align: center;
+	}
 
 	&:hover {
 		border: 1px solid var(--oex-orange);

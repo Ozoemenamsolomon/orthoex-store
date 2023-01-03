@@ -1,11 +1,11 @@
+import newsletter from '@assets/new/images/newsletter.png';
+import { useForm, ValidationError } from '@formspree/react';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import CTA from '../CTA';
 import SooSection from '../SooSection';
-import newsletter from '@assets/new/images/newsletter.png';
-import Image from 'next/image';
 import { Container } from '../styled';
-import { useForm, ValidationError } from '@formspree/react';
-import { useRouter } from 'next/router';
 
 const StayTunedSection = () => {
 	const [formState, handleSubmit] = useForm('mvonpbje');
@@ -42,8 +42,14 @@ const StayTunedSection = () => {
 			<Container
 				paddingMultiplier={6}
 				paddingMultiplierSmall={0}
-				style={{ display: 'flex', alignItems: 'flex-end' }}>
-				<div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+				style={{ display: 'flex', alignItems: 'flex-end', gap: '2rem' }}>
+				<div
+					style={{
+						display: 'flex',
+						flexDirection: 'column',
+						gap: '3rem',
+						flex: '2.5',
+					}}>
 					<div>
 						<h2>Stay tuned!</h2>
 						<p>
@@ -164,10 +170,9 @@ const ImageContainer = styled.div`
 	position: relative;
 	flex: 1;
 	aspect-ratio: 1;
-	margin-left: 6rem;
 	display: none;
 
-	@media (min-width: 600px) {
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		display: block;
 	}
 `;
@@ -185,7 +190,8 @@ const SubscribeForm = styled.form`
 		> input {
 			flex: 1;
 			padding: 0.51rem;
-			border: 0.5px solid var(--oex-light-grey);
+			border: 0.5px solid var(--oex-grey);
+			border-radius: 0.5rem;
 		}
 		> div {
 			color: var(--oex-danger);
