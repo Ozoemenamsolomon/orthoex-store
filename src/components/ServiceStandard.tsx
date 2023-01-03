@@ -1,5 +1,5 @@
-import React from 'react';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import React from 'react';
 import styled from 'styled-components';
 import { ServicesCards } from './styled';
 
@@ -91,6 +91,7 @@ const StyledServiceIcon = styled.div`
 `;
 
 const StyledServiceCards = styled(ServicesCards)`
+	--min-width: 150px;
 	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		--min-width: 128px;
 	}
