@@ -33,10 +33,6 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	const [light, setLight] = useState(false);
 
 	useEffect(() => {
-		const handleScroll = () => {
-			setScrollOffset(window.scrollY);
-		};
-
 		setLight(
 			[
 				'products',
@@ -49,6 +45,10 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 			].includes(pathname.split('/')[1]) ||
 				/\/composites\/(\w)+/.test(pathname),
 		);
+
+		const handleScroll = () => {
+			setScrollOffset(window.scrollY);
+		};
 
 		if (light) {
 			return;
