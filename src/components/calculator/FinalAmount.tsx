@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 
 export enum PRODUCTTYPE {
@@ -49,14 +49,8 @@ const ProductRatio = styled.div`
 `;
 
 const Product = styled.span<{ type: string }>`
-	background-color: ${({ type }) =>
-		type === PRODUCTTYPE.OEX5302
-			? 'var(--oex-light-success)'
-			: 'var(--oex-light-orange)'};
 	color: ${({ type }) =>
-		type === PRODUCTTYPE.OEX5302
-			? 'var(--oex-success)'
-			: 'var(--oex-yellow)'};);
+		type === PRODUCTTYPE.OEX5302 ? 'var(--oex-success)' : 'var(--oex-yellow)'};
 	padding: 0.5rem;
 `;
 

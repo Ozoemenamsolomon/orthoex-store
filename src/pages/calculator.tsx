@@ -1,7 +1,8 @@
+import ArrowBack from '@assets/new/icons/ArrowBack';
 import FinalAmount, { PRODUCTTYPE } from '@components/calculator/FinalAmount';
 import CTA from '@components/CTA';
-import { toast } from 'react-toastify';
 import ProductCard from '@components/ProductCard';
+import { ProductCards } from '@components/styled';
 import {
 	FormInput,
 	FormInputWrapper,
@@ -10,8 +11,10 @@ import {
 	FormRadioWrapper,
 	FormSelect,
 } from '@components/styled/Forms';
+import { productsData } from '@data/productsData';
 import Link from 'next/link';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import {
 	calculateCylinderResinInKg,
@@ -19,8 +22,6 @@ import {
 	SHAPETYPE,
 	UNITSTYPE,
 } from 'utils/calculator';
-import { productsData } from '@data/productsData';
-import ArrowBack from '@assets/new/icons/ArrowBack';
 
 type OnChangeType =
 	| React.ChangeEvent<HTMLInputElement>
@@ -234,10 +235,7 @@ function Calculator() {
 									/>
 								</FormInputWrapper>
 
-								<StyledCTA
-									// disabled={calculateDisabled}
-									className="no-animate"
-									type="submit">
+								<StyledCTA className="no-animate" type="submit">
 									Calculate
 								</StyledCTA>
 							</form>
@@ -423,27 +421,5 @@ const ResinProductTitle = styled.h4`
 
 	@media (${({ theme }) => theme.breakpoints.above.md}) {
 		font-size: 2rem;
-	}
-`;
-
-const ProductCards = styled.div`
-	display: flex;
-	overflow-x: scroll;
-	gap: 2rem;
-	justify-content: space-between;
-	padding: 2rem;
-
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-		padding: 2rem 0rem;
-
-		/* Hide scrollbar for Chrome, Safari and Opera */
-		::-webkit-scrollbar {
-			display: none;
-		}
-
-		/* Hide scrollbar for IE, Edge and Firefox */
-
-		-ms-overflow-style: none; /* IE and Edge */
-		scrollbar-width: none; /* Firefox */
 	}
 `;

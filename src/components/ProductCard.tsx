@@ -29,17 +29,13 @@ const ProductCard: React.FC<ProductCardProp> = ({
 	return (
 		<ProductCardContainer>
 			<div>
-				<Link href={`/composites/products/polyester-resin`} legacyBehavior>
-					<a>
-						<Image src={image} fill object-fit="contain" alt="product image" />
-					</a>
+				<Link href={`/composites/products/polyester-resin`}>
+					<Image src={image} fill object-fit="contain" alt="product image" />
 				</Link>
 			</div>
 			<ProductCardContent>
-				<Link href={`/composites/products/polyester-resin`} legacyBehavior>
-					<a>
-						<ProductName>{name}</ProductName>
-					</a>
+				<Link href={`/composites/products/polyester-resin`}>
+					<ProductName>{name}</ProductName>
 				</Link>
 				<Price>{priceFormatter.format(price)}</Price>
 				<ProductStars {...review} />
@@ -67,7 +63,7 @@ const ProductCardContainer = styled.div`
 	}
 
 	&:hover {
-		box-shadow: 8px 8px 13px rgb(0 0 0 / 7%);
+		box-shadow: 5px 5px 16px rgb(0 0 0 / 20%);
 		button {
 			opacity: 1;
 		}

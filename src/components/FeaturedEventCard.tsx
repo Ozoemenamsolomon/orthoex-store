@@ -1,16 +1,16 @@
-import { EventDataType, EventFormat } from '@data/eventsData';
-import styled from 'styled-components';
-import React, { useState } from 'react';
-import Link from 'next/link';
+import ArrowDownUp from '@assets/new/icons/ArrowDownUp';
 import Calender from '@assets/new/icons/Calender';
-import Time from '@assets/new/icons/Time';
+import Call from '@assets/new/icons/Call';
 import Location from '@assets/new/icons/Location';
 import People from '@assets/new/icons/People';
+import Time from '@assets/new/icons/Time';
+import Whatsapp from '@assets/new/icons/Whatsapp';
+import { EventDataType, EventFormat } from '@data/eventsData';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import { CTALink } from './CTA';
 import { priceFormatter } from './ProductCard';
-import ArrowDownUp from '@assets/new/icons/ArrowDownUp';
-import Call from '@assets/new/icons/Call';
-import Whatsapp from '@assets/new/icons/Whatsapp';
 
 interface FeaturedEventProp {
 	event: EventDataType;
@@ -137,10 +137,6 @@ const StyledCourseFormat = styled.p<{ type: string }>`
 	padding: 0.6rem 0.9rem;
 	color: ${({ type }) =>
 		type == EventFormat.ONSITE ? 'var(--oex-orange)' : 'var(--oex-success)'};
-	background-color: ${({ type }) =>
-		type == EventFormat.ONSITE
-			? 'var(--oex-light-orange)'
-			: 'var(--oex-light-success)'};
 	border: ${({ type }) =>
 		type == EventFormat.ONSITE
 			? '1px solid var(--oex-orange)'
@@ -172,7 +168,6 @@ const StyledDays = styled.span`
 `;
 
 const StyledSpot = styled.span`
-	background-color: var(--oex-bg-danger);
 	color: var(--oex-danger);
 	padding: 0.4rem 0.8rem;
 	font-size: 0.9rem;
