@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-export const StyledFormWrapper = styled.div`
-	padding: 2rem 0.5rem;
-	border: 1px solid var(--oex-light-grey);
-	border-radius: 0.2rem;
-`;
-
 export const StyledFormControl = styled.div`
 	display: flex;
 	flex-direction: column;

@@ -1,36 +1,30 @@
-import ImageInfoHeader, {
-	ImageInfoHeaderType,
-} from '@components/ImageInfoHeader';
-import React, { useState } from 'react';
-import Image from 'next/image';
-import styled from 'styled-components';
-import LadyImage from '@assets/new/images/home/customer-service.jpg';
+import CallIcon from '@assets/new/icons/CallIcon';
 import CallAgent from '@assets/new/icons/contact/CallAgent';
+import Email from '@assets/new/icons/contact/Email';
 import FaqDouble from '@assets/new/icons/contact/FaqDouble';
 import FaqSingle from '@assets/new/icons/contact/FaqSingle';
 import Message from '@assets/new/icons/contact/Message';
-import Email from '@assets/new/icons/contact/Email';
 import Partner from '@assets/new/icons/contact/Partner';
+import WhatsappIcon from '@assets/new/icons/WhatsappIcon';
+import LadyImage from '@assets/new/images/home/customer-service.jpg';
+import CTA from '@components/CTA';
+import ImageInfoHeader, {
+	ImageInfoHeaderType,
+} from '@components/ImageInfoHeader';
 import InfoText from '@components/InfoText';
-import { Container } from '@components/styled';
+import ThankYou from '@components/sections/ThankYou';
 import HeaderParagraph, {
 	HeaderParagraphType,
 } from '@components/shared/HeaderParagraph';
+import SocialMediaButtons from '@components/shared/SocialMediaButtons';
+import { Container } from '@components/styled';
 import {
 	StyledFormButtonControl,
 	StyledFormControl,
-	StyledFormWrapper,
 } from '@components/styled/Forms';
-import CTA from '@components/CTA';
-import Address from '@components/shared/Address';
-import SocialMediaButtons from '@components/shared/SocialMediaButtons';
 import SupportInfo, { SupportInfoType } from '@components/SupportInfo';
-import CallIcon from '@assets/new/icons/CallIcon';
-import WhatsappIcon from '@assets/new/icons/WhatsappIcon';
-
-type InputChangeType =
-	| React.ChangeEvent<HTMLInputElement>
-	| React.ChangeEvent<HTMLTextAreaElement>;
+import { useForm, ValidationError } from '@formspree/react';
+import styled from 'styled-components';
 
 const data: ImageInfoHeaderType = {
 	image: LadyImage,
@@ -83,18 +77,7 @@ const supportInfoData: SupportInfoType = {
 };
 
 const Contact = () => {
-	const [formData, setformData] = useState({
-		fullName: '',
-		email: '',
-		phone: '',
-		message: '',
-	});
-
-	const { fullName, email, message, phone } = formData;
-
-	const onInputChange = (e: InputChangeType) => {
-		setformData(prev => ({ ...prev, [e.target.id]: e.target.value }));
-	};
+	const [formState, handleSubmit] = useForm('xnqyagge');
 
 	return (
 		<StyledContactWrapper>
@@ -105,44 +88,48 @@ const Contact = () => {
 
 				<StyledMapForm>
 					<StyledMapSection>
-						<StyledMapHolder>
-							<Image
-								src={LadyImage}
-								style={{
-									objectFit: 'cover',
-								}}
-								fill
-								alt="map image"
-							/>
-							<CTA>View on map</CTA>
-						</StyledMapHolder>
-						<Address />
+						<iframe
+							style={{ border: 'none' }}
+							width="100%"
+							height="300"
+							src="https://maps.google.com/maps?q=Orthoex%20nigeria%20limited+(Orthoex%20Nigeria%20Limited)&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;width=100%25&amp;height=300&amp;hl=en&amp;output=embed"></iframe>
 					</StyledMapSection>
-
 					<StyledFormSection>
-						<StyledFormWrapper>
-							<form action="">
+						{formState.succeeded ? (
+							<ThankYou
+								show={formState.succeeded}
+								reason={'for contacting us!'}></ThankYou>
+						) : (
+							<form onSubmit={handleSubmit}>
 								<StyledFormControl>
 									<label htmlFor="fullName">Full Name</label>
 									<input
 										type="text"
 										id="fullname"
 										name="fullname"
-										onChange={onInputChange}
+										required
 										placeholder="John Doe"
-										value={fullName}
+									/>
+									<ValidationError
+										prefix="Full Name"
+										field="fullname"
+										errors={formState.errors}
 									/>
 								</StyledFormControl>
 
 								<StyledFormControl>
 									<label htmlFor="email">Email Address</label>
 									<input
-										type="text"
+										type="email"
 										id="email"
+										required
 										name="email"
-										onChange={onInputChange}
 										placeholder="john@email.com"
-										value={email}
+									/>
+									<ValidationError
+										prefix="Email"
+										field="email"
+										errors={formState.errors}
 									/>
 								</StyledFormControl>
 								<StyledFormControl>
@@ -151,9 +138,12 @@ const Contact = () => {
 										type="tel"
 										id="phone"
 										name="phone"
-										onChange={onInputChange}
 										placeholder="+2347000000000"
-										value={phone}
+									/>
+									<ValidationError
+										prefix="phone number"
+										field="phone"
+										errors={formState.errors}
 									/>
 								</StyledFormControl>
 
@@ -163,10 +153,14 @@ const Contact = () => {
 										name="message"
 										id="message"
 										placeholder="Enter your message here"
-										onChange={onInputChange}
-										value={message}
 										cols={30}
 										rows={10}
+										required
+									/>
+									<ValidationError
+										prefix="Message"
+										field="message"
+										errors={formState.errors}
 									/>
 								</StyledFormControl>
 
@@ -174,7 +168,7 @@ const Contact = () => {
 									<CTA type="submit">Send message</CTA>
 								</StyledFormButtonControl>
 							</form>
-						</StyledFormWrapper>
+						)}
 					</StyledFormSection>
 				</StyledMapForm>
 			</Container>
@@ -199,6 +193,13 @@ const StyledContactWrapper = styled.div`
 	margin: 7rem 0rem 0rem;
 `;
 
+const StyledFormSection = styled.div`
+	flex: 1;
+	padding: 2rem 0.5rem;
+	border: 1px solid var(--oex-light-grey);
+	border-radius: 0.2rem;
+`;
+
 const StyledMapForm = styled.div`
 	margin-bottom: 2rem;
 
@@ -212,41 +213,7 @@ const StyledMapForm = styled.div`
 	}
 `;
 
-const StyledFormSection = styled.div`
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-		width: 50%;
-	}
-`;
-
 const StyledMapSection = styled.div`
 	margin-bottom: 2rem;
-
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-		width: 50%;
-	}
-`;
-
-const StyledMapHolder = styled.div`
-	position: relative;
-	overflow: hidden;
-	width: 100%;
-	height: 100%;
-
-	& > button {
-		font-size: 0.7rem;
-		width: 80%;
-		padding: 0.7rem 1rem;
-		position: absolute;
-		top: 45%;
-		left: 0;
-		right: 0;
-		margin: 0 auto;
-	}
-
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-		& > button {
-			width: 50%;
-			margin: 0 auto;
-		}
-	}
+	flex: 1;
 `;
