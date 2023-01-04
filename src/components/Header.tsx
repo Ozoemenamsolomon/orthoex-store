@@ -34,16 +34,11 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 
 	useEffect(() => {
 		setLight(
-			[
-				'products',
-				'about',
-				'careers',
-				'contact',
-				'trainings',
-				'cart',
-				'calculator',
-			].includes(pathname.split('/')[1]) ||
-				/\/composites\/(\w)+/.test(pathname),
+			!(
+				pathname.split('/')[1] === '' ||
+				(pathname.split('/')[1] === 'composites' &&
+					!/\/composites\/(\w)+/.test(pathname))
+			),
 		);
 
 		const handleScroll = () => {
