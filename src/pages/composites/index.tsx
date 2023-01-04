@@ -73,7 +73,7 @@ const expectancies: ServiceCardType[] = [
 			'Use our resin calculator to estimate the amount of epoxy resin you will need for your projects.',
 		image: calculator,
 		cta: (
-			<CTALink href="/calculator" white>
+			<CTALink href="/composites/calculator" white>
 				Calculate your resin
 			</CTALink>
 		),

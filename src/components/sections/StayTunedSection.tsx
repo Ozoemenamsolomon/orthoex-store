@@ -15,7 +15,7 @@ const StayTunedSection = () => {
 	return formState.succeeded ? (
 		<ThankYou show={formState.succeeded} reason={'for subscribing!'}></ThankYou>
 	) : (
-		<SooSection>
+		<SooSection id="stay-tuned-section">
 			<Container
 				paddingMultiplier={6}
 				paddingMultiplierSmall={0}

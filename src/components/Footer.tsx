@@ -1,15 +1,15 @@
-import styled from 'styled-components';
+import orthoExLogo from '@assets/new/logos/orthoex-logo-white.svg';
 import {
 	Facebook,
 	Instagram,
 	Linkedin,
 	Twitter,
 } from '@styled-icons/bootstrap';
-import Link from 'next/link';
 import Image from 'next/image';
-import orthoExLogo from '@assets/new/logos/orthoex-logo-white.svg';
-import { Container } from './styled';
+import Link from 'next/link';
+import styled from 'styled-components';
 import { CTALink } from './CTA';
+import { Container } from './styled';
 
 type FooterProp = { pathname: string };
 
@@ -20,9 +20,9 @@ let footerLinks: {
 	{
 		title: 'COMPANY',
 		links: [
-			{ title: 'About us', href: '#' },
-			{ title: 'Careers', href: '#' },
-			{ title: 'Events', href: '#' },
+			{ title: 'About us', href: '/about' },
+			{ title: 'Careers', href: '/careers' },
+			{ title: 'Events', href: '/trainings' },
 			{ title: 'Contact us', href: '/contact' },
 		],
 	},
@@ -50,7 +50,7 @@ let footerLinks: {
 			{ title: 'Amputee guide', href: '#' },
 			{ title: 'Rehab Edge Magazine', href: '#' },
 			{ title: 'Blog', href: '#' },
-			{ title: 'Subscribe', href: '#' },
+			{ title: 'Subscribe', href: '/composites#stay-tuned-section' },
 		],
 	},
 	{
@@ -69,9 +69,9 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 			{
 				title: 'COMPANY',
 				links: [
-					{ title: 'About us', href: '#' },
-					{ title: 'Careers', href: '#' },
-					{ title: 'Events', href: '#' },
+					{ title: 'About us', href: '/about' },
+					{ title: 'Careers', href: '/careers' },
+					{ title: 'Events', href: '/trainings' },
 					{ title: 'Contact us', href: '/contact' },
 				],
 			},
@@ -89,7 +89,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 				title: 'RESOURCES',
 				links: [
 					{ title: 'Blog', href: '#' },
-					{ title: 'Subscribe', href: '#' },
+					{ title: 'Subscribe', href: '/composites#stay-tuned-section' },
 				],
 			},
 			{
