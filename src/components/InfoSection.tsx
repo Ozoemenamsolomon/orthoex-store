@@ -1,20 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
+import CallIcon from '@assets/new/icons/CallIcon';
+import EmailIcon from '@assets/new/icons/EmailIcon';
+import WhatsappIcon from '@assets/new/icons/WhatsappIcon';
 import CustomerService from '@assets/new/images/home/customer-service.jpg';
 import Imprint from '@assets/new/images/home/imprint.jpg';
 import QuickChange from '@assets/new/images/home/quickchange.jpg';
-import InfoCard from './InfoCard';
 import { StaticImageData } from 'next/image';
-import WhatsappIcon from '@assets/new/icons/WhatsappIcon';
-import EmailIcon from '@assets/new/icons/EmailIcon';
-import CallIcon from '@assets/new/icons/CallIcon';
-
-// TODO: check what files use this export
-export type CustomIcon = ({
-	color,
-}: {
-	color?: string | undefined;
-}) => JSX.Element;
+import styled from 'styled-components';
+import InfoCard from './InfoCard';
 
 interface InfoSectionType {
 	image: StaticImageData;
@@ -72,11 +64,10 @@ function InfoSection() {
 
 export default InfoSection;
 
-export const InfoSectionStyled = styled.div`
+const InfoSectionStyled = styled.div`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	padding: 2rem;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
