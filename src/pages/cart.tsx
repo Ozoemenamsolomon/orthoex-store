@@ -1,7 +1,7 @@
 import CartTotalPanel from '@components/CartTotalPanel';
 import ProductCard, { priceFormatter } from '@components/ProductCard';
 import SooSection from '@components/SooSection';
-import { Container } from '@components/styled';
+import { Container, ProductCards } from '@components/styled';
 import FilterProductContainer from '@components/styled/FIlterProductContainer';
 import { ProductDataType, productsData } from '@data/productsData';
 import { GetStaticProps, NextPage } from 'next';
@@ -24,16 +24,6 @@ const formatGramm = new Intl.NumberFormat('en-US', {
 const Cart: NextPage<{
 	products: ProductDataType[];
 }> = ({ products }) => {
-	const isInStock = false;
-
-	const [productCount, setProductCount] = useState(0);
-
-	const removeFromCart = (id: string) => () => {
-		console.log({ idToRemove: id });
-	};
-
-	console.log({ weight: products[0].weightInGrams });
-
 	return (
 		<Container>
 			<div>
@@ -43,75 +33,8 @@ const Cart: NextPage<{
 							flex: 2.5,
 						}}>
 						<Title>Your cart (3 items)</Title>
-						{products.map(({ previewImages, ...product }, index) => (
-							<CartItemWrapper key={`cart-item-${index}`}>
-								<div>
-									<div>
-										<ImageContainer>
-											<Image src={product.image} alt="product image" />
-										</ImageContainer>
-										<button
-											style={{
-												display: 'flex',
-												alignItems: 'center',
-												gap: '0.21rem',
-												background: 'none',
-												border: 'none',
-												color: 'var(--oex-danger)',
-											}}
-											onClick={removeFromCart(product.code)}>
-											<Trash size={18} />
-											Remove
-										</button>
-									</div>
-									<div>
-										<h3 style={{}}>{product.name}</h3>
-										<p style={{ fontSize: '1.2rem', color: 'var(--oex-grey)' }}>
-											Size: {formatGramm.format(product.weightInGrams)}
-										</p>
-										{!isInStock ? (
-											<p style={{ color: 'var(--oex-danger)' }}>Out of stock</p>
-										) : (
-											<p style={{ color: 'var(--oex-success)' }}>In stock</p>
-										)}
-									</div>
-								</div>
-
-								<div>
-									<div
-										style={{
-											display: 'flex',
-											gap: '.5rem',
-											alignItems: 'center',
-										}}>
-										<ProductCountControlButton
-											onClick={() => {
-												console.log(productCount);
-												setProductCount(
-													prevProductCount => prevProductCount - 1,
-												);
-											}}>
-											-
-										</ProductCountControlButton>
-										<ProductCountInput
-											type="number"
-											name="quantity"
-											id="quantity"
-											value={productCount}
-											onChange={e => setProductCount(Number(e.target.value))}
-										/>
-										<ProductCountControlButton
-											onClick={() =>
-												setProductCount(
-													prevProductCount => prevProductCount + 1,
-												)
-											}>
-											+
-										</ProductCountControlButton>
-									</div>
-									<Price>{priceFormatter.format(product.price)}</Price>
-								</div>
-							</CartItemWrapper>
+						{products.map((product, index) => (
+							<CartItem product={product} key={`cart_item_${index}`} />
 						))}
 					</div>
 					<CartTotalPanel />
@@ -120,18 +43,13 @@ const Cart: NextPage<{
 			<SooSection
 				BGColor="white"
 				header={{ title: 'Popular Products', align: 'left' }}>
-				<div
-					style={{
-						display: 'grid',
-						gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
-						gap: '2rem',
-					}}>
+				<ProductCards>
 					{Array.from({ length: 4 }, () => productsData[0]).map(
 						(product, index) => (
 							<ProductCard key={`product_${index}`} product={product} />
 						),
 					)}
-				</div>
+				</ProductCards>
 			</SooSection>
 		</Container>
 	);
@@ -153,6 +71,83 @@ export const getStaticProps: GetStaticProps = async context => {
 	};
 };
 
+const CartItem: React.FC<{ product: ProductDataType }> = ({ product }) => {
+	const isInStock = false;
+
+	const [productCount, setProductCount] = useState(0);
+
+	const removeFromCart = (id: string) => () => {
+		console.log({ idToRemove: id });
+	};
+
+	return (
+		<CartItemContainer>
+			<div>
+				<div>
+					<ImageContainer>
+						<Image src={product.image} alt="product image" />
+					</ImageContainer>
+					<button
+						style={{
+							display: 'flex',
+							alignItems: 'center',
+							gap: '0.21rem',
+							background: 'none',
+							border: 'none',
+							color: 'var(--oex-danger)',
+						}}
+						onClick={removeFromCart(product.code)}>
+						<Trash size={18} />
+						Remove
+					</button>
+				</div>
+				<div>
+					<h3 style={{}}>{product.name}</h3>
+					<p style={{ fontSize: '1.2rem', color: 'var(--oex-grey)' }}>
+						Size: {formatGramm.format(product.weightInGrams)}
+					</p>
+					{!isInStock ? (
+						<p style={{ color: 'var(--oex-danger)' }}>Out of stock</p>
+					) : (
+						<p style={{ color: 'var(--oex-success)' }}>In stock</p>
+					)}
+				</div>
+			</div>
+
+			<div>
+				<div
+					style={{
+						display: 'flex',
+						gap: '.5rem',
+						alignItems: 'center',
+					}}>
+					<ProductCountControlButton
+						onClick={() => {
+							console.log(productCount);
+							setProductCount(prevProductCount => prevProductCount - 1);
+						}}>
+						-
+					</ProductCountControlButton>
+					<ProductCountInput
+						type="number"
+						name="quantity"
+						id="quantity"
+						value={productCount}
+						onChange={e => setProductCount(Number(e.target.value))}
+					/>
+					<ProductCountControlButton
+						onClick={() =>
+							setProductCount(prevProductCount => prevProductCount + 1)
+						}>
+						+
+					</ProductCountControlButton>
+				</div>
+				<Price>{priceFormatter.format(product.price)}</Price>
+			</div>
+		</CartItemContainer>
+	);
+};
+
 const Title = styled.h2`
 	margin: 0;
 	font-weight: 600;
@@ -163,7 +158,7 @@ const Title = styled.h2`
 	display: flex;
 `;
 
-const CartItemWrapper = styled.div`
+const CartItemContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
