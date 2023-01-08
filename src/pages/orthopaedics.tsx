@@ -70,7 +70,7 @@ function orthopaedics() {
 				/>
 			</Hero>
 			<StyledHeading>
-				Diverse solutions for your patient's unique needs
+				Diverse solutions for your patient&apos;s unique needs
 			</StyledHeading>
 			<InfoCards>
 				{infoCardsData.map((info, index) => (
