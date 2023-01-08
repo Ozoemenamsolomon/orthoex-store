@@ -36,6 +36,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 		setLight(
 			!(
 				pathname.split('/')[1] === '' ||
+				pathname.split('/')[1] === 'orthopaedics' ||
 				(pathname.split('/')[1] === 'composites' &&
 					!/\/composites\/(\w)+/.test(pathname))
 			),
