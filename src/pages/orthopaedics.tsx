@@ -9,7 +9,6 @@ import HealthProfessionals from '@assets/new/icons/orthopaedics/health-professio
 import LinersSuspensionPickers from '@assets/new/icons/orthopaedics/liners-suspension-picker.svg';
 import Patients from '@assets/new/icons/orthopaedics/patients.svg';
 import styled from 'styled-components';
-import { ServicesCards } from '@components/styled';
 
 const infoCardsData: ServiceCardType[] = [
 	{
