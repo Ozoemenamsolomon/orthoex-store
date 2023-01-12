@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledFormControl = styled.div`
+export const FormControl = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -14,11 +14,12 @@ export const StyledFormControl = styled.div`
 
 	& > input,
 	textarea {
-		border: 1px solid var(--oex-light-grey);
+		border: 1px solid var(--oex-grey);
 		outline: none;
 		padding: 0.8rem;
 		border-radius: 0.2rem;
 		font: inherit;
+		background-color: white;
 	}
 
 	& > input::placeholder,

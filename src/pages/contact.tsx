@@ -18,10 +18,7 @@ import HeaderParagraph, {
 } from '@components/shared/HeaderParagraph';
 import SocialMediaButtons from '@components/shared/SocialMediaButtons';
 import { Container } from '@components/styled';
-import {
-	StyledFormButtonControl,
-	StyledFormControl,
-} from '@components/styled/Forms';
+import { FormControl, StyledFormButtonControl } from '@components/styled/Forms';
 import SupportInfo, { SupportInfoType } from '@components/SupportInfo';
 import { useForm, ValidationError } from '@formspree/react';
 import styled from 'styled-components';
@@ -101,7 +98,7 @@ const Contact = () => {
 								reason={'for contacting us!'}></ThankYou>
 						) : (
 							<form onSubmit={handleSubmit}>
-								<StyledFormControl>
+								<FormControl>
 									<label htmlFor="fullName">Full Name</label>
 									<input
 										type="text"
@@ -115,9 +112,9 @@ const Contact = () => {
 										field="fullname"
 										errors={formState.errors}
 									/>
-								</StyledFormControl>
+								</FormControl>
 
-								<StyledFormControl>
+								<FormControl>
 									<label htmlFor="email">Email Address</label>
 									<input
 										type="email"
@@ -131,8 +128,8 @@ const Contact = () => {
 										field="email"
 										errors={formState.errors}
 									/>
-								</StyledFormControl>
-								<StyledFormControl>
+								</FormControl>
+								<FormControl>
 									<label htmlFor="phone">Phone Number</label>
 									<input
 										type="tel"
@@ -145,9 +142,9 @@ const Contact = () => {
 										field="phone"
 										errors={formState.errors}
 									/>
-								</StyledFormControl>
+								</FormControl>
 
-								<StyledFormControl>
+								<FormControl>
 									<label htmlFor="message">Message</label>
 									<textarea
 										name="message"
@@ -162,7 +159,7 @@ const Contact = () => {
 										field="message"
 										errors={formState.errors}
 									/>
-								</StyledFormControl>
+								</FormControl>
 
 								<StyledFormButtonControl>
 									<CTA type="submit">Send message</CTA>

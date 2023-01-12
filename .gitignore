@@ -38,3 +38,4 @@ test.js
 
 # Local Netlify folder
 .netlify
+.env
