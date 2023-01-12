@@ -54,7 +54,7 @@ export const Container = styled.div<{
 	margin: auto;
 	padding-top: 1rem;
 	padding-inline: ${({ paddingMultiplierSmall }) =>
-		(paddingMultiplierSmall ?? 1) * 2}rem;
+		(paddingMultiplierSmall ?? 1) * 1}rem;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		${({ verticalPaddingInREM: verticalPadding }) =>
