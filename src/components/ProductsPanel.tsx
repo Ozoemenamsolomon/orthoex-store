@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { Dashboard } from 'styled-icons/boxicons-solid';
 import { ArrowPrevious, Filter } from 'styled-icons/fluentui-system-filled';
 import { CheveronLeft, CheveronRight } from 'styled-icons/zondicons';
-import { ProductCards } from './styled';
 
 const ProductsPanel: React.FC<{
 	products: ProductDataType[];
@@ -64,9 +63,18 @@ const ProductPanelContainer = styled.article`
 	}
 `;
 
+const ProductCards = styled.div`
+	--width: 150px;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(var(--width), 1fr));
+	gap: 2rem 1rem;
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		--width: 200px;
+	}
+`;
+
 const TitleFilterBar = styled.div`
 	display: flex;
-	padding-bottom: 1rem;
 	justify-content: space-between;
 	gap: 2rem;
 
@@ -82,6 +90,7 @@ const TitleFilterBar = styled.div`
 		padding-block: 1rem;
 		display: flex;
 		justify-content: space-between;
+		margin-block: 1rem;
 	}
 `;
 

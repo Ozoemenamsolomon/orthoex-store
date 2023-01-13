@@ -5,6 +5,16 @@ const handler: NextApiHandler = async (req, res) => {
 	const product = req.body;
 	console.log('body: ', product);
 
+	if (
+		!product.name ||
+		!product.code ||
+		!product.price ||
+		!product.brand ||
+		!product.category
+	) {
+		return res.status(400).json({ error: 'Missing required fields' });
+	}
+
 	const { data, error } = await supabaseClient.from('products').insert([
 		{
 			name: product.name,
@@ -20,7 +30,7 @@ const handler: NextApiHandler = async (req, res) => {
 
 	if (error) {
 		console.log('error: ', error);
-		return res.status(500).json({ error: error.details });
+		return res.status(500).json({ error: error.details || error.message });
 	}
 
 	return res.status(200).json({ data });
