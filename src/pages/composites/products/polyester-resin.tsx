@@ -62,7 +62,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 		category: { name: productCategory, slug: productCategorySlug },
 		brand: { name: brandName },
 		review: { count: reviewCount, average: reviewAverage },
-		productDetail,
+		details: productDetail,
 	} = product;
 
 	const customerReviews = Array.from({ length: 2 }, (_, index) =>

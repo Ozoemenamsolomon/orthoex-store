@@ -1,20 +1,21 @@
-import { categories } from './categories';
 import product1 from '@assets/new/images/product1.jpg';
 import product1prev from '@assets/new/images/product1prev.jpg';
 import { CategoryProps } from '@components/CategoryCard';
-import { brands } from './brands';
 import { StaticImageData } from 'next/image';
+import { brands } from './brands';
+import { categories } from './categories';
 
 export type ProductDataType = {
+	name: string;
 	code: string;
 	brand: { name: string; slug: string };
 	category: CategoryProps;
-	description: string;
 	image: StaticImageData;
-	name: string;
-	previewImages: StaticImageData[];
 	price: number;
-	productDetail: string;
+	details: string;
+	description: string;
+
+	previewImages: StaticImageData[];
 	weightInGrams: number;
 	review: { count: number; average: number };
 };
@@ -29,7 +30,7 @@ export const productsData: ProductDataType[] = [
 		image: product1,
 		previewImages: [product1, product1, product1],
 		name: 'Polyester Resin',
-		productDetail:
+		details:
 			'- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum morbi ac egestas sed mattis vitae. Phasellus risus, quam eu gravida etiam aliquam pharetra felis. , tellus congue proin amet nunc. Et sagittis, vitae dolor adipiscing dolor enim. Nisl mi congue ipsum mauris risus a, mauris.\n- Nibh elementum in viverra eu pellentesque quis. Semper nibh tellus enim porta. Eu lorem viverra interdum ac ac scelerisque ipsum enim auctor. Nunc urnaque sed enim eleifend volutpat gravida. Cursus habitant scelerisque suspendisse ornare lectus\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget sem nulla integer. Cras sed accumsan sit vitae mattis aliquet viverra cursus magna ut.\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget.',
 		price: 50,
 		weightInGrams: 100,
@@ -45,7 +46,7 @@ export const productsData: ProductDataType[] = [
 		image: product1,
 		previewImages: [product1prev, product1prev, product1prev],
 		name: 'Accelerator',
-		productDetail:
+		details:
 			'- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum morbi ac egestas sed mattis vitae. Phasellus risus, quam eu gravida etiam aliquam pharetra felis. , tellus congue proin amet nunc. Et sagittis, vitae dolor adipiscing dolor enim. Nisl mi congue ipsum mauris risus a, mauris.\n- Nibh elementum in viverra eu pellentesque quis. Semper nibh tellus enim porta. Eu lorem viverra interdum ac ac scelerisque ipsum enim auctor. Nunc urnaque sed enim eleifend volutpat gravida. Cursus habitant scelerisque suspendisse ornare lectus\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget sem nulla integer. Cras sed accumsan sit vitae mattis aliquet viverra cursus magna ut.\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget.',
 		price: 55787455,
 		weightInGrams: 1000,
@@ -61,7 +62,7 @@ export const productsData: ProductDataType[] = [
 		image: product1,
 		previewImages: [product1prev, product1prev, product1prev],
 		name: 'Epoxy Resin',
-		productDetail:
+		details:
 			'- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum morbi ac egestas sed mattis vitae. Phasellus risus, quam eu gravida etiam aliquam pharetra felis. , tellus congue proin amet nunc. Et sagittis, vitae dolor adipiscing dolor enim. Nisl mi congue ipsum mauris risus a, mauris.\n- Nibh elementum in viverra eu pellentesque quis. Semper nibh tellus enim porta. Eu lorem viverra interdum ac ac scelerisque ipsum enim auctor. Nunc urnaque sed enim eleifend volutpat gravida. Cursus habitant scelerisque suspendisse ornare lectus\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget sem nulla integer. Cras sed accumsan sit vitae mattis aliquet viverra cursus magna ut.\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget.',
 		price: 4577,
 		weightInGrams: 1030,
@@ -77,7 +78,7 @@ export const productsData: ProductDataType[] = [
 		image: product1,
 		previewImages: [product1prev, product1prev, product1prev],
 		name: 'Mica Pigment',
-		productDetail:
+		details:
 			'- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum morbi ac egestas sed mattis vitae. Phasellus risus, quam eu gravida etiam aliquam pharetra felis. , tellus congue proin amet nunc. Et sagittis, vitae dolor adipiscing dolor enim. Nisl mi congue ipsum mauris risus a, mauris.\n- Nibh elementum in viverra eu pellentesque quis. Semper nibh tellus enim porta. Eu lorem viverra interdum ac ac scelerisque ipsum enim auctor. Nunc urnaque sed enim eleifend volutpat gravida. Cursus habitant scelerisque suspendisse ornare lectus\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget sem nulla integer. Cras sed accumsan sit vitae mattis aliquet viverra cursus magna ut.\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget.',
 		price: 3345,
 		weightInGrams: 1000985,
@@ -92,7 +93,7 @@ export const productsData: ProductDataType[] = [
 		image: product1,
 		previewImages: [product1prev, product1prev, product1prev],
 		name: 'Polyester Resin B',
-		productDetail:
+		details:
 			'- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum morbi ac egestas sed mattis vitae. Phasellus risus, quam eu gravida etiam aliquam pharetra felis. , tellus congue proin amet nunc. Et sagittis, vitae dolor adipiscing dolor enim. Nisl mi congue ipsum mauris risus a, mauris.\n- Nibh elementum in viverra eu pellentesque quis. Semper nibh tellus enim porta. Eu lorem viverra interdum ac ac scelerisque ipsum enim auctor. Nunc urnaque sed enim eleifend volutpat gravida. Cursus habitant scelerisque suspendisse ornare lectus\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget sem nulla integer. Cras sed accumsan sit vitae mattis aliquet viverra cursus magna ut.\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget.',
 		price: 23456766,
 		weightInGrams: 10985,
@@ -107,7 +108,7 @@ export const productsData: ProductDataType[] = [
 		image: product1,
 		previewImages: [product1prev, product1prev, product1prev],
 		name: 'Polyester Resin S',
-		productDetail:
+		details:
 			'- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum morbi ac egestas sed mattis vitae. Phasellus risus, quam eu gravida etiam aliquam pharetra felis. , tellus congue proin amet nunc. Et sagittis, vitae dolor adipiscing dolor enim. Nisl mi congue ipsum mauris risus a, mauris.\n- Nibh elementum in viverra eu pellentesque quis. Semper nibh tellus enim porta. Eu lorem viverra interdum ac ac scelerisque ipsum enim auctor. Nunc urnaque sed enim eleifend volutpat gravida. Cursus habitant scelerisque suspendisse ornare lectus\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget sem nulla integer. Cras sed accumsan sit vitae mattis aliquet viverra cursus magna ut.\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget.',
 		price: 23456,
 		weightInGrams: 10955,
@@ -122,7 +123,7 @@ export const productsData: ProductDataType[] = [
 		image: product1,
 		previewImages: [product1prev, product1prev, product1prev],
 		name: 'Silicone',
-		productDetail:
+		details:
 			'- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum morbi ac egestas sed mattis vitae. Phasellus risus, quam eu gravida etiam aliquam pharetra felis. , tellus congue proin amet nunc. Et sagittis, vitae dolor adipiscing dolor enim. Nisl mi congue ipsum mauris risus a, mauris.\n- Nibh elementum in viverra eu pellentesque quis. Semper nibh tellus enim porta. Eu lorem viverra interdum ac ac scelerisque ipsum enim auctor. Nunc urnaque sed enim eleifend volutpat gravida. Cursus habitant scelerisque suspendisse ornare lectus\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget sem nulla integer. Cras sed accumsan sit vitae mattis aliquet viverra cursus magna ut.\n- Adipiscing lectus faucibus condimentum nibh nisl ultricies. Nisi, nisi mauris sem purus, nulla arcu risus velit. Integer non eu vestibulum accumsan, egestas fermentum pellentesque in. Leo ut nec sit metus proin mi potenti nunc mauris. Amet semper in gravida eget.',
 		price: 20320,
 		weightInGrams: 950985,
