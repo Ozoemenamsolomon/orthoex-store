@@ -39,8 +39,6 @@ const Cart: NextPage<{
 		console.log({ idToRemove: id });
 	};
 
-	console.log({ weight: products[0].weightInGrams });
-
 	return (
 		<Container>
 			<div>
@@ -93,7 +91,6 @@ const Cart: NextPage<{
 										}}>
 										<ProductCountControlButton
 											onClick={() => {
-												console.log(productCount);
 												setProductCount(
 													prevProductCount => prevProductCount - 1,
 												);

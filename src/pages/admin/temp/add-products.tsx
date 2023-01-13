@@ -45,7 +45,6 @@ const AddProduct: NextPage<Props> = ({ brands, categories }) => {
 				'Content-Type': 'application/json',
 			},
 		}).then(res => {
-			console.log(res);
 			if (!res.ok) {
 				return res.json().then(err => {
 					toast.error(err.error);
@@ -57,8 +56,6 @@ const AddProduct: NextPage<Props> = ({ brands, categories }) => {
 			return res.json();
 		});
 	};
-
-	console.log({ brands });
 
 	return (
 		<Container>
@@ -145,6 +142,15 @@ const AddProduct: NextPage<Props> = ({ brands, categories }) => {
 export default AddProduct;
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
+	if (ctx.req.cookies['temp_admin_cookie'] !== process.env.ADMIN_COOKIE_VALUE) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: false,
+			},
+		};
+	}
+
 	const [
 		{ data: brands, error: brandsFetchError },
 		{ data: categories, error: categoriesFetchError },
