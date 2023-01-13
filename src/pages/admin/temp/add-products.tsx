@@ -1,9 +1,10 @@
 import CTA from '@components/CTA';
 import { Container } from '@components/styled';
-import { FormControl } from '@components/styled/Forms';
+import { FormControl, FormSelect } from '@components/styled/Forms';
+import { supabaseClient } from '@utils/supabase';
+import { GetServerSideProps, NextPage } from 'next';
+import React from 'react';
 import { toast } from 'react-toastify';
-
-type Props = {};
 
 const InputGroup: React.FC<
 	{
@@ -12,31 +13,22 @@ const InputGroup: React.FC<
 		placeholder: string;
 		type?: string;
 		required?: false;
-	} & React.HTMLAttributes<HTMLInputElement>
-> = ({
-	label,
-	name,
-	type = 'text',
-	placeholder,
-	required = true,
-	...props
-}) => {
+	} & React.InputHTMLAttributes<HTMLInputElement>
+> = ({ label, name, type = 'text', required = true, ...props }) => {
 	return (
 		<FormControl>
 			<label htmlFor={name}>{label}</label>
-			<input
-				type={type}
-				id={name}
-				name={name}
-				required={required}
-				placeholder={placeholder}
-				{...props}
-			/>
+			<input type={type} id={name} name={name} required={required} {...props} />
 		</FormControl>
 	);
 };
 
-const AddProduct = (props: Props) => {
+type Brand = { id: number; name: string; slug: string };
+type Category = { id: number; name: string; slug: string };
+
+type Props = { brands: Brand[]; categories: Category[] };
+
+const AddProduct: NextPage<Props> = ({ brands, categories }) => {
 	const addProduct = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
@@ -65,6 +57,9 @@ const AddProduct = (props: Props) => {
 			return res.json();
 		});
 	};
+
+	console.log({ brands });
+
 	return (
 		<Container>
 			<h1
@@ -84,30 +79,62 @@ const AddProduct = (props: Props) => {
 				method="post">
 				<InputGroup
 					label="Product name"
-					name="productName"
+					name="name"
 					placeholder="Product name"
 				/>
+				<FormSelect name="brand" id="brand" placeholder="Choose your brand">
+					<option selected disabled value="default">
+						Choose product brand
+					</option>
+					{brands.map(brand => (
+						<option key={brand.id} value={brand.id}>
+							{brand.name}
+						</option>
+					))}
+				</FormSelect>
+				<FormSelect
+					name="category"
+					id="category"
+					placeholder="Choose your category">
+					<option selected disabled value="default">
+						Choose product category
+					</option>
+					{categories.map(category => (
+						<option key={category.id} value={category.id}>
+							{category.name}
+						</option>
+					))}
+				</FormSelect>
 				<InputGroup
 					label="Product code"
-					name="productCode"
+					name="code"
 					placeholder="Product code"
 				/>
 				<InputGroup
 					label="Product image"
-					name="productImage"
+					name="image"
 					placeholder="Product image"
 				/>
 				<InputGroup
 					label="Product price"
-					name="productPrice"
+					name="price"
 					placeholder="Product price"
 					type="number"
+					step={0.01}
 				/>
 				<InputGroup
 					label="Product description"
-					name="productDescription"
+					name="description"
 					placeholder="Product description"
 					type="textarea"
+					required={false}
+				/>
+				<InputGroup
+					label="Product details"
+					name="details"
+					placeholder="Product details"
+					type="textarea"
+					required={false}
 				/>
 				<CTA>Add Product</CTA>
 			</form>
@@ -116,3 +143,24 @@ const AddProduct = (props: Props) => {
 };
 
 export default AddProduct;
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+	const [
+		{ data: brands, error: brandsFetchError },
+		{ data: categories, error: categoriesFetchError },
+	] = await Promise.all([
+		supabaseClient.from('brands').select('id,name,slug'),
+		supabaseClient.from('categories').select('id,name,slug'),
+	]);
+
+	if (brandsFetchError || categoriesFetchError) {
+		console.log({
+			brandsFetchError,
+			categoriesFetchError,
+		});
+	}
+
+	return {
+		props: { brands: brands || [], categories: categories || [] },
+	};
+};

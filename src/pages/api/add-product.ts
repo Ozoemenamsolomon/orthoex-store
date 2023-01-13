@@ -1,21 +1,20 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabaseClient } from '@utils/supabase';
 import { NextApiHandler } from 'next';
-
-const supabaseUrl = process.env.SUPABASE_URL || '';
-const supabaseKey = process.env.SUPABASE_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 const handler: NextApiHandler = async (req, res) => {
 	const product = req.body;
 	console.log('body: ', product);
 
-	const { data, error } = await supabase.from('products').insert([
+	const { data, error } = await supabaseClient.from('products').insert([
 		{
-			productName: product.productName,
-			productCode: product.productCode,
-			productImage: product.productImage,
-			productPrice: product.productPrice,
-			productDescription: product.productDescription,
+			name: product.name,
+			code: product.code,
+			image: product.image,
+			price: product.price,
+			description: product.description,
+			details: product.details,
+			brand: product.brand,
+			category: product.category,
 		},
 	]);
 

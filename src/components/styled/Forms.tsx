@@ -171,6 +171,7 @@ export const FormSelect = styled.select`
 	font-size: inherit;
 	cursor: inherit;
 	line-height: inherit;
+	border-radius: 0.2rem;
 
 	& > ::placeholder {
 		color: var(--oex-bg-grey);
@@ -182,6 +183,9 @@ export const FormSelect = styled.select`
 
 	& > option {
 		background: white;
-		color: red;
+		color: var(--oex-orange);
+		:disabled {
+			color: var(--oex-grey);
+		}
 	}
 `;
