@@ -1,7 +1,7 @@
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
 import React from 'react';
 import styled from 'styled-components';
-import { ServicesCards } from './styled';
+import { Container } from './styled';
 
 interface ServiceStandardType {
 	heading: string;
@@ -16,24 +16,26 @@ type ServiceStandardProps = {
 const ServiceStandard: React.FC<ServiceStandardProps> = ({ data }) => {
 	const { heading, paragraph, servicesIcon } = data;
 	return (
-		<StyledServiceStandard>
-			<ServiceWriteUp>
-				<h3>{heading}</h3>
-				<p>{paragraph}</p>
-			</ServiceWriteUp>
-			<StyledServiceIcon>
-				<StyledServiceCards>
-					{servicesIcon.map((service, index) => (
-						<ServiceCard
-							greyFont
-							className="no-shadow no-padding shrink-start"
-							key={`image-desc-${index}`}
-							service={service}
-						/>
-					))}
-				</StyledServiceCards>
-			</StyledServiceIcon>
-		</StyledServiceStandard>
+		<Container paddingMultiplierSmall={0}>
+			<StyledServiceStandard>
+				<ServiceWriteUp>
+					<h3>{heading}</h3>
+					<p>{paragraph}</p>
+				</ServiceWriteUp>
+				<StyledServiceIcon>
+					<StyledServiceCards>
+						{servicesIcon.map((service, index) => (
+							<ServiceCard
+								greyFont
+								className="no-shadow no-padding shrink-start"
+								key={`image-desc-${index}`}
+								service={service}
+							/>
+						))}
+					</StyledServiceCards>
+				</StyledServiceIcon>
+			</StyledServiceStandard>
+		</Container>
 	);
 };
 
@@ -47,7 +49,7 @@ const StyledServiceStandard = styled.div`
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 
-	@media ${({ theme }) => theme.breakpoints.above.md} {
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		flex-direction: row;
 		padding: 2rem;
 		gap: 5rem;
@@ -90,9 +92,13 @@ const StyledServiceIcon = styled.div`
 	}
 `;
 
-const StyledServiceCards = styled(ServicesCards)`
-	--min-width: 150px;
-	@media ${({ theme }) => theme.breakpoints.above.lg} {
-		--min-width: 128px;
+const StyledServiceCards = styled.div`
+	display: grid;
+	gap: 2rem 1rem;
+	grid-template-columns: repeat(2, 1fr);
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		grid-template-rows: repeat(2, 1fr);
+		grid-template-columns: unset;
+		grid-auto-flow: column;
 	}
 `;
