@@ -103,7 +103,6 @@ export const calculateCylinderResinInKg = (
 	const calculatedResinInKgM3 = Math.trunc(
 		calculatedVolume * densityOfResinInKg,
 	);
-	console.log(calculatedResinInKgM3);
 
 	return checkAndReturnDivsisibleByThree(calculatedResinInKgM3);
 };

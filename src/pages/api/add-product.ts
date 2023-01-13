@@ -3,7 +3,14 @@ import { NextApiHandler } from 'next';
 
 const handler: NextApiHandler = async (req, res) => {
 	const product = req.body;
-	console.log('body: ', product);
+
+	if (req.method !== 'POST') {
+		return res.status(405).json({ error: 'Method not allowed' });
+	}
+
+	if (req.cookies.temp_admin_cookie !== process.env.ADMIN_COOKIE_VALUE) {
+		return res.status(401).json({ error: 'Unauthorized' });
+	}
 
 	if (
 		!product.name ||

@@ -206,7 +206,6 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									}}>
 									<ProductCountControlButton
 										onClick={() => {
-											console.log(productCount);
 											setProductCount(prevProductCount => prevProductCount - 1);
 										}}>
 										-
