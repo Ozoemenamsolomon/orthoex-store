@@ -1,6 +1,6 @@
+import Image, { StaticImageData } from 'next/image';
 import { FC, ReactElement } from 'react';
 import styled from 'styled-components';
-import Image, { StaticImageData } from 'next/image';
 
 export type ServiceCardType = {
 	description: string;
