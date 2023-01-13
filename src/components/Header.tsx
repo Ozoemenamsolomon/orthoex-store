@@ -108,7 +108,6 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 							</svg>
 						)}
 					</HamburgerButton>
-
 					<NavBar className={light ? 'light' : undefined}>
 						<div>
 							{navLinks.map((navLink, index) => (
