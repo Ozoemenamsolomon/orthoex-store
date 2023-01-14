@@ -476,6 +476,7 @@ const DataSheetLink = styled.p`
 	color: var(--oex-orange);
 `;
 
+// TODO: get rid of export
 export const ProductCountControlButton = styled.button`
 	height: 2.5rem;
 	aspect-ratio: 1;

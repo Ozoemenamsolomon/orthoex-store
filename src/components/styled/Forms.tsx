@@ -37,32 +37,6 @@ export const StyledFormButtonControl = styled.div`
 		font-size: 1.3rem;
 	}
 `;
-export const FormRadio = styled.input`
-	-webkit-appearance: none;
-	appearance: none;
-	color: var(--oex-orange);
-	width: 1.15em;
-	height: 1.15em;
-	border-radius: 50%;
-	background-color: var(--oex-orange);
-	border: 3px solid #fff;
-	margin: 0;
-	// box-shadow: 0 0 0 1px var(--oex-orange);
-
-	&::before {
-		content: '';
-		width: 2em;
-		height: 2em;
-		border-radius: 50%;
-		transform: scale(1000);
-		transition: 120ms transform ease-in-out;
-		box-shadow: 0 0 0 1px var(--oex-orange);
-	}
-
-	&::checked::before {
-		transform: scale(1);
-	}
-`;
 
 export const FormRadioLabel = styled.label`
 	color: var(--text-colour-grey);

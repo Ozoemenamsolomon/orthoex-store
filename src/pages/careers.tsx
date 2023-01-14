@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Image from 'next/image';
-import { Container } from '@components/styled';
-import CareerPeople from '@assets/new/images/career/career-people.jpg';
 import CareerManAndWoman from '@assets/new/images/career/career-man-woman.jpg';
+import CareerPeople from '@assets/new/images/career/career-people.jpg';
 import WomanOne from '@assets/new/images/career/woman-one.jpg';
-import WomanTwo from '@assets/new/images/career/woman-two.jpg';
 import WomanThree from '@assets/new/images/career/woman-three.jpg';
+import WomanTwo from '@assets/new/images/career/woman-two.jpg';
+import { Container } from '@components/styled';
+import Image from 'next/image';
+import { useState } from 'react';
+import styled from 'styled-components';
 
 import ImageInfoHeader, {
 	ImageInfoHeaderType,
 } from '@components/ImageInfoHeader';
 import InfoText from '@components/InfoText';
-import SocialMediaButtons from '@components/shared/SocialMediaButtons';
-import { openJobPositions } from '@data/openJobPositionsData';
 import JobPositonCard from '@components/JobPositonCard';
+import SocialMediaButtons from '@components/shared/SocialMediaButtons';
 import { hiringData } from '@data/hiringProcessData';
+import { openJobPositions } from '@data/openJobPositionsData';
 
 const careerData: ImageInfoHeaderType = {
 	image: CareerPeople,
@@ -121,7 +121,7 @@ function Careers() {
 
 export default Careers;
 
-export const StyledComponentHeading = styled.h2`
+const StyledComponentHeading = styled.h2`
 	font-size: 2rem;
 	font-weight: 400;
 	line-height: 38px;
