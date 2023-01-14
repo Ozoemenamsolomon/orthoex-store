@@ -34,13 +34,14 @@ const Products: NextPage<{
 		)
 		.filter(product =>
 			filter.brand ? filter.brand === product.brand.slug : true,
-		)
-		.filter(product =>
-			!filter.priceRange.max
-				? true
-				: product.price >= filter.priceRange.min &&
-				  product.price <= filter.priceRange.max,
 		);
+	// TODO: Fix this
+	// .filter(product =>
+	// 	!filter.priceRange.max
+	// 		? true
+	// 		: product.price >= filter.priceRange.min &&
+	// 		  product.price <= filter.priceRange.max,
+	// );
 
 	return (
 		<Container

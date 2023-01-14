@@ -10,6 +10,7 @@ export const FormControl = styled.div`
 		font-weight: 600;
 		color: var(--text-colour-dark);
 		font-size: 0.9rem;
+		text-transform: capitalize;
 	}
 
 	& > input,

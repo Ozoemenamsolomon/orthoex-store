@@ -1,5 +1,5 @@
 import FilterPanel, { FilterType } from '@components/FilterPanel';
-import ProductCard, { priceFormatter } from '@components/ProductCard';
+import ProductCard from '@components/ProductCard';
 import SooSection from '@components/SooSection';
 import { Container } from '@components/styled';
 import { ProductDataType, productsData } from '@data/productsData';
@@ -12,13 +12,6 @@ import {
 	ProductCountControlButton,
 	ProductCountInput,
 } from './composites/products/polyester-resin';
-
-const formatGramm = new Intl.NumberFormat('en-US', {
-	style: 'unit',
-	unit: 'gram',
-	notation: 'compact',
-	unitDisplay: 'narrow',
-});
 
 const Cart: NextPage<{
 	products: ProductDataType[];
@@ -72,7 +65,7 @@ const Cart: NextPage<{
 									<div>
 										<h3 style={{}}>{product.name}</h3>
 										<p style={{ fontSize: '1.2rem', color: 'var(--oex-grey)' }}>
-											Size: {formatGramm.format(product.weightInGrams)}
+											{/* Size: {formatGramm.format(product.weightInGrams)} */}
 										</p>
 										{!isInStock ? (
 											<p style={{ color: 'var(--oex-danger)' }}>Out of stock</p>
@@ -113,7 +106,7 @@ const Cart: NextPage<{
 											+
 										</ProductCountControlButton>
 									</div>
-									<Price>{priceFormatter.format(product.price)}</Price>
+									{/* <Price>{priceFormatter.format(product.price)}</Price> */}
 								</div>
 							</CartItemWrapper>
 						))}
@@ -184,12 +177,12 @@ const CartItemWrapper = styled.div`
 	}
 `;
 
-const Price = styled.p`
-	font-weight: 600;
-	font-size: 1.5rem;
-	text-align: right;
-	margin-block: 1rem;
-`;
+// const Price = styled.p`
+// 	font-weight: 600;
+// 	font-size: 1.5rem;
+// 	text-align: right;
+// 	margin-block: 1rem;
+// `;
 
 const ImageContainer = styled.div`
 	position: relative;

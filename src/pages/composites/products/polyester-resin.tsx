@@ -6,6 +6,8 @@ import nigeriaMap from '@assets/new/icons/nigeria.svg';
 import bankTransferlogo from '@assets/new/images/bank-transfer-logo.jpg';
 import mastercardLogo from '@assets/new/images/mastercard-logo.jpg';
 import visaLogo from '@assets/new/images/visa-logo.jpg';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import Breadcrumb from '@components/Breadcrumb';
 import CTA, { CTALink } from '@components/CTA';
 import CustomerReviewCommentCard from '@components/CustomerReviewCommentCard';
@@ -27,7 +29,7 @@ import ReactMarkdown from 'react-markdown';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import styled from 'styled-components';
-import { formatPrice } from 'utils';
+import { formatPrice, getPrice } from 'utils';
 
 const orderBenefits: ServiceCardType[] = [
 	{
@@ -56,14 +58,18 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 	const {
 		description,
 		name: productName,
-		price,
+		variants,
 		image,
 		previewImages,
 		category: { name: productCategory, slug: productCategorySlug },
 		brand: { name: brandName },
-		review: { count: reviewCount, average: reviewAverage },
+		review,
 		details: productDetail,
 	} = product;
+
+	const { user } = useUser();
+
+	const price = getPrice(variants, (user?.custier || 'visitor') as string);
 
 	const customerReviews = Array.from({ length: 2 }, (_, index) =>
 		index === 0
@@ -128,7 +134,7 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 									/>
 								</div>
 								<div style={{ display: 'flex', gap: '5px' }}>
-									{previewImages.map((imagei, index) => (
+									{previewImages?.map((imagei, index) => (
 										<div
 											key={`image-preview-${index}`}
 											style={{
@@ -157,7 +163,10 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 										{brandName}
 									</span>
 								</p>
-								<ProductStars average={reviewAverage} count={reviewCount} />
+
+								{review && (
+									<ProductStars average={review.average} count={review.count} />
+								)}
 								<Price>{formatPrice(price)}</Price>
 								<p style={{ color: '#575757' }}> {description}</p>
 								<ShareProduct forSmall />
@@ -285,7 +294,9 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 							</TabList>
 
 							<TabPanel>
-								<ReactMarkdown>{productDetail}</ReactMarkdown>
+								{productDetail && (
+									<ReactMarkdown>{productDetail}</ReactMarkdown>
+								)}
 							</TabPanel>
 							<TabPanel>
 								<h2>Epoxy calculator</h2>
@@ -388,11 +399,13 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 
 export default SingleProduct;
 
-export async function getStaticProps() {
-	return {
-		props: { product: productsData[0] },
-	};
-}
+export const getServerSideProps = withPageAuthRequired({
+	async getServerSideProps(context) {
+		return {
+			props: { product: productsData[0] },
+		};
+	},
+});
 
 const ShareandDataSheets = () => (
 	<ShareandDataSheetsContainer>
