@@ -1,12 +1,12 @@
-import React from 'react';
-import { CTALink } from '../CTA';
-import styled from 'styled-components';
 import {
 	Facebook,
 	Instagram,
 	Linkedin,
 	Twitter,
 } from '@styled-icons/bootstrap';
+import React from 'react';
+import styled from 'styled-components';
+import { CTALink } from '../CTA';
 
 type SocialMediaButtonsType = {
 	width?: number;
@@ -57,7 +57,7 @@ const SocialMediaButtons: React.FC<SocialMediaButtonsType> = ({
 	);
 };
 
-export const SocialsContainer = styled.div<{ color?: string }>`
+const SocialsContainer = styled.div<{ color?: string }>`
 	display: flex;
 	gap: 1.2rem;
 

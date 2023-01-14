@@ -61,11 +61,7 @@ type SectionHeaderProps = {
 	align?: 'left' | 'right';
 };
 
-export const SectionHeader: FC<SectionHeaderProps> = ({
-	title,
-	subtitle,
-	align,
-}) => {
+const SectionHeader: FC<SectionHeaderProps> = ({ title, subtitle, align }) => {
 	return (
 		<SectionHeaderContainer align={align}>
 			<SectionTitle align={align}>{title}</SectionTitle>

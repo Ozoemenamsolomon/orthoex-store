@@ -1,7 +1,7 @@
 import React from 'react';
-import SupportInfoCard from './SupportInfoCard';
 import styled from 'styled-components';
 import { StyledHeading } from './FeaturedEvents';
+import SupportInfoCard from './SupportInfoCard';
 
 type svgIcon = ({ color }: { color?: string | undefined }) => JSX.Element;
 
@@ -42,13 +42,13 @@ const SupportInfo: React.FC<SupportInfoProps> = ({ data }) => {
 
 export default SupportInfo;
 
-export const StyledSupportWrapper = styled.div`
+const StyledSupportWrapper = styled.div`
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 2rem;
 	}
 `;
 
-export const StyledSupportInfo = styled.div`
+const StyledSupportInfo = styled.div`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;

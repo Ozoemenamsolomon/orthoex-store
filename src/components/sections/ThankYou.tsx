@@ -36,7 +36,7 @@ const ThankYou: React.FC<{ show: boolean; reason: string }> = ({
 
 export default ThankYou;
 
-export const ThankYouContainer = styled.div`
+const ThankYouContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
