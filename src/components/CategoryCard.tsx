@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export type CategoryProps = {
 	name: string;
 	slug: string;
-	image: StaticImageData;
+	image: StaticImageData | string;
 };
 type CategoryCardProps = {
 	category: CategoryProps;
