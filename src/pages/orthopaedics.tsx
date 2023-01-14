@@ -1,14 +1,24 @@
-import { HeroComp as Hero } from '@components/Hero';
-import HeroContent from '@components/HeroContent';
 import HeaderBG from '@assets/images/header-background.png';
-import { CTALink } from '@components/CTA';
-import { StyledHeading } from '@components/FeaturedEvents';
-import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
 import FabricationHub from '@assets/new/icons/orthopaedics/fabrication-hub.svg';
 import HealthProfessionals from '@assets/new/icons/orthopaedics/health-professionals.svg';
 import LinersSuspensionPickers from '@assets/new/icons/orthopaedics/liners-suspension-picker.svg';
 import Patients from '@assets/new/icons/orthopaedics/patients.svg';
+import { CTALink } from '@components/CTA';
+import { StyledHeading } from '@components/FeaturedEvents';
+import { HeroComp as Hero } from '@components/Hero';
+import HeroContent from '@components/HeroContent';
+import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
 import styled from 'styled-components';
+
+//
+const StyledCTALink = styled(CTALink)`
+background-color: var(--oex-off-white);
+
+	@media ${prop => prop.theme.breakpoints.above.sm} {
+		padding: 1rem;
+		font-size: 1rem;
+	}
+`;
 
 const infoCardsData: ServiceCardType[] = [
 	{
@@ -17,9 +27,9 @@ const infoCardsData: ServiceCardType[] = [
 			'You are not alone; we are here to help. OrthoEx supports amputees, people needing orthosis, and their families with the resources they need to live limitless lives.',
 		image: Patients,
 		cta: (
-			<CTALink href="" white>
+			<StyledCTALink href="" white>
 				Patient resources
-			</CTALink>
+			</StyledCTALink>
 		),
 	},
 	{
@@ -28,9 +38,9 @@ const infoCardsData: ServiceCardType[] = [
 			'Use our Liners and suspension size guide to assist you with deciding the right product fit for your patients.',
 		image: LinersSuspensionPickers,
 		cta: (
-			<CTALink href="" white>
+			<StyledCTALink href="" white>
 				Select a product
-			</CTALink>
+			</StyledCTALink>
 		),
 	},
 	{
@@ -39,9 +49,9 @@ const infoCardsData: ServiceCardType[] = [
 			'We reduce your overhead cost and help you focus on what matters most- your patients.',
 		image: FabricationHub,
 		cta: (
-			<CTALink href="" white>
+			<StyledCTALink href="" white>
 				Read more
-			</CTALink>
+			</StyledCTALink>
 		),
 	},
 	{
@@ -50,9 +60,9 @@ const infoCardsData: ServiceCardType[] = [
 			'With our passion for a quality life and excellence in clinical practice, we create value for our customers and challenge the limits of human potential.',
 		image: HealthProfessionals,
 		cta: (
-			<CTALink href="" white>
+			<StyledCTALink href="" white>
 				Read more
-			</CTALink>
+			</StyledCTALink>
 		),
 	},
 ];
@@ -74,7 +84,7 @@ function orthopaedics() {
 			</StyledHeading>
 			<InfoCards>
 				{infoCardsData.map((info, index) => (
-					<ServiceCard greyFont service={info} key={`infoCardsData=${index}`} />
+					<ServiceCard bgColor={'var(--oex-off-white)'} greyFont service={info} key={`infoCardsData=${index}`} />
 				))}
 			</InfoCards>
 		</>
@@ -101,3 +111,4 @@ const InfoCards = styled.div`
 		}
 	}
 `;
+
