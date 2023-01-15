@@ -140,7 +140,7 @@ const Cart: NextPage<{
 
 export default Cart;
 
-export const getServerSideprops = withPageAuthRequired({
+export const getServerSideProps = withPageAuthRequired({
 	async getServerSideProps(ctx) {
 		const products = Array.from(
 			{ length: 16 },
