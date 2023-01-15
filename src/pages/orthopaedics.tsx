@@ -2,12 +2,23 @@ import HeaderBG from '@assets/images/header-background.png';
 import FabricationHub from '@assets/new/icons/orthopaedics/fabrication-hub.svg';
 import HealthProfessionals from '@assets/new/icons/orthopaedics/health-professionals.svg';
 import LinersSuspensionPickers from '@assets/new/icons/orthopaedics/liners-suspension-picker.svg';
+import LinesAndSleeves from '@assets/new/images/productVerticalSection/orthopaedics/lines-and-sleeves.jpg';
+import Prosthetic from '@assets/new/images/productVerticalSection/orthopaedics/Prosthetic.jpg';
+import OrthoicEquipments from '@assets/new/images/productVerticalSection/orthopaedics/orthoic-equipments.jpg';
+import FabricationAndSupply from '@assets/new/images/productVerticalSection/orthopaedics/fabrication-and-supply.jpg';
+import OrthopaedicBraces from '@assets/new/images/productVerticalSection/orthopaedics/orthopaedic-braces.jpg';
+import Paediatrics from '@assets/new/images/productVerticalSection/orthopaedics/paediatrics.jpg';
+import PatientAids from '@assets/new/images/productVerticalSection/orthopaedics/patients-aids.jpg';
+import DiabeticFootwear from '@assets/new/images/productVerticalSection/orthopaedics/diabetic-footwear.jpg';
+import CompressionGarment from '@assets/new/images/productVerticalSection/orthopaedics/compression-garment.jpg';
+import ToolsAndEquipments from '@assets/new/images/productVerticalSection/orthopaedics/tools-and-equipment.jpg';
 import Patients from '@assets/new/icons/orthopaedics/patients.svg';
 import { CTALink } from '@components/CTA';
 import { StyledHeading } from '@components/FeaturedEvents';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import ProductVerticalSection, { ProductVerticalSectionType } from '@components/shared/ProductVerticalSection';
 import styled from 'styled-components';
 
 //
@@ -67,6 +78,63 @@ const infoCardsData: ServiceCardType[] = [
 	},
 ];
 
+const productVerticalData:ProductVerticalSectionType  = {
+	title: 'Which of our product vertical is relevant for you?',
+	description: 'Take full advantage of our expert knowledge and growing product portfolio in these dormains for your specific field of application:',
+	cards: [
+		{
+			title: 'Prosthetic components',
+			image: Prosthetic,
+			link: '/composites/categories'
+		},
+		{
+			title: 'Liners and sleeves',
+			image: LinesAndSleeves,
+			link: '/composites/categories'
+		},
+		{
+			title: 'Orthotic components',
+			image: OrthoicEquipments,
+			link: '/composites/categories'
+		},
+		{
+			title: 'Fabrication materials and supply',
+			image: FabricationAndSupply,
+			link: '/composites/categories'
+		},
+		{
+			title: 'Orthopaedic braces',
+			image: OrthopaedicBraces,
+			link: '/composites/categories'
+		},
+		{
+			title: 'Paediatrics',
+			image: Paediatrics,
+			link: '/composites/categories'
+		},
+		{
+			title: 'Stump care & Patients aids',
+			image: PatientAids,
+			link: '/composites/categories'
+		},
+		{
+			title: 'Diabetic footwear & care products',
+			image: DiabeticFootwear,
+			link: '/composites/categories'
+		},
+		{
+			title: 'Compression garment',
+			image: CompressionGarment,
+			link: '/composites/categories'
+		},
+		{
+			title: 'Tools & equipment',
+			image: ToolsAndEquipments,
+			link: '/composites/categories'
+		},
+]
+}
+
 function orthopaedics() {
 	return (
 		<>
@@ -87,6 +155,10 @@ function orthopaedics() {
 					<ServiceCard bgColor={'var(--oex-off-white)'} greyFont service={info} key={`infoCardsData=${index}`} />
 				))}
 			</InfoCards>
+
+			<ProductVerticalSection data={productVerticalData} />
+
+
 		</>
 	);
 }
