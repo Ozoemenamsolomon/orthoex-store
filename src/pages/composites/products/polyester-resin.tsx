@@ -7,18 +7,18 @@ import bankTransferlogo from '@assets/new/images/bank-transfer-logo.jpg';
 import mastercardLogo from '@assets/new/images/mastercard-logo.jpg';
 import visaLogo from '@assets/new/images/visa-logo.jpg';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { UserProfile } from '@auth0/nextjs-auth0/client';
 import Breadcrumb from '@components/Breadcrumb';
 import CTA, { CTALink } from '@components/CTA';
 import CustomerReviewCommentCard from '@components/CustomerReviewCommentCard';
 import { SocialsContainer } from '@components/Footer';
 import ProductCard from '@components/ProductCard';
 import ProductStars from '@components/ProductStars';
-import { helps } from '@components/sections/NeedHelpSection';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
 import SooSection from '@components/SooSection';
 import StarPercentage from '@components/StarPercentage';
 import { Container, ProductCards } from '@components/styled';
+import { helps } from '@data/helps';
 import { ProductDataType, productsData } from '@data/productsData';
 import { Facebook, Instagram, Twitter } from '@styled-icons/bootstrap';
 import { NextPage } from 'next';
@@ -54,7 +54,10 @@ const orderBenefits: ServiceCardType[] = [
 	},
 ];
 
-const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
+const SingleProduct: NextPage<{
+	product: ProductDataType;
+	user: UserProfile;
+}> = ({ product, user }) => {
 	const {
 		description,
 		name: productName,
@@ -66,8 +69,6 @@ const SingleProduct: NextPage<{ product: ProductDataType }> = ({ product }) => {
 		review,
 		details: productDetail,
 	} = product;
-
-	const { user } = useUser();
 
 	const price = getPrice(variants, (user?.custier || 'visitor') as string);
 
