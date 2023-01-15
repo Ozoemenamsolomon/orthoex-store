@@ -1,14 +1,14 @@
-import OurMission from '@assets/new/icons/about/our-mission.svg';
-import OurVision from '@assets/new/icons/about/our-vision.svg';
+import CustomerFirst from '@assets/new/icons/about/customer-first.svg';
+import Excellence from '@assets/new/icons/about/excellence-and-dependable.svg';
 import HumanPotential from '@assets/new/icons/about/human-potentials.svg';
 import Innovative from '@assets/new/icons/about/innovative.svg';
-import SwiftResponsive from '@assets/new/icons/about/swift-and-responsive.svg';
+import OurMission from '@assets/new/icons/about/our-mission.svg';
+import OurVision from '@assets/new/icons/about/our-vision.svg';
 import PositivePassionate from '@assets/new/icons/about/positive-and-pastionate.svg';
-import Excellence from '@assets/new/icons/about/excellence-and-dependable.svg';
-import CustomerFirst from '@assets/new/icons/about/customer-first.svg';
+import SwiftResponsive from '@assets/new/icons/about/swift-and-responsive.svg';
 import Composites from '@assets/new/icons/home/composites.svg';
-import { AboutCardSectionType } from '@components/About/AboutCardSection';
 import Prosthetics2 from '@assets/new/icons/home/prosthetics.svg';
+import { AboutCardSectionType } from '@components/About/AboutCardSection';
 
 export interface AboutDataType {
 	title: string;
@@ -63,7 +63,7 @@ export const aboutData: AboutDataType[] = [
 						image: Excellence,
 						title: 'Excellence and dependable',
 						description:
-							"We surpass our customers' expecta tions in a caring and professional manner.",
+							"We surpass our customers' expectations in a caring and professional manner.",
 					},
 					{
 						image: PositivePassionate,

@@ -13,17 +13,27 @@ import DiabeticFootwear from '@assets/new/images/productVerticalSection/orthopae
 import CompressionGarment from '@assets/new/images/productVerticalSection/orthopaedics/compression-garment.jpg';
 import ToolsAndEquipments from '@assets/new/images/productVerticalSection/orthopaedics/tools-and-equipment.jpg';
 import Patients from '@assets/new/icons/orthopaedics/patients.svg';
+import quality from '@assets/new/icons/quality.svg';
+import nigeria from '@assets/new/icons/nigeria.svg';
+import swift from '@assets/new/icons/orthopaedics/swift.svg';
+import expertSupport from '@assets/new/icons/orthopaedics/expert-support.svg';
 import { CTALink } from '@components/CTA';
 import { StyledHeading } from '@components/FeaturedEvents';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
-import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
-import ProductVerticalSection, { ProductVerticalSectionType } from '@components/shared/ProductVerticalSection';
+import { ServiceCardType } from '@components/ServiceCard';
+import InfoTestmonial from '@components/InfoTestimonial';
+import ProductVerticalSection, {
+	ProductVerticalSectionType,
+} from '@components/shared/ProductVerticalSection';
 import styled from 'styled-components';
+import InfoCardSection from '@components/shared/InfoCardSection';
+import TitleInfoSection, {
+	TitleCardDataType,
+} from '@components/shared/TitleInfoSection';
 
-//
 const StyledCTALink = styled(CTALink)`
-background-color: var(--oex-off-white);
+	background-color: var(--oex-off-white);
 
 	@media ${prop => prop.theme.breakpoints.above.sm} {
 		padding: 1rem;
@@ -78,64 +88,90 @@ const infoCardsData: ServiceCardType[] = [
 	},
 ];
 
-const productVerticalData:ProductVerticalSectionType  = {
+const productVerticalData: ProductVerticalSectionType = {
 	title: 'Which of our product vertical is relevant for you?',
-	description: 'Take full advantage of our expert knowledge and growing product portfolio in these dormains for your specific field of application:',
+	description:
+		'Take full advantage of our expert knowledge and growing product portfolio in these dormains for your specific field of application:',
 	cards: [
 		{
 			title: 'Prosthetic components',
 			image: Prosthetic,
-			link: '/composites/categories'
+			link: '/composites/categories',
 		},
 		{
 			title: 'Liners and sleeves',
 			image: LinesAndSleeves,
-			link: '/composites/categories'
+			link: '/composites/categories',
 		},
 		{
 			title: 'Orthotic components',
 			image: OrthoicEquipments,
-			link: '/composites/categories'
+			link: '/composites/categories',
 		},
 		{
 			title: 'Fabrication materials and supply',
 			image: FabricationAndSupply,
-			link: '/composites/categories'
+			link: '/composites/categories',
 		},
 		{
 			title: 'Orthopaedic braces',
 			image: OrthopaedicBraces,
-			link: '/composites/categories'
+			link: '/composites/categories',
 		},
 		{
 			title: 'Paediatrics',
 			image: Paediatrics,
-			link: '/composites/categories'
+			link: '/composites/categories',
 		},
 		{
 			title: 'Stump care & Patients aids',
 			image: PatientAids,
-			link: '/composites/categories'
+			link: '/composites/categories',
 		},
 		{
 			title: 'Diabetic footwear & care products',
 			image: DiabeticFootwear,
-			link: '/composites/categories'
+			link: '/composites/categories',
 		},
 		{
 			title: 'Compression garment',
 			image: CompressionGarment,
-			link: '/composites/categories'
+			link: '/composites/categories',
 		},
 		{
 			title: 'Tools & equipment',
 			image: ToolsAndEquipments,
-			link: '/composites/categories'
+			link: '/composites/categories',
 		},
-]
-}
+	],
+};
 
-function orthopaedics() {
+const titleInfoData: TitleCardDataType = {
+	title:
+		"We go the extra mile to help you realize your patient's tailored needs and functional goals.",
+	cards: [
+		{
+			description: 'We are swift and responsive by design',
+			image: swift,
+		},
+		{
+			description: 'All products are delivered with a standard warranty',
+			image: quality,
+		},
+		{
+			description:
+				'Continuous expert support and resources from licenced P&O professionals',
+			image: expertSupport,
+		},
+		{
+			description:
+				"We are Nigeria's largest orthotics and prosthetics supplier",
+			image: nigeria,
+		},
+	],
+};
+
+function Orthopaedics() {
 	return (
 		<>
 			<Hero darkenBG bg={HeaderBG}>
@@ -150,37 +186,13 @@ function orthopaedics() {
 			<StyledHeading>
 				Diverse solutions for your patient&apos;s unique needs
 			</StyledHeading>
-			<InfoCards>
-				{infoCardsData.map((info, index) => (
-					<ServiceCard bgColor={'var(--oex-off-white)'} greyFont service={info} key={`infoCardsData=${index}`} />
-				))}
-			</InfoCards>
-
+			<InfoCardSection data={infoCardsData} />
 			<ProductVerticalSection data={productVerticalData} />
+			<TitleInfoSection data={titleInfoData} />
 
-
+			<InfoTestmonial />
 		</>
 	);
 }
 
-export default orthopaedics;
-
-const InfoCards = styled.div`
-	display: flex;
-	flex-direction: column;
-	padding: 2rem;
-	gap: 2rem;
-
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-		flex-direction: row;
-		justify-content: space-around;
-		gap: 0rem;
-
-		//  TODO : have a look at this
-		& > div {
-			height: auto;
-			width: 20%;
-		}
-	}
-`;
-
+export default Orthopaedics;
