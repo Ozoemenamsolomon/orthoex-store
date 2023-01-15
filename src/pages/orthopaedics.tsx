@@ -31,6 +31,9 @@ import InfoCardSection from '@components/shared/InfoCardSection';
 import TitleInfoSection, {
 	TitleCardDataType,
 } from '@components/shared/TitleInfoSection';
+import OrderBenefitsSection from '@components/shared/OrderBenefitsSection';
+import StayTunedSection from '@components/sections/StayTunedSection';
+import HelpSection from '@components/shared/HelpSection';
 
 const StyledCTALink = styled(CTALink)`
 	background-color: var(--oex-off-white);
@@ -91,7 +94,7 @@ const infoCardsData: ServiceCardType[] = [
 const productVerticalData: ProductVerticalSectionType = {
 	title: 'Which of our product vertical is relevant for you?',
 	description:
-		'Take full advantage of our expert knowledge and growing product portfolio in these dormains for your specific field of application:',
+		'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
 	cards: [
 		{
 			title: 'Prosthetic components',
@@ -186,13 +189,22 @@ function Orthopaedics() {
 			<StyledHeading>
 				Diverse solutions for your patient&apos;s unique needs
 			</StyledHeading>
+
 			<InfoCardSection data={infoCardsData} />
 			<ProductVerticalSection data={productVerticalData} />
 			<TitleInfoSection data={titleInfoData} />
-
+			<OrderBenefitsSection />
+			<PaddingContainer>
+				<StayTunedSection />
+			</PaddingContainer>
+			<HelpSection />
 			<InfoTestmonial />
 		</>
 	);
 }
 
 export default Orthopaedics;
+
+const PaddingContainer = styled.div`
+	padding: 0rem 2rem;
+`;

@@ -29,14 +29,26 @@ const InfoCards = styled.div`
 	padding: 2rem;
 	gap: 2rem;
 
+	& > div {
+		height: auto;
+	}
+
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
 		justify-content: space-around;
-		gap: 0rem;
+		gap: 1rem;
+		flex-wrap: wrap;
 
 		//  TODO : have a look at this
 		& > div {
 			height: auto;
+			width: 40%;
+		}
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
+		gap: 1rem;
+		& > div {
 			width: 20%;
 		}
 	}

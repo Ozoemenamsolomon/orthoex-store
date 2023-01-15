@@ -32,8 +32,7 @@ export default TitleInfoSection;
 
 const TitleCards = styled.div`
 	padding: 1rem;
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-	}
+	margin-bottom: 2rem;
 `;
 
 const InfoCards = styled.div`

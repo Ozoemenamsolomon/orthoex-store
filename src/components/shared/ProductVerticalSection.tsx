@@ -101,7 +101,13 @@ const CardsContainer = styled.div`
 	padding: 1rem 0rem;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		overflow-x: unset;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+		& {
+			-ms-overflow-style: none;
+			scrollbar-width: none;
+		}
 	}
 `;
 
@@ -130,9 +136,8 @@ const Card = styled.div`
 	}
 
 	&:hover {
-		cursor: pointer;
-
 		&::before {
+			cursor: pointer;
 			opacity: 1;
 		}
 	}
@@ -152,7 +157,7 @@ const ImageContainer = styled.div`
 `;
 
 const PageContainer = styled.div`
-	max-width: 1122px;
+	max-width: 1150px;
 	margin: 0 auto;
 `;
 
