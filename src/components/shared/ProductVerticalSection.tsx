@@ -28,8 +28,8 @@ const ProductVerticalSection: React.FC<ServiceCardProps> = ({ data }) => {
 
 				<CardsContainer>
 					{data.cards.map((card, index) => (
-						<Link href={card.link}>
-							<Card key={`cards-${index}`}>
+						<Link href={card.link} key={`cards-${index}`}>
+							<Card>
 								<ImageContainer>
 									<Image
 										object-fit="contain"
