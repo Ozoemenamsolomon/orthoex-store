@@ -88,6 +88,7 @@ const CardsContainer = styled.div`
   // grid-row-gap: 0.8rem;
   max-width: 1122px;
   margin: 2rem auto 0rem;
+  padding: 1rem 0rem;
 
 
 
@@ -118,7 +119,6 @@ const Card = styled.div`
     opacity: 0;
     border: 1px solid var(--oex-orange);
     border-radius: 0.7rem;
-
   }
   
   &:hover {
