@@ -1,9 +1,10 @@
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductCard from '@components/ProductCard';
 import SooSection from '@components/SooSection';
 import { Container } from '@components/styled';
 import { ProductDataType, productsData } from '@data/productsData';
-import { GetStaticProps, NextPage } from 'next';
+import { NextPage } from 'next';
 import Image from 'next/image';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -14,7 +15,7 @@ import {
 } from './composites/products/polyester-resin';
 
 const Cart: NextPage<{
-	products: ProductDataType[];
+	products?: ProductDataType[];
 }> = ({ products }) => {
 	const [filter, setFilter] = useState<FilterType>({
 		category: '',
@@ -41,7 +42,7 @@ const Cart: NextPage<{
 							flex: 1,
 						}}>
 						<Title>Your cart (3 items)</Title>
-						{products.map(({ previewImages, ...product }, index) => (
+						{products?.map(({ previewImages, ...product }, index) => (
 							<CartItemWrapper key={`cart-item-${index}`}>
 								<div>
 									<div>
@@ -139,19 +140,23 @@ const Cart: NextPage<{
 
 export default Cart;
 
-export const getStaticProps: GetStaticProps = async context => {
-	const products = Array.from(
-		{ length: 16 },
-		(_, index) =>
-			productsData[Math.abs(productsData.length - index) % productsData.length],
-	);
+export const getServerSideprops = withPageAuthRequired({
+	async getServerSideProps(ctx) {
+		const products = Array.from(
+			{ length: 16 },
+			(_, index) =>
+				productsData[
+					Math.abs(productsData.length - index) % productsData.length
+				],
+		);
 
-	return {
-		props: {
-			products,
-		},
-	};
-};
+		return {
+			props: {
+				products,
+			},
+		};
+	},
+});
 
 const Title = styled.h2`
 	margin: 0;

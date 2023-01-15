@@ -1,21 +1,24 @@
-import Image, { StaticImageData } from 'next/image';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { ProductDataType } from '@data/productsData';
+import { getPrice } from '@utils/index';
+import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 import CTA from './CTA';
 import ProductStars from './ProductStars';
 
-export type ProductProps = {
-	name: string;
-	price: number;
-	image: StaticImageData;
-	review: {
-		average: number;
-		count: number;
-	};
-};
+// type ProductProps = {
+// 	name: string;
+// 	price: number;
+// 	image: StaticImageData;
+// 	review: {
+// 		average: number;
+// 		count: number;
+// 	};
+// };
 
 type ProductCardProp = {
-	product: ProductProps;
+	product: ProductDataType;
 };
 
 export const priceFormatter = Intl.NumberFormat('en-ng', {
@@ -24,8 +27,12 @@ export const priceFormatter = Intl.NumberFormat('en-ng', {
 });
 
 const ProductCard: React.FC<ProductCardProp> = ({
-	product: { image, price, name, review },
+	product: { image, name, review, variants },
 }) => {
+	const { user } = useUser();
+
+	const price = getPrice(variants, (user?.custier || 'visitor') as string);
+
 	return (
 		<ProductCardContainer>
 			<div>
@@ -37,9 +44,19 @@ const ProductCard: React.FC<ProductCardProp> = ({
 				<Link href={`/composites/products/polyester-resin`}>
 					<ProductName>{name}</ProductName>
 				</Link>
-				<Price>{priceFormatter.format(price)}</Price>
-				<ProductStars {...review} />
-				<StyledCTA>ADD TO CART</StyledCTA>
+				<div style={{ position: 'relative' }}>
+					{user ? (
+						<Price blur={false}>{priceFormatter.format(price)}</Price>
+					) : (
+						<>
+							<Price blur={true}>{priceFormatter.format(111111.111)}</Price>
+							<Link href={'/api/auth/login'}>Login to view price</Link>
+						</>
+					)}
+				</div>
+
+				{review && <ProductStars {...review} />}
+				{user && <StyledCTA>ADD TO CART</StyledCTA>}
 			</ProductCardContent>
 		</ProductCardContainer>
 	);
@@ -99,10 +116,23 @@ const ProductName = styled.h3`
 	}
 `;
 
-const Price = styled.p`
+const Price = styled.p<{ blur: boolean }>`
 	font-weight: 300;
 	font-size: 0.9rem;
 	margin-bottom: 0;
+	${({ blur }) =>
+		blur &&
+		`
+		+ a {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			border-radius: 4px;
+			backdrop-filter: blur(2px);
+			background: #ffffff75;
+			}`}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		font-weight: 400;
