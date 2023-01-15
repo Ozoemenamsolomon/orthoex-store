@@ -3,6 +3,7 @@ import SearchIcon from '@assets/new/icons/Search';
 import CartIcon from '@assets/new/icons/ShoppingCart';
 import orthoExLogoCol from '@assets/new/logos/orthoex-logo-coloured.svg';
 import orthoExLogo from '@assets/new/logos/orthoex-logo-white.svg';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -21,16 +22,13 @@ const navLinks = [
 	{ name: 'Trainings', to: '/trainings' },
 	{ name: 'Careers', to: '/careers' },
 ];
-const rightNavLinks = [
-	{ name: 'Search', to: '/search', Icon: SearchIcon },
-	{ name: 'Orthopaedics', to: '/account', Icon: SccountIcon },
-	{ name: 'Composites', to: '/cart', Icon: CartIcon },
-];
 
 const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	const [scrollOffset, setScrollOffset] = useState(0);
 	const [isNavOpen, setIsNavOpen] = useState(false);
 	const [light, setLight] = useState(false);
+
+	const { user } = useUser();
 
 	useEffect(() => {
 		setLight(
@@ -54,6 +52,12 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 			document.removeEventListener('scroll', handleScroll);
 		};
 	}, [pathname, light]);
+
+	const rightNavLinks = [
+		{ name: 'Search', to: '/search', Icon: SearchIcon },
+		{ name: 'Orthopaedics', to: '/account', Icon: SccountIcon },
+		...(user ? [{ name: 'Cart', to: '/cart', Icon: CartIcon }] : []),
+	];
 
 	return (
 		<>
