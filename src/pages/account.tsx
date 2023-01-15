@@ -1,18 +1,14 @@
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { CTALink } from '@components/CTA';
 import { Container } from '@components/styled';
 import { supabaseClient } from '@utils/supabase';
+import { NextPage } from 'next';
 
-type Props = {};
+type Props = { user: UserProfile; data: any };
 
-const Account = (props: Props) => {
-	const { user, error, isLoading } = useUser();
-
-	if (isLoading) return <div>Loading...</div>;
-	if (error) return <div>{error.message}</div>;
-
-	console.log({ props });
+const Account: NextPage<Props> = ({ user, data }) => {
+	console.log({ user, data });
 
 	return !user ? (
 		<div>please login</div>
