@@ -1,5 +1,5 @@
 import { StyledHeading } from '@components/FeaturedEvents';
-import { helps } from '@components/sections/NeedHelpSection';
+import { helps } from '@data/helps';
 import ServiceCard from '@components/ServiceCard';
 import styled from 'styled-components';
 
