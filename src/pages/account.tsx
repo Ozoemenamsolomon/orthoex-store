@@ -40,7 +40,12 @@ const Account: NextPage<Props> = ({ user, data }) => {
 						<hr />
 						<div>
 							<h5>Variations</h5>
-							<ol>
+							<ol
+								style={{
+									display: 'grid',
+									gridTemplateColumns: 'repeat(auto-fit,minmax(144px,1fr))',
+									gap: '1rem 2rem',
+								}}>
 								{variants?.map(({ variant, quantity, prices, id }: any) => (
 									<li key={'variant' + id}>
 										<p>Variant id: {id}</p>
@@ -79,7 +84,8 @@ export const getServerSideProps = withPageAuthRequired({
 			.select(
 				`code, name, image, description, brand(name, slug), category(name, slug, image), details,variants(variant, id, prices(custier, priceInKobo),quantity(quantity))`,
 			)
-			.eq('variants.prices.custier', custier);
+			.eq('variants.prices.custier', custier)
+			.like('code', 'PRO-%');
 
 		if (error) {
 			console.log({ error });
