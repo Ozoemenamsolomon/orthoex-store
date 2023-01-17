@@ -41,3 +41,4 @@ test.js
 .env
 src/pages/api/product-parser.js
 src/pages/api/products.csv
+src/pages/api/products.json

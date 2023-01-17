@@ -31,6 +31,16 @@ const Account: NextPage<Props> = ({ user, data }) => {
 					details,
 				}: any) => (
 					<div key={code}>
+						<p
+							style={{
+								padding: '6px',
+								borderRadius: '3px',
+								border: '1px solid var(--oex-orange-dark)',
+								backgroundColor: 'var(--oex-danger)',
+								color: 'white',
+							}}>
+							Your are seeing this because you've been added to the test user
+						</p>
 						<h2>{name}</h2>
 						<p>Brand: {brand.name}</p>
 						<p>Category: {category.name}</p>
@@ -76,7 +86,11 @@ export const getServerSideProps = withPageAuthRequired({
 
 		const custier = session?.user.custier;
 
-		if (process.env.NODE_ENV !== 'development') return { props: { data: [] } };
+		if (
+			!process.env.ALLOWED_USER_EMAIL?.split(',').includes(session?.user.email)
+		) {
+			return { props: { data: [] } };
+		}
 
 		// @ts-ignore
 		const { data, error } = await supabaseClient
