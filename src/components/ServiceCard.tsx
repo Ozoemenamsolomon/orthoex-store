@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from 'next/image';
-import { FC, ReactElement } from 'react';
+import React, { FC, ReactElement } from 'react';
 import styled from 'styled-components';
 
 export type ServiceCardType = {
@@ -15,6 +15,7 @@ type ServiceCardProps = {
 	imagePadding?: boolean;
 	small?: boolean;
 	greyFont?: boolean;
+	bgColor?: string;
 	/**
 	 * | classes | action |
 	 * |---|---|
@@ -32,8 +33,9 @@ const ServiceCard: FC<ServiceCardProps> = ({
 	imagePadding,
 	small,
 	greyFont,
+	bgColor
 }) => (
-	<ServiceCardContainer className={`${className}`}>
+	<ServiceCardContainer bgColor={bgColor} className={`${className}`}>
 		<ImageTitleContainer className={`${small ? 'small' : ''}`}>
 			<ImageContainer
 				small={small}
@@ -60,7 +62,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 
 export default ServiceCard;
 
-const ServiceCardContainer = styled.div`
+const ServiceCardContainer = styled.div<{bgColor?: string}>`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -68,6 +70,7 @@ const ServiceCardContainer = styled.div`
 	height: 100%;
 	width: 100%;
 	justify-content: space-between;
+	background-color: ${({ bgColor }) => (bgColor ? bgColor : '')};
 
 	&:not(.no-padding) {
 		padding: 2rem;

@@ -8,6 +8,7 @@ import SooSection from '../SooSection';
 import { Container } from '../styled';
 import ThankYou from './ThankYou';
 
+
 const StayTunedSection = () => {
 	const [formState, handleSubmit] = useForm('mvonpbje');
 	const { asPath } = useRouter();
@@ -99,6 +100,7 @@ const SubscribeForm = styled.form`
 			padding: 0.51rem;
 			border: 0.5px solid var(--oex-grey);
 			border-radius: 0.5rem;
+			outline: none;
 		}
 		> div {
 			color: var(--oex-danger);
