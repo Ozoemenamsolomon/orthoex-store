@@ -86,18 +86,22 @@ const SectionTitle = styled.h2<{
 	margin: 0px 0px 1rem;
 	text-align: center;
 	font-size: 2rem;
+	font-weight: 400;
 
 	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		font-size: ${({ align }) => (align === 'left' ? '2rem' : '3.2rem')};
 		max-width: 70%;
+		font-weight: 700;
 	}
 `;
 
 const SectionSubtitle = styled.span`
 	text-align: center;
 	display: block;
-	font-size: 1.2rem;
+	font-size: 1rem;
+	color: var(--text-colour-grey);
 	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		max-width: 50%;
+		font-size: 1.2rem;
 	}
 `;

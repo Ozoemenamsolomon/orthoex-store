@@ -26,7 +26,7 @@ export default CallButton;
 
 const StyledCallButtonDiv = styled.div`
 	position: fixed;
-	left: 0;
+	right: 0;
 	bottom: 2%;
 	z-index: 10;
 	width: 20%;

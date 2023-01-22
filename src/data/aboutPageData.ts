@@ -63,7 +63,7 @@ export const aboutData: AboutDataType[] = [
 						image: Excellence,
 						title: 'Excellence and dependable',
 						description:
-							"We surpass our customers' expecta tions in a caring and professional manner.",
+							"We surpass our customers' expectations in a caring and professional manner.",
 					},
 					{
 						image: PositivePassionate,
