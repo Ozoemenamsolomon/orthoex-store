@@ -22,15 +22,16 @@ const HeroContent = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-start;
-	gap: 2rem;
+	gap: 1rem;
 	@media ${({ theme }) => theme.breakpoints.above.sm} {
-		max-width: 33rem;
+		max-width: 36rem;
+		gap: 2rem;
 	}
 `;
 
 const HeroTitle = styled.h1`
 	color: var(--oex-orange);
-	font-size: 3rem;
+	font-size: 2.3rem;
 	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		font-size: 4rem;
 	}

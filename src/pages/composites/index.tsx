@@ -1,10 +1,7 @@
 import calculator from '@assets/new/icons/calculate.svg';
 import composite from '@assets/new/icons/composite.svg';
-import creditCard from '@assets/new/icons/credit-card.svg';
-import deliveryVan from '@assets/new/icons/delivery-van.svg';
 import durable from '@assets/new/icons/durable.svg';
 import handShake from '@assets/new/icons/handshake.svg';
-import headphone from '@assets/new/icons/headphone.svg';
 import highPerformanceIcon from '@assets/new/icons/high-performance.svg';
 import nigeria from '@assets/new/icons/nigeria.svg';
 import quality from '@assets/new/icons/quality.svg';
@@ -20,6 +17,7 @@ import SooSection, { SOOSectionProp } from '@components/SooSection';
 import { Container, ServicesCards } from '@components/styled';
 import ViewMoreLink from '@components/ViewMoreLink';
 import { helps } from '@data/helps';
+import orderBenefits from '@data/orderBenefits';
 import { categories } from 'data/categories';
 import type { NextPage } from 'next';
 import React from 'react';
@@ -81,24 +79,6 @@ const expectancies: ServiceCardType[] = [
 	},
 ];
 
-const orderBenefits: ServiceCardType[] = [
-	{
-		title: 'Order by 12PM',
-		description: 'Shipped same day',
-		image: deliveryVan,
-	},
-	{
-		title: 'Safe payment',
-		description: 'Trusted SSL protection',
-		image: creditCard,
-	},
-	{
-		title: 'Technical Advice',
-		description: 'We offer helpful tips & tricks to aid your craft',
-		image: headphone,
-	},
-];
-
 const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 	{
 		header: {
@@ -135,6 +115,7 @@ const sections: (SOOSectionProp & { children: React.ReactNode })[] = [
 			title:
 				'We empower your creativity with quality products and expert advise',
 		},
+		// TODO: replace with OrderBenefits component
 		children: (
 			<ServicesCards minWidth="200px">
 				{qualities.map((quality, index) => (
