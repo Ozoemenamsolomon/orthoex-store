@@ -31,7 +31,6 @@ const TestimonialCardContainer = styled.div`
 	border-radius: 4px;
 `;
 
-
 const Text = styled.p`
 	color: var(--text-colour-grey);
 `;

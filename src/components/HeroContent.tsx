@@ -24,8 +24,8 @@ const HeroContent = styled.div`
 	align-items: flex-start;
 	gap: 1rem;
 	@media ${({ theme }) => theme.breakpoints.above.sm} {
-		gap: 2rem;
 		max-width: 36rem;
+		gap: 2rem;
 	}
 `;
 

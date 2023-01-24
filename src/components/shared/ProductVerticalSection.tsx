@@ -19,6 +19,7 @@ type ServiceCardProps = {
 	data: ProductVerticalSectionType;
 };
 
+// TODO: merge with category cards
 const ProductVerticalSection: React.FC<ServiceCardProps> = ({ data }) => {
 	return (
 		<ProductVerticalWrapper>

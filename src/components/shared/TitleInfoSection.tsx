@@ -1,4 +1,3 @@
-import React from 'react';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
 import styled from 'styled-components';
 
@@ -20,7 +19,7 @@ const TitleInfoSection: React.FC<TitleCardSectionProps> = ({ data }) => {
 					<ServiceCard
 						className="no-shadow"
 						service={info}
-						key={`infoCardsData=${index}`}
+						key={`infoCardsData-${index}`}
 					/>
 				))}
 			</InfoCards>

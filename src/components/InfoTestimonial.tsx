@@ -1,4 +1,3 @@
-import React from 'react';
 import client1 from '@assets/new/images/client1.jpg';
 import client2 from '@assets/new/images/client2.jpg';
 import client3 from '@assets/new/images/client3.jpg';
@@ -32,7 +31,7 @@ function InfoTestimonial() {
 				subtitle:
 					'There are many reasons why our partners love to work with us. Hear it from the people for yourself.',
 			}}>
-			<PostCardsContainer padding="0rem 2rem">
+			<PostCardsContainer>
 				{testimonials.map((testimonial, index) => (
 					<TestimonialCard
 						key={`testimonial_${index}`}

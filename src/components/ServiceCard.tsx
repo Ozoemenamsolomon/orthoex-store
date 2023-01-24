@@ -33,7 +33,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 	imagePadding,
 	small,
 	greyFont,
-	bgColor
+	bgColor,
 }) => (
 	<ServiceCardContainer bgColor={bgColor} className={`${className}`}>
 		<ImageTitleContainer className={`${small ? 'small' : ''}`}>
@@ -62,7 +62,7 @@ const ServiceCard: FC<ServiceCardProps> = ({
 
 export default ServiceCard;
 
-const ServiceCardContainer = styled.div<{bgColor?: string}>`
+const ServiceCardContainer = styled.div<{ bgColor?: string }>`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;

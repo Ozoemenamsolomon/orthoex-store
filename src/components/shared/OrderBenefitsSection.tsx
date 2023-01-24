@@ -1,26 +1,6 @@
-import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
-import deliveryVan from '@assets/new/icons/delivery-van.svg';
-import creditCard from '@assets/new/icons/credit-card.svg';
-import headphone from '@assets/new/icons/headphone.svg';
+import ServiceCard from '@components/ServiceCard';
+import orderBenefits from '@data/orderBenefits';
 import styled from 'styled-components';
-
-const orderBenefits: ServiceCardType[] = [
-	{
-		title: 'Order by 12PM',
-		description: 'Shipped same day',
-		image: deliveryVan,
-	},
-	{
-		title: 'Safe payment',
-		description: 'Trusted SSL protection',
-		image: creditCard,
-	},
-	{
-		title: 'Technical Advice',
-		description: 'We offer helpful tips & tricks to aid your craft',
-		image: headphone,
-	},
-];
 
 const OrderBenefitsSection = () => {
 	return (

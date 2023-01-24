@@ -40,7 +40,7 @@ export const PostCardsContainer = styled.div<{ padding?: string }>`
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 	gap: 4rem;
-	padding: ${({ padding }) => (padding ? padding : '')}; ;
+	padding: 0rem 2rem;
 `;
 
 export const Container = styled.div<{

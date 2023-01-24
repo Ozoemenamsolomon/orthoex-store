@@ -1,41 +1,39 @@
-import React from 'react';
 import HeaderBG from '@assets/images/header-background.png';
+import nigeria from '@assets/new/icons/nigeria.svg';
+import expertSupport from '@assets/new/icons/orthopaedics/expert-support.svg';
 import FabricationHub from '@assets/new/icons/orthopaedics/fabrication-hub.svg';
 import HealthProfessionals from '@assets/new/icons/orthopaedics/health-professionals.svg';
 import LinersSuspensionPickers from '@assets/new/icons/orthopaedics/liners-suspension-picker.svg';
-import LinesAndSleeves from '@assets/new/images/productVerticalSection/orthopaedics/lines-and-sleeves.jpg';
-import Prosthetic from '@assets/new/images/productVerticalSection/orthopaedics/Prosthetic.jpg';
-import OrthoicEquipments from '@assets/new/images/productVerticalSection/orthopaedics/orthoic-equipments.jpg';
+import Patients from '@assets/new/icons/orthopaedics/patients.svg';
+import swift from '@assets/new/icons/orthopaedics/swift.svg';
+import quality from '@assets/new/icons/quality.svg';
+import CompressionGarment from '@assets/new/images/productVerticalSection/orthopaedics/compression-garment.jpg';
+import DiabeticFootwear from '@assets/new/images/productVerticalSection/orthopaedics/diabetic-footwear.jpg';
 import FabricationAndSupply from '@assets/new/images/productVerticalSection/orthopaedics/fabrication-and-supply.jpg';
+import LinesAndSleeves from '@assets/new/images/productVerticalSection/orthopaedics/lines-and-sleeves.jpg';
+import OrthoicEquipments from '@assets/new/images/productVerticalSection/orthopaedics/orthoic-equipments.jpg';
 import OrthopaedicBraces from '@assets/new/images/productVerticalSection/orthopaedics/orthopaedic-braces.jpg';
 import Paediatrics from '@assets/new/images/productVerticalSection/orthopaedics/paediatrics.jpg';
 import PatientAids from '@assets/new/images/productVerticalSection/orthopaedics/patients-aids.jpg';
-import DiabeticFootwear from '@assets/new/images/productVerticalSection/orthopaedics/diabetic-footwear.jpg';
-import CompressionGarment from '@assets/new/images/productVerticalSection/orthopaedics/compression-garment.jpg';
+import Prosthetic from '@assets/new/images/productVerticalSection/orthopaedics/Prosthetic.jpg';
 import ToolsAndEquipments from '@assets/new/images/productVerticalSection/orthopaedics/tools-and-equipment.jpg';
-import Patients from '@assets/new/icons/orthopaedics/patients.svg';
-import quality from '@assets/new/icons/quality.svg';
-import nigeria from '@assets/new/icons/nigeria.svg';
-import swift from '@assets/new/icons/orthopaedics/swift.svg';
-import expertSupport from '@assets/new/icons/orthopaedics/expert-support.svg';
 import { CTALink } from '@components/CTA';
 import { StyledHeading } from '@components/FeaturedEvents';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
-import { ServiceCardType } from '@components/ServiceCard';
 import InfoTestmonial from '@components/InfoTestimonial';
+import StayTunedSection from '@components/sections/StayTunedSection';
+import { ServiceCardType } from '@components/ServiceCard';
+import HelpSection from '@components/shared/HelpSection';
+import InfoCardSection from '@components/shared/InfoCardSection';
+import OrderBenefitsSection from '@components/shared/OrderBenefitsSection';
 import ProductVerticalSection, {
 	ProductVerticalSectionType,
 } from '@components/shared/ProductVerticalSection';
-import styled from 'styled-components';
-import InfoCardSection from '@components/shared/InfoCardSection';
 import TitleInfoSection, {
 	TitleCardDataType,
 } from '@components/shared/TitleInfoSection';
-import OrderBenefitsSection from '@components/shared/OrderBenefitsSection';
-import StayTunedSection from '@components/sections/StayTunedSection';
-import HelpSection from '@components/shared/HelpSection';
-
+import styled from 'styled-components';
 
 const StyledCTALink = styled(CTALink)`
 	background-color: var(--oex-off-white);
@@ -191,7 +189,6 @@ function Orthopaedics() {
 			<StyledHeading>
 				Diverse solutions for your patient&apos;s unique needs
 			</StyledHeading>
-
 			<InfoCardSection data={infoCardsData} />
 			<ProductVerticalSection data={productVerticalData} />
 			<TitleInfoSection data={titleInfoData} />
