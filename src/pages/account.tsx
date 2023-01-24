@@ -39,7 +39,8 @@ const Account: NextPage<Props> = ({ user, data }) => {
 								backgroundColor: 'var(--oex-danger)',
 								color: 'white',
 							}}>
-							Your are seeing this because you've been added to the test user
+							Your are seeing this because you&apos;ve been added to the test
+							user
 						</p>
 						<h2>{name}</h2>
 						<p>Brand: {brand.name}</p>
