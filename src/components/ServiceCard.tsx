@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from 'next/image';
-import React, { FC, ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import styled from 'styled-components';
 
 export type ServiceCardType = {

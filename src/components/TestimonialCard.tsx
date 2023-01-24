@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
 import Image, { StaticImageData } from 'next/image';
+import { FC } from 'react';
+import styled from 'styled-components';
 import { ImageContainer } from './ServiceCard';
 
 export type TestimonialProps = {
