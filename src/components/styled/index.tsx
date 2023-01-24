@@ -36,7 +36,7 @@ export const ServicesCards = styled.div<{
 	}
 `;
 
-export const PostCardsContainer = styled.div<{ padding?: string }>`
+export const PostCardsContainer = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 	gap: 4rem;

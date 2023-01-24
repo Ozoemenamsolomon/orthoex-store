@@ -99,7 +99,6 @@ const SubscribeForm = styled.form`
 			padding: 0.51rem;
 			border: 0.5px solid var(--oex-grey);
 			border-radius: 0.5rem;
-			outline: none;
 		}
 		> div {
 			color: var(--oex-danger);

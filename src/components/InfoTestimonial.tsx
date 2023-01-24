@@ -31,7 +31,7 @@ function InfoTestimonial() {
 				subtitle:
 					'There are many reasons why our partners love to work with us. Hear it from the people for yourself.',
 			}}>
-			<PostCardsContainer padding="0rem 2rem">
+			<PostCardsContainer>
 				{testimonials.map((testimonial, index) => (
 					<TestimonialCard
 						key={`testimonial_${index}`}
