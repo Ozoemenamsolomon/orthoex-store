@@ -28,10 +28,10 @@ import HelpSection from '@components/shared/HelpSection';
 import InfoCardSection from '@components/shared/InfoCardSection';
 import OrderBenefitsSection from '@components/shared/OrderBenefitsSection';
 import ProductVerticalSection, {
-	ProductVerticalSectionType,
+	ProductVerticalSectionType
 } from '@components/shared/ProductVerticalSection';
 import TitleInfoSection, {
-	TitleCardDataType,
+	TitleCardDataType
 } from '@components/shared/TitleInfoSection';
 import styled from 'styled-components';
 
@@ -95,58 +95,58 @@ const productVerticalData: ProductVerticalSectionType = {
 	title: 'Which of our product vertical is relevant for you?',
 	description:
 		'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
-	cards: [
-		{
-			title: 'Prosthetic components',
-			image: Prosthetic,
-			link: '/composites/categories',
-		},
-		{
-			title: 'Liners and sleeves',
-			image: LinesAndSleeves,
-			link: '/composites/categories',
-		},
-		{
-			title: 'Orthotic components',
-			image: OrthoicEquipments,
-			link: '/composites/categories',
-		},
-		{
-			title: 'Fabrication materials and supply',
-			image: FabricationAndSupply,
-			link: '/composites/categories',
-		},
-		{
-			title: 'Orthopaedic braces',
-			image: OrthopaedicBraces,
-			link: '/composites/categories',
-		},
-		{
-			title: 'Paediatrics',
-			image: Paediatrics,
-			link: '/composites/categories',
-		},
-		{
-			title: 'Stump care & Patients aids',
-			image: PatientAids,
-			link: '/composites/categories',
-		},
-		{
-			title: 'Diabetic footwear & care products',
-			image: DiabeticFootwear,
-			link: '/composites/categories',
-		},
-		{
-			title: 'Compression garment',
-			image: CompressionGarment,
-			link: '/composites/categories',
-		},
-		{
-			title: 'Tools & equipment',
-			image: ToolsAndEquipments,
-			link: '/composites/categories',
-		},
-	],
+		cards: [
+			{
+				name: 'Prosthetic Components',
+				image: Prosthetic,
+				slug: 'prosthetic-components',
+			},
+			{
+				name: 'Liners and Sleeves',
+				image: LinesAndSleeves,
+				slug: 'liners-and-sleeves',
+			},
+			{
+				name: 'Orthotic components',
+				image: OrthoicEquipments,
+				slug: 'orthotic-components',
+			},
+			{
+				name: 'Fabrication Materials and Supply',
+				image: FabricationAndSupply,
+				slug: 'fabrication-materials-and-supply',
+			},
+			{
+				name: 'Orthopaedic Braces',
+				image: OrthopaedicBraces,
+				slug: 'orthopaedic-braces',
+			},
+			{
+				name: 'Paediatrics',
+				image: Paediatrics,
+				slug: 'paediatrics',
+			},
+			{
+				name: 'Stump Care & Patients Aids',
+				image: PatientAids,
+				slug: 'stump-care-and-patients-aids',
+			},
+			{
+				name: 'Diabetic Footwear & Care Products',
+				image: DiabeticFootwear,
+				slug: 'diabetic-footwear-and-care-products',
+			},
+			{
+				name: 'Compression Garment',
+				image: CompressionGarment,
+				slug: 'compression-garment',
+			},
+			{
+				name: 'Tools & Equipment',
+				image: ToolsAndEquipments,
+				slug: 'tools-and-equipment',
+			},
+		],
 };
 
 const titleInfoData: TitleCardDataType = {
@@ -183,7 +183,7 @@ function Orthopaedics() {
 					claim={
 						'We support and equip clinicians to be successful in their roles through access to the right prosthetic and orthotic components, tools and resources needed for their best work- enabling them to deliver the highest quality of care to their patients.'
 					}
-					cta={<CTALink href="/composites/categories">Shop now</CTALink>}
+					cta={<CTALink href="/contact">Contact Us</CTALink>}
 				/>
 			</Hero>
 			<StyledHeading>

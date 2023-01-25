@@ -4,9 +4,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 type CardType = {
-	image: StaticImageData;
-	title: string;
-	link: string;
+	image: StaticImageData | string;
+	name: string;
+	slug: string;
 };
 
 export type ProductVerticalSectionType = {
@@ -29,7 +29,7 @@ const ProductVerticalSection: React.FC<ServiceCardProps> = ({ data }) => {
 
 				<CardsContainer>
 					{data.cards.map((card, index) => (
-						<Link href={card.link} key={`cards-${index}`}>
+						<Link href={card.slug} key={`cards-${index}`}>
 							<Card>
 								<ImageContainer>
 									<Image
@@ -39,7 +39,7 @@ const ProductVerticalSection: React.FC<ServiceCardProps> = ({ data }) => {
 										alt="product card image"
 									/>
 								</ImageContainer>
-								<Text>{card.title}</Text>
+								<Text>{card.name}</Text>
 							</Card>
 						</Link>
 					))}
