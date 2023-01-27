@@ -186,7 +186,7 @@ function Orthopaedics() {
 					cta={<CTALink href="/contact">Contact Us</CTALink>}
 				/>
 			</Hero>
-			<StyledHeading>
+			<StyledHeading padding align='left'>
 				Diverse solutions for your patient&apos;s unique needs
 			</StyledHeading>
 			<InfoCardSection data={infoCardsData} />

@@ -39,13 +39,16 @@ const StyledWrapperDiv = styled.div`
 	padding: 3rem 0rem;
 `;
 
-export const StyledHeading = styled.h3`
-	text-align: center;
+export const StyledHeading = styled.h3<{align?: string, padding?: boolean}>`
+	text-align: ${({ align }) => align ? align : 'center'};
+	padding: ${({ padding }) => padding ? '0rem 1rem' : '0rem'};
 	font-size: 2rem;
 	margin-bottom: 2rem;
 	font-weight: 500;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
+		padding: 0rem;
+		text-align: center;
 		font-weight: 700;
 		font-size: 3rem;
 		margin-bottom: 5rem;

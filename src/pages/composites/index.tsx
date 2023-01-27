@@ -1,10 +1,9 @@
 import composite from '@assets/new/icons/composite.svg';
 import durable from '@assets/new/icons/durable.svg';
 import nigeria from '@assets/new/icons/nigeria.svg';
-import FabricationHub from '@assets/new/icons/orthopaedics/fabrication-hub.svg';
-import HealthProfessionals from '@assets/new/icons/orthopaedics/health-professionals.svg';
-import LinersSuspensionPickers from '@assets/new/icons/orthopaedics/liners-suspension-picker.svg';
-import Patients from '@assets/new/icons/orthopaedics/patients.svg';
+import highPerformanceIcon from '@assets/new/icons/high-performance.svg';
+import handShake from '@assets/new/icons/handshake.svg';
+import calculator from '@assets/new/icons/calculate.svg';
 import quality from '@assets/new/icons/quality.svg';
 import heroBG from '@assets/new/images/hero-bg.jpg';
 import { CTALink } from '@components/CTA';
@@ -35,50 +34,39 @@ const StyledCTALink = styled(CTALink)`
 	}
 `;
 
-const infoCardsData: ServiceCardType[] = [
+const infoCardsData: ServiceCardType[] =[
 	{
-		title: 'Patients',
 		description:
-			'You are not alone; we are here to help. OrthoEx supports amputees, people needing orthosis, and their families with the resources they need to live limitless lives.',
-		image: Patients,
+			'We are committed to delivering superior composite materials that you can trust for your craft. Take advantage of our high quality products',
+		image: highPerformanceIcon,
 		cta: (
-			<StyledCTALink href="" white>
-				Patient resources
+			<StyledCTALink href="#categories" white>
+				View products
 			</StyledCTALink>
 		),
+		title: undefined,
 	},
 	{
-		title: 'Liners and Suspension picker',
 		description:
-			'Use our Liners and suspension size guide to assist you with deciding the right product fit for your patients.',
-		image: LinersSuspensionPickers,
+			'With our safe and reliable composite solutions, you can make a wide range of stronger, lighter and tougher products',
+		image: handShake,
 		cta: (
-			<StyledCTALink href="" white>
-				Select a product
+			<StyledCTALink href="/composites/categories" white>
+				Shop now
 			</StyledCTALink>
 		),
+		title: undefined,
 	},
 	{
-		title: 'Fabrication Hub',
 		description:
-			'We reduce your overhead cost and help you focus on what matters most- your patients.',
-		image: FabricationHub,
+			'Use our resin calculator to estimate the amount of epoxy resin you will need for your projects.',
+		image: calculator,
 		cta: (
-			<StyledCTALink href="" white>
-				Read more
+			<StyledCTALink href="/composites/calculator" white>
+				Calculate your resin
 			</StyledCTALink>
 		),
-	},
-	{
-		title: 'Healthcare professionals',
-		description:
-			'With our passion for a quality life and excellence in clinical practice, we create value for our customers and challenge the limits of human potential.',
-		image: HealthProfessionals,
-		cta: (
-			<StyledCTALink href="" white>
-				Read more
-			</StyledCTALink>
-		),
+		title: undefined,
 	},
 ];
 
@@ -129,7 +117,7 @@ function Orthopaedics() {
 					}
 				/>
 			</Hero>
-			<StyledHeading>
+			<StyledHeading padding align='left'>
 			Experience a new level of performance with our safe and reliable products
 			</StyledHeading>
 			<InfoCardSection data={infoCardsData} />

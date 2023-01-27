@@ -125,25 +125,37 @@ const ImageTitleContainer = styled.div`
 export const ImageContainer = styled.div<{ small?: boolean }>`
 	position: relative;
 	aspect-ratio: 1;
-	width: ${({ small }) => (small ? '2rem' : '5rem')};
+	width: ${({ small }) => (small ? '2rem' : '3rem')};
 
 	&.pad {
 		width: 3rem;
 	}
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		width: ${({ small }) => (small ? '2rem' : '5rem')};
+	}
 `;
 
 const Title = styled.p`
-	font-size: 1.5rem;
+	font-size: 1rem;
 	font-weight: bold;
 	&.small {
 		font-size: 1rem;
 	}
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		font-size: 1.5rem;
+	}
 `;
 
 const Description = styled.p<{ greyFont?: boolean }>`
-	font-size: 1.2rem;
+	font-size: 1rem;
 	color: ${({ greyFont }) => (greyFont ? 'var(--oex-dark-grey)' : 'inherit')};
 	&.small {
 		font-size: 0.8rem;
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		font-size: 1.2rem;
 	}
 `;
