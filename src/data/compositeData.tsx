@@ -1,4 +1,4 @@
-import { ServiceCardType } from "@components/ServiceCard";
+import { ServiceCardType } from '@components/ServiceCard';
 import composite from '@assets/new/icons/composite.svg';
 import durable from '@assets/new/icons/durable.svg';
 import nigeria from '@assets/new/icons/nigeria.svg';
@@ -6,15 +6,12 @@ import highPerformanceIcon from '@assets/new/icons/high-performance.svg';
 import handShake from '@assets/new/icons/handshake.svg';
 import calculator from '@assets/new/icons/calculate.svg';
 import quality from '@assets/new/icons/quality.svg';
-import { ProductVerticalSectionType } from "@components/shared/ProductVerticalSection";
-import { TitleCardDataType } from "@components/shared/TitleInfoSection";
-import { categories } from "./categories";
-import { StyledCTALink } from "./orthopaedicsData";
+import { ProductVerticalSectionType } from '@components/shared/ProductVerticalSection';
+import { TitleCardDataType } from '@components/shared/TitleInfoSection';
+import { categories } from './categories';
+import { StyledCTALink } from './orthopaedicsData';
 
-
-
-
-export const infoCardsData: ServiceCardType[] =[
+export const infoCardsData: ServiceCardType[] = [
 	{
 		description:
 			'We are committed to delivering superior composite materials that you can trust for your craft. Take advantage of our high quality products',
@@ -55,12 +52,15 @@ export const productVerticalData: ProductVerticalSectionType = {
 	title: 'Which of our product vertical is relevant for you?',
 	description:
 		'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
-	cards: categories
+	cards: categories,
+	viewMore: {
+		link: '/composites/category',
+		text: 'View more Categories',
+	},
 };
 
 export const titleInfoData: TitleCardDataType = {
-	title:
-		'We empower your creativity with quality products and expert advise',
+	title: 'We empower your creativity with quality products and expert advise',
 	cards: [
 		{
 			description: 'We offer the right composite material for your projects',

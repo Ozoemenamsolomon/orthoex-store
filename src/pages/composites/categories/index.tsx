@@ -1,12 +1,18 @@
-import Categories from '@components/Categories';
 import ProductCard from '@components/ProductCard';
 import StayTunedSection from '@components/sections/StayTunedSection';
 import SooSection from '@components/SooSection';
 import { Container, ProductCards } from '@components/styled';
 import { categories } from '@data/categories';
 import Breadcrumb from '@components/Breadcrumb';
-import ViewMoreLink from '@components/ViewMoreLink';
 import { productsData } from '@data/productsData';
+import CategorySection, {
+	CategoryViewMoreType,
+} from '@components/shared/CategorySection';
+
+const viewMoreData: CategoryViewMoreType = {
+	link: '/composites/products',
+	text: 'View more Products',
+};
 
 const composite = () => {
 	const breadcrumb = [
@@ -24,8 +30,7 @@ const composite = () => {
 				BGColor="white"
 				style={{ display: 'flex', flexDirection: 'column' }}
 				header={{ title: 'All Categories', align: 'left' }}>
-				<Categories categories={categories} />
-				<ViewMoreLink href="/composites/products" text="View more Products" />
+				<CategorySection cards={categories} viewMore={viewMoreData} />
 			</SooSection>
 			<SooSection
 				BGColor="white"

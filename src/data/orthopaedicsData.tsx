@@ -22,7 +22,6 @@ import { ServiceCardType } from '@components/ServiceCard';
 import { ProductVerticalSectionType } from '@components/shared/ProductVerticalSection';
 import { TitleCardDataType } from '@components/shared/TitleInfoSection';
 
-
 export const StyledCTALink = styled(CTALink)`
 	background-color: var(--oex-off-white);
 
@@ -83,60 +82,63 @@ export const productVerticalData: ProductVerticalSectionType = {
 	title: 'Which of our product vertical is relevant for you?',
 	description:
 		'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
-		cards: [
-			{
-				name: 'Prosthetic Components',
-				image: Prosthetic,
-				slug: 'prosthetic-components',
-			},
-			{
-				name: 'Liners and Sleeves',
-				image: LinesAndSleeves,
-				slug: 'liners-and-sleeves',
-			},
-			{
-				name: 'Orthotic components',
-				image: OrthoicEquipments,
-				slug: 'orthotic-components',
-			},
-			{
-				name: 'Fabrication Materials and Supply',
-				image: FabricationAndSupply,
-				slug: 'fabrication-materials-and-supply',
-			},
-			{
-				name: 'Orthopaedic Braces',
-				image: OrthopaedicBraces,
-				slug: 'orthopaedic-braces',
-			},
-			{
-				name: 'Paediatrics',
-				image: Paediatrics,
-				slug: 'paediatrics',
-			},
-			{
-				name: 'Stump Care & Patients Aids',
-				image: PatientAids,
-				slug: 'stump-care-and-patients-aids',
-			},
-			{
-				name: 'Diabetic Footwear & Care Products',
-				image: DiabeticFootwear,
-				slug: 'diabetic-footwear-and-care-products',
-			},
-			{
-				name: 'Compression Garment',
-				image: CompressionGarment,
-				slug: 'compression-garment',
-			},
-			{
-				name: 'Tools & Equipment',
-				image: ToolsAndEquipments,
-				slug: 'tools-and-equipment',
-			},
-		],
+	cards: [
+		{
+			name: 'Prosthetic Components',
+			image: Prosthetic,
+			slug: 'prosthetic-components',
+		},
+		{
+			name: 'Liners and Sleeves',
+			image: LinesAndSleeves,
+			slug: 'liners-and-sleeves',
+		},
+		{
+			name: 'Orthotic components',
+			image: OrthoicEquipments,
+			slug: 'orthotic-components',
+		},
+		{
+			name: 'Fabrication Materials and Supply',
+			image: FabricationAndSupply,
+			slug: 'fabrication-materials-and-supply',
+		},
+		{
+			name: 'Orthopaedic Braces',
+			image: OrthopaedicBraces,
+			slug: 'orthopaedic-braces',
+		},
+		{
+			name: 'Paediatrics',
+			image: Paediatrics,
+			slug: 'paediatrics',
+		},
+		{
+			name: 'Stump Care & Patients Aids',
+			image: PatientAids,
+			slug: 'stump-care-and-patients-aids',
+		},
+		{
+			name: 'Diabetic Footwear & Care Products',
+			image: DiabeticFootwear,
+			slug: 'diabetic-footwear-and-care-products',
+		},
+		{
+			name: 'Compression Garment',
+			image: CompressionGarment,
+			slug: 'compression-garment',
+		},
+		{
+			name: 'Tools & Equipment',
+			image: ToolsAndEquipments,
+			slug: 'tools-and-equipment',
+		},
+	],
+	viewMore: {
+		link: '/composites/category',
+		text: 'View more Categories',
+	},
 };
-
 
 export const titleInfoData: TitleCardDataType = {
 	title:

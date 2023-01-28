@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import React from 'react';
 import HeaderBG from '@assets/images/header-background.png';
-import CTA from '@components/CTA';
+import { CTALink } from '@components/CTA';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
 import { Container } from '@components/styled';
@@ -33,7 +33,6 @@ const serviceStandardData = {
 };
 
 const Home: NextPage = () => {
-	const findRep = () => {};
 	return (
 		<>
 			<Hero darkenBG bg={HeaderBG}>
@@ -42,7 +41,7 @@ const Home: NextPage = () => {
 					claim={
 						'We are facilitating prosthetics, orthopaedic devices and composite materials distribution in West Africa. <br /> <br /> Speak with an account manager in your region'
 					}
-					cta={<CTA onClick={findRep}>Find Us</CTA>}
+					cta={<CTALink href='/contact'>Find Us</CTALink>}
 				/>
 			</Hero>
 			<Container bg="white" paddingMultiplier={0}>
