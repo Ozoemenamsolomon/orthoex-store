@@ -51,7 +51,8 @@ export const StyledHeading = styled.h3<{align?: string, padding?: boolean}>`
 		text-align: center;
 		font-weight: 700;
 		font-size: 3rem;
-		margin-bottom: 5rem;
+		max-width: 70%;
+		margin: 0rem auto 5rem;
 	}
 `;
 
