@@ -52,7 +52,7 @@ export const StyledHeading = styled.h3<{align?: string, padding?: boolean}>`
 		font-weight: 700;
 		font-size: 3rem;
 		max-width: 70%;
-		margin: 0rem auto 5rem;
+		margin: 5rem auto;
 	}
 `;
 

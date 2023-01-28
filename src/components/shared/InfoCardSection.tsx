@@ -31,6 +31,7 @@ const InfoCards = styled.div`
 
 	& > div {
 		height: auto;
+		flex: 1;
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
@@ -47,7 +48,7 @@ const InfoCards = styled.div`
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.lg} {
-		gap: 1rem;
+		gap: 3rem;
 		& > div {
 			width: 20%;
 		}

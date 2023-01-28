@@ -125,7 +125,7 @@ const ImageTitleContainer = styled.div`
 export const ImageContainer = styled.div<{ small?: boolean }>`
 	position: relative;
 	aspect-ratio: 1;
-	width: ${({ small }) => (small ? '2rem' : '3rem')};
+	width: ${({ small }) => (small ? '2rem' : '4rem')};
 
 	&.pad {
 		width: 3rem;
