@@ -15,7 +15,7 @@ import { infoCardsData, productVerticalData, titleInfoData } from '@data/composi
 import styled from 'styled-components';
 
 
-function Orthopaedics() {
+function Composite() {
 	return (
 		<>
 			<Hero darkenBG bg={heroBG}>
@@ -45,7 +45,7 @@ function Orthopaedics() {
 	);
 }
 
-export default Orthopaedics;
+export default Composite;
 
 const PaddingContainer = styled.div`
 	padding: 0rem 2rem;
