@@ -54,7 +54,7 @@ export const productVerticalData: ProductVerticalSectionType = {
 		'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
 	cards: categories,
 	viewMore: {
-		link: '/composites/category',
+		link: '/composites/categories',
 		text: 'View more Categories',
 	},
 };

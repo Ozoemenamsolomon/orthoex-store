@@ -135,7 +135,7 @@ export const productVerticalData: ProductVerticalSectionType = {
 		},
 	],
 	viewMore: {
-		link: '/composites/category',
+		link: '/composites/categories',
 		text: 'View more Categories',
 	},
 };
