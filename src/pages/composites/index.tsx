@@ -1,19 +1,21 @@
-
 import heroBG from '@assets/new/images/hero-bg.jpg';
 import { CTALink } from '@components/CTA';
 import { StyledHeading } from '@components/FeaturedEvents';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
-import InfoTestmonial from '@components/InfoTestimonial';
+import InfoTestimonial from '@components/InfoTestimonial';
 import StayTunedSection from '@components/sections/StayTunedSection';
 import HelpSection from '@components/shared/HelpSection';
 import InfoCardSection from '@components/shared/InfoCardSection';
 import OrderBenefitsSection from '@components/shared/OrderBenefitsSection';
 import ProductVerticalSection from '@components/shared/ProductVerticalSection';
 import TitleInfoSection from '@components/shared/TitleInfoSection';
-import { infoCardsData, productVerticalData, titleInfoData } from '@data/compositeData';
+import {
+	infoCardsData,
+	productVerticalData,
+	titleInfoData,
+} from '@data/compositeData';
 import styled from 'styled-components';
-
 
 function Composite() {
 	return (
@@ -29,8 +31,9 @@ function Composite() {
 					}
 				/>
 			</Hero>
-			<StyledHeading padding align='left'>
-			Experience a new level of performance with our safe and reliable products
+			<StyledHeading padding align="left">
+				Experience a new level of performance with our safe and reliable
+				products
 			</StyledHeading>
 			<InfoCardSection data={infoCardsData} />
 			<ProductVerticalSection data={productVerticalData} />
@@ -40,7 +43,7 @@ function Composite() {
 				<StayTunedSection />
 			</PaddingContainer>
 			<HelpSection />
-			<InfoTestmonial />
+			<InfoTestimonial />
 		</>
 	);
 }

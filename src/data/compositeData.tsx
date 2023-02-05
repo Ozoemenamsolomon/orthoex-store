@@ -1,11 +1,11 @@
-import { ServiceCardType } from '@components/ServiceCard';
+import calculator from '@assets/new/icons/calculate.svg';
 import composite from '@assets/new/icons/composite.svg';
 import durable from '@assets/new/icons/durable.svg';
-import nigeria from '@assets/new/icons/nigeria.svg';
-import highPerformanceIcon from '@assets/new/icons/high-performance.svg';
 import handShake from '@assets/new/icons/handshake.svg';
-import calculator from '@assets/new/icons/calculate.svg';
+import highPerformanceIcon from '@assets/new/icons/high-performance.svg';
+import nigeria from '@assets/new/icons/nigeria.svg';
 import quality from '@assets/new/icons/quality.svg';
+import { ServiceCardType } from '@components/ServiceCard';
 import { ProductVerticalSectionType } from '@components/shared/ProductVerticalSection';
 import { TitleCardDataType } from '@components/shared/TitleInfoSection';
 import { categories } from './categories';
@@ -47,9 +47,8 @@ export const infoCardsData: ServiceCardType[] = [
 	},
 ];
 
-//TODO: Rename the below title to name, add slug, the link is the slug.
 export const productVerticalData: ProductVerticalSectionType = {
-	title: 'Which of our product vertical is relevant for you?',
+	name: 'Which of our product vertical is relevant for you?',
 	description:
 		'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
 	cards: categories,

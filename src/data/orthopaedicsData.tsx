@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import nigeria from '@assets/new/icons/nigeria.svg';
 import expertSupport from '@assets/new/icons/orthopaedics/expert-support.svg';
 import FabricationHub from '@assets/new/icons/orthopaedics/fabrication-hub.svg';
@@ -21,6 +20,7 @@ import { CTALink } from '@components/CTA';
 import { ServiceCardType } from '@components/ServiceCard';
 import { ProductVerticalSectionType } from '@components/shared/ProductVerticalSection';
 import { TitleCardDataType } from '@components/shared/TitleInfoSection';
+import styled from 'styled-components';
 
 export const StyledCTALink = styled(CTALink)`
 	background-color: var(--oex-off-white);
@@ -79,7 +79,7 @@ export const infoCardsData: ServiceCardType[] = [
 ];
 
 export const productVerticalData: ProductVerticalSectionType = {
-	title: 'Which of our product vertical is relevant for you?',
+	name: 'Which of our product vertical is relevant for you?',
 	description:
 		'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
 	cards: [

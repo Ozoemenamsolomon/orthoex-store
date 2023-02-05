@@ -59,8 +59,6 @@ const CardsContainer = styled.div`
 	grid-template-columns: repeat(5, 1fr);
 	overflow-x: scroll;
 	grid-gap: 0.8rem;
-	// max-width: 1122px;
-	// margin: 2rem auto 0rem;
 	margin-top: 2rem;
 	padding: 1rem 0rem;
 
@@ -80,10 +78,8 @@ const Card = styled.div`
 	background: white;
 	border-radius: 0.5rem;
 	width: 150px;
-	// orange color effect
 	height: 100%;
 	position: relative;
-	// overflow: hidden;
 
 	&::before {
 		background-color: rgba(239, 191, 129, 0.1);

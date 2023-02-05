@@ -11,7 +11,7 @@ type CardType = {
 };
 
 export type ProductVerticalSectionType = {
-	title: string;
+	name: string;
 	description: string;
 	cards: CardType[];
 	viewMore: CategoryViewMoreType;
@@ -26,7 +26,7 @@ const ProductVerticalSection: React.FC<ServiceCardProps> = ({ data }) => {
 	return (
 		<ProductVerticalWrapper>
 			<PageContainer>
-				<Title>{data.title}</Title>
+				<Title>{data.name}</Title>
 				<Description>{data.description}</Description>
 
 				<CategorySection cards={data.cards} viewMore={data.viewMore} />

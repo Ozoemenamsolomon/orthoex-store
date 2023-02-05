@@ -1,22 +1,21 @@
-import type { NextPage } from 'next';
-import React from 'react';
 import HeaderBG from '@assets/images/header-background.png';
+import Briefcase from '@assets/new/icons/home/briefcase.svg';
+import Enzymes from '@assets/new/icons/home/enzyme.svg';
+import Operator from '@assets/new/icons/home/operator.svg';
+import Prosthetics from '@assets/new/icons/home/prosthetics.svg';
+import ShoppingCart from '@assets/new/icons/home/shopping-cart.svg';
+import Training from '@assets/new/icons/home/training.svg';
+import CallButton from '@components/CallButton';
 import { CTALink } from '@components/CTA';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
-import { Container } from '@components/styled';
-import ServiceStandard from '@components/ServiceStandard';
 import InfoSection from '@components/InfoSection';
-import InfoText from '@components/InfoText';
 import InfoTestmonial from '@components/InfoTestimonial';
+import InfoText from '@components/InfoText';
 import ProductVertical from '@components/ProductVertical';
-import CallButton from '@components/CallButton';
-import Prosthetics from '@assets/new/icons/home/prosthetics.svg';
-import Enzymes from '@assets/new/icons/home/enzyme.svg';
-import Training from '@assets/new/icons/home/training.svg';
-import Operator from '@assets/new/icons/home/operator.svg';
-import Briefcase from '@assets/new/icons/home/briefcase.svg';
-import ShoppingCart from '@assets/new/icons/home/shopping-cart.svg';
+import ServiceStandard from '@components/ServiceStandard';
+import { Container } from '@components/styled';
+import type { NextPage } from 'next';
 
 const serviceStandardData = {
 	heading: 'Our commitment to quality ensures your peace of mind',
@@ -41,7 +40,7 @@ const Home: NextPage = () => {
 					claim={
 						'We are facilitating prosthetics, orthopaedic devices and composite materials distribution in West Africa. <br /> <br /> Speak with an account manager in your region'
 					}
-					cta={<CTALink href='/contact'>Find Us</CTALink>}
+					cta={<CTALink href="/contact">Find Us</CTALink>}
 				/>
 			</Hero>
 			<Container bg="white" paddingMultiplier={0}>
