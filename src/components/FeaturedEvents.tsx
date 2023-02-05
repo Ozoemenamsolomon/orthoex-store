@@ -1,9 +1,9 @@
 import { featuredEvents } from '@data/eventsData';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import CTA from './CTA';
 import FeaturedEventCard from './FeaturedEventCard';
 import { Container } from './styled';
-import CTA from './CTA';
 
 const FeaturedEvents = () => {
 	const [eventCount, setEventCount] = useState(2);
@@ -39,16 +39,20 @@ const StyledWrapperDiv = styled.div`
 	padding: 3rem 0rem;
 `;
 
-export const StyledHeading = styled.h3`
-	text-align: center;
+export const StyledHeading = styled.h3<{ align?: string; padding?: boolean }>`
+	text-align: ${({ align }) => (align ? align : 'center')};
+	padding: ${({ padding }) => (padding ? '0rem 1rem' : '0rem')};
 	font-size: 2rem;
 	margin-bottom: 2rem;
 	font-weight: 500;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
+		padding: 0rem;
+		text-align: center;
 		font-weight: 700;
 		font-size: 3rem;
-		margin-bottom: 5rem;
+		max-width: 70%;
+		margin: 5rem auto;
 	}
 `;
 

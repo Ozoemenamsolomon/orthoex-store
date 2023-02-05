@@ -32,31 +32,26 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ event }) => {
 						<span>2nd Aug 2022 - 7th Aug 2022</span>
 						<StyledDays>10 DAYS</StyledDays>
 					</StyledInfoDiv>
-
 					<StyledInfoDiv>
 						<Time />
 						<span>8.00 am - 5.00pm</span>
 					</StyledInfoDiv>
-
 					<StyledInfoDiv>
 						<Location />
 						<span>{`${event.location.city}, ${event.location.state}`}</span>
 					</StyledInfoDiv>
 				</StyledLeftContent>
-
 				<StyledRightContent>
 					<StyledInfoDiv>
 						<People />
 						<span>12 particpants</span>
 						<StyledSpot>3 Spots left</StyledSpot>
 					</StyledInfoDiv>
-
 					<StyledPrice>
 						<p>{priceFormatter.format(event.price)}</p>
 						<CTALink href={'/'}>Book now</CTALink>
 					</StyledPrice>
 					<StyledIconText>Speak with the Event Team</StyledIconText>
-
 					<StyledButtonGroup>
 						<CTALink white href={'/'}>
 							<Call /> Phone call
@@ -67,24 +62,20 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ event }) => {
 					</StyledButtonGroup>
 				</StyledRightContent>
 			</StyledDetailsSection>
-
 			<StyledInfoSection>
 				<StyledIconText onClick={() => setpanelOpen(prev => !prev)}>
 					<span>Read more about this course </span>
 					<ArrowDownUp rotate={panelOpen} />
 				</StyledIconText>
-
 				<StyledCourseInfo open={panelOpen}>
 					<h4>About the Course</h4>
 					<StyledText>{event.courseInfo.course}</StyledText>
-
 					<h4>About the Instructor(s)</h4>
 					<StyledList>
 						{event.courseInfo.instructor.map((info, index) => (
 							<li key={index}>{info}</li>
 						))}
 					</StyledList>
-
 					<p>Refreshment: {event.refreshment === true ? 'Yes' : 'No'}</p>
 					<p>Starter Pack: {event.starterPack === true ? 'Yes' : 'No'}</p>
 					<StyledSpanLink>

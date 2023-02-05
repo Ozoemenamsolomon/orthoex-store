@@ -1,27 +1,26 @@
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, {
-	Navigation,
-	Pagination,
-	A11y,
-	Scrollbar,
-	Grid,
-} from 'swiper';
-import styled from 'styled-components';
-import SooSection from './SooSection';
 import ColorPigment from '@assets/new/images/home/color_pigment.jpg';
 import EpoxyResins from '@assets/new/images/home/epoxy_resin.jpg';
 import Fabrication from '@assets/new/images/home/fabrication_materials.jpg';
 import Orthoses from '@assets/new/images/home/orthoses.jpg';
 import PolyesterResins from '@assets/new/images/home/polyester_resins.jpg';
+import Protheses from '@assets/new/images/home/prosthesis.jpg';
 import SiliconMould from '@assets/new/images/home/silicon_mould.jpg';
 import SyntheticFibre from '@assets/new/images/home/synthetic_fibre.jpg';
-import Protheses from '@assets/new/images/home/prosthesis.jpg';
-import ProductVerticalCard from './ProductVerticalCard';
 import { StaticImageData } from 'next/image';
+import styled from 'styled-components';
+import SwiperCore, {
+	A11y,
+	Grid,
+	Navigation,
+	Pagination,
+	Scrollbar,
+} from 'swiper';
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import ProductVerticalCard from './ProductVerticalCard';
+import SooSection from './SooSection';
 
 export interface VerticalType {
 	title: string;

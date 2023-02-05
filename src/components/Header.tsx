@@ -1,4 +1,5 @@
 import SccountIcon from '@assets/new/icons/Account';
+import HamburgerIcon from '@assets/new/icons/HamburgerIcon';
 import SearchIcon from '@assets/new/icons/Search';
 import CartIcon from '@assets/new/icons/ShoppingCart';
 import orthoExLogoCol from '@assets/new/logos/orthoex-logo-coloured.svg';
@@ -8,7 +9,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CTA from './CTA';
+import { CTALink } from './CTA';
 import NavLink from './NavLink';
 import { Container } from './styled';
 
@@ -98,18 +99,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 								<path d="M28,19.85,39.64,8.18a2.5,2.5,0,0,0-3.53-3.54L24.44,16.31,12.77,4.64A2.5,2.5,0,0,0,9.24,8.18L20.91,19.85,9.24,31.51A2.5,2.5,0,0,0,11,35.78a2.45,2.45,0,0,0,1.76-.73L24.44,23.38,36.11,35.05a2.49,2.49,0,0,0,1.77.73,2.45,2.45,0,0,0,1.76-.73,2.5,2.5,0,0,0,0-3.54Z" />
 							</svg>
 						) : (
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								xmlnsXlink="http://www.w3.org/1999/xlink"
-								height="32px"
-								id="Layer_1"
-								version="1.1"
-								viewBox="0 0 32 32"
-								width="32px"
-								xmlSpace="preserve"
-								fill="currentColor">
-								<path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z" />
-							</svg>
+							<HamburgerIcon colour={light ? 'black' : 'currentColor'}/>
 						)}
 					</HamburgerButton>
 					<NavBar className={light ? 'light' : undefined}>
@@ -172,7 +162,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 							))}
 						</StyledSideBarNavLink>
 					</StyledSideBarContent>
-					<StyledButton>Find a representative</StyledButton>
+					<CTALink className='full-width' href='/contact' onClick={() => setIsNavOpen(prevState => !prevState)}>Contact Us</CTALink  >
 				</StyledSideBar>
 			)}
 		</>
@@ -266,7 +256,7 @@ const NavBar = styled.nav`
 	}
 `;
 
-const HamburgerButton = styled(CTA)`
+const HamburgerButton = styled.span`
 	padding: 0.3rem 0.6rem;
 	align-self: center;
 	z-index: 2;
@@ -286,6 +276,10 @@ const StyledSideBar = styled.div`
 	background-color: var(--oex-off-white);
 	transition: 850ms;
 	width: 100vw;
+
+	.full-width {
+		width: 100%;
+	}
 `;
 
 const StyledSideBarContent = styled.div`
@@ -311,14 +305,4 @@ const StyledSideBarNavLink = styled.ul`
 		margin-bottom: 3rem;
 		padding: 0;
 	}
-`;
-
-const StyledButton = styled.button`
-	color: white;
-	background-color: var(--oex-orange);
-	border: none;
-	padding: 1.2rem 1rem;
-	border-radius: 0.5rem;
-	width: 100%;
-	font-size: 1rem;
 `;
