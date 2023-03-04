@@ -10,15 +10,15 @@ type Props = { user: UserProfile; data: any };
 const Account: NextPage<Props> = ({ user, data }) => {
 	console.log({ user, data });
 
-	return !user ? (
-		<div>please login</div>
-	) : (
+	return (
 		<Container>
 			<h1>Account</h1>
 			<CTALink href="/api/auth/logout">Logout</CTALink>
 			<p>You are logeged in with {user.email} </p>
 			<p>name: {user.name}</p>
 			<img src={user.picture || ''} alt="user gravatar" />
+			<hr />
+			<textarea name="" id=""></textarea>
 			<hr />
 			{data.map(
 				({

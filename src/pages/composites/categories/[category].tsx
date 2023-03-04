@@ -1,12 +1,11 @@
 import categoryBanner from '@assets/new/images/category-banner.jpg';
 import Breadcrumb, { BreadcrumProps } from '@components/Breadcrumb';
-import { CategoryProps } from '@components/CategoryCard';
 import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
 import FilterProductContainer from '@components/styled/FIlterProductContainer';
 import { ProductDataType, productsData } from '@data/productsData';
-import { categories } from 'data/categories';
+import { categories, CategoryProps } from 'data/categories';
 import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useState } from 'react';

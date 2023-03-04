@@ -16,7 +16,8 @@ const TitleInfoSection: React.FC<TitleCardSectionProps> = ({ data }) => {
 			<Heading>{data.title}</Heading>
 			<InfoCards>
 				{data.cards.map((info, index) => (
-					<ServiceCard greyFont
+					<ServiceCard
+						greyFont
 						className="no-shadow shrink-start"
 						service={info}
 						key={`infoCardsData-${index}`}

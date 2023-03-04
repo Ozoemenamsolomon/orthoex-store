@@ -12,7 +12,11 @@ import InfoCardSection from '@components/shared/InfoCardSection';
 import OrderBenefitsSection from '@components/shared/OrderBenefitsSection';
 import ProductVerticalSection from '@components/shared/ProductVerticalSection';
 import TitleInfoSection from '@components/shared/TitleInfoSection';
-import { infoCardsData, productVerticalData, titleInfoData } from '@data/orthopaedicsData';
+import {
+	infoCardsData,
+	productVerticalData,
+	titleInfoData,
+} from '@data/orthopaedicsData';
 import styled from 'styled-components';
 
 function Orthopaedics() {
@@ -27,7 +31,7 @@ function Orthopaedics() {
 					cta={<CTALink href="/contact">Contact Us</CTALink>}
 				/>
 			</Hero>
-			<StyledHeading padding align='left'>
+			<StyledHeading padding align="left">
 				Diverse solutions for your patient&apos;s unique needs
 			</StyledHeading>
 			<InfoCardSection data={infoCardsData} />

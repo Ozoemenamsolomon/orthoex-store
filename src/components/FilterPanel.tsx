@@ -1,7 +1,6 @@
-import { CategoryProps } from '@components/CategoryCard';
 import PriceFilter, { PriceRange } from '@components/PriceFilter';
 import { brands } from '@data/brands';
-import { categories } from 'data/categories';
+import { categories, CategoryProps } from 'data/categories';
 import { Rating as StarRating } from 'react-simple-star-rating';
 import styled from 'styled-components';
 

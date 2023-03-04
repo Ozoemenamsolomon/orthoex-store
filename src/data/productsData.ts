@@ -1,9 +1,8 @@
 import product1 from '@assets/new/images/product1.jpg';
 import product1prev from '@assets/new/images/product1prev.jpg';
-import { CategoryProps } from '@components/CategoryCard';
+import { categories, CategoryProps } from 'data/categories';
 import { StaticImageData } from 'next/image';
 import { brands } from './brands';
-import { categories } from './categories';
 
 type ProductVariant = {
 	weightInGram: number;

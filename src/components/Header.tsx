@@ -99,7 +99,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 								<path d="M28,19.85,39.64,8.18a2.5,2.5,0,0,0-3.53-3.54L24.44,16.31,12.77,4.64A2.5,2.5,0,0,0,9.24,8.18L20.91,19.85,9.24,31.51A2.5,2.5,0,0,0,11,35.78a2.45,2.45,0,0,0,1.76-.73L24.44,23.38,36.11,35.05a2.49,2.49,0,0,0,1.77.73,2.45,2.45,0,0,0,1.76-.73,2.5,2.5,0,0,0,0-3.54Z" />
 							</svg>
 						) : (
-							<HamburgerIcon colour={light ? 'black' : 'currentColor'}/>
+							<HamburgerIcon colour={light ? 'black' : 'currentColor'} />
 						)}
 					</HamburgerButton>
 					<NavBar className={light ? 'light' : undefined}>
@@ -162,7 +162,12 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 							))}
 						</StyledSideBarNavLink>
 					</StyledSideBarContent>
-					<CTALink className='full-width' href='/contact' onClick={() => setIsNavOpen(prevState => !prevState)}>Contact Us</CTALink  >
+					<CTALink
+						className="full-width"
+						href="/contact"
+						onClick={() => setIsNavOpen(prevState => !prevState)}>
+						Contact Us
+					</CTALink>
 				</StyledSideBar>
 			)}
 		</>
