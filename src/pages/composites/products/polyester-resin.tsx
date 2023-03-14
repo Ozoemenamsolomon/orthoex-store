@@ -1,8 +1,5 @@
-import creditCard from '@assets/new/icons/credit-card-black.svg';
 import DataSheet from '@assets/new/icons/DataSheet';
-import deliveryVan from '@assets/new/icons/delivery-van-black.svg';
-import headphone from '@assets/new/icons/headphone-black.svg';
-import nigeriaMap from '@assets/new/icons/nigeria.svg';
+
 import bankTransferlogo from '@assets/new/images/bank-transfer-logo.jpg';
 import mastercardLogo from '@assets/new/images/mastercard-logo.jpg';
 import visaLogo from '@assets/new/images/visa-logo.jpg';
@@ -14,10 +11,16 @@ import CustomerReviewCommentCard from '@components/CustomerReviewCommentCard';
 import { SocialsContainer } from '@components/Footer';
 import ProductCard from '@components/ProductCard';
 import ProductStars from '@components/ProductStars';
-import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import ServiceCard from '@components/ServiceCard';
 import SooSection from '@components/SooSection';
 import StarPercentage from '@components/StarPercentage';
 import { Container, ProductCards } from '@components/styled';
+import {
+	DeliveryAndAdvantage,
+	ProductCountControlButton,
+	ProductCountInput,
+	Title,
+} from '@components/styled/Temp';
 import { helps } from '@data/helps';
 import { ProductDataType, productsData } from '@data/productsData';
 import { Facebook, Instagram, Twitter } from '@styled-icons/bootstrap';
@@ -30,29 +33,6 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import styled from 'styled-components';
 import { formatPrice, getPrice } from 'utils';
-
-const orderBenefits: ServiceCardType[] = [
-	{
-		title: 'Order by 12PM',
-		description: 'Shipped same day',
-		image: deliveryVan,
-	},
-	{
-		title: 'Safe payment',
-		description: 'Trusted SSL protection',
-		image: creditCard,
-	},
-	{
-		title: 'Technical Advice',
-		description: 'We offer helpful tips & tricks to aid your craft',
-		image: headphone,
-	},
-	{
-		title: 'Nationwide delivery',
-		description: 'We deliver to all cities in Nigeria',
-		image: nigeriaMap,
-	},
-];
 
 const SingleProduct: NextPage<{
 	product: ProductDataType;
@@ -247,29 +227,7 @@ const SingleProduct: NextPage<{
 						</div>
 					</ProductData>
 				</SooSection>
-				<SooSection BGColor="white">
-					<Title>Delivery</Title>
-					<p>Delivery is charged based on your location at checkout</p>
-					<Title>Our Advantages</Title>
-					<div
-						style={{
-							display: 'grid',
-							gridTemplateColumns: '1fr 1fr',
-							gap: '2rem 0.5rem',
-							border: '1px solid #F3F3F3',
-							borderRadius: '6px',
-							padding: '1rem',
-						}}>
-						{orderBenefits.map((benefit, index) => (
-							<ServiceCard
-								small
-								className="no-shadow no-padding"
-								key={`e-comerce-${index}`}
-								service={benefit}
-							/>
-						))}
-					</div>
-				</SooSection>
+				<DeliveryAndAdvantage />
 				<SooSection BGColor="white">
 					<TabsContainer>
 						<Tabs>
@@ -477,35 +435,12 @@ const DataSheetLink = styled.p`
 	color: var(--oex-orange);
 `;
 
-// TODO: get rid of export
-export const ProductCountControlButton = styled.button`
-	height: 2.5rem;
-	aspect-ratio: 1;
-	border-radius: 50%;
-	border: none;
-	font-size: 2rem;
-	background: var(--oex-light-grey);
-	color: #a0a0a0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-`;
-
 const Price = styled.p`
 	font-weight: 600;
 	font-size: 32px;
 	margin-block: 1rem;
 `;
 
-const Title = styled.h2`
-	margin: 0;
-	font-weight: 600;
-	font-size: 1.2rem;
-	border-bottom: 1px solid var(--oex-light-grey);
-	padding-bottom: 0.5rem;
-	margin-bottom: 1rem;
-	display: flex;
-`;
 const TabsContainer = styled.span`
 	.react-tabs__tab-list {
 		display: grid;
@@ -553,23 +488,5 @@ const ProductData = styled.div`
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		display: flex;
 		gap: 1rem;
-	}
-`;
-
-export const ProductCountInput = styled.input`
-	padding-block: 1rem;
-	font-size: 1rem;
-	width: 5ch;
-	border: none;
-	text-align: center;
-
-	&::-webkit-outer-spin-button,
-	&::-webkit-inner-spin-button {
-		-webkit-appearance: none;
-		margin: 0;
-	}
-
-	&[type='number'] {
-		-moz-appearance: textfield;
 	}
 `;

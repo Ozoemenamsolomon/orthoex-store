@@ -50,7 +50,8 @@ export const productsData: ProductDataType[] = [
 	{
 		code: '127823-237834ewrf',
 		name: 'tgjklrtrtoit rt',
-		image: 'rtuzhtbndrth tzznt6',
+		image:
+			'https://res.cloudinary.com/kachiozo/image/upload/v1673589643/orthoex-product/categories/category8_qx9anl.jpg',
 		description: 'ztjuzmnzth tzjmzuk,uimgh gh',
 		details: 'tzjmnt6uznjtf tzzujmnzujk67umtz',
 		brand: {
