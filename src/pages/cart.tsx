@@ -3,8 +3,7 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import CartItem from '@components/CartItem';
 import CTA from '@components/CTA';
 import IconText from '@components/IconText';
-import ProductCard from '@components/ProductCard';
-import SooSection from '@components/SooSection';
+import ProductSuggestion from '@components/ProductSuggestion';
 import { Container } from '@components/styled';
 import { ProductDataType, productsData } from '@data/productsData';
 import { NextPage } from 'next';
@@ -16,7 +15,7 @@ const Cart: NextPage<{
 	return (
 		<Container>
 			<div>
-				<div style={{ display: 'flex' }}>
+				<div style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start' }}>
 					<div
 						style={{
 							flex: 1,
@@ -41,27 +40,23 @@ const Cart: NextPage<{
 						<p style={{ color: 'var(--oex-danger)' }}>
 							Delivery value will be estimated at checkout
 						</p>
-						<CTA>Checkout</CTA>
-						<IconText icon={moreArrow} text={'Continue shopping'}></IconText>
+						<hr
+							style={{
+								border: 'none',
+								borderBottom: '1px solid var(--oex-light-grey)',
+							}}
+						/>
+						<CTA style={{ width: '100%' }}>Checkout</CTA>
+						<div style={{ marginTop: '1rem' }}>
+							<IconText icon={moreArrow} text={'Continue shopping'}></IconText>
+						</div>
 					</div>
 				</div>
 			</div>
-			<SooSection
-				BGColor="white"
-				header={{ title: 'Popular Products', align: 'left' }}>
-				<div
-					style={{
-						display: 'grid',
-						gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
-						gap: '2rem',
-					}}>
-					{Array.from({ length: 4 }, () => productsData[0]).map(
-						(product, index) => (
-							<ProductCard key={`product_${index}`} product={product} />
-						),
-					)}
-				</div>
-			</SooSection>
+			<ProductSuggestion
+				title="Recently viewed"
+				products={Array.from({ length: 4 }, () => productsData[0])}
+			/>
 		</Container>
 	);
 };
