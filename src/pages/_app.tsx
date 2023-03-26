@@ -1,5 +1,6 @@
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { theme } from '@styles/theme';
+import { CartProvider } from 'context/cartContext';
 import type { AppProps } from 'next/app';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,14 +10,16 @@ import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
-		<UserProvider>
-			<ThemeProvider theme={theme}>
-				<Layout>
-					<Component {...pageProps} />
-					<ToastContainer />
-				</Layout>
-			</ThemeProvider>
-		</UserProvider>
+		<CartProvider>
+			<UserProvider>
+				<ThemeProvider theme={theme}>
+					<Layout>
+						<Component {...pageProps} />
+						<ToastContainer />
+					</Layout>
+				</ThemeProvider>
+			</UserProvider>
+		</CartProvider>
 	);
 }
 export default MyApp;

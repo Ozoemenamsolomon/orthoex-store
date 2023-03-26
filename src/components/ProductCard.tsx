@@ -1,21 +1,12 @@
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { ProductDataType } from '@data/productsData';
 import { getPrice } from '@utils/index';
+import { useCart } from 'context/cartContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 import CTA from './CTA';
 import ProductStars from './ProductStars';
-
-// type ProductProps = {
-// 	name: string;
-// 	price: number;
-// 	image: StaticImageData;
-// 	review: {
-// 		average: number;
-// 		count: number;
-// 	};
-// };
 
 type ProductCardProp = {
 	product: ProductDataType;
@@ -26,12 +17,21 @@ export const priceFormatter = Intl.NumberFormat('en-ng', {
 	style: 'currency',
 });
 
-const ProductCard: React.FC<ProductCardProp> = ({
-	product: { image, name, review, variants },
-}) => {
+const ProductCard: React.FC<ProductCardProp> = ({ product }) => {
 	const { user } = useUser();
 
+	const { image, name, review, variants } = product;
+
 	const price = getPrice(variants, (user?.custier || 'visitor') as string);
+
+	const { dispatch } = useCart();
+
+	const addProductToCart = () => {
+		dispatch({
+			type: 'ADD_TO_CART',
+			payload: product,
+		});
+	};
 
 	return (
 		<ProductCardContainer>
@@ -56,7 +56,7 @@ const ProductCard: React.FC<ProductCardProp> = ({
 				</div>
 
 				{review && <ProductStars {...review} />}
-				{user && <StyledCTA>ADD TO CART</StyledCTA>}
+				{user && <StyledCTA onClick={addProductToCart}>ADD TO CART</StyledCTA>}
 			</ProductCardContent>
 		</ProductCardContainer>
 	);

@@ -5,17 +5,20 @@ import { StaticImageData } from 'next/image';
 import { brands } from './brands';
 
 type ProductVariant = {
-	weightInGram: number;
-	hardness: number;
-	volumeInML: number;
-	colour: string;
-	gms: number;
-	material: string;
+	id: number;
+	variant: {
+		weightInGram: number | null;
+		hardness: number | null;
+		volumeInML: number | null;
+		colour: string | null;
+		gsm: number | null;
+		material: string | null;
+	};
 	prices: {
 		custier: 'prime' | 'regular' | 'casual' | null;
 		priceInKobo: number;
 	}[];
-	quantity: null;
+	quantity: number;
 };
 
 export type ProductDataType = {
@@ -66,19 +69,22 @@ export const productsData: ProductDataType[] = [
 		},
 		variants: [
 			{
-				weightInGram: 2435,
-				hardness: 35,
-				volumeInML: 23453.6867,
-				colour: 'rtdjnztn ght ntz',
-				gms: 3456,
-				material: 'tzm uz tznrt',
+				variant: {
+					weightInGram: 2435,
+					hardness: 35,
+					volumeInML: 23453.6867,
+					colour: 'rtdjnztn ght ntz',
+					gsm: 3456,
+					material: 'tzm uz tznrt',
+				},
+				id: 687,
 				prices: [
 					{
 						custier: 'prime',
 						priceInKobo: 3243546,
 					},
 				],
-				quantity: null,
+				quantity: 56,
 			},
 		],
 	},
@@ -130,7 +136,7 @@ export const productsData: ProductDataType[] = [
 	{
 		brand: brands[1],
 		category: categories[5],
-		code: 'PROD_128745875',
+		code: 'PROD_128747895875',
 
 		description: 'This is Polyester Resin B',
 		image: product1,

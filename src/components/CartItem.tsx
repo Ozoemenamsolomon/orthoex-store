@@ -3,6 +3,7 @@ import {
 	ProductCountInput,
 } from '@components/styled/Temp';
 import { ProductDataType } from '@data/productsData';
+import { formatGramm } from '@utils/index';
 import Image from 'next/image';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
@@ -43,8 +44,8 @@ const CartItem: FC<{
 				</div>
 				<div>
 					<h3 style={{}}>{product.name}</h3>
-					<p style={{ fontSize: '1.2rem', color: 'var(--oex-grey)' }}>
-						{/* Size: {formatGramm.format(product.weightInGrams)} */}
+					<p style={{ fontSize: '1rem', color: 'var(--oex-grey)' }}>
+						Size: {formatGramm.format(1234)}
 					</p>
 					{!isInStock ? (
 						<p style={{ color: 'var(--oex-danger)' }}>Out of stock</p>
@@ -112,4 +113,6 @@ const Price = styled.p`
 
 const ImageContainer = styled.div`
 	position: relative;
+	width: 6rem;
+	aspect-ratio: 1;
 `;
