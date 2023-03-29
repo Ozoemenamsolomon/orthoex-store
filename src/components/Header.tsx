@@ -5,6 +5,7 @@ import CartIcon from '@assets/new/icons/ShoppingCart';
 import orthoExLogoCol from '@assets/new/logos/orthoex-logo-coloured.svg';
 import orthoExLogo from '@assets/new/logos/orthoex-logo-white.svg';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { useCart } from 'context/cartContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -30,6 +31,12 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	const [light, setLight] = useState(false);
 
 	const { user } = useUser();
+
+	const {
+		state: { cart },
+	} = useCart();
+
+	const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
 	useEffect(() => {
 		setLight(
@@ -124,6 +131,9 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 									)}
 								/>
 							))}
+							{process.env.NODE_ENV === 'development' && (
+								<p>cartCount={totalItems}</p>
+							)}
 						</div>
 					</NavBar>
 				</Container>

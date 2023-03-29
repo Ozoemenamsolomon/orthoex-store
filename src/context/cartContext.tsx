@@ -4,7 +4,7 @@ import { createContext, useContext, useReducer } from 'react';
 const CartContext = createContext<CartContextType | null>(null);
 
 type CartState = {
-	cart: { productCode: string; count: number }[];
+	cart: { productCode: string; quantity: number }[];
 };
 
 type CartAction =
@@ -20,7 +20,7 @@ const cartReducer = (state: CartState, action: CartAction) => {
 	switch (action.type) {
 		case 'ADD_TO_CART': {
 			const { code, variants } = action.payload;
-			const productCode = `${code}-${variants[0]?.id}`;
+			const productCode = `${code}v${variants[0]?.id}`;
 			const product = state.cart.find(item => item.productCode === productCode);
 
 			return {
@@ -28,10 +28,10 @@ const cartReducer = (state: CartState, action: CartAction) => {
 				cart: product
 					? state.cart.map(item =>
 							item.productCode === productCode
-								? { ...item, count: item.count + 1 }
+								? { ...item, quantity: item.quantity + 1 }
 								: item,
 					  )
-					: [...state.cart, { productCode, count: 1 }],
+					: [...state.cart, { productCode, quantity: 1 }],
 			};
 		}
 		case 'REMOVE_FROM_CART':
