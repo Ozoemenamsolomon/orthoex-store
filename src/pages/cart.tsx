@@ -6,12 +6,17 @@ import IconText from '@components/IconText';
 import ProductSuggestion from '@components/ProductSuggestion';
 import { Container } from '@components/styled';
 import { ProductDataType, productsData } from '@data/productsData';
+import { useCart } from 'context/cartContext';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 
 const Cart: NextPage<{
 	products?: ProductDataType[];
 }> = ({ products }) => {
+	const {
+		state: { cart },
+	} = useCart();
+
 	return (
 		<Container>
 			<div>
@@ -21,6 +26,8 @@ const Cart: NextPage<{
 							flex: 1,
 						}}>
 						<Title>Your cart (3 items)</Title>
+
+						<pre>{JSON.stringify(cart, null, 2)}</pre>
 						{products?.map((product, index) => (
 							<CartItem product={product} key={`cart-item-${index}`} />
 						))}
