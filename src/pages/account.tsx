@@ -49,7 +49,7 @@ const Account: NextPage<Props> = ({ user, data }) => {
 					image,
 					variantID,
 				}) => (
-					<div>
+					<div key={`product_number_${variantID + code}`}>
 						<p
 							style={{
 								padding: '6px',
@@ -99,6 +99,7 @@ export const getServerSideProps = withPageAuthRequired({
 			return { props: { data: [] } };
 		}
 
+		// @ts-ignore
 		const { data, error } = await supabaseClient
 			.from('variants')
 			.select(
@@ -117,7 +118,7 @@ export const getServerSideProps = withPageAuthRequired({
 
 		return {
 			props: {
-				data: data.map(({ price, product, quantity, variantID, variant }) => ({
+				data: data?.map(({ price, product, quantity, variantID, variant }) => ({
 					price: price[0],
 					variantID,
 					variant,

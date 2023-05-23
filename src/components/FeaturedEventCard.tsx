@@ -18,8 +18,7 @@ interface FeaturedEventProp {
 	userEmail: string;
 }
 
-// @ts-ignore
-const onSuccess = reference => {
+const onSuccess = (reference: any) => {
 	console.log(reference);
 };
 
@@ -73,6 +72,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 						<p>{priceFormatter.format(event.price)}</p>
 						<CTA
 							onClick={() => {
+								// @ts-ignore
 								initializePayment(onSuccess, onClose);
 							}}>
 							Book now
