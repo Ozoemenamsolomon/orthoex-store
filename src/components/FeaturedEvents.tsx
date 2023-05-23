@@ -1,11 +1,17 @@
-import { featuredEvents } from '@data/eventsData';
+import { EventDataType } from '@data/eventsData';
 import { useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
 import FeaturedEventCard from './FeaturedEventCard';
 import { Container } from './styled';
 
-const FeaturedEvents = () => {
+const FeaturedEvents = ({
+	featuredEvents,
+	userEmail,
+}: {
+	featuredEvents: EventDataType[];
+	userEmail: string;
+}) => {
 	const [eventCount, setEventCount] = useState(2);
 
 	const LoadMoreEvent = () => {
@@ -17,7 +23,11 @@ const FeaturedEvents = () => {
 			<Container>
 				<StyledHeading>Featured Events</StyledHeading>
 				{featuredEvents.slice(0, eventCount).map(event => (
-					<FeaturedEventCard key={event.id} event={event} />
+					<FeaturedEventCard
+						key={event.id}
+						userEmail={userEmail}
+						event={event}
+					/>
 				))}
 
 				{featuredEvents.length !== eventCount && (

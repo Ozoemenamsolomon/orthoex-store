@@ -105,6 +105,39 @@ export const sampleVariedProduct: VariedProduct = {
 // 	},
 // ],
 
+// get all product from supabase, variants is renames to variant and is single instead of array
+// const getAllProducts = async () => {
+// 	const { data, error } = await supabaseClient
+// 		.from('products')
+// 		.select('*');
+
+// 	if (error) {
+// 		console.log(error);
+// 		return [];
+// 	}
+
+// 	return data.map((product) => {
+// 		return {
+// 			...product,
+// 			variant: product.variants[0],
+// 		};
+// 	});
+// };
+
+// // get all product variants from supabase
+// const getAllProductVariants = async () => {
+// 	const { data, error } = await supabaseClient
+// 		.from('product_variants')
+// 		.select('*');
+
+// 	if (error) {
+// 		console.log(error);
+// 		return [];
+// 	}
+
+// 	return data;
+// };
+
 export const productsData: ProductDataType[] = [
 	{
 		brand: brands[0],

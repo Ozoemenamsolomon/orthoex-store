@@ -5,7 +5,22 @@ import { Container } from '@components/styled';
 import { supabaseClient } from '@utils/supabase';
 import { NextPage } from 'next';
 
-type Props = { user: UserProfile; data: any };
+type Props = {
+	user: UserProfile;
+	data: {
+		name: string;
+		brand: { name: string };
+		category: { name: string };
+		description: string;
+		details: string;
+		code: string;
+		variant: { [key: string]: string };
+		quantity: number;
+		price: { priceInKobo: number };
+		image: string;
+		variantID: string;
+	}[];
+};
 
 const Account: NextPage<Props> = ({ user, data }) => {
 	console.log({ user, data });
@@ -23,14 +38,18 @@ const Account: NextPage<Props> = ({ user, data }) => {
 			{data.map(
 				({
 					name,
-					code,
-					variants,
-					description,
 					brand,
 					category,
+					description,
 					details,
-				}: any) => (
-					<div key={code}>
+					code,
+					variant,
+					quantity,
+					price,
+					image,
+					variantID,
+				}) => (
+					<div>
 						<p
 							style={{
 								padding: '6px',
@@ -45,32 +64,19 @@ const Account: NextPage<Props> = ({ user, data }) => {
 						<h2>{name}</h2>
 						<p>Brand: {brand.name}</p>
 						<p>Category: {category.name}</p>
+						<p>Code: {code}</p>
+						<p>Price: {price.priceInKobo}</p>
 						<p>Description: {description}</p>
 						<p>Details: {details}</p>
-						<p>Code: {code}</p>
+						<p>Qty. in stock: {quantity}</p>
+						<p>VariantID:{variantID}</p>
+						<p>Image: {image}</p>
 						<hr />
-						<div>
-							<h5>Variations</h5>
-							<ol
-								style={{
-									display: 'grid',
-									gridTemplateColumns: 'repeat(auto-fit,minmax(144px,1fr))',
-									gap: '1rem 2rem',
-								}}>
-								{variants?.map(({ variant, quantity, prices, id }: any) => (
-									<li key={'variant' + id}>
-										<p>Variant id: {id}</p>
-										{Object.entries(variant).map(([key, value]) => (
-											<p key={key}>
-												{key}: {value}
-											</p>
-										))}
-										<p>Qty. in stock: {quantity?.quantity}</p>
-										<p>Price: {prices[0]?.priceInKobo}</p>
-									</li>
-								))}
-							</ol>
-						</div>
+						{Object.entries(variant).map(([key, value]) => (
+							<p key={key}>
+								{key}: {value}
+							</p>
+						))}
 						<hr />
 					</div>
 				),
@@ -93,14 +99,12 @@ export const getServerSideProps = withPageAuthRequired({
 			return { props: { data: [] } };
 		}
 
-		// @ts-ignore
 		const { data, error } = await supabaseClient
-			.from('products')
+			.from('variants')
 			.select(
-				`code, name, image, description, brand(name, slug), category(name, slug, image), details,variants(variant, id, prices(custier, priceInKobo),quantity(quantity))`,
+				`*, variantID:id, product(code, name, image, description, details, brand(name, slug), category(name, slug, image)), quantity(quantity),price:prices(*)`,
 			)
-			.eq('variants.prices.custier', custier)
-			.like('code', 'PRO-%');
+			.eq('prices.custier', custier);
 
 		if (error) {
 			console.log({ error });
@@ -113,7 +117,13 @@ export const getServerSideProps = withPageAuthRequired({
 
 		return {
 			props: {
-				data,
+				data: data.map(({ price, product, quantity, variantID, variant }) => ({
+					price: price[0],
+					variantID,
+					variant,
+					...quantity,
+					...product,
+				})),
 			},
 		};
 	},

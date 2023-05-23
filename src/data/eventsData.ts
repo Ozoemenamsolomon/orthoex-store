@@ -69,13 +69,13 @@ export const featuredEvents: EventDataType[] = [
 		booked_spot: 3,
 	},
 	{
-		id: 1,
+		id: 3,
 		title: 'Working with the glass fibre reinforced concrete',
 		eventFormat: EventFormat.ONLINE,
 		startDateTime: '',
 		endDateTime: '',
 		location: { city: 'Ikeja', state: 'Lagos' },
-		price: 10000,
+		price: 250000,
 		contact: { call: '', chat: '' },
 		courseInfo: {
 			course:
@@ -92,13 +92,13 @@ export const featuredEvents: EventDataType[] = [
 		booked_spot: 3,
 	},
 	{
-		id: 1,
+		id: 4,
 		title: 'Working with the glass fibre reinforced concrete',
 		eventFormat: EventFormat.ONLINE,
 		startDateTime: '',
 		endDateTime: '',
 		location: { city: 'Ikeja', state: 'Lagos' },
-		price: 10000,
+		price: 103500,
 		contact: { call: '', chat: '' },
 		courseInfo: {
 			course:

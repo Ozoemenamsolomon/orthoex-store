@@ -8,16 +8,38 @@ import Whatsapp from '@assets/new/icons/Whatsapp';
 import { EventDataType, EventFormat } from '@data/eventsData';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { usePaystackPayment } from 'react-paystack';
 import styled from 'styled-components';
-import { CTALink } from './CTA';
+import CTA, { CTALink } from './CTA';
 import { priceFormatter } from './ProductCard';
 
 interface FeaturedEventProp {
 	event: EventDataType;
+	userEmail: string;
 }
 
-const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ event }) => {
+// @ts-ignore
+const onSuccess = reference => {
+	console.log(reference);
+};
+
+const onClose = () => {
+	console.log('closed');
+};
+
+const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
+	event,
+	userEmail,
+}) => {
+	const config = {
+		reference: new Date().getTime().toString(),
+		email: userEmail,
+		amount: event.price * 100,
+		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_KEY as string,
+	};
+
 	const [panelOpen, setpanelOpen] = useState(false);
+	const initializePayment = usePaystackPayment(config);
 
 	return (
 		<StyledWrapperDiv>
@@ -49,7 +71,12 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ event }) => {
 					</StyledInfoDiv>
 					<StyledPrice>
 						<p>{priceFormatter.format(event.price)}</p>
-						<CTALink href={'/'}>Book now</CTALink>
+						<CTA
+							onClick={() => {
+								initializePayment(onSuccess, onClose);
+							}}>
+							Book now
+						</CTA>
 					</StyledPrice>
 					<StyledIconText>Speak with the Event Team</StyledIconText>
 					<StyledButtonGroup>
