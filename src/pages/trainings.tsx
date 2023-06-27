@@ -15,6 +15,8 @@ import {
 	featuredEvents as featuredEventsData,
 } from '@data/eventsData';
 import { NextPage } from 'next';
+import useTrainingEventApi from '../../hooks/useTrainingApi';
+import { useEffect } from 'react';
 
 const data: ImageInfoHeaderType = {
 	image: LadyImage,
@@ -36,10 +38,17 @@ const serviceStandardData = {
 	],
 };
 
-const trainings: NextPage<{
+const Trainings: NextPage<{
 	featuredEvents: EventDataType[];
 	user: Claims;
 }> = ({ featuredEvents, user }) => {
+	const { getTrainingEvents } = useTrainingEventApi();
+
+	useEffect(() => {
+		const data = getTrainingEvents();
+		console.log(data);
+	}, []);
+
 	return (
 		<>
 			<Container bg="white" paddingMultiplier={0}>
@@ -51,7 +60,7 @@ const trainings: NextPage<{
 	);
 };
 
-export default trainings;
+export default Trainings;
 
 export const getServerSideProps = withPageAuthRequired({
 	async getServerSideProps(ctx) {
