@@ -15,8 +15,8 @@ import {
 	featuredEvents as featuredEventsData,
 } from '@data/eventsData';
 import { NextPage } from 'next';
-import useTrainingEventApi from '../../hooks/useTrainingApi';
-import { useEffect } from 'react';
+import { createClient } from 'contentful';
+// import { TrainingDataType } from '@data/types/Training.types';
 
 const data: ImageInfoHeaderType = {
 	image: LadyImage,
@@ -41,21 +41,17 @@ const serviceStandardData = {
 const Trainings: NextPage<{
 	featuredEvents: EventDataType[];
 	user: Claims;
-}> = ({ featuredEvents, user }) => {
-	const { getTrainingEvents } = useTrainingEventApi();
-
-	useEffect(() => {
-		const data = getTrainingEvents();
-		console.log(data);
-	}, []);
-
+	trainingData: any;
+}> = ({ featuredEvents, user, trainingData }) => {
 	return (
 		<>
 			<Container bg="white" paddingMultiplier={0}>
 				<ImageInfoHeader data={data} />
 				<ServiceStandard data={serviceStandardData} />
 			</Container>
-			<FeaturedEvents {...{ featuredEvents, userEmail: user.email }} />
+			<FeaturedEvents
+				{...{ featuredEvents, userEmail: user.email, trainingData }}
+			/>
 		</>
 	);
 };
@@ -64,12 +60,32 @@ export default Trainings;
 
 export const getServerSideProps = withPageAuthRequired({
 	async getServerSideProps(ctx) {
-		const session = await getSession(ctx.req, ctx.res);
+		const spaceId = process.env.CONTENTFUL_TRAINING_SPACE || '';
+		const accessToken = process.env.CONTENTFUL_TRAINING_ACCESS_TOKEN || '';
+		const client = createClient({
+			space: spaceId,
+			accessToken: accessToken,
+			host: 'cdn.contentful.com',
+		});
+		const trainingEvents = await client.getEntries({
+			content_type: 'orthoexTrainingData',
+		});
 
+		const santizedData = trainingEvents.items.map((data: any) => {
+			const posterImage = data.fields.eventPosterImage.fields;
+			const eventPosterImage = {
+				url: posterImage.file.url,
+				title: posterImage.title,
+			};
+			return { ...data.fields, eventPosterImage };
+		});
+
+		const session = await getSession(ctx.req, ctx.res);
 		return {
 			props: {
 				user: session?.user,
 				featuredEvents: featuredEventsData,
+				trainingData: santizedData,
 			},
 		};
 	},

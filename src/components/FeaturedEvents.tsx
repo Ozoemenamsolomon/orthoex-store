@@ -8,9 +8,11 @@ import { Container } from './styled';
 const FeaturedEvents = ({
 	featuredEvents,
 	userEmail,
+	trainingData,
 }: {
 	featuredEvents: EventDataType[];
 	userEmail: string;
+	trainingData: any;
 }) => {
 	const [eventCount, setEventCount] = useState(2);
 
