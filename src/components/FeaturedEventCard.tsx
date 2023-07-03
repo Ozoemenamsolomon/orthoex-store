@@ -6,16 +6,19 @@ import People from '@assets/new/icons/People';
 import Time from '@assets/new/icons/Time';
 import Whatsapp from '@assets/new/icons/Whatsapp';
 import { EventDataType, EventFormat } from '@data/eventsData';
+import { TypeOrthoexTrainingDataFields } from '@data/types/contentfulTypes';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { usePaystackPayment } from 'react-paystack';
 import styled from 'styled-components';
 import CTA, { CTALink } from './CTA';
 import { priceFormatter } from './ProductCard';
+import { calculateDateDifference, formatDate } from '@utils/index';
 
 interface FeaturedEventProp {
 	event: EventDataType;
 	userEmail: string;
+	training: TypeOrthoexTrainingDataFields;
 }
 
 const onSuccess = (reference: any) => {
@@ -29,11 +32,12 @@ const onClose = () => {
 const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 	event,
 	userEmail,
+	training,
 }) => {
 	const config = {
 		reference: new Date().getTime().toString(),
 		email: userEmail,
-		amount: event.price * 100,
+		amount: training.price * 100,
 		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_KEY as string,
 	};
 
@@ -44,18 +48,25 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 		<StyledWrapperDiv>
 			<StyledDetailsSection>
 				<StyledLeftContent>
-					<StyledCourseFormat type={event.eventFormat}>
-						{event.eventFormat}
+					<StyledCourseFormat type={training.trainingFormat}>
+						{training.trainingFormat}
 					</StyledCourseFormat>
-					<h4>{event.title}</h4>
+					<h4>{training.title}</h4>
 					<StyledInfoDiv>
 						<Calender />
-						<span>2nd Aug 2022 - 7th Aug 2022</span>
-						<StyledDays>10 DAYS</StyledDays>
+						<span>{`${formatDate(new Date(training.startDate))} - ${formatDate(
+							new Date(training.endDate),
+						)}`}</span>
+						<StyledDays>{`${calculateDateDifference(
+							training.endDate,
+							training.startDate,
+						)} DAYS`}</StyledDays>
 					</StyledInfoDiv>
 					<StyledInfoDiv>
 						<Time />
-						<span>8.00 am - 5.00pm</span>
+						<span>
+							{training.startTime} - {training.endTime}
+						</span>
 					</StyledInfoDiv>
 					<StyledInfoDiv>
 						<Location />
@@ -65,11 +76,11 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 				<StyledRightContent>
 					<StyledInfoDiv>
 						<People />
-						<span>12 particpants</span>
+						<span>{training.participants} participants</span>
 						<StyledSpot>3 Spots left</StyledSpot>
 					</StyledInfoDiv>
 					<StyledPrice>
-						<p>{priceFormatter.format(event.price)}</p>
+						<p>{priceFormatter.format(training.price)}</p>
 						<CTA
 							onClick={() => {
 								// @ts-ignore
@@ -80,10 +91,10 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 					</StyledPrice>
 					<StyledIconText>Speak with the Event Team</StyledIconText>
 					<StyledButtonGroup>
-						<CTALink white href={'/'}>
+						<CTALink white href={`tel:${training.phoneContact}`}>
 							<Call /> Phone call
 						</CTALink>
-						<CTALink white href={'/'}>
+						<CTALink white href={`https://wa.me/${training.whatsappContact}`}>
 							<Whatsapp /> Whatsapp
 						</CTALink>
 					</StyledButtonGroup>
@@ -103,8 +114,8 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 							<li key={index}>{info}</li>
 						))}
 					</StyledList>
-					<p>Refreshment: {event.refreshment === true ? 'Yes' : 'No'}</p>
-					<p>Starter Pack: {event.starterPack === true ? 'Yes' : 'No'}</p>
+					<p>Refreshment: {training.refreshment === true ? 'Yes' : 'No'}</p>
+					<p>Starter Pack: {training.starterPack === true ? 'Yes' : 'No'}</p>
 					<StyledSpanLink>
 						Please note our{' '}
 						<Link href="/">COVID-19 Protocol & social distancing measures</Link>

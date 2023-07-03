@@ -14,9 +14,9 @@ import {
 	EventDataType,
 	featuredEvents as featuredEventsData,
 } from '@data/eventsData';
-import { NextPage } from 'next';
+import { TypeOrthoexTrainingDataFields } from '@data/types/contentfulTypes';
 import { createClient } from 'contentful';
-// import { TrainingDataType } from '@data/types/Training.types';
+import { NextPage } from 'next';
 
 const data: ImageInfoHeaderType = {
 	image: LadyImage,
@@ -41,7 +41,7 @@ const serviceStandardData = {
 const Trainings: NextPage<{
 	featuredEvents: EventDataType[];
 	user: Claims;
-	trainingData: any;
+	trainingData: TypeOrthoexTrainingDataFields[];
 }> = ({ featuredEvents, user, trainingData }) => {
 	return (
 		<>
@@ -65,27 +65,23 @@ export const getServerSideProps = withPageAuthRequired({
 		const client = createClient({
 			space: spaceId,
 			accessToken: accessToken,
-			host: 'cdn.contentful.com',
 		});
+
 		const trainingEvents = await client.getEntries({
 			content_type: 'orthoexTrainingData',
 		});
 
-		const santizedData = trainingEvents.items.map((data: any) => {
-			const posterImage = data.fields.eventPosterImage.fields;
-			const eventPosterImage = {
-				url: posterImage.file.url,
-				title: posterImage.title,
-			};
-			return { ...data.fields, eventPosterImage };
+		const trainingData = trainingEvents.items.map(training => {
+			const transformedTrainingData =
+				training.fields as unknown as TypeOrthoexTrainingDataFields;
+			return transformedTrainingData;
 		});
-
 		const session = await getSession(ctx.req, ctx.res);
 		return {
 			props: {
 				user: session?.user,
 				featuredEvents: featuredEventsData,
-				trainingData: santizedData,
+				trainingData,
 			},
 		};
 	},
