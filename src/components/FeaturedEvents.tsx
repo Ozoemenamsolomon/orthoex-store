@@ -50,7 +50,7 @@ export default FeaturedEvents;
 
 const StyledWrapperDiv = styled.div`
 	background-color: var(--oex-off-white);
-	padding: 3rem 0rem;
+	padding: 3rem 0rem 0rem;
 `;
 
 export const StyledHeading = styled.h3<{ align?: string; padding?: boolean }>`

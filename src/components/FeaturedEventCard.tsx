@@ -7,13 +7,13 @@ import Time from '@assets/new/icons/Time';
 import Whatsapp from '@assets/new/icons/Whatsapp';
 import { EventDataType, EventFormat } from '@data/eventsData';
 import { TypeOrthoexTrainingDataFields } from '@data/types/contentfulTypes';
-import Link from 'next/link';
 import React, { useState } from 'react';
 import { usePaystackPayment } from 'react-paystack';
 import styled from 'styled-components';
 import CTA, { CTALink } from './CTA';
 import { priceFormatter } from './ProductCard';
 import { calculateDateDifference, formatDate } from '@utils/index';
+import Image from 'next/image';
 
 interface FeaturedEventProp {
 	event: EventDataType;
@@ -91,7 +91,11 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 					</StyledPrice>
 					<StyledIconText>Speak with the Event Team</StyledIconText>
 					<StyledButtonGroup>
-						<CTALink white href={`tel:${training.phoneContact}`}>
+						<CTALink
+							white
+							href={`tel:${
+								training?.phoneContact ? training?.phoneContact : ''
+							}`}>
 							<Call /> Phone call
 						</CTALink>
 						<CTALink white href={`https://wa.me/${training.whatsappContact}`}>
@@ -106,20 +110,55 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 					<ArrowDownUp rotate={panelOpen} />
 				</StyledIconText>
 				<StyledCourseInfo open={panelOpen}>
-					<h4>About the Course</h4>
-					<StyledText>{event.courseInfo.course}</StyledText>
-					<h4>About the Instructor(s)</h4>
-					<StyledList>
-						{event.courseInfo.instructor.map((info, index) => (
-							<li key={index}>{info}</li>
-						))}
-					</StyledList>
-					<p>Refreshment: {training.refreshment === true ? 'Yes' : 'No'}</p>
-					<p>Starter Pack: {training.starterPack === true ? 'Yes' : 'No'}</p>
-					<StyledSpanLink>
-						Please note our{' '}
-						<Link href="/">COVID-19 Protocol & social distancing measures</Link>
-					</StyledSpanLink>
+					<CourseInfoFlex>
+						<CourseInfoDiv>
+							<h4>Description</h4>
+							<StyledText>{training.description}</StyledText>
+							{training.prerequisites && (
+								<>
+									<h4>Prerequisites</h4>
+									<StyledText>{training.prerequisites}</StyledText>
+								</>
+							)}
+							<h4>Benefits</h4>
+							<StyledList>
+								{training.benefits.map((info, index) => (
+									<li key={index}>{info}</li>
+								))}
+							</StyledList>
+							{training.extraInformation && (
+								<Text>Note: {training.extraInformation}</Text>
+							)}
+							<Text>
+								Refreshment: {training.refreshment === true ? 'Yes' : 'No'}
+							</Text>
+							<Text>
+								Starter Pack: {training.starterPack === true ? 'Yes' : 'No'}
+							</Text>
+							<MoreInfoBox>
+								To attend this training, please register at least two working
+								days before the event.{' '}
+								{training.nextTrainingDate && (
+									<span>
+										{`The next training will take place on ${formatDate(
+											new Date(training.nextTrainingDate),
+										)}`}
+									</span>
+								)}
+							</MoreInfoBox>
+						</CourseInfoDiv>
+
+						{training.eventPosterImage?.fields?.file && (
+							<CourseImageDiv>
+								<Image
+									src={`http:${training.eventPosterImage.fields.file.url}`}
+									fill
+									sizes="100"
+									alt="image"
+								/>
+							</CourseImageDiv>
+						)}
+					</CourseInfoFlex>
 				</StyledCourseInfo>
 			</StyledInfoSection>
 		</StyledWrapperDiv>
@@ -127,6 +166,77 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 };
 
 export default FeaturedEventCard;
+
+const MoreInfoBox = styled.div`
+	background-color: var(--oex-light-grey);
+	padding: 0.8rem;
+	border-radius: 0.5rem 0.5rem 0 0;
+	margin: 0 auto;
+	font-size: 0.8rem;
+	line-height: 1.5;
+	text-align: center;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		padding: 2rem;
+		font-size: 1rem;
+		margin: 0 1rem;
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
+		padding: 2rem;
+	}
+`;
+
+const CourseInfoFlex = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	max-height: 35rem;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		flex-direction: row;
+	}
+`;
+
+const CourseImageDiv = styled.div`
+	position: relative;
+	border-radius: 0.5rem;
+	aspect-ratio: 1;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		flex: 1;
+	}
+`;
+const CourseInfoDiv = styled.div`
+	background-color: var(--oex-off-white);
+	padding: 0rem 0.7rem 0;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		flex: 1;
+		position: relative;
+		padding: 0rem 1rem 0;
+		overflow-y: scroll;
+		// max-height: 40rem;
+
+		&::-webkit-scrollbar {
+			display: none;
+			-ms-overflow-style: none;
+			scrollbar-width: none;
+		}
+	}
+`;
+
+const Text = styled.p`
+	line-height: 1.5;
+	margin: 1rem 0rem;
+
+	&:last-child {
+		margin-bottom: 0rem;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		font-size: 1.2rem;
+	}
+`;
 
 const StyledWrapperDiv = styled.div`
 	background-color: white;
@@ -284,8 +394,7 @@ const StyledInfoSection = styled.div``;
 
 const StyledCourseInfo = styled.div<{ open: boolean }>`
 	display: ${({ open }) => (open === true ? 'block' : 'none')};
-	padding: 0.7rem;
-	background-color: var(--oex-off-white);
+	padding: 0.7rem 0.7rem 0rem;
 
 	& > h4 {
 		margin: 0;
@@ -294,7 +403,7 @@ const StyledCourseInfo = styled.div<{ open: boolean }>`
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		color: black;
-		padding: 1rem;
+		padding: 1rem 1rem 0;
 
 		& > p {
 			font-size: 1.2rem;
@@ -303,7 +412,6 @@ const StyledCourseInfo = styled.div<{ open: boolean }>`
 `;
 
 const StyledText = styled.p`
-	color: var(--text-colour-grey);
 	line-height: 1.5;
 	margin: 1rem 0;
 
@@ -314,7 +422,6 @@ const StyledText = styled.p`
 `;
 
 const StyledList = styled.ul`
-	color: var(--text-colour-grey);
 	line-height: 1.8;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
@@ -323,13 +430,13 @@ const StyledList = styled.ul`
 	}
 `;
 
-const StyledSpanLink = styled.span`
-	font-size: 0.8rem;
-	& > a {
-		color: var(--oex-orange);
-	}
+// const StyledSpanLink = styled.span`
+// 	font-size: 0.8rem;
+// 	& > a {
+// 		color: var(--oex-orange);
+// 	}
 
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-		color: black;
-	}
-`;
+// 	@media ${({ theme }) => theme.breakpoints.above.md} {
+// 		color: black;
+// 	}
+// `;
