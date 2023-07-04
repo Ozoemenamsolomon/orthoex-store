@@ -191,10 +191,12 @@ const CourseInfoFlex = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
-	max-height: 35rem;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		max-height: 35rem;
 	}
 `;
 
