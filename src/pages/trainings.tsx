@@ -14,9 +14,13 @@ import {
 	EventDataType,
 	featuredEvents as featuredEventsData,
 } from '@data/eventsData';
-import { OrthoexTrainingDataFieldsType } from '@data/types/contentfulTypes';
+import {
+	OrthoexTrainingDataFieldsType,
+	TrainingSupbaseDataType,
+} from '@data/types/contentfulTypes';
 import { createClient } from 'contentful';
 import { NextPage } from 'next';
+import { supabaseClient } from '@utils/supabase';
 
 const data: ImageInfoHeaderType = {
 	image: LadyImage,
@@ -76,6 +80,16 @@ export const getServerSideProps = withPageAuthRequired({
 				training.fields as unknown as OrthoexTrainingDataFieldsType;
 			return transformedTrainingData;
 		});
+
+		const trainingFromSupabase = await supabaseClient
+			.from('training')
+			.select('*');
+
+		const trainingFromSupaBaseTransformed =
+			trainingFromSupabase.data as unknown as TrainingSupbaseDataType;
+
+		console.log(trainingFromSupaBaseTransformed);
+
 		const session = await getSession(ctx.req, ctx.res);
 		return {
 			props: {
