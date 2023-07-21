@@ -14,7 +14,7 @@ import {
 	EventDataType,
 	featuredEvents as featuredEventsData,
 } from '@data/eventsData';
-import { TypeOrthoexTrainingDataFields } from '@data/types/contentfulTypes';
+import { OrthoexTrainingDataFieldsType } from '@data/types/contentfulTypes';
 import { createClient } from 'contentful';
 import { NextPage } from 'next';
 
@@ -41,7 +41,7 @@ const serviceStandardData = {
 const Trainings: NextPage<{
 	featuredEvents: EventDataType[];
 	user: Claims;
-	trainingData: TypeOrthoexTrainingDataFields[];
+	trainingData: OrthoexTrainingDataFieldsType[];
 }> = ({ featuredEvents, user, trainingData }) => {
 	return (
 		<>
@@ -73,7 +73,7 @@ export const getServerSideProps = withPageAuthRequired({
 
 		const trainingData = trainingEvents.items.map(training => {
 			const transformedTrainingData =
-				training.fields as unknown as TypeOrthoexTrainingDataFields;
+				training.fields as unknown as OrthoexTrainingDataFieldsType;
 			return transformedTrainingData;
 		});
 		const session = await getSession(ctx.req, ctx.res);

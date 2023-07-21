@@ -1,5 +1,5 @@
 import { EventDataType } from '@data/eventsData';
-import { TypeOrthoexTrainingDataFields } from '@data/types/contentfulTypes';
+import { OrthoexTrainingDataFieldsType } from '@data/types/contentfulTypes';
 import { useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
@@ -13,7 +13,7 @@ const FeaturedEvents = ({
 }: {
 	featuredEvents: EventDataType[];
 	userEmail: string;
-	trainingData: TypeOrthoexTrainingDataFields[];
+	trainingData: OrthoexTrainingDataFieldsType[];
 }) => {
 	const [eventCount, setEventCount] = useState(2);
 

@@ -1,5 +1,1 @@
-export type {
-	TypeOrthoexTrainingData,
-	TypeOrthoexTrainingDataFields,
-	OrthoexTrainingDataSkeleton,
-} from './TypeOrthoexTrainingData';
+export type { OrthoexTrainingDataFieldsType } from './TypeOrthoexTrainingData';

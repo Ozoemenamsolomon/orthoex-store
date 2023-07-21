@@ -1,38 +1,38 @@
-import type { Asset, Entry, EntryFields } from 'contentful';
+type posterImageType = {
+	fields: {
+		title: string;
+		description: string;
+		file: {
+			url: string;
+			fileName: string;
+		};
+	};
+};
 
-export interface TypeOrthoexTrainingDataFields {
-	id: EntryFields.Integer;
-	title: EntryFields.Symbol;
-	description: EntryFields.Text;
-	benefits: EntryFields.Symbol[];
-	prerequisites?: EntryFields.Symbol;
+type LocationType = {
+	latitude: string;
+	longitude: string;
+};
+export interface OrthoexTrainingDataFieldsType {
+	id: number;
+	title: string;
+	description: string;
+	benefits: string[];
+	prerequisites?: string;
 	trainingFormat: 'ONLINE' | 'ONSITE';
-	startDate: EntryFields.Date;
-	eventPosterImage?: Asset;
-	endDate: EntryFields.Date;
-	startTime: EntryFields.Symbol;
-	endTime: EntryFields.Symbol;
-	location: EntryFields.Location;
-	price: EntryFields.Integer;
-	phoneContact?: EntryFields.Symbol;
-	whatsappContact: EntryFields.Symbol;
-	refreshment: EntryFields.Boolean;
-	starterPack: EntryFields.Boolean;
-	participants: EntryFields.Integer;
-	extraInformation?: EntryFields.Text;
-	nextTrainingDate?: EntryFields.Date;
+	startDate: string;
+	eventPosterImage?: posterImageType;
+	endDate: string;
+	startTime: string;
+	endTime: string;
+	location: LocationType;
+	venue: string;
+	price: number;
+	phoneContact?: string;
+	whatsappContact: string;
+	refreshment: boolean;
+	starterPack: boolean;
+	participants: number;
+	extraInformation?: string;
+	nextTrainingDate?: string;
 }
-
-type TypeOrthoexFieldsAndContentType = {
-	fields: { [key: string]: any };
-	contentTypeId: string;
-};
-
-export type TypeOrthoexTrainingData = Entry<
-	TypeOrthoexTrainingDataFields & TypeOrthoexFieldsAndContentType
->;
-
-export type OrthoexTrainingDataSkeleton = {
-	contentTypeId: 'orthoexTrainingData';
-	fields: TypeOrthoexTrainingDataFields;
-};

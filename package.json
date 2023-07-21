@@ -12,8 +12,7 @@
 		"format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
 		"cf-export": "contentful space export --config contentful/export-config.json --management-token ${CONTENTFUL_TRAINING_ACCESS_TOKEN} --space-id $CONTENTFUL_TRAINING_SPACE",
 		"cf-login": "contentful login",
-		"cf-space": "contentful space use",
-		"cf-generate-types": "cf-content-types-generator contentful/export.json --out types/contentful/contentfulTypes"
+		"cf-space": "contentful space use"
 	},
 	"engines": {
 		"node": ">=14.0.0"
@@ -42,7 +41,6 @@
 		"@types/react-tabs": "^2.3.4",
 		"@types/styled-components": "^5.1.15",
 		"babel-plugin-styled-components": "^1.13.2",
-		"cf-content-types-generator": "^2.12.2",
 		"contentful-cli": "^2.6.24",
 		"eslint": "^8.25.0",
 		"eslint-config-next": "^13.0.4",

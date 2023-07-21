@@ -6,19 +6,19 @@ import People from '@assets/new/icons/People';
 import Time from '@assets/new/icons/Time';
 import Whatsapp from '@assets/new/icons/Whatsapp';
 import { EventDataType, EventFormat } from '@data/eventsData';
-import { TypeOrthoexTrainingDataFields } from '@data/types/contentfulTypes';
+import { OrthoexTrainingDataFieldsType } from '@data/types/contentfulTypes';
+import { calculateDateDifference, formatDate } from '@utils/index';
+import Image from 'next/image';
 import React, { useState } from 'react';
 import { usePaystackPayment } from 'react-paystack';
 import styled from 'styled-components';
 import CTA, { CTALink } from './CTA';
 import { priceFormatter } from './ProductCard';
-import { calculateDateDifference, formatDate } from '@utils/index';
-import Image from 'next/image';
 
 interface FeaturedEventProp {
 	event: EventDataType;
 	userEmail: string;
-	training: TypeOrthoexTrainingDataFields;
+	training: OrthoexTrainingDataFieldsType;
 }
 
 const onSuccess = (reference: any) => {
