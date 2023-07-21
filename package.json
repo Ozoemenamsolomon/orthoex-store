@@ -9,10 +9,7 @@
 		"export": "next export",
 		"lint": "next lint",
 		"prepare": "husky install",
-		"format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-		"cf-export": "contentful space export --config contentful/export-config.json --management-token ${CONTENTFUL_TRAINING_ACCESS_TOKEN} --space-id $CONTENTFUL_TRAINING_SPACE",
-		"cf-login": "contentful login",
-		"cf-space": "contentful space use"
+		"format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
 	},
 	"engines": {
 		"node": ">=14.0.0"
@@ -21,7 +18,7 @@
 		"@auth0/nextjs-auth0": "^2.1.0",
 		"@formspree/react": "^2.4.1",
 		"@supabase/supabase-js": "^2.20.0",
-		"contentful": "^10.3.0",
+		"contentful": "^10.3.6",
 		"netlify-cli": "^12.7.2",
 		"next": "^13.0.4",
 		"react": "^18.2.0",
@@ -41,7 +38,6 @@
 		"@types/react-tabs": "^2.3.4",
 		"@types/styled-components": "^5.1.15",
 		"babel-plugin-styled-components": "^1.13.2",
-		"contentful-cli": "^2.6.24",
 		"eslint": "^8.25.0",
 		"eslint-config-next": "^13.0.4",
 		"husky": "^8.0.0",
