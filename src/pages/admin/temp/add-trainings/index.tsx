@@ -60,10 +60,12 @@ export const getServerSideProps = withPageAuthRequired({
 });
 
 const WrapperDiv = styled.div`
-	padding: 2rem;
+	padding: 1rem;
 	background-color: var(--oex-light-grey);
+	min-height: 60vh;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
+		padding: 2rem;
 	}
 `;
 
@@ -74,7 +76,7 @@ const HeadingSection = styled.div`
 
 	& > a > button {
 		padding: 5px 10px;
-		font-size: 15px;
+		font-size: 8px;
 		border: 1px solid var(--oex-orange);
 
 		:hover {
@@ -84,13 +86,21 @@ const HeadingSection = styled.div`
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
+		& > a > button {
+			padding: 5px 10px;
+			font-size: 15px;
+			border: 1px solid var(--oex-orange);
+		}
 	}
 `;
 
 const HeadingText = styled.h2`
-	margin: 1.5rem 0;
+	margin: 0.8rem 0;
+	font-size: 1rem;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
+		margin: 1.5rem 0;
+		font-size: 2rem;
 	}
 `;
 
@@ -110,11 +120,13 @@ const TableHeader = styled.div`
 	padding: 10px 5px;
 	font-weight: bold;
 	background-color: var(--oex-lighter-grey);
+	font-size: 0.6rem;
 
 	& > :first-child {
 		padding-left: 4px;
 	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
+		font-size: 1rem;
 	}
 `;
 

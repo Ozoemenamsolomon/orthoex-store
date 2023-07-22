@@ -60,6 +60,7 @@ const TrainingEventWrapper = styled.div`
 	padding: 10px 5px;
 	font-size: 14px;
 	background-color: white;
+	font-size: 0.6rem;
 
 	& > :first-child {
 		padding-left: 4px;
@@ -73,17 +74,19 @@ const TrainingEventWrapper = styled.div`
 		visibility: visible;
 	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
+		font-size: 1rem;
 	}
 `;
 
 const CTAGroup = styled.div`
 	display: flex;
+	flex-direction: column;
 	align-items: stretch;
 	gap: 8px;
 
 	& .training {
-		padding: 5px 8px;
-		font-size: 12px;
+		padding: 3px 2px;
+		font-size: 6px;
 		border: 1px solid var(--oex-orange);
 		width: 100%;
 
@@ -102,5 +105,11 @@ const CTAGroup = styled.div`
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
+		flex-direction: row;
+
+		& .training {
+			padding: 5px 8px;
+		}
+		}
 	}
 `;
