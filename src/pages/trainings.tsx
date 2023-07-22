@@ -62,7 +62,7 @@ export const getServerSideProps = withPageAuthRequired({
 			props: {
 				user: session?.user,
 				featuredEvents: featuredEventsData,
-				trainingData: trainingData,
+				trainingData: trainingData || [],
 			},
 		};
 	},
