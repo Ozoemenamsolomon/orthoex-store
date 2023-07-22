@@ -18,7 +18,9 @@ const TrainingEventCard: React.FC<TrainingEventCardProp> = ({ training }) => {
 			<div>{training.trainingFormat}</div>
 			<div>{priceFormatter.format(training.price)}</div>
 			<CTAGroup>
-				<CTALink className="no-animate training" href={''}>
+				<CTALink
+					className="no-animate training"
+					href={`/admin/temp/add-trainings/${training.id}`}>
 					view
 				</CTALink>
 				<CTA className="training delete">Delete</CTA>
@@ -29,6 +31,26 @@ const TrainingEventCard: React.FC<TrainingEventCardProp> = ({ training }) => {
 
 export default TrainingEventCard;
 
+// export const getServerSideProps = withPageAuthRequired({
+// 	async getServerSideProps(ctx) {
+// 		const session = await getSession(ctx.req, ctx.res);
+// 		if (!session?.user) {
+// 			return {
+// 				redirect: {
+// 					destination: '/',
+// 					permanent: false,
+// 				},
+// 			};
+// 		}
+
+// 		return {
+// 			props: {
+// 				user: 'user',
+// 			},
+// 		};
+// 	},
+// });
+
 const TrainingEventWrapper = styled.div`
 	display: grid;
 	grid-template-columns: 2fr repeat(5, 1fr);
@@ -37,6 +59,7 @@ const TrainingEventWrapper = styled.div`
 	gap: 2px;
 	padding: 10px 5px;
 	font-size: 14px;
+	background-color: white;
 
 	& > :first-child {
 		padding-left: 4px;
