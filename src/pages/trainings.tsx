@@ -11,9 +11,9 @@ import ImageInfoHeader, {
 import ServiceStandard from '@components/ServiceStandard';
 import { Container } from '@components/styled';
 import { featuredEvents as featuredEventsData } from '@data/eventsData';
-import { TrainingSupbaseDataType } from '@data/types/contentfulTypes';
-import { NextPage } from 'next';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes';
 import { supabaseClient } from '@utils/supabase';
+import { NextPage } from 'next';
 
 const data: ImageInfoHeaderType = {
 	image: LadyImage,

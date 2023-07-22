@@ -1,8 +1,7 @@
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
-import { TrainingSupbaseDataType } from '@data/types/contentfulTypes';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes';
 import { supabaseClient } from '@utils/supabase';
 import { NextPage } from 'next';
-import React from 'react';
 
 type Props = { trainings: TrainingSupbaseDataType[] };
 

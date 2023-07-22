@@ -1,4 +1,4 @@
-import { TrainingSupbaseDataType } from '@data/types/contentfulTypes';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes';
 import { useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
