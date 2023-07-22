@@ -1,5 +1,4 @@
-import { EventDataType } from '@data/eventsData';
-import { OrthoexTrainingDataFieldsType } from '@data/types/contentfulTypes';
+import { TrainingSupbaseDataType } from '@data/types/contentfulTypes';
 import { useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
@@ -7,13 +6,11 @@ import FeaturedEventCard from './FeaturedEventCard';
 import { Container } from './styled';
 
 const FeaturedEvents = ({
-	featuredEvents,
 	userEmail,
 	trainingData,
 }: {
-	featuredEvents: EventDataType[];
 	userEmail: string;
-	trainingData: OrthoexTrainingDataFieldsType[];
+	trainingData: TrainingSupbaseDataType[];
 }) => {
 	const [eventCount, setEventCount] = useState(2);
 
@@ -30,7 +27,6 @@ const FeaturedEvents = ({
 						training={training}
 						key={training.id}
 						userEmail={userEmail}
-						event={featuredEvents[0]}
 					/>
 				))}
 

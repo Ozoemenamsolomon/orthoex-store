@@ -5,8 +5,8 @@ import Location from '@assets/new/icons/Location';
 import People from '@assets/new/icons/People';
 import Time from '@assets/new/icons/Time';
 import Whatsapp from '@assets/new/icons/Whatsapp';
-import { EventDataType, EventFormat } from '@data/eventsData';
-import { OrthoexTrainingDataFieldsType } from '@data/types/contentfulTypes';
+import { EventFormat } from '@data/eventsData';
+import { TrainingSupbaseDataType } from '@data/types/contentfulTypes';
 import { calculateDateDifference, formatDate } from '@utils/index';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -16,9 +16,8 @@ import CTA, { CTALink } from './CTA';
 import { priceFormatter } from './ProductCard';
 
 interface FeaturedEventProp {
-	event: EventDataType;
 	userEmail: string;
-	training: OrthoexTrainingDataFieldsType;
+	training: TrainingSupbaseDataType;
 }
 
 const onSuccess = (reference: any) => {
@@ -30,7 +29,6 @@ const onClose = () => {
 };
 
 const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
-	event,
 	userEmail,
 	training,
 }) => {
@@ -54,23 +52,21 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 					<h4>{training.title}</h4>
 					<StyledInfoDiv>
 						<Calender />
-						<span>{`${formatDate(new Date(training.startDate))} - ${formatDate(
-							new Date(training.endDate),
-						)}`}</span>
+						<span>{`${formatDate(
+							new Date(training.startDateTime),
+						)} - ${formatDate(new Date(training.endDateTime))}`}</span>
 						<StyledDays>{`${calculateDateDifference(
-							training.endDate,
-							training.startDate,
+							training.startDateTime,
+							training.endDateTime,
 						)} DAYS`}</StyledDays>
 					</StyledInfoDiv>
 					<StyledInfoDiv>
 						<Time />
-						<span>
-							{training.startTime} - {training.endTime}
-						</span>
+						<span>{/* {training.startTime} - {training.endTime} */}</span>
 					</StyledInfoDiv>
 					<StyledInfoDiv>
 						<Location />
-						<span>{`${event.location.city}, ${event.location.state}`}</span>
+						<span>{`${training.location}`}</span>
 					</StyledInfoDiv>
 				</StyledLeftContent>
 				<StyledRightContent>
@@ -148,10 +144,11 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 							</MoreInfoBox>
 						</CourseInfoDiv>
 
-						{training.eventPosterImage?.fields?.file && (
+						{training.eventPosterImage && (
 							<CourseImageDiv>
 								<Image
-									src={`http:${training.eventPosterImage.fields.file.url}`}
+									// src={`http:${training.eventPosterImage}`}
+									src={`https://res.cloudinary.com/dcfntkzap/image/upload/v1690004091/Training-data-images/Event_Flier_Template_Single_Person_yaj9is.png`}
 									fill
 									sizes="100"
 									alt="image"

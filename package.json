@@ -18,7 +18,6 @@
 		"@auth0/nextjs-auth0": "^2.1.0",
 		"@formspree/react": "^2.4.1",
 		"@supabase/supabase-js": "^2.20.0",
-		"contentful": "^10.3.6",
 		"netlify-cli": "^12.7.2",
 		"next": "^13.0.4",
 		"react": "^18.2.0",

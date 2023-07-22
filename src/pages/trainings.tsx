@@ -10,15 +10,8 @@ import ImageInfoHeader, {
 } from '@components/ImageInfoHeader';
 import ServiceStandard from '@components/ServiceStandard';
 import { Container } from '@components/styled';
-import {
-	EventDataType,
-	featuredEvents as featuredEventsData,
-} from '@data/eventsData';
-import {
-	OrthoexTrainingDataFieldsType,
-	TrainingSupbaseDataType,
-} from '@data/types/contentfulTypes';
-import { createClient } from 'contentful';
+import { featuredEvents as featuredEventsData } from '@data/eventsData';
+import { TrainingSupbaseDataType } from '@data/types/contentfulTypes';
 import { NextPage } from 'next';
 import { supabaseClient } from '@utils/supabase';
 
@@ -43,19 +36,16 @@ const serviceStandardData = {
 };
 
 const Trainings: NextPage<{
-	featuredEvents: EventDataType[];
 	user: Claims;
-	trainingData: OrthoexTrainingDataFieldsType[];
-}> = ({ featuredEvents, user, trainingData }) => {
+	trainingData: TrainingSupbaseDataType[];
+}> = ({ user, trainingData }) => {
 	return (
 		<>
 			<Container bg="white" paddingMultiplier={0}>
 				<ImageInfoHeader data={data} />
 				<ServiceStandard data={serviceStandardData} />
 			</Container>
-			<FeaturedEvents
-				{...{ featuredEvents, userEmail: user.email, trainingData }}
-			/>
+			<FeaturedEvents {...{ userEmail: user.email, trainingData }} />
 		</>
 	);
 };
@@ -64,38 +54,15 @@ export default Trainings;
 
 export const getServerSideProps = withPageAuthRequired({
 	async getServerSideProps(ctx) {
-		const spaceId = process.env.CONTENTFUL_TRAINING_SPACE || '';
-		const accessToken = process.env.CONTENTFUL_TRAINING_ACCESS_TOKEN || '';
-		const client = createClient({
-			space: spaceId,
-			accessToken: accessToken,
-		});
-
-		const trainingEvents = await client.getEntries({
-			content_type: 'orthoexTrainingData',
-		});
-
-		const trainingData = trainingEvents.items.map(training => {
-			const transformedTrainingData =
-				training.fields as unknown as OrthoexTrainingDataFieldsType;
-			return transformedTrainingData;
-		});
-
-		const trainingFromSupabase = await supabaseClient
-			.from('training')
-			.select('*');
-
-		const trainingFromSupaBaseTransformed =
-			trainingFromSupabase.data as unknown as TrainingSupbaseDataType;
-
-		console.log(trainingFromSupaBaseTransformed);
+		const response = await supabaseClient.from('training').select('*');
+		const trainingData = response.data as unknown as TrainingSupbaseDataType;
 
 		const session = await getSession(ctx.req, ctx.res);
 		return {
 			props: {
 				user: session?.user,
 				featuredEvents: featuredEventsData,
-				trainingData,
+				trainingData: trainingData,
 			},
 		};
 	},
