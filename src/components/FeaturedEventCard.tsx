@@ -10,37 +10,42 @@ import { TrainingSupbaseDataType } from '@data/types/trainingTypes';
 import { calculateDateDifference, formatDate } from '@utils/index';
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { usePaystackPayment } from 'react-paystack';
+// import { usePaystackPayment } from 'react-paystack';
 import styled from 'styled-components';
-import CTA, { CTALink } from './CTA';
+import { CTALink } from './CTA';
 import { priceFormatter } from './ProductCard';
+import FeaturedEventDialog from './FeaturedEventDialog';
 
 interface FeaturedEventProp {
 	userEmail: string;
 	training: TrainingSupbaseDataType;
 }
 
-const onSuccess = (reference: any) => {
-	console.log(reference);
-};
+// const onSuccess = (reference: any) => {
+// 	console.log(reference);
+// };
 
-const onClose = () => {
-	console.log('closed');
-};
+// const onClose = () => {
+// 	console.log('closed');
+// };
 
 const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 	userEmail,
 	training,
 }) => {
-	const config = {
-		reference: new Date().getTime().toString(),
-		email: userEmail,
-		amount: training.price * 100,
-		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_KEY as string,
-	};
+	// const config = {
+	// 	reference: new Date().getTime().toString(),
+	// 	email: userEmail,
+	// 	amount: training.price * 100,
+	// 	publicKey: process.env.NEXT_PUBLIC_PAYSTACK_KEY as string,
+	// };
 
 	const [panelOpen, setpanelOpen] = useState(false);
-	const initializePayment = usePaystackPayment(config);
+	const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
+
+	const openBookingDialog = () => setIsBookingDialogOpen(true);
+	const closeBookingDialog = () => setIsBookingDialogOpen(false);
+	// const initializePayment = usePaystackPayment(config);
 
 	return (
 		<StyledWrapperDiv>
@@ -77,13 +82,11 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 					</StyledInfoDiv>
 					<StyledPrice>
 						<p>{priceFormatter.format(training.price)}</p>
-						<CTA
-							onClick={() => {
-								// @ts-ignore
-								initializePayment(onSuccess, onClose);
-							}}>
-							Book now
-						</CTA>
+						<FeaturedEventDialog
+							training={training}
+							onOpen={openBookingDialog}
+							isOpen={isBookingDialogOpen}
+							onClose={closeBookingDialog}></FeaturedEventDialog>
 					</StyledPrice>
 					<StyledIconText>Speak with the Event Team</StyledIconText>
 					<StyledButtonGroup>
