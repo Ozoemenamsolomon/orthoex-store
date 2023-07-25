@@ -23,7 +23,9 @@ interface FormDataType {
 }
 const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 	const [numPeople, setNumPeople] = useState(1);
-	const [formData, setFormData] = useState<FormDataType[]>([]);
+	const [formData, setFormData] = useState<FormDataType[]>([
+		{ firstname: '', lastname: '', email: '', phone: '' },
+	]);
 
 	const handleIncrease = () => {
 		setNumPeople(prevNum => prevNum + 1);
@@ -34,7 +36,8 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 	};
 
 	const handleDecrease = () => {
-		if (numPeople > 0) {
+		if (numPeople === 1) return;
+		if (numPeople > 1) {
 			setNumPeople(prevNum => prevNum - 1);
 			setFormData(prevFormData => prevFormData.slice(0, -1));
 		}
@@ -83,7 +86,7 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 								</PeopleFee>
 
 								<RegisterFormSection>
-									<form onSubmit={handleSubmit}>
+									<form>
 										{formData.map((participant, index) => (
 											<div key={index}>
 												<h2>Participant {index + 1}:</h2>
@@ -125,13 +128,17 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 												</div>
 											</div>
 										))}
-										{numPeople > 0 && (
-											<button type="submit">Register Event</button>
-										)}
+										{/* {numPeople > 0 && (
+											<CTA type="button" className="no-animate register-btn">
+												Register Event
+											</CTA>
+										)} */}
 									</form>
 								</RegisterFormSection>
 
-								<CTA className="no-animate register-btn">Register Event</CTA>
+								<CTA onClick={handleSubmit} className="no-animate register-btn">
+									Register Event
+								</CTA>
 							</EditInfo>
 						</EditSection>
 						<ViewSection>
