@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import styles from './FeaturedEventCard.module.css';
 import styled from 'styled-components';
@@ -14,7 +14,47 @@ type Props = {
 	// children: ReactNode;
 	training: TrainingSupbaseDataType;
 };
+
+interface FormDataType {
+	firstname: string;
+	lastname: string;
+	email: string;
+	phone: string;
+}
 const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
+	const [numPeople, setNumPeople] = useState(1);
+	const [formData, setFormData] = useState<FormDataType[]>([]);
+
+	const handleIncrease = () => {
+		setNumPeople(prevNum => prevNum + 1);
+		setFormData(prevFormData => [
+			...prevFormData,
+			{ firstname: '', lastname: '', email: '', phone: '' },
+		]);
+	};
+
+	const handleDecrease = () => {
+		if (numPeople > 0) {
+			setNumPeople(prevNum => prevNum - 1);
+			setFormData(prevFormData => prevFormData.slice(0, -1));
+		}
+	};
+
+	const handleChange = (index: number, event: any) => {
+		const { name, value } = event.target;
+		setFormData(prevFormData => {
+			const updatedFormData = [...prevFormData];
+			updatedFormData[index] = { ...updatedFormData[index], [name]: value };
+			return updatedFormData;
+		});
+	};
+
+	const handleSubmit = (event: any) => {
+		event.preventDefault();
+		// You can send the formData to the API here
+		console.log(formData);
+	};
+
 	return (
 		<Dialog.Root>
 			<Dialog.Trigger className={styles.DialogButton}>
@@ -31,12 +71,65 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 							<EditInfo>
 								<PeopleAttendance>
 									<PeopleText>People attending</PeopleText>
-									<PeoplePrice>- 1 +</PeoplePrice>
+									<PeopleNumber>
+										<button onClick={handleDecrease}>-</button>
+										{numPeople}
+										<button onClick={handleIncrease}>+</button>
+									</PeopleNumber>
 								</PeopleAttendance>
 								<PeopleFee>
 									<FeeText>Fee:</FeeText>
 									<FeePrice>N0.00</FeePrice>
 								</PeopleFee>
+
+								<RegisterFormSection>
+									<form onSubmit={handleSubmit}>
+										{formData.map((participant, index) => (
+											<div key={index}>
+												<h2>Participant {index + 1}:</h2>
+												<div>
+													<label>First Name:</label>
+													<input
+														type="text"
+														name="firstname"
+														value={participant.firstname}
+														onChange={e => handleChange(index, e)}
+													/>
+												</div>
+												<div>
+													<label>Last Name:</label>
+													<input
+														type="text"
+														name="lastname"
+														value={participant.lastname}
+														onChange={e => handleChange(index, e)}
+													/>
+												</div>
+												<div>
+													<label>Email:</label>
+													<input
+														type="email"
+														name="email"
+														value={participant.email}
+														onChange={e => handleChange(index, e)}
+													/>
+												</div>
+												<div>
+													<label>Phone:</label>
+													<input
+														type="tel"
+														name="phone"
+														value={participant.phone}
+														onChange={e => handleChange(index, e)}
+													/>
+												</div>
+											</div>
+										))}
+										{numPeople > 0 && (
+											<button type="submit">Register Event</button>
+										)}
+									</form>
+								</RegisterFormSection>
 
 								<CTA className="no-animate register-btn">Register Event</CTA>
 							</EditInfo>
@@ -151,7 +244,21 @@ const PeopleText = styled.span`
 	font-size: 0.9rem;
 	font-weight: 500;
 `;
-const PeoplePrice = styled.span``;
+const PeopleNumber = styled.div`
+	button {
+		border-radius: 50%;
+		background-color: var(--oex-grey);
+		border: none;
+		color: white;
+		margin: 0 1rem;
+		padding: 0.1rem 0.34rem;
+		cursor: pointer;
+
+		:active {
+			background-color: var(--oex-orange);
+		}
+	}
+`;
 
 const PeopleFee = styled.div`
 	display: flex;
@@ -165,6 +272,8 @@ const FeeText = styled.div`
 const FeePrice = styled.div`
 	font-weight: 600;
 `;
+
+const RegisterFormSection = styled.div``;
 
 const ViewSection = styled.div`
 	display: hidden;
