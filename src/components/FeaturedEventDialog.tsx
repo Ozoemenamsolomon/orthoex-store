@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes';
 import { formatDate } from '@utils/index';
 import Image from 'next/image';
+import CTA from './CTA';
 
 type Props = {
 	isOpen: boolean;
@@ -25,7 +26,21 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 					onInteractOutside={e => e.preventDefault()}
 					className={styles.DialogContent}>
 					<ContentWrapper>
-						<EditSection>left</EditSection>
+						<EditSection>
+							<EditHeading>Checkout</EditHeading>
+							<EditInfo>
+								<PeopleAttendance>
+									<PeopleText>People attending</PeopleText>
+									<PeoplePrice>- 1 +</PeoplePrice>
+								</PeopleAttendance>
+								<PeopleFee>
+									<FeeText>Fee:</FeeText>
+									<FeePrice>N0.00</FeePrice>
+								</PeopleFee>
+
+								<CTA className="no-animate register-btn">Register Event</CTA>
+							</EditInfo>
+						</EditSection>
 						<ViewSection>
 							<Heading>{training.title}</Heading>
 							<DateInfo>{`${formatDate(
@@ -45,11 +60,11 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 							<Summary>Order Summary</Summary>
 							<Attendance>
 								<People>1X People Attending</People>
-								<Price>N10000,00</Price>
+								<Price>N10.000,00</Price>
 							</Attendance>
 							<TotalSection>
 								<Info>Total</Info>
-								<Amount>N10000,00</Amount>
+								<Amount>N10.000,00</Amount>
 							</TotalSection>
 						</ViewSection>
 					</ContentWrapper>
@@ -82,10 +97,11 @@ const CTAButton = styled.span`
 const ContentWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: 1rem;
-	height: 100%;
+	height: 100vh;
 
+	// padding: 1rem;
 	@media ${({ theme }) => theme.breakpoints.above.md} {
+		height: 32rem;
 		flex-direction: row;
 		padding: 0rem;
 	}
@@ -93,15 +109,63 @@ const ContentWrapper = styled.div`
 
 const EditSection = styled.div`
 	overflow-y: scroll;
-	padding: 15px;
+	// padding: 15px;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
 		flex: 60%;
 		overflow-y: scroll;
-		padding: 15px;
+		// padding: 15px;
 	}
 `;
+
+const EditHeading = styled.p`
+	padding: 1rem 0;
+	font-size: 1rem;
+	text-align: center;
+	border-bottom: 1px solid var(--oex-light-grey);
+`;
+
+const EditInfo = styled.div`
+	padding: 1rem;
+
+	.register-btn {
+		margin-top: 2rem;
+		border: 1px solid var(--oex-orange);
+		font-size: 0.8rem;
+		padding: 1rem 3rem;
+
+		&:hover {
+			background-color: white;
+			color: var(--oex-orange);
+		}
+	}
+`;
+
+const PeopleAttendance = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 4rem;
+`;
+const PeopleText = styled.span`
+	font-size: 0.9rem;
+	font-weight: 500;
+`;
+const PeoplePrice = styled.span``;
+
+const PeopleFee = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-top: 1rem;
+`;
+
+const FeeText = styled.div`
+	font-size: 0.8rem;
+`;
+const FeePrice = styled.div`
+	font-weight: 600;
+`;
+
 const ViewSection = styled.div`
 	display: hidden;
 	// height: 500px;
@@ -128,13 +192,15 @@ const DateInfo = styled.p`
 const CourseImageDiv = styled.div`
 	position: relative;
 	// aspect-ratio: 1;
-	height: 55%;
+	height: 15rem;
 
 	.image {
 		border-radius: 0.5rem;
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
+		// uncomment this if the image becomes
+		// height: 55%;
 	}
 `;
 
@@ -148,7 +214,7 @@ const Attendance = styled.div`
 	justify-content: space-between;
 	padding-bottom: 1rem;
 	font-size: 0.8rem;
-	border-bottom: 1px solid var(--oex-lighter-grey);
+	border-bottom: 1.5px solid var(--oex-lighter-grey);
 `;
 
 const People = styled.span``;
