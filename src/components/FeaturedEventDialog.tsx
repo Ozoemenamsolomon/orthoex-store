@@ -6,6 +6,7 @@ import { TrainingSupbaseDataType } from '@data/types/trainingTypes';
 import { formatDate } from '@utils/index';
 import Image from 'next/image';
 import CTA from './CTA';
+import { priceFormatter } from './ProductCard';
 
 type Props = {
 	isOpen: boolean;
@@ -82,51 +83,57 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 								</PeopleAttendance>
 								<PeopleFee>
 									<FeeText>Fee:</FeeText>
-									<FeePrice>N0.00</FeePrice>
+									<FeePrice>
+										{priceFormatter.format(training.price * numPeople)}
+									</FeePrice>
 								</PeopleFee>
 
 								<RegisterFormSection>
 									<form>
 										{formData.map((participant, index) => (
-											<div key={index}>
-												<h2>Participant {index + 1}:</h2>
-												<div>
-													<label>First Name:</label>
-													<input
-														type="text"
-														name="firstname"
-														value={participant.firstname}
-														onChange={e => handleChange(index, e)}
-													/>
-												</div>
-												<div>
-													<label>Last Name:</label>
-													<input
-														type="text"
-														name="lastname"
-														value={participant.lastname}
-														onChange={e => handleChange(index, e)}
-													/>
-												</div>
-												<div>
-													<label>Email:</label>
-													<input
-														type="email"
-														name="email"
-														value={participant.email}
-														onChange={e => handleChange(index, e)}
-													/>
-												</div>
-												<div>
-													<label>Phone:</label>
-													<input
-														type="tel"
-														name="phone"
-														value={participant.phone}
-														onChange={e => handleChange(index, e)}
-													/>
-												</div>
-											</div>
+											<AtendeeForm key={index}>
+												<AtendeeText>Attendee {index + 1}:</AtendeeText>
+												<FormFlex>
+													<AtendeeFormControl>
+														<label>First Name:</label>
+														<input
+															type="text"
+															name="firstname"
+															value={participant.firstname}
+															onChange={e => handleChange(index, e)}
+														/>
+													</AtendeeFormControl>
+													<AtendeeFormControl>
+														<label>Last Name:</label>
+														<input
+															type="text"
+															name="lastname"
+															value={participant.lastname}
+															onChange={e => handleChange(index, e)}
+														/>
+													</AtendeeFormControl>
+												</FormFlex>
+												<FormFlex>
+													<AtendeeFormControl>
+														<label>Email:</label>
+														<input
+															type="email"
+															name="email"
+															value={participant.email}
+															onChange={e => handleChange(index, e)}
+														/>
+													</AtendeeFormControl>
+													<AtendeeFormControl>
+														<label>Phone:</label>
+														<input
+															type="tel"
+															name="phone"
+															value={participant.phone}
+															onChange={e => handleChange(index, e)}
+														/>
+													</AtendeeFormControl>
+												</FormFlex>
+											</AtendeeForm>
 										))}
 										{/* {numPeople > 0 && (
 											<CTA type="button" className="no-animate register-btn">
@@ -159,12 +166,16 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 							</CourseImageDiv>
 							<Summary>Order Summary</Summary>
 							<Attendance>
-								<People>1X People Attending</People>
-								<Price>N10.000,00</Price>
+								<People>{numPeople} X People Attending</People>
+								<Price>
+									{priceFormatter.format(training.price * numPeople)}
+								</Price>
 							</Attendance>
 							<TotalSection>
 								<Info>Total</Info>
-								<Amount>N10.000,00</Amount>
+								<Amount>
+									{priceFormatter.format(training.price * numPeople)}
+								</Amount>
 							</TotalSection>
 						</ViewSection>
 					</ContentWrapper>
@@ -280,7 +291,41 @@ const FeePrice = styled.div`
 	font-weight: 600;
 `;
 
-const RegisterFormSection = styled.div``;
+const RegisterFormSection = styled.div`
+	margin: 2rem 0 0;
+`;
+
+const AtendeeText = styled.p`
+	color: var(--text-colour-grey);
+	margin 1rem 0rem;
+`;
+const AtendeeForm = styled.div``;
+
+const FormFlex = styled.div`
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+`;
+
+const AtendeeFormControl = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex: 50%;
+
+	label {
+		font-size: 0.7rem;
+		font-weight: 500;
+		margin: 0.7rem 0rem 0.3rem;
+	}
+
+	input {
+		padding: 0.5rem 0.7rem;
+		outline-color: var(--oex-orange);
+		outline-width: thin;
+		border-radius: 0.1rem;
+		border: 1px solid var(--oex-lighter-grey);
+	}
+`;
 
 const ViewSection = styled.div`
 	display: hidden;
