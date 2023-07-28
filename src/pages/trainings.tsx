@@ -3,7 +3,7 @@ import Graduation from '@assets/new/icons/graduation-hat.svg';
 import Idea from '@assets/new/icons/idea.svg';
 import Presentation from '@assets/new/icons/presentation.svg';
 import LadyImage from '@assets/new/images/orangeshirt-lady.jpg';
-import { Claims, getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { Claims } from '@auth0/nextjs-auth0';
 import FeaturedEvents from '@components/FeaturedEvents';
 import ImageInfoHeader, {
 	ImageInfoHeaderType,
@@ -45,25 +45,36 @@ const Trainings: NextPage<{
 				<ImageInfoHeader data={data} />
 				<ServiceStandard data={serviceStandardData} />
 			</Container>
-			<FeaturedEvents {...{ userEmail: user.email, trainingData }} />
+			<FeaturedEvents {...{ userEmail: user?.email, trainingData }} />
 		</>
 	);
 };
 
 export default Trainings;
 
-export const getServerSideProps = withPageAuthRequired({
-	async getServerSideProps(ctx) {
-		const response = await supabaseClient.from('training').select('*');
-		const trainingData = response.data as unknown as TrainingSupbaseDataType;
+// export const getServerSideProps = withPageAuthRequired({
+// 	async getServerSideProps(ctx) {
+// 		const response = await supabaseClient.from('training').select('*');
+// 		const trainingData = response.data as unknown as TrainingSupbaseDataType;
 
-		const session = await getSession(ctx.req, ctx.res);
-		return {
-			props: {
-				user: session?.user,
-				featuredEvents: featuredEventsData,
-				trainingData: trainingData || [],
-			},
-		};
-	},
-});
+// 		const session = await getSession(ctx.req, ctx.res);
+// 		return {
+// 			props: {
+// 				user: session?.user,
+// 				featuredEvents: featuredEventsData,
+// 				trainingData: trainingData || [],
+// 			},
+// 		};
+// 	},
+// });
+export const getServerSideProps = async (ctx: any) => {
+	const response = await supabaseClient.from('training').select('*');
+	const trainingData = response.data as unknown as TrainingSupbaseDataType;
+
+	return {
+		props: {
+			featuredEvents: featuredEventsData,
+			trainingData: trainingData || [],
+		},
+	};
+};
