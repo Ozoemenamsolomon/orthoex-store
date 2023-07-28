@@ -7,6 +7,8 @@ import { formatDate } from '@utils/index';
 import Image from 'next/image';
 import CTA from './CTA';
 import { priceFormatter } from './ProductCard';
+import { FormRadioLabel } from './styled/Forms';
+import CancelIcon from '@assets/new/icons/CancelIcon';
 
 type Props = {
 	isOpen: boolean;
@@ -151,44 +153,52 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 								<AboutUs>
 									<p className="title">How did you hear about us?</p>
 									<div className="radio-input">
-										<input
-											type="radio"
-											name="aboutUs"
-											id="instagram"
-											value={aboutUsChannel}
-											onChange={onAboutUsChange}
-										/>
-										<label htmlFor="instagram">Instagram</label>
+										<FormRadioLabel htmlFor="instagram">
+											<input
+												type="radio"
+												name="aboutUs"
+												id="instagram"
+												value={aboutUsChannel}
+												onChange={onAboutUsChange}
+											/>
+											Instagram
+										</FormRadioLabel>
 									</div>
 									<div className="radio-input">
-										<input
-											type="radio"
-											name="aboutUs"
-											id="facebook"
-											value={aboutUsChannel}
-											onChange={onAboutUsChange}
-										/>
-										<label htmlFor="facebook">Facebook</label>
+										<FormRadioLabel htmlFor="facebook">
+											<input
+												type="radio"
+												name="aboutUs"
+												id="facebook"
+												value={aboutUsChannel}
+												onChange={onAboutUsChange}
+											/>
+											Facebook
+										</FormRadioLabel>
 									</div>
 									<div className="radio-input">
-										<input
-											type="radio"
-											name="aboutUs"
-											id="whatsapp"
-											value={aboutUsChannel}
-											onChange={onAboutUsChange}
-										/>
-										<label htmlFor="whatsapp">Whatsapp</label>
+										<FormRadioLabel htmlFor="whatsapp">
+											<input
+												type="radio"
+												name="aboutUs"
+												id="whatsapp"
+												value={aboutUsChannel}
+												onChange={onAboutUsChange}
+											/>
+											Whatsapp
+										</FormRadioLabel>
 									</div>
 									<div className="radio-input">
-										<input
-											type="radio"
-											name="aboutUs"
-											id="friends"
-											value={aboutUsChannel}
-											onChange={onAboutUsChange}
-										/>
-										<label htmlFor="friends">Friends</label>
+										<FormRadioLabel htmlFor="friends">
+											<input
+												type="radio"
+												name="aboutUs"
+												id="friends"
+												value={aboutUsChannel}
+												onChange={onAboutUsChange}
+											/>
+											Friends
+										</FormRadioLabel>
 									</div>
 								</AboutUs>
 
@@ -227,6 +237,11 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 								</Amount>
 							</TotalSection>
 						</ViewSection>
+						<Dialog.Close className={styles.unSet} asChild>
+							<CloseButton>
+								<CancelIcon />
+							</CloseButton>
+						</Dialog.Close>
 					</ContentWrapper>
 				</Dialog.Content>
 			</Dialog.Portal>
@@ -258,6 +273,7 @@ const ContentWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
+	position: relative;
 
 	// padding: 1rem;
 	@media ${({ theme }) => theme.breakpoints.above.md} {
@@ -314,6 +330,39 @@ const PeopleAttendance = styled.div`
 	align-items: center;
 	gap: 4rem;
 `;
+
+const CloseButton = styled.button`
+	position: absolute;
+	top: -0.5rem;
+	right: -0.5rem;
+	display: inline-flex;
+	height: 3.25rem;
+	width: 3.25rem;
+	align-items: center;
+	justify-content: center;
+	border-radius: 9999px;
+	padding: 0.5rem;
+	color: black;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #f3d2be;
+	}
+
+	&:focus-visible,
+	&[data-focus-visible] {
+		outline-style: solid;
+		outline-width: 2px;
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		top: 0.5rem;
+		right: 0.5rem;
+		height: 2.5rem;
+		width: 2.5rem;
+	}
+`;
+
 const PeopleText = styled.span`
 	font-size: 0.9rem;
 	font-weight: 500;
@@ -360,7 +409,7 @@ const AtendeeForm = styled.div``;
 const FormFlex = styled.div`
 	display: flex;
 	justify-content: space-between;
-	gap: 20px;
+	gap: 10px;
 `;
 
 const AtendeeFormControl = styled.div`
@@ -393,6 +442,18 @@ const AboutUs = styled.div`
 	}
 	label {
 		margin-bottom: 0.5rem;
+		color: var(--oex-bg-grey);
+	}
+
+	input[type='radio'] {
+		border: 1px solid black;
+	}
+	input[type='radio']::before {
+		border: 1px solid var(--oex-orange);
+		// border: 0.5px solid red;
+	}
+	input[type='radio']:checked {
+		border: 1px solid var(--oex-orange);
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
@@ -400,7 +461,7 @@ const AboutUs = styled.div`
 `;
 
 const ViewSection = styled.div`
-	display: hidden;
+	display: none;
 	// height: 500px;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
