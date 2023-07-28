@@ -24,9 +24,14 @@ interface FormDataType {
 }
 const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 	const [numPeople, setNumPeople] = useState(1);
+	const [aboutUsChannel, setAboutUsChannel] = useState('');
 	const [formData, setFormData] = useState<FormDataType[]>([
 		{ firstname: '', lastname: '', email: '', phone: '' },
 	]);
+
+	const onAboutUsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setAboutUsChannel(e.target.id);
+	};
 
 	const handleIncrease = () => {
 		setNumPeople(prevNum => prevNum + 1);
@@ -57,6 +62,7 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 		event.preventDefault();
 		// You can send the formData to the API here
 		console.log(formData);
+		console.log(aboutUsChannel);
 	};
 
 	return (
@@ -142,6 +148,49 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 										)} */}
 									</form>
 								</RegisterFormSection>
+								<AboutUs>
+									<p className="title">How did you hear about us?</p>
+									<div className="radio-input">
+										<input
+											type="radio"
+											name="aboutUs"
+											id="instagram"
+											value={aboutUsChannel}
+											onChange={onAboutUsChange}
+										/>
+										<label htmlFor="instagram">Instagram</label>
+									</div>
+									<div className="radio-input">
+										<input
+											type="radio"
+											name="aboutUs"
+											id="facebook"
+											value={aboutUsChannel}
+											onChange={onAboutUsChange}
+										/>
+										<label htmlFor="facebook">Facebook</label>
+									</div>
+									<div className="radio-input">
+										<input
+											type="radio"
+											name="aboutUs"
+											id="whatsapp"
+											value={aboutUsChannel}
+											onChange={onAboutUsChange}
+										/>
+										<label htmlFor="whatsapp">Whatsapp</label>
+									</div>
+									<div className="radio-input">
+										<input
+											type="radio"
+											name="aboutUs"
+											id="friends"
+											value={aboutUsChannel}
+											onChange={onAboutUsChange}
+										/>
+										<label htmlFor="friends">Friends</label>
+									</div>
+								</AboutUs>
 
 								<CTA onClick={handleSubmit} className="no-animate register-btn">
 									Register Event
@@ -244,7 +293,7 @@ const EditInfo = styled.div`
 		margin-top: 2rem;
 		border: 1px solid var(--oex-orange);
 		font-size: 0.8rem;
-		padding: 1rem 3rem;
+		padding: 0.7rem 3rem;
 
 		&:hover {
 			background-color: white;
@@ -324,6 +373,22 @@ const AtendeeFormControl = styled.div`
 		outline-width: thin;
 		border-radius: 0.1rem;
 		border: 1px solid var(--oex-lighter-grey);
+	}
+`;
+
+const AboutUs = styled.div`
+	margin-top: 1rem;
+	& .title {
+		margin-bottom: 0.5rem;
+	}
+	& .radio-input {
+		margin-bottom: 0.3rem;
+	}
+	label {
+		margin-bottom: 0.5rem;
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 	}
 `;
 
