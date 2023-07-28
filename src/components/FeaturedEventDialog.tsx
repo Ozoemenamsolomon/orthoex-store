@@ -269,7 +269,14 @@ const ContentWrapper = styled.div`
 
 const EditSection = styled.div`
 	overflow-y: scroll;
-	// padding: 15px;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	& {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
