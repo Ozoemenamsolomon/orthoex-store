@@ -2,7 +2,7 @@ import Expert from '@assets/new/icons/expert.svg';
 import Graduation from '@assets/new/icons/graduation-hat.svg';
 import Idea from '@assets/new/icons/idea.svg';
 import Presentation from '@assets/new/icons/presentation.svg';
-import LadyImage from '@assets/new/images/orangeshirt-lady.jpg';
+import LadyImage from '@assets/new/images/man-woman-talk.jpg';
 import { Claims } from '@auth0/nextjs-auth0';
 import FeaturedEvents from '@components/FeaturedEvents';
 import ImageInfoHeader, {
