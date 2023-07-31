@@ -1,4 +1,4 @@
-import { TrainingSupbaseDataType } from '@data/types/trainingTypes';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { formatDate } from '@utils/index';
 import React from 'react';
 import styled from 'styled-components';
@@ -30,26 +30,6 @@ const TrainingEventCard: React.FC<TrainingEventCardProp> = ({ training }) => {
 };
 
 export default TrainingEventCard;
-
-// export const getServerSideProps = withPageAuthRequired({
-// 	async getServerSideProps(ctx) {
-// 		const session = await getSession(ctx.req, ctx.res);
-// 		if (!session?.user) {
-// 			return {
-// 				redirect: {
-// 					destination: '/',
-// 					permanent: false,
-// 				},
-// 			};
-// 		}
-
-// 		return {
-// 			props: {
-// 				user: 'user',
-// 			},
-// 		};
-// 	},
-// });
 
 const TrainingEventWrapper = styled.div`
 	display: grid;

@@ -1,4 +1,4 @@
-import { TrainingSupbaseDataType } from '@data/types/trainingTypes';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
@@ -20,7 +20,7 @@ const FeaturedEvents = ({
 
 	return (
 		<StyledWrapperDiv>
-			<Container>
+			<Container id="featured-events">
 				<StyledHeading>Featured Events</StyledHeading>
 				{trainingData.slice(0, eventCount).map(training => (
 					<FeaturedEventCard

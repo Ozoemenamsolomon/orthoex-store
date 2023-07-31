@@ -11,7 +11,7 @@ import ImageInfoHeader, {
 import ServiceStandard from '@components/ServiceStandard';
 import { Container } from '@components/styled';
 import { featuredEvents as featuredEventsData } from '@data/eventsData';
-import { TrainingSupbaseDataType } from '@data/types/trainingTypes';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseClient } from '@utils/supabase';
 import { NextPage } from 'next';
 
@@ -20,7 +20,7 @@ const data: ImageInfoHeaderType = {
 	heading: 'Our workshops are tailored for you!',
 	paragraph:
 		'Available workshops include silicone mould making, Epoxy River Tables, Lifecasting, Glass Fibre Reinforced Concrete, jewellery making,  modelling, sculptures, Resin Art, e.t.c. Immerse yourself in a world of unlimited possibilities!',
-	cta: { link: '/', text: 'View Events' },
+	cta: { link: '#featured-events', text: 'View Events' },
 };
 
 const serviceStandardData = {

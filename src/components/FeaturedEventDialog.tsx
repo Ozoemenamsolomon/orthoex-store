@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import styles from './FeaturedEventCard.module.css';
 import styled from 'styled-components';
-import { TrainingSupbaseDataType } from '@data/types/trainingTypes';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { formatDate } from '@utils/index';
 import Image from 'next/image';
 import CTA from './CTA';
@@ -24,7 +24,12 @@ interface FormDataType {
 	email: string;
 	phone: string;
 }
-const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
+const FeaturedEventDialog: React.FC<Props> = ({
+	isOpen,
+	onClose,
+	onOpen,
+	training,
+}) => {
 	const [numPeople, setNumPeople] = useState(1);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
 	const [formData, setFormData] = useState<FormDataType[]>([
@@ -143,11 +148,6 @@ const FeaturedEventDialog = ({ isOpen, onClose, onOpen, training }: Props) => {
 												</FormFlex>
 											</AtendeeForm>
 										))}
-										{/* {numPeople > 0 && (
-											<CTA type="button" className="no-animate register-btn">
-												Register Event
-											</CTA>
-										)} */}
 									</form>
 								</RegisterFormSection>
 								<AboutUs>

@@ -6,11 +6,10 @@ import People from '@assets/new/icons/People';
 import Time from '@assets/new/icons/Time';
 import Whatsapp from '@assets/new/icons/Whatsapp';
 import { EventFormat } from '@data/eventsData';
-import { TrainingSupbaseDataType } from '@data/types/trainingTypes';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { calculateDateDifference, formatDate } from '@utils/index';
 import Image from 'next/image';
 import React, { useState } from 'react';
-// import { usePaystackPayment } from 'react-paystack';
 import styled from 'styled-components';
 import { CTALink } from './CTA';
 import { priceFormatter } from './ProductCard';
@@ -21,31 +20,15 @@ interface FeaturedEventProp {
 	training: TrainingSupbaseDataType;
 }
 
-// const onSuccess = (reference: any) => {
-// 	console.log(reference);
-// };
-
-// const onClose = () => {
-// 	console.log('closed');
-// };
-
 const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 	userEmail,
 	training,
 }) => {
-	// const config = {
-	// 	reference: new Date().getTime().toString(),
-	// 	email: userEmail,
-	// 	amount: training.price * 100,
-	// 	publicKey: process.env.NEXT_PUBLIC_PAYSTACK_KEY as string,
-	// };
-
 	const [panelOpen, setpanelOpen] = useState(false);
 	const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
 
 	const openBookingDialog = () => setIsBookingDialogOpen(true);
 	const closeBookingDialog = () => setIsBookingDialogOpen(false);
-	// const initializePayment = usePaystackPayment(config);
 
 	return (
 		<StyledWrapperDiv>
