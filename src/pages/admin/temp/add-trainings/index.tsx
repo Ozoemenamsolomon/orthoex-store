@@ -1,7 +1,7 @@
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { CTALink } from '@components/CTA';
 import TrainingEventCard from '@components/TrainingEventCard';
-import { TrainingSupbaseDataType } from '@data/types/trainingTypes';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseClient } from '@utils/supabase';
 import { NextPage } from 'next';
 import styled from 'styled-components';

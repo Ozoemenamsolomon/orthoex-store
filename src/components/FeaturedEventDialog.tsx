@@ -14,7 +14,6 @@ type Props = {
 	isOpen: boolean;
 	onClose: () => void;
 	onOpen: () => void;
-	// children: ReactNode;
 	training: TrainingSupbaseDataType;
 };
 

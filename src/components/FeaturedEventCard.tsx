@@ -12,8 +12,8 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CTALink } from './CTA';
-import { priceFormatter } from './ProductCard';
 import FeaturedEventDialog from './FeaturedEventDialog';
+import { priceFormatter } from './ProductCard';
 
 interface FeaturedEventProp {
 	userEmail: string;
