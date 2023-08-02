@@ -52,21 +52,6 @@ const Trainings: NextPage<{
 
 export default Trainings;
 
-// export const getServerSideProps = withPageAuthRequired({
-// 	async getServerSideProps(ctx) {
-// 		const response = await supabaseClient.from('training').select('*');
-// 		const trainingData = response.data as unknown as TrainingSupbaseDataType;
-
-// 		const session = await getSession(ctx.req, ctx.res);
-// 		return {
-// 			props: {
-// 				user: session?.user,
-// 				featuredEvents: featuredEventsData,
-// 				trainingData: trainingData || [],
-// 			},
-// 		};
-// 	},
-// });
 export const getServerSideProps = async (ctx: any) => {
 	const response = await supabaseClient.from('training').select('*');
 	const trainingData = response.data as unknown as TrainingSupbaseDataType;

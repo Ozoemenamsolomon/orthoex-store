@@ -414,14 +414,3 @@ const StyledList = styled.ul`
 		color: black;
 	}
 `;
-
-// const StyledSpanLink = styled.span`
-// 	font-size: 0.8rem;
-// 	& > a {
-// 		color: var(--oex-orange);
-// 	}
-
-// 	@media ${({ theme }) => theme.breakpoints.above.md} {
-// 		color: black;
-// 	}
-// `;
