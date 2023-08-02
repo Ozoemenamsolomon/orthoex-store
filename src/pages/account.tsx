@@ -20,10 +20,11 @@ type Props = {
 		image: string;
 		variantID: string;
 	}[];
+	trainings: any[];
 };
 
-const Account: NextPage<Props> = ({ user, data }) => {
-	console.log({ user, data });
+const Account: NextPage<Props> = ({ user, data, trainings }) => {
+	console.log({ user, trainings });
 
 	return (
 		<Container>
@@ -107,7 +108,11 @@ export const getServerSideProps = withPageAuthRequired({
 			)
 			.eq('prices.custier', custier);
 
-		if (error) {
+		const { data: trainings, error: error2 } = await supabaseClient
+			.from('training')
+			.select('*');
+
+		if (error || error2) {
 			console.log({ error });
 			return {
 				props: {
@@ -125,6 +130,7 @@ export const getServerSideProps = withPageAuthRequired({
 					...quantity,
 					...product,
 				})),
+				trainings,
 			},
 		};
 	},

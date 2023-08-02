@@ -8,16 +8,20 @@ import StayTunedSection from '@components/sections/StayTunedSection';
 import HelpSection from '@components/shared/HelpSection';
 import InfoCardSection from '@components/shared/InfoCardSection';
 import OrderBenefitsSection from '@components/shared/OrderBenefitsSection';
-import ProductVerticalSection from '@components/shared/ProductVerticalSection';
+import ProductVerticalSection, {
+	ProductVerticalSectionType,
+} from '@components/shared/ProductVerticalSection';
 import TitleInfoSection from '@components/shared/TitleInfoSection';
-import {
-	infoCardsData,
-	productVerticalData,
-	titleInfoData,
-} from '@data/compositeData';
+import { infoCardsData, titleInfoData } from '@data/compositeData';
+import { getCategories } from '@data/index';
+import { GetServerSideProps, NextPage } from 'next';
 import styled from 'styled-components';
 
-function Composite() {
+const Composite: NextPage<{
+	productVerticalData: ProductVerticalSectionType;
+}> = ({ productVerticalData }) => {
+	console.log({ productVerticalData });
+
 	return (
 		<>
 			<Hero darkenBG bg={heroBG}>
@@ -46,10 +50,29 @@ function Composite() {
 			<InfoTestimonial />
 		</>
 	);
-}
+};
 
 export default Composite;
 
 const PaddingContainer = styled.div`
 	padding: 0rem 2rem;
 `;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+	const productVerticalData: ProductVerticalSectionType = {
+		name: 'Which of our product vertical is relevant for you?',
+		description:
+			'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
+		cards: await getCategories(),
+		viewMore: {
+			link: '/composites/categories',
+			text: 'View more Categories',
+		},
+	};
+
+	return {
+		props: {
+			productVerticalData,
+		},
+	};
+};

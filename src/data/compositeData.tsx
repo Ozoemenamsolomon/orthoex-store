@@ -6,9 +6,7 @@ import highPerformanceIcon from '@assets/new/icons/high-performance.svg';
 import nigeria from '@assets/new/icons/nigeria.svg';
 import quality from '@assets/new/icons/quality.svg';
 import { ServiceCardType } from '@components/ServiceCard';
-import { ProductVerticalSectionType } from '@components/shared/ProductVerticalSection';
 import { TitleCardDataType } from '@components/shared/TitleInfoSection';
-import { categories } from './categories';
 import { StyledCTALink } from './orthopaedicsData';
 
 export const infoCardsData: ServiceCardType[] = [
@@ -46,17 +44,6 @@ export const infoCardsData: ServiceCardType[] = [
 		title: undefined,
 	},
 ];
-
-export const productVerticalData: ProductVerticalSectionType = {
-	name: 'Which of our product vertical is relevant for you?',
-	description:
-		'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
-	cards: categories,
-	viewMore: {
-		link: '/composites/categories',
-		text: 'View more Categories',
-	},
-};
 
 export const titleInfoData: TitleCardDataType = {
 	title: 'We empower your creativity with quality products and expert advise',
