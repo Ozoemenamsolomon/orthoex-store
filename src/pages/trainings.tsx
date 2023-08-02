@@ -10,10 +10,9 @@ import ImageInfoHeader, {
 } from '@components/ImageInfoHeader';
 import ServiceStandard from '@components/ServiceStandard';
 import { Container } from '@components/styled';
-import { featuredEvents as featuredEventsData } from '@data/eventsData';
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseClient } from '@utils/supabase';
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 
 const data: ImageInfoHeaderType = {
 	image: LadyImage,
@@ -52,13 +51,12 @@ const Trainings: NextPage<{
 
 export default Trainings;
 
-export const getServerSideProps = async (ctx: any) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
 	const response = await supabaseClient.from('training').select('*');
 	const trainingData = response.data as unknown as TrainingSupbaseDataType;
 
 	return {
 		props: {
-			featuredEvents: featuredEventsData,
 			trainingData: trainingData || [],
 		},
 	};
