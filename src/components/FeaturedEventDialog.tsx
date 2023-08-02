@@ -401,7 +401,7 @@ const RegisterFormSection = styled.div`
 
 const AtendeeText = styled.p`
 	color: var(--text-colour-grey);
-	margin 1rem 0rem;
+	/* margin: 1rem 0rem; */
 `;
 const AtendeeForm = styled.div``;
 
