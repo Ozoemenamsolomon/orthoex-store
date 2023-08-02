@@ -45,6 +45,7 @@ export const FormRadioLabel = styled.label`
 	grid-template-columns: 1em auto;
 	gap: 0.5em;
 	cursor: pointer;
+	align-items: center;
 
 	input[type='radio'] {
 		-webkit-appearance: none;
