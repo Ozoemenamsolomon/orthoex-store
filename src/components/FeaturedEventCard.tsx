@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import { CTALink } from './CTA';
 import FeaturedEventDialog from './FeaturedEventDialog';
 import { priceFormatter } from './ProductCard';
+import SocialMediaButtons from './shared/SocialMediaButtons';
 
 interface FeaturedEventProp {
 	userEmail: string;
@@ -56,6 +57,15 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 						<Location />
 						<span>{`${training.location}`}</span>
 					</StyledInfoDiv>
+					<SocialSection>
+						<p className='title'>Share this event</p>
+					<SocialMediaButtons
+					whatsappLink={`https://api.whatsapp.com/send?text=${training.title}`}
+					height={20}
+					width={20}
+					color={'black'}
+				/>
+					</SocialSection>
 				</StyledLeftContent>
 				<StyledRightContent>
 					<StyledInfoDiv>
@@ -374,6 +384,16 @@ const StyledButtonGroup = styled.div`
 		}
 	}
 `;
+
+const SocialSection = styled.div`
+	margin: 1rem 0;
+	& .title {
+		text-transform: uppercase;
+		font-weight: 700;
+		font-size: 0.8rem;
+	}
+`;
+
 
 const StyledInfoSection = styled.div``;
 
