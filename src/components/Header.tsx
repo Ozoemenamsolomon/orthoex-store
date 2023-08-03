@@ -85,7 +85,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 							<Logo>
 								<Image
 									src={light ? orthoExLogoCol : orthoExLogo}
-									objectPosition="left"
+									style={{ objectPosition: 'left' }}
 									object-fit="contain"
 									alt="OrthoEx Logo"
 									fill></Image>

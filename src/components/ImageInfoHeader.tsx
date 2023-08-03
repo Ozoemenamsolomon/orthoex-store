@@ -19,7 +19,13 @@ const ImageInfoHeader: React.FC<ImageInfoHeaderProps> = ({ data }) => {
 	return (
 		<StyledDiv>
 			<StyledImageDiv>
-				<Image src={image} style={{ objectFit: 'cover' }} fill alt="image" />
+				<Image
+					src={image}
+					style={{ objectFit: 'cover' }}
+					fill
+					sizes="100"
+					alt="image"
+				/>
 			</StyledImageDiv>
 
 			<StyledContentDiv>

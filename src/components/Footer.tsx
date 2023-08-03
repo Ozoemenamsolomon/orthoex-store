@@ -122,7 +122,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 							<Logo>
 								<Image
 									src={orthoExLogo}
-									objectPosition="left"
+									style={{ objectPosition: 'left' }}
 									object-fit="contain"
 									fill
 									alt="OrthoEx Logo"

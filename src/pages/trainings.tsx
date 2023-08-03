@@ -2,26 +2,24 @@ import Expert from '@assets/new/icons/expert.svg';
 import Graduation from '@assets/new/icons/graduation-hat.svg';
 import Idea from '@assets/new/icons/idea.svg';
 import Presentation from '@assets/new/icons/presentation.svg';
-import LadyImage from '@assets/new/images/orangeshirt-lady.jpg';
-import { Claims, getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import LadyImage from '@assets/new/images/man-woman-talk.jpg';
+import { Claims } from '@auth0/nextjs-auth0';
 import FeaturedEvents from '@components/FeaturedEvents';
 import ImageInfoHeader, {
 	ImageInfoHeaderType,
 } from '@components/ImageInfoHeader';
 import ServiceStandard from '@components/ServiceStandard';
 import { Container } from '@components/styled';
-import {
-	EventDataType,
-	featuredEvents as featuredEventsData,
-} from '@data/eventsData';
-import { NextPage } from 'next';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { supabaseClient } from '@utils/supabase';
+import { GetServerSideProps, NextPage } from 'next';
 
 const data: ImageInfoHeaderType = {
 	image: LadyImage,
 	heading: 'Our workshops are tailored for you!',
 	paragraph:
 		'Available workshops include silicone mould making, Epoxy River Tables, Lifecasting, Glass Fibre Reinforced Concrete, jewellery making,  modelling, sculptures, Resin Art, e.t.c. Immerse yourself in a world of unlimited possibilities!',
-	cta: { link: '/', text: 'View Events' },
+	cta: { link: '#featured-events', text: 'View Events' },
 };
 
 const serviceStandardData = {
@@ -36,32 +34,30 @@ const serviceStandardData = {
 	],
 };
 
-const trainings: NextPage<{
-	featuredEvents: EventDataType[];
+const Trainings: NextPage<{
 	user: Claims;
-}> = ({ featuredEvents, user }) => {
+	trainingData: TrainingSupbaseDataType[];
+}> = ({ user, trainingData }) => {
 	return (
 		<>
 			<Container bg="white" paddingMultiplier={0}>
 				<ImageInfoHeader data={data} />
 				<ServiceStandard data={serviceStandardData} />
 			</Container>
-			<FeaturedEvents {...{ featuredEvents, userEmail: user.email }} />
+			<FeaturedEvents {...{ userEmail: user?.email, trainingData }} />
 		</>
 	);
 };
 
-export default trainings;
+export default Trainings;
 
-export const getServerSideProps = withPageAuthRequired({
-	async getServerSideProps(ctx) {
-		const session = await getSession(ctx.req, ctx.res);
+export const getServerSideProps: GetServerSideProps = async ctx => {
+	const response = await supabaseClient.from('training').select('*');
+	const trainingData = response.data as unknown as TrainingSupbaseDataType;
 
-		return {
-			props: {
-				user: session?.user,
-				featuredEvents: featuredEventsData,
-			},
-		};
-	},
-});
+	return {
+		props: {
+			trainingData: trainingData || [],
+		},
+	};
+};

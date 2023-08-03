@@ -1,4 +1,4 @@
-import { EventDataType } from '@data/eventsData';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
@@ -6,11 +6,11 @@ import FeaturedEventCard from './FeaturedEventCard';
 import { Container } from './styled';
 
 const FeaturedEvents = ({
-	featuredEvents,
 	userEmail,
+	trainingData,
 }: {
-	featuredEvents: EventDataType[];
 	userEmail: string;
+	trainingData: TrainingSupbaseDataType[];
 }) => {
 	const [eventCount, setEventCount] = useState(2);
 
@@ -20,17 +20,17 @@ const FeaturedEvents = ({
 
 	return (
 		<StyledWrapperDiv>
-			<Container>
+			<Container id="featured-events">
 				<StyledHeading>Featured Events</StyledHeading>
-				{featuredEvents.slice(0, eventCount).map(event => (
+				{trainingData.slice(0, eventCount).map(training => (
 					<FeaturedEventCard
-						key={event.id}
+						training={training}
+						key={training.id}
 						userEmail={userEmail}
-						event={event}
 					/>
 				))}
 
-				{featuredEvents.length !== eventCount && (
+				{trainingData.length !== eventCount && (
 					<StyledLoadMore>
 						<CTA className="btn-width" onClick={LoadMoreEvent} white>
 							Load more events
@@ -46,7 +46,7 @@ export default FeaturedEvents;
 
 const StyledWrapperDiv = styled.div`
 	background-color: var(--oex-off-white);
-	padding: 3rem 0rem;
+	padding: 3rem 0rem 0rem;
 `;
 
 export const StyledHeading = styled.h3<{ align?: string; padding?: boolean }>`

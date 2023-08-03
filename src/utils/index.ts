@@ -14,6 +14,23 @@ export const formatTime: (dateTime: Date) => string = dateTime => {
 	});
 };
 
+export function calculateDateDifference(
+	startDate: string,
+	endDate: string,
+): number {
+	const oneDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+
+	const start = new Date(startDate);
+	const end = new Date(endDate);
+
+	// Calculate the difference in days
+	const diffInDays = Math.round(
+		Math.abs((start.getTime() - end.getTime()) / oneDay),
+	);
+
+	return diffInDays;
+}
+
 export const formatPrice: (price: number) => string = price => {
 	return Intl.NumberFormat('en-NG', {
 		style: 'currency',
