@@ -4,8 +4,14 @@ import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
 import FilterProductContainer from '@components/styled/FIlterProductContainer';
+import {
+	ProductVariantType,
+	getCategories,
+	getCategoryBySlug,
+	getProductsByCategory,
+} from '@data/index';
 import { ProductDataType, productsData } from '@data/productsData';
-import { categories, CategoryProps } from 'data/categories';
+import { CategoryProps } from 'data/categories';
 import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -14,7 +20,9 @@ import styled from 'styled-components';
 const Category: NextPage<{
 	category: CategoryProps;
 	products: ProductDataType[];
-}> = ({ category: { name: categoryName }, products }) => {
+	products2: ProductVariantType[];
+}> = ({ category: { name: categoryName }, products, products2 }) => {
+	console.log({ products2 });
 	const [filter, setFilter] = useState<FilterType>({
 		category: '',
 		brand: '',
@@ -56,17 +64,34 @@ const Category: NextPage<{
 export default Category;
 
 export async function getStaticPaths() {
-	const paths = categories.map(({ slug }) => ({ params: { category: slug } }));
+	const categories2 = await getCategories();
+	const paths = categories2.map(category => ({
+		params: { category: category.slug },
+	}));
+
 	return {
 		paths,
 		fallback: false,
 	};
 }
 
-export const getStaticProps: GetStaticProps = async context => {
-	const category = categories.find(
-		({ slug }) => slug === context.params?.category,
-	) || { name: '', image: categoryBanner };
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+	const custier = 'regular';
+
+	if (typeof params?.category !== 'string') {
+		return {
+			notFound: true,
+		};
+	}
+	const category = await getCategoryBySlug(params.category);
+
+	if (!category) {
+		return {
+			notFound: true,
+		};
+	}
+
+	const products2 = await getProductsByCategory(category.id, custier);
 
 	const products = Array.from({ length: 9 }, () => ({
 		...productsData[0],
@@ -76,6 +101,7 @@ export const getStaticProps: GetStaticProps = async context => {
 
 	return {
 		props: {
+			products2,
 			category,
 			products,
 		},

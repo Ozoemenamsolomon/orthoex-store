@@ -20,10 +20,7 @@ interface FeaturedEventProp {
 	training: TrainingSupbaseDataType;
 }
 
-const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
-	userEmail,
-	training,
-}) => {
+const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	const [panelOpen, setpanelOpen] = useState(false);
 	const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
 
@@ -133,8 +130,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 						{training.eventPosterImage && (
 							<CourseImageDiv>
 								<Image
-									// src={`http:${training.eventPosterImage}`}
-									src={`https://res.cloudinary.com/dcfntkzap/image/upload/v1690004091/Training-data-images/Event_Flier_Template_Single_Person_yaj9is.png`}
+									src={training.eventPosterImage}
 									fill
 									sizes="100"
 									alt="image"
