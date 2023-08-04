@@ -20,8 +20,6 @@ import styled from 'styled-components';
 const Composite: NextPage<{
 	productVerticalData: ProductVerticalSectionType;
 }> = ({ productVerticalData }) => {
-	console.log({ productVerticalData });
-
 	return (
 		<>
 			<Hero darkenBG bg={heroBG}>

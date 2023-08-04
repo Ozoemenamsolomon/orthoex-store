@@ -75,36 +75,6 @@ export const sampleVariedProduct: VariedProduct = {
 	},
 };
 
-// [
-// 	,
-// 	{
-// 		id: 2,
-// 		variant: {
-// 			weightInGram: 100,
-// 			hardness: 1,
-// 			volumeInML: 100,
-// 			colour: 'red',
-// 			gsm: 100,
-// 			material: 'plastic',
-// 		},
-// 		prices: [
-// 			{
-// 				custier: 'prime',
-// 				priceInKobo: 100000,
-// 			},
-// 			{
-// 				custier: 'regular',
-// 				priceInKobo: 100000,
-// 			},
-// 			{
-// 				custier: 'casual',
-// 				priceInKobo: 100000,
-// 			},
-// 		],
-// 		quantity: 100,
-// 	},
-// ],
-
 // get all product from supabase, variants is renames to variant and is single instead of array
 // const getAllProducts = async () => {
 // 	const { data, error } = await supabaseClient
@@ -137,6 +107,8 @@ export const sampleVariedProduct: VariedProduct = {
 
 // 	return data;
 // };
+
+const DBProductToProductMapper = (product: any) => {};
 
 export const productsData: ProductDataType[] = [
 	{
