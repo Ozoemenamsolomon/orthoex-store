@@ -21,11 +21,9 @@ const Category: NextPage<{
 	category: CategoryProps;
 	products: ProductVariantType[];
 }> = ({ category: { name: categoryName }, products }) => {
-	console.log({ products });
 	const transformedProducts = products.map(product =>
 		singleDBProductToProductMapper(product),
 	);
-	console.log({ transformedProducts });
 
 	const [filter, setFilter] = useState<FilterType>({
 		category: '',
@@ -71,7 +69,7 @@ export default Category;
 
 export async function getStaticPaths() {
 	const categories2 = await getCategories();
-	const paths = categories2.map(category => ({
+	const paths = categories2?.map(category => ({
 		params: { category: category.slug },
 	}));
 

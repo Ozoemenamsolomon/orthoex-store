@@ -97,7 +97,7 @@ export const getServerSideProps = withPageAuthRequired({
 		if (
 			!process.env.ALLOWED_USER_EMAIL?.split(',').includes(session?.user.email)
 		) {
-			return { props: { data: [] } };
+			return { props: { data: [], trainings: [] } };
 		}
 
 		// @ts-ignore
@@ -117,6 +117,7 @@ export const getServerSideProps = withPageAuthRequired({
 			return {
 				props: {
 					data: [],
+					trainings: [],
 				},
 			};
 		}

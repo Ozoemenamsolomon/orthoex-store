@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		name: 'Which of our product vertical is relevant for you?',
 		description:
 			'Take full advantage of our expert knowledge and growing product portfolio in these domains for your specific field of application:',
-		cards: await getCategories(),
+		cards: (await getCategories()) || [],
 		viewMore: {
 			link: '/composites/categories',
 			text: 'View more Categories',

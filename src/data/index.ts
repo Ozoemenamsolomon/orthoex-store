@@ -88,8 +88,8 @@ export const getProductVariantsByCategory: (
 		product!inner(id, code, name, image, description, details,
 			brand(name, slug),
 			cat:category(name, slug, image)),
-		reviews(stars)
-		`,
+			reviews(stars)
+			`,
 		)
 		.eq('product.category', id)
 		.eq('prices.custier', custier);
@@ -102,6 +102,7 @@ export const getProductVariantsByCategory: (
 };
 
 export const getProductByCategory = async (id: string, custier?: string) => {
+	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('products')
 		.select(
@@ -120,6 +121,7 @@ export const getProductByCategory = async (id: string, custier?: string) => {
 };
 
 export const getProductByID = async (id: string, custier?: string) => {
+	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
 		.select(
@@ -129,8 +131,8 @@ export const getProductByID = async (id: string, custier?: string) => {
 		product!inner(id, code, name, image, description, details,
 			brand(name, slug),
 			cat:category(name, slug, image)),
-		reviews(stars)
-		`,
+			reviews(stars)
+			`,
 		)
 		.eq('id', id)
 		.eq('prices.custier', custier)
@@ -147,6 +149,7 @@ export const getRelatedProducts = async (
 	productCode: string,
 	custier: string = 'regular',
 ) => {
+	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
 		.select(
@@ -172,14 +175,15 @@ export const getRelatedProducts = async (
 };
 
 export const getAllProductVariants = async (custier: string = 'regular') => {
+	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
 		.select(
 			`variant, variantID:id,
-	quantity(quantity),
-	prices(price, priceInKobo, custier, id),
-	product!inner(id, code, name, image, description, details,
-		brand(name, slug),
+		quantity(quantity),
+		prices(price, priceInKobo, custier, id),
+		product!inner(id, code, name, image, description, details,
+			brand(name, slug),
 		cat:category(name, slug, image)),
 	reviews(stars)
 	`,
@@ -197,6 +201,7 @@ export const getAllProductVariants = async (custier: string = 'regular') => {
 export const getRecentlyViewedProducts = async (
 	custier: string = 'regular',
 ) => {
+	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
 		.select(
