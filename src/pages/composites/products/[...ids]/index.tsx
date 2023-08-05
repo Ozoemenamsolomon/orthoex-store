@@ -3,18 +3,16 @@ import DataSheet from '@assets/new/icons/DataSheet';
 import bankTransferlogo from '@assets/new/images/bank-transfer-logo.jpg';
 import mastercardLogo from '@assets/new/images/mastercard-logo.jpg';
 import visaLogo from '@assets/new/images/visa-logo.jpg';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import Breadcrumb from '@components/Breadcrumb';
 import CTA, { CTALink } from '@components/CTA';
 import CustomerReviewCommentCard from '@components/CustomerReviewCommentCard';
 import { SocialsContainer } from '@components/Footer';
-import ProductCard from '@components/ProductCard';
 import ProductStars from '@components/ProductStars';
 import ServiceCard from '@components/ServiceCard';
 import SooSection from '@components/SooSection';
 import StarPercentage from '@components/StarPercentage';
-import { Container, ProductCards } from '@components/styled';
+import { Container } from '@components/styled';
 import {
 	DeliveryAndAdvantage,
 	ProductCountControlButton,
@@ -22,9 +20,10 @@ import {
 	Title,
 } from '@components/styled/Temp';
 import { helps } from '@data/helps';
-import { ProductDataType, productsData } from '@data/productsData';
+import { ProductVariantType, getProductByID } from '@data/index';
+import { singleDBProductToProductMapper } from '@data/productsData';
 import { Facebook, Instagram, Twitter } from '@styled-icons/bootstrap';
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -32,25 +31,24 @@ import ReactMarkdown from 'react-markdown';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import styled from 'styled-components';
-import { formatPrice, getPrice } from 'utils';
+import { formatPrice } from 'utils';
 
 const SingleProduct: NextPage<{
-	product: ProductDataType;
+	product: ProductVariantType;
 	user: UserProfile;
 }> = ({ product, user }) => {
+	const transformedProduct = singleDBProductToProductMapper(product);
+
 	const {
 		description,
 		name: productName,
-		variants,
+		price,
 		image,
-		previewImages,
 		category: { name: productCategory, slug: productCategorySlug },
 		brand: { name: brandName },
 		review,
 		details: productDetail,
-	} = product;
-
-	const price = getPrice(variants, (user?.custier || 'visitor') as string);
+	} = transformedProduct;
 
 	const customerReviews = Array.from({ length: 2 }, (_, index) =>
 		index === 0
@@ -114,7 +112,7 @@ const SingleProduct: NextPage<{
 										fill
 									/>
 								</div>
-								<div style={{ display: 'flex', gap: '5px' }}>
+								{/* <div style={{ display: 'flex', gap: '5px' }}>
 									{previewImages?.map((imagei, index) => (
 										<div
 											key={`image-preview-${index}`}
@@ -130,7 +128,7 @@ const SingleProduct: NextPage<{
 												alt="product image preview"></Image>
 										</div>
 									))}
-								</div>
+								</div> */}
 							</div>
 							<ShareandDataSheets />
 						</div>
@@ -329,7 +327,7 @@ const SingleProduct: NextPage<{
 						))}
 					</div>
 				</SooSection>
-				<SooSection
+				{/* <SooSection
 					BGColor="white"
 					header={{ title: 'Recently Viewed', align: 'left' }}>
 					<ProductCards>
@@ -350,7 +348,7 @@ const SingleProduct: NextPage<{
 							),
 						)}
 					</ProductCards>
-				</SooSection>
+				</SooSection> */}
 			</LayoutDiv>
 		</Container>
 	);
@@ -358,13 +356,36 @@ const SingleProduct: NextPage<{
 
 export default SingleProduct;
 
-export const getServerSideProps = withPageAuthRequired({
-	async getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+	const ids = params?.ids;
+	if (!Array.isArray(ids)) {
 		return {
-			props: { product: productsData[0] },
+			notFound: true,
 		};
-	},
-});
+	}
+
+	const prodctCode = ids[0];
+	const productVariantID = ids[2];
+
+	const product = await getProductByID(productVariantID);
+
+	if (
+		!product ||
+		product?.product.code.toLowerCase() !== prodctCode.toLowerCase()
+	) {
+		return {
+			notFound: true,
+		};
+	}
+
+	console.log({ ids, product });
+
+	return {
+		props: {
+			product,
+		},
+	};
+};
 
 const ShareandDataSheets = () => (
 	<ShareandDataSheetsContainer>

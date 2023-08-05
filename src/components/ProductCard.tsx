@@ -1,15 +1,20 @@
 import { useUser } from '@auth0/nextjs-auth0/client';
-import { ProductDataType } from '@data/productsData';
-import { getPrice } from '@utils/index';
-import { useCart } from 'context/cartContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 import CTA from './CTA';
 import ProductStars from './ProductStars';
 
-type ProductCardProp = {
-	product: ProductDataType;
+export type ProductCardProp = {
+	code: string;
+	name: string;
+	image: string;
+	price: number;
+	variantID: number;
+	review: {
+		average: number;
+		count: number;
+	};
 };
 
 export const priceFormatter = Intl.NumberFormat('en-ng', {
@@ -17,31 +22,43 @@ export const priceFormatter = Intl.NumberFormat('en-ng', {
 	style: 'currency',
 });
 
-const ProductCard: React.FC<ProductCardProp> = ({ product }) => {
+const slugifyName = (name: string) =>
+	name.toLowerCase().replace(/\s/g, '-').replace(/-+/g, '-');
+
+const ProductCard: React.FC<ProductCardProp> = ({
+	image,
+	name,
+	review,
+	price,
+	code,
+	variantID,
+}) => {
 	const { user } = useUser();
 
-	const { image, name, review, variants } = product;
-
-	const price = getPrice(variants, (user?.custier || 'visitor') as string);
-
-	const { dispatch } = useCart();
+	// const { dispatch } = useCart();
 
 	const addProductToCart = () => {
-		dispatch({
-			type: 'ADD_TO_CART',
-			payload: product,
-		});
+		// dispatch({
+		// 	type: 'ADD_TO_CART',
+		// 	payload: product,
+		// });
 	};
 
 	return (
 		<ProductCardContainer>
 			<div>
-				<Link href={`/composites/products/polyester-resin`}>
+				<Link
+					href={`/composites/products/${code}/${slugifyName(
+						name,
+					)}/${variantID}`}>
 					<Image src={image} fill object-fit="contain" alt="product image" />
 				</Link>
 			</div>
 			<ProductCardContent>
-				<Link href={`/composites/products/polyester-resin`}>
+				<Link
+					href={`/composites/products/${code}/${slugifyName(
+						name,
+					)}/${variantID}`}>
 					<ProductName>{name}</ProductName>
 				</Link>
 				<div style={{ position: 'relative' }}>
