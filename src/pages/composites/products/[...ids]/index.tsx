@@ -3,6 +3,7 @@ import DataSheet from '@assets/new/icons/DataSheet';
 import bankTransferlogo from '@assets/new/images/bank-transfer-logo.jpg';
 import mastercardLogo from '@assets/new/images/mastercard-logo.jpg';
 import visaLogo from '@assets/new/images/visa-logo.jpg';
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import Breadcrumb from '@components/Breadcrumb';
 import CTA, { CTALink } from '@components/CTA';
@@ -28,7 +29,7 @@ import {
 } from '@data/index';
 import { singleDBProductToProductMapper } from '@data/productsData';
 import { Facebook, Instagram, Twitter } from '@styled-icons/bootstrap';
-import { GetServerSideProps, NextPage } from 'next';
+import { NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -364,42 +365,51 @@ const SingleProduct: NextPage<{
 };
 
 export default SingleProduct;
+export const getServerSideProps = withPageAuthRequired({
+	async getServerSideProps({ params, req, res }) {
+		const ids = params?.ids;
+		if (!Array.isArray(ids)) {
+			return {
+				notFound: true,
+			};
+		}
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-	const ids = params?.ids;
-	if (!Array.isArray(ids)) {
+		const prodctCode = ids[0];
+		const productVariantID = ids[2];
+		const session = await getSession(req, res);
+
+		const custier = session?.user.custier;
+		const product = await getProductByID(productVariantID, custier);
+
+		if (
+			!product ||
+			product?.product.code.toLowerCase() !== prodctCode.toLowerCase()
+		) {
+			return {
+				notFound: true,
+			};
+		}
+
+		const relatedProducts = await getRelatedProducts(
+			product.product.code,
+			custier,
+		);
+
+		const popularProductCode = 'PRO-08001';
+		const popularProducts = await getRelatedProducts(
+			popularProductCode,
+			custier,
+		);
+
 		return {
-			notFound: true,
+			props: {
+				product,
+				relatedProducts,
+				popularProducts,
+			},
 		};
-	}
-
-	const prodctCode = ids[0];
-	const productVariantID = ids[2];
-
-	const product = await getProductByID(productVariantID);
-
-	if (
-		!product ||
-		product?.product.code.toLowerCase() !== prodctCode.toLowerCase()
-	) {
-		return {
-			notFound: true,
-		};
-	}
-
-	const relatedProducts = await getRelatedProducts(product.product.code);
-
-	const poppularProductCode = 'PRO-08001';
-	const popularProducts = await getRelatedProducts(poppularProductCode);
-
-	return {
-		props: {
-			product,
-			relatedProducts,
-			popularProducts,
-		},
-	};
-};
+	},
+});
 
 const ShareandDataSheets = () => (
 	<ShareandDataSheetsContainer>
