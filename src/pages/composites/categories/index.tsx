@@ -1,4 +1,5 @@
 import Breadcrumb from '@components/Breadcrumb';
+import { ProductCardProp } from '@components/ProductCard';
 import ProductSuggestion from '@components/ProductSuggestion';
 import StayTunedSection from '@components/sections/StayTunedSection';
 import CategorySection, {
@@ -7,14 +8,22 @@ import CategorySection, {
 import SooSection from '@components/SooSection';
 import { Container } from '@components/styled';
 import { categories } from '@data/categories';
-import { productsData } from '@data/productsData';
+import { getRelatedProducts, ProductVariantType } from '@data/index';
+import { singleDBProductToProductMapper } from '@data/productsData';
+import { GetStaticProps, NextPage } from 'next';
 
 const viewMoreData: CategoryViewMoreType = {
 	link: '/composites/products',
 	text: 'View more Products',
 };
 
-const composite = () => {
+const Composite: NextPage<{ popularProducts: ProductVariantType[] }> = ({
+	popularProducts,
+}) => {
+	const transformedProducts: ProductCardProp[] = popularProducts.map(product =>
+		singleDBProductToProductMapper(product),
+	);
+
 	const breadcrumb = [
 		{ name: 'Composites', link: '/composites' },
 		{ name: 'All Categories', link: '/composites/categories' },
@@ -34,11 +43,23 @@ const composite = () => {
 			</SooSection>
 			<ProductSuggestion
 				title="Popular Products"
-				products={Array.from({ length: 4 }, () => productsData[0])}
+				products={transformedProducts}
 			/>
 			<StayTunedSection />
 		</Container>
 	);
 };
 
-export default composite;
+export default Composite;
+
+export const getStaticProps: GetStaticProps = async () => {
+	const popularProductCode = 'PRO-08013';
+
+	const popularProducts = await getRelatedProducts(popularProductCode);
+
+	return {
+		props: {
+			popularProducts,
+		},
+	};
+};

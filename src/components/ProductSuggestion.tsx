@@ -1,16 +1,15 @@
-import { ProductDataType } from '@data/productsData';
-import ProductCard from './ProductCard';
+import ProductCard, { ProductCardProp } from './ProductCard';
 import SooSection from './SooSection';
 import { ProductCards } from './styled';
 
-type Props = { products: ProductDataType[]; title: string };
+type Props = { products: ProductCardProp[]; title: string };
 
 const ProductSuggestion = ({ title, products }: Props) => {
 	return (
 		<SooSection BGColor="white" header={{ title: title, align: 'left' }}>
 			<ProductCards>
 				{products.map((product, index) => (
-					<ProductCard key={`product_${index}`} product={product} />
+					<ProductCard key={`product_${index}`} {...product} />
 				))}
 			</ProductCards>
 		</SooSection>
