@@ -142,3 +142,81 @@ export const getProductByID = async (id: string, custier?: string) => {
 	}
 	return data as unknown as ProductVariantType;
 };
+
+export const getRelatedProducts = async (
+	productCode: string,
+	custier: string = 'regular',
+) => {
+	const { data, error } = await supabaseClient
+		.from('variants')
+		.select(
+			`variant, variantID:id,
+	quantity(quantity),
+	prices(price, priceInKobo, custier, id),
+	product!inner(id, code, name, image, description, details,
+		brand(name, slug),
+		cat:category(name, slug, image)),
+	reviews(stars)
+	`,
+		)
+		.eq('product.code', productCode)
+		.eq('prices.custier', custier)
+		.limit(4);
+
+	if (error) {
+		console.log({ error });
+		return [];
+	}
+
+	return data;
+};
+
+export const getAllProductVariants = async (custier: string = 'regular') => {
+	const { data, error } = await supabaseClient
+		.from('variants')
+		.select(
+			`variant, variantID:id,
+	quantity(quantity),
+	prices(price, priceInKobo, custier, id),
+	product!inner(id, code, name, image, description, details,
+		brand(name, slug),
+		cat:category(name, slug, image)),
+	reviews(stars)
+	`,
+		)
+		.eq('prices.custier', custier);
+
+	if (error) {
+		console.log({ error });
+		return [];
+	}
+
+	return data;
+};
+
+export const getRecentlyViewedProducts = async (
+	custier: string = 'regular',
+) => {
+	const { data, error } = await supabaseClient
+		.from('variants')
+		.select(
+			`variant, variantID:id,
+	quantity(quantity),
+	prices(price, priceInKobo, custier, id),
+	product!inner(id, code, name, image, description, details,
+		brand(name, slug),
+		cat:category(name, slug, image)),
+	reviews(stars)
+	`,
+		)
+		.eq('prices.custier', custier)
+		.order('variant', { ascending: false })
+		.limit(4);
+
+	if (error) {
+		console.log({ error });
+		return [];
+	}
+
+	return data;
+};

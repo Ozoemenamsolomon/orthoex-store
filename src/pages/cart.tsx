@@ -1,18 +1,21 @@
 import moreArrow from '@assets/new/icons/more-arrow.svg';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
-import CartItem from '@components/CartItem';
 import CTA from '@components/CTA';
 import IconText from '@components/IconText';
 import ProductSuggestion from '@components/ProductSuggestion';
 import { Container } from '@components/styled';
-import { ProductDataType, productsData } from '@data/productsData';
+import { getRecentlyViewedProducts, ProductVariantType } from '@data/index';
+import { singleDBProductToProductMapper } from '@data/productsData';
 import { useCart } from 'context/cartContext';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 
 const Cart: NextPage<{
-	products?: ProductDataType[];
-}> = ({ products }) => {
+	recentlyViewedProducts: ProductVariantType[];
+}> = ({ recentlyViewedProducts }) => {
+	const transformedRecentlyViewedProducts = recentlyViewedProducts?.map(
+		product => singleDBProductToProductMapper(product),
+	);
 	const {
 		state: { cart },
 	} = useCart();
@@ -28,9 +31,11 @@ const Cart: NextPage<{
 						<Title>Your cart (3 items)</Title>
 
 						<pre>{JSON.stringify(cart, null, 2)}</pre>
-						{products?.map((product, index) => (
-							<CartItem product={product} key={`cart-item-${index}`} />
-						))}
+						{transformedRecentlyViewedProducts?.map(
+							(product, index) =>
+								// <CartItem product={product} key={`cart-item-${index}`} />
+								null,
+						)}
 					</div>
 					<div>
 						<Title>Total price</Title>
@@ -62,7 +67,7 @@ const Cart: NextPage<{
 			</div>
 			<ProductSuggestion
 				title="Recently viewed"
-				products={Array.from({ length: 4 }, () => productsData[0])}
+				products={transformedRecentlyViewedProducts}
 			/>
 		</Container>
 	);
@@ -72,17 +77,11 @@ export default Cart;
 
 export const getServerSideProps = withPageAuthRequired({
 	async getServerSideProps(ctx) {
-		const products = Array.from(
-			{ length: 16 },
-			(_, index) =>
-				productsData[
-					Math.abs(productsData.length - index) % productsData.length
-				],
-		);
+		const recentlyViewedProducts = await getRecentlyViewedProducts();
 
 		return {
 			props: {
-				products,
+				products: recentlyViewedProducts,
 			},
 		};
 	},

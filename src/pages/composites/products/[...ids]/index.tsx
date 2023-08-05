@@ -8,11 +8,12 @@ import Breadcrumb from '@components/Breadcrumb';
 import CTA, { CTALink } from '@components/CTA';
 import CustomerReviewCommentCard from '@components/CustomerReviewCommentCard';
 import { SocialsContainer } from '@components/Footer';
+import ProductCard from '@components/ProductCard';
 import ProductStars from '@components/ProductStars';
 import ServiceCard from '@components/ServiceCard';
 import SooSection from '@components/SooSection';
 import StarPercentage from '@components/StarPercentage';
-import { Container } from '@components/styled';
+import { Container, ProductCards } from '@components/styled';
 import {
 	DeliveryAndAdvantage,
 	ProductCountControlButton,
@@ -20,7 +21,11 @@ import {
 	Title,
 } from '@components/styled/Temp';
 import { helps } from '@data/helps';
-import { ProductVariantType, getProductByID } from '@data/index';
+import {
+	ProductVariantType,
+	getProductByID,
+	getRelatedProducts,
+} from '@data/index';
 import { singleDBProductToProductMapper } from '@data/productsData';
 import { Facebook, Instagram, Twitter } from '@styled-icons/bootstrap';
 import { GetServerSideProps, NextPage } from 'next';
@@ -36,8 +41,16 @@ import { formatPrice } from 'utils';
 const SingleProduct: NextPage<{
 	product: ProductVariantType;
 	user: UserProfile;
-}> = ({ product, user }) => {
+	relatedProducts: ProductVariantType[];
+	popularProducts: ProductVariantType[];
+}> = ({ product, user, relatedProducts, popularProducts }) => {
 	const transformedProduct = singleDBProductToProductMapper(product);
+	const transformedRelatedProducts = relatedProducts.map(product =>
+		singleDBProductToProductMapper(product),
+	);
+	const transformedPopularProducts = popularProducts.map(product =>
+		singleDBProductToProductMapper(product),
+	);
 
 	const {
 		description,
@@ -327,28 +340,24 @@ const SingleProduct: NextPage<{
 						))}
 					</div>
 				</SooSection>
-				{/* <SooSection
+				<SooSection
 					BGColor="white"
-					header={{ title: 'Recently Viewed', align: 'left' }}>
+					header={{ title: 'Related Products', align: 'left' }}>
 					<ProductCards>
-						{Array.from({ length: 4 }, () => productsData[0]).map(
-							(product, index) => (
-								<ProductCard key={`product_${index}`} product={product} />
-							),
-						)}
+						{transformedRelatedProducts.map((product, index) => (
+							<ProductCard key={`product_${index}`} {...product} />
+						))}
 					</ProductCards>
 				</SooSection>
 				<SooSection
 					BGColor="white"
 					header={{ title: 'Popular Products', align: 'left' }}>
 					<ProductCards>
-						{Array.from({ length: 4 }, () => productsData[2]).map(
-							(product, index) => (
-								<ProductCard key={`product_${index}`} product={product} />
-							),
-						)}
+						{transformedPopularProducts.map((product, index) => (
+							<ProductCard key={`product_${index}`} {...product} />
+						))}
 					</ProductCards>
-				</SooSection> */}
+				</SooSection>
 			</LayoutDiv>
 		</Container>
 	);
@@ -378,11 +387,16 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 		};
 	}
 
-	console.log({ ids, product });
+	const relatedProducts = await getRelatedProducts(product.product.code);
+
+	const poppularProductCode = 'PRO-08001';
+	const popularProducts = await getRelatedProducts(poppularProductCode);
 
 	return {
 		props: {
 			product,
+			relatedProducts,
+			popularProducts,
 		},
 	};
 };

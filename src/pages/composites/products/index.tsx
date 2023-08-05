@@ -4,15 +4,20 @@ import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
 import FilterProductContainer from '@components/styled/FIlterProductContainer';
-import { ProductDataType, productsData } from '@data/productsData';
+import { ProductVariantType, getAllProductVariants } from '@data/index';
+import { singleDBProductToProductMapper } from '@data/productsData';
 import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useState } from 'react';
 import styled from 'styled-components';
 
 const Products: NextPage<{
-	products: ProductDataType[];
+	products: ProductVariantType[];
 }> = ({ products }) => {
+	const transformedProducts = products.map(product =>
+		singleDBProductToProductMapper(product),
+	);
+
 	const [filter, setFilter] = useState<FilterType>({
 		category: '',
 		brand: '',
@@ -28,7 +33,7 @@ const Products: NextPage<{
 		{ name: title, link: '#' },
 	];
 
-	const filteredProducts = products
+	const filteredProducts = transformedProducts
 		.filter(product =>
 			filter.category ? filter.category === product.category.slug : true,
 		)
@@ -65,11 +70,7 @@ const Products: NextPage<{
 export default Products;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-	const products = Array.from(
-		{ length: 16 },
-		(_, index) =>
-			productsData[Math.abs(productsData.length - index) % productsData.length],
-	);
+	const products = await getAllProductVariants();
 
 	return {
 		props: {

@@ -11,7 +11,9 @@ import {
 	FormRadioWrapper,
 	FormSelect,
 } from '@components/styled/Forms';
-import { productsData } from '@data/productsData';
+import { getRelatedProducts, ProductVariantType } from '@data/index';
+import { singleDBProductToProductMapper } from '@data/productsData';
+import { GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -36,7 +38,12 @@ type FormDataType = {
 	unit: UNITSTYPE;
 };
 
-function Calculator() {
+const Calculator: NextPage<{ selectedProducts: ProductVariantType[] }> = ({
+	selectedProducts,
+}) => {
+	const transformedProducts = selectedProducts.map(product =>
+		singleDBProductToProductMapper(product),
+	);
 	const [formData, setFormData] = useState<FormDataType>({
 		shape: SHAPETYPE.RECTANGLE,
 		diameter: 0,
@@ -262,20 +269,29 @@ function Calculator() {
 					<ResinProducts>
 						<ResinProductTitle>Selected Products</ResinProductTitle>
 						<ProductCards>
-							{Array.from({ length: 4 }, () => productsData[0]).map(
-								(product, index) => (
-									<ProductCard key={`product_${index}`} product={product} />
-								),
-							)}
+							{transformedProducts.map((product, index) => (
+								<ProductCard key={`product_${index}`} {...product} />
+							))}
 						</ProductCards>
 					</ResinProducts>
 				</PageContainer>
 			</PageWrapper>
 		</>
 	);
-}
+};
 
 export default Calculator;
+
+export const getStaticProps: GetStaticProps = async () => {
+	const selectedProductCode = 'PRO-08001';
+
+	const selectedProducts = await getRelatedProducts(selectedProductCode);
+	return {
+		props: {
+			selectedProducts,
+		},
+	};
+};
 
 const PageWrapper = styled.div`
 	background-color: var(--oex-off-white);
