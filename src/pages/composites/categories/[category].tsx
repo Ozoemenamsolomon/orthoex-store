@@ -8,9 +8,9 @@ import {
 	ProductVariantType,
 	getCategories,
 	getCategoryBySlug,
-	getProductsByCategory,
+	getProductVariantsByCategory,
 } from '@data/index';
-import { ProductDataType, productsData } from '@data/productsData';
+import { singleDBProductToProductMapper } from '@data/productsData';
 import { CategoryProps } from 'data/categories';
 import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
@@ -19,10 +19,14 @@ import styled from 'styled-components';
 
 const Category: NextPage<{
 	category: CategoryProps;
-	products: ProductDataType[];
-	products2: ProductVariantType[];
-}> = ({ category: { name: categoryName }, products, products2 }) => {
-	console.log({ products2 });
+	products: ProductVariantType[];
+}> = ({ category: { name: categoryName }, products }) => {
+	console.log({ products });
+	const transformedProducts = products.map(product =>
+		singleDBProductToProductMapper(product),
+	);
+	console.log({ transformedProducts });
+
 	const [filter, setFilter] = useState<FilterType>({
 		category: '',
 		brand: '',
@@ -46,7 +50,9 @@ const Category: NextPage<{
 				<Breadcrumb breadcrumb={breadcrumb} />
 				<FilterProductContainer>
 					<FilterPanel {...{ filter, setFilter, noCategory: true }} />
-					<ProductsPanel {...{ products, title: categoryName }} />
+					<ProductsPanel
+						{...{ products: transformedProducts, title: categoryName }}
+					/>
 				</FilterProductContainer>
 				<ImageContainer>
 					<Image
@@ -91,17 +97,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 		};
 	}
 
-	const products2 = await getProductsByCategory(category.id, custier);
-
-	const products = Array.from({ length: 9 }, () => ({
-		...productsData[0],
-		image: category.image,
-		name: category.name,
-	}));
+	const products = await getProductVariantsByCategory(category.id, custier);
 
 	return {
 		props: {
-			products2,
 			category,
 			products,
 		},

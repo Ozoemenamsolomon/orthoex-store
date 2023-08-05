@@ -66,12 +66,15 @@ type VariantQuantity = {
 export type ProductVariantType = {
 	variant: Variant;
 	variantID: number;
-	price: VariantPrice[];
+	prices: VariantPrice[];
 	product: VariantProduct;
 	quantity: VariantQuantity;
+	reviews?: {
+		stars: number;
+	}[];
 };
 
-export const getProductsByCategory: (
+export const getProductVariantsByCategory: (
 	id: string,
 	custier?: string,
 ) => Promise<ProductVariantType[]> = async (id, custier = 'regular') => {
@@ -84,7 +87,8 @@ export const getProductsByCategory: (
 		prices(price, priceInKobo, custier, id),
 		product!inner(id, code, name, image, description, details,
 			brand(name, slug),
-			cat:category(name, slug, image))
+			cat:category(name, slug, image)),
+		reviews(stars)
 		`,
 		)
 		.eq('product.category', id)
@@ -95,4 +99,46 @@ export const getProductsByCategory: (
 		return [];
 	}
 	return data as unknown as ProductVariantType[];
+};
+
+export const getProductByCategory = async (id: string, custier?: string) => {
+	const { data, error } = await supabaseClient
+		.from('products')
+		.select(
+			`id, code, name, image, description, details,
+		brand(name, slug),
+		cat:category(name, slug, image), variants(*, prices(*, custier, id), quantity(*), reviews(stars))`,
+		)
+		.eq('category', id)
+		.eq('variants.prices.custier', custier);
+
+	if (error) {
+		console.log({ error });
+		return [];
+	}
+	return data;
+};
+
+export const getProductByID = async (id: string, custier?: string) => {
+	const { data, error } = await supabaseClient
+		.from('variants')
+		.select(
+			`variant, variantID:id,
+		quantity(quantity),
+		prices(price, priceInKobo, custier, id),
+		product!inner(id, code, name, image, description, details,
+			brand(name, slug),
+			cat:category(name, slug, image)),
+		reviews(stars)
+		`,
+		)
+		.eq('id', id)
+		.eq('prices.custier', custier)
+		.single();
+
+	if (error) {
+		console.log({ error });
+		return null;
+	}
+	return data as unknown as ProductVariantType;
 };

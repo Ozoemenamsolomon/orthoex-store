@@ -1,13 +1,12 @@
 import CTA from '@components/CTA';
-import ProductCard from '@components/ProductCard';
-import { ProductDataType } from '@data/productsData';
+import ProductCard, { ProductCardProp } from '@components/ProductCard';
 import styled from 'styled-components';
 import { Dashboard } from 'styled-icons/boxicons-solid';
 import { ArrowPrevious, Filter } from 'styled-icons/fluentui-system-filled';
 import { CheveronLeft, CheveronRight } from 'styled-icons/zondicons';
 
 const ProductsPanel: React.FC<{
-	products: ProductDataType[];
+	products: ProductCardProp[];
 	title: string;
 }> = ({ title, products }) => (
 	<ProductPanelContainer>
@@ -31,7 +30,7 @@ const ProductsPanel: React.FC<{
 		</div>
 		<ProductCards>
 			{products.map((product, index) => (
-				<ProductCard key={`product_${index}`} product={product} />
+				<ProductCard key={`product_${index}`} {...product} />
 			))}
 		</ProductCards>
 		{products.length === 0 ? (

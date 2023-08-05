@@ -2,6 +2,7 @@ import product1 from '@assets/new/images/product1.jpg';
 import product1prev from '@assets/new/images/product1prev.jpg';
 import { categories, CategoryProps } from 'data/categories';
 import { StaticImageData } from 'next/image';
+import { ProductVariantType } from '.';
 import { brands } from './brands';
 
 export type ProductDataType = {
@@ -10,9 +11,9 @@ export type ProductDataType = {
 	brand: { name: string; slug: string };
 	category: CategoryProps;
 	image: StaticImageData | string;
-
 	details?: string | null;
 	description?: string;
+
 	previewImages?: StaticImageData[];
 	review?: { count: number; average: number };
 	variants: ProductVariant[];
@@ -108,7 +109,34 @@ export const sampleVariedProduct: VariedProduct = {
 // 	return data;
 // };
 
-const DBProductToProductMapper = (product: any) => {};
+export const singleDBProductToProductMapper = (product: ProductVariantType) => {
+	const {
+		product: { cat, ...productData },
+		prices,
+		quantity,
+		variant,
+		variantID,
+		reviews,
+	} = product;
+
+	return {
+		category: cat,
+		...productData,
+		image: productData.image || cat.image,
+		quantity,
+		price: prices.length ? prices[0].price : 0,
+		variant,
+		variantID,
+		review: reviews?.length
+			? {
+					count: reviews.length,
+					average:
+						reviews.reduce((acc, review) => acc + review.stars, 0) /
+						reviews.length,
+			  }
+			: { count: 0, average: 0 },
+	};
+};
 
 export const productsData: ProductDataType[] = [
 	{

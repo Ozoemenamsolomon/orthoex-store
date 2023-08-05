@@ -5,7 +5,7 @@ import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
 import FilterProductContainer from '@components/styled/FIlterProductContainer';
 import { ProductDataType, productsData } from '@data/productsData';
-import { GetStaticProps, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -64,7 +64,7 @@ const Products: NextPage<{
 
 export default Products;
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getServerSideProps: GetServerSideProps = async () => {
 	const products = Array.from(
 		{ length: 16 },
 		(_, index) =>
