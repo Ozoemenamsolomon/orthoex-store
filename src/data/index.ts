@@ -101,6 +101,33 @@ export const getProductVariantsByCategory: (
 	return data as unknown as ProductVariantType[];
 };
 
+export const getProductVariantsByMultipleIDs = async (
+	ids: number[],
+	custier: string,
+) => {
+	// @ts-ignore
+	const { data, error } = await supabaseClient
+		.from('variants')
+		.select(
+			`variant, variantID:id,
+		quantity(quantity),
+		prices(price, priceInKobo, custier, id),
+		product!inner(id, code, name, image, description, details,
+			brand(name, slug),
+			cat:category(name, slug, image)),
+			reviews(stars)
+			`,
+		)
+		.in('id', ids)
+		.eq('prices.custier', custier);
+
+	if (error) {
+		console.log({ error });
+		return [];
+	}
+	return data as unknown as ProductVariantType[];
+};
+
 export const getProductByID = async (id: string, custier?: string) => {
 	// @ts-ignore
 	const { data, error } = await supabaseClient
