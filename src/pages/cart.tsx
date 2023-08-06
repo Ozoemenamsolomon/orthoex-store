@@ -16,9 +16,7 @@ const Cart: NextPage<{
 	const transformedRecentlyViewedProducts = recentlyViewedProducts?.map(
 		product => singleDBProductToProductMapper(product),
 	);
-	const {
-		state: { cart },
-	} = useCart();
+	const { cart } = useCart();
 
 	return (
 		<Container>
@@ -81,7 +79,7 @@ export const getServerSideProps = withPageAuthRequired({
 
 		return {
 			props: {
-				products: recentlyViewedProducts,
+				recentlyViewedProducts,
 			},
 		};
 	},

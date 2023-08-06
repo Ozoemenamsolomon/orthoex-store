@@ -50,7 +50,6 @@ type VariantProduct = {
 	};
 };
 
-// array most likely contains only one item based on the custier
 type VariantPrice = {
 	id: number;
 	custier: string;
@@ -66,6 +65,7 @@ type VariantQuantity = {
 export type ProductVariantType = {
 	variant: Variant;
 	variantID: number;
+	// array most likely contains only one item based on the custier
 	prices: VariantPrice[];
 	product: VariantProduct;
 	quantity: VariantQuantity;
@@ -76,7 +76,7 @@ export type ProductVariantType = {
 
 export const getProductVariantsByCategory: (
 	id: string,
-	custier?: string,
+	custier: string,
 ) => Promise<ProductVariantType[]> = async (id, custier = 'regular') => {
 	// @ts-ignore
 	const { data, error } = await supabaseClient
@@ -99,25 +99,6 @@ export const getProductVariantsByCategory: (
 		return [];
 	}
 	return data as unknown as ProductVariantType[];
-};
-
-export const getProductByCategory = async (id: string, custier?: string) => {
-	// @ts-ignore
-	const { data, error } = await supabaseClient
-		.from('products')
-		.select(
-			`id, code, name, image, description, details,
-		brand(name, slug),
-		cat:category(name, slug, image), variants(*, prices(*, custier, id), quantity(*), reviews(stars))`,
-		)
-		.eq('category', id)
-		.eq('variants.prices.custier', custier);
-
-	if (error) {
-		console.log({ error });
-		return [];
-	}
-	return data;
 };
 
 export const getProductByID = async (id: string, custier?: string) => {
