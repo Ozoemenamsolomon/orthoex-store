@@ -1,13 +1,16 @@
 import moreArrow from '@assets/new/icons/more-arrow.svg';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import CTA from '@components/CTA';
+import CartItem from '@components/CartItem';
 import IconText from '@components/IconText';
+import { priceFormatter } from '@components/ProductCard';
 import ProductSuggestion from '@components/ProductSuggestion';
 import { Container } from '@components/styled';
-import { getRecentlyViewedProducts, ProductVariantType } from '@data/index';
+import { ProductVariantType, getRecentlyViewedProducts } from '@data/index';
 import { singleDBProductToProductMapper } from '@data/productsData';
-import { useCart } from 'context/cartContext';
+import { CartState, useCart } from 'context/cartContext';
 import { NextPage } from 'next';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Cart: NextPage<{
@@ -18,6 +21,45 @@ const Cart: NextPage<{
 	);
 	const { cart } = useCart();
 
+	const [products, setProducts] = useState<ProductVariantType[]>([]);
+
+	const transformedProducts = products.map(product => ({
+		...singleDBProductToProductMapper(product),
+		quantity:
+			cart.find(item => item.productVariantID === product.variantID.toString())
+				?.quantity || 0,
+	}));
+
+	const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+	const totalPrice =
+		transformedProducts.reduce(
+			(acc, item) => acc + item.price * item.quantity,
+			0,
+		) || 0;
+
+	const getProductsByMultipleIDs = async (cart: CartState) => {
+		try {
+			const response = await fetch('/api/products', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ cart }),
+			});
+			const products = await response.json();
+
+			return products;
+		} catch (errorFromFE) {
+			console.log({ error: errorFromFE });
+		}
+	};
+
+	useEffect(() => {
+		getProductsByMultipleIDs(cart).then(products => {
+			setProducts(products);
+		});
+	}, [cart]);
+
 	return (
 		<Container>
 			<div>
@@ -26,20 +68,16 @@ const Cart: NextPage<{
 						style={{
 							flex: 1,
 						}}>
-						<Title>Your cart (3 items)</Title>
-
-						<pre>{JSON.stringify(cart, null, 2)}</pre>
-						{transformedRecentlyViewedProducts?.map(
-							(product, index) =>
-								// <CartItem product={product} key={`cart-item-${index}`} />
-								null,
-						)}
+						<Title>Your cart ({totalItems} items)</Title>
+						{transformedProducts?.map((product, index) => (
+							<CartItem {...product} key={`cart-item-${index}`} />
+						))}
 					</div>
 					<div>
 						<Title>Total price</Title>
 						<p style={{ display: 'flex', justifyContent: 'space-between' }}>
 							<strong>Subtotal</strong>
-							<span>₦1,000,000.00</span>
+							<span>{priceFormatter.format(totalPrice)}</span>
 						</p>
 						<hr
 							style={{

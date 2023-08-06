@@ -20,8 +20,8 @@ const navLinks = [
 	{ name: 'Home', to: '/' },
 	{ name: 'Composites', to: '/composites' },
 	{ name: 'Orthopaedics', to: '/orthopaedics' },
-	{ name: 'About us', to: '/about' },
 	{ name: 'Trainings', to: '/trainings' },
+	{ name: 'About us', to: '/about' },
 	{ name: 'Careers', to: '/careers' },
 ];
 

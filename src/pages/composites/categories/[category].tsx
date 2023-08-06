@@ -1,5 +1,4 @@
 import categoryBanner from '@assets/new/images/category-banner.jpg';
-import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Breadcrumb, { BreadcrumProps } from '@components/Breadcrumb';
 import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
@@ -13,7 +12,7 @@ import {
 } from '@data/index';
 import { singleDBProductToProductMapper } from '@data/productsData';
 import { CategoryProps } from 'data/categories';
-import { NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -80,35 +79,31 @@ export async function getStaticPaths() {
 	};
 }
 
-export const getServerSideProps = withPageAuthRequired({
-	async getServerSideProps({ params, req, res }) {
-		const session = await getSession(req, res);
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+	const custier = 'regular';
 
-		const custier = session?.user.custier;
-
-		if (typeof params?.category !== 'string') {
-			return {
-				notFound: true,
-			};
-		}
-		const category = await getCategoryBySlug(params.category);
-
-		if (!category) {
-			return {
-				notFound: true,
-			};
-		}
-
-		const products = await getProductVariantsByCategory(category.id, custier);
-
+	if (typeof params?.category !== 'string') {
 		return {
-			props: {
-				category,
-				products,
-			},
+			notFound: true,
 		};
-	},
-});
+	}
+	const category = await getCategoryBySlug(params.category);
+
+	if (!category) {
+		return {
+			notFound: true,
+		};
+	}
+
+	const products = await getProductVariantsByCategory(category.id, custier);
+
+	return {
+		props: {
+			category,
+			products,
+		},
+	};
+};
 
 const LayoutDiv = styled.div`
 	display: flex;

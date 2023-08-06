@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 const CartContext = createContext<CartContextType | null>(null);
 
-type CartState = { productVariantID: string; quantity: number }[];
+export type CartState = { productVariantID: string; quantity: number }[];
 
 type CartContextType = {
 	cart: CartState;

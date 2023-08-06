@@ -2,31 +2,46 @@ import {
 	ProductCountControlButton,
 	ProductCountInput,
 } from '@components/styled/Temp';
-import { ProductDataType } from '@data/productsData';
 import { formatGramm } from '@utils/index';
+import { useCart } from 'context/cartContext';
 import Image from 'next/image';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { Trash } from 'styled-icons/heroicons-outline';
-import { priceFormatter } from './ProductCard';
+import { ProductCardProp, priceFormatter } from './ProductCard';
 
-const CartItem: FC<{
-	product: ProductDataType;
-}> = ({ product }) => {
-	const removeFromCart = (id: string) => () => {
-		console.log({ idToRemove: id });
-	};
-
+const CartItem: FC<
+	ProductCardProp & {
+		quantity: number;
+	}
+> = ({ code, name, image, price, variantID, quantity }) => {
 	const isInStock = false;
 
-	const [productCount, setProductCount] = useState(1);
+	const { getQuantity: getCartQuantity, setQuantity: setCartQuantity } =
+		useCart();
+
+	const [localQuantity, setLocalQuantity] = useState(
+		getCartQuantity(variantID.toString()),
+	);
+
+	const removeFromCart = (id: string) => () => {
+		setCartQuantity(id, 0);
+	};
+
+	const incrementLocalQuantity = () => {
+		setLocalQuantity(localQuantity + 1);
+	};
+
+	const decrementLocalQuantity = () => {
+		setLocalQuantity(localQuantity - 1);
+	};
 
 	return (
 		<CartItemWrapper>
 			<div>
 				<div>
 					<ImageContainer>
-						<Image src={product.image} fill alt="product image" />
+						<Image src={image} fill alt="product image" />
 					</ImageContainer>
 					<button
 						style={{
@@ -37,13 +52,13 @@ const CartItem: FC<{
 							border: 'none',
 							color: 'var(--oex-danger)',
 						}}
-						onClick={removeFromCart(product.code)}>
+						onClick={removeFromCart(variantID.toString())}>
 						<Trash size={18} />
 						Remove
 					</button>
 				</div>
 				<div>
-					<h3 style={{}}>{product.name}</h3>
+					<h3 style={{}}>{name}</h3>
 					<p style={{ fontSize: '1rem', color: 'var(--oex-grey)' }}>
 						Size: {formatGramm.format(1234)}
 					</p>
@@ -63,26 +78,22 @@ const CartItem: FC<{
 						alignItems: 'center',
 					}}>
 					<ProductCountControlButton
-						onClick={() => {
-							setProductCount(prevProductCount => prevProductCount - 1);
-						}}>
+						disabled={localQuantity <= 0}
+						onClick={decrementLocalQuantity}>
 						-
 					</ProductCountControlButton>
 					<ProductCountInput
 						type="number"
 						name="quantity"
 						id="quantity"
-						value={productCount}
-						onChange={e => setProductCount(Number(e.target.value))}
+						value={localQuantity}
+						readOnly
 					/>
-					<ProductCountControlButton
-						onClick={() =>
-							setProductCount(prevProductCount => prevProductCount + 1)
-						}>
+					<ProductCountControlButton onClick={incrementLocalQuantity}>
 						+
 					</ProductCountControlButton>
 				</div>
-				<Price>{priceFormatter.format(24523524)}</Price>
+				<Price>{priceFormatter.format(price)}</Price>
 			</div>
 		</CartItemWrapper>
 	);
