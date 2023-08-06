@@ -32,9 +32,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 
 	const { user } = useUser();
 
-	const {
-		state: { cart },
-	} = useCart();
+	const { cart } = useCart();
 
 	const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 

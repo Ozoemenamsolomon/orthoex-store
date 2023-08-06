@@ -1,6 +1,9 @@
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { slugifyName } from '@utils/index';
+import { useCart } from 'context/cartContext';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
 import ProductStars from './ProductStars';
@@ -22,9 +25,6 @@ export const priceFormatter = Intl.NumberFormat('en-ng', {
 	style: 'currency',
 });
 
-const slugifyName = (name: string) =>
-	name.toLowerCase().replace(/\s/g, '-').replace(/-+/g, '-');
-
 const ProductCard: React.FC<ProductCardProp> = ({
 	image,
 	name,
@@ -35,13 +35,23 @@ const ProductCard: React.FC<ProductCardProp> = ({
 }) => {
 	const { user } = useUser();
 
-	// const { dispatch } = useCart();
+	const { getQuantity: getCartQuantity, setQuantity: setCartQuantity } =
+		useCart();
+	const [localQuantity, setLocalQuantity] = useState(
+		getCartQuantity(variantID.toString()),
+	);
 
 	const addProductToCart = () => {
-		// dispatch({
-		// 	type: 'ADD_TO_CART',
-		// 	payload: product,
-		// });
+		setCartQuantity(variantID.toString(), 1);
+		setLocalQuantity(1);
+	};
+
+	const incrementLocalQuantity = () => {
+		setLocalQuantity(localQuantity + 1);
+	};
+
+	const decrementLocalQuantity = () => {
+		setLocalQuantity(localQuantity - 1);
 	};
 
 	return (
@@ -73,7 +83,43 @@ const ProductCard: React.FC<ProductCardProp> = ({
 				</div>
 
 				{review && <ProductStars {...review} />}
-				{user && <StyledCTA onClick={addProductToCart}>ADD TO CART</StyledCTA>}
+
+				{user && getCartQuantity(variantID.toString()) != 0 ? (
+					<div
+						style={{
+							display: 'grid',
+							gridTemplateColumns: '1fr 1fr 1fr',
+						}}>
+						<StyledCTA
+							disabled={localQuantity <= 0}
+							onClick={decrementLocalQuantity}>
+							-
+						</StyledCTA>
+						<div
+							style={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+							}}>
+							{localQuantity}
+						</div>
+						<StyledCTA onClick={incrementLocalQuantity}>+</StyledCTA>
+
+						{localQuantity !== getCartQuantity(variantID.toString()) && (
+							<StyledCTA
+								style={{ gridColumn: '1 / -1' }}
+								onClick={() =>
+									setCartQuantity(variantID.toString(), localQuantity)
+								}>
+								Save to Cart
+							</StyledCTA>
+						)}
+					</div>
+				) : (
+					<StyledCTA className="add-to-cart" onClick={addProductToCart}>
+						ADD TO CART
+					</StyledCTA>
+				)}
 			</ProductCardContent>
 		</ProductCardContainer>
 	);
@@ -91,14 +137,14 @@ const ProductCardContainer = styled.div`
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.sm} {
-		button {
+		button.add-to-cart {
 			opacity: 0;
 		}
 	}
 
 	&:hover {
 		box-shadow: 5px 5px 16px rgb(0 0 0 / 20%);
-		button {
+		button.add-to-cart {
 			opacity: 1;
 		}
 	}

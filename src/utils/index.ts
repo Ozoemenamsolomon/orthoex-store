@@ -6,6 +6,9 @@ export const formatDate: (dateTime: Date) => string = dateTime => {
 	});
 };
 
+export const slugifyName = (name: string) =>
+	name.toLowerCase().replace(/\s/g, '-').replace(/-+/g, '-');
+
 export const formatTime: (dateTime: Date) => string = dateTime => {
 	return dateTime.toLocaleTimeString('en-NG', {
 		hour12: true,

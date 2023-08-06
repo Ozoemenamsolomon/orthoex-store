@@ -29,6 +29,7 @@ import {
 } from '@data/index';
 import { singleDBProductToProductMapper } from '@data/productsData';
 import { Facebook, Instagram, Twitter } from '@styled-icons/bootstrap';
+import { useCart } from 'context/cartContext';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -62,6 +63,7 @@ const SingleProduct: NextPage<{
 		brand: { name: brandName },
 		review,
 		details: productDetail,
+		variantID,
 	} = transformedProduct;
 
 	const customerReviews = Array.from({ length: 2 }, (_, index) =>
@@ -82,7 +84,24 @@ const SingleProduct: NextPage<{
 			  },
 	);
 
-	const [productCount, setProductCount] = useState(0);
+	const { getQuantity: getCartQuantity, setQuantity: setCartQuantity } =
+		useCart();
+	const [localQuantity, setLocalQuantity] = useState(
+		getCartQuantity(variantID.toString()),
+	);
+
+	const addProductToCart = () => {
+		setCartQuantity(variantID.toString(), 1);
+		setLocalQuantity(1);
+	};
+
+	const incrementLocalQuantity = () => {
+		setLocalQuantity(localQuantity + 1);
+	};
+
+	const decrementLocalQuantity = () => {
+		setLocalQuantity(localQuantity - 1);
+	};
 
 	return (
 		<Container
@@ -207,34 +226,56 @@ const SingleProduct: NextPage<{
 										alignItems: 'center',
 									}}>
 									<ProductCountControlButton
-										onClick={() => {
-											setProductCount(prevProductCount => prevProductCount - 1);
-										}}>
+										onClick={decrementLocalQuantity}
+										disabled={localQuantity === 0}>
 										-
 									</ProductCountControlButton>
 									<ProductCountInput
 										type="number"
 										name="quantity"
 										id="quantity"
-										value={productCount}
-										onChange={e => setProductCount(Number(e.target.value))}
+										value={localQuantity}
+										onChange={e => setLocalQuantity(Number(e.target.value))}
 									/>
-									<ProductCountControlButton
-										onClick={() =>
-											setProductCount(prevProductCount => prevProductCount + 1)
-										}>
+									<ProductCountControlButton onClick={incrementLocalQuantity}>
 										+
 									</ProductCountControlButton>
 								</div>
 							</div>
 							<div
 								style={{
-									display: 'grid',
-									gap: '2rem',
-									gridTemplateColumns: '1fr 1fr',
+									display: 'flex',
+									gap: '1.5rem',
 								}}>
-								<CTA>Add to cart</CTA>
-								<CTA>Buy now</CTA>
+								{localQuantity <= 0 && (
+									<CTA
+										style={{
+											flex: '1',
+											transition: 'all .3s ease-in-out',
+										}}
+										onClick={addProductToCart}>
+										Add to cart
+									</CTA>
+								)}
+								{localQuantity !== getCartQuantity(variantID.toString()) && (
+									<CTA
+										style={{
+											flex: '1',
+											transition: 'all .3s ease-in-out',
+										}}
+										onClick={() =>
+											setCartQuantity(variantID.toString(), localQuantity)
+										}>
+										Update cart
+									</CTA>
+								)}
+								<CTA
+									style={{
+										flex: '1',
+										transition: 'all .3s ease-in-out',
+									}}>
+									Buy now
+								</CTA>
 							</div>
 						</div>
 					</ProductData>
@@ -381,10 +422,7 @@ export const getServerSideProps = withPageAuthRequired({
 		const custier = session?.user.custier;
 		const product = await getProductByID(productVariantID, custier);
 
-		if (
-			!product ||
-			product?.product.code.toLowerCase() !== prodctCode.toLowerCase()
-		) {
+		if (product?.product.code.toLowerCase() !== prodctCode.toLowerCase()) {
 			return {
 				notFound: true,
 			};

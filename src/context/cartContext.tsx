@@ -1,58 +1,80 @@
-import { ProductDataType } from '@data/productsData';
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 const CartContext = createContext<CartContextType | null>(null);
 
-type CartState = {
-	cart: { productCode: string; quantity: number }[];
-};
-
-type CartAction =
-	| { type: 'ADD_TO_CART'; payload: ProductDataType }
-	| { type: 'REMOVE_FROM_CART'; payload: string };
+type CartState = { productVariantID: string; quantity: number }[];
 
 type CartContextType = {
-	state: CartState;
-	dispatch: React.Dispatch<CartAction>;
-};
-
-const cartReducer = (state: CartState, action: CartAction) => {
-	switch (action.type) {
-		case 'ADD_TO_CART': {
-			const { code, variants } = action.payload;
-			const productCode = `${code}v${variants[0]?.id}`;
-			const product = state.cart.find(item => item.productCode === productCode);
-
-			return {
-				...state,
-				cart: product
-					? state.cart.map(item =>
-							item.productCode === productCode
-								? { ...item, quantity: item.quantity + 1 }
-								: item,
-					  )
-					: [...state.cart, { productCode, quantity: 1 }],
-			};
-		}
-		case 'REMOVE_FROM_CART':
-			return {
-				...state,
-				cart: state.cart.filter(item => item.productCode !== action.payload),
-			};
-
-		default:
-			return state;
-	}
+	cart: CartState;
+	setQuantity: (productVariantID: string, quantity: number) => void;
+	getQuantity: (productVariantID: string) => number;
 };
 
 export const CartProvider: React.FC = ({ children }) => {
-	const [state, dispatch] = useReducer(cartReducer, {
-		cart: [],
-	});
-	console.log({ state });
+	const [cart, setCart] = useState<CartState>([]);
+	const firstUpdate = useRef(true);
+
+	useEffect(() => {
+		const cartFromLocalStorage = localStorage.getItem('cart');
+
+		if (cartFromLocalStorage) {
+			setCart(JSON.parse(cartFromLocalStorage));
+		}
+	}, []);
+
+	useEffect(() => {
+		if (firstUpdate.current) {
+			firstUpdate.current = false;
+			return;
+		}
+		localStorage.setItem('cart', JSON.stringify(cart));
+	}, [cart]);
+
+	const removeFromCart = (productVariantID: string) => {
+		setCart(cart.filter(item => item.productVariantID !== productVariantID));
+	};
+
+	const setQuantity = (productVariantID: string, quantity: number) => {
+		if (quantity === 0) {
+			return removeFromCart(productVariantID);
+		}
+
+		const itemInCart = cart.find(
+			item => item.productVariantID === productVariantID,
+		);
+
+		if (itemInCart) {
+			setCart(
+				cart.map(item =>
+					item.productVariantID === productVariantID
+						? { ...item, quantity }
+						: item,
+				),
+			);
+		} else {
+			setCart([...cart, { productVariantID, quantity }]);
+		}
+	};
+
+	const getQuantity = (productVariantID: string) => {
+		const itemInCart = cart.find(
+			item => item.productVariantID === productVariantID,
+		);
+
+		if (itemInCart) {
+			return itemInCart.quantity;
+		}
+
+		return 0;
+	};
 
 	return (
-		<CartContext.Provider value={{ state, dispatch }}>
+		<CartContext.Provider
+			value={{
+				cart,
+				setQuantity,
+				getQuantity,
+			}}>
 			{children}
 		</CartContext.Provider>
 	);
