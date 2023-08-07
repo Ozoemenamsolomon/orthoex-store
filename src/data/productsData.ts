@@ -49,7 +49,7 @@ export const singleDBProductToProductMapper = (product: ProductVariantType) => {
 		category: cat,
 		...productData,
 		image: productData.image || cat.image,
-		quantityAvailable: quantity.quantity,
+		quantityAvailable: quantity?.quantity || 0,
 		price: prices.length ? prices[0].price : 0,
 		variant,
 		variantID,

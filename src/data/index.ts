@@ -70,7 +70,7 @@ export type ProductVariantType = {
 	 */
 	prices: VariantPrice[];
 	product: VariantProduct;
-	quantity: VariantQuantity;
+	quantity: VariantQuantity | null;
 	reviews?: {
 		stars: number;
 	}[];
