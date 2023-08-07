@@ -3,7 +3,7 @@ import { slugifyName } from '@utils/index';
 import { useCart } from 'context/cartContext';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
 import ProductStars from './ProductStars';
@@ -40,6 +40,10 @@ const ProductCard: React.FC<ProductCardProp> = ({
 	const [localQuantity, setLocalQuantity] = useState(
 		getCartQuantity(variantID.toString()),
 	);
+
+	useEffect(() => {
+		setLocalQuantity(getCartQuantity(variantID.toString()));
+	}, [getCartQuantity, variantID]);
 
 	const addProductToCart = () => {
 		setCartQuantity(variantID.toString(), 1);
@@ -130,6 +134,10 @@ export default ProductCard;
 const ProductCardContainer = styled.div`
 	border-radius: 4px;
 	transition: all 0.3s ease-in-out;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 
 	> div:first-child {
 		aspect-ratio: 210/164;

@@ -1,11 +1,8 @@
-import {
-	ProductCountControlButton,
-	ProductCountInput,
-} from '@components/styled/Temp';
+import { ProductCountInput } from '@components/styled/Temp';
 import { formatGramm } from '@utils/index';
 import { useCart } from 'context/cartContext';
 import Image from 'next/image';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Trash } from 'styled-icons/heroicons-outline';
 import { ProductCardProp, priceFormatter } from './ProductCard';
@@ -24,16 +21,12 @@ const CartItem: FC<
 		getCartQuantity(variantID.toString()),
 	);
 
+	useEffect(() => {
+		setLocalQuantity(getCartQuantity(variantID.toString()));
+	}, [getCartQuantity, variantID]);
+
 	const removeFromCart = (id: string) => () => {
 		setCartQuantity(id, 0);
-	};
-
-	const incrementLocalQuantity = () => {
-		setLocalQuantity(localQuantity + 1);
-	};
-
-	const decrementLocalQuantity = () => {
-		setLocalQuantity(localQuantity - 1);
 	};
 
 	return (
@@ -77,21 +70,15 @@ const CartItem: FC<
 						gap: '.5rem',
 						alignItems: 'center',
 					}}>
-					<ProductCountControlButton
-						disabled={localQuantity <= 0}
-						onClick={decrementLocalQuantity}>
-						-
-					</ProductCountControlButton>
 					<ProductCountInput
 						type="number"
 						name="quantity"
 						id="quantity"
 						value={localQuantity}
-						readOnly
+						onChange={e =>
+							setCartQuantity(variantID.toString(), Number(e.target.value))
+						}
 					/>
-					<ProductCountControlButton onClick={incrementLocalQuantity}>
-						+
-					</ProductCountControlButton>
 				</div>
 				<Price>{priceFormatter.format(price)}</Price>
 			</div>

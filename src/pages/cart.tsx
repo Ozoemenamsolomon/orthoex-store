@@ -64,7 +64,7 @@ const Cart: NextPage<{
 	return (
 		<Container>
 			<div>
-				<div style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start' }}>
+				<ProductAndDetails style={{}}>
 					<div
 						style={{
 							flex: 1,
@@ -100,7 +100,7 @@ const Cart: NextPage<{
 							<IconText icon={moreArrow} text={'Continue shopping'}></IconText>
 						</div>
 					</div>
-				</div>
+				</ProductAndDetails>
 			</div>
 			<ProductSuggestion
 				title="Recently viewed"
@@ -132,4 +132,14 @@ const Title = styled.h2`
 	padding-bottom: 0.5rem;
 	margin-bottom: 1rem;
 	display: flex;
+`;
+
+const ProductAndDetails = styled.div`
+	flex-direction: column;
+
+	@media (min-width: 768px) {
+		display: flex;
+		gap: 2rem;
+		align-items: flex-start;
+	}
 `;
