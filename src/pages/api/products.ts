@@ -10,7 +10,10 @@ export default withApiAuthRequired(async function products(req, res) {
 		return Number(item.productVariantID);
 	});
 
-	const products = getProductVariantsByMultipleIDs(ids, session?.user?.custier);
+	const products = await getProductVariantsByMultipleIDs(
+		ids,
+		session?.user?.custier,
+	);
 
 	res.status(200).json(products);
 });
