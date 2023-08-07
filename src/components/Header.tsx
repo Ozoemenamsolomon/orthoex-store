@@ -119,6 +119,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 						<div
 							style={{
 								display: 'flex',
+								alignItems: 'center',
 							}}>
 							{rightNavLinks.map((navLink, index) => (
 								<NavLink
@@ -130,7 +131,23 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 								/>
 							))}
 							{process.env.NODE_ENV === 'development' && (
-								<p>cartCount={totalItems}</p>
+								<p
+									style={{
+										color: 'white',
+										marginLeft: '-1rem',
+										zIndex: 1,
+										cursor: 'pointer',
+										backgroundColor: '#E25C5C',
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+										aspectRatio: '1/1',
+										padding: '0.2rem',
+										borderRadius: '50%',
+										fontSize: '0.5rem',
+									}}>
+									{totalItems}
+								</p>
 							)}
 						</div>
 					</NavBar>

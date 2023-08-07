@@ -65,7 +65,9 @@ type VariantQuantity = {
 export type ProductVariantType = {
 	variant: Variant;
 	variantID: number;
-	// array most likely contains only one item based on the custier
+	/**
+	 * @note array most likely contains only one item based on the custier
+	 */
 	prices: VariantPrice[];
 	product: VariantProduct;
 	quantity: VariantQuantity;
@@ -74,6 +76,17 @@ export type ProductVariantType = {
 	}[];
 };
 
+const productVariantQuery = `
+variant,
+variantID:id,
+quantity(quantity),
+reviews(stars),
+prices(price, priceInKobo, custier, id),
+product!inner(id, code, name, image, description, details,
+	brand(name, slug),
+	cat:category(name, slug, image))
+	`;
+
 export const getProductVariantsByCategory: (
 	id: string,
 	custier: string,
@@ -81,16 +94,7 @@ export const getProductVariantsByCategory: (
 	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
-		.select(
-			`variant, variantID:id,
-		quantity(quantity),
-		prices(price, priceInKobo, custier, id),
-		product!inner(id, code, name, image, description, details,
-			brand(name, slug),
-			cat:category(name, slug, image)),
-			reviews(stars)
-			`,
-		)
+		.select(productVariantQuery)
 		.eq('product.category', id)
 		.eq('prices.custier', custier);
 
@@ -108,16 +112,7 @@ export const getProductVariantsByMultipleIDs = async (
 	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
-		.select(
-			`variant, variantID:id,
-		quantity(quantity),
-		prices(price, priceInKobo, custier, id),
-		product!inner(id, code, name, image, description, details,
-			brand(name, slug),
-			cat:category(name, slug, image)),
-			reviews(stars)
-			`,
-		)
+		.select(productVariantQuery)
 		.in('id', ids)
 		.eq('prices.custier', custier);
 
@@ -132,16 +127,7 @@ export const getProductByID = async (id: string, custier?: string) => {
 	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
-		.select(
-			`variant, variantID:id,
-		quantity(quantity),
-		prices(price, priceInKobo, custier, id),
-		product!inner(id, code, name, image, description, details,
-			brand(name, slug),
-			cat:category(name, slug, image)),
-			reviews(stars)
-			`,
-		)
+		.select(productVariantQuery)
 		.eq('id', id)
 		.eq('prices.custier', custier)
 		.single();
@@ -160,16 +146,7 @@ export const getRelatedProducts = async (
 	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
-		.select(
-			`variant, variantID:id,
-	quantity(quantity),
-	prices(price, priceInKobo, custier, id),
-	product!inner(id, code, name, image, description, details,
-		brand(name, slug),
-		cat:category(name, slug, image)),
-	reviews(stars)
-	`,
-		)
+		.select(productVariantQuery)
 		.eq('product.code', productCode)
 		.eq('prices.custier', custier)
 		.limit(4);
@@ -186,16 +163,7 @@ export const getAllProductVariants = async (custier: string = 'regular') => {
 	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
-		.select(
-			`variant, variantID:id,
-		quantity(quantity),
-		prices(price, priceInKobo, custier, id),
-		product!inner(id, code, name, image, description, details,
-			brand(name, slug),
-		cat:category(name, slug, image)),
-	reviews(stars)
-	`,
-		)
+		.select(productVariantQuery)
 		.eq('prices.custier', custier);
 
 	if (error) {
@@ -212,16 +180,7 @@ export const getRecentlyViewedProducts = async (
 	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
-		.select(
-			`variant, variantID:id,
-	quantity(quantity),
-	prices(price, priceInKobo, custier, id),
-	product!inner(id, code, name, image, description, details,
-		brand(name, slug),
-		cat:category(name, slug, image)),
-	reviews(stars)
-	`,
-		)
+		.select(productVariantQuery)
 		.eq('prices.custier', custier)
 		.order('variant', { ascending: false })
 		.limit(4);
