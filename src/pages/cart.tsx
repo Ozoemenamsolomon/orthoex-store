@@ -141,5 +141,6 @@ const ProductAndDetails = styled.div`
 		display: flex;
 		gap: 2rem;
 		align-items: flex-start;
+		flex-direction: row;
 	}
 `;
