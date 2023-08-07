@@ -13,15 +13,35 @@ import { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+const getProductsByMultipleIDs = async (cart: CartState) => {
+	try {
+		const response = await fetch('/api/products', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ cart }),
+		});
+		const products = await response.json();
+
+		return products;
+	} catch (errorFromFE) {
+		console.log({ error: errorFromFE });
+	}
+};
+
 const Cart: NextPage<{
 	recentlyViewedProducts: ProductVariantType[];
 }> = ({ recentlyViewedProducts }) => {
-	const transformedRecentlyViewedProducts = recentlyViewedProducts?.map(
-		product => singleDBProductToProductMapper(product),
-	);
 	const { cart } = useCart();
 
 	const [products, setProducts] = useState<ProductVariantType[]>([]);
+
+	useEffect(() => {
+		getProductsByMultipleIDs(cart).then(products => {
+			setProducts(products);
+		});
+	}, [cart]);
 
 	const transformedProducts = products.map(product => ({
 		...singleDBProductToProductMapper(product),
@@ -37,28 +57,9 @@ const Cart: NextPage<{
 			0,
 		) || 0;
 
-	const getProductsByMultipleIDs = async (cart: CartState) => {
-		try {
-			const response = await fetch('/api/products', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ cart }),
-			});
-			const products = await response.json();
-
-			return products;
-		} catch (errorFromFE) {
-			console.log({ error: errorFromFE });
-		}
-	};
-
-	useEffect(() => {
-		getProductsByMultipleIDs(cart).then(products => {
-			setProducts(products);
-		});
-	}, [cart]);
+	const transformedRecentlyViewedProducts = recentlyViewedProducts?.map(
+		product => singleDBProductToProductMapper(product),
+	);
 
 	return (
 		<Container>
