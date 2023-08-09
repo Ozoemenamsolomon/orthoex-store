@@ -33,7 +33,7 @@ const getProductsByMultipleIDs = async (cart: CartState) => {
 const Cart: NextPage<{
 	recentlyViewedProducts: ProductVariantType[];
 }> = ({ recentlyViewedProducts }) => {
-	const { cart } = useCart();
+	const { cart, checkout } = useCart();
 
 	const [products, setProducts] = useState<ProductVariantType[]>([]);
 
@@ -95,7 +95,9 @@ const Cart: NextPage<{
 								borderBottom: '1px solid var(--oex-light-grey)',
 							}}
 						/>
-						<CTA style={{ width: '100%' }}>Checkout</CTA>
+						<CTA onClick={() => checkout()} style={{ width: '100%' }}>
+							Checkout
+						</CTA>
 						<div style={{ marginTop: '1rem' }}>
 							<IconText icon={moreArrow} text={'Continue shopping'}></IconText>
 						</div>

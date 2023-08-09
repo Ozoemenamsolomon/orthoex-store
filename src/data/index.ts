@@ -42,11 +42,13 @@ type VariantProduct = {
 	brand: {
 		name: string;
 		slug: string;
+		id: number;
 	};
 	cat: {
 		name: string;
 		slug: string;
 		image: string;
+		id: number;
 	};
 };
 
@@ -83,8 +85,8 @@ quantity(quantity),
 reviews(stars),
 prices(price, priceInKobo, custier, id),
 product!inner(id, code, name, image, description, details,
-	brand(name, slug),
-	cat:category(name, slug, image))
+	brand(name, slug, id),
+	cat:category(name, slug, image, id))
 	`;
 
 export const getProductVariantsByCategory: (
