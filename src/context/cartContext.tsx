@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -8,11 +9,13 @@ type CartContextType = {
 	cart: CartState;
 	setQuantity: (productVariantID: string, quantity: number) => void;
 	getQuantity: (productVariantID: string) => number;
+	checkout: () => void;
 };
 
 export const CartProvider: React.FC = ({ children }) => {
 	const [cart, setCart] = useState<CartState>([]);
 	const firstUpdate = useRef(true);
+	const router = useRouter();
 
 	useEffect(() => {
 		const cartFromLocalStorage = localStorage.getItem('cart');
@@ -68,10 +71,30 @@ export const CartProvider: React.FC = ({ children }) => {
 		return 0;
 	};
 
+	const checkout = async () => {
+		try {
+			const response = await fetch('/api/checkout', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ cart }),
+			});
+			const { reference } = await response.json();
+
+			setCart([]);
+
+			router.push(`composites/checkout/${reference}`);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<CartContext.Provider
 			value={{
 				cart,
+				checkout,
 				setQuantity,
 				getQuantity,
 			}}>
