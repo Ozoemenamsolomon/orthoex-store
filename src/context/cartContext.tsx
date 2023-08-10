@@ -72,6 +72,10 @@ export const CartProvider: React.FC = ({ children }) => {
 	};
 
 	const checkout = async () => {
+		if (cart.length === 0) {
+			return;
+		}
+
 		try {
 			const response = await fetch('/api/checkout', {
 				method: 'POST',

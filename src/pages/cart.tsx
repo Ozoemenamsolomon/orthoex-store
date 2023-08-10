@@ -95,7 +95,10 @@ const Cart: NextPage<{
 								borderBottom: '1px solid var(--oex-light-grey)',
 							}}
 						/>
-						<CTA onClick={() => checkout()} style={{ width: '100%' }}>
+						<CTA
+							disabled={cart.length === 0}
+							onClick={() => checkout()}
+							style={{ width: '100%' }}>
 							Checkout
 						</CTA>
 						<div style={{ marginTop: '1rem' }}>
