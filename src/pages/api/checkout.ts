@@ -9,6 +9,11 @@ export default withApiAuthRequired(async function checkout(req, res) {
 		const session = await getSession(req, res);
 
 		const cart: CartState = req.body.cart;
+
+		if (!cart || cart.length === 0) {
+			return res.status(400).json({ error: 'Cart is empty' });
+		}
+
 		const ids = cart.map((item: { productVariantID: any }) => {
 			return Number(item.productVariantID);
 		});
@@ -17,6 +22,11 @@ export default withApiAuthRequired(async function checkout(req, res) {
 			ids,
 			session?.user?.custier,
 		);
+
+		// invalid product variant id
+		if (products.length !== ids.length) {
+			return res.status(400).json({ error: 'Invalid product variant id' });
+		}
 
 		const totalPrice = products.reduce((acc, item) => {
 			return (
@@ -32,26 +42,29 @@ export default withApiAuthRequired(async function checkout(req, res) {
 				i => i.variantID.toString() === item.productVariantID,
 			);
 
+			if (!product) {
+				return null;
+			}
+
 			return {
-				variant: product?.variant,
-				variantID: product?.variantID,
+				variant: product.variant,
+				variantID: product.variantID,
 				quantity: item.quantity,
-				price: product?.prices[0].price || 0,
-				code: product?.product?.code,
-				name: product?.product?.name,
-				image: product?.product?.image,
-				brand: product?.product?.brand.id,
-				cat: product?.product?.cat.id,
+				price: product.prices[0].price || 0,
+				code: product.product.code,
+				name: product.product.name,
+				image: product.product.image,
+				brand: product.product.brand.id,
+				cat: product.product?.cat.id,
+				timeStamp: Date.now(),
 			};
 		});
 
-		// use hashmac to hash cart
 		const hash = crypto
 			.createHmac('sha256', process.env.HASH_SECRET || '')
 			.update(JSON.stringify(transformedCart))
 			.digest('hex');
 
-		// save order to database
 		const { data, error } = await supabaseClient.from('orders').insert([
 			{
 				cart: transformedCart,
@@ -59,7 +72,7 @@ export default withApiAuthRequired(async function checkout(req, res) {
 				reference: hash,
 				user: session?.user?.email,
 				expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7).toISOString(),
-				status: 'pending',
+				status: process.env.NODE_ENV,
 			},
 		]);
 

@@ -63,7 +63,12 @@ const CartItem: FC<
 				</div>
 			</div>
 
-			<div>
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'flex-end',
+				}}>
 				<div
 					style={{
 						display: 'flex',
