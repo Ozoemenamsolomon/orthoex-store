@@ -36,8 +36,6 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 	});
 	const [phone, setPhone] = useState('');
 
-	console.log({ address, phone });
-
 	const isxpired = new Date(order.expiresAt).getTime() < Date.now();
 
 	/**
@@ -66,9 +64,6 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 		})
 			.then(res => res.json())
 			.then(data => {
-				console.log(data);
-				setIsSuccessful(true);
-
 				router.push('/account');
 			})
 			.catch(err => {

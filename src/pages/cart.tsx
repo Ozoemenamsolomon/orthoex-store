@@ -25,8 +25,8 @@ const getProductsByMultipleIDs = async (cart: CartState) => {
 		const products = await response.json();
 
 		return products;
-	} catch (errorFromFE) {
-		console.log({ error: errorFromFE });
+	} catch (errorFromBE) {
+		console.log({ errorFromBE });
 	}
 };
 

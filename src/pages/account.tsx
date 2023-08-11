@@ -11,8 +11,6 @@ type Props = {
 };
 
 const Account: NextPage<Props> = ({ user, orders }) => {
-	console.log({ user: user });
-
 	return (
 		<Container>
 			<h1>Account</h1>
@@ -34,9 +32,6 @@ export const getServerSideProps = withPageAuthRequired({
 	async getServerSideProps(ctx) {
 		const session = await getSession(ctx.req, ctx.res);
 
-		const custier = session?.user.custier;
-
-		console.log({ custier });
 		if (
 			!process.env.ALLOWED_USER_EMAIL?.split(',').includes(session?.user.email)
 		) {
@@ -53,7 +48,14 @@ export const getServerSideProps = withPageAuthRequired({
 			.eq('user', session?.user.email)
 			.order('created_at', { ascending: false });
 
-		console.log({ data, error });
+		if (error) {
+			console.log({ error });
+			return {
+				props: {
+					orders: [],
+				},
+			};
+		}
 
 		return {
 			props: {
