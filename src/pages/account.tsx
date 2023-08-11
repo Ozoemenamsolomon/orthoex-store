@@ -30,6 +30,7 @@ const Account: NextPage<Props> = ({ user, orders }) => {
 
 			{orders.map(order => (
 				<div
+					key={order.id}
 					style={{
 						border: '1px solid #ccc',
 						margin: '1rem 0',
