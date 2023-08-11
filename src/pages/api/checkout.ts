@@ -65,7 +65,7 @@ export default withApiAuthRequired(async function checkout(req, res) {
 			.update(JSON.stringify(transformedCart))
 			.digest('hex');
 
-		const { data, error } = await supabaseClient.from('orders').insert([
+		const { data: _data, error } = await supabaseClient.from('orders').insert([
 			{
 				cart: transformedCart,
 				totalPrice,
@@ -80,19 +80,9 @@ export default withApiAuthRequired(async function checkout(req, res) {
 			throw error;
 		}
 
-		console.log({ data });
-
 		res.status(200).json({ reference: hash });
 	} catch (error) {
 		console.log({ error });
 		res.status(500).json({ error });
 	}
 });
-
-// 		// use hash as payment reference
-// 		type Order = {
-// 			paid: boolean;
-// 			address: { street: string; city: string; zip: string; country: string };
-// 			phone: string;
-// 		};
-// 		// redirect to order summary page, where user can add address and phone number and pay and then paid is set to true if payment is successful

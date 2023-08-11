@@ -39,20 +39,12 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 	const isxpired = new Date(order.expiresAt).getTime() < Date.now();
 
 	/**
-     * 
-     * @param reference 
-     * {
-        "reference": "f92458a008b540c6578f2010b9b643be3014b4724451ecf1fcd1007f844b2071",
-        "trans": "3014756833",
-        "status": "success",
-        "message": "Approved",
-        "transaction": "3014756833",
-        "trxref": "f92458a008b540c6578f2010b9b643be3014b4724451ecf1fcd1007f844b2071",
-        "redirecturl": "?trxref=f92458a008b540c6578f2010b9b643be3014b4724451ecf1fcd1007f844b2071&reference=f92458a008b540c6578f2010b9b643be3014b4724451ecf1fcd1007f844b2071"
-    }
-     */
-
-	// do not type, it causes error
+	 *
+	 * @param reference - transaction reference
+	 * @returns void
+	 * @description - this function is called when the transaction is successful
+	 *
+	 */
 	const onSuccess = (reference: any) => {
 		// send reference to backend to verify transaction
 		fetch('/api/verify', {
@@ -64,6 +56,7 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 		})
 			.then(res => res.json())
 			.then(data => {
+				setIsSuccessful(true);
 				router.push('/account');
 			})
 			.catch(err => {
@@ -76,71 +69,75 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 		<>
 			<h1>Checkout Page</h1>
 
-			{isSuccessful && (
+			{isSuccessful ? (
 				<div>
 					<h1>Order Successful</h1>
 				</div>
+			) : (
+				<>
+					<form
+						onSubmit={e => {
+							e.preventDefault();
+
+							if (isxpired || !phone) {
+								return;
+							}
+
+							// @ts-ignore
+							initializePayment(onSuccess, onClose);
+						}}>
+						<input
+							type="text"
+							placeholder="Street"
+							value={address.street}
+							onChange={e => setAddress({ ...address, street: e.target.value })}
+						/>
+						<input
+							type="text"
+							placeholder="Number"
+							value={address.number}
+							onChange={e => setAddress({ ...address, number: e.target.value })}
+						/>
+						<input
+							type="text"
+							placeholder="City"
+							value={address.city}
+							onChange={e => setAddress({ ...address, city: e.target.value })}
+						/>
+						<input
+							type="text"
+							placeholder="State"
+							value={address.state}
+							onChange={e => setAddress({ ...address, state: e.target.value })}
+						/>
+						<input
+							type="text"
+							placeholder="Country"
+							value={address.country}
+							onChange={e =>
+								setAddress({ ...address, country: e.target.value })
+							}
+						/>
+						<input
+							type="text"
+							placeholder="Phone"
+							value={phone}
+							onChange={e => setPhone(e.target.value)}
+						/>
+						<CTA>
+							{isxpired
+								? 'Order Expired'
+								: `Pay ${priceFormatter.format(order.totalPrice)}`}
+						</CTA>
+					</form>
+
+					<div>
+						{order?.cart?.map((item: any, index: any) => (
+							<CartItem key={`checkout-item-${index}`} {...item} />
+						))}
+					</div>
+				</>
 			)}
-
-			<form
-				onSubmit={e => {
-					e.preventDefault();
-
-					if (isxpired || !phone) {
-						return;
-					}
-
-					// @ts-ignore
-					initializePayment(onSuccess, onClose);
-				}}>
-				<input
-					type="text"
-					placeholder="Street"
-					value={address.street}
-					onChange={e => setAddress({ ...address, street: e.target.value })}
-				/>
-				<input
-					type="text"
-					placeholder="Number"
-					value={address.number}
-					onChange={e => setAddress({ ...address, number: e.target.value })}
-				/>
-				<input
-					type="text"
-					placeholder="City"
-					value={address.city}
-					onChange={e => setAddress({ ...address, city: e.target.value })}
-				/>
-				<input
-					type="text"
-					placeholder="State"
-					value={address.state}
-					onChange={e => setAddress({ ...address, state: e.target.value })}
-				/>
-				<input
-					type="text"
-					placeholder="Country"
-					value={address.country}
-					onChange={e => setAddress({ ...address, country: e.target.value })}
-				/>
-				<input
-					type="text"
-					placeholder="Phone"
-					value={phone}
-					onChange={e => setPhone(e.target.value)}
-				/>
-				<CTA>
-					{isxpired
-						? 'Order Expired'
-						: `Pay ${priceFormatter.format(order.totalPrice)}`}
-				</CTA>
-			</form>
-
-			<div>
-				{order?.cart?.map((item: any, index: any) => (
-					<CartItem key={`checkout-item-${index}`} {...item} />
-				))}
-			</div>
 		</>
 	);
 };

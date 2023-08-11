@@ -1,9 +1,12 @@
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
-import { CTALink } from '@components/CTA';
+import CTA, { CTALink } from '@components/CTA';
+import { priceFormatter } from '@components/ProductCard';
 import { Container } from '@components/styled';
 import { supabaseClient } from '@utils/supabase';
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { Key } from 'react';
 
 type Props = {
 	user: UserProfile;
@@ -11,6 +14,7 @@ type Props = {
 };
 
 const Account: NextPage<Props> = ({ user, orders }) => {
+	const router = useRouter();
 	return (
 		<Container>
 			<h1>Account</h1>
@@ -21,7 +25,37 @@ const Account: NextPage<Props> = ({ user, orders }) => {
 			<hr />
 			<textarea name="" id=""></textarea>
 			<hr />
-			<pre>{JSON.stringify(orders, null, 2)}</pre>
+			{/* <pre>{JSON.stringify(orders, null, 2)}</pre> */}
+			<h2>
+				{orders.length} order{orders.length > 1 ? 's' : ''}
+			</h2>
+
+			{orders.map(order => (
+				<div
+					style={{
+						border: '1px solid #ccc',
+						margin: '1rem 0',
+						padding: '1rem',
+						display: 'flex',
+						justifyContent: 'space-between',
+					}}>
+					{order.cart.map((item: { id: Key | null | undefined }) => (
+						<span>
+							<pre key={item.id}>{JSON.stringify(item, null, 1)}</pre>
+						</span>
+					))}
+					<div style={{ display: 'flex', alignItems: 'center' }}>
+						{!order.paid && (
+							<CTA
+								onClick={() => {
+									router.push(`/composites/checkout/${order.reference}`);
+								}}>
+								Pay {priceFormatter.format(order.totalPrice)}
+							</CTA>
+						)}
+					</div>
+				</div>
+			))}
 		</Container>
 	);
 };
