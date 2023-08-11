@@ -10,6 +10,7 @@ type CartContextType = {
 	setQuantity: (productVariantID: string, quantity: number) => void;
 	getQuantity: (productVariantID: string) => number;
 	checkout: () => void;
+	checkoutSingleProduct: (productVariantID: string) => void;
 };
 
 export const CartProvider: React.FC = ({ children }) => {
@@ -88,7 +89,41 @@ export const CartProvider: React.FC = ({ children }) => {
 
 			setCart([]);
 
-			router.push(`composites/checkout/${reference}`);
+			router.push(`/composites/checkout/${reference}`);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const checkoutSingleProduct = async (productVariantID: string) => {
+		let newCart: CartState = [
+			{
+				productVariantID,
+				quantity: 1,
+			},
+		];
+		// get product with productVariantID from cart
+		const cartProduct = cart.find(
+			item => item.productVariantID === productVariantID,
+		);
+
+		if (cartProduct) {
+			newCart = [cartProduct];
+		}
+
+		try {
+			const response = await fetch('/api/checkout', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ cart: newCart }),
+			});
+			const { reference } = await response.json();
+
+			removeFromCart(productVariantID);
+
+			router.push(`/composites/checkout/${reference}`);
 		} catch (error) {
 			console.log(error);
 		}
@@ -101,6 +136,7 @@ export const CartProvider: React.FC = ({ children }) => {
 				checkout,
 				setQuantity,
 				getQuantity,
+				checkoutSingleProduct,
 			}}>
 			{children}
 		</CartContext.Provider>

@@ -84,8 +84,11 @@ const SingleProduct: NextPage<{
 			  },
 	);
 
-	const { getQuantity: getCartQuantity, setQuantity: setCartQuantity } =
-		useCart();
+	const {
+		getQuantity: getCartQuantity,
+		setQuantity: setCartQuantity,
+		checkoutSingleProduct,
+	} = useCart();
 	const [localQuantity, setLocalQuantity] = useState(
 		getCartQuantity(variantID.toString()),
 	);
@@ -270,6 +273,7 @@ const SingleProduct: NextPage<{
 									</CTA>
 								)}
 								<CTA
+									onClick={() => checkoutSingleProduct(variantID.toString())}
 									style={{
 										flex: '1',
 										transition: 'all .3s ease-in-out',
