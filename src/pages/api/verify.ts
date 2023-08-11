@@ -8,7 +8,7 @@ const logger = (e: any) => {
 
 export default withApiAuthRequired(async function verify(req, res) {
 	const session = await getSession(req, res);
-	const { reference } = req.body.reference;
+	const { reference, address, phone } = req.body.reference;
 
 	const { data, error } = await supabaseClient
 		.from('orders')
@@ -30,7 +30,6 @@ export default withApiAuthRequired(async function verify(req, res) {
 	})
 		.then(res => res.json())
 		.catch(err => {
-			logger('an error occured verifying the transaction');
 			logger({ err });
 			return res.status(400).json({ error: err.message });
 		});
@@ -41,13 +40,11 @@ export default withApiAuthRequired(async function verify(req, res) {
 		return res.status(400).json({ error: 'Transaction not successful' });
 	}
 
-	const { data: updatedData, error: updatedError } = await supabaseClient
+	const { data: _updatedData, error: updatedError } = await supabaseClient
 		.from('orders')
-		.update({ paid: true })
+		.update({ paid: true, address, phone })
 		.eq('reference', reference)
 		.eq('user', session?.user?.email);
-
-	logger({ updatedData, updatedError });
 
 	if (updatedError) {
 		logger({ updatedError });
