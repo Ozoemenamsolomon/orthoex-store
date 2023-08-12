@@ -7,7 +7,7 @@ import Time from '@assets/new/icons/Time';
 import Whatsapp from '@assets/new/icons/Whatsapp';
 import { EventFormat } from '@data/eventsData';
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
-import { calculateDateDifference, formatDate } from '@utils/index';
+import { calculateDateDifference, formatDate, formatTime } from '@utils/index';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -34,7 +34,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	const closeBookingDialog = () => setIsBookingDialogOpen(false);
 
 	return (
-		<StyledWrapperDiv>
+		<StyledWrapperDiv id={`training-${training.id}`}>
 			<StyledDetailsSection>
 				<StyledLeftContent>
 					<StyledCourseFormat type={training.trainingFormat}>
@@ -53,7 +53,9 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 					</StyledInfoDiv>
 					<StyledInfoDiv>
 						<Time />
-						<span>{/* {training.startTime} - {training.endTime} */}</span>
+						<span>{`${formatTime(
+							new Date(training.startDateTime),
+						)} - ${formatTime(new Date(training.endDateTime))}`}</span>
 					</StyledInfoDiv>
 					<StyledInfoDiv>
 						<Location />
