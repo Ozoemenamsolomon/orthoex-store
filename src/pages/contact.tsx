@@ -177,7 +177,7 @@ const Contact = () => {
 				<SocialMediaButtons
 					height={20}
 					width={15}
-					color={'var(--oex-orange)'}
+					color={'white'}
 				/>
 			</InfoText>
 		</StyledContactWrapper>
