@@ -10,8 +10,9 @@ import { ProductCardProp, priceFormatter } from './ProductCard';
 const CartItem: FC<
 	ProductCardProp & {
 		quantity: number;
+		readOnly?: boolean;
 	}
-> = ({ code, name, image, price, variantID, quantity }) => {
+> = ({ code, name, image, price, variantID, quantity, readOnly }) => {
 	const isInStock = false;
 
 	const { getQuantity: getCartQuantity, setQuantity: setCartQuantity } =
@@ -36,19 +37,21 @@ const CartItem: FC<
 					<ImageContainer>
 						<Image src={image} fill alt="product image" />
 					</ImageContainer>
-					<button
-						style={{
-							display: 'flex',
-							alignItems: 'center',
-							gap: '0.21rem',
-							background: 'none',
-							border: 'none',
-							color: 'var(--oex-danger)',
-						}}
-						onClick={removeFromCart(variantID.toString())}>
-						<Trash size={18} />
-						Remove
-					</button>
+					{!readOnly && (
+						<button
+							style={{
+								display: 'flex',
+								alignItems: 'center',
+								gap: '0.21rem',
+								background: 'none',
+								border: 'none',
+								color: 'var(--oex-danger)',
+							}}
+							onClick={removeFromCart(variantID.toString())}>
+							<Trash size={18} />
+							Remove
+						</button>
+					)}
 				</div>
 				<div>
 					<h3 style={{}}>{name}</h3>
@@ -75,11 +78,22 @@ const CartItem: FC<
 						gap: '.5rem',
 						alignItems: 'center',
 					}}>
+					{readOnly && (
+						<p
+							style={{
+								fontSize: '1rem',
+								color: 'var(--oex-grey)',
+								marginBottom: 0,
+							}}>
+							Quantity:
+						</p>
+					)}
 					<ProductCountInput
 						type="number"
 						name="quantity"
 						id="quantity"
-						value={localQuantity}
+						value={readOnly ? quantity : localQuantity}
+						readOnly={readOnly}
 						onChange={e =>
 							setCartQuantity(variantID.toString(), Number(e.target.value))
 						}

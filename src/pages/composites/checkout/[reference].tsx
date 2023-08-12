@@ -133,7 +133,7 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 
 					<div>
 						{order?.cart?.map((item: any, index: any) => (
-							<CartItem key={`checkout-item-${index}`} {...item} />
+							<CartItem readOnly key={`checkout-item-${index}`} {...item} />
 						))}
 					</div>
 				</>
