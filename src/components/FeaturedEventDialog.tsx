@@ -24,9 +24,6 @@ interface FormDataType {
 	phone: string;
 }
 const FeaturedEventDialog: React.FC<Props> = ({
-	isOpen,
-	onClose,
-	onOpen,
 	training,
 }) => {
 	const [numPeople, setNumPeople] = useState(1);
@@ -109,6 +106,7 @@ const FeaturedEventDialog: React.FC<Props> = ({
 													<AtendeeFormControl>
 														<label>First Name:</label>
 														<input
+															required
 															type="text"
 															name="firstname"
 															value={participant.firstname}
@@ -118,6 +116,7 @@ const FeaturedEventDialog: React.FC<Props> = ({
 													<AtendeeFormControl>
 														<label>Last Name:</label>
 														<input
+															required
 															type="text"
 															name="lastname"
 															value={participant.lastname}
@@ -129,6 +128,7 @@ const FeaturedEventDialog: React.FC<Props> = ({
 													<AtendeeFormControl>
 														<label>Email:</label>
 														<input
+															required
 															type="email"
 															name="email"
 															value={participant.email}
@@ -138,6 +138,7 @@ const FeaturedEventDialog: React.FC<Props> = ({
 													<AtendeeFormControl>
 														<label>Phone:</label>
 														<input
+															required
 															type="tel"
 															name="phone"
 															value={participant.phone}
@@ -154,6 +155,7 @@ const FeaturedEventDialog: React.FC<Props> = ({
 									<div className="radio-input">
 										<FormRadioLabel htmlFor="instagram">
 											<input
+												required
 												type="radio"
 												name="aboutUs"
 												id="instagram"
@@ -276,7 +278,7 @@ const ContentWrapper = styled.div`
 
 	// padding: 1rem;
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		height: 32rem;
+		height: 37rem;
 		flex-direction: row;
 		padding: 0rem;
 	}
