@@ -25,14 +25,20 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 	userEmail,
 	training,
 }) => {
+
+	const websiteUrl = `https://orthoex.ng/trainings#training-${training.id}`
+	const createUrlText = () => {
+		return encodeURI(`Check out this training: ${training.title} at`)
+	}
 	const [panelOpen, setpanelOpen] = useState(false);
 	const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
 
 	const openBookingDialog = () => setIsBookingDialogOpen(true);
 	const closeBookingDialog = () => setIsBookingDialogOpen(false);
+	
 
 	return (
-		<StyledWrapperDiv>
+		<StyledWrapperDiv id={`training-${training.id}`}>
 			<StyledDetailsSection>
 				<StyledLeftContent>
 					<StyledCourseFormat type={training.trainingFormat}>
@@ -60,7 +66,10 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({
 					<SocialSection>
 						<p className='title'>Share this event</p>
 					<SocialMediaButtons
-					whatsappLink={`https://api.whatsapp.com/send?text=${training.title}`}
+					whatsappLink={`https://api.whatsapp.com/send?text=${createUrlText()} ${websiteUrl}`}
+					twitterLink={`https://twitter.com/intent/tweet?text=${createUrlText()}&url=${websiteUrl}`}
+					facebookLink={`https://www.facebook.com/sharer.php?u=${websiteUrl}&text=${createUrlText()}`}
+					linkedInLink={`https://www.linkedin.com/shareArticle?text=${createUrlText()}&url=${websiteUrl}`}
 					height={20}
 					width={20}
 					color={'black'}
