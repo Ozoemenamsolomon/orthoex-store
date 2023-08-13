@@ -154,6 +154,7 @@ export const getServerSideProps = withPageAuthRequired({
 			.eq('reference', reference)
 			.eq('paid', false)
 			.eq('delivered', false)
+			.gt('expiresAt', new Date().toISOString())
 			.single();
 
 		if (error) {
