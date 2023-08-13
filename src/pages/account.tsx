@@ -25,7 +25,7 @@ const Account: NextPage<Props> = ({ user, orders }) => {
 			</h2>
 
 			{orders.map(order => (
-				<OrderItemCard {...order} />
+				<OrderItemCard key={order.id} {...order} />
 			))}
 		</Container>
 	);

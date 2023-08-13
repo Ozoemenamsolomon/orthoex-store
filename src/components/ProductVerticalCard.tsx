@@ -1,7 +1,7 @@
-import React from 'react';
 import Image from 'next/image';
-import styled from 'styled-components';
 import Link from 'next/link';
+import React from 'react';
+import styled from 'styled-components';
 import { VerticalType } from './ProductVertical';
 
 const ProductVerticalCard: React.FC<VerticalType> = ({
@@ -21,7 +21,7 @@ const ProductVerticalCard: React.FC<VerticalType> = ({
 				/>
 			</StyledImageWrapper>
 			<StyledContent>
-				<p>{title.toLocaleUpperCase()}</p>
+				<p>{title.toUpperCase()}</p>
 				<Link href={link} legacyBehavior>
 					View Product
 				</Link>
