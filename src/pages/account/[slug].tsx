@@ -23,6 +23,7 @@ import ShoppingBag from '@assets/new/icons/account/ShoppingBag.svg';
 import SupportAgent from '@assets/new/icons/account/SupportAgent.svg';
 import AccountSubNav from '@components/AccountSubNav';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import Details from '@components/account/Details';
 import { FC } from 'react';
 
 const accountOverviewLinks: ServiceCardType[] = [
@@ -104,6 +105,8 @@ const Account: NextPage<Props> = ({ user, data }) => {
 						<Overview />
 					) : slug === 'orders' ? (
 						<Orders orders={data.orders} />
+					) : slug === 'details' ? (
+						<Details />
 					) : null}
 				</div>
 				{slug === 'overview' && <Overview2 />}

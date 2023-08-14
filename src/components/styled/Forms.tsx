@@ -14,9 +14,9 @@ export const FormControl = styled.div`
 	}
 
 	& > input,
-	textarea {
+	textarea,
+	select {
 		border: 1px solid var(--oex-grey);
-		outline: none;
 		padding: 0.8rem;
 		border-radius: 0.2rem;
 		font: inherit;
