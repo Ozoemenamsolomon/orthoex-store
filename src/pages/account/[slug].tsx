@@ -3,69 +3,29 @@ import { UserProfile } from '@auth0/nextjs-auth0/client';
 import OrderItemCard from '@components/OrderItemCard';
 import { Container } from '@components/styled';
 import { Title } from '@components/styled/Temp';
+import {
+	TypeOfSlug,
+	accountSubLinks,
+	isAccountSubLinkSlug,
+} from '@data/accountSublinks';
 import { supabaseClient } from '@utils/supabase';
 import { NextPage } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
 
 type Props = {
 	user: UserProfile;
 	data: {
 		orders: any[];
+		title: string;
 	};
 };
 
-const accountSubLinks = [
-	{
-		name: 'Overview',
-		slug: 'overview',
-	},
-	{
-		name: 'Account Details',
-		slug: 'details',
-	},
-	{
-		name: 'Orders',
-		slug: 'orders',
-	},
-	{
-		name: 'Edit Password',
-		slug: 'password',
-	},
-	{
-		name: 'Addresses',
-		slug: 'addresses',
-	},
-	{
-		name: 'Pending Reviews',
-		slug: 'reviews',
-	},
-	{
-		name: 'Recently Viewed',
-		slug: 'recent',
-	},
-	{
-		name: 'Account Manager',
-		slug: 'manager',
-	},
-	{
-		name: 'Invite a Friend',
-		slug: 'invite',
-	},
-	{
-		name: 'Reward Points & Store Wallet',
-		slug: 'rewards',
-	},
-	{
-		name: 'Newsleter Preferences',
-		slug: 'newsletter',
-	},
-	{
-		name: 'Request Account Data',
-		slug: 'data',
-	},
-] as const;
-
 const Account: NextPage<Props> = ({ user, data }) => {
+	const router = useRouter();
+	const slug = router.query.slug as TypeOfSlug;
+
 	return (
 		<Container
 			style={{
@@ -77,27 +37,27 @@ const Account: NextPage<Props> = ({ user, data }) => {
 				style={{
 					backgroundColor: '#fff',
 					borderRadius: '5px',
-					padding: '1rem',
 					boxShadow: '0 0 1rem rgba(0,0,0,0.1)',
 					maxWidth: '300px',
 				}}>
-				<Title>Your OrthoEx Account</Title>
-				<ul
+				<div
 					style={{
-						padding: '0rem',
-						margin: '0rem',
+						padding: '1rem',
+						paddingBottom: '0rem',
 					}}>
+					<Title>Your OrthoEx Account</Title>
+				</div>
+				<AccountSubNav>
 					{accountSubLinks.map(({ name, slug }) => (
-						<li
-							style={{
-								listStyle: 'none',
-								padding: '0.5rem 0rem',
-							}}
-							key={slug}>
-							<Link href={`/account/${slug}`}>{name}</Link>
+						<li key={slug}>
+							<Link
+								className={slug === router.query.slug ? 'active' : ''}
+								href={`/account/${slug}`}>
+								{name}
+							</Link>
 						</li>
 					))}
-				</ul>
+				</AccountSubNav>
 			</div>
 			<div
 				style={{
@@ -107,33 +67,34 @@ const Account: NextPage<Props> = ({ user, data }) => {
 					boxShadow: '0 0 1rem rgba(0,0,0,0.1)',
 					padding: '1rem',
 				}}>
-				<Title>Overview</Title>
+				<Title>{data.title}</Title>
 				{/* <CTALink href="/api/auth/logout">Logout</CTALink>
 				<p>You are logeged in as {user.email} </p>
 				<p>name: {user.name}</p>
 				<img src={user.picture || ''} alt="user gravatar" />
-				<hr /> */}
-				<h2>
-					{data.orders.length} order{data.orders.length > 1 ? 's' : ''}
-				</h2>
+            <hr /> */}
 
-				{data.orders.map(order => (
-					<OrderItemCard key={order.id} {...order} />
-				))}
+				{slug === 'overview' ? (
+					<>
+						<h2>Overview</h2>
+						<p>Coming soon...</p>
+					</>
+				) : slug === 'orders' ? (
+					<>
+						<h2>
+							{data.orders.length} order{data.orders.length > 1 ? 's' : ''}
+						</h2>
+						{data.orders.map(order => (
+							<OrderItemCard key={order.id} {...order} />
+						))}
+					</>
+				) : null}
 			</div>
 		</Container>
 	);
 };
 
 export default Account;
-
-type TypeOfSlug = typeof accountSubLinks[number]['slug'];
-
-function isAccountSubLinkSlug(slug: any): slug is TypeOfSlug {
-	return accountSubLinks.map(({ slug }) => slug).includes(slug);
-}
-// q: how can I achieve the above without using arrow function?
-// a: const is
 
 export const getServerSideProps = withPageAuthRequired({
 	async getServerSideProps({ query, res, req }) {
@@ -150,6 +111,8 @@ export const getServerSideProps = withPageAuthRequired({
 
 		const data = {
 			orders: [],
+			title:
+				accountSubLinks.find(({ slug }) => slug === query.slug)?.name || '',
 		};
 
 		if (query.slug === 'orders') {
@@ -173,3 +136,29 @@ export const getServerSideProps = withPageAuthRequired({
 		};
 	},
 });
+
+const AccountSubNav = styled.ul`
+	display: flex;
+	flex-direction: column;
+	padding: 0rem;
+	margin: 0rem;
+	li {
+		list-style: none;
+		display: flex;
+		a {
+			text-decoration: none;
+			color: #000;
+			padding: 0.5rem 1rem;
+			width: 100%;
+			&:hover {
+				color: #000;
+			}
+			&.active {
+				border-left: 2px solid var(--oex-orange);
+				font-weight: 600;
+				color: var(--oex-orange);
+				background-color: var(--oex-orange-mute);
+			}
+		}
+	}
+`;

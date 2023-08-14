@@ -1,12 +1,12 @@
-import HeaderBG from '@assets/images/header-background.png';
 import Briefcase from '@assets/new/icons/home/briefcase.svg';
 import Enzymes from '@assets/new/icons/home/enzyme.svg';
 import Operator from '@assets/new/icons/home/operator.svg';
 import Prosthetics from '@assets/new/icons/home/prosthetics.svg';
 import ShoppingCart from '@assets/new/icons/home/shopping-cart.svg';
 import Training from '@assets/new/icons/home/training.svg';
-import CallButton from '@components/CallButton';
+import HeaderBG from '@assets/new/images/header-background.png';
 import { CTALink } from '@components/CTA';
+import CallButton from '@components/CallButton';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
 import InfoSection from '@components/InfoSection';
