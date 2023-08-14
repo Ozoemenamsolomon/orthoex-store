@@ -82,6 +82,7 @@ const Account: NextPage<Props> = ({ user, data }) => {
 			style={{
 				display: 'flex',
 				gap: '2rem',
+				alignItems: 'flex-start',
 			}}>
 			<AccountSubNav />
 
@@ -97,7 +98,8 @@ const Account: NextPage<Props> = ({ user, data }) => {
 						display: 'flex',
 						flexDirection: 'column',
 						boxShadow: '2px 2px 9px 1px rgb(0 0 0 / 10%)',
-						padding: '2rem 1rem',
+						padding: '1rem',
+						paddingBottom: '2rem',
 					}}>
 					<Title>{data.title}</Title>
 
@@ -184,7 +186,8 @@ const Overview2 = () => {
 				display: 'flex',
 				flexDirection: 'column',
 				boxShadow: '2px 2px 9px 1px rgb(0 0 0 / 10%)',
-				padding: '2rem 1rem',
+				padding: '1rem',
+				paddingBottom: '2rem',
 			}}>
 			<Title>Product</Title>
 			<div

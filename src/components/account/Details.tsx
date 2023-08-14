@@ -5,41 +5,34 @@ import styled from 'styled-components';
 const Details = () => {
 	return (
 		<AccountDetailsForm
-			style={{ display: 'flex', flexWrap: 'wrap' }}
 			onSubmit={e => {
 				e.preventDefault();
 			}}>
 			<FormControl>
 				<label htmlFor="firstName">First Name</label>
-				<input type="text" id="firstName" />
+				<input type="text" id="firstName" placeholder="John" />
 			</FormControl>
 			<FormControl>
 				<label htmlFor="lastName">Last Name</label>
-				<input type="text" id="lastName" />
+				<input type="text" id="lastName" placeholder="Doe" />
 			</FormControl>
 			<FormControl>
 				<label htmlFor="email">Email</label>
-				<input type="email" id="email" />
+				<input type="email" id="email" placeholder="johndoe@example.com" />
 			</FormControl>
 			<FormControl>
 				<label htmlFor="phone">Phone</label>
-				<input type="tel" id="phone" />
+				<input type="tel" id="phone" placeholder="+2347000000000" />
 			</FormControl>
-			<fieldset>
-				<legend>Address</legend>
-				<FormControl>
-					<label htmlFor="country">Country</label>
-					<input type="text" id="country" />
-				</FormControl>
-				<FormControl>
-					<label htmlFor="state">State</label>
-					<input type="text" id="state" />
-				</FormControl>
-				<FormControl>
-					<label htmlFor="city">City</label>
-					<input type="text" id="city" />
-				</FormControl>
-			</fieldset>
+			<FormControl>
+				<label htmlFor="profession">Profession</label>
+				<input
+					type="text"
+					id="profession"
+					placeholder="Enter your profession"
+					autoComplete="organization-title"
+				/>
+			</FormControl>
 			<FormControl>
 				<label htmlFor="gender">Gender</label>
 				<select name="gender" id="gender">
@@ -61,19 +54,15 @@ export default Details;
 
 const AccountDetailsForm = styled.form`
 	gap: 1rem;
-	& > *:not(fieldset) {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	& > *:not(button):not(:nth-child(5)) {
 		width: 48%;
 	}
-	& > fieldset {
-		width: 100%;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-		> *:not(legend) {
-			width: 48%;
-		}
-	}
-	& > button {
+
+	& > button,
+	& > *:nth-child(5) {
 		width: 100%;
 	}
 `;
