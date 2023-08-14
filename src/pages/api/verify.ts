@@ -10,6 +10,8 @@ export default withApiAuthRequired(async function verify(req, res) {
 	const session = await getSession(req, res);
 	const { reference, address, phone } = req.body.reference;
 
+	console.log({ reference, address, phone });
+
 	const { data, error } = await supabaseClient
 		.from('orders')
 		.select('*')
@@ -33,7 +35,6 @@ export default withApiAuthRequired(async function verify(req, res) {
 			logger({ err });
 			return res.status(400).json({ error: err.message });
 		});
-	logger({ verify });
 
 	if (verify?.data?.status !== 'success') {
 		logger({ verify });

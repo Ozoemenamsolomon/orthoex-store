@@ -41,13 +41,32 @@ const OrderItemCard: FC<{
 					padding: '1rem',
 					paddingBottom: 0,
 				}}>
-				<p>Checkout on {new Date(created_at).toDateString()}</p>
-				<p>
+				<p
+					style={{
+						flex: '1',
+						width: '33%',
+					}}>
+					Checkout on {new Date(created_at).toDateString()}
+				</p>
+				<p
+					style={{
+						flex: '1',
+						width: '33%',
+					}}>
 					Totalling {priceFormatter.format(totalPrice)} for {cart.length} item
 					{cart.length > 1 ? 's' : ''}
 				</p>
-				<p>
-					Order reference: <strong>{reference}</strong>
+				<p
+					style={{
+						flex: '1',
+						width: '33%',
+						display: 'flex',
+					}}>
+					Order reference:{'  '}
+					<strong
+						style={{ textOverflow: 'ellipsis', overflow: 'hidden', flex: 1 }}>
+						{reference}
+					</strong>
 				</p>
 			</div>
 			<div>

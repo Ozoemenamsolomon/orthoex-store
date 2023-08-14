@@ -10,9 +10,58 @@ import {
 } from '@data/accountSublinks';
 import { supabaseClient } from '@utils/supabase';
 import { NextPage } from 'next';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
+
+import Coupon from '@assets/new/icons/account/Coupon.svg';
+import Favourite from '@assets/new/icons/account/Favourite.svg';
+import Gift from '@assets/new/icons/account/Gift.svg';
+import RecentlyViewed from '@assets/new/icons/account/RecentlyViewed.svg';
+
+import DeliveryTruck from '@assets/new/icons/account/DeliveryTruck.svg';
+import Feedback from '@assets/new/icons/account/Feedback.svg';
+import ShoppingBag from '@assets/new/icons/account/ShoppingBag.svg';
+import SupportAgent from '@assets/new/icons/account/SupportAgent.svg';
+import AccountSubNav from '@components/AccountSubNav';
+import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import { FC } from 'react';
+
+const accountOverviewLinks: ServiceCardType[] = [
+	{
+		image: Favourite,
+		description: 'Saved items',
+	},
+	{
+		image: Gift,
+		description: 'Invite friend',
+	},
+	{
+		image: RecentlyViewed,
+		description: 'Viewed',
+	},
+	{
+		image: Coupon,
+		description: 'Store wallet',
+	},
+];
+
+const accountProductLinks: ServiceCardType[] = [
+	{
+		image: DeliveryTruck,
+		description: 'Delivery',
+	},
+	{
+		image: Feedback,
+		description: 'Feedback',
+	},
+	{
+		image: ShoppingBag,
+		description: 'Orders',
+	},
+	{
+		image: SupportAgent,
+		description: 'Support',
+	},
+];
 
 type Props = {
 	user: UserProfile;
@@ -28,67 +77,36 @@ const Account: NextPage<Props> = ({ user, data }) => {
 
 	return (
 		<Container
+			verticalPaddingInREM={2}
 			style={{
 				display: 'flex',
-				borderRadius: '5px',
 				gap: '2rem',
 			}}>
-			<div
-				style={{
-					backgroundColor: '#fff',
-					borderRadius: '5px',
-					boxShadow: '0 0 1rem rgba(0,0,0,0.1)',
-					maxWidth: '300px',
-				}}>
-				<div
-					style={{
-						padding: '1rem',
-						paddingBottom: '0rem',
-					}}>
-					<Title>Your OrthoEx Account</Title>
-				</div>
-				<AccountSubNav>
-					{accountSubLinks.map(({ name, slug }) => (
-						<li key={slug}>
-							<Link
-								className={slug === router.query.slug ? 'active' : ''}
-								href={`/account/${slug}`}>
-								{name}
-							</Link>
-						</li>
-					))}
-				</AccountSubNav>
-			</div>
+			<AccountSubNav />
+
 			<div
 				style={{
 					display: 'flex',
 					flexDirection: 'column',
+					gap: '2rem',
 					flex: 1,
-					boxShadow: '0 0 1rem rgba(0,0,0,0.1)',
-					padding: '1rem',
 				}}>
-				<Title>{data.title}</Title>
-				{/* <CTALink href="/api/auth/logout">Logout</CTALink>
-				<p>You are logeged in as {user.email} </p>
-				<p>name: {user.name}</p>
-				<img src={user.picture || ''} alt="user gravatar" />
-            <hr /> */}
+				<div
+					style={{
+						display: 'flex',
+						flexDirection: 'column',
+						boxShadow: '2px 2px 9px 1px rgb(0 0 0 / 10%)',
+						padding: '2rem 1rem',
+					}}>
+					<Title>{data.title}</Title>
 
-				{slug === 'overview' ? (
-					<>
-						<h2>Overview</h2>
-						<p>Coming soon...</p>
-					</>
-				) : slug === 'orders' ? (
-					<>
-						<h2>
-							{data.orders.length} order{data.orders.length > 1 ? 's' : ''}
-						</h2>
-						{data.orders.map(order => (
-							<OrderItemCard key={order.id} {...order} />
-						))}
-					</>
-				) : null}
+					{slug === 'overview' ? (
+						<Overview />
+					) : slug === 'orders' ? (
+						<Orders orders={data.orders} />
+					) : null}
+				</div>
+				{slug === 'overview' && <Overview2 />}
 			</div>
 		</Container>
 	);
@@ -137,28 +155,64 @@ export const getServerSideProps = withPageAuthRequired({
 	},
 });
 
-const AccountSubNav = styled.ul`
-	display: flex;
-	flex-direction: column;
-	padding: 0rem;
-	margin: 0rem;
-	li {
-		list-style: none;
-		display: flex;
-		a {
-			text-decoration: none;
-			color: #000;
-			padding: 0.5rem 1rem;
-			width: 100%;
-			&:hover {
-				color: #000;
-			}
-			&.active {
-				border-left: 2px solid var(--oex-orange);
-				font-weight: 600;
-				color: var(--oex-orange);
-				background-color: var(--oex-orange-mute);
-			}
-		}
-	}
-`;
+const Overview = () => {
+	return (
+		<div
+			style={{
+				display: 'flex',
+			}}>
+			{accountOverviewLinks.map((card, index) => (
+				<ServiceCard
+					small
+					greyFont
+					className="no-shadow no-padding"
+					key={index}
+					service={card}
+				/>
+			))}
+		</div>
+	);
+};
+
+const Overview2 = () => {
+	return (
+		<div
+			style={{
+				display: 'flex',
+				flexDirection: 'column',
+				boxShadow: '2px 2px 9px 1px rgb(0 0 0 / 10%)',
+				padding: '2rem 1rem',
+			}}>
+			<Title>Product</Title>
+			<div
+				style={{
+					display: 'flex',
+				}}>
+				{accountProductLinks.map((card, index) => (
+					<ServiceCard
+						small
+						greyFont
+						className="no-shadow no-padding"
+						key={index}
+						service={card}
+					/>
+				))}
+			</div>
+		</div>
+	);
+};
+
+const Orders: FC<{
+	orders: any[];
+}> = ({ orders }) => {
+	return (
+		<>
+			<p>
+				{orders.length} order{orders.length > 1 ? 's' : ''}
+			</p>
+			{orders.map(order => (
+				<OrderItemCard key={order.id} {...order} />
+			))}
+		</>
+	);
+};

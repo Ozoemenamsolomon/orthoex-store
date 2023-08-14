@@ -65,7 +65,7 @@ const ProductPanelContainer = styled.article`
 const ProductCards = styled.div`
 	--width: 150px;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(var(--width), 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(var(--width), 1fr));
 	gap: 2rem 1rem;
 	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		--width: 200px;
