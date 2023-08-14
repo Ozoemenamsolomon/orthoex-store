@@ -57,7 +57,7 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 			.then(res => res.json())
 			.then(data => {
 				setIsSuccessful(true);
-				router.push('/account');
+				router.push('/account/orders');
 			})
 			.catch(err => {
 				console.log(err);
@@ -166,7 +166,7 @@ export const getServerSideProps = withPageAuthRequired({
 		if (!data) {
 			return {
 				redirect: {
-					destination: `/account`,
+					destination: `/account/orders`,
 					permanent: false,
 				},
 			};

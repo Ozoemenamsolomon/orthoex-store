@@ -17,14 +17,13 @@ const OrderItemCard: FC<{
 	reference: string;
 	paid: boolean;
 	expiresAt: string;
-}> = ({ id, created_at, totalPrice, cart, reference, paid, expiresAt }) => {
+}> = ({ created_at, totalPrice, cart, reference, paid, expiresAt }) => {
 	const router = useRouter();
 
 	const isExpired = new Date(expiresAt).getTime() < new Date().getTime();
 
 	return (
 		<div
-			key={id}
 			style={{
 				border: '1px solid #ccc',
 				margin: '1rem 0',

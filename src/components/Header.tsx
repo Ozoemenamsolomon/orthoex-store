@@ -1,4 +1,4 @@
-import SccountIcon from '@assets/new/icons/Account';
+import AccountIcon from '@assets/new/icons/Account';
 import HamburgerIcon from '@assets/new/icons/HamburgerIcon';
 import SearchIcon from '@assets/new/icons/Search';
 import CartIcon from '@assets/new/icons/ShoppingCart';
@@ -62,7 +62,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 
 	const rightNavLinks = [
 		{ name: 'Search', to: '/search', Icon: SearchIcon },
-		{ name: 'Orthopaedics', to: '/account', Icon: SccountIcon },
+		{ name: 'Account', to: '/account/overview', Icon: AccountIcon },
 		...(user ? [{ name: 'Cart', to: '/cart', Icon: CartIcon }] : []),
 	];
 
