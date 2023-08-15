@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { FC } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import CTA from './CTA';
 import { priceFormatter } from './ProductCard';
@@ -31,13 +32,14 @@ const OrderItemCard: FC<{
 					Totalling {priceFormatter.format(totalPrice)} for {cart.length} item
 					{cart.length > 1 ? 's' : ''}
 				</p>
-				<p
-					style={{
-						display: 'flex',
-					}}>
+				<p>
 					Order reference:{'  '}
 					<strong
-						style={{ textOverflow: 'ellipsis', overflow: 'hidden', flex: 1 }}>
+						onClick={() => {
+							navigator.clipboard.writeText(reference);
+							toast.success('Order reference copied to clipboard');
+						}}
+						title={reference}>
 						{reference}
 					</strong>
 				</p>
@@ -53,6 +55,7 @@ const OrderItemCard: FC<{
 						<span>{priceFormatter.format(item.price * item.quantity)}</span>
 
 						{JSON.stringify(item.variant, null, 1)}
+						<hr />
 					</CartItemContainer>
 				))}
 			</div>
@@ -81,7 +84,6 @@ const OrderItemCard: FC<{
 					)}
 				</div>
 			)}
-			<hr />
 		</OrderItemCardContainer>
 	);
 };
@@ -96,17 +98,31 @@ const OrderItemCardContainer = styled.div`
 	flex-direction: column;
 `;
 const OrderGroupLabel = styled.div`
-	display: flex;
 	justify-content: space-between;
 	background-color: var(--oex-orange-mute);
 	margin-top: -1rem;
 	margin-inline: -1rem;
 	padding: 1rem;
 	padding-bottom: 0;
-
 	& > p {
-		flex: 1;
-		width: 33%;
+		&:has(> strong) {
+			display: flex;
+			gap: 0.5rem;
+		}
+		& > strong {
+			max-width: 150px;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			cursor: pointer;
+		}
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		display: flex;
+		& > p {
+			flex: 1;
+			width: 33%;
+		}
 	}
 `;
 
@@ -114,6 +130,11 @@ const CartItemContainer = styled.div`
 	display: grid;
 	gap: 1rem;
 	padding: 1rem;
+
+	> hr {
+		grid-column: 1 / -1;
+		width: 100%;
+	}
 
 	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		grid-template-columns: repeat(4, 1fr);
