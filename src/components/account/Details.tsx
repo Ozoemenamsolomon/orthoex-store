@@ -41,10 +41,32 @@ const Details = () => {
 					<option>Other</option>
 				</select>
 			</FormControl>
-			<FormControl>
-				<label htmlFor="dateOfBirth">Date of Birth</label>
-				<input type="date" id="dateOfBirth" />
-			</FormControl>
+			<div>
+				<FormControl>
+					<label htmlFor="birthDay">Birth Day</label>
+					<select id="birthDay">
+						{[...Array(31)].map((_, i) => (
+							<option key={i}>{i + 1}</option>
+						))}
+					</select>
+				</FormControl>
+				<FormControl>
+					<label htmlFor="birthMonth">Birth Month</label>
+					<select id="birthMonth">
+						{[...Array(12)].map((_, i) => {
+							const date = new Date();
+							date.setMonth(i);
+							return (
+								<option key={i}>
+									{date.toLocaleString('EN-GB', {
+										month: 'long',
+									})}
+								</option>
+							);
+						})}
+					</select>
+				</FormControl>
+			</div>
 			<CTA>Save</CTA>
 		</AccountDetailsForm>
 	);
@@ -53,16 +75,26 @@ const Details = () => {
 export default Details;
 
 const AccountDetailsForm = styled.form`
-	gap: 1rem;
+	gap: 1rem 0;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	& > *:not(button):not(:nth-child(5)) {
+	& > *:not(button) {
 		width: 48%;
 	}
+	& > div:nth-child(7) {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		& > * {
+			width: 48%;
+		}
+		@media ${({ theme }) => theme.breakpoints.above.sm} {
+			width: 48%;
+		}
+	}
 
-	& > button,
-	& > *:nth-child(5) {
+	& > button {
 		width: 100%;
 	}
 `;
