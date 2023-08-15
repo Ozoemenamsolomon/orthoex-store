@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { FC } from 'react';
+import styled from 'styled-components';
 import CTA from './CTA';
 import { priceFormatter } from './ProductCard';
 
@@ -23,43 +24,15 @@ const OrderItemCard: FC<{
 	const isExpired = new Date(expiresAt).getTime() < new Date().getTime();
 
 	return (
-		<div
-			style={{
-				border: '1px solid #ccc',
-				margin: '1rem 0',
-				padding: '1rem',
-				display: 'flex',
-				flexDirection: 'column',
-			}}>
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					backgroundColor: 'var(--oex-orange-mute)',
-					marginTop: '-1rem',
-					marginInline: '-1rem',
-					padding: '1rem',
-					paddingBottom: 0,
-				}}>
-				<p
-					style={{
-						flex: '1',
-						width: '33%',
-					}}>
-					Checkout on {new Date(created_at).toDateString()}
-				</p>
-				<p
-					style={{
-						flex: '1',
-						width: '33%',
-					}}>
+		<OrderItemCardContainer>
+			<OrderGroupLabel>
+				<p>Checkout on {new Date(created_at).toDateString()}</p>
+				<p>
 					Totalling {priceFormatter.format(totalPrice)} for {cart.length} item
 					{cart.length > 1 ? 's' : ''}
 				</p>
 				<p
 					style={{
-						flex: '1',
-						width: '33%',
 						display: 'flex',
 					}}>
 					Order reference:{'  '}
@@ -68,18 +41,10 @@ const OrderItemCard: FC<{
 						{reference}
 					</strong>
 				</p>
-			</div>
+			</OrderGroupLabel>
 			<div>
 				{cart.map(item => (
-					<div
-						style={{
-							display: 'grid',
-							gridTemplateColumns: 'repeat(4,1fr)',
-							gap: '1rem',
-							padding: '1rem',
-							borderBottom: '1px solid #ccc',
-						}}
-						key={item.id}>
+					<CartItemContainer key={item.id}>
 						<span>
 							{item.quantity} x {item.name}
 						</span>
@@ -88,7 +53,7 @@ const OrderItemCard: FC<{
 						<span>{priceFormatter.format(item.price * item.quantity)}</span>
 
 						{JSON.stringify(item.variant, null, 1)}
-					</div>
+					</CartItemContainer>
 				))}
 			</div>
 			{!paid && (
@@ -116,8 +81,41 @@ const OrderItemCard: FC<{
 					)}
 				</div>
 			)}
-		</div>
+			<hr />
+		</OrderItemCardContainer>
 	);
 };
 
 export default OrderItemCard;
+
+const OrderItemCardContainer = styled.div`
+	border: 1px solid #ccc;
+	margin: 1rem 0;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+`;
+const OrderGroupLabel = styled.div`
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--oex-orange-mute);
+	margin-top: -1rem;
+	margin-inline: -1rem;
+	padding: 1rem;
+	padding-bottom: 0;
+
+	& > p {
+		flex: 1;
+		width: 33%;
+	}
+`;
+
+const CartItemContainer = styled.div`
+	display: grid;
+	gap: 1rem;
+	padding: 1rem;
+
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		grid-template-columns: repeat(4, 1fr);
+	}
+`;
