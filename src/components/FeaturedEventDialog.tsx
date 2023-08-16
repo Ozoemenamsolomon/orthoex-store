@@ -68,7 +68,6 @@ const FeaturedEventDialog: React.FC<Props> = ({ training }) => {
 	};
 	const handleCloseModal = () => {
 		setIsModalClose(prev => !prev);
-		console.log('modal close');
 	};
 
 	return (

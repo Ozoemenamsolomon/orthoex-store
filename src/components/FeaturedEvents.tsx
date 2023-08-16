@@ -4,13 +4,15 @@ import styled from 'styled-components';
 import CTA from './CTA';
 import FeaturedEventCard from './FeaturedEventCard';
 import { Container } from './styled';
-
-const FeaturedEvents = ({
-	userEmail,
-	trainingData,
-}: {
+import FeaturedEventsFilter from './FeaturedEventsFilter';
+interface FeaturedEventsProp {
 	userEmail: string;
 	trainingData: TrainingSupbaseDataType[];
+}
+
+const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
+	userEmail,
+	trainingData,
 }) => {
 	const [eventCount, setEventCount] = useState(2);
 
@@ -22,6 +24,7 @@ const FeaturedEvents = ({
 		<StyledWrapperDiv>
 			<Container id="featured-events">
 				<StyledHeading>Featured Events</StyledHeading>
+				<FeaturedEventsFilter></FeaturedEventsFilter>
 				{trainingData.slice(0, eventCount).map(training => (
 					<FeaturedEventCard
 						training={training}
