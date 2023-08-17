@@ -10,9 +10,10 @@ import ImageInfoHeader, {
 } from '@components/ImageInfoHeader';
 import ServiceStandard from '@components/ServiceStandard';
 import { Container } from '@components/styled';
-import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { TrainingSupbaseDataType, trainingSampleData } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseClient } from '@utils/supabase';
 import { GetServerSideProps, NextPage } from 'next';
+
 
 const data: ImageInfoHeaderType = {
 	image: LadyImage,
@@ -38,7 +39,6 @@ const Trainings: NextPage<{
 	user: Claims;
 	trainingData: TrainingSupbaseDataType[];
 }> = ({ user, trainingData }) => {
-	console.log(trainingData);
 	
 	return (
 		<>
@@ -46,7 +46,7 @@ const Trainings: NextPage<{
 				<ImageInfoHeader data={data} />
 				<ServiceStandard data={serviceStandardData} />
 			</Container>
-			{/* <FeaturedEvents {...{ userEmail: user?.email, trainingData }} /> */}
+			<FeaturedEvents {...{ userEmail: user?.email, trainingData: trainingSampleData }} />
 		</>
 	);
 };
