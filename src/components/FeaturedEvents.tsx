@@ -24,7 +24,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 		<StyledWrapperDiv>
 			<Container id="featured-events">
 				<StyledHeading>Featured Events</StyledHeading>
-				<FeaturedEventsFilter></FeaturedEventsFilter>
+				<FeaturedEventsFilter />
 				{trainingData.slice(0, eventCount).map(training => (
 					<FeaturedEventCard
 						training={training}

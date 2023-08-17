@@ -38,13 +38,15 @@ const Trainings: NextPage<{
 	user: Claims;
 	trainingData: TrainingSupbaseDataType[];
 }> = ({ user, trainingData }) => {
+	console.log(trainingData);
+	
 	return (
 		<>
 			<Container bg="white" paddingMultiplier={0}>
 				<ImageInfoHeader data={data} />
 				<ServiceStandard data={serviceStandardData} />
 			</Container>
-			<FeaturedEvents {...{ userEmail: user?.email, trainingData }} />
+			{/* <FeaturedEvents {...{ userEmail: user?.email, trainingData }} /> */}
 		</>
 	);
 };

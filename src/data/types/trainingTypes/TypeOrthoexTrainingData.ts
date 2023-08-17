@@ -18,4 +18,5 @@ export interface TrainingSupbaseDataType {
 	participants: 24;
 	extraInformation?: string;
 	nextTrainingDate?: string;
+	trainingexperience: 
 }
