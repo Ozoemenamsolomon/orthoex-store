@@ -15,6 +15,11 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	trainingData,
 }) => {
 	const [eventCount, setEventCount] = useState(2);
+	// const [filterList, setfilterList] = useState({
+	// 	date: '',
+	// 	title: '',
+	// 	category: ''
+	// });
 
 	const LoadMoreEvent = () => {
 		setEventCount(prev => prev + 1);

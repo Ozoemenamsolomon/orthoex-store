@@ -41,6 +41,7 @@ const FeaturedEventsFilter: React.FC = () => {
 
 	const categoryOptions = ['Category 1', 'Category 2', 'Category 3'];
 	const titleOptions = ['Title 1', 'Title 2', 'Title 3'];
+
 	return (
 		<FEWrapper>
 			<FilterWrapper>
@@ -92,7 +93,7 @@ const FeaturedEventsFilter: React.FC = () => {
 				</FilterInputs>
 				<CTA className="no-animate filter-btn">Filter</CTA>
 			</FilterWrapper>
-			{/* TODO: Chnage below component to reusable */}
+			{/* TODO: Change below component to reusable */}
 			<FilterTilesWrapper>
 				{dateRange.every(item => item !== null) && (
 					<FilterTiles>
