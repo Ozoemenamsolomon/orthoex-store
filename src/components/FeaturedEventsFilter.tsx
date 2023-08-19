@@ -93,32 +93,32 @@ const FeaturedEventsFilter: React.FC = () => {
 				<CTA className="no-animate filter-btn">Filter</CTA>
 			</FilterWrapper>
 			{/* TODO: Chnage below component to reusable */}
-			<SelectedFiltersWrapper>
+			<FilterTilesWrapper>
 				{dateRange.every(item => item !== null) && (
-					<SelectedFilter>
+					<FilterTiles>
 						<span className="selected-text">Date</span>
 						<span className="icon" onClick={() => setDateRange([null, null])}>
 							<CancelIcon />
 						</span>
-					</SelectedFilter>
+					</FilterTiles>
 				)}
 				{selectedCategories.length > 0 && (
-					<SelectedFilter>
+					<FilterTiles>
 						<span className="selected-text">Category</span>
 						<span className="icon" onClick={() => setSelectedCategories([])}>
 							<CancelIcon />
 						</span>
-					</SelectedFilter>
+					</FilterTiles>
 				)}
 				{selectedTitles.length > 0 && (
-					<SelectedFilter>
+					<FilterTiles>
 						<span className="selected-text">Title</span>
 						<span className="icon" onClick={() => setSelectedTitles([])}>
 							<CancelIcon />
 						</span>
-					</SelectedFilter>
+					</FilterTiles>
 				)}
-			</SelectedFiltersWrapper>
+			</FilterTilesWrapper>
 		</FEWrapper>
 	);
 };
@@ -129,13 +129,13 @@ const FEWrapper = styled.div`
 	margin-bottom: 1rem;
 `;
 
-const SelectedFiltersWrapper = styled.div`
+const FilterTilesWrapper = styled.div`
 	display: flex;
 	gap: 1rem;
 	margin-top: 1rem;
 `;
 
-const SelectedFilter = styled.span`
+const FilterTiles = styled.span`
 	display: inline-flex;
 	align-items: center;
 	background-color: var(--oex-orange-mute);
@@ -154,8 +154,8 @@ const SelectedFilter = styled.span`
 
 const FilterWrapper = styled.div`
 	& .filter-btn {
-		font-size: 0.8rem;
-		padding: 0.5rem 1rem;
+		font-size: 1rem;
+		padding: 0.6rem 1.2rem;
 		margin-top: 0.7rem;
 	}
 
