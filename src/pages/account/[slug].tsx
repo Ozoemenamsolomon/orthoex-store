@@ -108,7 +108,17 @@ const Account: NextPage<Props> = ({ user, data }) => {
 					) : slug === 'orders' ? (
 						<Orders orders={data.orders} />
 					) : slug === 'details' ? (
-						<Details />
+						<Details
+							user={user}
+							savedUserData={{
+								phone: '08012345678',
+								profession: 'Software Engineer',
+								firstName: 'John',
+								lastName: 'Doe',
+								birthday: '1990-01-01',
+								gender: 'male',
+							}}
+						/>
 					) : null}
 				</div>
 				{slug === 'overview' && <Overview2 />}
