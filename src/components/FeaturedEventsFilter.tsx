@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
 import CTA from './CTA';
 import 'react-datepicker/dist/react-datepicker.css';
+import CancelIcon from '@assets/new/icons/CancelIcon';
 
 const CheckboxGroup: React.FC<any> = ({
 	options,
@@ -41,63 +42,117 @@ const FeaturedEventsFilter: React.FC = () => {
 	const categoryOptions = ['Category 1', 'Category 2', 'Category 3'];
 	const titleOptions = ['Title 1', 'Title 2', 'Title 3'];
 	return (
-		<FilterWrapper>
-			<FilterInputs>
-				<DatePickerWrapper>
-					<span>Date Range:</span>
-					<DatePicker
-						className="date-picker"
-						selectsRange={true}
-						startDate={startDate}
-						endDate={endDate}
-						onChange={update => {
-							setDateRange(update);
-						}}
-						placeholderText="Select Date"
-						isClearable={true}
-					/>
-				</DatePickerWrapper>
-				<CheckBoxWrapper>
-					<CheckboxGroup
-						title="Category"
-						options={categoryOptions}
-						selectedOptions={selectedCategories}
-						onChange={(option: any) => {
-							if (selectedCategories.includes(option)) {
-								setSelectedCategories(
-									selectedCategories.filter((item: any) => item !== option),
-								);
-							} else {
-								setSelectedCategories([...selectedCategories, option]);
-							}
-						}}
-					/>
-					<CheckboxGroup
-						title="Title"
-						options={titleOptions}
-						selectedOptions={selectedTitles}
-						onChange={(option: any) => {
-							if (selectedTitles.includes(option)) {
-								setSelectedTitles(
-									selectedTitles.filter((item: any) => item !== option),
-								);
-							} else {
-								setSelectedTitles([...selectedTitles, option]);
-							}
-						}}
-					/>
-				</CheckBoxWrapper>
-			</FilterInputs>
-			<CTA className="no-animate filter-btn">Filter</CTA>
-		</FilterWrapper>
+		<FEWrapper>
+			<FilterWrapper>
+				<FilterInputs>
+					<DatePickerWrapper>
+						<span>Date Range:</span>
+						<DatePicker
+							className="date-picker"
+							selectsRange={true}
+							startDate={startDate}
+							endDate={endDate}
+							onChange={update => {
+								setDateRange(update);
+							}}
+							placeholderText="Select Date"
+							isClearable={true}
+						/>
+					</DatePickerWrapper>
+					<CheckBoxWrapper>
+						<CheckboxGroup
+							title="Category"
+							options={categoryOptions}
+							selectedOptions={selectedCategories}
+							onChange={(option: any) => {
+								if (selectedCategories.includes(option)) {
+									setSelectedCategories(
+										selectedCategories.filter((item: any) => item !== option),
+									);
+								} else {
+									setSelectedCategories([...selectedCategories, option]);
+								}
+							}}
+						/>
+						<CheckboxGroup
+							title="Title"
+							options={titleOptions}
+							selectedOptions={selectedTitles}
+							onChange={(option: any) => {
+								if (selectedTitles.includes(option)) {
+									setSelectedTitles(
+										selectedTitles.filter((item: any) => item !== option),
+									);
+								} else {
+									setSelectedTitles([...selectedTitles, option]);
+								}
+							}}
+						/>
+					</CheckBoxWrapper>
+				</FilterInputs>
+				<CTA className="no-animate filter-btn">Filter</CTA>
+			</FilterWrapper>
+			{/* TODO: Chnage below component to reusable */}
+			<SelectedFiltersWrapper>
+				{dateRange.every(item => item !== null) && (
+					<SelectedFilter>
+						<span className="selected-text">Date</span>
+						<span className="icon" onClick={() => setDateRange([null, null])}>
+							<CancelIcon />
+						</span>
+					</SelectedFilter>
+				)}
+				{selectedCategories.length > 0 && (
+					<SelectedFilter>
+						<span className="selected-text">Category</span>
+						<span className="icon" onClick={() => setSelectedCategories([])}>
+							<CancelIcon />
+						</span>
+					</SelectedFilter>
+				)}
+				{selectedTitles.length > 0 && (
+					<SelectedFilter>
+						<span className="selected-text">Title</span>
+						<span className="icon" onClick={() => setSelectedTitles([])}>
+							<CancelIcon />
+						</span>
+					</SelectedFilter>
+				)}
+			</SelectedFiltersWrapper>
+		</FEWrapper>
 	);
 };
 
 export default FeaturedEventsFilter;
 
-const FilterWrapper = styled.div`
+const FEWrapper = styled.div`
 	margin-bottom: 1rem;
-	
+`;
+
+const SelectedFiltersWrapper = styled.div`
+	display: flex;
+	gap: 1rem;
+	margin-top: 1rem;
+`;
+
+const SelectedFilter = styled.span`
+	display: inline-flex;
+	align-items: center;
+	background-color: var(--oex-orange-mute);
+	border-radius: 9px;
+	padding: 2px 8px;
+
+	& .icon {
+		cursor: pointer;
+	}
+	& .selected-text {
+		font-size: 1.2rem;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+	}
+`;
+
+const FilterWrapper = styled.div`
 	& .filter-btn {
 		font-size: 0.8rem;
 		padding: 0.5rem 1rem;
@@ -106,7 +161,7 @@ const FilterWrapper = styled.div`
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		min-width: 80%;
-		margin: 2rem auto;
+		margin: 1rem 0;
 		display: flex;
 
 		& .filter-btn {
@@ -203,7 +258,6 @@ const DatePickerWrapper = styled.div`
 	.react-datepicker__year-text--in-range {
 		background-color: #f5a97a;
 	}
-
 `;
 
 const CheckBoxWrapper = styled.div`
@@ -212,5 +266,4 @@ const CheckBoxWrapper = styled.div`
 	justify-content: center;
 	gap: 1rem;
 	min-height: 50px;
-
 `;
