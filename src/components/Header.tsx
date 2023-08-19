@@ -186,6 +186,29 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 								</li>
 							))}
 						</StyledSideBarNavLink>
+						<hr />
+						<ul
+							style={{
+								listStyleType: 'none',
+								padding: 0,
+								margin: 0,
+							}}>
+							{rightNavLinks.map((navLink, index) => (
+								<li key={`nav-link-4-${navLink.name}-${index}`}>
+									<Link
+										href={navLink.to}
+										style={{
+											display: 'flex',
+											gap: '1rem',
+											alignItems: 'center',
+											padding: '0.5rem 0',
+										}}>
+										<navLink.Icon />
+										{navLink.name}
+									</Link>
+								</li>
+							))}
+						</ul>
 					</StyledSideBarContent>
 					<CTALink
 						className="full-width"
