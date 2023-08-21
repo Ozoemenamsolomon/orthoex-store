@@ -69,8 +69,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 							</Logo>
 						</a>
 					</Link>
-					<HamburgerButton
-						onClick={() => setIsNavOpen(prevState => !prevState)}>
+					<HamburgerButton onClick={() => setIsNavOpen(true)}>
 						{isNavOpen ? (
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +97,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 					onClick={e => {
 						setIsNavOpen(prev => !prev);
 					}}>
-					<StyledCloseIcon onClick={() => setIsNavOpen(prev => !prev)}>
+					<StyledCloseIcon onClickCapture={() => setIsNavOpen(false)}>
 						<svg
 							width="14"
 							height="14"
@@ -323,7 +322,9 @@ const StyledSideBarContent = styled.div`
 	margin-block: 4rem 2rem;
 `;
 
-const StyledCloseIcon = styled.span`
+const StyledCloseIcon = styled.button`
+	border: none;
+	background: none;
 	position: absolute;
 	right: 2rem;
 `;
