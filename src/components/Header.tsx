@@ -8,7 +8,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { useCart } from 'context/cartContext';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CTALink } from './CTA';
 import NavLink from './NavLink';
@@ -16,25 +16,10 @@ import { Container } from './styled';
 
 type HeaderProp = { pathname: string };
 
-const navLinks = [
-	{ name: 'Home', to: '/' },
-	{ name: 'Composites', to: '/composites' },
-	{ name: 'Orthopaedics', to: '/orthopaedics' },
-	{ name: 'Trainings', to: '/trainings' },
-	{ name: 'About us', to: '/about' },
-	{ name: 'Careers', to: '/careers' },
-];
-
 const Header: React.FC<HeaderProp> = ({ pathname }) => {
 	const [scrollOffset, setScrollOffset] = useState(0);
 	const [isNavOpen, setIsNavOpen] = useState(false);
 	const [light, setLight] = useState(false);
-
-	const { user } = useUser();
-
-	const { cart } = useCart();
-
-	const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
 	useEffect(() => {
 		setLight(
@@ -59,12 +44,6 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 			document.removeEventListener('scroll', handleScroll);
 		};
 	}, [pathname, light]);
-
-	const rightNavLinks = [
-		{ name: 'Search', to: '/search', Icon: SearchIcon },
-		{ name: 'Account', to: '/account/overview', Icon: AccountIcon },
-		...(user ? [{ name: 'Cart', to: '/cart', Icon: CartIcon }] : []),
-	];
 
 	return (
 		<>
@@ -108,55 +87,21 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 						)}
 					</HamburgerButton>
 					<NavBar className={light ? 'light' : undefined}>
-						<div>
-							{navLinks.map((navLink, index) => (
-								<NavLink
-									key={`nav-link-${navLink.name}-${index}`}
-									{...navLink}
-								/>
-							))}
-						</div>
-						<div
-							style={{
-								display: 'flex',
-								alignItems: 'center',
-							}}>
-							{rightNavLinks.map((navLink, index) => (
-								<NavLink
-									key={`nav-link-2-${navLink.name}-${index}`}
-									{...navLink}
-									icon={() => (
-										<navLink.Icon colour={light ? 'black' : 'white'} />
-									)}
-								/>
-							))}
-							{process.env.NODE_ENV === 'development' && (
-								<p
-									style={{
-										color: 'white',
-										marginLeft: '-1rem',
-										zIndex: 1,
-										cursor: 'pointer',
-										backgroundColor: '#E25C5C',
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'center',
-										aspectRatio: '1/1',
-										padding: '0.2rem',
-										borderRadius: '50%',
-										fontSize: '0.5rem',
-									}}>
-									{totalItems}
-								</p>
-							)}
-						</div>
+						<LeftNav />
+						<RightNav light={light} />
 					</NavBar>
 				</Container>
 			</SooHeader>
 
 			{isNavOpen && (
-				<StyledSideBar>
-					<StyledCloseIcon onClick={() => setIsNavOpen(prev => !prev)}>
+				<StyledSideBar
+					onClick={e => {
+						setIsNavOpen(prev => !prev);
+					}}>
+					<StyledCloseIcon
+						onClick={() => {
+							setIsNavOpen(prev => !prev);
+						}}>
 						<svg
 							width="14"
 							height="14"
@@ -170,45 +115,14 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 						</svg>
 					</StyledCloseIcon>
 					<StyledSideBarContent>
-						<StyledSideBarNavLink>
-							{navLinks.map((navLink, index) => (
-								<li
-									style={{
-										display: 'flex',
-										flexDirection: 'column',
-										color: `${
-											navLink.to === pathname ? 'var(--oex-orange)' : ''
-										}`,
-									}}
-									key={`nav-link-3-${navLink.name}-${index}`}
-									onClick={() => setIsNavOpen(prev => !prev)}>
-									<Link href={navLink.to}>{navLink.name}</Link>
-								</li>
-							))}
-						</StyledSideBarNavLink>
-						<hr />
-						<ul
+						<LeftNav forMobile />
+						<hr
 							style={{
-								listStyleType: 'none',
-								padding: 0,
-								margin: 0,
-							}}>
-							{rightNavLinks.map((navLink, index) => (
-								<li key={`nav-link-4-${navLink.name}-${index}`}>
-									<Link
-										href={navLink.to}
-										style={{
-											display: 'flex',
-											gap: '1rem',
-											alignItems: 'center',
-											padding: '0.5rem 0',
-										}}>
-										<navLink.Icon />
-										{navLink.name}
-									</Link>
-								</li>
-							))}
-						</ul>
+								border: '1px solid #E5E5E5',
+								margin: '1rem 0',
+							}}
+						/>
+						<RightNav forMobile light={light} />
 					</StyledSideBarContent>
 					<CTALink
 						className="full-width"
@@ -223,6 +137,91 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 };
 
 export default Header;
+
+const RightNav: FC<{
+	light: boolean;
+	forMobile?: boolean;
+}> = ({ light, forMobile = false }) => {
+	const { user } = useUser();
+
+	const { cart } = useCart();
+
+	const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+	const rightNavLinks = [
+		{ name: 'Search', to: '/search', Icon: SearchIcon },
+		{ name: 'Account', to: '/account/overview', Icon: AccountIcon },
+		...(user ? [{ name: 'Cart', to: '/cart', Icon: CartIcon }] : []),
+	];
+
+	return (
+		<RightNavWrapper>
+			{rightNavLinks.map((navLink, index) => (
+				<NavLink
+					key={`nav-link-2-${navLink.name}-${index}`}
+					isRight={true}
+					{...navLink}
+					icon={() => (
+						<navLink.Icon
+							colour={forMobile ? 'black' : light ? 'black' : 'white'}
+							{...(navLink.name === 'Cart' ? { totalItems } : {})}
+						/>
+					)}
+				/>
+			))}
+		</RightNavWrapper>
+	);
+};
+
+const RightNavWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		flex-direction: row;
+		gap: 0.5rem;
+	}
+`;
+const LeftNav: FC<{ forMobile?: boolean }> = ({ forMobile = false }) => {
+	const navLinks = [
+		{ name: 'Home', to: '/' },
+		{ name: 'Composites', to: '/composites' },
+		{ name: 'Orthopaedics', to: '/orthopaedics' },
+		{ name: 'Trainings', to: '/trainings' },
+		{ name: 'About us', to: '/about' },
+		{ name: 'Careers', to: '/careers' },
+	];
+
+	return (
+		<LeftNavWrapper>
+			{navLinks.map((navLink, index) => (
+				<NavLink key={`nav-link-2-${navLink.name}-${index}`} {...navLink} />
+			))}
+		</LeftNavWrapper>
+	);
+};
+
+const LeftNavWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+
+	& > a {
+		padding: 0.35rem 0.5rem;
+		&.active {
+			position: relative;
+			color: var(--oex-orange);
+		}
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		flex-direction: row;
+		& > a {
+			text-align: center;
+		}
+	}
+`;
 
 const SooHeader = styled.header<{ light: boolean }>`
 	display: flex;
@@ -253,7 +252,8 @@ const Logo = styled.div`
 	height: 4rem;
 	position: relative;
 	aspect-ratio: 1.5;
-	@media (min-width: 600px) {
+
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
 		aspect-ratio: 2;
 	}
 `;
@@ -264,19 +264,6 @@ const NavBar = styled.nav`
 	gap: 4rem;
 	align-items: center;
 
-	& > div:first-child {
-		display: flex;
-		gap: 1.5rem;
-	}
-
-	& > div > a {
-		padding: 0.35rem 0.5rem;
-		text-align: center;
-	}
-	& > div > a.active {
-		position: relative;
-		color: var(--oex-orange);
-	}
 	&.light {
 		color: black;
 	}
@@ -314,7 +301,7 @@ const HamburgerButton = styled.span`
 	align-self: center;
 	z-index: 2;
 
-	@media (min-width: 900px) {
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 		display: none;
 	}
 `;
@@ -336,26 +323,10 @@ const StyledSideBar = styled.div`
 `;
 
 const StyledSideBarContent = styled.div`
-	margin-top: 4rem;
+	margin-block: 4rem 2rem;
 `;
 
 const StyledCloseIcon = styled.span`
 	position: absolute;
 	right: 2rem;
-	/* pointer: cursor;
-
-	&:hover {
-		pointer: cursor;
-	} */
-`;
-
-const StyledSideBarNavLink = styled.ul`
-	padding: 0;
-	margin: 0;
-
-	& > li {
-		list-style-type: none;
-		margin-bottom: 3rem;
-		padding: 0;
-	}
 `;

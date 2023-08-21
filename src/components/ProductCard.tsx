@@ -3,6 +3,7 @@ import { slugifyName } from '@utils/index';
 import { useCart } from 'context/cartContext';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
@@ -34,6 +35,7 @@ const ProductCard: React.FC<ProductCardProp> = ({
 	variantID,
 }) => {
 	const { user } = useUser();
+	const router = useRouter();
 
 	const { getQuantity: getCartQuantity, setQuantity: setCartQuantity } =
 		useCart();
@@ -81,7 +83,12 @@ const ProductCard: React.FC<ProductCardProp> = ({
 					) : (
 						<>
 							<Price blur={true}>{priceFormatter.format(111111.111)}</Price>
-							<Link href={'/api/auth/login'}>Login to view price</Link>
+							<Link
+								href={`/api/auth/login?returnTo=${encodeURIComponent(
+									router.asPath,
+								)}`}>
+								Login to view price
+							</Link>
 						</>
 					)}
 				</div>
