@@ -98,10 +98,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 					onClick={e => {
 						setIsNavOpen(prev => !prev);
 					}}>
-					<StyledCloseIcon
-						onClick={() => {
-							setIsNavOpen(prev => !prev);
-						}}>
+					<StyledCloseIcon onClick={() => setIsNavOpen(prev => !prev)}>
 						<svg
 							width="14"
 							height="14"

@@ -1,6 +1,18 @@
+import Coupon from '@assets/new/icons/account/Coupon.svg';
+import DeliveryTruck from '@assets/new/icons/account/DeliveryTruck.svg';
+import Favourite from '@assets/new/icons/account/Favourite.svg';
+import Feedback from '@assets/new/icons/account/Feedback.svg';
+import Gift from '@assets/new/icons/account/Gift.svg';
+import RecentlyViewed from '@assets/new/icons/account/RecentlyViewed.svg';
+import ShoppingBag from '@assets/new/icons/account/ShoppingBag.svg';
+import SupportAgent from '@assets/new/icons/account/SupportAgent.svg';
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
+import AccountSubNav from '@components/AccountSubNav';
+import CTA from '@components/CTA';
 import OrderItemCard from '@components/OrderItemCard';
+import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import Details from '@components/account/Details';
 import { Container } from '@components/styled';
 import { Title } from '@components/styled/Temp';
 import {
@@ -11,20 +23,8 @@ import {
 import { supabaseClient } from '@utils/supabase';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-
-import Coupon from '@assets/new/icons/account/Coupon.svg';
-import Favourite from '@assets/new/icons/account/Favourite.svg';
-import Gift from '@assets/new/icons/account/Gift.svg';
-import RecentlyViewed from '@assets/new/icons/account/RecentlyViewed.svg';
-
-import DeliveryTruck from '@assets/new/icons/account/DeliveryTruck.svg';
-import Feedback from '@assets/new/icons/account/Feedback.svg';
-import ShoppingBag from '@assets/new/icons/account/ShoppingBag.svg';
-import SupportAgent from '@assets/new/icons/account/SupportAgent.svg';
-import AccountSubNav from '@components/AccountSubNav';
-import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
-import Details from '@components/account/Details';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const accountOverviewLinks: ServiceCardType[] = [
 	{
@@ -119,6 +119,8 @@ const Account: NextPage<Props> = ({ user, data }) => {
 								gender: 'male',
 							}}
 						/>
+					) : slug === 'password' ? (
+						<ResetPassword />
 					) : null}
 				</div>
 				{slug === 'overview' && <Overview2 />}
@@ -230,5 +232,37 @@ const Orders: FC<{
 				<OrderItemCard key={order.id} {...order} />
 			))}
 		</>
+	);
+};
+
+const ResetPassword = () => {
+	const [passwordResetEmailSent, setPasswordResetEmailSent] = useState(false);
+
+	return (
+		<form
+			onSubmit={async e => {
+				e.preventDefault();
+				const response = await fetch('/api/auth/reset-password', {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				});
+				if (response.ok) {
+					setPasswordResetEmailSent(true);
+					toast.success('Password reset email sent!');
+				} else {
+					setPasswordResetEmailSent(false);
+					console.log({ response });
+					toast.error('Something went wrong trying to reset password');
+				}
+			}}>
+			<p>We will send you an email to reset your password.</p>
+			{!passwordResetEmailSent ? (
+				<CTA>Send password reset email</CTA>
+			) : (
+				<p>Check your email for the password reset link</p>
+			)}
+		</form>
 	);
 };
