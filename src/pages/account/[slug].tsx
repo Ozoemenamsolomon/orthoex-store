@@ -25,6 +25,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
 const accountOverviewLinks: ServiceCardType[] = [
 	{
@@ -223,17 +224,76 @@ const Overview2 = () => {
 const Orders: FC<{
 	orders: any[];
 }> = ({ orders }) => {
+	const [paid, setPaid] = useState(false);
+
+	const paidOrders = orders.filter(order => order.paid);
+	const unpaidOrders = orders.filter(order => !order.paid);
+
 	return (
 		<>
-			<p>
-				{orders.length} order{orders.length > 1 ? 's' : ''}
-			</p>
-			{orders.map(order => (
-				<OrderItemCard key={order.id} {...order} />
-			))}
+			<OrderFilterButtons>
+				<button
+					onClick={() => setPaid(false)}
+					className={!paid ? 'active' : ''}>
+					Unpaid Orders
+					<span>{orders.filter(order => !order.paid).length}</span>
+				</button>
+				<button onClick={() => setPaid(true)} className={paid ? 'active' : ''}>
+					Paid Orders
+					<span>{orders.filter(order => order.paid).length}</span>
+				</button>
+			</OrderFilterButtons>
+
+			{paid ? (
+				<div>
+					{paidOrders.map((order, index) => (
+						<OrderItemCard key={index} {...order} />
+					))}
+				</div>
+			) : (
+				<div>
+					{unpaidOrders.map((order, index) => (
+						<OrderItemCard key={index} {...order} />
+					))}
+				</div>
+			)}
 		</>
 	);
 };
+
+const OrderFilterButtons = styled.div`
+	display: flex;
+	gap: 1rem;
+	margin-bottom: 1rem;
+
+	& > button {
+		cursor: pointer;
+		border: none;
+		background: none;
+		display: flex;
+		align-items: center;
+		padding-bottom: 0.5rem;
+
+		& > span {
+			margin-left: 0.5rem;
+			padding: 0.25rem 0.5rem;
+			border-radius: 0.1rem;
+			background: var(--oex-grey);
+			color: white;
+			font-weight: 600;
+		}
+
+		&.active {
+			color: var(--oex-orange);
+			border-bottom: 2px solid var(--oex-orange);
+
+			& > span {
+				background: var(--oex-orange);
+				color: white;
+			}
+		}
+	}
+`;
 
 const ResetPassword = () => {
 	const [passwordResetEmailSent, setPasswordResetEmailSent] = useState(false);
