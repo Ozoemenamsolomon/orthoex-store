@@ -57,17 +57,15 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 						justifyContent: 'space-between',
 						paddingBlock: '1rem',
 					}}>
-					<Link href="/" legacyBehavior>
-						<a>
-							<Logo>
-								<Image
-									src={light ? orthoExLogoCol : orthoExLogo}
-									style={{ objectPosition: 'left' }}
-									object-fit="contain"
-									alt="OrthoEx Logo"
-									fill></Image>
-							</Logo>
-						</a>
+					<Link href="/">
+						<Logo>
+							<Image
+								src={light ? orthoExLogoCol : orthoExLogo}
+								style={{ objectPosition: 'left' }}
+								object-fit="contain"
+								alt="OrthoEx Logo"
+								fill></Image>
+						</Logo>
 					</Link>
 					<HamburgerButton onClick={() => setIsNavOpen(true)}>
 						{isNavOpen ? (

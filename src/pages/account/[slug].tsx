@@ -236,11 +236,11 @@ const Orders: FC<{
 					onClick={() => setPaid(false)}
 					className={!paid ? 'active' : ''}>
 					Unpaid Orders
-					<span>{orders.filter(order => !order.paid).length}</span>
+					<span>{unpaidOrders.length}</span>
 				</button>
 				<button onClick={() => setPaid(true)} className={paid ? 'active' : ''}>
 					Paid Orders
-					<span>{orders.filter(order => order.paid).length}</span>
+					<span>{paidOrders.length}</span>
 				</button>
 			</OrderFilterButtons>
 

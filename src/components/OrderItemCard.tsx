@@ -43,47 +43,51 @@ const OrderItemCard: FC<{
 						{reference}
 					</strong>
 				</p>
+				{!paid && (
+					<div
+						style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+						<CTA
+							onClick={() => {
+								if (isExpired) return;
+								router.push(`/composites/checkout/${reference}`);
+							}}>
+							{isExpired
+								? 'Order Expired'
+								: `Pay ${priceFormatter.format(totalPrice)}`}
+						</CTA>
+						{!isExpired ? (
+							<p>
+								Order expires in{' '}
+								{Math.ceil(
+									(new Date(expiresAt).getTime() - new Date().getTime()) /
+										(1000 * 60 * 60 * 24),
+								)}{' '}
+								Day(s)
+							</p>
+						) : (
+							<p>Order expired on {new Date(expiresAt).toDateString()}</p>
+						)}
+					</div>
+				)}
 			</OrderGroupLabel>
-			<div>
-				{cart.map(item => (
-					<CartItemContainer key={item.id}>
-						<span>
-							{item.quantity} x {item.name}
-						</span>
+			<details>
+				<summary>View products</summary>
+				<div>
+					{cart.map(item => (
+						<CartItemContainer key={item.id}>
+							<span>
+								{item.quantity} x {item.name}
+							</span>
 
-						<span>{priceFormatter.format(item.price)}</span>
-						<span>{priceFormatter.format(item.price * item.quantity)}</span>
+							<span>{priceFormatter.format(item.price)}</span>
+							<span>{priceFormatter.format(item.price * item.quantity)}</span>
 
-						{JSON.stringify(item.variant, null, 1)}
-						<hr />
-					</CartItemContainer>
-				))}
-			</div>
-			{!paid && (
-				<div style={{ display: 'flex', alignItems: 'center' }}>
-					<CTA
-						onClick={() => {
-							if (isExpired) return;
-							router.push(`/composites/checkout/${reference}`);
-						}}>
-						{isExpired
-							? 'Order Expired'
-							: `Pay ${priceFormatter.format(totalPrice)}`}
-					</CTA>
-					{!isExpired ? (
-						<p>
-							Order expires in{' '}
-							{Math.ceil(
-								(new Date(expiresAt).getTime() - new Date().getTime()) /
-									(1000 * 60 * 60 * 24),
-							)}{' '}
-							Day(s)
-						</p>
-					) : (
-						<p>Order expired on {new Date(expiresAt).toDateString()}</p>
-					)}
+							{JSON.stringify(item.variant, null, 1)}
+							<hr />
+						</CartItemContainer>
+					))}
 				</div>
-			)}
+			</details>
 		</OrderItemCardContainer>
 	);
 };
