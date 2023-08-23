@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { SetStateAction, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
 import CTA from './CTA';
@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import CancelIcon from '@assets/new/icons/CancelIcon';
 import Location from '@assets/new/icons/Location';
 import Calender from '@assets/new/icons/Calender';
+import { FilterListType } from './FeaturedEvents';
 
 const CheckboxGroup: React.FC<any> = ({
 	options,
@@ -17,7 +18,7 @@ const CheckboxGroup: React.FC<any> = ({
 		<CheckBoxGroupWrapper>
 			<div className="checkbox-title">{children}</div>
 			<div className="options">
-				{options.map((option: any) => (
+				{options.map((option: string) => (
 					<label key={option}>
 						<input
 							type="checkbox"
@@ -35,13 +36,20 @@ const CheckboxGroup: React.FC<any> = ({
 
 type DateType = Date | null;
 
-const FeaturedEventsFilter: React.FC = () => {
+interface FeaturedEventsFilter {
+	filterList: FilterListType;
+	setFilterList: React.Dispatch<SetStateAction<FilterListType>>;
+}
+
+const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
+	filterList,
+	setFilterList,
+}) => {
 	const [dateRange, setDateRange] = useState<DateType[]>([null, null]);
 	const [startDate, endDate] = dateRange;
-	const [selectedCategories, setSelectedCategories] = useState<any>([]);
-	const [selectedTitles, setSelectedTitles] = useState<any>([]);
+	const [selectedTitles, setSelectedTitles] = useState<string[]>([]);
 
-	const categoryOptions = ['Category 1', 'Category 2', 'Category 3'];
+	const categoryOptions = ['Location 1', 'Location 2', 'Location 3'];
 	const titleOptions = ['Title 1', 'Title 2', 'Title 3'];
 
 	return (
@@ -71,14 +79,20 @@ const FeaturedEventsFilter: React.FC = () => {
 					<CheckBoxWrapper>
 						<CheckboxGroup
 							options={categoryOptions}
-							selectedOptions={selectedCategories}
-							onChange={(option: any) => {
-								if (selectedCategories.includes(option)) {
-									setSelectedCategories(
-										selectedCategories.filter((item: any) => item !== option),
-									);
+							selectedOptions={filterList.location}
+							onChange={(option: string) => {
+								if (filterList.location?.includes(option)) {
+									setFilterList(prev => {
+										const filteredLocation = filterList.location.filter(
+											item => item !== option,
+										);
+										return { ...prev, location: filteredLocation };
+									});
 								} else {
-									setSelectedCategories([...selectedCategories, option]);
+									setFilterList(prev => {
+										const filteredLocation = [...filterList.location, option];
+										return { ...prev, location: filteredLocation };
+									});
 								}
 							}}>
 							<DivSection>
@@ -105,7 +119,11 @@ const FeaturedEventsFilter: React.FC = () => {
 						</CheckboxGroup>
 					</CheckBoxWrapper>
 				</FilterInputs>
-				<CTA className="no-animate filter-btn">Filter</CTA>
+				<CTA
+					className="no-animate filter-btn"
+					onClick={() => console.log(filterList)}>
+					Filter
+				</CTA>
 			</FilterWrapper>
 
 			<FilterTilesWrapper>
@@ -117,10 +135,16 @@ const FeaturedEventsFilter: React.FC = () => {
 						</span>
 					</FilterTiles>
 				)}
-				{selectedCategories.length > 0 && (
+				{filterList.location.length > 1 && (
 					<FilterTiles>
 						<span className="selected-text">Category</span>
-						<span className="icon" onClick={() => setSelectedCategories([])}>
+						<span
+							className="icon"
+							onClick={() =>
+								setFilterList(prev => {
+									return { ...prev, location: [''] };
+								})
+							}>
 							<CancelIcon />
 						</span>
 					</FilterTiles>

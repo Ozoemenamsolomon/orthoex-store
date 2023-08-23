@@ -1,25 +1,36 @@
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { useState } from 'react';
+// import { useSearchParams } from 'next/navigation';
 import styled from 'styled-components';
 import CTA from './CTA';
 import FeaturedEventCard from './FeaturedEventCard';
 import { Container } from './styled';
 import FeaturedEventsFilter from './FeaturedEventsFilter';
+
 interface FeaturedEventsProp {
 	userEmail: string;
 	trainingData: TrainingSupbaseDataType[];
+}
+
+export interface FilterListType {
+	date: { startDate: string; endDate: string };
+	title: string[];
+	location: string[];
 }
 
 const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	userEmail,
 	trainingData,
 }) => {
+	// const searchParams = useSearchParams();
 	const [eventCount, setEventCount] = useState(2);
-	// const [filterList, setfilterList] = useState({
-	// 	date: '',
-	// 	title: '',
-	// 	category: ''
-	// });
+	const [filterList, setFilterList] = useState<FilterListType>({
+		date: { startDate: '', endDate: '' },
+		title: [''],
+		location: [],
+	});
+
+
 
 	const LoadMoreEvent = () => {
 		setEventCount(prev => prev + 1);
@@ -29,7 +40,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 		<StyledWrapperDiv>
 			<Container id="featured-events">
 				<StyledHeading>Featured Events</StyledHeading>
-				<FeaturedEventsFilter />
+				<FeaturedEventsFilter filterList={filterList} setFilterList={setFilterList} />
 				{trainingData.slice(0, eventCount).map(training => (
 					<FeaturedEventCard
 						training={training}
