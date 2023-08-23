@@ -15,7 +15,7 @@ const CheckboxGroup: React.FC<any> = ({
 }) => {
 	return (
 		<CheckBoxGroupWrapper>
-			{children}
+			<div className="checkbox-title">{children}</div>
 			<div className="options">
 				{options.map((option: any) => (
 					<label key={option}>
@@ -107,7 +107,7 @@ const FeaturedEventsFilter: React.FC = () => {
 				</FilterInputs>
 				<CTA className="no-animate filter-btn">Filter</CTA>
 			</FilterWrapper>
-			{/* TODO: Change below component to reusable */}
+
 			<FilterTilesWrapper>
 				{dateRange.every(item => item !== null) && (
 					<FilterTiles>
@@ -142,6 +142,13 @@ export default FeaturedEventsFilter;
 
 const FEWrapper = styled.div`
 	margin-bottom: 1rem;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 2rem;
+	}
 `;
 
 const FilterTilesWrapper = styled.div`
@@ -163,8 +170,6 @@ const FilterTiles = styled.span`
 	& .selected-text {
 		font-size: 1.2rem;
 	}
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-	}
 `;
 
 const FilterWrapper = styled.div`
@@ -175,7 +180,6 @@ const FilterWrapper = styled.div`
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		// min-width: 80%;
 		margin: 1rem 0;
 		display: flex;
 
@@ -202,6 +206,14 @@ const CheckBoxGroupWrapper = styled.div`
 	display: inline-block;
 	width: 200px;
 	cursor: pointer;
+
+	&:hover .checkbox-title {
+		color: var(--oex-orange);
+	}
+
+	&:hover .options {
+		display: block;
+	}
 
 	& .options {
 		display: none;
@@ -236,8 +248,8 @@ const CheckBoxGroupWrapper = styled.div`
 		}
 	}
 
-	&:hover .options {
-		display: block;
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		border-left: 1px solid var(--text-colour-grey);
 	}
 `;
 
@@ -248,18 +260,20 @@ const DivSection = styled.div`
 	justify-content: center;
 	color: var(--text-colour-grey);
 	text-align: center;
+
+	&:hover {
+		color: var(--oex-orange);
+	}
 `;
 
 const DatePickerWrapper = styled.div`
 	position: relative;
 	display: flex;
-	// align-items: center;
-	// gap: 10px;
 	width: 100%;
 	color: var(--text-colour-grey);
 	min-height: 50px;
 	justify-content: center;
-	min-width: 100px;
+	min-width: 140px;
 
 	& .date-title {
 		display: flex;
@@ -282,6 +296,10 @@ const DatePickerWrapper = styled.div`
 
 	&:hover .date-picker-wrapper {
 		display: block;
+	}
+
+	&:hover {
+		color: var(--oex-orange);
 	}
 
 	& .react-datepicker__close-icon:: after {
