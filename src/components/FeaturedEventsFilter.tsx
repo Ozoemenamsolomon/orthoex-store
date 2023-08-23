@@ -4,16 +4,18 @@ import styled from 'styled-components';
 import CTA from './CTA';
 import 'react-datepicker/dist/react-datepicker.css';
 import CancelIcon from '@assets/new/icons/CancelIcon';
+import Location from '@assets/new/icons/Location';
+import Calender from '@assets/new/icons/Calender';
 
 const CheckboxGroup: React.FC<any> = ({
 	options,
 	selectedOptions,
 	onChange,
-	title,
+	children,
 }) => {
 	return (
 		<CheckBoxGroupWrapper>
-			<span>{title}</span>
+			{children}
 			<div className="options">
 				{options.map((option: any) => (
 					<label key={option}>
@@ -62,7 +64,6 @@ const FeaturedEventsFilter: React.FC = () => {
 					</DatePickerWrapper>
 					<CheckBoxWrapper>
 						<CheckboxGroup
-							title="Category"
 							options={categoryOptions}
 							selectedOptions={selectedCategories}
 							onChange={(option: any) => {
@@ -73,10 +74,13 @@ const FeaturedEventsFilter: React.FC = () => {
 								} else {
 									setSelectedCategories([...selectedCategories, option]);
 								}
-							}}
-						/>
+							}}>
+							<DivSection>
+								<Calender />
+								<span>Category</span>
+							</DivSection>
+						</CheckboxGroup>
 						<CheckboxGroup
-							title="Title"
 							options={titleOptions}
 							selectedOptions={selectedTitles}
 							onChange={(option: any) => {
@@ -87,8 +91,12 @@ const FeaturedEventsFilter: React.FC = () => {
 								} else {
 									setSelectedTitles([...selectedTitles, option]);
 								}
-							}}
-						/>
+							}}>
+							<DivSection>
+								<Location />
+								<span>Title</span>
+							</DivSection>
+						</CheckboxGroup>
 					</CheckBoxWrapper>
 				</FilterInputs>
 				<CTA className="no-animate filter-btn">Filter</CTA>
@@ -221,6 +229,16 @@ const CheckBoxGroupWrapper = styled.div`
 	&:hover .options {
 		display: block;
 	}
+`;
+
+const DivSection = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: center;
+	border-left: 1px solid var(--text-colour-grey);
+	color: var(--text-colour-grey);
+	text-align: center;
 `;
 
 const DatePickerWrapper = styled.div`
