@@ -49,18 +49,24 @@ const FeaturedEventsFilter: React.FC = () => {
 			<FilterWrapper>
 				<FilterInputs>
 					<DatePickerWrapper>
-						<span>Date Range:</span>
-						<DatePicker
-							className="date-picker"
-							selectsRange={true}
-							startDate={startDate}
-							endDate={endDate}
-							onChange={update => {
-								setDateRange(update);
-							}}
-							placeholderText="Select Date"
-							isClearable={true}
-						/>
+						<div className="date-title">
+							<Calender />
+							<span>Date</span>
+						</div>
+						<div className="date-picker-wrapper">
+							<DatePicker
+								className="date-picker"
+								selectsRange={true}
+								startDate={startDate}
+								endDate={endDate}
+								inline
+								onChange={update => {
+									setDateRange(update);
+								}}
+								placeholderText="Select Date"
+								isClearable={true}
+							/>
+						</div>
 					</DatePickerWrapper>
 					<CheckBoxWrapper>
 						<CheckboxGroup
@@ -76,8 +82,8 @@ const FeaturedEventsFilter: React.FC = () => {
 								}
 							}}>
 							<DivSection>
-								<Calender />
-								<span>Category</span>
+								<Location />
+								<span>Location</span>
 							</DivSection>
 						</CheckboxGroup>
 						<CheckboxGroup
@@ -169,7 +175,7 @@ const FilterWrapper = styled.div`
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		min-width: 80%;
+		// min-width: 80%;
 		margin: 1rem 0;
 		display: flex;
 
@@ -203,6 +209,10 @@ const CheckBoxGroupWrapper = styled.div`
 		background-color: var(--oex-off-white);
 		z-index: 1;
 		padding: 12px 0px;
+		box-shadow: 2px 0px 16px rgba(207, 207, 207, 0.1),
+			-2px 0px 4px rgba(207, 207, 207, 0.1),
+			0px 2px 12px rgba(207, 207, 207, 0.1),
+			0px -2px 16px rgba(207, 207, 207, 0.1);
 
 		& label {
 			display: inline-block;
@@ -236,20 +246,42 @@ const DivSection = styled.div`
 	align-items: center;
 	gap: 10px;
 	justify-content: center;
-	border-left: 1px solid var(--text-colour-grey);
 	color: var(--text-colour-grey);
 	text-align: center;
 `;
 
 const DatePickerWrapper = styled.div`
+	position: relative;
 	display: flex;
-	align-items: center;
-	gap: 10px;
+	// align-items: center;
+	// gap: 10px;
+	width: 100%;
+	color: var(--text-colour-grey);
+	min-height: 50px;
+	justify-content: center;
+	min-width: 100px;
+
+	& .date-title {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		justify-center: center;
+	}
+	& .date-picker-wrapper {
+		position: absolute;
+		z-index: 2;
+		display: none;
+		margin-top: 2.5rem;
+	}
 
 	& .date-picker {
 		outline-color: var(--oex-orange);
 		padding: 0.5rem 0.4rem;
 		width: 180px;
+	}
+
+	&:hover .date-picker-wrapper {
+		display: block;
 	}
 
 	& .react-datepicker__close-icon:: after {
@@ -276,6 +308,14 @@ const DatePickerWrapper = styled.div`
 	.react-datepicker__year-text--in-selecting-range,
 	.react-datepicker__year-text--in-range {
 		background-color: #f5a97a;
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		justify-content: left;
+
+		& .date-title {
+			padding-left: 20px;
+		}
 	}
 `;
 
