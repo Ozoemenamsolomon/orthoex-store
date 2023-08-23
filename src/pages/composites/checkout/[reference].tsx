@@ -161,8 +161,6 @@ export const getServerSideProps = withPageAuthRequired({
 			console.log(error);
 		}
 
-		console.log({ data });
-
 		if (!data) {
 			return {
 				redirect: {
