@@ -27,13 +27,16 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 	const initializePayment = usePaystackPayment(config);
 	const router = useRouter();
 	const [isSuccessful, setIsSuccessful] = useState(false);
-	const [address, setAddress] = useState({
-		street: '',
-		number: '',
-		city: '',
-		state: '',
-		country: '',
-	});
+	const [address, setAddress] = useState<
+		| {
+				street?: string;
+				number?: string;
+				city?: string;
+				state?: string;
+				country?: string;
+		  }
+		| undefined
+	>(undefined);
 	const [phone, setPhone] = useState('');
 
 	const isxpired = new Date(order.expiresAt).getTime() < Date.now();
@@ -88,31 +91,31 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 						<input
 							type="text"
 							placeholder="Street"
-							value={address.street}
+							value={address?.street}
 							onChange={e => setAddress({ ...address, street: e.target.value })}
 						/>
 						<input
 							type="text"
 							placeholder="Number"
-							value={address.number}
+							value={address?.number}
 							onChange={e => setAddress({ ...address, number: e.target.value })}
 						/>
 						<input
 							type="text"
 							placeholder="City"
-							value={address.city}
+							value={address?.city}
 							onChange={e => setAddress({ ...address, city: e.target.value })}
 						/>
 						<input
 							type="text"
 							placeholder="State"
-							value={address.state}
+							value={address?.state}
 							onChange={e => setAddress({ ...address, state: e.target.value })}
 						/>
 						<input
 							type="text"
 							placeholder="Country"
-							value={address.country}
+							value={address?.country}
 							onChange={e =>
 								setAddress({ ...address, country: e.target.value })
 							}
