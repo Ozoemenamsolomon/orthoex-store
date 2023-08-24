@@ -221,8 +221,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training }) => {
 								<CourseImageDiv>
 									<Image
 										className="image"
-										// src={`http:${training.eventPosterImage}`}
-										src={`https://res.cloudinary.com/dcfntkzap/image/upload/v1690004091/Training-data-images/Event_Flier_Template_Single_Person_yaj9is.png`}
+										src={`${training.eventPosterImage}`}
 										fill
 										style={{ objectFit: 'cover' }}
 										sizes="100"
