@@ -57,7 +57,7 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 			.then(res => res.json())
 			.then(data => {
 				setIsSuccessful(true);
-				router.push('/account');
+				router.push('/account/orders');
 			})
 			.catch(err => {
 				console.log(err);
@@ -133,7 +133,7 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 
 					<div>
 						{order?.cart?.map((item: any, index: any) => (
-							<CartItem key={`checkout-item-${index}`} {...item} />
+							<CartItem readOnly key={`checkout-item-${index}`} {...item} />
 						))}
 					</div>
 				</>
@@ -154,18 +154,17 @@ export const getServerSideProps = withPageAuthRequired({
 			.eq('reference', reference)
 			.eq('paid', false)
 			.eq('delivered', false)
+			.gt('expiresAt', new Date().toISOString())
 			.single();
 
 		if (error) {
 			console.log(error);
 		}
 
-		console.log({ data });
-
 		if (!data) {
 			return {
 				redirect: {
-					destination: `/account`,
+					destination: `/account/orders`,
 					permanent: false,
 				},
 			};

@@ -1,4 +1,4 @@
-import HeaderBG from '@assets/images/header-background.png';
+import HeaderBG from '@assets/new/images/header-background.png';
 
 import { CTALink } from '@components/CTA';
 import { StyledHeading } from '@components/FeaturedEvents';

@@ -11,7 +11,7 @@ import ImageInfoHeader, {
 import ServiceStandard from '@components/ServiceStandard';
 import { Container } from '@components/styled';
 import { TrainingSupbaseDataType, trainingSampleData } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
-import { supabaseClient } from '@utils/supabase';
+import { supabaseTrainingClient } from '@utils/supabase';
 import { GetServerSideProps, NextPage } from 'next';
 
 
@@ -54,7 +54,7 @@ const Trainings: NextPage<{
 export default Trainings;
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-	const response = await supabaseClient.from('training').select('*');
+	const response = await supabaseTrainingClient.from('training').select('*');
 	const trainingData = response.data as unknown as TrainingSupbaseDataType;
 
 	return {

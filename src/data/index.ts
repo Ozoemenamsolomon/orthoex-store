@@ -89,10 +89,10 @@ product!inner(id, code, name, image, description, details,
 	cat:category(name, slug, image, id))
 	`;
 
-export const getProductVariantsByCategory: (
+export const getProductVariantsByCategory = async (
 	id: string,
-	custier: string,
-) => Promise<ProductVariantType[]> = async (id, custier = 'regular') => {
+	custier = 'casual',
+) => {
 	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
@@ -143,7 +143,7 @@ export const getProductByID = async (id: string, custier?: string) => {
 
 export const getRelatedProducts = async (
 	productCode: string,
-	custier: string = 'regular',
+	custier = 'casual',
 ) => {
 	// @ts-ignore
 	const { data, error } = await supabaseClient
@@ -161,7 +161,7 @@ export const getRelatedProducts = async (
 	return data;
 };
 
-export const getAllProductVariants = async (custier: string = 'regular') => {
+export const getAllProductVariants = async (custier = 'casual') => {
 	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
@@ -176,9 +176,7 @@ export const getAllProductVariants = async (custier: string = 'regular') => {
 	return data;
 };
 
-export const getRecentlyViewedProducts = async (
-	custier: string = 'regular',
-) => {
+export const getRecentlyViewedProducts = async (custier = 'casual') => {
 	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')

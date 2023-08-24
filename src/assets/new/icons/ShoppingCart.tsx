@@ -1,6 +1,10 @@
-import React from 'react';
-
-const ShoppingCart = ({ colour = 'black' }) => (
+const ShoppingCart = ({
+	colour = 'black',
+	totalItems,
+}: {
+	colour?: string;
+	totalItems?: number;
+}) => (
 	<svg
 		width="26"
 		height="24"
@@ -26,8 +30,19 @@ const ShoppingCart = ({ colour = 'black' }) => (
 			/>
 			<path
 				d="M21.7613 7.33329C23.7122 7.33329 25.2937 5.84091 25.2937 3.99996C25.2937 2.15901 23.7122 0.666626 21.7613 0.666626C19.8105 0.666626 18.229 2.15901 18.229 3.99996C18.229 5.84091 19.8105 7.33329 21.7613 7.33329Z"
-				fill="#E25C5C"
-			/>
+				fill="#E25C5C"></path>
+			<text
+				x="5.5"
+				y="19.5"
+				fontFamily="Arial"
+				fontSize="12"
+				fill="white"
+				textAnchor="middle"
+				alignmentBaseline="middle"
+				stroke="white"
+				strokeWidth="0.5px">
+				{totalItems}
+			</text>
 		</g>
 		<defs>
 			<clipPath id="clip0_571_399">

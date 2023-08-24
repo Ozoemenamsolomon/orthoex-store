@@ -80,8 +80,6 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-	const custier = 'regular';
-
 	if (typeof params?.category !== 'string') {
 		return {
 			notFound: true,
@@ -95,7 +93,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 		};
 	}
 
-	const products = await getProductVariantsByCategory(category.id, custier);
+	const products = await getProductVariantsByCategory(category.id);
 
 	return {
 		props: {

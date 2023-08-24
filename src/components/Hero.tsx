@@ -1,4 +1,4 @@
-import DefaultBG from '@assets/images/website-backfround-image.jpg';
+import DefaultBG from '@assets/new/images/website-backfround-image.jpg';
 import Image, { StaticImageData } from 'next/image';
 import { FC } from 'react';
 import styled from 'styled-components';
