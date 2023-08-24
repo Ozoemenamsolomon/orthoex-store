@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState } from 'react';
+import React, { SetStateAction } from 'react';
 import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
 import CTA from './CTA';
@@ -64,7 +64,6 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 								endDate={filterList.date[1]}
 								inline
 								onChange={update => {
-									// setDateRange(update);
 									setFilterList(prev => ({ ...prev, date: update }));
 								}}
 								placeholderText="Select Date"

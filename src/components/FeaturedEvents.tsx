@@ -33,18 +33,9 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 
 	const searchParams = useSearchParams();
 
-	// const createQueryString = useCallback(
-	// 	(name: string, value: string) => {
-	// 		const params = new URLSearchParams(searchParams);
-	// 		params.set(name, value);
-
-	// 		return params.toString();
-	// 	},
-	// 	[searchParams]
-	// );
-
 	const LoadMoreEvent = () => {
 		setEventCount(prev => prev + 1);
+		console.log(searchParams.get('a'));
 	};
 
 	return (
