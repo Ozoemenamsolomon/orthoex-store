@@ -10,7 +10,7 @@ import ImageInfoHeader, {
 } from '@components/ImageInfoHeader';
 import ServiceStandard from '@components/ServiceStandard';
 import { Container } from '@components/styled';
-import { TrainingSupbaseDataType, trainingSampleData } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseTrainingClient } from '@utils/supabase';
 import { GetServerSideProps, NextPage } from 'next';
 
@@ -46,7 +46,7 @@ const Trainings: NextPage<{
 				<ImageInfoHeader data={data} />
 				<ServiceStandard data={serviceStandardData} />
 			</Container>
-			<FeaturedEvents {...{ userEmail: user?.email, trainingData: trainingSampleData }} />
+			<FeaturedEvents {...{ userEmail: user?.email, trainingData }} />
 		</>
 	);
 };

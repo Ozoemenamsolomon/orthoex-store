@@ -25,7 +25,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	userEmail,
 	trainingData,
 }) => {
-	const [eventCount, setEventCount] = useState(2);
+	const [eventCount, setEventCount] = useState(5);
 	const [filterList, setFilterList] = useState<FilterListType>({
 		date: [null, null],
 		title: [],
@@ -58,7 +58,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	}, [searchParams]);
 
 	const LoadMoreEvent = () => {
-		setEventCount(prev => prev + 1);
+		setEventCount(prev => prev + 3);
 	};
 
 	return (
@@ -78,7 +78,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 					/>
 				))}
 
-				{trainingData.length !== eventCount && (
+				{(trainingData.length !== eventCount || trainingData.length < eventCount) && (
 					<StyledLoadMore>
 						<CTA className="btn-width" onClick={LoadMoreEvent} white>
 							Load more events

@@ -197,7 +197,7 @@ const FilterTilesWrapper = styled.div`
 const FilterTiles = styled.span`
 	display: inline-flex;
 	align-items: center;
-	background-color: var(--oex-orange-mute);
+	background-color: #ffe8da;
 	border-radius: 9px;
 	padding: 2px 8px;
 
@@ -271,7 +271,7 @@ const CheckBoxGroupWrapper = styled.div`
 			cursor: pointer;
 
 			&:hover {
-				background-color: var(--oex-orange-mute);
+				background-color: #ffe8da;
 			}
 		}
 
