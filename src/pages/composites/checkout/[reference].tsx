@@ -46,7 +46,6 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 	 *
 	 */
 	const onSuccess = (reference: any) => {
-		// send reference to backend to verify transaction
 		fetch('/api/verify', {
 			method: 'POST',
 			headers: {
