@@ -3,7 +3,7 @@ import { UserProfile } from '@auth0/nextjs-auth0/client';
 import CTA from '@components/CTA';
 import CartItem from '@components/CartItem';
 import { priceFormatter } from '@components/ProductCard';
-import { supabaseClient } from '@utils/supabase';
+import { getUnpaidOrder } from '@data/index';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -150,20 +150,18 @@ export const getServerSideProps = withPageAuthRequired({
 	async getServerSideProps(ctx) {
 		const { reference } = ctx.query;
 
-		const { data, error } = await supabaseClient
-			.from('orders')
-			.select('*')
-			.eq('reference', reference)
-			.eq('paid', false)
-			.eq('delivered', false)
-			.gt('expiresAt', new Date().toISOString())
-			.single();
-
-		if (error) {
-			console.log(error);
+		if (typeof reference !== 'string') {
+			return {
+				redirect: {
+					destination: `/account/orders`,
+					permanent: false,
+				},
+			};
 		}
 
-		if (!data) {
+		const order = await getUnpaidOrder(reference);
+
+		if (!order) {
 			return {
 				redirect: {
 					destination: `/account/orders`,
@@ -174,7 +172,7 @@ export const getServerSideProps = withPageAuthRequired({
 
 		return {
 			props: {
-				order: data,
+				order,
 			},
 		};
 	},

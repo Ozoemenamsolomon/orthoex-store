@@ -27,6 +27,7 @@ const CartItem: FC<
 	}, [getCartQuantity, variantID]);
 
 	const removeFromCart = (id: string) => () => {
+		if (readOnly) return;
 		setCartQuantity(id, 0);
 	};
 
@@ -58,11 +59,12 @@ const CartItem: FC<
 					<p style={{ fontSize: '1rem', color: 'var(--oex-grey)' }}>
 						Size: {formatGramm.format(1234)}
 					</p>
-					{!isInStock ? (
-						<p style={{ color: 'var(--oex-danger)' }}>Out of stock</p>
-					) : (
-						<p style={{ color: 'var(--oex-success)' }}>In stock</p>
-					)}
+					{!readOnly &&
+						(!isInStock ? (
+							<p style={{ color: 'var(--oex-danger)' }}>Out of stock</p>
+						) : (
+							<p style={{ color: 'var(--oex-success)' }}>In stock</p>
+						))}
 				</div>
 			</div>
 

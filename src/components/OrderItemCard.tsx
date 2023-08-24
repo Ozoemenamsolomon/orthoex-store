@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import CTA from './CTA';
+import CartItem from './CartItem';
 import { priceFormatter } from './ProductCard';
 
 const OrderItemCard: FC<{
@@ -73,18 +74,8 @@ const OrderItemCard: FC<{
 			<details>
 				<summary>View products</summary>
 				<div>
-					{cart.map(item => (
-						<CartItemContainer key={item.id}>
-							<span>
-								{item.quantity} x {item.name}
-							</span>
-
-							<span>{priceFormatter.format(item.price)}</span>
-							<span>{priceFormatter.format(item.price * item.quantity)}</span>
-
-							{JSON.stringify(item.variant, null, 1)}
-							<hr />
-						</CartItemContainer>
+					{cart?.map((item: any, index: any) => (
+						<CartItem readOnly key={`order-product-item-${index}`} {...item} />
 					))}
 				</div>
 			</details>
