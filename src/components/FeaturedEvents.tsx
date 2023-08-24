@@ -1,6 +1,6 @@
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { useState } from 'react';
-// import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import styled from 'styled-components';
 import CTA from './CTA';
 import FeaturedEventCard from './FeaturedEventCard';
@@ -12,8 +12,10 @@ interface FeaturedEventsProp {
 	trainingData: TrainingSupbaseDataType[];
 }
 
+type DateType = Date | null;
+
 export interface FilterListType {
-	date: { startDate: string; endDate: string };
+	date: DateType[];
 	title: string[];
 	location: string[];
 }
@@ -22,15 +24,24 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	userEmail,
 	trainingData,
 }) => {
-	// const searchParams = useSearchParams();
 	const [eventCount, setEventCount] = useState(2);
 	const [filterList, setFilterList] = useState<FilterListType>({
-		date: { startDate: '', endDate: '' },
-		title: [''],
+		date: [null, null],
+		title: [],
 		location: [],
 	});
 
+	const searchParams = useSearchParams();
 
+	// const createQueryString = useCallback(
+	// 	(name: string, value: string) => {
+	// 		const params = new URLSearchParams(searchParams);
+	// 		params.set(name, value);
+
+	// 		return params.toString();
+	// 	},
+	// 	[searchParams]
+	// );
 
 	const LoadMoreEvent = () => {
 		setEventCount(prev => prev + 1);
@@ -40,7 +51,10 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 		<StyledWrapperDiv>
 			<Container id="featured-events">
 				<StyledHeading>Featured Events</StyledHeading>
-				<FeaturedEventsFilter filterList={filterList} setFilterList={setFilterList} />
+				<FeaturedEventsFilter
+					filterList={filterList}
+					setFilterList={setFilterList}
+				/>
 				{trainingData.slice(0, eventCount).map(training => (
 					<FeaturedEventCard
 						training={training}

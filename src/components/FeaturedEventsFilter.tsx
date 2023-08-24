@@ -34,8 +34,6 @@ const CheckboxGroup: React.FC<any> = ({
 	);
 };
 
-type DateType = Date | null;
-
 interface FeaturedEventsFilter {
 	filterList: FilterListType;
 	setFilterList: React.Dispatch<SetStateAction<FilterListType>>;
@@ -45,9 +43,6 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 	filterList,
 	setFilterList,
 }) => {
-	const [dateRange, setDateRange] = useState<DateType[]>([null, null]);
-	const [startDate, endDate] = dateRange;
-	const [selectedTitles, setSelectedTitles] = useState<string[]>([]);
 
 	const categoryOptions = ['Location 1', 'Location 2', 'Location 3'];
 	const titleOptions = ['Title 1', 'Title 2', 'Title 3'];
@@ -65,11 +60,12 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 							<DatePicker
 								className="date-picker"
 								selectsRange={true}
-								startDate={startDate}
-								endDate={endDate}
+								startDate={filterList.date[0]}
+								endDate={filterList.date[1]}
 								inline
 								onChange={update => {
-									setDateRange(update);
+									// setDateRange(update);
+									setFilterList(prev => ({ ...prev, date: update }));
 								}}
 								placeholderText="Select Date"
 								isClearable={true}
@@ -81,7 +77,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 							options={categoryOptions}
 							selectedOptions={filterList.location}
 							onChange={(option: string) => {
-								if (filterList.location?.includes(option)) {
+								if (filterList.location.includes(option)) {
 									setFilterList(prev => {
 										const filteredLocation = filterList.location.filter(
 											item => item !== option,
@@ -102,14 +98,20 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 						</CheckboxGroup>
 						<CheckboxGroup
 							options={titleOptions}
-							selectedOptions={selectedTitles}
-							onChange={(option: any) => {
-								if (selectedTitles.includes(option)) {
-									setSelectedTitles(
-										selectedTitles.filter((item: any) => item !== option),
-									);
+							selectedOptions={filterList.title}
+							onChange={(option: string) => {
+								if (filterList.title.includes(option)) {
+									setFilterList(prev => {
+										const filteredTitle = filterList.title.filter(
+											item => item !== option,
+										);
+										return { ...prev, title: filteredTitle };
+									});
 								} else {
-									setSelectedTitles([...selectedTitles, option]);
+									setFilterList(prev => {
+										const filteredTitle = [...filterList.title, option];
+										return { ...prev, title: filteredTitle };
+									});
 								}
 							}}>
 							<DivSection>
@@ -127,32 +129,42 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 			</FilterWrapper>
 
 			<FilterTilesWrapper>
-				{dateRange.every(item => item !== null) && (
+				{filterList.date.every(item => item !== null) && (
 					<FilterTiles>
 						<span className="selected-text">Date</span>
-						<span className="icon" onClick={() => setDateRange([null, null])}>
+						<span
+							className="icon"
+							onClick={() =>
+								setFilterList(prev => ({ ...prev, date: [null, null] }))
+							}>
 							<CancelIcon />
 						</span>
 					</FilterTiles>
 				)}
-				{filterList.location.length > 1 && (
+				{filterList.location.length > 0 && (
 					<FilterTiles>
-						<span className="selected-text">Category</span>
+						<span className="selected-text">Location</span>
 						<span
 							className="icon"
 							onClick={() =>
 								setFilterList(prev => {
-									return { ...prev, location: [''] };
+									return { ...prev, location: [] };
 								})
 							}>
 							<CancelIcon />
 						</span>
 					</FilterTiles>
 				)}
-				{selectedTitles.length > 0 && (
+				{filterList.title.length > 0 && (
 					<FilterTiles>
 						<span className="selected-text">Title</span>
-						<span className="icon" onClick={() => setSelectedTitles([])}>
+						<span
+							className="icon"
+							onClick={() =>
+								setFilterList(prev => {
+									return { ...prev, title: [] };
+								})
+							}>
 							<CancelIcon />
 						</span>
 					</FilterTiles>
