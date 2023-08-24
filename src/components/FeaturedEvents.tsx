@@ -1,6 +1,7 @@
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import CTA from './CTA';
 import FeaturedEventCard from './FeaturedEventCard';
@@ -32,10 +33,32 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	});
 
 	const searchParams = useSearchParams();
+	const router = useRouter();
+
+	const handleFilterClick = () => {
+		 router.push({
+			pathname: router.pathname,
+			query: {
+				...router.query,
+				title: filterList.title.join('**'),
+				location: filterList.location.join('**'),
+			},
+		});
+	};
+
+	useEffect(() => {
+		const location = searchParams.get('location')?.split('**') || [];
+		const title = searchParams.get('title')?.split('**') || [];
+		
+		setFilterList(prev => ({
+			...prev,
+			title: title.length > 0 ? title : [],
+			location: location.length > 0 ? location : [],
+		}));
+	}, [searchParams]);
 
 	const LoadMoreEvent = () => {
 		setEventCount(prev => prev + 1);
-		console.log(searchParams.get('a'));
 	};
 
 	return (
@@ -45,6 +68,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 				<FeaturedEventsFilter
 					filterList={filterList}
 					setFilterList={setFilterList}
+					onFilterClick={handleFilterClick}
 				/>
 				{trainingData.slice(0, eventCount).map(training => (
 					<FeaturedEventCard

@@ -37,11 +37,13 @@ const CheckboxGroup: React.FC<any> = ({
 interface FeaturedEventsFilter {
 	filterList: FilterListType;
 	setFilterList: React.Dispatch<SetStateAction<FilterListType>>;
+	onFilterClick: ()=> void
 }
 
 const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 	filterList,
 	setFilterList,
+	onFilterClick
 }) => {
 
 	const categoryOptions = ['Location 1', 'Location 2', 'Location 3'];
@@ -122,7 +124,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 				</FilterInputs>
 				<CTA
 					className="no-animate filter-btn"
-					onClick={() => console.log(filterList)}>
+					onClick={onFilterClick}>
 					Filter
 				</CTA>
 			</FilterWrapper>
