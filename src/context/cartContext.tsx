@@ -1,3 +1,5 @@
+import { getProductsByMultipleIDs } from '@data/client';
+import { ProductVariantType } from '@data/index';
 import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
@@ -9,8 +11,9 @@ type CartContextType = {
 	cart: CartState;
 	setQuantity: (productVariantID: string, quantity: number) => void;
 	getQuantity: (productVariantID: string) => number;
-	checkout: () => void;
+	checkout: (address: any) => void;
 	checkoutSingleProduct: (productVariantID: string) => void;
+	cartProductDetails?: ProductVariantType[];
 };
 
 export const CartProvider: React.FC = ({ children }) => {
@@ -72,7 +75,7 @@ export const CartProvider: React.FC = ({ children }) => {
 		return 0;
 	};
 
-	const checkout = async () => {
+	const checkout = async (address: any) => {
 		if (cart.length === 0) {
 			return;
 		}
@@ -83,7 +86,7 @@ export const CartProvider: React.FC = ({ children }) => {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ cart }),
+				body: JSON.stringify({ cart, address }),
 			});
 			const { reference } = await response.json();
 
@@ -143,12 +146,29 @@ export const CartProvider: React.FC = ({ children }) => {
 	);
 };
 
-export const useCart = () => {
+export const useCart = (
+	options?: { withProductDetails: boolean } | undefined,
+) => {
 	const context = useContext(CartContext);
-
 	if (!context) {
 		throw new Error('useCart must be used within a CartProvider');
 	}
 
-	return context;
+	const [cartProducts, setCartProducts] = useState<ProductVariantType[]>([]);
+
+	useEffect(() => {
+		if (options?.withProductDetails) {
+			getCartProductsData();
+		}
+	}, [context.cart]);
+
+	const getCartProductsData = async () => {
+		const products = await getProductsByMultipleIDs(context.cart);
+		setCartProducts(products);
+	};
+
+	return {
+		...context,
+		cartProducts,
+	};
 };
