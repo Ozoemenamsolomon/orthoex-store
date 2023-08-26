@@ -92,10 +92,9 @@ const ProductCard: React.FC<ProductCardProp> = ({
 						</>
 					)}
 				</div>
-
 				{review && <ProductStars {...review} />}
-
-				{user && getCartQuantity(variantID.toString()) != 0 ? (
+				// user &&
+				{getCartQuantity(variantID.toString()) != 0 ? (
 					<div
 						style={{
 							display: 'grid',
