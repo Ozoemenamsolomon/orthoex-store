@@ -1,6 +1,8 @@
 import { getProductsByMultipleIDs } from '@data/client';
-import { ProductVariantType } from '@data/index';
-import { singleDBProductToProductMapper } from '@data/productsData';
+import {
+	ProductVariantType,
+	singleDBProductToProductMapper,
+} from '@data/products';
 import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 

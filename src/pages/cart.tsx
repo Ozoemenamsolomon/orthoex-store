@@ -6,8 +6,11 @@ import IconText from '@components/IconText';
 import { priceFormatter } from '@components/ProductCard';
 import ProductSuggestion from '@components/ProductSuggestion';
 import { Container } from '@components/styled';
-import { ProductVariantType, getRecentlyViewedProducts } from '@data/index';
-import { singleDBProductToProductMapper } from '@data/productsData';
+import {
+	ProductVariantType,
+	getRecentlyViewedProducts,
+	singleDBProductToProductMapper,
+} from '@data/products';
 import { useCart } from 'context/cartContext';
 import { NextPage } from 'next';
 import styled from 'styled-components';

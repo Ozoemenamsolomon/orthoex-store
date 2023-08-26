@@ -26,8 +26,8 @@ import {
 	ProductVariantType,
 	getProductByID,
 	getRelatedProducts,
-} from '@data/index';
-import { singleDBProductToProductMapper } from '@data/productsData';
+	singleDBProductToProductMapper,
+} from '@data/products';
 import { Facebook, Instagram, Twitter } from '@styled-icons/bootstrap';
 import { useCart } from 'context/cartContext';
 import { NextPage } from 'next';

@@ -8,8 +8,11 @@ import CategorySection, {
 import SooSection from '@components/SooSection';
 import { Container } from '@components/styled';
 import { categories } from '@data/categories';
-import { getRelatedProducts, ProductVariantType } from '@data/index';
-import { singleDBProductToProductMapper } from '@data/productsData';
+import {
+	getRelatedProducts,
+	ProductVariantType,
+	singleDBProductToProductMapper,
+} from '@data/products';
 import { GetStaticProps, NextPage } from 'next';
 
 const viewMoreData: CategoryViewMoreType = {

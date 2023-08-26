@@ -1,5 +1,5 @@
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
-import { getProductVariantsByMultipleIDs } from '@data/index';
+import { getProductVariantsByMultipleIDs } from '@data/products';
 import { supabaseClient } from '@utils/supabase';
 import { CartState } from 'context/cartContext';
 import crypto from 'crypto';

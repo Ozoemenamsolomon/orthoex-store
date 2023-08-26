@@ -4,13 +4,12 @@ import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
 import FilterProductContainer from '@components/styled/FIlterProductContainer';
+import { getCategories, getCategoryBySlug } from '@data/index';
 import {
 	ProductVariantType,
-	getCategories,
-	getCategoryBySlug,
 	getProductVariantsByCategory,
-} from '@data/index';
-import { singleDBProductToProductMapper } from '@data/productsData';
+	singleDBProductToProductMapper,
+} from '@data/products';
 import { CategoryProps } from 'data/categories';
 import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';

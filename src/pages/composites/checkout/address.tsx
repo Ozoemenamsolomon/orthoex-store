@@ -52,6 +52,7 @@ const Address: NextPage<{
 	return (
 		<Container
 			paddingMultiplierSmall={1}
+			verticalPaddingInREM={2}
 			style={{
 				display: 'flex',
 				gap: '2rem',
