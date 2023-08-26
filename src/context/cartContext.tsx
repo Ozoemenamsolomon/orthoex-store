@@ -1,5 +1,6 @@
 import { getProductsByMultipleIDs } from '@data/client';
 import { ProductVariantType } from '@data/index';
+import { singleDBProductToProductMapper } from '@data/productsData';
 import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
@@ -168,8 +169,16 @@ export const useCart = (
 		setCartProducts(products);
 	};
 
+	const transformedProducts = cartProducts.map(product => ({
+		...singleDBProductToProductMapper(product),
+		quantity:
+			context.cart.find(
+				item => item.productVariantID === product.variantID.toString(),
+			)?.quantity || 0,
+	}));
+
 	return {
 		...context,
-		cartProducts,
+		cartProducts: transformedProducts,
 	};
 };

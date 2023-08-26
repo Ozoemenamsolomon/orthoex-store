@@ -19,19 +19,10 @@ const Cart: NextPage<{
 		withProductDetails: true,
 	});
 
-	const transformedProducts = cartProducts.map(product => ({
-		...singleDBProductToProductMapper(product),
-		quantity:
-			cart.find(item => item.productVariantID === product.variantID.toString())
-				?.quantity || 0,
-	}));
-
 	const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 	const totalPrice =
-		transformedProducts.reduce(
-			(acc, item) => acc + item.price * item.quantity,
-			0,
-		) || 0;
+		cartProducts.reduce((acc, item) => acc + item.price * item.quantity, 0) ||
+		0;
 
 	const transformedRecentlyViewedProducts = recentlyViewedProducts?.map(
 		product => singleDBProductToProductMapper(product),
@@ -46,7 +37,7 @@ const Cart: NextPage<{
 							flex: 1,
 						}}>
 						<Title>Your cart ({totalItems} items)</Title>
-						{transformedProducts?.map((product, index) => (
+						{cartProducts?.map((product, index) => (
 							<CartItem {...product} key={`cart-item-${index}`} />
 						))}
 					</div>

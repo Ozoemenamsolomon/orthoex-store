@@ -2,9 +2,12 @@ import styled from 'styled-components';
 
 export const FormControl = styled.div`
 	display: flex;
-	flex-direction: column;
 	gap: 1rem;
 	margin-bottom: 1rem;
+
+	&:not(:has(> [type='radio'])) {
+		flex-direction: column;
+	}
 
 	& > label {
 		font-weight: 600;
