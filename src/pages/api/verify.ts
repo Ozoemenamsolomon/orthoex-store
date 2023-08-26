@@ -10,8 +10,6 @@ export default withApiAuthRequired(async function verify(req, res) {
 	const session = await getSession(req, res);
 	const {
 		reference: { reference },
-		address,
-		phone,
 	} = req.body;
 
 	const { data, error } = await supabaseClient
@@ -45,7 +43,7 @@ export default withApiAuthRequired(async function verify(req, res) {
 
 	const { data: _updatedData, error: updatedError } = await supabaseClient
 		.from('orders')
-		.update({ paid: true, address, phone })
+		.update({ paid: true })
 		.eq('reference', reference)
 		.eq('user', session?.user?.email);
 

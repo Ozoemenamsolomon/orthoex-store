@@ -8,9 +8,9 @@ export default withApiAuthRequired(async function checkout(req, res) {
 	try {
 		const session = await getSession(req, res);
 
-		const cart: CartState = req.body.cart;
+		const { cart, address } = req.body as { cart: CartState; address: any };
 
-		if (!cart || cart.length === 0) {
+		if (!cart || cart.length === 0 || !address) {
 			return res.status(400).json({ error: 'Cart is empty' });
 		}
 
@@ -73,6 +73,7 @@ export default withApiAuthRequired(async function checkout(req, res) {
 				user: session?.user?.email,
 				expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7).toISOString(),
 				status: process.env.NODE_ENV,
+				address,
 			},
 		]);
 

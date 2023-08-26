@@ -154,6 +154,7 @@ export const useCart = (
 		throw new Error('useCart must be used within a CartProvider');
 	}
 
+	// TODO: look into this, it's inconsistent
 	const [cartProducts, setCartProducts] = useState<ProductVariantType[]>([]);
 
 	useEffect(() => {

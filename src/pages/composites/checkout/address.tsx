@@ -26,7 +26,7 @@ const Address: NextPage<{
 		| undefined
 	>(undefined);
 
-	const formSubitable =
+	const formSubmitable =
 		address?.CO &&
 		address?.streetAdress &&
 		address?.state &&
@@ -140,7 +140,7 @@ const Address: NextPage<{
 						</select>
 					</FormControl>
 
-					<CTA>{`Place order`}</CTA>
+					<CTA>Place order</CTA>
 				</AccountDetailsForm>
 			</div>
 			<div>
