@@ -47,53 +47,7 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 
 	return (
 		<>
-			{/* user && !user.email_verified && (
-				<div>
-					<Container
-						paddingMultiplier={2}
-						style={{
-							display: 'flex',
-							justifyContent: 'space-between',
-							paddingBlock: '1rem',
-							backgroundColor: '#FFD700',
-							color: '#000',
-						}}>
-						You are logged but not verified, send a verificationg mail by
-						clicking{' '}
-						<button
-							onClick={() => {
-								fetch(
-									`https://login.auth0.com/api/v2/jobs/verification-email`,
-									{
-										method: 'POST',
-										headers: {
-											'Content-Type': 'application/json',
-											Authorization: `Bearer ${process.env.AUTH0_MANAGEMENT_API_TOKEN}`,
-										},
-										body: JSON.stringify({
-											user_id: 'auth0|60a0c5e6c9f7f9006a9f5b2e',
-											client_id: process.env.AUTH0_CLIENT_ID,
-										}),
-									},
-								)
-									.then(res => res.json())
-									.then(res => {
-										console.log(res);
-										toast.success('Verification email sent');
-									})
-									.catch(err => {
-										console.log(err);
-										toast.error('Verification email not sent');
-									});
-							}}>
-							here
-						</button>
-					</Container>
-				</div>
-			) */}
-			<SooHeader
-				light={light}
-				className={`${scrollOffset > 0 ? 'scrolled' : ''}`}>
+			<SooHeader light={light} className={scrollOffset > 0 ? 'scrolled' : ''}>
 				<Container
 					paddingMultiplier={2}
 					style={{
@@ -108,7 +62,8 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 								style={{ objectPosition: 'left' }}
 								object-fit="contain"
 								alt="OrthoEx Logo"
-								fill></Image>
+								fill
+							/>
 						</Logo>
 					</Link>
 					<HamburgerButton onClick={() => setIsNavOpen(true)}>
@@ -357,6 +312,10 @@ const StyledSideBar = styled.div`
 
 	.full-width {
 		width: 100%;
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		display: none;
 	}
 `;
 
