@@ -7,6 +7,7 @@ import CancelIcon from '@assets/new/icons/CancelIcon';
 import Location from '@assets/new/icons/Location';
 import Calender from '@assets/new/icons/Calender';
 import { FilterListType } from './FeaturedEvents';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 
 const CheckboxGroup: React.FC<any> = ({
 	options,
@@ -34,20 +35,36 @@ const CheckboxGroup: React.FC<any> = ({
 	);
 };
 
+function getUniqueValuesByKey<T>(
+  data: T[],
+  key: keyof T
+): Array<T[keyof T]> {
+  const uniqueValuesSet = new Set<T[keyof T]>();
+  
+  data.forEach(item => {
+    uniqueValuesSet.add(item[key]);
+  });
+  
+  return Array.from(uniqueValuesSet);
+}
+
 interface FeaturedEventsFilter {
 	filterList: FilterListType;
 	setFilterList: React.Dispatch<SetStateAction<FilterListType>>;
-	onFilterClick: ()=> void
+	onFilterClick: ()=> void,
+	training: TrainingSupbaseDataType[]
 }
 
 const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 	filterList,
 	setFilterList,
-	onFilterClick
+	onFilterClick,
+	training
 }) => {
 
-	const categoryOptions = ['Location 1', 'Location 2', 'Location 3'];
-	const titleOptions = ['Title 1', 'Title 2', 'Title 3'];
+	const locationOptions = getUniqueValuesByKey<TrainingSupbaseDataType>(training,'trainingFormat');
+	const titleOptions = getUniqueValuesByKey<TrainingSupbaseDataType>(training,'title');
+	console.log(titleOptions);
 
 	return (
 		<FEWrapper>
@@ -75,7 +92,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 					</DatePickerWrapper>
 					<CheckBoxWrapper>
 						<CheckboxGroup
-							options={categoryOptions}
+							options={locationOptions}
 							selectedOptions={filterList.location}
 							onChange={(option: string) => {
 								if (filterList.location.includes(option)) {
@@ -258,6 +275,7 @@ const CheckBoxGroupWrapper = styled.div`
 		background-color: var(--oex-off-white);
 		z-index: 1;
 		padding: 12px 0px;
+		min-width: 100%;
 		box-shadow: 2px 0px 16px rgba(207, 207, 207, 0.1),
 			-2px 0px 4px rgba(207, 207, 207, 0.1),
 			0px 2px 12px rgba(207, 207, 207, 0.1),

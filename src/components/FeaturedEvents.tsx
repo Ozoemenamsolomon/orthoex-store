@@ -36,7 +36,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	const router = useRouter();
 
 	const handleFilterClick = () => {
-		 router.push({
+		router.push({
 			pathname: router.pathname,
 			query: {
 				...router.query,
@@ -49,13 +49,41 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	useEffect(() => {
 		const location = searchParams.get('location')?.split('**') || [];
 		const title = searchParams.get('title')?.split('**') || [];
-		
+
 		setFilterList(prev => ({
 			...prev,
 			title: title.length > 0 ? title : [],
 			location: location.length > 0 ? location : [],
 		}));
 	}, [searchParams]);
+
+	// const updateURL = () => {
+	// 	const queryParams: any = {};
+
+	// 	for (const key in filterList) {
+	// 		if (filterList[key].length > 0) {
+	// 			queryParams[key] = filterList[key];
+	// 		}
+	// 	}
+
+	// 	router.push({ pathname: router.pathname, query: queryParams }, undefined, {
+	// 		shallow: true,
+	// 	});
+	// };
+
+	// useEffect(() => {
+	// 	const { query } = router;
+	// 	// TODO: replace with appropriate type.
+	// 	const updatedFilters: any = {};
+
+	// 	for (const key in query) {
+	// 		updatedFilters[key] = Array.isArray(query[key])
+	// 			? query[key]
+	// 			: [query[key]];
+	// 	}
+
+	// 	setFilterList(prevFilters => ({ ...prevFilters, ...updatedFilters }));
+	// }, [router.query, router]);
 
 	const LoadMoreEvent = () => {
 		setEventCount(prev => prev + 3);
@@ -66,6 +94,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 			<Container id="featured-events">
 				<StyledHeading>Featured Events</StyledHeading>
 				<FeaturedEventsFilter
+					training={trainingData}
 					filterList={filterList}
 					setFilterList={setFilterList}
 					onFilterClick={handleFilterClick}
@@ -78,7 +107,8 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 					/>
 				))}
 
-				{(trainingData.length !== eventCount || trainingData.length < eventCount) && (
+				{(trainingData.length !== eventCount ||
+					trainingData.length < eventCount) && (
 					<StyledLoadMore>
 						<CTA className="btn-width" onClick={LoadMoreEvent} white>
 							Load more events
