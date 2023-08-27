@@ -27,7 +27,7 @@ const CheckboxGroup: React.FC<any> = ({
 							checked={selectedOptions.includes(option)}
 							onChange={() => onChange(option)}
 						/>
-						{option}
+						<span>{option}</span>
 					</label>
 				))}
 			</div>
@@ -35,36 +35,37 @@ const CheckboxGroup: React.FC<any> = ({
 	);
 };
 
-function getUniqueValuesByKey<T>(
-  data: T[],
-  key: keyof T
-): Array<T[keyof T]> {
-  const uniqueValuesSet = new Set<T[keyof T]>();
-  
-  data.forEach(item => {
-    uniqueValuesSet.add(item[key]);
-  });
-  
-  return Array.from(uniqueValuesSet);
+function getUniqueValuesByKey<T>(data: T[], key: keyof T): Array<T[keyof T]> {
+	const uniqueValuesSet = new Set<T[keyof T]>();
+
+	data.forEach(item => {
+		uniqueValuesSet.add(item[key]);
+	});
+
+	return Array.from(uniqueValuesSet);
 }
 
 interface FeaturedEventsFilter {
 	filterList: FilterListType;
 	setFilterList: React.Dispatch<SetStateAction<FilterListType>>;
-	onFilterClick: ()=> void,
-	training: TrainingSupbaseDataType[]
+	onFilterClick: () => void;
+	training: TrainingSupbaseDataType[];
 }
 
 const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 	filterList,
 	setFilterList,
 	onFilterClick,
-	training
+	training,
 }) => {
-
-	const locationOptions = getUniqueValuesByKey<TrainingSupbaseDataType>(training,'trainingFormat');
-	const titleOptions = getUniqueValuesByKey<TrainingSupbaseDataType>(training,'title');
-	console.log(titleOptions);
+	const locationOptions = getUniqueValuesByKey<TrainingSupbaseDataType>(
+		training,
+		'trainingFormat',
+	);
+	const titleOptions = getUniqueValuesByKey<TrainingSupbaseDataType>(
+		training,
+		'title',
+	);
 
 	return (
 		<FEWrapper>
@@ -139,9 +140,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 						</CheckboxGroup>
 					</CheckBoxWrapper>
 				</FilterInputs>
-				<CTA
-					className="no-animate filter-btn"
-					onClick={onFilterClick}>
+				<CTA className="no-animate filter-btn" onClick={onFilterClick}>
 					Filter
 				</CTA>
 			</FilterWrapper>
@@ -274,7 +273,7 @@ const CheckBoxGroupWrapper = styled.div`
 		position: absolute;
 		background-color: var(--oex-off-white);
 		z-index: 1;
-		padding: 12px 0px;
+		padding-top: 12px;
 		min-width: 100%;
 		box-shadow: 2px 0px 16px rgba(207, 207, 207, 0.1),
 			-2px 0px 4px rgba(207, 207, 207, 0.1),
@@ -282,8 +281,9 @@ const CheckBoxGroupWrapper = styled.div`
 			0px -2px 16px rgba(207, 207, 207, 0.1);
 
 		& label {
-			display: inline-block;
-			margin-bottom: 5px;
+			display: flex;
+			gap: 3px;
+			align-items: flex-start;
 			width: 100%;
 			padding: 5px 3px;
 			cursor: pointer;
