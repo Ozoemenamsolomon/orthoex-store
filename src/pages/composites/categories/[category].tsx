@@ -4,7 +4,7 @@ import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
 import FilterProductContainer from '@components/styled/FIlterProductContainer';
-import { getCategories, getCategoryBySlug } from '@data/index';
+import { getCategories, getCategoryBySlug } from '@data/categories';
 import {
 	ProductVariantType,
 	getProductVariantsByCategory,
@@ -92,7 +92,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 		};
 	}
 
-	const products = await getProductVariantsByCategory(category.id);
+	const products = await getProductVariantsByCategory(category.id.toString());
 
 	return {
 		props: {

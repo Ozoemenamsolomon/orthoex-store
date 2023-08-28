@@ -1,3 +1,8 @@
+import { Category } from './categories';
+
+/**
+ * This is the product type we need in the codebase
+ */
 type ProductType = {
 	id: number;
 	code: string;
@@ -5,17 +10,8 @@ type ProductType = {
 	image: string;
 	description: string;
 	details: string;
-	brand: {
-		name: string;
-		slug: string;
-		id: number;
-	};
-	category: {
-		name: string;
-		slug: string;
-		image: string;
-		id: number;
-	};
+	brand: Brand;
+	category: Category;
 	quantityAvailable: number;
 	price: number;
 	variant: Variant;
@@ -35,47 +31,41 @@ type Variant = {
 	material: string | null;
 };
 
-type VariantProduct = {
-	id: number;
-	code: string;
+type Brand = {
 	name: string;
-	image: string;
-	description: string;
-	details: string;
-	brand: {
-		name: string;
-		slug: string;
-		id: number;
-	};
-	cat: {
-		name: string;
-		slug: string;
-		image: string;
-		id: number;
-	};
-};
-
-type VariantPrice = {
+	slug: string;
 	id: number;
-	custier: 'prime' | 'regular' | 'casual' | null;
-	price: number;
-	priceInKobo: number;
 };
 
-type VariantQuantity = {
-	id: number;
-	quantity: number;
-};
-
+/**
+ * This is the product type we get fom the DB
+ */
 export type ProductVariantType = {
 	variant: Variant;
 	variantID: number;
 	/**
 	 * @note array most likely contains only one item based on the custier
 	 */
-	prices: VariantPrice[];
-	product: VariantProduct;
-	quantity: VariantQuantity | null;
+	prices: {
+		id: number;
+		custier: 'prime' | 'regular' | 'casual' | null;
+		price: number;
+		priceInKobo: number;
+	}[];
+	product: {
+		id: number;
+		code: string;
+		name: string;
+		image: string;
+		description: string;
+		details: string;
+		brand: Brand;
+		cat: Category;
+	};
+	quantity: {
+		id: number;
+		quantity: number;
+	} | null;
 	reviews?: {
 		stars: number;
 	}[];
