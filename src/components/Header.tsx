@@ -47,7 +47,9 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 
 	return (
 		<>
-			<SooHeader light={light} className={scrollOffset > 0 ? 'scrolled' : ''}>
+			<SooHeader
+				light={light}
+				className={`${scrollOffset > 0 ? 'scrolled' : ''}`}>
 				<Container
 					paddingMultiplier={2}
 					style={{
