@@ -1,4 +1,4 @@
-import React, { SetStateAction } from 'react';
+import React, { SetStateAction, useCallback } from 'react';
 import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
 import CTA from './CTA';
@@ -8,12 +8,16 @@ import Location from '@assets/new/icons/Location';
 import Calender from '@assets/new/icons/Calender';
 import { FilterListType } from './FeaturedEvents';
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { useRouter } from 'next/router';
+
+type InputEventType = React.ChangeEvent<HTMLInputElement>;
 
 const CheckboxGroup: React.FC<any> = ({
 	options,
 	selectedOptions,
 	onChange,
 	children,
+	inputName,
 }) => {
 	return (
 		<CheckBoxGroupWrapper>
@@ -22,10 +26,11 @@ const CheckboxGroup: React.FC<any> = ({
 				{options.map((option: string) => (
 					<label key={option}>
 						<input
+							name={inputName}
 							type="checkbox"
 							value={option}
 							checked={selectedOptions.includes(option)}
-							onChange={() => onChange(option)}
+							onChange={event => onChange(option, event)}
 						/>
 						<span>{option}</span>
 					</label>
@@ -67,6 +72,64 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 		'title',
 	);
 
+	const router = useRouter();
+
+	const handleQueryParamsOnChange = useCallback(
+		(name: string, value: string) => {
+			const queryParams = new URLSearchParams(
+				router.query as Record<string, string>,
+			);
+
+			// value = 'bam', name = 'title'
+			// if (params.has(name)) {
+			// 	// params.delete(name);
+			// 		const paramValues = params.getAll(name); // ['bar', 'baz', 'bam']
+			// 		console.log(paramValues);
+			// 		if(paramValues.includes(value)){
+			// 			const newParamValues = paramValues.filter(paramValue => paramValue !== value);
+			// 			if(newParamValues.length > 1){
+			// 				newParamValues.forEach(newParamValue => params.append(name, newParamValue))
+			// 			} else {
+			// 				params.delete(name);
+			// 			}
+			// 		}else {
+			// 			params.append(name, value)
+			// 		}
+
+			// } else {
+			// 	params.set(name, value);
+			// }
+			if (queryParams.has(name)) {
+				const paramValues = queryParams.getAll(name);
+				
+				// If the value is already present, remove it
+				if (paramValues.includes(value)) {
+					queryParams.delete(name);
+					paramValues.filter(paramValue => paramValue !== value).forEach(title => queryParams.append(name, title));
+				} else {
+					queryParams.append(name, value);
+				}
+			} else {
+				queryParams.append(name, value);
+			}
+
+			// return params.toString();
+			router.push({pathname: router.pathname, query: queryParams.toString()},undefined,{ scroll: false },);
+		},
+		[router],
+	);
+
+	const deleteParams = useCallback((name: string) => {
+		const queryParams = new URLSearchParams(
+			router.query as Record<string, string>,
+		);
+		if(queryParams.has(name)){
+			queryParams.delete(name);
+		}
+		
+		router.push({pathname: router.pathname, query: queryParams.toString() }, undefined, {scroll: false});
+	}, [router])
+
 	return (
 		<FEWrapper>
 			<FilterWrapper>
@@ -78,12 +141,13 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 						</div>
 						<div className="date-picker-wrapper">
 							<DatePicker
+								name="date"
 								className="date-picker"
 								selectsRange={true}
 								startDate={filterList.date[0]}
 								endDate={filterList.date[1]}
 								inline
-								onChange={update => {
+								onChange={(update, event) => {
 									setFilterList(prev => ({ ...prev, date: update }));
 								}}
 								placeholderText="Select Date"
@@ -93,9 +157,13 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 					</DatePickerWrapper>
 					<CheckBoxWrapper>
 						<CheckboxGroup
+							inputName={'location'}
 							options={locationOptions}
 							selectedOptions={filterList.location}
-							onChange={(option: string) => {
+							onChange={(option: string, e: InputEventType) => {
+								// update the route
+								handleQueryParamsOnChange(e.target.name, e.target.value);
+								// update filter state
 								if (filterList.location.includes(option)) {
 									setFilterList(prev => {
 										const filteredLocation = filterList.location.filter(
@@ -116,9 +184,11 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 							</DivSection>
 						</CheckboxGroup>
 						<CheckboxGroup
+							inputName={'title'}
 							options={titleOptions}
 							selectedOptions={filterList.title}
-							onChange={(option: string) => {
+							onChange={(option: string, e: InputEventType) => {
+								handleQueryParamsOnChange(e.target.name, e.target.value);
 								if (filterList.title.includes(option)) {
 									setFilterList(prev => {
 										const filteredTitle = filterList.title.filter(
@@ -163,11 +233,12 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 						<span className="selected-text">Location</span>
 						<span
 							className="icon"
-							onClick={() =>
+							onClick={() => {
+								deleteParams('location');
 								setFilterList(prev => {
 									return { ...prev, location: [] };
 								})
-							}>
+							}}>
 							<CancelIcon />
 						</span>
 					</FilterTiles>
@@ -177,11 +248,12 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 						<span className="selected-text">Title</span>
 						<span
 							className="icon"
-							onClick={() =>
+							onClick={() => {
+								deleteParams('title')
 								setFilterList(prev => {
 									return { ...prev, title: [] };
 								})
-							}>
+							}}>
 							<CancelIcon />
 						</span>
 					</FilterTiles>
@@ -273,7 +345,6 @@ const CheckBoxGroupWrapper = styled.div`
 		position: absolute;
 		background-color: var(--oex-off-white);
 		z-index: 1;
-		padding-top: 12px;
 		min-width: 100%;
 		box-shadow: 2px 0px 16px rgba(207, 207, 207, 0.1),
 			-2px 0px 4px rgba(207, 207, 207, 0.1),
