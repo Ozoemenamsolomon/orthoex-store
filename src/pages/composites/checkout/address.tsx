@@ -7,8 +7,7 @@ import { Title } from '@components/styled/Temp';
 import { formatPrice } from '@utils/index';
 import { useCart } from 'context/cartContext';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 const Address: NextPage<{
@@ -44,8 +43,6 @@ const Address: NextPage<{
 			  address.phone &&
 			  deliveryFee;
 
-	const router = useRouter();
-
 	const { cart, cartProducts, checkout } = useCart({
 		withProductDetails: true,
 	});
@@ -56,12 +53,6 @@ const Address: NextPage<{
 			name: string;
 		}[]
 	>([]);
-
-	useEffect(() => {
-		if (cart.length < 1) {
-			router.replace('/cart');
-		}
-	}, [cart]);
 
 	const subTotal =
 		cartProducts.reduce((acc, item) => acc + item.price * item.quantity, 0) ||
