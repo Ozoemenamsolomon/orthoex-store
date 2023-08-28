@@ -120,18 +120,3 @@ const OrderGroupLabel = styled.div`
 		}
 	}
 `;
-
-const CartItemContainer = styled.div`
-	display: grid;
-	gap: 1rem;
-	padding: 1rem;
-
-	> hr {
-		grid-column: 1 / -1;
-		width: 100%;
-	}
-
-	@media ${({ theme }) => theme.breakpoints.above.sm} {
-		grid-template-columns: repeat(4, 1fr);
-	}
-`;

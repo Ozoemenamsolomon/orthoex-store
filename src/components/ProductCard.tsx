@@ -93,7 +93,7 @@ const ProductCard: React.FC<ProductCardProp> = ({
 					)}
 				</div>
 				{review && <ProductStars {...review} />}
-				// user &&
+				{/* user && */}
 				{getCartQuantity(variantID.toString()) != 0 ? (
 					<div
 						style={{

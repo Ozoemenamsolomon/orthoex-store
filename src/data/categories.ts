@@ -1,3 +1,5 @@
+import { supabaseClient } from '@utils/supabase';
+
 import category1 from '@assets/new/images/category1.jpg';
 import category10 from '@assets/new/images/category10.jpg';
 import category2 from '@assets/new/images/category2.jpg';
@@ -68,8 +70,6 @@ export const categories: CategoryProps[] = [
 		image: category10,
 	},
 ];
-
-import { supabaseClient } from '@utils/supabase';
 
 export type Category = {
 	name: string;

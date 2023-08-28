@@ -164,7 +164,7 @@ export const useCart = (
 		if (options?.withProductDetails) {
 			getCartProductsData();
 		}
-	}, [context.cart]);
+	}, [context.cart, options]);
 
 	const getCartProductsData = async () => {
 		const products = await getProductsByMultipleIDs(context.cart);

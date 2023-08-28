@@ -1,3 +1,4 @@
+import { supabaseClient } from '@utils/supabase';
 import { Category } from './categories';
 
 /**
