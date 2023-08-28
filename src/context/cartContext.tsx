@@ -79,7 +79,7 @@ export const CartProvider: React.FC = ({ children }) => {
 	};
 
 	const checkout = async (address: any) => {
-		if (cart.length === 0) {
+		if (cart.length < 1) {
 			return;
 		}
 
@@ -164,7 +164,7 @@ export const useCart = (
 		if (options?.withProductDetails) {
 			getCartProductsData();
 		}
-	}, [context.cart, options]);
+	}, [context.cart]);
 
 	const getCartProductsData = async () => {
 		const products = await getProductsByMultipleIDs(context.cart);

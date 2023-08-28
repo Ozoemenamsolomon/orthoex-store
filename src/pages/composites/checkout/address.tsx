@@ -7,31 +7,44 @@ import { Title } from '@components/styled/Temp';
 import { formatPrice } from '@utils/index';
 import { useCart } from 'context/cartContext';
 import { NextPage } from 'next';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
-
 const Address: NextPage<{
 	states: {
 		id: number;
 		name: string;
 	}[];
 }> = ({ states }) => {
-	const [address, setAddress] = useState<
-		| {
-				CO?: string;
-				streetAdress?: string;
-				state?: string;
-				lga?: string;
-				phone?: string;
-				deliveryOption?: string;
-		  }
-		| undefined
-	>(undefined);
+	const [address, setAddress] = useState<{
+		fullName: string;
+		phone: string;
+		streetAdress: string;
+		state: string;
+		lga: string;
+		deliveryOption: string;
+	}>({
+		fullName: '',
+		phone: '',
+		streetAdress: '',
+		state: '',
+		lga: '',
+		deliveryOption: 'selfPickup',
+	});
+	const [deliveryFee, setDeliveryFee] = useState(0);
 
 	const formSubmitable =
-		address?.CO && address?.phone && address?.deliveryOption === 'waybill'
-			? address?.streetAdress && address?.state && address?.lga
-			: true;
+		address.deliveryOption === 'selfPickup'
+			? address.fullName && address.phone
+			: address.streetAdress &&
+			  address.state &&
+			  address.lga &&
+			  address.fullName &&
+			  address.phone &&
+			  deliveryFee;
+
+	const router = useRouter();
 
 	const { cart, cartProducts, checkout } = useCart({
 		withProductDetails: true,
@@ -44,7 +57,12 @@ const Address: NextPage<{
 		}[]
 	>([]);
 
-	const [deliveryFee, setDeliveryFee] = useState(0);
+	useEffect(() => {
+		if (cart.length < 1) {
+			router.replace('/cart');
+		}
+	}, [cart]);
+
 	const subTotal =
 		cartProducts.reduce((acc, item) => acc + item.price * item.quantity, 0) ||
 		0;
@@ -69,10 +87,11 @@ const Address: NextPage<{
 						e.preventDefault();
 
 						if (!formSubmitable) {
+							toast.error('Some fields are missing');
 							return;
 						}
 
-						console.log(address);
+						console.log({ address });
 						checkout(address);
 					}}>
 					<FormControl>
@@ -80,9 +99,11 @@ const Address: NextPage<{
 						<input
 							type="text"
 							placeholder="John Doe"
-							value={address?.CO}
+							value={address?.fullName}
 							id="fullName"
-							onChange={e => setAddress({ ...address, CO: e.target.value })}
+							onChange={e =>
+								setAddress({ ...address, fullName: e.target.value })
+							}
 						/>
 					</FormControl>
 					<FormControl>
@@ -107,6 +128,7 @@ const Address: NextPage<{
 								name="deliveryOption"
 								id="selfPickup"
 								value="selfPickup"
+								checked={address?.deliveryOption === 'selfPickup'}
 								onChange={e =>
 									setAddress({ ...address, deliveryOption: e.target.value })
 								}
@@ -119,6 +141,7 @@ const Address: NextPage<{
 								name="deliveryOption"
 								id="waybill"
 								value="waybill"
+								checked={address?.deliveryOption === 'waybill'}
 								onChange={e =>
 									setAddress({ ...address, deliveryOption: e.target.value })
 								}
