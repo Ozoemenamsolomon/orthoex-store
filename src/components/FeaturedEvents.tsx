@@ -1,12 +1,11 @@
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import CTA from './CTA';
 import FeaturedEventCard from './FeaturedEventCard';
 import { Container } from './styled';
 import FeaturedEventsFilter from './FeaturedEventsFilter';
+import { useRouter } from 'next/router';
 
 interface FeaturedEventsProp {
 	userEmail: string;
@@ -32,58 +31,36 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 		location: [],
 	});
 
-	const searchParams = useSearchParams();
+
 	const router = useRouter();
 
+
 	const handleFilterClick = () => {
-		router.push({
-			pathname: router.pathname,
-			query: {
-				...router.query,
-				title: filterList.title.join('**'),
-				location: filterList.location.join('**'),
-			},
-		});
+		// Filter the trainingData using the filter parameters
 	};
 
 	useEffect(() => {
-		const location = searchParams.get('location')?.split('**') || [];
-		const title = searchParams.get('title')?.split('**') || [];
+
+		const getParamValues = (paramKey: string) => {
+			const titleValues = [] as any;
+
+			for (const [key, value] of Object.entries(router.query)) {
+				if (key.startsWith(paramKey)) {
+					titleValues.push(value);
+				}
+			}
+			return titleValues;
+		};
+
+		const location = getParamValues('location') || [];
+		const title = getParamValues('title') || [];
 
 		setFilterList(prev => ({
 			...prev,
-			title: title.length > 0 ? title : [],
-			location: location.length > 0 ? location : [],
+			title,
+			location,
 		}));
-	}, [searchParams]);
-
-	// const updateURL = () => {
-	// 	const queryParams: any = {};
-
-	// 	for (const key in filterList) {
-	// 		if (filterList[key].length > 0) {
-	// 			queryParams[key] = filterList[key];
-	// 		}
-	// 	}
-
-	// 	router.push({ pathname: router.pathname, query: queryParams }, undefined, {
-	// 		shallow: true,
-	// 	});
-	// };
-
-	// useEffect(() => {
-	// 	const { query } = router;
-	// 	// TODO: replace with appropriate type.
-	// 	const updatedFilters: any = {};
-
-	// 	for (const key in query) {
-	// 		updatedFilters[key] = Array.isArray(query[key])
-	// 			? query[key]
-	// 			: [query[key]];
-	// 	}
-
-	// 	setFilterList(prevFilters => ({ ...prevFilters, ...updatedFilters }));
-	// }, [router.query, router]);
+	}, [router.query]);
 
 	const LoadMoreEvent = () => {
 		setEventCount(prev => prev + 3);

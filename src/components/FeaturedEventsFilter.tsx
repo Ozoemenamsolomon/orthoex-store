@@ -1,18 +1,26 @@
-import React, { SetStateAction, useCallback } from 'react';
-import DatePicker from 'react-datepicker';
-import styled from 'styled-components';
-import CTA from './CTA';
-import 'react-datepicker/dist/react-datepicker.css';
+import Calender from '@assets/new/icons/Calender';
 import CancelIcon from '@assets/new/icons/CancelIcon';
 import Location from '@assets/new/icons/Location';
-import Calender from '@assets/new/icons/Calender';
-import { FilterListType } from './FeaturedEvents';
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { useRouter } from 'next/router';
+import React, { ReactNode, SetStateAction, useCallback } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import styled from 'styled-components';
+import CTA from './CTA';
+import { FilterListType } from './FeaturedEvents';
 
 type InputEventType = React.ChangeEvent<HTMLInputElement>;
 
-const CheckboxGroup: React.FC<any> = ({
+type CheckboxGroupType = {
+	options: string[],
+	selectedOptions: string[],
+	inputName: string,
+	onChange: (option: string, event: any) => void,
+	children: ReactNode
+}
+
+const CheckboxGroup: React.FC<CheckboxGroupType> = ({
 	options,
 	selectedOptions,
 	onChange,
@@ -23,10 +31,10 @@ const CheckboxGroup: React.FC<any> = ({
 		<CheckBoxGroupWrapper>
 			<div className="checkbox-title">{children}</div>
 			<div className="options">
-				{options.map((option: string) => (
+				{options.map((option: string, idx) => (
 					<label key={option}>
 						<input
-							name={inputName}
+							name={`${inputName}-${idx+1}`}
 							type="checkbox"
 							value={option}
 							checked={selectedOptions.includes(option)}
@@ -66,11 +74,12 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 	const locationOptions = getUniqueValuesByKey<TrainingSupbaseDataType>(
 		training,
 		'trainingFormat',
-	);
+	) as string[];
 	const titleOptions = getUniqueValuesByKey<TrainingSupbaseDataType>(
 		training,
 		'title',
-	);
+	) as string[];
+
 
 	const router = useRouter();
 
@@ -79,42 +88,12 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 			const queryParams = new URLSearchParams(
 				router.query as Record<string, string>,
 			);
-
-			// value = 'bam', name = 'title'
-			// if (params.has(name)) {
-			// 	// params.delete(name);
-			// 		const paramValues = params.getAll(name); // ['bar', 'baz', 'bam']
-			// 		console.log(paramValues);
-			// 		if(paramValues.includes(value)){
-			// 			const newParamValues = paramValues.filter(paramValue => paramValue !== value);
-			// 			if(newParamValues.length > 1){
-			// 				newParamValues.forEach(newParamValue => params.append(name, newParamValue))
-			// 			} else {
-			// 				params.delete(name);
-			// 			}
-			// 		}else {
-			// 			params.append(name, value)
-			// 		}
-
-			// } else {
-			// 	params.set(name, value);
-			// }
-			if (queryParams.has(name)) {
-				const paramValues = queryParams.getAll(name);
-				
-				// If the value is already present, remove it
-				if (paramValues.includes(value)) {
-					queryParams.delete(name);
-					paramValues.filter(paramValue => paramValue !== value).forEach(title => queryParams.append(name, title));
-				} else {
-					queryParams.append(name, value);
-				}
+			if (queryParams.get(name)) {
+				queryParams.delete(name);
 			} else {
-				queryParams.append(name, value);
+				queryParams.set(name, value);
 			}
-
-			// return params.toString();
-			router.push({pathname: router.pathname, query: queryParams.toString()},undefined,{ scroll: false },);
+			router.push({pathname: router.pathname, query: queryParams.toString()},undefined,{ scroll: false });
 		},
 		[router],
 	);
@@ -163,6 +142,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 							onChange={(option: string, e: InputEventType) => {
 								// update the route
 								handleQueryParamsOnChange(e.target.name, e.target.value);
+								
 								// update filter state
 								if (filterList.location.includes(option)) {
 									setFilterList(prev => {
@@ -189,6 +169,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 							selectedOptions={filterList.title}
 							onChange={(option: string, e: InputEventType) => {
 								handleQueryParamsOnChange(e.target.name, e.target.value);
+
 								if (filterList.title.includes(option)) {
 									setFilterList(prev => {
 										const filteredTitle = filterList.title.filter(
