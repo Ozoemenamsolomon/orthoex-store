@@ -1,3 +1,5 @@
+import { supabaseClient } from '@utils/supabase';
+
 import category1 from '@assets/new/images/category1.jpg';
 import category10 from '@assets/new/images/category10.jpg';
 import category2 from '@assets/new/images/category2.jpg';
@@ -68,3 +70,36 @@ export const categories: CategoryProps[] = [
 		image: category10,
 	},
 ];
+
+export type Category = {
+	name: string;
+	slug: string;
+	image: string;
+	id: number;
+};
+
+export const getCategories = async () => {
+	const { data, error } = await supabaseClient
+		.from('categories')
+		.select('id,name,image,slug');
+
+	if (error) {
+		console.log({ error });
+		return [];
+	}
+	return data as Category[];
+};
+
+export const getCategoryBySlug = async (slug: string) => {
+	const { data, error } = await supabaseClient
+		.from('categories')
+		.select('id,name,image,slug')
+		.eq('slug', slug)
+		.single();
+
+	if (error) {
+		console.log({ error });
+		return null;
+	}
+	return data as Category;
+};

@@ -4,13 +4,12 @@ import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
 import FilterProductContainer from '@components/styled/FIlterProductContainer';
+import { getCategories, getCategoryBySlug } from '@data/categories';
 import {
 	ProductVariantType,
-	getCategories,
-	getCategoryBySlug,
 	getProductVariantsByCategory,
-} from '@data/index';
-import { singleDBProductToProductMapper } from '@data/productsData';
+	singleDBProductToProductMapper,
+} from '@data/products';
 import { CategoryProps } from 'data/categories';
 import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
@@ -93,7 +92,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 		};
 	}
 
-	const products = await getProductVariantsByCategory(category.id);
+	const products = await getProductVariantsByCategory(category.id.toString());
 
 	return {
 		props: {

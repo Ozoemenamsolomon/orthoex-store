@@ -1,3 +1,8 @@
+import { getProductsByMultipleIDs } from '@data/client';
+import {
+	ProductVariantType,
+	singleDBProductToProductMapper,
+} from '@data/products';
 import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
@@ -9,8 +14,9 @@ type CartContextType = {
 	cart: CartState;
 	setQuantity: (productVariantID: string, quantity: number) => void;
 	getQuantity: (productVariantID: string) => number;
-	checkout: () => void;
+	checkout: (address: any) => void;
 	checkoutSingleProduct: (productVariantID: string) => void;
+	cartProductDetails?: ProductVariantType[];
 };
 
 export const CartProvider: React.FC = ({ children }) => {
@@ -72,8 +78,8 @@ export const CartProvider: React.FC = ({ children }) => {
 		return 0;
 	};
 
-	const checkout = async () => {
-		if (cart.length === 0) {
+	const checkout = async (address: any) => {
+		if (cart.length < 1) {
 			return;
 		}
 
@@ -83,7 +89,7 @@ export const CartProvider: React.FC = ({ children }) => {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ cart }),
+				body: JSON.stringify({ cart, address }),
 			});
 			const { reference } = await response.json();
 
@@ -143,12 +149,38 @@ export const CartProvider: React.FC = ({ children }) => {
 	);
 };
 
-export const useCart = () => {
+export const useCart = (
+	options?: { withProductDetails: boolean } | undefined,
+) => {
 	const context = useContext(CartContext);
-
 	if (!context) {
 		throw new Error('useCart must be used within a CartProvider');
 	}
 
-	return context;
+	// TODO: look into this, it's inconsistent
+	const [cartProducts, setCartProducts] = useState<ProductVariantType[]>([]);
+
+	useEffect(() => {
+		if (options?.withProductDetails) {
+			getCartProductsData();
+		}
+	}, [context.cart]);
+
+	const getCartProductsData = async () => {
+		const products = await getProductsByMultipleIDs(context.cart);
+		setCartProducts(products);
+	};
+
+	const transformedProducts = cartProducts.map(product => ({
+		...singleDBProductToProductMapper(product),
+		quantity:
+			context.cart.find(
+				item => item.productVariantID === product.variantID.toString(),
+			)?.quantity || 0,
+	}));
+
+	return {
+		...context,
+		cartProducts: transformedProducts,
+	};
 };

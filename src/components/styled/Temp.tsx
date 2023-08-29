@@ -1,3 +1,4 @@
+// TODO solve this temp
 import creditCard from '@assets/new/icons/credit-card-black.svg';
 import deliveryVan from '@assets/new/icons/delivery-van-black.svg';
 import headphone from '@assets/new/icons/headphone-black.svg';
@@ -52,7 +53,6 @@ export const ProductCountInput = styled.input`
 	}
 `;
 
-// TODO: get rid of export
 export const ProductCountControlButton = styled.button`
 	height: 2.5rem;
 	aspect-ratio: 1;

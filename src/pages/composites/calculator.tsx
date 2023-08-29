@@ -11,8 +11,11 @@ import {
 	FormRadioWrapper,
 	FormSelect,
 } from '@components/styled/Forms';
-import { getRelatedProducts, ProductVariantType } from '@data/index';
-import { singleDBProductToProductMapper } from '@data/productsData';
+import {
+	getRelatedProducts,
+	ProductVariantType,
+	singleDBProductToProductMapper,
+} from '@data/products';
 import { GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
 import { useState } from 'react';

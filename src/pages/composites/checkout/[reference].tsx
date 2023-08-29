@@ -1,11 +1,10 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import CTA from '@components/CTA';
-import CartItem from '@components/CartItem';
 import { priceFormatter } from '@components/ProductCard';
-import { supabaseClient } from '@utils/supabase';
+import { getUnpaidOrder } from '@data/index';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import router from 'next/router';
 import { useState } from 'react';
 import { usePaystackPayment } from 'react-paystack';
 
@@ -25,16 +24,7 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 	};
 
 	const initializePayment = usePaystackPayment(config);
-	const router = useRouter();
 	const [isSuccessful, setIsSuccessful] = useState(false);
-	const [address, setAddress] = useState({
-		street: '',
-		number: '',
-		city: '',
-		state: '',
-		country: '',
-	});
-	const [phone, setPhone] = useState('');
 
 	const isxpired = new Date(order.expiresAt).getTime() < Date.now();
 
@@ -46,13 +36,12 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 	 *
 	 */
 	const onSuccess = (reference: any) => {
-		// send reference to backend to verify transaction
 		fetch('/api/verify', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ reference, address, phone }),
+			body: JSON.stringify({ reference }),
 		})
 			.then(res => res.json())
 			.then(data => {
@@ -79,63 +68,19 @@ const CheckoutPage: NextPage<{ order: any; user: UserProfile }> = ({
 						onSubmit={e => {
 							e.preventDefault();
 
-							if (isxpired || !phone) {
+							if (isxpired) {
 								return;
 							}
 
 							// @ts-ignore
 							initializePayment(onSuccess, onClose);
 						}}>
-						<input
-							type="text"
-							placeholder="Street"
-							value={address.street}
-							onChange={e => setAddress({ ...address, street: e.target.value })}
-						/>
-						<input
-							type="text"
-							placeholder="Number"
-							value={address.number}
-							onChange={e => setAddress({ ...address, number: e.target.value })}
-						/>
-						<input
-							type="text"
-							placeholder="City"
-							value={address.city}
-							onChange={e => setAddress({ ...address, city: e.target.value })}
-						/>
-						<input
-							type="text"
-							placeholder="State"
-							value={address.state}
-							onChange={e => setAddress({ ...address, state: e.target.value })}
-						/>
-						<input
-							type="text"
-							placeholder="Country"
-							value={address.country}
-							onChange={e =>
-								setAddress({ ...address, country: e.target.value })
-							}
-						/>
-						<input
-							type="text"
-							placeholder="Phone"
-							value={phone}
-							onChange={e => setPhone(e.target.value)}
-						/>
 						<CTA>
 							{isxpired
 								? 'Order Expired'
 								: `Pay ${priceFormatter.format(order.totalPrice)}`}
 						</CTA>
 					</form>
-
-					<div>
-						{order?.cart?.map((item: any, index: any) => (
-							<CartItem readOnly key={`checkout-item-${index}`} {...item} />
-						))}
-					</div>
 				</>
 			)}
 		</>
@@ -148,20 +93,18 @@ export const getServerSideProps = withPageAuthRequired({
 	async getServerSideProps(ctx) {
 		const { reference } = ctx.query;
 
-		const { data, error } = await supabaseClient
-			.from('orders')
-			.select('*')
-			.eq('reference', reference)
-			.eq('paid', false)
-			.eq('delivered', false)
-			.gt('expiresAt', new Date().toISOString())
-			.single();
-
-		if (error) {
-			console.log(error);
+		if (typeof reference !== 'string') {
+			return {
+				redirect: {
+					destination: `/account/orders`,
+					permanent: false,
+				},
+			};
 		}
 
-		if (!data) {
+		const order = await getUnpaidOrder(reference);
+
+		if (!order) {
 			return {
 				redirect: {
 					destination: `/account/orders`,
@@ -172,7 +115,7 @@ export const getServerSideProps = withPageAuthRequired({
 
 		return {
 			props: {
-				order: data,
+				order,
 			},
 		};
 	},

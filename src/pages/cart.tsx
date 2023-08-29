@@ -1,61 +1,31 @@
 import moreArrow from '@assets/new/icons/more-arrow.svg';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
-import CTA from '@components/CTA';
+import { CTALink } from '@components/CTA';
 import CartItem from '@components/CartItem';
 import IconText from '@components/IconText';
 import { priceFormatter } from '@components/ProductCard';
 import ProductSuggestion from '@components/ProductSuggestion';
 import { Container } from '@components/styled';
-import { ProductVariantType, getRecentlyViewedProducts } from '@data/index';
-import { singleDBProductToProductMapper } from '@data/productsData';
-import { CartState, useCart } from 'context/cartContext';
+import {
+	ProductVariantType,
+	getRecentlyViewedProducts,
+	singleDBProductToProductMapper,
+} from '@data/products';
+import { useCart } from 'context/cartContext';
 import { NextPage } from 'next';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-const getProductsByMultipleIDs = async (cart: CartState) => {
-	try {
-		const response = await fetch('/api/products', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ cart }),
-		});
-		const products = await response.json();
-
-		return products;
-	} catch (errorFromBE) {
-		console.log({ errorFromBE });
-	}
-};
 
 const Cart: NextPage<{
 	recentlyViewedProducts: ProductVariantType[];
 }> = ({ recentlyViewedProducts }) => {
-	const { cart, checkout } = useCart();
-
-	const [products, setProducts] = useState<ProductVariantType[]>([]);
-
-	useEffect(() => {
-		getProductsByMultipleIDs(cart).then(products => {
-			setProducts(products);
-		});
-	}, [cart]);
-
-	const transformedProducts = products.map(product => ({
-		...singleDBProductToProductMapper(product),
-		quantity:
-			cart.find(item => item.productVariantID === product.variantID.toString())
-				?.quantity || 0,
-	}));
+	const { cart, cartProducts } = useCart({
+		withProductDetails: true,
+	});
 
 	const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 	const totalPrice =
-		transformedProducts.reduce(
-			(acc, item) => acc + item.price * item.quantity,
-			0,
-		) || 0;
+		cartProducts.reduce((acc, item) => acc + item.price * item.quantity, 0) ||
+		0;
 
 	const transformedRecentlyViewedProducts = recentlyViewedProducts?.map(
 		product => singleDBProductToProductMapper(product),
@@ -70,7 +40,7 @@ const Cart: NextPage<{
 							flex: 1,
 						}}>
 						<Title>Your cart ({totalItems} items)</Title>
-						{transformedProducts?.map((product, index) => (
+						{cartProducts?.map((product, index) => (
 							<CartItem {...product} key={`cart-item-${index}`} />
 						))}
 					</div>
@@ -95,12 +65,12 @@ const Cart: NextPage<{
 								borderBottom: '1px solid var(--oex-light-grey)',
 							}}
 						/>
-						<CTA
+						<CTALink
 							disabled={cart.length === 0}
-							onClick={() => checkout()}
+							href="/composites/checkout/address"
 							style={{ width: '100%' }}>
 							Checkout
-						</CTA>
+						</CTALink>
 						<div style={{ marginTop: '1rem' }}>
 							<IconText icon={moreArrow} text={'Continue shopping'}></IconText>
 						</div>

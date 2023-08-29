@@ -64,7 +64,8 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 								style={{ objectPosition: 'left' }}
 								object-fit="contain"
 								alt="OrthoEx Logo"
-								fill></Image>
+								fill
+							/>
 						</Logo>
 					</Link>
 					<HamburgerButton onClick={() => setIsNavOpen(true)}>
@@ -313,6 +314,10 @@ const StyledSideBar = styled.div`
 
 	.full-width {
 		width: 100%;
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		display: none;
 	}
 `;
 

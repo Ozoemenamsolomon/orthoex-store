@@ -4,8 +4,11 @@ import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
 import FilterProductContainer from '@components/styled/FIlterProductContainer';
-import { ProductVariantType, getAllProductVariants } from '@data/index';
-import { singleDBProductToProductMapper } from '@data/productsData';
+import {
+	ProductVariantType,
+	getAllProductVariants,
+	singleDBProductToProductMapper,
+} from '@data/products';
 import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useState } from 'react';

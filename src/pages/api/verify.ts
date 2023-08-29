@@ -8,9 +8,9 @@ const logger = (e: any) => {
 
 export default withApiAuthRequired(async function verify(req, res) {
 	const session = await getSession(req, res);
-	const { reference, address, phone } = req.body.reference;
-
-	console.log({ reference, address, phone });
+	const {
+		reference: { reference },
+	} = req.body;
 
 	const { data, error } = await supabaseClient
 		.from('orders')
@@ -43,7 +43,7 @@ export default withApiAuthRequired(async function verify(req, res) {
 
 	const { data: _updatedData, error: updatedError } = await supabaseClient
 		.from('orders')
-		.update({ paid: true, address, phone })
+		.update({ paid: true })
 		.eq('reference', reference)
 		.eq('user', session?.user?.email);
 

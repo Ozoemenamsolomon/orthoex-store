@@ -128,7 +128,7 @@ const Details: FC<{
 
 export default Details;
 
-const AccountDetailsForm = styled.form`
+export const AccountDetailsForm = styled.form`
 	gap: 1rem 0;
 	display: flex;
 	flex-wrap: wrap;
@@ -136,17 +136,6 @@ const AccountDetailsForm = styled.form`
 	& > *:not(button) {
 		width: 48%;
 	}
-	/* & > div:nth-child(7) {
-		width: 100%;
-		display: flex;
-		justify-content: space-between;
-		& > * {
-			width: 48%;
-		}
-		@media ${({ theme }) => theme.breakpoints.above.sm} {
-			width: 48%;
-		}
-	} */
 
 	& > button {
 		width: 100%;

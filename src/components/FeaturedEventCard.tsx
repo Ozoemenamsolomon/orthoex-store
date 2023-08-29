@@ -5,7 +5,6 @@ import Location from '@assets/new/icons/Location';
 import People from '@assets/new/icons/People';
 import Time from '@assets/new/icons/Time';
 import Whatsapp from '@assets/new/icons/Whatsapp';
-import { EventFormat } from '@data/eventsData';
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { calculateDateDifference, formatDate, formatTime } from '@utils/index';
 import Image from 'next/image';
@@ -20,6 +19,11 @@ import SocialMediaButtons from './shared/SocialMediaButtons';
 interface FeaturedEventProp {
 	userEmail: string;
 	training: TrainingSupbaseDataType;
+}
+
+enum EventFormat {
+	ONLINE = 'ONLINE',
+	ONSITE = 'ONSITE',
 }
 
 const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {

@@ -12,8 +12,8 @@ import ProductVerticalSection, {
 	ProductVerticalSectionType,
 } from '@components/shared/ProductVerticalSection';
 import TitleInfoSection from '@components/shared/TitleInfoSection';
+import { getCategories } from '@data/categories';
 import { infoCardsData, titleInfoData } from '@data/compositeData';
-import { getCategories } from '@data/index';
 import { GetServerSideProps, NextPage } from 'next';
 import styled from 'styled-components';
 
