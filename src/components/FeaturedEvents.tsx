@@ -1,5 +1,5 @@
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
 import FeaturedEventCard from './FeaturedEventCard';
@@ -31,13 +31,32 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 		location: [],
 	});
 
-
 	const router = useRouter();
-
 
 	const handleFilterClick = () => {
 		// Filter the trainingData using the filter parameters
 	};
+
+	const {location, date, title} = filterList;
+
+	const filteredTrainingData = useMemo(() => {
+		trainingData.filter(training => training.title.toLowerCase().includes('ga'))
+		return trainingData.filter(training => {
+			// Apply date filtering logic
+			const trainingDate = new Date(training.startDateTime); // Assuming your training has a 'date' property
+			const startDate = date[0] ? new Date(date[0]) : null;
+			const endDate = date[1] ? new Date(date[1]) : null;
+			const isDateInRange = (!startDate || trainingDate >= startDate) && (!endDate || trainingDate <= endDate);
+	
+			// Apply title filtering logic
+			const isTitleMatched = title.length === 0 || title.some(t => training.title.includes(t)); // Assuming training has a 'title' property
+	
+			// Apply location filtering logic
+			const isLocationMatched = location.length === 0 || location.some(l => training.location.includes(l)); // Assuming training has a 'location' property
+	
+			return isDateInRange && isTitleMatched && isLocationMatched;
+		});
+	},[location, trainingData, date, title])
 
 	useEffect(() => {
 
@@ -76,7 +95,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 					setFilterList={setFilterList}
 					onFilterClick={handleFilterClick}
 				/>
-				{trainingData.slice(0, eventCount).map(training => (
+				{filteredTrainingData.slice(0, eventCount).map(training => (
 					<FeaturedEventCard
 						training={training}
 						key={training.id}
