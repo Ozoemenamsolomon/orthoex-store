@@ -4,11 +4,26 @@ import {
 	singleDBProductToProductMapper,
 } from '@data/products';
 import { useRouter } from 'next/router';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import {
+	ChangeEventHandler,
+	createContext,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
 const CartContext = createContext<CartContextType | null>(null);
 
 export type CartState = { productVariantID: string; quantity: number }[];
+type AddressType = {
+	fullName: string;
+	phone: string;
+	streetAdress: string;
+	state: string;
+	lga: string;
+	deliveryOption: string;
+};
 
 type CartContextType = {
 	cart: CartState;
@@ -17,6 +32,11 @@ type CartContextType = {
 	checkout: (address: any) => void;
 	checkoutSingleProduct: (productVariantID: string) => void;
 	cartProductDetails?: ProductVariantType[];
+	address: AddressType;
+	deliveryFee: number;
+	handleAddressChange: ChangeEventHandler<
+		HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+	>;
 };
 
 export const CartProvider: React.FC = ({ children }) => {
@@ -39,6 +59,42 @@ export const CartProvider: React.FC = ({ children }) => {
 		}
 		localStorage.setItem('cart', JSON.stringify(cart));
 	}, [cart]);
+
+	const [address, setAddress] = useState<AddressType>({
+		fullName: '',
+		phone: '',
+		streetAdress: '',
+		state: '',
+		lga: '',
+		deliveryOption: 'selfPickup',
+	});
+	const [deliveryFee, setDeliveryFee] = useState(0);
+
+	const handleChange: ChangeEventHandler<
+		HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+	> = e => {
+		setAddress({ ...address, [e.target.name]: e.target.value });
+		if (e.target.value && e.target.name === 'lga') {
+			//  estimate delivery fee
+			const estimatedDeliveryFee = 0;
+			fetch(`/api/estimate-delivery`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					lga: e.target.value,
+					cart,
+				}),
+			})
+				.then(res => res.json())
+				.then(data => {
+					setDeliveryFee(data.deliveryFee);
+				});
+
+			setDeliveryFee(estimatedDeliveryFee);
+		}
+	};
 
 	const removeFromCart = (productVariantID: string) => {
 		setCart(cart.filter(item => item.productVariantID !== productVariantID));
@@ -143,6 +199,9 @@ export const CartProvider: React.FC = ({ children }) => {
 				setQuantity,
 				getQuantity,
 				checkoutSingleProduct,
+				address,
+				deliveryFee,
+				handleAddressChange: handleChange,
 			}}>
 			{children}
 		</CartContext.Provider>

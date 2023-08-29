@@ -16,22 +16,16 @@ const Address: NextPage<{
 		name: string;
 	}[];
 }> = ({ states }) => {
-	const [address, setAddress] = useState<{
-		fullName: string;
-		phone: string;
-		streetAdress: string;
-		state: string;
-		lga: string;
-		deliveryOption: string;
-	}>({
-		fullName: '',
-		phone: '',
-		streetAdress: '',
-		state: '',
-		lga: '',
-		deliveryOption: 'selfPickup',
+	const {
+		cart,
+		cartProducts,
+		checkout,
+		address,
+		deliveryFee,
+		handleAddressChange,
+	} = useCart({
+		withProductDetails: true,
 	});
-	const [deliveryFee, setDeliveryFee] = useState(0);
 
 	const formSubmitable =
 		address.deliveryOption === 'selfPickup'
@@ -43,11 +37,7 @@ const Address: NextPage<{
 			  address.phone &&
 			  deliveryFee;
 
-	const { cart, cartProducts, checkout } = useCart({
-		withProductDetails: true,
-	});
-
-	const [lga, setLga] = useState<
+	const [lgas, setLgas] = useState<
 		{
 			id: number;
 			name: string;
@@ -89,22 +79,22 @@ const Address: NextPage<{
 						<label htmlFor="fullName">Full name</label>
 						<input
 							type="text"
+							name="fullName"
 							placeholder="John Doe"
 							value={address?.fullName}
 							id="fullName"
-							onChange={e =>
-								setAddress({ ...address, fullName: e.target.value })
-							}
+							onChange={handleAddressChange}
 						/>
 					</FormControl>
 					<FormControl>
 						<label htmlFor="phone">Phone</label>
 						<input
 							type="text"
+							name="phone"
 							placeholder="+2347000000000"
 							id="phone"
 							value={address?.phone}
-							onChange={e => setAddress({ ...address, phone: e.target.value })}
+							onChange={handleAddressChange}
 						/>
 					</FormControl>
 					<div
@@ -120,9 +110,7 @@ const Address: NextPage<{
 								id="selfPickup"
 								value="selfPickup"
 								checked={address?.deliveryOption === 'selfPickup'}
-								onChange={e =>
-									setAddress({ ...address, deliveryOption: e.target.value })
-								}
+								onChange={handleAddressChange}
 							/>
 						</FormControl>
 						<FormControl>
@@ -133,9 +121,7 @@ const Address: NextPage<{
 								id="waybill"
 								value="waybill"
 								checked={address?.deliveryOption === 'waybill'}
-								onChange={e =>
-									setAddress({ ...address, deliveryOption: e.target.value })
-								}
+								onChange={handleAddressChange}
 							/>
 						</FormControl>
 					</div>
@@ -151,9 +137,7 @@ const Address: NextPage<{
 									placeholder="House no., Street name, City"
 									name="streetAdress"
 									value={address?.streetAdress}
-									onChange={e =>
-										setAddress({ ...address, streetAdress: e.target.value })
-									}
+									onChange={handleAddressChange}
 								/>
 							</FormControl>
 							<FormControl>
@@ -162,12 +146,15 @@ const Address: NextPage<{
 									name="state"
 									id="state"
 									onChange={e => {
-										setAddress({ ...address, state: e.target.value });
-										fetch(`/api/lgas?state=${e.target.value}`)
-											.then(res => res.json())
-											.then(data => {
-												setLga(data);
-											});
+										handleAddressChange(e);
+
+										if (e.target.value) {
+											fetch(`/api/lgas?state=${e.target.value}`)
+												.then(res => res.json())
+												.then(data => {
+													setLgas(data);
+												});
+										}
 									}}>
 									<option value="">Select State</option>
 									{states.map((state, index) => (
@@ -179,22 +166,9 @@ const Address: NextPage<{
 							</FormControl>
 							<FormControl>
 								<label htmlFor="lga">LGA</label>
-								<select
-									name="lga"
-									id="lga"
-									onChange={e => {
-										setAddress({ ...address, lga: e.target.value });
-										//if value is not empty
-
-										{
-											//  estimate delivery fee
-											const estimatedDeliveryFee = 0;
-
-											setDeliveryFee(estimatedDeliveryFee);
-										}
-									}}>
+								<select name="lga" id="lga" onChange={handleAddressChange}>
 									<option value="">Select LGA</option>
-									{lga.map((lga, index) => (
+									{lgas.map((lga, index) => (
 										<option key={index} value={lga.id}>
 											{lga.name}
 										</option>
