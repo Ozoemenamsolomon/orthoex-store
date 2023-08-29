@@ -151,7 +151,7 @@ export const CartProvider: React.FC = ({ children }) => {
 
 			setCart([]);
 
-			router.push(`/composites/checkout/${reference}`);
+			router.replace(`/composites/checkout/${reference}`);
 		} catch (error) {
 			console.log(error);
 		}
@@ -185,7 +185,7 @@ export const CartProvider: React.FC = ({ children }) => {
 
 			removeFromCart(productVariantID);
 
-			router.push(`/composites/checkout/${reference}`);
+			router.replace(`/composites/checkout/${reference}`);
 		} catch (error) {
 			console.log(error);
 		}

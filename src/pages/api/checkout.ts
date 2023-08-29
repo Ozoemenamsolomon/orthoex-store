@@ -1,6 +1,6 @@
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
+import { creatOrders, estimateDeliveryFee } from '@data/index';
 import { getProductVariantsByMultipleIDs } from '@data/products';
-import { supabaseClient } from '@utils/supabase';
 import { CartState } from 'context/cartContext';
 import crypto from 'crypto';
 
@@ -10,7 +10,7 @@ export default withApiAuthRequired(async function checkout(req, res) {
 
 		const { cart, address } = req.body as { cart: CartState; address: any };
 
-		if (!cart || cart.length === 0 || !address) {
+		if (!cart || cart.length < 1 || !address) {
 			return res.status(400).json({ error: 'Cart is empty' });
 		}
 
@@ -23,12 +23,17 @@ export default withApiAuthRequired(async function checkout(req, res) {
 			session?.user?.custier,
 		);
 
-		// invalid product variant id
 		if (products.length !== ids.length) {
 			return res.status(400).json({ error: 'Invalid product variant id' });
 		}
 
-		const totalPrice = products.reduce((acc, item) => {
+		const totalWeight = products.reduce(
+			(acc, prod) =>
+				prod?.variant?.weightInGram ? acc + prod?.variant?.weightInGram : 0,
+			0,
+		);
+
+		const subTotal = products.reduce((acc, item) => {
 			return (
 				acc +
 				item.prices[0].price *
@@ -37,14 +42,13 @@ export default withApiAuthRequired(async function checkout(req, res) {
 			);
 		}, 0);
 
-		const transformedCart = cart.map(item => {
-			const product = products.find(
-				i => i.variantID.toString() === item.productVariantID,
-			);
+		const deliveryFee = estimateDeliveryFee(address.lga, totalWeight);
 
-			if (!product) {
-				return null;
-			}
+		const totalPrice = subTotal + deliveryFee;
+
+		const transformedCart = cart.map((item, index) => {
+			// TODO: does supabase order the product just like the array?
+			const product = products[index];
 
 			return {
 				variant: product.variant,
@@ -65,7 +69,7 @@ export default withApiAuthRequired(async function checkout(req, res) {
 			.update(JSON.stringify(transformedCart))
 			.digest('hex');
 
-		const { data: _data, error } = await supabaseClient.from('orders').insert([
+		await creatOrders([
 			{
 				cart: transformedCart,
 				totalPrice,
@@ -73,13 +77,9 @@ export default withApiAuthRequired(async function checkout(req, res) {
 				user: session?.user?.email,
 				expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7).toISOString(),
 				status: process.env.NODE_ENV,
-				address,
+				address: { ...address, totalWeight, deliveryFee },
 			},
 		]);
-
-		if (error) {
-			throw error;
-		}
 
 		res.status(200).json({ reference: hash });
 	} catch (error) {
