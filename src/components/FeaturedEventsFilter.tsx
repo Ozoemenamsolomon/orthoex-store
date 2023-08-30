@@ -113,7 +113,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 		);
 		const selectedDateString = selectedDate.join('**')
 
-		if (selectedDate.every(d => d !== null)) {
+		if (selectedDate.some(d => d !== null)) {
 			queryParams.delete('date');
 			queryParams.set('date', selectedDateString);
 		}
@@ -207,7 +207,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 			</FilterWrapper>
 
 			<FilterTilesWrapper>
-				{filterList.date.every(item => item !== null) && (
+				{filterList.date.some(item => item !== null) && (
 					<FilterTiles>
 						<span className="selected-text">Date</span>
 						<span

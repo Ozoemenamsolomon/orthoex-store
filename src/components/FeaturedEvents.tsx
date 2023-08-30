@@ -77,7 +77,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 		const location = getParamValues('location') || [];
 		const title = getParamValues('title') || [];
 		const dateFromParams = queryParams.get('date')?.split('**');
-		const date = dateFromParams ? [new Date(dateFromParams[0]), new Date(dateFromParams[1])] : [null, null]
+		const date = dateFromParams ? [new Date(dateFromParams[0]), dateFromParams[1] ? new Date(dateFromParams[1]) : null] : [null, null]
 		
 		setFilterList(prev => ({
 			...prev,
