@@ -55,7 +55,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 		}).sort((a, b) => {
 			const dateA = new Date(a.startDateTime);
 			const dateB = new Date(b.endDateTime);
-			return dateB > dateA ? 1 : dateB < dateA ? -1 : 0;
+			return dateA > dateB ? 1 : dateA < dateB ? -1 : 0;
 		});
 	},[location, trainingData, date, title])
 
