@@ -40,19 +40,19 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	const {location, date, title} = filterList;
 
 	const filteredTrainingData = useMemo(() => {
-		trainingData.filter(training => training.title.toLowerCase().includes('ga'))
+
 		return trainingData.filter(training => {
 			// Apply date filtering logic
-			const trainingDate = new Date(training.startDateTime); // Assuming your training has a 'date' property
+			const trainingDate = new Date(training.startDateTime); 
 			const startDate = date[0] ? new Date(date[0]) : null;
 			const endDate = date[1] ? new Date(date[1]) : null;
 			const isDateInRange = (!startDate || trainingDate >= startDate) && (!endDate || trainingDate <= endDate);
 	
 			// Apply title filtering logic
-			const isTitleMatched = title.length === 0 || title.some(t => training.title.includes(t)); // Assuming training has a 'title' property
+			const isTitleMatched = title.length === 0 || title.some(t => training.title.includes(t));
 	
 			// Apply location filtering logic
-			const isLocationMatched = location.length === 0 || location.some(l => training.location.includes(l)); // Assuming training has a 'location' property
+			const isLocationMatched = location.length === 0 || location.some(l => training.location.includes(l)); 
 	
 			return isDateInRange && isTitleMatched && isLocationMatched;
 		});
@@ -79,6 +79,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 			title,
 			location,
 		}));
+
 	}, [router.query]);
 
 	const LoadMoreEvent = () => {

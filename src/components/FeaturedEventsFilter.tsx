@@ -73,7 +73,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 }) => {
 	const locationOptions = getUniqueValuesByKey<TrainingSupbaseDataType>(
 		training,
-		'trainingFormat',
+		'location',
 	) as string[];
 	const titleOptions = getUniqueValuesByKey<TrainingSupbaseDataType>(
 		training,
@@ -102,10 +102,11 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 		const queryParams = new URLSearchParams(
 			router.query as Record<string, string>,
 		);
-		if(queryParams.has(name)){
-			queryParams.delete(name);
+		for (const [key] of Object.entries(router.query)) {
+			if (key.startsWith(name)) {
+				queryParams.delete(key);
+			}
 		}
-		
 		router.push({pathname: router.pathname, query: queryParams.toString() }, undefined, {scroll: false});
 	}, [router])
 
