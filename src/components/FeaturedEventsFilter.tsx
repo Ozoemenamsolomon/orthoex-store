@@ -7,7 +7,7 @@ import React, { ReactNode, SetStateAction, useCallback } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
-import { FilterListType } from './FeaturedEvents';
+import { DateType, FilterListType } from './FeaturedEvents';
 
 type InputEventType = React.ChangeEvent<HTMLInputElement>;
 
@@ -107,6 +107,20 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 		router.push({pathname: router.pathname, query: queryParams.toString() }, undefined, {scroll: false});
 	}, [router])
 
+	const addDateParams = useCallback((selectedDate: DateType[]) => {
+		const queryParams = new URLSearchParams(
+			router.query as Record<string, string>,
+		);
+		const selectedDateString = selectedDate.join('**')
+
+		if (selectedDate.every(d => d !== null)) {
+			queryParams.delete('date');
+			queryParams.set('date', selectedDateString);
+		}
+
+		router.push({pathname: router.pathname, query: queryParams.toString() }, undefined, {scroll: false});
+	}, [router])
+
 	return (
 		<FEWrapper>
 			<FilterWrapper>
@@ -125,9 +139,9 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 								endDate={filterList.date[1]}
 								inline
 								onChange={(update) => {
+									addDateParams(update)
 									setFilterList(prev => ({ ...prev, date: update }));
 								}}
-								onChangeRaw={(event) => console.log(event)}
 								placeholderText="Select Date"
 								isClearable={true}
 							/>
@@ -198,9 +212,10 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 						<span className="selected-text">Date</span>
 						<span
 							className="icon"
-							onClick={() =>
+							onClick={() => {
+								deleteParams('date');
 								setFilterList(prev => ({ ...prev, date: [null, null] }))
-							}>
+							}}>
 							<CancelIcon />
 						</span>
 					</FilterTiles>

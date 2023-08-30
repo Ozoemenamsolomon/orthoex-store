@@ -12,7 +12,7 @@ interface FeaturedEventsProp {
 	trainingData: TrainingSupbaseDataType[];
 }
 
-type DateType = Date | null;
+export type DateType = Date | null;
 
 export interface FilterListType {
 	date: DateType[];
@@ -60,7 +60,9 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	},[location, trainingData, date, title])
 
 	useEffect(() => {
-
+		const queryParams = new URLSearchParams(
+			router.query as Record<string, string>,
+		);
 		const getParamValues = (paramKey: string) => {
 			const titleValues = [] as any;
 
@@ -74,14 +76,18 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 
 		const location = getParamValues('location') || [];
 		const title = getParamValues('title') || [];
-
+		const dateFromParams = queryParams.get('date')?.split('**');
+		const date = dateFromParams ? [new Date(dateFromParams[0]), new Date(dateFromParams[1])] : [null, null]
+		
 		setFilterList(prev => ({
 			...prev,
+			date,
 			title,
 			location,
 		}));
 
-	}, [router.query]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const LoadMoreEvent = () => {
 		setEventCount(prev => prev + 3);
