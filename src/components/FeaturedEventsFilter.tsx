@@ -124,9 +124,10 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 								startDate={filterList.date[0]}
 								endDate={filterList.date[1]}
 								inline
-								onChange={(update, event) => {
+								onChange={(update) => {
 									setFilterList(prev => ({ ...prev, date: update }));
 								}}
+								onChangeRaw={(event) => console.log(event)}
 								placeholderText="Select Date"
 								isClearable={true}
 							/>

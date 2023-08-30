@@ -52,6 +52,10 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 			const isLocationMatched = location.length === 0 || location.some(l => training.location.includes(l)); 
 	
 			return isDateInRange && isTitleMatched && isLocationMatched;
+		}).sort((a, b) => {
+			const dateA = new Date(a.startDateTime);
+			const dateB = new Date(b.endDateTime);
+			return dateB > dateA ? 1 : dateB < dateA ? -1 : 0;
 		});
 	},[location, trainingData, date, title])
 
