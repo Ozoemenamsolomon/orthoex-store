@@ -36,7 +36,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 
 	const {location, date, title} = filterList;
 
-	const filteredTrainingData = useMemo(() => {
+	const filteredAndSortedTrainingData = useMemo(() => {
 
 		return trainingData.filter(training => {
 			// Apply date filtering logic
@@ -96,7 +96,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 					filterList={filterList}
 					setFilterList={setFilterList}
 				/>
-				{filteredTrainingData.slice(0, eventCount).map(training => (
+				{filteredAndSortedTrainingData.slice(0, eventCount).map(training => (
 					<FeaturedEventCard
 						training={training}
 						key={training.id}
@@ -104,8 +104,8 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 					/>
 				))}
 
-				{(trainingData.length !== eventCount ||
-					trainingData.length < eventCount) && (
+				{(
+					filteredAndSortedTrainingData.length > eventCount) && (
 					<StyledLoadMore>
 						<CTA className="btn-width" onClick={LoadMoreEvent} white>
 							Load more events
