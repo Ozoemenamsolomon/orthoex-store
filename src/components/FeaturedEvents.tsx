@@ -33,9 +33,6 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 
 	const router = useRouter();
 
-	const handleFilterClick = () => {
-		// Filter the trainingData using the filter parameters
-	};
 
 	const {location, date, title} = filterList;
 
@@ -94,7 +91,6 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 					training={trainingData}
 					filterList={filterList}
 					setFilterList={setFilterList}
-					onFilterClick={handleFilterClick}
 				/>
 				{filteredTrainingData.slice(0, eventCount).map(training => (
 					<FeaturedEventCard

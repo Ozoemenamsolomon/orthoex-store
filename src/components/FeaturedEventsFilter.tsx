@@ -7,7 +7,6 @@ import React, { ReactNode, SetStateAction, useCallback } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
-import CTA from './CTA';
 import { FilterListType } from './FeaturedEvents';
 
 type InputEventType = React.ChangeEvent<HTMLInputElement>;
@@ -61,14 +60,12 @@ function getUniqueValuesByKey<T>(data: T[], key: keyof T): Array<T[keyof T]> {
 interface FeaturedEventsFilter {
 	filterList: FilterListType;
 	setFilterList: React.Dispatch<SetStateAction<FilterListType>>;
-	onFilterClick: () => void;
 	training: TrainingSupbaseDataType[];
 }
 
 const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 	filterList,
 	setFilterList,
-	onFilterClick,
 	training,
 }) => {
 	const locationOptions = getUniqueValuesByKey<TrainingSupbaseDataType>(
@@ -192,9 +189,6 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 						</CheckboxGroup>
 					</CheckBoxWrapper>
 				</FilterInputs>
-				<CTA className="no-animate filter-btn" onClick={onFilterClick}>
-					Filter
-				</CTA>
 			</FilterWrapper>
 
 			<FilterTilesWrapper>
