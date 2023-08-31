@@ -1,4 +1,5 @@
 import { supabaseClient } from '@utils/supabase';
+import lgas from '../../delivery/lgas.json';
 
 export const getUnpaidOrder = async (reference: string) => {
 	const { data, error } = await supabaseClient
@@ -49,7 +50,39 @@ export const creatOrders = async (
 	}
 };
 
-export function estimateDeliveryFee(lga: string, totalWeight: number): number {
-	// TODO: get delivery fee from address and total weight
-	return 0;
-}
+export const estimateDeliveryFee = async (lga: string, totalWeight: number) => {
+	const locationClass = lgas.find(l => l.id === Number(lga))?.class;
+
+	if (!locationClass) {
+		return null;
+	}
+
+	const deliveryFeeEstimate = await getDeliveryFee(totalWeight, locationClass);
+
+	const deliveryFee =
+		(deliveryFeeEstimate?.partnerfee || 0) +
+		(deliveryFeeEstimate?.basefee || 0);
+	return {
+		deliveryFee,
+		comment: deliveryFeeEstimate?.comment,
+		deliverydays: deliveryFeeEstimate?.deliverydays,
+	};
+};
+
+const getDeliveryFee = async (weightToCheck: number, locationClass: string) => {
+	const { data, error } = await supabaseClient
+		.from('delivery_fee')
+		.select('basefee, partnerfee, comment, deliverydays')
+		.lte('weightrangelower', weightToCheck)
+		.gt(`weightrangeupper`, weightToCheck)
+		.eq('class', locationClass)
+		.single();
+
+	if (error) {
+		console.log(error);
+		throw error;
+	}
+	console.log({ data });
+
+	return data;
+};

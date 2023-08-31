@@ -74,6 +74,10 @@ export const CartProvider: React.FC = ({ children }) => {
 		HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 	> = e => {
 		setAddress({ ...address, [e.target.name]: e.target.value });
+		if (e.target.value && e.target.name === 'state') {
+			setDeliveryFee(0);
+		}
+
 		if (e.target.value && e.target.name === 'lga') {
 			//  estimate delivery fee
 			const estimatedDeliveryFee = 0;
@@ -147,6 +151,10 @@ export const CartProvider: React.FC = ({ children }) => {
 				},
 				body: JSON.stringify({ cart, address }),
 			});
+			if (!response.ok) {
+				console.log(response.json());
+				throw new Error("couldn't checkout cart");
+			}
 			const { reference } = await response.json();
 
 			setCart([]);
@@ -181,6 +189,11 @@ export const CartProvider: React.FC = ({ children }) => {
 				},
 				body: JSON.stringify({ cart: newCart }),
 			});
+
+			if (!response.ok) {
+				console.log(response.json());
+				throw new Error("couldn't checkout cart");
+			}
 			const { reference } = await response.json();
 
 			removeFromCart(productVariantID);

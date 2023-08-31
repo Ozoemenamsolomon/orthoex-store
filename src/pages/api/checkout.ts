@@ -42,9 +42,9 @@ export default withApiAuthRequired(async function checkout(req, res) {
 			);
 		}, 0);
 
-		const deliveryFee = estimateDeliveryFee(address.lga, totalWeight);
+		const deliveryFee = await estimateDeliveryFee(address.lga, totalWeight);
 
-		const totalPrice = subTotal + deliveryFee;
+		const totalPrice = subTotal + deliveryFee?.deliveryFee || 0;
 
 		const transformedCart = cart.map((item, index) => {
 			// TODO: does supabase order the product just like the array?
