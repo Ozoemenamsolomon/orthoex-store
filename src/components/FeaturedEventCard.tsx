@@ -47,7 +47,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 					<h4>{training.title}</h4>
 					<StyledInfoDiv>
 						<Calender />
-						<span>{`${formatDate(
+						<span className='date'>{`${formatDate(
 							new Date(training.startDateTime),
 						)} - ${formatDate(new Date(training.endDateTime))}`}</span>
 						<StyledDays>{`${calculateDateDifference(
@@ -101,7 +101,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 							}`}>
 							<Call /> Phone call
 						</CTALink>
-						<CTALink white href={`https://wa.me/${training.whatsappContact}`}>
+						<CTALink white href={`https://wa.me/${training.whatsappContact}?text=Hello, I am writing regarding the upcoming training program ${training.title} scheduled for ${formatDate(new Date(training.startDateTime))}.`}>
 							<Whatsapp /> Whatsapp
 						</CTALink>
 					</StyledButtonGroup>
@@ -239,7 +239,7 @@ const Text = styled.p`
 		margin-bottom: 0rem;
 	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		font-size: 1.2rem;
+		font-size: 1rem;
 	}
 `;
 
@@ -254,10 +254,13 @@ const StyledWrapperDiv = styled.div`
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 2rem 2rem 1rem;
+		width: 700px;
+		margin: 0 auto 3rem;
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		padding: 4rem 3rem 1rem;
+		width: 1000px;
 	}
 `;
 
@@ -298,6 +301,15 @@ const StyledInfoDiv = styled.div`
 	justify-content: flex-start;
 	margin-bottom: 1rem;
 	gap: 0.7rem;
+
+	& .date {
+		font-size: 0.9rem;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		& .date {
+			font-size: 0.9rem;
+		}
+	}
 `;
 
 const SocialSection = styled.div`
@@ -430,7 +442,7 @@ const StyledText = styled.p`
 	margin: 1rem 0;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		font-size: 1.2rem;
+		font-size: 1rem;
 		color: black;
 	}
 `;
@@ -439,7 +451,7 @@ const StyledList = styled.ul`
 	line-height: 1.8;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		font-size: 1.2rem;
+		font-size: 1rem;
 		color: black;
 	}
 `;
