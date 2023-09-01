@@ -54,27 +54,27 @@ export const estimateDeliveryFee = async (lga: string, totalWeight: number) => {
 	const locationClass = lgas.find(l => l.id === Number(lga))?.class;
 
 	if (!locationClass) {
-		return null;
+		throw new Error('Invalid LGA');
 	}
 
 	const deliveryFeeEstimate = await getDeliveryFee(totalWeight, locationClass);
 
 	const deliveryFee =
-		(deliveryFeeEstimate?.partnerfee || 0) +
-		(deliveryFeeEstimate?.basefee || 0);
+		deliveryFeeEstimate?.partnerfee + deliveryFeeEstimate?.basefee;
+
 	return {
 		deliveryFee,
-		comment: deliveryFeeEstimate?.comment,
-		deliverydays: deliveryFeeEstimate?.deliverydays,
+		comment: deliveryFeeEstimate.comment,
+		deliverydays: deliveryFeeEstimate.deliverydays,
 	};
 };
 
 const getDeliveryFee = async (weightToCheck: number, locationClass: string) => {
 	const { data, error } = await supabaseClient
 		.from('delivery_fee')
-		.select('basefee, partnerfee, comment, deliverydays')
+		.select(`*`)
 		.lte('weightrangelower', weightToCheck)
-		.gt(`weightrangeupper`, weightToCheck)
+		.gt('weightrangeupper', weightToCheck)
 		.eq('class', locationClass)
 		.single();
 
