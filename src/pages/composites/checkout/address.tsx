@@ -56,7 +56,7 @@ const Address: NextPage<{
 				display: 'flex',
 				gap: '2rem',
 				flexWrap: 'wrap',
-				alignContent: 'stretch',
+				alignItems: 'flex-start',
 			}}>
 			<AddressFormWrapper
 				style={{

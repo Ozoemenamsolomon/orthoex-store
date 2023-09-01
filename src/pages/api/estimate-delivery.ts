@@ -1,6 +1,7 @@
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
 import { estimateDeliveryFee } from '@data/index';
 import { getProductVariantsByMultipleIDs } from '@data/products';
+import { getProductTotalWeight } from '@utils/index';
 
 export default withApiAuthRequired(async function products(req, res) {
 	const session = await getSession(req, res);
@@ -24,14 +25,7 @@ export default withApiAuthRequired(async function products(req, res) {
 			return res.status(400).json({ error: 'Invalid product variant id' });
 		}
 
-		const weight = Number(
-			products.reduce(
-				(acc, prod) =>
-					prod?.variant?.weightInGram ? acc + prod?.variant?.weightInGram : 0,
-				0,
-			),
-		);
-
+		const weight = getProductTotalWeight(products);
 		console.log({ lga, weight });
 		const deliveryFee = await estimateDeliveryFee(lga, weight);
 

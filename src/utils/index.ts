@@ -1,3 +1,5 @@
+import { ProductVariantType } from '@data/products';
+
 export const formatDate: (dateTime: Date) => string = dateTime => {
 	return dateTime.toLocaleDateString('en-NG', {
 		dateStyle: 'long',
@@ -45,3 +47,13 @@ export const formatGramm = new Intl.NumberFormat('en-US', {
 	notation: 'compact',
 	unitDisplay: 'narrow',
 });
+
+export const getProductTotalWeight = (products: ProductVariantType[]) => {
+	return products.reduce(
+		(acc, prod) =>
+			prod?.variant?.weightInGram
+				? acc + Number(prod?.variant?.weightInGram)
+				: 0,
+		0,
+	);
+};

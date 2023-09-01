@@ -66,7 +66,7 @@ export const CartProvider: React.FC = ({ children }) => {
 		streetAdress: '',
 		state: '',
 		lga: '',
-		deliveryOption: 'selfPickup',
+		deliveryOption: 'waybill',
 	});
 	const [deliveryFee, setDeliveryFee] = useState(0);
 
