@@ -1,4 +1,5 @@
 import categoryBanner from '@assets/new/images/category-banner.jpg';
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Breadcrumb, { BreadcrumProps } from '@components/Breadcrumb';
 import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
@@ -9,7 +10,7 @@ import {
 	getAllProductVariants,
 	singleDBProductToProductMapper,
 } from '@data/products';
-import { GetServerSideProps, NextPage } from 'next';
+import { NextPage } from 'next';
 import Image from 'next/image';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -72,15 +73,19 @@ const Products: NextPage<{
 
 export default Products;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-	const products = await getAllProductVariants();
+export const getServerSideProps = withPageAuthRequired({
+	async getServerSideProps({ req, res }) {
+		const session = await getSession(req, res);
+		const custier = session?.user.custier;
+		const products = await getAllProductVariants(custier);
 
-	return {
-		props: {
-			products,
-		},
-	};
-};
+		return {
+			props: {
+				products,
+			},
+		};
+	},
+});
 
 const LayoutDiv = styled.div`
 	display: flex;

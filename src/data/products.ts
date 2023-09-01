@@ -119,7 +119,7 @@ export const getProductVariantsByMultipleIDs = async (
 	return data as unknown as ProductVariantType[];
 };
 
-export const getAllProductVariants = async (custier = 'casual') => {
+export const getAllProductVariants = async (custier: string) => {
 	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
@@ -134,7 +134,7 @@ export const getAllProductVariants = async (custier = 'casual') => {
 	return data;
 };
 
-export const getRecentlyViewedProducts = async (custier = 'casual') => {
+export const getRecentlyViewedProducts = async (custier: string) => {
 	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')

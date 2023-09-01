@@ -1,5 +1,5 @@
 import moreArrow from '@assets/new/icons/more-arrow.svg';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { CTALink } from '@components/CTA';
 import CartItem from '@components/CartItem';
 import IconText from '@components/IconText';
@@ -88,8 +88,11 @@ const Cart: NextPage<{
 export default Cart;
 
 export const getServerSideProps = withPageAuthRequired({
-	async getServerSideProps(ctx) {
-		const recentlyViewedProducts = await getRecentlyViewedProducts();
+	async getServerSideProps({ req, res }) {
+		const session = await getSession(req, res);
+		const custier = session?.user.custier;
+
+		const recentlyViewedProducts = await getRecentlyViewedProducts(custier);
 
 		return {
 			props: {
