@@ -18,18 +18,7 @@ export const getUnpaidOrder = async (reference: string) => {
 
 	return data;
 };
-// ({
-// 			variant: any;
-// 			variantID: number;
-// 			quantity: number;
-// 			price: number;
-// 			code: string;
-// 			name: string;
-// 			image: string;
-// 			brand: number;
-// 			cat: number;
-// 			timeStamp: number;
-// 		} | null
+
 export const creatOrders = async (
 	orders: {
 		cart: any;
