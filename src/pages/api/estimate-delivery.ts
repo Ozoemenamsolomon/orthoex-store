@@ -26,10 +26,9 @@ export default withApiAuthRequired(async function products(req, res) {
 		}
 
 		const weight = getProductTotalWeight(products);
-		console.log({ lga, weight });
+
 		const deliveryFee = await estimateDeliveryFee(lga, weight);
 
-		console.log({ deliveryFee });
 		res.status(200).json(deliveryFee);
 	} catch (error) {
 		console.log({ error });

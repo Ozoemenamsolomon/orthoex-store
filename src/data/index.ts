@@ -82,7 +82,6 @@ const getDeliveryFee = async (weightToCheck: number, locationClass: string) => {
 		console.log(error);
 		throw error;
 	}
-	console.log({ data });
 
 	return data;
 };
