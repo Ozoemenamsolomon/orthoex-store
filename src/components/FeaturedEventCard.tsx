@@ -50,17 +50,26 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training, promoData })
     const promo = promoData.find((promo) => promo.promo_code === promoCode);
 
     if (promo) {
-      if (promo.promo_amount !== null) {
-        const discountedPrice = training.price - promo.promo_amount;
-				setDiscountedPrice(discountedPrice);
-				setPromoIsValid(true);
-        setPromoNotification('Discount code valid');
-      } else if (promo.promo_percentage !== null) {
-        const discountedPrice = training.price - (training.price * promo.promo_percentage) / 100;
-				setDiscountedPrice(discountedPrice);
-				setPromoIsValid(true);
-      	setPromoNotification('Discount code valid');
-      }
+			const currentDate = new Date();
+    	const validUntilDate = new Date(promo.valid_until);
+
+			if (currentDate <= validUntilDate) {
+				if (promo.promo_amount !== null) {
+					const discountedPrice = training.price - promo.promo_amount;
+					setDiscountedPrice(discountedPrice);
+					setPromoIsValid(true);
+					setPromoNotification('Discount code valid');
+				} else if (promo.promo_percentage !== null) {
+					const discountedPrice = training.price - (training.price * promo.promo_percentage) / 100;
+					setDiscountedPrice(discountedPrice);
+					setPromoIsValid(true);
+					setPromoNotification('Discount code valid');
+				}
+			} else {
+				setPromoNotification('Discount code is expired.');
+				setPromoIsValid(false);
+			}
+
     } else {
     	setPromoNotification('Discount code is invalid.');
 			setPromoIsValid(false);
