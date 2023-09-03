@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import { CTAFlex } from './CTA';
+import { CTALink } from './CTA';
 
 const CallButton = () => {
 	return (
 		<StyledCallButtonDiv>
-			<CTAFlex>
+			<CTALink href='tel:+2347030324696' className='btn'>
 				<svg
 					width="14"
-					height="20"
+					height="14"
 					viewBox="0 0 14 20"
 					xmlns="http://www.w3.org/2000/svg">
 					<path
@@ -15,8 +15,8 @@ const CallButton = () => {
 						fill="white"
 					/>
 				</svg>
-				Call
-			</CTAFlex>
+				<span>Call</span>
+			</CTALink>
 		</StyledCallButtonDiv>
 	);
 };
@@ -29,6 +29,14 @@ const StyledCallButtonDiv = styled.div`
 	bottom: 2%;
 	z-index: 10;
 	width: 20%;
+
+	& .btn {
+		display: flex;
+		padding: 10px 18px;
+		align-items: center;
+		gap: 5px;
+		border-radius: 5px;
+	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		display: none;
 	}
