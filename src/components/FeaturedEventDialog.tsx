@@ -287,7 +287,9 @@ const CTAButton = styled.span`
 	font-size: 1rem;
 	border: 1px solid var(--oex-orange);
 	cursor: pointer;
+	display: block;
 	width: 100%;
+	text-align: center;
 
 	&:hover {
 		background-color: white;

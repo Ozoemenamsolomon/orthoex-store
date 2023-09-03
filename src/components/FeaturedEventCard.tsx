@@ -10,7 +10,7 @@ import { calculateDateDifference, formatDate, formatTime } from '@utils/index';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { CTALink } from './CTA';
+import CTA, { CTALink } from './CTA';
 import FeaturedEventDialog from './FeaturedEventDialog';
 import { priceFormatter } from './ProductCard';
 import SocialMediaButtons from './shared/SocialMediaButtons';
@@ -85,7 +85,14 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 						<StyledSpot>3 Spots left</StyledSpot>
 					</StyledInfoDiv>
 					<StyledPrice>
-						<p>{priceFormatter.format(training.price)}</p>
+						<p className='price'>{priceFormatter.format(training.price)}</p>
+						<PromoSection>
+							<p className='promo-title'>Promo code</p>
+							<PromoInput>
+								<input className='promo-input' type="text" name="promo" id="promo" placeholder='Enter a valid discount code' />
+								<CTA className='promo-btn'>Redeem</CTA>
+							</PromoInput>
+						</PromoSection>
 						<FeaturedEventDialog
 							training={training}
 							onOpen={openBookingDialog}
@@ -340,10 +347,10 @@ const StyledSpot = styled.span`
 
 const StyledPrice = styled.div`
 	display: flex;
-	align-items: center;
+	flex-direction: column;
 	justify-content: space-between;
 	margin-bottom: 1rem;
-	gap: 2rem;
+	gap: 1.2rem;
 
 	& > p {
 		font-size: 1.5rem;
@@ -356,13 +363,52 @@ const StyledPrice = styled.div`
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		gap: 2rem;
-		flex-direction: column;
-		align-items: flex-start;
+		gap: 1rem;
+		margin-bottom: 0rem;
 
 		& > a > button {
 			flex: 0.5 0;
 			min-width: 60%;
+		}
+	}
+`;
+
+const PromoSection = styled.div`
+	margin-bottom: 1rem;
+
+	& .promo-title {
+		font-size: 800;
+		margin-bottom: 5px;
+	}
+`;
+
+const PromoInput = styled.div`
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+
+	& .promo-input {
+		border: 1px solid var(--text-colour-light-grey);
+		padding: 10px;
+		outline: var(--oex-orange);
+		border-radius: 4px;
+		width: 80%;
+
+		&:placeholder {
+			color: 1px solid var(--text-colour-light-grey);
+			font-size: 2px;
+		}
+	}
+
+	& .promo-btn {
+		padding: 8px 12px;
+		font-size: 10px;
+		background-color: var(--text-colour-grey);
+		border: 1px solid var(--text-colour-grey);
+
+		&:hover {
+			color: white;
+			background-color: var(--text-colour-grey);
 		}
 	}
 `;
@@ -372,7 +418,7 @@ const StyledIconText = styled.p`
 	margin: 0;
 	font-weight: 400;
 	display: inline-block;
-	margin-bottom: 2rem;
+	margin-top: 1rem;
 
 	& > span {
 		padding-right: 1rem;
@@ -381,6 +427,7 @@ const StyledIconText = styled.p`
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		font-size: 1.2rem;
+		margin-bottom: 1rem;
 	}
 `;
 
