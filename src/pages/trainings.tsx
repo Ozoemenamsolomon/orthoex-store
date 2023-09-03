@@ -10,8 +10,8 @@ import ImageInfoHeader, {
 } from '@components/ImageInfoHeader';
 import ServiceStandard from '@components/ServiceStandard';
 import { Container } from '@components/styled';
-import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
-import { supabaseTrainingClient } from '@utils/supabase';
+import { TrainingPromoDataType, TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { supabaseTrainingClient, supabaseClient } from '@utils/supabase';
 import { GetServerSideProps, NextPage } from 'next';
 
 
@@ -38,7 +38,8 @@ const serviceStandardData = {
 const Trainings: NextPage<{
 	user: Claims;
 	trainingData: TrainingSupbaseDataType[];
-}> = ({ user, trainingData }) => {
+	promoData: TrainingPromoDataType[]
+}> = ({ user, trainingData, promoData }) => {
 	
 	return (
 		<>
@@ -46,7 +47,7 @@ const Trainings: NextPage<{
 				<ImageInfoHeader data={data} />
 				<ServiceStandard data={serviceStandardData} />
 			</Container>
-			<FeaturedEvents {...{ userEmail: user?.email, trainingData }} />
+			<FeaturedEvents {...{ userEmail: user?.email, trainingData, promoData }} />
 		</>
 	);
 };
@@ -55,11 +56,15 @@ export default Trainings;
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
 	const response = await supabaseTrainingClient.from('training').select('*');
-	const trainingData = response.data as unknown as TrainingSupbaseDataType;
+	const trainingData = response.data as unknown as TrainingSupbaseDataType[];
+
+	const promoResponse = await supabaseClient.from('promo').select('*');
+	const promoData = promoResponse.data as TrainingPromoDataType[];
 
 	return {
 		props: {
 			trainingData: trainingData || [],
+			promoData: promoData || [],
 		},
 	};
 };

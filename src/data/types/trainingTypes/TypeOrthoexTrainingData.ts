@@ -22,3 +22,12 @@ export interface TrainingSupbaseDataType {
 	trainingbenefactors?: string[] | null;
 	trainingitems?: string | null;
 }
+
+export interface TrainingPromoDataType {
+	created_at: string;
+	promo_amount: number | null;
+	promo_code: string;
+	promo_description: string;
+	promo_percentage: number | null;
+	valid_until: string;
+}
