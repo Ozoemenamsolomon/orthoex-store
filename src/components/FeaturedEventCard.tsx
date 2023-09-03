@@ -5,7 +5,7 @@ import Location from '@assets/new/icons/Location';
 import People from '@assets/new/icons/People';
 import Time from '@assets/new/icons/Time';
 import Whatsapp from '@assets/new/icons/Whatsapp';
-import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { TrainingSupbaseDataType, TrainingPromoDataType  } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { calculateDateDifference, formatDate, formatTime } from '@utils/index';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -19,6 +19,7 @@ import SocialMediaButtons from './shared/SocialMediaButtons';
 interface FeaturedEventProp {
 	userEmail: string;
 	training: TrainingSupbaseDataType;
+	promoData: TrainingPromoDataType[];
 }
 
 enum EventFormat {
@@ -26,16 +27,45 @@ enum EventFormat {
 	ONSITE = 'ONSITE',
 }
 
-const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
+const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training, promoData }) => {
 	const websiteUrl = `https://orthoex.ng/trainings#training-${training.id}`
 	const createUrlText = () => {
 		return encodeURI(`Check out this training: ${training.title} at`)
 	}
+	
 	const [panelOpen, setpanelOpen] = useState(false);
 	const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
+	const [promoCode, setPromoCode] = useState('');
+  const [promoNotification, setPromoNotification] = useState('');
+  const [discountedPrice, setDiscountedPrice] = useState<number | null>(null);
+  const [promoIsValid, setPromoIsValid] = useState<boolean>(false);
 
 	const openBookingDialog = () => setIsBookingDialogOpen(true);
 	const closeBookingDialog = () => setIsBookingDialogOpen(false);
+
+	const trainingPrice = discountedPrice ? discountedPrice : training.price;
+
+	const redeemPromoCode = () => {
+    // Check if the entered promo code exists in the promo list
+    const promo = promoData.find((promo) => promo.promo_code === promoCode);
+
+    if (promo) {
+      if (promo.promo_amount !== null) {
+        const discountedPrice = training.price - promo.promo_amount;
+				setDiscountedPrice(discountedPrice);
+				setPromoIsValid(true);
+        setPromoNotification('Discount code valid');
+      } else if (promo.promo_percentage !== null) {
+        const discountedPrice = training.price - (training.price * promo.promo_percentage) / 100;
+				setDiscountedPrice(discountedPrice);
+				setPromoIsValid(true);
+      	setPromoNotification('Discount code valid');
+      }
+    } else {
+    	setPromoNotification('Discount code is invalid.');
+			setPromoIsValid(false);
+    }
+  };
 
 	return (
 		<StyledWrapperDiv id={`training-${training.id}`}>
@@ -85,15 +115,17 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 						<StyledSpot>3 Spots left</StyledSpot>
 					</StyledInfoDiv>
 					<StyledPrice>
-						<p className='price'>{priceFormatter.format(training.price)}</p>
-						<PromoSection>
+						<p className='price'>{priceFormatter.format(trainingPrice)}</p>
+						<PromoSection promoIsValid={promoIsValid}>
 							<p className='promo-title'>Promo code</p>
 							<PromoInput>
-								<input className='promo-input' type="text" name="promo" id="promo" placeholder='Enter a valid discount code' />
-								<CTA className='promo-btn'>Redeem</CTA>
+								<input className='promo-input' value={promoCode} onChange={(e)=> setPromoCode(e.target.value)} type="text" name="promo" id="promo" placeholder='Enter a valid discount code' />
+								<CTA className='promo-btn' onClick={redeemPromoCode}>Redeem</CTA>
 							</PromoInput>
+							{promoNotification && <span className='promo-notification'>{promoNotification}</span>}
 						</PromoSection>
 						<FeaturedEventDialog
+						trainingPrice={trainingPrice}
 							training={training}
 							onOpen={openBookingDialog}
 							isOpen={isBookingDialogOpen}
@@ -373,12 +405,21 @@ const StyledPrice = styled.div`
 	}
 `;
 
-const PromoSection = styled.div`
+const PromoSection = styled.div<{promoIsValid: boolean}>`
 	margin-bottom: 1rem;
 
 	& .promo-title {
-		font-size: 800;
+		font-weight: 600;
 		margin-bottom: 5px;
+	}
+
+	& .promo-notification {
+		font-size: 12px;
+		margin-bottom: 0;
+		color: ${({ promoIsValid }) => (promoIsValid === true ? 'var(--oex-success)' : 'var(--oex-danger)')};
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		margin-bottom: 0rem;
 	}
 `;
 

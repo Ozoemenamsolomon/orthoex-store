@@ -106,6 +106,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 				/>
 				{filteredAndSortedTrainingData.slice(0, eventCount).map(training => (
 					<FeaturedEventCard
+						promoData={promoData}
 						training={training}
 						key={training.id}
 						userEmail={userEmail}

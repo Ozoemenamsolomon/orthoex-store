@@ -15,6 +15,7 @@ type Props = {
 	onClose: () => void;
 	onOpen: () => void;
 	training: TrainingSupbaseDataType;
+	trainingPrice: number;
 };
 
 interface FormDataType {
@@ -23,7 +24,7 @@ interface FormDataType {
 	email: string;
 	phone: string;
 }
-const FeaturedEventDialog: React.FC<Props> = ({ training }) => {
+const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 	const [numPeople, setNumPeople] = useState(1);
 	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
@@ -96,7 +97,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training }) => {
 									<PeopleFee>
 										<FeeText>Fee:</FeeText>
 										<FeePrice>
-											{priceFormatter.format(training.price * numPeople)}
+											{priceFormatter.format(trainingPrice * numPeople)}
 										</FeePrice>
 									</PeopleFee>
 
@@ -232,13 +233,13 @@ const FeaturedEventDialog: React.FC<Props> = ({ training }) => {
 								<Attendance>
 									<People>{numPeople} X People Attending</People>
 									<Price>
-										{priceFormatter.format(training.price * numPeople)}
+										{priceFormatter.format(trainingPrice * numPeople)}
 									</Price>
 								</Attendance>
 								<TotalSection>
 									<Info>Total</Info>
 									<Amount>
-										{priceFormatter.format(training.price * numPeople)}
+										{priceFormatter.format(trainingPrice * numPeople)}
 									</Amount>
 								</TotalSection>
 							</ViewSection>
