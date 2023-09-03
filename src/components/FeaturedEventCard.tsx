@@ -305,16 +305,16 @@ const StyledInfoDiv = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-	justify-content: flex-start;
 	margin-bottom: 1rem;
 	gap: 0.7rem;
+	flex-wrap: wrap;
 
 	& .date {
 		font-size: 0.9rem;
 	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		& .date {
-			font-size: 0.9rem;
+			font-size: 1rem;
 		}
 	}
 `;
