@@ -41,35 +41,6 @@ const SocialCTA = styled(CTA)`
 	border-radius: 7px;
 `;
 
-// TODO: remove,
-/**
- * new CTAs should be based on functionality not on styling
- *
- * @deprecated use CTALink or CTA
- * use a span within if you need advanced styling that cannot be extended
- */
-export const CTAFlex = styled(CTA)`
-	font: inherit;
-	padding: 0.5rem;
-	width: 100%;
-	border-radius: 0.2rem;
-	border: 0.09rem solid var(--oex-orange);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 0.5rem;
-	@media (${({ theme }) => theme.breakpoints.above.md}) {
-		padding: 0.3rem 0.1rem;
-		gap: 0.1rem;
-		font-size: 0.7rem;
-	}
-	@media (min-width: 900px) {
-		padding: 0.5rem 0.5rem;
-		gap: 0.7rem;
-		font-size: 1rem;
-	}
-`;
-
 type CTAProps = React.ButtonHTMLAttributes<HTMLButtonElement> & CTAType;
 
 export const CTALink: FC<

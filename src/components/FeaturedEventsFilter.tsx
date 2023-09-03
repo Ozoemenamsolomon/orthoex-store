@@ -57,7 +57,7 @@ function getUniqueValuesByKey<T>(data: T[], key: keyof T): Array<T[keyof T]> {
 	return Array.from(uniqueValuesSet);
 }
 
-interface FeaturedEventsFilter {
+type FeaturedEventsFilter = {
 	filterList: FilterListType;
 	setFilterList: React.Dispatch<SetStateAction<FilterListType>>;
 	training: TrainingSupbaseDataType[];

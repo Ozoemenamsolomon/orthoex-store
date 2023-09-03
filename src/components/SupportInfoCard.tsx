@@ -1,5 +1,5 @@
 import React from 'react';
-import { CTAFlex } from './CTA';
+import CTA from './CTA';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { SupportCardDetailType } from './SupportInfo';
@@ -24,9 +24,9 @@ const SupportInfoCard: React.FC<SupportInfoCardType> = ({ data }) => {
 						key={`button-link-${index}`}
 						href={link}
 						passHref>
-						<CTAFlex white key={index}>
+						<CTA className='btn' white key={index}>
 							<Icon /> {title}
-						</CTAFlex>
+						</CTA>
 					</Link>
 				))}
 			</StyledBtnContainer>
@@ -70,6 +70,18 @@ const StyledBtnContainer = styled.div`
 	font: inherit;
 	padding: 0rem;
 	width: 100%;
+
+	& .btn {
+		font: inherit;
+		padding: 0.5rem;
+		width: 100%;
+		border-radius: 0.2rem;
+		border: 0.09rem solid var(--oex-orange);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+	}
 
 	& > a {
 		flex: 1;

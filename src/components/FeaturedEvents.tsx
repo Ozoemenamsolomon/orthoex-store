@@ -7,7 +7,7 @@ import { Container } from './styled';
 import FeaturedEventsFilter from './FeaturedEventsFilter';
 import { useRouter } from 'next/router';
 
-interface FeaturedEventsProp {
+type FeaturedEventsProp = {
 	userEmail: string;
 	trainingData: TrainingSupbaseDataType[];
 	promoData: TrainingPromoDataType[];
@@ -15,7 +15,7 @@ interface FeaturedEventsProp {
 
 export type DateType = Date | null;
 
-export interface FilterListType {
+export type FilterListType = {
 	date: DateType[];
 	title: string[];
 	location: string[];

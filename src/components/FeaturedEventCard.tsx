@@ -16,7 +16,7 @@ import { priceFormatter } from './ProductCard';
 import SocialMediaButtons from './shared/SocialMediaButtons';
 
 
-interface FeaturedEventProp {
+type FeaturedEventProp = {
 	userEmail: string;
 	training: TrainingSupbaseDataType;
 	promoData: TrainingPromoDataType[];
