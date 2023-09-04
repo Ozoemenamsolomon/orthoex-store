@@ -1,4 +1,4 @@
-import { TrainingPromoDataType, TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
@@ -10,7 +10,6 @@ import { useRouter } from 'next/router';
 type FeaturedEventsProp = {
 	userEmail: string;
 	trainingData: TrainingSupbaseDataType[];
-	promoData: TrainingPromoDataType[];
 }
 
 export type DateType = Date | null;
@@ -24,7 +23,6 @@ export type FilterListType = {
 const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	userEmail,
 	trainingData,
-	promoData
 }) => {
 	const [eventCount, setEventCount] = useState(5);
 	const [filterList, setFilterList] = useState<FilterListType>({
@@ -106,7 +104,6 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 				/>
 				{filteredAndSortedTrainingData.slice(0, eventCount).map(training => (
 					<FeaturedEventCard
-						promoData={promoData}
 						training={training}
 						key={training.id}
 						userEmail={userEmail}

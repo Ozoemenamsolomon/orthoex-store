@@ -5,8 +5,8 @@ import Location from '@assets/new/icons/Location';
 import People from '@assets/new/icons/People';
 import Time from '@assets/new/icons/Time';
 import Whatsapp from '@assets/new/icons/Whatsapp';
-import { TrainingSupbaseDataType, TrainingPromoDataType  } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
-import { calculateDateDifference, formatDate, formatTime } from '@utils/index';
+import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { calculateDateDifference, debounce, formatDate, formatTime } from '@utils/index';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -19,7 +19,6 @@ import SocialMediaButtons from './shared/SocialMediaButtons';
 type FeaturedEventProp = {
 	userEmail: string;
 	training: TrainingSupbaseDataType;
-	promoData: TrainingPromoDataType[];
 }
 
 enum EventFormat {
@@ -27,7 +26,7 @@ enum EventFormat {
 	ONSITE = 'ONSITE',
 }
 
-const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training, promoData }) => {
+const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	const websiteUrl = `https://orthoex.ng/trainings#training-${training.id}`
 	const createUrlText = () => {
 		return encodeURI(`Check out this training: ${training.title} at`)
@@ -36,45 +35,46 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training, promoData })
 	const [panelOpen, setpanelOpen] = useState(false);
 	const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
 	const [promoCode, setPromoCode] = useState('');
-  const [promoNotification, setPromoNotification] = useState('');
-  const [discountedPrice, setDiscountedPrice] = useState<number | null>(null);
-  const [promoIsValid, setPromoIsValid] = useState<boolean>(false);
+	const [isRequestPending, setIsRequestPending] = useState(false);
+  const [promoNotification] = useState('');
+  const [discountedPrice] = useState<number | null>(null);
+  const [promoIsValid] = useState<boolean>(false);
 
 	const openBookingDialog = () => setIsBookingDialogOpen(true);
 	const closeBookingDialog = () => setIsBookingDialogOpen(false);
 
 	const trainingPrice = discountedPrice ? discountedPrice : training.price;
 
-	const redeemPromoCode = () => {
-    // Check if the entered promo code exists in the promo list
-    const promo = promoData.find((promo) => promo.promo_code === promoCode);
+	const redeemPromoCode = async () => {
+		// const response = 
+		try {
+			const response = await fetch('/api/promo', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ promoCode, price: training.price }),
+			});
+			return await response.json();
 
-    if (promo) {
-			const currentDate = new Date();
-    	const validUntilDate = new Date(promo.valid_until);
+		} catch (error) {
+			console.log(error);
+		}
 
-			if (currentDate <= validUntilDate) {
-				if (promo.promo_amount !== null) {
-					const discountedPrice = training.price - promo.promo_amount;
-					setDiscountedPrice(discountedPrice);
-					setPromoIsValid(true);
-					setPromoNotification('Discount code valid');
-				} else if (promo.promo_percentage !== null) {
-					const discountedPrice = training.price - (training.price * promo.promo_percentage) / 100;
-					setDiscountedPrice(discountedPrice);
-					setPromoIsValid(true);
-					setPromoNotification('Discount code valid');
-				}
-			} else {
-				setPromoNotification('Discount code is expired.');
-				setPromoIsValid(false);
-			}
-
-    } else {
-    	setPromoNotification('Discount code is invalid.');
-			setPromoIsValid(false);
-    }
   };
+
+	const handleRedeemClick = async () => {
+    if (isRequestPending) {
+      return; // Prevent multiple requests while one is already pending
+    }
+    setIsRequestPending(true);
+    const data = await redeemPromoCode();
+		console.log(data);
+    setIsRequestPending(false);
+  };
+
+  // Debounced version of handleRedeemClick
+  const debouncedHandleRedeemClick = debounce(handleRedeemClick, 1000); // Adjust the delay as needed
 
 	return (
 		<StyledWrapperDiv id={`training-${training.id}`}>
@@ -129,7 +129,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training, promoData })
 							<p className='promo-title'>Promo code</p>
 							<PromoInput>
 								<input className='promo-input' value={promoCode} onChange={(e)=> setPromoCode(e.target.value)} type="text" name="promo" id="promo" placeholder='Enter a valid discount code' />
-								<CTA className='promo-btn' onClick={redeemPromoCode}>Redeem</CTA>
+								<CTA className='promo-btn' disabled={isRequestPending} onClick={debouncedHandleRedeemClick}>Redeem</CTA>
 							</PromoInput>
 							{promoNotification && <span className='promo-notification'>{promoNotification}</span>}
 						</PromoSection>
