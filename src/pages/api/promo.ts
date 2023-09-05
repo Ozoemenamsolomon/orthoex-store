@@ -14,7 +14,6 @@ const handler: NextApiHandler = async (req, res) => {
 		.gte('valid_until', new Date().toISOString())
 		.single();
 	const promoData = data as TrainingPromoDataType;
-	console.log({ promoData });
 
 	if (errorFetchingPromo) {
 		console.log({ errorFetchingPromo, promoCode });

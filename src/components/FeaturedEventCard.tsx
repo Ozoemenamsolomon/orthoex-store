@@ -61,7 +61,6 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	const trainingPrice = discountedPrice ? discountedPrice : training.price;
 
 	const redeemPromoCode = async () => {
-		// avoid making request if promo code is empty, saves on api calls
 		if (!promoCode) {
 			toast.error('Please enter a promo code');
 			return;
@@ -93,7 +92,6 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	};
 
 	// Debounced version of handleRedeemClick
-	// you don't even really need a debounce, just disable the button while the request is pending
 	const debouncedHandleRedeemClick = debounce(handleRedeemClick, 1000); // Adjust the delay as needed
 
 	return (
