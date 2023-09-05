@@ -3,7 +3,7 @@ import {
 	Instagram,
 	Linkedin,
 	Twitter,
-	Whatsapp
+	Whatsapp,
 } from '@styled-icons/bootstrap';
 import React from 'react';
 import styled from 'styled-components';
@@ -21,13 +21,12 @@ type SocialMediaButtonsType = {
 };
 
 const socialLinks = {
-	facebook: "https://www.facebook.com/orthoexng",
-	instagram: "https://www.instagram.com/orthoex_nigeria/",
-	twitter: "https://twitter.com/OrthoExNg",
+	facebook: 'https://www.facebook.com/orthoexng',
+	instagram: 'https://www.instagram.com/orthoex_nigeria/',
+	twitter: 'https://twitter.com/OrthoExNg',
 	whatsapp: 'https://wa.me/+2347030324696',
-	linkedin: "https://www.linkedin.com/company/orthoexnigeria/"
-
-}
+	linkedin: 'https://www.linkedin.com/company/orthoexnigeria/',
+};
 
 const SocialMediaButtons: React.FC<SocialMediaButtonsType> = ({
 	width,
@@ -37,7 +36,7 @@ const SocialMediaButtons: React.FC<SocialMediaButtonsType> = ({
 	instagramLink,
 	whatsappLink,
 	twitterLink,
-	facebookLink
+	facebookLink,
 }) => {
 	return (
 		<SocialsContainer color={color}>
@@ -70,7 +69,7 @@ const SocialMediaButtons: React.FC<SocialMediaButtonsType> = ({
 				isSocial={true}
 				target="_blank"
 				rel="noopener noreferrer"
-				href={twitterLink ? twitterLink : socialLinks.twitter}>	
+				href={twitterLink ? twitterLink : socialLinks.twitter}>
 				<Twitter width={width ? width : 18} height={height ? height : 20} />
 			</CTALink>
 			<CTALink
@@ -78,7 +77,7 @@ const SocialMediaButtons: React.FC<SocialMediaButtonsType> = ({
 				isSocial={true}
 				target="_blank"
 				rel="noopener noreferrer"
-				href={whatsappLink ? whatsappLink : socialLinks.whatsapp}>	
+				href={whatsappLink ? whatsappLink : socialLinks.whatsapp}>
 				<Whatsapp width={width ? width : 18} height={height ? height : 20} />
 			</CTALink>
 		</SocialsContainer>
@@ -90,7 +89,7 @@ const SocialsContainer = styled.div<{ color?: string }>`
 	gap: 1.2rem;
 
 	& > a > button {
-		color: ${({color}) => color ? color : 'white'};
+		color: ${({ color }) => (color ? color : 'white')};
 		padding: 0rem;
 		background-color: transparent;
 	}

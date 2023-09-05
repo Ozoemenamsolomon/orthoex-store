@@ -9,19 +9,19 @@ type ButtonType = {
 	title: string;
 	link: string;
 	Icon: svgIcon;
-}
+};
 
 export type SupportCardDetailType = {
 	CardIcon: svgIcon;
 	title: string;
 	paragraph: string;
 	buttons: ButtonType[];
-}
+};
 
 export type SupportInfoType = {
 	header: string;
 	cardDetail: SupportCardDetailType[];
-}
+};
 
 type SupportInfoProps = {
 	data: SupportInfoType;

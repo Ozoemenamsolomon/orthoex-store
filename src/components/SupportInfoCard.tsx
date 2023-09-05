@@ -24,7 +24,7 @@ const SupportInfoCard: React.FC<SupportInfoCardType> = ({ data }) => {
 						key={`button-link-${index}`}
 						href={link}
 						passHref>
-						<CTA className='btn' white key={index}>
+						<CTA className="btn" white key={index}>
 							<Icon /> {title}
 						</CTA>
 					</Link>

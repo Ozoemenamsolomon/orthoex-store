@@ -250,7 +250,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 					) : (
 						<LeaveCheckout>
 							<h4>Leave Checkout?</h4>
-							<p className='text'>
+							<p className="text">
 								Are you sure you want to leave checkout? The items you have
 								selected may not be available later.
 							</p>
@@ -308,7 +308,7 @@ const ContentWrapper = styled.div`
 		height: 35rem;
 		flex-direction: row;
 		padding: 0rem;
-	}     
+	}
 	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		height: 37rem;
 	}
@@ -420,7 +420,7 @@ const LeaveCheckout = styled.div`
 		margin-left: 2rem;
 	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-	height: 30rem;
+		height: 30rem;
 	}
 `;
 

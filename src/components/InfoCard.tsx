@@ -31,7 +31,7 @@ const InfoCard: React.FC<Props> = ({ image, description, buttons }) => {
 			<ButtonContainer>
 				{buttons.map(({ Icon, link, title }, index) => (
 					<Link style={{ flex: 1 }} key={index} href={link}>
-						<CTA className='btn' white>
+						<CTA className="btn" white>
 							{Icon && <Icon />}
 							{title}
 						</CTA>

@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 type FeaturedEventsProp = {
 	userEmail: string;
 	trainingData: TrainingSupbaseDataType[];
-}
+};
 
 export type DateType = Date | null;
 
@@ -18,7 +18,7 @@ export type FilterListType = {
 	date: DateType[];
 	title: string[];
 	location: string[];
-}
+};
 
 const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	userEmail,
@@ -33,31 +33,36 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 
 	const router = useRouter();
 
-
-	const {location, date, title} = filterList;
+	const { location, date, title } = filterList;
 
 	const filteredAndSortedTrainingData = useMemo(() => {
+		return trainingData
+			.filter(training => {
+				// Apply date filtering logic
+				const trainingDate = new Date(training.startDateTime);
+				const startDate = date[0] ? new Date(date[0]) : null;
+				const endDate = date[1] ? new Date(date[1]) : null;
+				const isDateInRange =
+					(!startDate || trainingDate >= startDate) &&
+					(!endDate || trainingDate <= endDate);
 
-		return trainingData.filter(training => {
-			// Apply date filtering logic
-			const trainingDate = new Date(training.startDateTime); 
-			const startDate = date[0] ? new Date(date[0]) : null;
-			const endDate = date[1] ? new Date(date[1]) : null;
-			const isDateInRange = (!startDate || trainingDate >= startDate) && (!endDate || trainingDate <= endDate);
-	
-			// Apply title filtering logic
-			const isTitleMatched = title.length === 0 || title.some(t => training.title.includes(t));
-	
-			// Apply location filtering logic
-			const isLocationMatched = location.length === 0 || location.some(l => training.location.includes(l)); 
-	
-			return isDateInRange && isTitleMatched && isLocationMatched;
-		}).sort((a, b) => {
-			const dateA = new Date(a.startDateTime);
-			const dateB = new Date(b.endDateTime);
-			return dateA > dateB ? 1 : dateA < dateB ? -1 : 0;
-		});
-	},[location, trainingData, date, title])
+				// Apply title filtering logic
+				const isTitleMatched =
+					title.length === 0 || title.some(t => training.title.includes(t));
+
+				// Apply location filtering logic
+				const isLocationMatched =
+					location.length === 0 ||
+					location.some(l => training.location.includes(l));
+
+				return isDateInRange && isTitleMatched && isLocationMatched;
+			})
+			.sort((a, b) => {
+				const dateA = new Date(a.startDateTime);
+				const dateB = new Date(b.endDateTime);
+				return dateA > dateB ? 1 : dateA < dateB ? -1 : 0;
+			});
+	}, [location, trainingData, date, title]);
 
 	useEffect(() => {
 		const queryParams = new URLSearchParams(
@@ -77,8 +82,13 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 		const location = getParamValues('location') || [];
 		const title = getParamValues('title') || [];
 		const dateFromParams = queryParams.get('date')?.split('**');
-		const date = dateFromParams ? [new Date(dateFromParams[0]), dateFromParams[1] ? new Date(dateFromParams[1]) : null] : [null, null]
-		
+		const date = dateFromParams
+			? [
+					new Date(dateFromParams[0]),
+					dateFromParams[1] ? new Date(dateFromParams[1]) : null,
+			  ]
+			: [null, null];
+
 		setFilterList(prev => ({
 			...prev,
 			date,
@@ -86,7 +96,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 			location,
 		}));
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const LoadMoreEvent = () => {
@@ -110,8 +120,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 					/>
 				))}
 
-				{(
-					filteredAndSortedTrainingData.length > eventCount) && (
+				{filteredAndSortedTrainingData.length > eventCount && (
 					<StyledLoadMore>
 						<CTA className="btn-width" onClick={LoadMoreEvent} white>
 							Load more events

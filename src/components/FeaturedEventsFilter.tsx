@@ -12,12 +12,12 @@ import { DateType, FilterListType } from './FeaturedEvents';
 type InputEventType = React.ChangeEvent<HTMLInputElement>;
 
 type CheckboxGroupType = {
-	options: string[],
-	selectedOptions: string[],
-	inputName: string,
-	onChange: (option: string, event: any) => void,
-	children: ReactNode
-}
+	options: string[];
+	selectedOptions: string[];
+	inputName: string;
+	onChange: (option: string, event: any) => void;
+	children: ReactNode;
+};
 
 const CheckboxGroup: React.FC<CheckboxGroupType> = ({
 	options,
@@ -33,7 +33,7 @@ const CheckboxGroup: React.FC<CheckboxGroupType> = ({
 				{options.map((option: string, idx) => (
 					<label key={option}>
 						<input
-							name={`${inputName}-${idx+1}`}
+							name={`${inputName}-${idx + 1}`}
 							type="checkbox"
 							value={option}
 							checked={selectedOptions.includes(option)}
@@ -61,7 +61,7 @@ type FeaturedEventsFilter = {
 	filterList: FilterListType;
 	setFilterList: React.Dispatch<SetStateAction<FilterListType>>;
 	training: TrainingSupbaseDataType[];
-}
+};
 
 const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 	filterList,
@@ -77,7 +77,6 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 		'title',
 	) as string[];
 
-
 	const router = useRouter();
 
 	const handleQueryParamsOnChange = useCallback(
@@ -90,36 +89,54 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 			} else {
 				queryParams.set(name, value);
 			}
-			router.push({pathname: router.pathname, query: queryParams.toString()},undefined,{ scroll: false });
+			router.push(
+				{ pathname: router.pathname, query: queryParams.toString() },
+				undefined,
+				{ scroll: false },
+			);
 		},
 		[router],
 	);
 
-	const deleteParams = useCallback((name: string) => {
-		const queryParams = new URLSearchParams(
-			router.query as Record<string, string>,
-		);
-		for (const [key] of Object.entries(router.query)) {
-			if (key.startsWith(name)) {
-				queryParams.delete(key);
+	const deleteParams = useCallback(
+		(name: string) => {
+			const queryParams = new URLSearchParams(
+				router.query as Record<string, string>,
+			);
+			for (const [key] of Object.entries(router.query)) {
+				if (key.startsWith(name)) {
+					queryParams.delete(key);
+				}
 			}
-		}
-		router.push({pathname: router.pathname, query: queryParams.toString() }, undefined, {scroll: false});
-	}, [router])
+			router.push(
+				{ pathname: router.pathname, query: queryParams.toString() },
+				undefined,
+				{ scroll: false },
+			);
+		},
+		[router],
+	);
 
-	const addDateParams = useCallback((selectedDate: DateType[]) => {
-		const queryParams = new URLSearchParams(
-			router.query as Record<string, string>,
-		);
-		const selectedDateString = selectedDate.join('**')
+	const addDateParams = useCallback(
+		(selectedDate: DateType[]) => {
+			const queryParams = new URLSearchParams(
+				router.query as Record<string, string>,
+			);
+			const selectedDateString = selectedDate.join('**');
 
-		if (selectedDate.some(d => d !== null)) {
-			queryParams.delete('date');
-			queryParams.set('date', selectedDateString);
-		}
+			if (selectedDate.some(d => d !== null)) {
+				queryParams.delete('date');
+				queryParams.set('date', selectedDateString);
+			}
 
-		router.push({pathname: router.pathname, query: queryParams.toString() }, undefined, {scroll: false});
-	}, [router])
+			router.push(
+				{ pathname: router.pathname, query: queryParams.toString() },
+				undefined,
+				{ scroll: false },
+			);
+		},
+		[router],
+	);
 
 	return (
 		<FEWrapper>
@@ -138,8 +155,8 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 								startDate={filterList.date[0]}
 								endDate={filterList.date[1]}
 								inline
-								onChange={(update) => {
-									addDateParams(update)
+								onChange={update => {
+									addDateParams(update);
 									setFilterList(prev => ({ ...prev, date: update }));
 								}}
 								placeholderText="Select Date"
@@ -155,7 +172,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 							onChange={(option: string, e: InputEventType) => {
 								// update the route
 								handleQueryParamsOnChange(e.target.name, e.target.value);
-								
+
 								// update filter state
 								if (filterList.location.includes(option)) {
 									setFilterList(prev => {
@@ -214,7 +231,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 							className="icon"
 							onClick={() => {
 								deleteParams('date');
-								setFilterList(prev => ({ ...prev, date: [null, null] }))
+								setFilterList(prev => ({ ...prev, date: [null, null] }));
 							}}>
 							<CancelIcon />
 						</span>
@@ -229,7 +246,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 								deleteParams('location');
 								setFilterList(prev => {
 									return { ...prev, location: [] };
-								})
+								});
 							}}>
 							<CancelIcon />
 						</span>
@@ -241,10 +258,10 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 						<span
 							className="icon"
 							onClick={() => {
-								deleteParams('title')
+								deleteParams('title');
 								setFilterList(prev => {
 									return { ...prev, title: [] };
-								})
+								});
 							}}>
 							<CancelIcon />
 						</span>

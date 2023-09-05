@@ -6,7 +6,12 @@ import People from '@assets/new/icons/People';
 import Time from '@assets/new/icons/Time';
 import Whatsapp from '@assets/new/icons/Whatsapp';
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
-import { calculateDateDifference, debounce, formatDate, formatTime } from '@utils/index';
+import {
+	calculateDateDifference,
+	debounce,
+	formatDate,
+	formatTime,
+} from '@utils/index';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -15,11 +20,10 @@ import FeaturedEventDialog from './FeaturedEventDialog';
 import { priceFormatter } from './ProductCard';
 import SocialMediaButtons from './shared/SocialMediaButtons';
 
-
 type FeaturedEventProp = {
 	userEmail: string;
 	training: TrainingSupbaseDataType;
-}
+};
 
 enum EventFormat {
 	ONLINE = 'ONLINE',
@@ -27,17 +31,17 @@ enum EventFormat {
 }
 
 type PromoResultType = {
-	promoIsValid: boolean,
-	promoNotification: string,
-	discountedPrice: number | null,
-}
+	promoIsValid: boolean;
+	promoNotification: string;
+	discountedPrice: number | null;
+};
 
 const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
-	const websiteUrl = `https://orthoex.ng/trainings#training-${training.id}`
+	const websiteUrl = `https://orthoex.ng/trainings#training-${training.id}`;
 	const createUrlText = () => {
-		return encodeURI(`Check out this training: ${training.title} at`)
-	}
-	
+		return encodeURI(`Check out this training: ${training.title} at`);
+	};
+
 	const [panelOpen, setpanelOpen] = useState(false);
 	const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
 	const [promoCode, setPromoCode] = useState('');
@@ -48,7 +52,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 		discountedPrice: null,
 	});
 
-	const {promoIsValid, promoNotification, discountedPrice} = promoResult;
+	const { promoIsValid, promoNotification, discountedPrice } = promoResult;
 
 	const openBookingDialog = () => setIsBookingDialogOpen(true);
 	const closeBookingDialog = () => setIsBookingDialogOpen(false);
@@ -64,28 +68,26 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 				},
 				body: JSON.stringify({ promoCode, price: training.price }),
 			});
-			return await response.json() as PromoResultType;
-
+			return (await response.json()) as PromoResultType;
 		} catch (error) {
 			console.log(error);
 		}
-
-  };
+	};
 
 	const handleRedeemClick = async () => {
-    if (isRequestPending) {
-      return; // Prevent multiple requests while one is already pending
-    }
-    setIsRequestPending(true);
-    const data = await redeemPromoCode();
-		if(data){
-			setPromoResult(data)
+		if (isRequestPending) {
+			return; // Prevent multiple requests while one is already pending
 		}
-    setIsRequestPending(false);
-  };
+		setIsRequestPending(true);
+		const data = await redeemPromoCode();
+		if (data) {
+			setPromoResult(data);
+		}
+		setIsRequestPending(false);
+	};
 
-  // Debounced version of handleRedeemClick
-  const debouncedHandleRedeemClick = debounce(handleRedeemClick, 1000); // Adjust the delay as needed
+	// Debounced version of handleRedeemClick
+	const debouncedHandleRedeemClick = debounce(handleRedeemClick, 1000); // Adjust the delay as needed
 
 	return (
 		<StyledWrapperDiv id={`training-${training.id}`}>
@@ -97,7 +99,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 					<h4>{training.title}</h4>
 					<StyledInfoDiv>
 						<Calender />
-						<span className='date'>{`${formatDate(
+						<span className="date">{`${formatDate(
 							new Date(training.startDateTime),
 						)} - ${formatDate(new Date(training.endDateTime))}`}</span>
 						<StyledDays>{`${calculateDateDifference(
@@ -116,16 +118,16 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 						<span>{`${training.location}`}</span>
 					</StyledInfoDiv>
 					<SocialSection>
-						<p className='title'>Share this event</p>
-					<SocialMediaButtons
-					whatsappLink={`https://api.whatsapp.com/send?text=${createUrlText()} ${websiteUrl}`}
-					twitterLink={`https://twitter.com/intent/tweet?text=${createUrlText()}&url=${websiteUrl}`}
-					facebookLink={`https://www.facebook.com/sharer.php?u=${websiteUrl}&text=${createUrlText()}`}
-					linkedInLink={`https://www.linkedin.com/shareArticle?text=${createUrlText()}&url=${websiteUrl}`}
-					height={20}
-					width={20}
-					color={'black'}
-				/>
+						<p className="title">Share this event</p>
+						<SocialMediaButtons
+							whatsappLink={`https://api.whatsapp.com/send?text=${createUrlText()} ${websiteUrl}`}
+							twitterLink={`https://twitter.com/intent/tweet?text=${createUrlText()}&url=${websiteUrl}`}
+							facebookLink={`https://www.facebook.com/sharer.php?u=${websiteUrl}&text=${createUrlText()}`}
+							linkedInLink={`https://www.linkedin.com/shareArticle?text=${createUrlText()}&url=${websiteUrl}`}
+							height={20}
+							width={20}
+							color={'black'}
+						/>
 					</SocialSection>
 				</StyledLeftContent>
 				<StyledRightContent>
@@ -135,17 +137,32 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 						<StyledSpot>3 Spots left</StyledSpot>
 					</StyledInfoDiv>
 					<StyledPrice>
-						<p className='price'>{priceFormatter.format(trainingPrice)}</p>
+						<p className="price">{priceFormatter.format(trainingPrice)}</p>
 						<PromoSection promoIsValid={promoIsValid}>
-							<p className='promo-title'>Promo code</p>
+							<p className="promo-title">Promo code</p>
 							<PromoInput>
-								<input className='promo-input' value={promoCode} onChange={(e)=> setPromoCode(e.target.value)} type="text" name="promo" id="promo" placeholder='Enter a valid discount code' />
-								<CTA className='promo-btn' disabled={isRequestPending} onClick={debouncedHandleRedeemClick}>Redeem</CTA>
+								<input
+									className="promo-input"
+									value={promoCode}
+									onChange={e => setPromoCode(e.target.value)}
+									type="text"
+									name="promo"
+									id="promo"
+									placeholder="Enter a valid discount code"
+								/>
+								<CTA
+									className="promo-btn"
+									disabled={isRequestPending}
+									onClick={debouncedHandleRedeemClick}>
+									Redeem
+								</CTA>
 							</PromoInput>
-							{promoNotification && <span className='promo-notification'>{promoNotification}</span>}
+							{promoNotification && (
+								<span className="promo-notification">{promoNotification}</span>
+							)}
 						</PromoSection>
 						<FeaturedEventDialog
-						trainingPrice={trainingPrice}
+							trainingPrice={trainingPrice}
 							training={training}
 							onOpen={openBookingDialog}
 							isOpen={isBookingDialogOpen}
@@ -160,7 +177,15 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 							}`}>
 							<Call /> Phone call
 						</CTALink>
-						<CTALink white href={`https://wa.me/${training.whatsappContact}?text=Hello, I am writing regarding the upcoming training program ${training.title} scheduled for ${formatDate(new Date(training.startDateTime))}.`}>
+						<CTALink
+							white
+							href={`https://wa.me/${
+								training.whatsappContact
+							}?text=Hello, I am writing regarding the upcoming training program ${
+								training.title
+							} scheduled for ${formatDate(
+								new Date(training.startDateTime),
+							)}.`}>
 							<Whatsapp /> Whatsapp
 						</CTALink>
 					</StyledButtonGroup>
@@ -425,7 +450,7 @@ const StyledPrice = styled.div`
 	}
 `;
 
-const PromoSection = styled.div<{promoIsValid: boolean}>`
+const PromoSection = styled.div<{ promoIsValid: boolean }>`
 	margin-bottom: 1rem;
 
 	& .promo-title {
@@ -436,7 +461,8 @@ const PromoSection = styled.div<{promoIsValid: boolean}>`
 	& .promo-notification {
 		font-size: 12px;
 		margin-bottom: 0;
-		color: ${({ promoIsValid }) => (promoIsValid ? 'var(--oex-success)' : 'var(--oex-danger)')};
+		color: ${({ promoIsValid }) =>
+			promoIsValid ? 'var(--oex-success)' : 'var(--oex-danger)'};
 	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		margin-bottom: 0rem;

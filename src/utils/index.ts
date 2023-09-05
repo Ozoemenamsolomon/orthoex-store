@@ -49,15 +49,15 @@ export const formatGramm = new Intl.NumberFormat('en-US', {
 type DebounceFunction = (...args: any[]) => void;
 
 export function debounce<T extends DebounceFunction>(
-  func: T,
-  delay: number
+	func: T,
+	delay: number,
 ): (...args: Parameters<T>) => void {
-  let timeoutId: NodeJS.Timeout;
+	let timeoutId: NodeJS.Timeout;
 
-  return function (...args: Parameters<T>) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      func(...args);
-    }, delay);
-  };
+	return function (...args: Parameters<T>) {
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(() => {
+			func(...args);
+		}, delay);
+	};
 }

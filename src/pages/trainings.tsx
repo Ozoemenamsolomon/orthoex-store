@@ -14,7 +14,6 @@ import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTr
 import { supabaseTrainingClient } from '@utils/supabase';
 import { GetServerSideProps, NextPage } from 'next';
 
-
 const data: ImageInfoHeaderType = {
 	image: LadyImage,
 	heading: 'Our workshops are tailored for you!',
@@ -39,7 +38,6 @@ const Trainings: NextPage<{
 	user: Claims;
 	trainingData: TrainingSupbaseDataType[];
 }> = ({ user, trainingData }) => {
-	
 	return (
 		<>
 			<Container bg="white" paddingMultiplier={0}>
