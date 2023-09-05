@@ -11,7 +11,7 @@ export const getBrands = async (categorySlug: string) => {
 		console.log({ error });
 		return [];
 	}
-	console.log({ data });
+
 	return data as {
 		id: number;
 		name: string;

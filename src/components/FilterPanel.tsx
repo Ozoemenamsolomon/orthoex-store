@@ -67,34 +67,36 @@ const FilterPanel: React.FC<{
 					</div>
 				</FilterPanelSectionContainer>
 			)}
-			<FilterPanelSectionContainer>
-				<FilterPanelSectionHeader>
-					<h2>BRAND</h2>
-					{filter.brand && (
-						<button onClick={resetBrandFilter}>&#x1F5D9;</button>
-					)}
-				</FilterPanelSectionHeader>
-				<div
-					style={{
-						display: 'flex',
-						flexDirection: 'column',
-						gap: '.5rem',
-					}}>
-					{brands.map(({ slug, name }, index) => (
-						<label key={`brand-select-radio-${index}`}>
-							<input
-								checked={slug === filter.brand}
-								onChange={selectBrandFilter}
-								type="radio"
-								name="brand"
-								data-brand={slug}
-								id={slug}
-							/>
-							<span>{name}</span>
-						</label>
-					))}
-				</div>
-			</FilterPanelSectionContainer>
+			{brands.length > 1 && (
+				<FilterPanelSectionContainer>
+					<FilterPanelSectionHeader>
+						<h2>BRAND</h2>
+						{filter.brand && (
+							<button onClick={resetBrandFilter}>&#x1F5D9;</button>
+						)}
+					</FilterPanelSectionHeader>
+					<div
+						style={{
+							display: 'flex',
+							flexDirection: 'column',
+							gap: '.5rem',
+						}}>
+						{brands.map(({ slug, name }, index) => (
+							<label key={`brand-select-radio-${index}`}>
+								<input
+									checked={slug === filter.brand}
+									onChange={selectBrandFilter}
+									type="radio"
+									name="brand"
+									data-brand={slug}
+									id={slug}
+								/>
+								<span>{name}</span>
+							</label>
+						))}
+					</div>
+				</FilterPanelSectionContainer>
+			)}
 			<FilterPanelSectionContainer>
 				<FilterPanelSectionHeader>
 					<h2>PRODUCT RATING</h2>
