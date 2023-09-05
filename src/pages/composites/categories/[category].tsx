@@ -4,6 +4,7 @@ import FilterPanel, { FilterType } from '@components/FilterPanel';
 import ProductsPanel from '@components/ProductsPanel';
 import { Container } from '@components/styled';
 import FilterProductContainer from '@components/styled/FIlterProductContainer';
+import { getBrands } from '@data/brands';
 import { getCategories, getCategoryBySlug } from '@data/categories';
 import {
 	ProductVariantType,
@@ -19,7 +20,8 @@ import styled from 'styled-components';
 const Category: NextPage<{
 	category: CategoryProps;
 	products: ProductVariantType[];
-}> = ({ category: { name: categoryName }, products }) => {
+	brands: Awaited<ReturnType<typeof getBrands>>;
+}> = ({ category: { name: categoryName }, products, brands }) => {
 	const transformedProducts = products.map(product =>
 		singleDBProductToProductMapper(product),
 	);
@@ -46,7 +48,7 @@ const Category: NextPage<{
 			<LayoutDiv>
 				<Breadcrumb breadcrumb={breadcrumb} />
 				<FilterProductContainer>
-					<FilterPanel {...{ filter, setFilter, noCategory: true }} />
+					<FilterPanel {...{ filter, setFilter, noCategory: true, brands }} />
 					<ProductsPanel
 						{...{ products: transformedProducts, title: categoryName }}
 					/>
@@ -67,8 +69,8 @@ const Category: NextPage<{
 export default Category;
 
 export async function getStaticPaths() {
-	const categories2 = await getCategories();
-	const paths = categories2?.map(category => ({
+	const categories = await getCategories();
+	const paths = categories?.map(category => ({
 		params: { category: category.slug },
 	}));
 
@@ -85,6 +87,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 		};
 	}
 	const category = await getCategoryBySlug(params.category);
+	const brands = await getBrands(params.category);
 
 	if (!category) {
 		return {
@@ -98,6 +101,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 		props: {
 			category,
 			products,
+			brands,
 		},
 	};
 };

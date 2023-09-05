@@ -1,5 +1,4 @@
-import PriceFilter, { PriceRange } from '@components/PriceFilter';
-import { brands } from '@data/brands';
+import { PriceRange } from '@components/PriceFilter';
 import { categories, CategoryProps } from 'data/categories';
 import { Rating as StarRating } from 'react-simple-star-rating';
 import styled from 'styled-components';
@@ -14,20 +13,8 @@ const FilterPanel: React.FC<{
 	filter: FilterType;
 	setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
 	noCategory?: boolean;
-}> = ({ filter, setFilter, noCategory }) => {
-	const setHighPriceRange: React.ChangeEventHandler<HTMLInputElement> = e => {
-		setFilter(prev => ({
-			...prev,
-			priceRange: { ...prev.priceRange, max: Number(e.target.value) },
-		}));
-	};
-	const setLowPriceRange: React.ChangeEventHandler<HTMLInputElement> = e => {
-		setFilter(prev => ({
-			...prev,
-			priceRange: { ...prev.priceRange, min: Number(e.target.value) },
-		}));
-	};
-
+	brands: { slug: string; name: string }[];
+}> = ({ filter, setFilter, noCategory, brands }) => {
 	const resetBrandFilter = () => setFilter(prev => ({ ...prev, brand: '' }));
 	const resetCategoryFilter = () =>
 		setFilter(prev => ({ ...prev, category: '' }));
@@ -107,26 +94,6 @@ const FilterPanel: React.FC<{
 						</label>
 					))}
 				</div>
-			</FilterPanelSectionContainer>
-			<FilterPanelSectionContainer>
-				<FilterPanelSectionHeader>
-					<h2>PRICE (₦)</h2>
-					<button
-						style={{
-							color: 'var(--oex-orange)',
-							background: 'none',
-							border: 'none',
-						}}>
-						Apply
-					</button>
-				</FilterPanelSectionHeader>
-				<PriceFilter
-					{...{
-						priceRange: filter.priceRange,
-						setHighPriceRange,
-						setLowPriceRange,
-					}}
-				/>
 			</FilterPanelSectionContainer>
 			<FilterPanelSectionContainer>
 				<FilterPanelSectionHeader>
