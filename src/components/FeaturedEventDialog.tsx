@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import * as Dialog from '@radix-ui/react-dialog';
-import styles from './FeaturedEventCard.module.css';
-import styled from 'styled-components';
+import CancelIcon from '@assets/new/icons/CancelIcon';
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import * as Dialog from '@radix-ui/react-dialog';
 import { formatDate } from '@utils/index';
 import Image from 'next/image';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import CTA from './CTA';
+import styles from './FeaturedEventCard.module.css';
 import { priceFormatter } from './ProductCard';
 import { FormRadioLabel } from './styled/Forms';
-import CancelIcon from '@assets/new/icons/CancelIcon';
 
 type Props = {
 	isOpen: boolean;
@@ -25,19 +25,20 @@ interface FormDataType {
 	phone: string;
 }
 const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
-	const [numPeople, setNumPeople] = useState(1);
 	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
 	const [formData, setFormData] = useState<FormDataType[]>([
 		{ firstname: '', lastname: '', email: '', phone: '' },
 	]);
 
+	// derived state from formData, update when formData changes
+	const numPeople = formData.length;
+
 	const onAboutUsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setAboutUsChannel(e.target.id);
 	};
 
 	const handleIncrease = () => {
-		setNumPeople(prevNum => prevNum + 1);
 		setFormData(prevFormData => [
 			...prevFormData,
 			{ firstname: '', lastname: '', email: '', phone: '' },
@@ -47,7 +48,6 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 	const handleDecrease = () => {
 		if (numPeople === 1) return;
 		if (numPeople > 1) {
-			setNumPeople(prevNum => prevNum - 1);
 			setFormData(prevFormData => prevFormData.slice(0, -1));
 		}
 	};
