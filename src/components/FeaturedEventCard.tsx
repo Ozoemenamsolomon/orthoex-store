@@ -14,6 +14,7 @@ import {
 } from '@utils/index';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import CTA, { CTALink } from './CTA';
 import FeaturedEventDialog from './FeaturedEventDialog';
@@ -60,6 +61,11 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	const trainingPrice = discountedPrice ? discountedPrice : training.price;
 
 	const redeemPromoCode = async () => {
+		// avoid making request if promo code is empty, saves on api calls
+		if (!promoCode) {
+			toast.error('Please enter a promo code');
+			return;
+		}
 		try {
 			const response = await fetch('/api/promo', {
 				method: 'POST',
@@ -87,6 +93,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	};
 
 	// Debounced version of handleRedeemClick
+	// you don't even really need a debounce, just disable the button while the request is pending
 	const debouncedHandleRedeemClick = debounce(handleRedeemClick, 1000); // Adjust the delay as needed
 
 	return (
