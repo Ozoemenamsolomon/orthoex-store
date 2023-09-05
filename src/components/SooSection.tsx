@@ -44,14 +44,14 @@ const SOOSectionContainer = styled('section')<{
 	bgColor?: string;
 }>`
 	background-color: ${prop => prop.bgColor};
-	${({ bgColor }) => bgColor && `margin-inline: -1rem; padding-inline: 0.5rem;`}
+	${({ bgColor }) => bgColor && `padding-inline: 0.5rem;`}
 	margin-top: 1rem;
 	padding-block: 3rem;
 	flex-direction: column;
 	/* TODO look into this */
 	scroll-padding-top: 6rem;
 	@media ${({ theme }) => theme.breakpoints.above.sm} {
-		${({ bgColor }) => bgColor && `margin-inline: -2rem; padding-inline: 2rem;`}
+		${({ bgColor }) => bgColor && `padding-inline: 2rem;`}
 		margin-top: 3rem;
 		display: flex;
 	}

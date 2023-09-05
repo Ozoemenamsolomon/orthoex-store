@@ -554,11 +554,14 @@ const TabTitle = styled(Title)`
 `;
 
 const LayoutDiv = styled.div`
-	display: grid;
 	gap: 2rem;
 	align-items: start;
 	& > section {
 		margin-top: 0;
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.sm} {
+		display: grid;
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.xl} {
