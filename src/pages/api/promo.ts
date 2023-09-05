@@ -22,7 +22,7 @@ const handler: NextApiHandler = async (req, res) => {
 		return res
 			.status(404)
 			.json({
-				isPromoValid: false,
+				promoIsValid: false,
 				promoNotification: 'Discount code is invalid',
 			});
 	}
@@ -34,28 +34,24 @@ const handler: NextApiHandler = async (req, res) => {
 		if (currentDate <= validUntilDate) {
 			if (promo.promo_amount !== null) {
 				const discountedPrice = price - promo.promo_amount;
-				const isPromoValid = true;
+				const promoIsValid = true;
 				const promoNotification = 'Discount code valid';
 				return res
 					.status(200)
-					.json({ discountedPrice, isPromoValid, promoNotification });
+					.json({ discountedPrice, promoIsValid, promoNotification });
 			} else if (promo.promo_percentage !== null) {
 				const discountedPrice = price - (price * promo.promo_percentage) / 100;
-				const isPromoValid = true;
+				const promoIsValid = true;
 				const promoNotification = 'Discount code valid';
 				return res
 					.status(200)
-					.json({ discountedPrice, isPromoValid, promoNotification });
+					.json({ discountedPrice, promoIsValid, promoNotification });
 			}
 		} else {
 			const promoNotification = 'Discount code is expired.';
-			const isPromoValid = false;
-			return res.status(200).json({ isPromoValid, promoNotification });
+			const promoIsValid = false;
+			return res.status(200).json({ promoIsValid, promoNotification });
 		}
-	} else {
-		const promoNotification = 'Discount code is invalid.';
-		const isPromoValid = false;
-		return res.status(200).json({ isPromoValid, promoNotification });
 	}
 
 	// res.status(200).json(products);

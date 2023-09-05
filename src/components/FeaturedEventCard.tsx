@@ -26,6 +26,12 @@ enum EventFormat {
 	ONSITE = 'ONSITE',
 }
 
+type PromoResultType = {
+	promoIsValid: boolean,
+	promoNotification: string,
+	discountedPrice: number | null,
+}
+
 const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	const websiteUrl = `https://orthoex.ng/trainings#training-${training.id}`
 	const createUrlText = () => {
@@ -36,9 +42,13 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
 	const [promoCode, setPromoCode] = useState('');
 	const [isRequestPending, setIsRequestPending] = useState(false);
-  const [promoNotification] = useState('');
-  const [discountedPrice] = useState<number | null>(null);
-  const [promoIsValid] = useState<boolean>(false);
+	const [promoResult, setPromoResult] = useState<PromoResultType>({
+		promoIsValid: false,
+		promoNotification: '',
+		discountedPrice: null,
+	});
+
+	const {promoIsValid, promoNotification, discountedPrice} = promoResult;
 
 	const openBookingDialog = () => setIsBookingDialogOpen(true);
 	const closeBookingDialog = () => setIsBookingDialogOpen(false);
@@ -46,7 +56,6 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	const trainingPrice = discountedPrice ? discountedPrice : training.price;
 
 	const redeemPromoCode = async () => {
-		// const response = 
 		try {
 			const response = await fetch('/api/promo', {
 				method: 'POST',
@@ -55,7 +64,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 				},
 				body: JSON.stringify({ promoCode, price: training.price }),
 			});
-			return await response.json();
+			return await response.json() as PromoResultType;
 
 		} catch (error) {
 			console.log(error);
@@ -69,7 +78,9 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
     }
     setIsRequestPending(true);
     const data = await redeemPromoCode();
-		console.log(data);
+		if(data){
+			setPromoResult(data)
+		}
     setIsRequestPending(false);
   };
 
@@ -425,7 +436,7 @@ const PromoSection = styled.div<{promoIsValid: boolean}>`
 	& .promo-notification {
 		font-size: 12px;
 		margin-bottom: 0;
-		color: ${({ promoIsValid }) => (promoIsValid === true ? 'var(--oex-success)' : 'var(--oex-danger)')};
+		color: ${({ promoIsValid }) => (promoIsValid ? 'var(--oex-success)' : 'var(--oex-danger)')};
 	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		margin-bottom: 0rem;
