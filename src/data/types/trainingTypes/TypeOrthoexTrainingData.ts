@@ -16,6 +16,18 @@ export interface TrainingSupbaseDataType {
 	refreshment: boolean;
 	starterPack: boolean;
 	participants: number;
-	extraInformation?: string;
-	nextTrainingDate?: string;
+	extraInformation?: string | null;
+	nextTrainingDate?: string | null;
+	trainingexperience?: string | null;
+	trainingbenefactors?: string[] | null;
+	trainingitems?: string | null;
+}
+
+export interface TrainingPromoDataType {
+	created_at: string;
+	promo_amount: number | null;
+	promo_code: string;
+	promo_description: string;
+	promo_percentage: number | null;
+	valid_until: string;
 }

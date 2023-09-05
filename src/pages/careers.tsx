@@ -102,11 +102,7 @@ function Careers() {
 				description={
 					'Do you love to be a part of a passionate team that enables human potential? We are building the best experience for you!'
 				}>
-				<SocialMediaButtons
-					height={20}
-					width={15}
-					color={'var(--oex-orange)'}
-				/>
+				<SocialMediaButtons height={20} width={15} color={'white'} />
 			</InfoText>
 
 			<StyledOpenPositons id="openPositions">

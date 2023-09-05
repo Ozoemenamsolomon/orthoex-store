@@ -15,6 +15,7 @@ type Props = {
 	onClose: () => void;
 	onOpen: () => void;
 	training: TrainingSupbaseDataType;
+	trainingPrice: number;
 };
 
 interface FormDataType {
@@ -23,13 +24,9 @@ interface FormDataType {
 	email: string;
 	phone: string;
 }
-const FeaturedEventDialog: React.FC<Props> = ({
-	isOpen,
-	onClose,
-	onOpen,
-	training,
-}) => {
+const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 	const [numPeople, setNumPeople] = useState(1);
+	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
 	const [formData, setFormData] = useState<FormDataType[]>([
 		{ firstname: '', lastname: '', email: '', phone: '' },
@@ -70,6 +67,9 @@ const FeaturedEventDialog: React.FC<Props> = ({
 		console.log(formData);
 		console.log(aboutUsChannel);
 	};
+	const handleCloseModal = () => {
+		setIsModalClose(prev => !prev);
+	};
 
 	return (
 		<Dialog.Root>
@@ -81,167 +81,195 @@ const FeaturedEventDialog: React.FC<Props> = ({
 				<Dialog.Content
 					onInteractOutside={e => e.preventDefault()}
 					className={styles.DialogContent}>
-					<ContentWrapper>
-						<EditSection>
-							<EditHeading>Checkout</EditHeading>
-							<EditInfo>
-								<PeopleAttendance>
-									<PeopleText>People attending</PeopleText>
-									<PeopleNumber>
-										<button onClick={handleDecrease}>-</button>
-										{numPeople}
-										<button onClick={handleIncrease}>+</button>
-									</PeopleNumber>
-								</PeopleAttendance>
-								<PeopleFee>
-									<FeeText>Fee:</FeeText>
-									<FeePrice>
-										{priceFormatter.format(training.price * numPeople)}
-									</FeePrice>
-								</PeopleFee>
+					{!isModalClose ? (
+						<ContentWrapper>
+							<EditSection>
+								<EditHeading>Checkout</EditHeading>
+								<EditInfo>
+									<PeopleAttendance>
+										<PeopleText>People attending</PeopleText>
+										<PeopleNumber>
+											<button onClick={handleDecrease}>-</button>
+											{numPeople}
+											<button onClick={handleIncrease}>+</button>
+										</PeopleNumber>
+									</PeopleAttendance>
+									<PeopleFee>
+										<FeeText>Fee:</FeeText>
+										<FeePrice>
+											{priceFormatter.format(trainingPrice * numPeople)}
+										</FeePrice>
+									</PeopleFee>
 
-								<RegisterFormSection>
-									<form>
-										{formData.map((participant, index) => (
-											<AtendeeForm key={index}>
-												<AtendeeText>Attendee {index + 1}:</AtendeeText>
-												<FormFlex>
-													<AtendeeFormControl>
-														<label>First Name:</label>
-														<input
-															type="text"
-															name="firstname"
-															value={participant.firstname}
-															onChange={e => handleChange(index, e)}
-														/>
-													</AtendeeFormControl>
-													<AtendeeFormControl>
-														<label>Last Name:</label>
-														<input
-															type="text"
-															name="lastname"
-															value={participant.lastname}
-															onChange={e => handleChange(index, e)}
-														/>
-													</AtendeeFormControl>
-												</FormFlex>
-												<FormFlex>
-													<AtendeeFormControl>
-														<label>Email:</label>
-														<input
-															type="email"
-															name="email"
-															value={participant.email}
-															onChange={e => handleChange(index, e)}
-														/>
-													</AtendeeFormControl>
-													<AtendeeFormControl>
-														<label>Phone:</label>
-														<input
-															type="tel"
-															name="phone"
-															value={participant.phone}
-															onChange={e => handleChange(index, e)}
-														/>
-													</AtendeeFormControl>
-												</FormFlex>
-											</AtendeeForm>
-										))}
-									</form>
-								</RegisterFormSection>
-								<AboutUs>
-									<p className="title">How did you hear about us?</p>
-									<div className="radio-input">
-										<FormRadioLabel htmlFor="instagram">
-											<input
-												type="radio"
-												name="aboutUs"
-												id="instagram"
-												value={aboutUsChannel}
-												onChange={onAboutUsChange}
-											/>
-											Instagram
-										</FormRadioLabel>
-									</div>
-									<div className="radio-input">
-										<FormRadioLabel htmlFor="facebook">
-											<input
-												type="radio"
-												name="aboutUs"
-												id="facebook"
-												value={aboutUsChannel}
-												onChange={onAboutUsChange}
-											/>
-											Facebook
-										</FormRadioLabel>
-									</div>
-									<div className="radio-input">
-										<FormRadioLabel htmlFor="whatsapp">
-											<input
-												type="radio"
-												name="aboutUs"
-												id="whatsapp"
-												value={aboutUsChannel}
-												onChange={onAboutUsChange}
-											/>
-											Whatsapp
-										</FormRadioLabel>
-									</div>
-									<div className="radio-input">
-										<FormRadioLabel htmlFor="friends">
-											<input
-												type="radio"
-												name="aboutUs"
-												id="friends"
-												value={aboutUsChannel}
-												onChange={onAboutUsChange}
-											/>
-											Friends
-										</FormRadioLabel>
-									</div>
-								</AboutUs>
+									<RegisterFormSection>
+										<form>
+											{formData.map((participant, index) => (
+												<AtendeeForm key={index}>
+													<AtendeeText>Attendee {index + 1}:</AtendeeText>
+													<FormFlex>
+														<AtendeeFormControl>
+															<label>First Name:</label>
+															<input
+																required
+																type="text"
+																name="firstname"
+																value={participant.firstname}
+																onChange={e => handleChange(index, e)}
+															/>
+														</AtendeeFormControl>
+														<AtendeeFormControl>
+															<label>Last Name:</label>
+															<input
+																required
+																type="text"
+																name="lastname"
+																value={participant.lastname}
+																onChange={e => handleChange(index, e)}
+															/>
+														</AtendeeFormControl>
+													</FormFlex>
+													<FormFlex>
+														<AtendeeFormControl>
+															<label>Email:</label>
+															<input
+																required
+																type="email"
+																name="email"
+																value={participant.email}
+																onChange={e => handleChange(index, e)}
+															/>
+														</AtendeeFormControl>
+														<AtendeeFormControl>
+															<label>Phone:</label>
+															<input
+																required
+																type="tel"
+																name="phone"
+																value={participant.phone}
+																onChange={e => handleChange(index, e)}
+															/>
+														</AtendeeFormControl>
+													</FormFlex>
+												</AtendeeForm>
+											))}
+										</form>
+									</RegisterFormSection>
+									<AboutUs>
+										<p className="title">How did you hear about us?</p>
+										<div className="radio-input">
+											<FormRadioLabel htmlFor="instagram">
+												<input
+													required
+													type="radio"
+													name="aboutUs"
+													id="instagram"
+													value={aboutUsChannel}
+													onChange={onAboutUsChange}
+												/>
+												Instagram
+											</FormRadioLabel>
+										</div>
+										<div className="radio-input">
+											<FormRadioLabel htmlFor="facebook">
+												<input
+													type="radio"
+													name="aboutUs"
+													id="facebook"
+													value={aboutUsChannel}
+													onChange={onAboutUsChange}
+												/>
+												Facebook
+											</FormRadioLabel>
+										</div>
+										<div className="radio-input">
+											<FormRadioLabel htmlFor="whatsapp">
+												<input
+													type="radio"
+													name="aboutUs"
+													id="whatsapp"
+													value={aboutUsChannel}
+													onChange={onAboutUsChange}
+												/>
+												Whatsapp
+											</FormRadioLabel>
+										</div>
+										<div className="radio-input">
+											<FormRadioLabel htmlFor="friends">
+												<input
+													type="radio"
+													name="aboutUs"
+													id="friends"
+													value={aboutUsChannel}
+													onChange={onAboutUsChange}
+												/>
+												Friends
+											</FormRadioLabel>
+										</div>
+									</AboutUs>
 
-								<CTA onClick={handleSubmit} className="no-animate register-btn">
-									Register Event
-								</CTA>
-							</EditInfo>
-						</EditSection>
-						<ViewSection>
-							<Heading>{training.title}</Heading>
-							<DateInfo>{`${formatDate(
-								new Date(training.startDateTime),
-							)} - ${formatDate(new Date(training.endDateTime))}`}</DateInfo>
-							<CourseImageDiv>
-								<Image
-									className="image"
-									// src={`http:${training.eventPosterImage}`}
-									src={`https://res.cloudinary.com/dcfntkzap/image/upload/v1690004091/Training-data-images/Event_Flier_Template_Single_Person_yaj9is.png`}
-									fill
-									style={{ objectFit: 'cover' }}
-									sizes="100"
-									alt="image"
-								/>
-							</CourseImageDiv>
-							<Summary>Order Summary</Summary>
-							<Attendance>
-								<People>{numPeople} X People Attending</People>
-								<Price>
-									{priceFormatter.format(training.price * numPeople)}
-								</Price>
-							</Attendance>
-							<TotalSection>
-								<Info>Total</Info>
-								<Amount>
-									{priceFormatter.format(training.price * numPeople)}
-								</Amount>
-							</TotalSection>
-						</ViewSection>
-						<Dialog.Close className={styles.unSet} asChild>
-							<CloseButton>
+									<CTA
+										onClick={handleSubmit}
+										className="no-animate register-btn">
+										Register Event
+									</CTA>
+								</EditInfo>
+							</EditSection>
+							<ViewSection>
+								<Heading>{training.title}</Heading>
+								<DateInfo>{`${formatDate(
+									new Date(training.startDateTime),
+								)} - ${formatDate(new Date(training.endDateTime))}`}</DateInfo>
+								<CourseImageDiv>
+									<Image
+										className="image"
+										src={`${training.eventPosterImage}`}
+										fill
+										style={{ objectFit: 'cover' }}
+										sizes="100"
+										alt="image"
+									/>
+								</CourseImageDiv>
+								<Summary>Order Summary</Summary>
+								<Attendance>
+									<People>{numPeople} X People Attending</People>
+									<Price>
+										{priceFormatter.format(trainingPrice * numPeople)}
+									</Price>
+								</Attendance>
+								<TotalSection>
+									<Info>Total</Info>
+									<Amount>
+										{priceFormatter.format(trainingPrice * numPeople)}
+									</Amount>
+								</TotalSection>
+							</ViewSection>
+							<CloseButton onClick={handleCloseModal}>
 								<CancelIcon />
 							</CloseButton>
-						</Dialog.Close>
-					</ContentWrapper>
+						</ContentWrapper>
+					) : (
+						<LeaveCheckout>
+							<h4>Leave Checkout?</h4>
+							<p className="text">
+								Are you sure you want to leave checkout? The items you have
+								selected may not be available later.
+							</p>
+							<div>
+								<CTA
+									onClick={handleCloseModal}
+									className="no-animate btn stay-btn">
+									Stay
+								</CTA>
+								<Dialog.Close className={styles.unSet} asChild>
+									<CTA
+										onClick={handleCloseModal}
+										className="no-animate btn leave-btn">
+										Leave
+									</CTA>
+								</Dialog.Close>
+							</div>
+						</LeaveCheckout>
+					)}
 				</Dialog.Content>
 			</Dialog.Portal>
 		</Dialog.Root>
@@ -260,7 +288,9 @@ const CTAButton = styled.span`
 	font-size: 1rem;
 	border: 1px solid var(--oex-orange);
 	cursor: pointer;
+	display: block;
 	width: 100%;
+	text-align: center;
 
 	&:hover {
 		background-color: white;
@@ -274,11 +304,13 @@ const ContentWrapper = styled.div`
 	height: 100vh;
 	position: relative;
 
-	// padding: 1rem;
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		height: 32rem;
+		height: 35rem;
 		flex-direction: row;
 		padding: 0rem;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
+		height: 37rem;
 	}
 `;
 
@@ -295,9 +327,9 @@ const EditSection = styled.div`
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
+		padding: 0rem 1rem;
 		flex: 60%;
 		overflow-y: scroll;
-		// padding: 15px;
 	}
 `;
 
@@ -331,6 +363,7 @@ const PeopleAttendance = styled.div`
 `;
 
 const CloseButton = styled.button`
+	all: unset;
 	position: absolute;
 	top: -0.5rem;
 	right: -0.5rem;
@@ -359,6 +392,35 @@ const CloseButton = styled.button`
 		right: 0.5rem;
 		height: 2.5rem;
 		width: 2.5rem;
+	}
+`;
+
+const LeaveCheckout = styled.div`
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	align-items: center;
+	justify-content: center;
+	padding: 3rem;
+
+	& .text {
+		text-align: center;
+	}
+	& .btn {
+		font-size: 0.7rem;
+		padding: 0.8rem 3rem;
+		border: 1px solid var(--oex-orange);
+	}
+	& .stay-btn {
+		background-color: white;
+		color: var(--oex-orange);
+	}
+	& .leave-btn {
+		margin-left: 2rem;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		height: 30rem;
 	}
 `;
 
@@ -401,7 +463,6 @@ const RegisterFormSection = styled.div`
 
 const AtendeeText = styled.p`
 	color: var(--text-colour-grey);
-	/* margin: 1rem 0rem; */
 `;
 const AtendeeForm = styled.div``;
 
@@ -449,7 +510,6 @@ const AboutUs = styled.div`
 	}
 	input[type='radio']::before {
 		border: 1px solid var(--oex-orange);
-		// border: 0.5px solid red;
 	}
 	input[type='radio']:checked {
 		border: 1px solid var(--oex-orange);
@@ -461,7 +521,6 @@ const AboutUs = styled.div`
 
 const ViewSection = styled.div`
 	display: none;
-	// height: 500px;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		display: block;

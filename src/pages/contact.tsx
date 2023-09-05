@@ -174,11 +174,7 @@ const Contact = () => {
 				description={
 					"Are you following us on our social media channels? We're constantly sharing product news and event updates. Click the icon below to follow your favourite brand."
 				}>
-				<SocialMediaButtons
-					height={20}
-					width={15}
-					color={'var(--oex-orange)'}
-				/>
+				<SocialMediaButtons height={20} width={15} color={'white'} />
 			</InfoText>
 		</StyledContactWrapper>
 	);

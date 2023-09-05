@@ -5,23 +5,23 @@ import SupportInfoCard from './SupportInfoCard';
 
 type svgIcon = ({ color }: { color?: string | undefined }) => JSX.Element;
 
-interface ButtonType {
+type ButtonType = {
 	title: string;
 	link: string;
 	Icon: svgIcon;
-}
+};
 
-export interface SupportCardDetailType {
+export type SupportCardDetailType = {
 	CardIcon: svgIcon;
 	title: string;
 	paragraph: string;
 	buttons: ButtonType[];
-}
+};
 
-export interface SupportInfoType {
+export type SupportInfoType = {
 	header: string;
 	cardDetail: SupportCardDetailType[];
-}
+};
 
 type SupportInfoProps = {
 	data: SupportInfoType;

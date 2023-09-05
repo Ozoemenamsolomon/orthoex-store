@@ -6,33 +6,96 @@ import People from '@assets/new/icons/People';
 import Time from '@assets/new/icons/Time';
 import Whatsapp from '@assets/new/icons/Whatsapp';
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
-import { calculateDateDifference, formatDate } from '@utils/index';
+import {
+	calculateDateDifference,
+	debounce,
+	formatDate,
+	formatTime,
+} from '@utils/index';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import { CTALink } from './CTA';
+import CTA, { CTALink } from './CTA';
 import FeaturedEventDialog from './FeaturedEventDialog';
 import { priceFormatter } from './ProductCard';
+import SocialMediaButtons from './shared/SocialMediaButtons';
 
-interface FeaturedEventProp {
+type FeaturedEventProp = {
 	userEmail: string;
 	training: TrainingSupbaseDataType;
-}
+};
 
 enum EventFormat {
 	ONLINE = 'ONLINE',
 	ONSITE = 'ONSITE',
 }
 
+type PromoResultType = {
+	promoIsValid: boolean;
+	promoNotification: string;
+	discountedPrice: number | null;
+};
+
 const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
+	const websiteUrl = `https://orthoex.ng/trainings#training-${training.id}`;
+	const createUrlText = () => {
+		return encodeURI(`Check out this training: ${training.title} at`);
+	};
+
 	const [panelOpen, setpanelOpen] = useState(false);
 	const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
+	const [promoCode, setPromoCode] = useState('');
+	const [isRequestPending, setIsRequestPending] = useState(false);
+	const [promoResult, setPromoResult] = useState<PromoResultType>({
+		promoIsValid: false,
+		promoNotification: '',
+		discountedPrice: null,
+	});
+
+	const { promoIsValid, promoNotification, discountedPrice } = promoResult;
 
 	const openBookingDialog = () => setIsBookingDialogOpen(true);
 	const closeBookingDialog = () => setIsBookingDialogOpen(false);
 
+	const trainingPrice = discountedPrice ? discountedPrice : training.price;
+
+	const redeemPromoCode = async () => {
+		if (!promoCode) {
+			toast.error('Please enter a promo code');
+			return;
+		}
+		try {
+			const response = await fetch('/api/promo', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ promoCode, price: training.price }),
+			});
+			return (await response.json()) as PromoResultType;
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const handleRedeemClick = async () => {
+		if (isRequestPending) {
+			return; // Prevent multiple requests while one is already pending
+		}
+		setIsRequestPending(true);
+		const data = await redeemPromoCode();
+		if (data) {
+			setPromoResult(data);
+		}
+		setIsRequestPending(false);
+	};
+
+	// Debounced version of handleRedeemClick
+	const debouncedHandleRedeemClick = debounce(handleRedeemClick, 1000); // Adjust the delay as needed
+
 	return (
-		<StyledWrapperDiv>
+		<StyledWrapperDiv id={`training-${training.id}`}>
 			<StyledDetailsSection>
 				<StyledLeftContent>
 					<StyledCourseFormat type={training.trainingFormat}>
@@ -41,7 +104,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 					<h4>{training.title}</h4>
 					<StyledInfoDiv>
 						<Calender />
-						<span>{`${formatDate(
+						<span className="date">{`${formatDate(
 							new Date(training.startDateTime),
 						)} - ${formatDate(new Date(training.endDateTime))}`}</span>
 						<StyledDays>{`${calculateDateDifference(
@@ -51,12 +114,26 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 					</StyledInfoDiv>
 					<StyledInfoDiv>
 						<Time />
-						<span>{/* {training.startTime} - {training.endTime} */}</span>
+						<span>{`${formatTime(
+							new Date(training.startDateTime),
+						)} - ${formatTime(new Date(training.endDateTime))}`}</span>
 					</StyledInfoDiv>
 					<StyledInfoDiv>
 						<Location />
 						<span>{`${training.location}`}</span>
 					</StyledInfoDiv>
+					<SocialSection>
+						<p className="title">Share this event</p>
+						<SocialMediaButtons
+							whatsappLink={`https://api.whatsapp.com/send?text=${createUrlText()} ${websiteUrl}`}
+							twitterLink={`https://twitter.com/intent/tweet?text=${createUrlText()}&url=${websiteUrl}`}
+							facebookLink={`https://www.facebook.com/sharer.php?u=${websiteUrl}&text=${createUrlText()}`}
+							linkedInLink={`https://www.linkedin.com/shareArticle?text=${createUrlText()}&url=${websiteUrl}`}
+							height={20}
+							width={20}
+							color={'black'}
+						/>
+					</SocialSection>
 				</StyledLeftContent>
 				<StyledRightContent>
 					<StyledInfoDiv>
@@ -65,8 +142,32 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 						<StyledSpot>3 Spots left</StyledSpot>
 					</StyledInfoDiv>
 					<StyledPrice>
-						<p>{priceFormatter.format(training.price)}</p>
+						<p className="price">{priceFormatter.format(trainingPrice)}</p>
+						<PromoSection promoIsValid={promoIsValid}>
+							<p className="promo-title">Promo code</p>
+							<PromoInput>
+								<input
+									className="promo-input"
+									value={promoCode}
+									onChange={e => setPromoCode(e.target.value)}
+									type="text"
+									name="promo"
+									id="promo"
+									placeholder="Enter a valid discount code"
+								/>
+								<CTA
+									className="promo-btn"
+									disabled={isRequestPending}
+									onClick={debouncedHandleRedeemClick}>
+									Redeem
+								</CTA>
+							</PromoInput>
+							{promoNotification && (
+								<span className="promo-notification">{promoNotification}</span>
+							)}
+						</PromoSection>
 						<FeaturedEventDialog
+							trainingPrice={trainingPrice}
 							training={training}
 							onOpen={openBookingDialog}
 							isOpen={isBookingDialogOpen}
@@ -81,7 +182,15 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 							}`}>
 							<Call /> Phone call
 						</CTALink>
-						<CTALink white href={`https://wa.me/${training.whatsappContact}`}>
+						<CTALink
+							white
+							href={`https://wa.me/${
+								training.whatsappContact
+							}?text=Hello, I am writing regarding the upcoming training program ${
+								training.title
+							} scheduled for ${formatDate(
+								new Date(training.startDateTime),
+							)}.`}>
 							<Whatsapp /> Whatsapp
 						</CTALink>
 					</StyledButtonGroup>
@@ -219,7 +328,7 @@ const Text = styled.p`
 		margin-bottom: 0rem;
 	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		font-size: 1.2rem;
+		font-size: 1rem;
 	}
 `;
 
@@ -234,10 +343,13 @@ const StyledWrapperDiv = styled.div`
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 2rem 2rem 1rem;
+		width: 700px;
+		margin: 0 auto 3rem;
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		padding: 4rem 3rem 1rem;
+		width: 1000px;
 	}
 `;
 
@@ -275,9 +387,27 @@ const StyledInfoDiv = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-	justify-content: flex-start;
 	margin-bottom: 1rem;
 	gap: 0.7rem;
+	flex-wrap: wrap;
+
+	& .date {
+		font-size: 0.9rem;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		& .date {
+			font-size: 1rem;
+		}
+	}
+`;
+
+const SocialSection = styled.div`
+	margin: 1rem 0;
+	& .title {
+		text-transform: uppercase;
+		font-weight: 700;
+		font-size: 0.8rem;
+	}
 `;
 
 const StyledDays = styled.span`
@@ -299,10 +429,10 @@ const StyledSpot = styled.span`
 
 const StyledPrice = styled.div`
 	display: flex;
-	align-items: center;
+	flex-direction: column;
 	justify-content: space-between;
 	margin-bottom: 1rem;
-	gap: 2rem;
+	gap: 1.2rem;
 
 	& > p {
 		font-size: 1.5rem;
@@ -315,13 +445,62 @@ const StyledPrice = styled.div`
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		gap: 2rem;
-		flex-direction: column;
-		align-items: flex-start;
+		gap: 1rem;
+		margin-bottom: 0rem;
 
 		& > a > button {
 			flex: 0.5 0;
 			min-width: 60%;
+		}
+	}
+`;
+
+const PromoSection = styled.div<{ promoIsValid: boolean }>`
+	margin-bottom: 1rem;
+
+	& .promo-title {
+		font-weight: 600;
+		margin-bottom: 5px;
+	}
+
+	& .promo-notification {
+		font-size: 12px;
+		margin-bottom: 0;
+		color: ${({ promoIsValid }) =>
+			promoIsValid ? 'var(--oex-success)' : 'var(--oex-danger)'};
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		margin-bottom: 0rem;
+	}
+`;
+
+const PromoInput = styled.div`
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+
+	& .promo-input {
+		border: 1px solid var(--text-colour-light-grey);
+		padding: 10px;
+		outline: var(--oex-orange);
+		border-radius: 4px;
+		width: 80%;
+
+		&:placeholder {
+			color: 1px solid var(--text-colour-light-grey);
+			font-size: 2px;
+		}
+	}
+
+	& .promo-btn {
+		padding: 8px 12px;
+		font-size: 10px;
+		background-color: var(--text-colour-grey);
+		border: 1px solid var(--text-colour-grey);
+
+		&:hover {
+			color: white;
+			background-color: var(--text-colour-grey);
 		}
 	}
 `;
@@ -331,7 +510,7 @@ const StyledIconText = styled.p`
 	margin: 0;
 	font-weight: 400;
 	display: inline-block;
-	margin-bottom: 2rem;
+	margin-top: 1rem;
 
 	& > span {
 		padding-right: 1rem;
@@ -340,6 +519,7 @@ const StyledIconText = styled.p`
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		font-size: 1.2rem;
+		margin-bottom: 1rem;
 	}
 `;
 
@@ -401,7 +581,7 @@ const StyledText = styled.p`
 	margin: 1rem 0;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		font-size: 1.2rem;
+		font-size: 1rem;
 		color: black;
 	}
 `;
@@ -410,7 +590,7 @@ const StyledList = styled.ul`
 	line-height: 1.8;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		font-size: 1.2rem;
+		font-size: 1rem;
 		color: black;
 	}
 `;
