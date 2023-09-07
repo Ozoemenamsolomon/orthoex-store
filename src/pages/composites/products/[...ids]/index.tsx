@@ -22,12 +22,7 @@ import {
 	Title,
 } from '@components/styled/Temp';
 import { helps } from '@data/helps';
-import {
-	ProductVariantType,
-	getProductByID,
-	getRelatedProducts,
-	singleDBProductToProductMapper,
-} from '@data/products';
+import { getProductByID, getRelatedProducts } from '@data/products';
 import { Facebook, Instagram, Twitter } from '@styled-icons/bootstrap';
 import { useCart } from 'context/cartContext';
 import { NextPage } from 'next';
@@ -41,19 +36,11 @@ import styled from 'styled-components';
 import { formatPrice } from 'utils';
 
 const SingleProduct: NextPage<{
-	product: ProductVariantType;
+	product: Awaited<ReturnType<typeof getProductByID>>;
 	user: UserProfile;
-	relatedProducts: ProductVariantType[];
-	popularProducts: ProductVariantType[];
+	relatedProducts: Awaited<ReturnType<typeof getRelatedProducts>>;
+	popularProducts: Awaited<ReturnType<typeof getRelatedProducts>>;
 }> = ({ product, user, relatedProducts, popularProducts }) => {
-	const transformedProduct = singleDBProductToProductMapper(product);
-	const transformedRelatedProducts = relatedProducts.map(product =>
-		singleDBProductToProductMapper(product),
-	);
-	const transformedPopularProducts = popularProducts.map(product =>
-		singleDBProductToProductMapper(product),
-	);
-
 	const {
 		description,
 		name: productName,
@@ -64,7 +51,7 @@ const SingleProduct: NextPage<{
 		review,
 		details: productDetail,
 		variantID,
-	} = transformedProduct;
+	} = product!;
 
 	const customerReviews = Array.from({ length: 2 }, (_, index) =>
 		index === 0
@@ -390,7 +377,7 @@ const SingleProduct: NextPage<{
 					BGColor="white"
 					header={{ title: 'Related Products', align: 'left' }}>
 					<ProductCards>
-						{transformedRelatedProducts.map((product, index) => (
+						{relatedProducts.map((product, index) => (
 							<ProductCard key={`product_${index}`} {...product} />
 						))}
 					</ProductCards>
@@ -399,7 +386,7 @@ const SingleProduct: NextPage<{
 					BGColor="white"
 					header={{ title: 'Popular Products', align: 'left' }}>
 					<ProductCards>
-						{transformedPopularProducts.map((product, index) => (
+						{popularProducts.map((product, index) => (
 							<ProductCard key={`product_${index}`} {...product} />
 						))}
 					</ProductCards>
@@ -426,16 +413,13 @@ export const getServerSideProps = withPageAuthRequired({
 		const custier = session?.user.custier;
 		const product = await getProductByID(productVariantID, custier);
 
-		if (product?.product.code.toLowerCase() !== prodctCode.toLowerCase()) {
+		if (product?.code.toLowerCase() !== prodctCode.toLowerCase()) {
 			return {
 				notFound: true,
 			};
 		}
 
-		const relatedProducts = await getRelatedProducts(
-			product.product.code,
-			custier,
-		);
+		const relatedProducts = await getRelatedProducts(product.code, custier);
 
 		const popularProductCode = 'PRO-08001';
 		const popularProducts = await getRelatedProducts(

@@ -1,8 +1,5 @@
 import { getProductsByMultipleIDs } from '@data/client';
-import {
-	ProductVariantType,
-	singleDBProductToProductMapper,
-} from '@data/products';
+import { ProductType } from '@data/products';
 import { useRouter } from 'next/router';
 import {
 	ChangeEventHandler,
@@ -31,7 +28,7 @@ type CartContextType = {
 	getQuantity: (productVariantID: string) => number;
 	checkout: (address: any) => void;
 	checkoutSingleProduct: (productVariantID: string) => void;
-	cartProductDetails?: ProductVariantType[];
+	cartProductDetails?: ProductType[];
 	address: AddressType;
 	deliveryFee: number;
 	handleAddressChange: ChangeEventHandler<
@@ -230,7 +227,7 @@ export const useCart = (
 	}
 
 	// TODO: look into this, it's inconsistent
-	const [cartProducts, setCartProducts] = useState<ProductVariantType[]>([]);
+	const [cartProducts, setCartProducts] = useState<ProductType[]>([]);
 
 	useEffect(() => {
 		if (options?.withProductDetails) {
@@ -244,7 +241,7 @@ export const useCart = (
 	};
 
 	const transformedProducts = cartProducts.map(product => ({
-		...singleDBProductToProductMapper(product),
+		...product,
 		quantity:
 			context.cart.find(
 				item => item.productVariantID === product.variantID.toString(),

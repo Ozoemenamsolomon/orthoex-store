@@ -6,17 +6,13 @@ import IconText from '@components/IconText';
 import { priceFormatter } from '@components/ProductCard';
 import ProductSuggestion from '@components/ProductSuggestion';
 import { Container } from '@components/styled';
-import {
-	ProductVariantType,
-	getRecentlyViewedProducts,
-	singleDBProductToProductMapper,
-} from '@data/products';
+import { getRecentlyViewedProducts } from '@data/products';
 import { useCart } from 'context/cartContext';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 
 const Cart: NextPage<{
-	recentlyViewedProducts: ProductVariantType[];
+	recentlyViewedProducts: Awaited<ReturnType<typeof getRecentlyViewedProducts>>;
 }> = ({ recentlyViewedProducts }) => {
 	const { cart, cartProducts } = useCart({
 		withProductDetails: true,
@@ -26,10 +22,6 @@ const Cart: NextPage<{
 	const totalPrice =
 		cartProducts.reduce((acc, item) => acc + item.price * item.quantity, 0) ||
 		0;
-
-	const transformedRecentlyViewedProducts = recentlyViewedProducts?.map(
-		product => singleDBProductToProductMapper(product),
-	);
 
 	return (
 		<Container>
@@ -79,7 +71,7 @@ const Cart: NextPage<{
 			</div>
 			<ProductSuggestion
 				title="Recently viewed"
-				products={transformedRecentlyViewedProducts}
+				products={recentlyViewedProducts}
 			/>
 		</Container>
 	);

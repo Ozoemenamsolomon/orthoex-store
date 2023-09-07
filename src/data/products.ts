@@ -4,7 +4,7 @@ import { Category } from './categories';
 /**
  * This is the product type we need in the codebase
  */
-type ProductType = {
+export type ProductType = {
 	id: number;
 	code: string;
 	name: string;
@@ -41,7 +41,7 @@ type Brand = {
 /**
  * This is the product type we get fom the DB
  */
-export type ProductVariantType = {
+type ProductVariantType = {
 	variant: Variant;
 	variantID: number;
 	/**
@@ -82,112 +82,98 @@ product!inner(id, code, name, image, description, details,
 	brand(name, slug, id),
 	cat:category(name, slug, image, id))
 	`;
-
 export const getProductVariantsByCategory = async (
 	id: string,
 	custier = 'casual',
 ) => {
-	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
 		.select(productVariantQuery)
 		.eq('product.category', id)
-		.eq('prices.custier', custier);
+		.eq('prices.custier', custier)
+		.returns<ProductVariantType>();
 
 	if (error) {
 		console.log({ error });
 		return [];
 	}
-	return data as unknown as ProductVariantType[];
+	return data.map(product => singleDBProductToProductMapper(product));
 };
 
 export const getProductVariantsByMultipleIDs = async (
 	ids: number[],
 	custier: string,
 ) => {
-	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
 		.select(productVariantQuery)
 		.in('id', ids)
-		.eq('prices.custier', custier);
-
-	if (error) {
-		console.log({ error });
-		return [];
-	}
-	return data as unknown as ProductVariantType[];
-};
-
-export const getAllProductVariants = async (custier: string) => {
-	// @ts-ignore
-	const { data, error } = await supabaseClient
-		.from('variants')
-		.select(productVariantQuery)
-		.eq('prices.custier', custier);
+		.eq('prices.custier', custier)
+		.returns<ProductVariantType>();
 
 	if (error) {
 		console.log({ error });
 		return [];
 	}
 
-	return data;
+	return data.map(product => singleDBProductToProductMapper(product));
 };
 
 export const getRecentlyViewedProducts = async (custier: string) => {
-	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
 		.select(productVariantQuery)
 		.eq('prices.custier', custier)
 		.order('variant', { ascending: false })
-		.limit(4);
+		.limit(4)
+		.returns<ProductVariantType>();
 
 	if (error) {
 		console.log({ error });
 		return [];
 	}
 
-	return data;
+	return data.map(product => singleDBProductToProductMapper(product));
 };
 
 export const getProductByID = async (id: string, custier?: string) => {
-	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
 		.select(productVariantQuery)
 		.eq('id', id)
 		.eq('prices.custier', custier)
+		.returns<ProductVariantType>()
 		.single();
 
 	if (error) {
 		console.log({ error });
 		return null;
 	}
-	return data as unknown as ProductVariantType;
+
+	return singleDBProductToProductMapper(data);
 };
 
 export const getRelatedProducts = async (
 	productCode: string,
 	custier = 'casual',
 ) => {
-	// @ts-ignore
 	const { data, error } = await supabaseClient
 		.from('variants')
 		.select(productVariantQuery)
 		.eq('product.code', productCode)
 		.eq('prices.custier', custier)
-		.limit(4);
+		.limit(4)
+		.returns<ProductVariantType>();
 
 	if (error) {
 		console.log({ error });
 		return [];
 	}
 
-	return data;
+	return data.map(product => singleDBProductToProductMapper(product));
 };
 
-export const singleDBProductToProductMapper = (product: ProductVariantType) => {
+const singleDBProductToProductMapper = (product: ProductVariantType) => {
 	const {
 		product: { cat, ...productData },
 		prices,

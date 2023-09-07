@@ -6,11 +6,7 @@ import { Container } from '@components/styled';
 import FilterProductContainer from '@components/styled/FIlterProductContainer';
 import { getBrands } from '@data/brands';
 import { getCategories, getCategoryBySlug } from '@data/categories';
-import {
-	ProductVariantType,
-	getProductVariantsByCategory,
-	singleDBProductToProductMapper,
-} from '@data/products';
+import { getProductVariantsByCategory } from '@data/products';
 import { CategoryProps } from 'data/categories';
 import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
@@ -19,13 +15,9 @@ import styled from 'styled-components';
 
 const Category: NextPage<{
 	category: CategoryProps;
-	products: ProductVariantType[];
+	products: Awaited<ReturnType<typeof getProductVariantsByCategory>>;
 	brands: Awaited<ReturnType<typeof getBrands>>;
 }> = ({ category: { name: categoryName }, products, brands }) => {
-	const transformedProducts = products.map(product =>
-		singleDBProductToProductMapper(product),
-	);
-
 	const [filter, setFilter] = useState<FilterType>({
 		category: '',
 		brand: '',
@@ -49,9 +41,7 @@ const Category: NextPage<{
 				<Breadcrumb breadcrumb={breadcrumb} />
 				<FilterProductContainer>
 					<FilterPanel {...{ filter, setFilter, noCategory: true, brands }} />
-					<ProductsPanel
-						{...{ products: transformedProducts, title: categoryName }}
-					/>
+					<ProductsPanel {...{ products, title: categoryName }} />
 				</FilterProductContainer>
 				<ImageContainer>
 					<Image

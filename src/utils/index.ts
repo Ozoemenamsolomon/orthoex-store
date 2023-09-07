@@ -1,5 +1,3 @@
-import { ProductVariantType } from '@data/products';
-
 export const formatDate: (dateTime: Date) => string = dateTime => {
 	return dateTime.toLocaleDateString('en-NG', {
 		dateStyle: 'long',
@@ -63,9 +61,11 @@ export function debounce<T extends DebounceFunction>(
 		}, delay);
 	};
 }
-export const getProductTotalWeight = (products: ProductVariantType[]) => {
+export const getProductTotalWeight = (
+	products: { variant: { weightInGram: any } }[],
+) => {
 	return products.reduce(
-		(acc, prod) =>
+		(acc: number, prod) =>
 			prod?.variant?.weightInGram
 				? acc + Number(prod?.variant?.weightInGram)
 				: 0,

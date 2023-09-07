@@ -1,5 +1,4 @@
 import Breadcrumb from '@components/Breadcrumb';
-import { ProductCardProp } from '@components/ProductCard';
 import ProductSuggestion from '@components/ProductSuggestion';
 import StayTunedSection from '@components/sections/StayTunedSection';
 import CategorySection, {
@@ -8,11 +7,7 @@ import CategorySection, {
 import SooSection from '@components/SooSection';
 import { Container } from '@components/styled';
 import { categories } from '@data/categories';
-import {
-	getRelatedProducts,
-	ProductVariantType,
-	singleDBProductToProductMapper,
-} from '@data/products';
+import { getRelatedProducts } from '@data/products';
 import { GetStaticProps, NextPage } from 'next';
 
 const viewMoreData: CategoryViewMoreType = {
@@ -20,13 +15,9 @@ const viewMoreData: CategoryViewMoreType = {
 	text: 'View more Products',
 };
 
-const Composite: NextPage<{ popularProducts: ProductVariantType[] }> = ({
-	popularProducts,
-}) => {
-	const transformedProducts: ProductCardProp[] = popularProducts.map(product =>
-		singleDBProductToProductMapper(product),
-	);
-
+const Composite: NextPage<{
+	popularProducts: Awaited<ReturnType<typeof getRelatedProducts>>;
+}> = ({ popularProducts }) => {
 	const breadcrumb = [
 		{ name: 'Composites', link: '/composites' },
 		{ name: 'All Categories', link: '/composites/categories' },
@@ -44,10 +35,7 @@ const Composite: NextPage<{ popularProducts: ProductVariantType[] }> = ({
 				header={{ title: 'All Categories', align: 'left' }}>
 				<CategorySection cards={categories} viewMore={viewMoreData} />
 			</SooSection>
-			<ProductSuggestion
-				title="Popular Products"
-				products={transformedProducts}
-			/>
+			<ProductSuggestion title="Popular Products" products={popularProducts} />
 			<StayTunedSection />
 		</Container>
 	);

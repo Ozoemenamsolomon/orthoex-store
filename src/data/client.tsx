@@ -1,4 +1,5 @@
 import { CartState } from 'context/cartContext';
+import { ProductType } from './products';
 
 export const getProductsByMultipleIDs = async (cart: CartState) => {
 	try {
@@ -11,8 +12,9 @@ export const getProductsByMultipleIDs = async (cart: CartState) => {
 		});
 		const products = await response.json();
 
-		return products;
+		return products as ProductType[];
 	} catch (errorFromBE) {
 		console.log({ errorFromBE });
+		return [];
 	}
 };

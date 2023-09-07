@@ -11,11 +11,7 @@ import {
 	FormRadioWrapper,
 	FormSelect,
 } from '@components/styled/Forms';
-import {
-	getRelatedProducts,
-	ProductVariantType,
-	singleDBProductToProductMapper,
-} from '@data/products';
+import { getRelatedProducts } from '@data/products';
 import { GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -41,12 +37,9 @@ type FormDataType = {
 	unit: UNITSTYPE;
 };
 
-const Calculator: NextPage<{ selectedProducts: ProductVariantType[] }> = ({
-	selectedProducts,
-}) => {
-	const transformedProducts = selectedProducts.map(product =>
-		singleDBProductToProductMapper(product),
-	);
+const Calculator: NextPage<{
+	selectedProducts: Awaited<ReturnType<typeof getRelatedProducts>>;
+}> = ({ selectedProducts }) => {
 	const [formData, setFormData] = useState<FormDataType>({
 		shape: SHAPETYPE.RECTANGLE,
 		diameter: 0,
@@ -272,7 +265,7 @@ const Calculator: NextPage<{ selectedProducts: ProductVariantType[] }> = ({
 					<ResinProducts>
 						<ResinProductTitle>Selected Products</ResinProductTitle>
 						<ProductCards>
-							{transformedProducts.map((product, index) => (
+							{selectedProducts.map((product, index) => (
 								<ProductCard key={`product_${index}`} {...product} />
 							))}
 						</ProductCards>

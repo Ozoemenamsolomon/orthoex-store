@@ -33,7 +33,7 @@ export default withApiAuthRequired(async function checkout(req, res) {
 		const subTotal = products.reduce((acc, item) => {
 			return (
 				acc +
-				item.prices[0].price *
+				item.price *
 					(cart.find(i => i.productVariantID === item.variantID.toString())
 						?.quantity || 0)
 			);
@@ -51,12 +51,12 @@ export default withApiAuthRequired(async function checkout(req, res) {
 				variant: product.variant,
 				variantID: product.variantID,
 				quantity: item.quantity,
-				price: product.prices[0].price || 0,
-				code: product.product.code,
-				name: product.product.name,
-				image: product.product.image,
-				brand: product.product.brand.id,
-				cat: product.product?.cat.id,
+				price: product.price || 0,
+				code: product.code,
+				name: product.name,
+				image: product.image,
+				brand: product.brand.id,
+				cat: product?.category.id,
 				timeStamp: Date.now(),
 			};
 		});
