@@ -4,7 +4,7 @@ import { useCart } from 'context/cartContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
 import ProductStars from './ProductStars';
@@ -34,9 +34,6 @@ const ProductCard: React.FC<ProductCardProp> = ({
 	code,
 	variantID,
 }) => {
-	const { user } = useUser();
-	const router = useRouter();
-
 	const { getQuantity: getCartQuantity, setQuantity: setCartQuantity } =
 		useCart();
 	const [localQuantity, setLocalQuantity] = useState(
@@ -77,21 +74,7 @@ const ProductCard: React.FC<ProductCardProp> = ({
 					)}/${variantID}`}>
 					<ProductName>{name}</ProductName>
 				</Link>
-				<div style={{ position: 'relative' }}>
-					{user ? (
-						<Price blur={false}>{priceFormatter.format(price)}</Price>
-					) : (
-						<>
-							<Price blur={true}>{priceFormatter.format(111111.111)}</Price>
-							<Link
-								href={`/api/auth/login?returnTo=${encodeURIComponent(
-									router.asPath,
-								)}`}>
-								Login to view price
-							</Link>
-						</>
-					)}
-				</div>
+				<Price price={price} />
 				{review && <ProductStars {...review} />}
 				{/* user && */}
 				{getCartQuantity(variantID.toString()) != 0 ? (
@@ -193,7 +176,7 @@ const ProductName = styled.h3`
 	}
 `;
 
-const Price = styled.p<{ blur: boolean }>`
+const PriceText = styled.p<{ blur: boolean }>`
 	font-weight: 300;
 	font-size: 0.9rem;
 	margin-bottom: 0;
@@ -216,3 +199,26 @@ const Price = styled.p<{ blur: boolean }>`
 		font-size: 1.2rem;
 	}
 `;
+
+const Price: FC<{ price: number }> = ({ price }) => {
+	const { user } = useUser();
+	const router = useRouter();
+
+	return (
+		<div style={{ position: 'relative' }}>
+			{user ? (
+				<PriceText blur={false}>{priceFormatter.format(price)}</PriceText>
+			) : (
+				<>
+					<PriceText blur={true}>{priceFormatter.format(111111.111)}</PriceText>
+					<Link
+						href={`/api/auth/login?returnTo=${encodeURIComponent(
+							router.asPath,
+						)}`}>
+						Login to view price
+					</Link>
+				</>
+			)}
+		</div>
+	);
+};
