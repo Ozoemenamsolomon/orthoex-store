@@ -34,15 +34,15 @@ const FilterPanel: React.FC<{
 		}));
 	};
 
-	const CategoryRadioOption: React.FC<CategoryProps> = ({ name, slug }) => {
+	const CategoryRadioOption: React.FC<CategoryProps> = ({ name, url }) => {
 		return (
-			<label className="label" htmlFor={slug}>
+			<label className="label" htmlFor={url}>
 				<input
-					checked={slug === filter.category}
+					checked={url === filter.category}
 					type="radio"
 					name={'category-selector'}
-					id={slug}
-					data-category={slug}
+					id={url}
+					data-category={url}
 					onChange={selectCategoryFilter}
 				/>
 				{name}
