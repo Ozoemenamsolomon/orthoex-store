@@ -22,7 +22,11 @@ import {
 	Title,
 } from '@components/styled/Temp';
 import { helps } from '@data/helps';
-import { getProductByID, getRelatedProducts } from '@data/products';
+import {
+	getProductByID,
+	getProductsInGroup,
+	getRelatedProducts,
+} from '@data/products';
 import { Facebook, Instagram, Twitter } from '@styled-icons/bootstrap';
 import { useCart } from 'context/cartContext';
 import { NextPage } from 'next';
@@ -40,7 +44,9 @@ const SingleProduct: NextPage<{
 	user: UserProfile;
 	relatedProducts: Awaited<ReturnType<typeof getRelatedProducts>>;
 	popularProducts: Awaited<ReturnType<typeof getRelatedProducts>>;
-}> = ({ product, user, relatedProducts, popularProducts }) => {
+	otherVariants: Awaited<ReturnType<typeof getProductsInGroup>>;
+}> = ({ product, user, relatedProducts, popularProducts, otherVariants }) => {
+	console.log({ otherVariants });
 	const {
 		description,
 		name: productName,
@@ -412,6 +418,7 @@ export const getServerSideProps = withPageAuthRequired({
 
 		const custier = session?.user.custier;
 		const product = await getProductByID(productVariantID, custier);
+		const otherVariants = await getProductsInGroup(prodctCode, custier);
 
 		if (product?.code.toLowerCase() !== prodctCode.toLowerCase()) {
 			return {
@@ -430,6 +437,7 @@ export const getServerSideProps = withPageAuthRequired({
 		return {
 			props: {
 				product,
+				otherVariants,
 				relatedProducts,
 				popularProducts,
 			},

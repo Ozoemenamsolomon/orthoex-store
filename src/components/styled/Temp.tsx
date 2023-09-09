@@ -36,11 +36,10 @@ export const ProductCountInput = styled.input`
 	width: 5ch;
 	border: none;
 	text-align: center;
-
-	&:not(:read-only) {
+	/* &:not(:read-only) {
 		box-shadow: 3px 3px 6px -1px #c6c6c6 inset;
 		border-radius: 1rem;
-	}
+	} */
 
 	&::-webkit-outer-spin-button,
 	&::-webkit-inner-spin-button {

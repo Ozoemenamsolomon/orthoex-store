@@ -78,7 +78,7 @@ const SectionHeaderContainer = styled(Container)<{
 	flex-direction: column;
 	gap: 1rem;
 	align-items: ${({ align }) => (align === 'left' ? 'flex-start' : 'center')};
-	margin-bottom: 3rem;
+	margin-bottom: 1rem;
 `;
 
 const SectionTitle = styled.h2<{

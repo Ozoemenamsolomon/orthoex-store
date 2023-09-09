@@ -70,10 +70,10 @@ export const ProductCards = styled.div`
 	overflow-x: scroll;
 	gap: 2rem;
 	justify-content: space-between;
-	padding: 2rem;
+	padding: 1rem;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		padding: 2rem 0rem;
+		padding: 1rem 0rem;
 		overflow-x: unset;
 	}
 `;

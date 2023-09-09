@@ -1,9 +1,7 @@
-import CTA from '@components/CTA';
 import ProductCard, { ProductCardProp } from '@components/ProductCard';
 import styled from 'styled-components';
 import { Dashboard } from 'styled-icons/boxicons-solid';
-import { ArrowPrevious, Filter } from 'styled-icons/fluentui-system-filled';
-import { CheveronLeft, CheveronRight } from 'styled-icons/zondicons';
+import { Filter } from 'styled-icons/fluentui-system-filled';
 
 const ProductsPanel: React.FC<{
 	products: ProductCardProp[];
@@ -28,14 +26,17 @@ const ProductsPanel: React.FC<{
 				<Dashboard size={24} color="var(--oex-orange)" />
 			</span>
 		</div>
-		<ProductCards>
-			{products.map((product, index) => (
-				<ProductCard key={`product_${index}`} {...product} />
-			))}
-		</ProductCards>
 		{products.length === 0 ? (
 			<EmptyProducts>No product to display</EmptyProducts>
 		) : (
+			<ProductCards>
+				{products.map((product, index) => (
+					<ProductCard key={`product_${index}`} {...product} />
+				))}
+			</ProductCards>
+		)}
+
+		{/* : (
 			<PaginationBar>
 				<PaginationButton>
 					<ArrowPrevious size={24} />
@@ -49,7 +50,7 @@ const ProductsPanel: React.FC<{
 					<CheveronRight size={24} />
 				</PaginationButton>
 			</PaginationBar>
-		)}
+		)} */}
 	</ProductPanelContainer>
 );
 
@@ -99,25 +100,25 @@ const EmptyProducts = styled.h3`
 	color: var(--oex-dark-grey);
 `;
 
-const PaginationBar = styled.div`
-	display: flex;
-	gap: 1rem;
-	justify-content: center;
-	padding: 1rem 0;
-	margin-top: 1rem;
-`;
+// const PaginationBar = styled.div`
+// 	display: flex;
+// 	gap: 1rem;
+// 	justify-content: center;
+// 	padding: 1rem 0;
+// 	margin-top: 1rem;
+// `;
 
-const PaginationButton = styled(CTA)`
-	color: black;
-	background-color: white;
-	border: 1px solid var(--oex-grey);
-	border-radius: 4px;
-	padding: 0;
+// const PaginationButton = styled(CTA)`
+// 	color: black;
+// 	background-color: white;
+// 	border: 1px solid var(--oex-grey);
+// 	border-radius: 4px;
+// 	padding: 0;
 
-	&.active {
-		border-color: var(--oex-orange);
-	}
-`;
+// 	&.active {
+// 		border-color: var(--oex-orange);
+// 	}
+// `;
 
 const SortSelectContainer = styled.div`
 	display: flex;
