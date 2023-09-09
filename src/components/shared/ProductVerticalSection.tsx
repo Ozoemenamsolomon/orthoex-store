@@ -7,7 +7,7 @@ import CategorySection, { CategoryViewMoreType } from './CategorySection';
 type CardType = {
 	image: StaticImageData | string;
 	name: string;
-	slug: string;
+	url: string;
 };
 
 export type ProductVerticalSectionType = {

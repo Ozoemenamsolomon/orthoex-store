@@ -14,59 +14,59 @@ import { StaticImageData } from 'next/image';
 
 export type CategoryProps = {
 	name: string;
-	slug: string;
+	url: string;
 	image: StaticImageData | string;
 };
 
 export const categories: CategoryProps[] = [
 	{
 		name: 'Polyester Resin & Components',
-		slug: 'polyester-resin-and-components',
+		url: '/composites/categories/polyester-resin-and-components',
 		image: category1,
 	},
 	{
 		name: 'Epoxy Resin & Components',
-		slug: 'epoxy-resin-and-components',
+		url: '/composites/categories/epoxy-resin-and-components',
 		image: category2,
 	},
 	{
 		name: 'Silicone & Polyurethane Rubber',
-		slug: 'silicone-and-polyurethane-rubber',
+		url: '/composites/categories/silicone-and-polyurethane-rubber',
 		image: category3,
 	},
 	{
 		name: 'Fabric & Prepreg Reinforcements',
-		slug: 'fabric-and-prepreg-reinforcements',
+		url: '/composites/categories/fabric-and-prepreg-reinforcements',
 		image: category4,
 	},
 	{
 		name: 'Gelcoats',
-		slug: 'gelcoats',
+		url: '/composites/categories/gelcoats',
 		image: category5,
 	},
 	{
 		name: 'Expanding Foams',
-		slug: 'expanding-foams',
+		url: '/composites/categories/expanding-foams',
 		image: category6,
 	},
 	{
 		name: 'Colour Pigments',
-		slug: 'colour-pigments',
+		url: '/composites/categories/colour-pigments',
 		image: category7,
 	},
 	{
 		name: 'Sealants & Adhesives',
-		slug: 'sealants-and-adhesives',
+		url: '/composites/categories/sealants-and-adhesives',
 		image: category8,
 	},
 	{
 		name: 'Tools, Machines & Supplies',
-		slug: 'tools-machines-and-supplies',
+		url: '/composites/categories/tools-machines-and-supplies',
 		image: category9,
 	},
 	{
 		name: 'Mould Release Agents',
-		slug: 'mould-release-agents',
+		url: '/composites/categories/mould-release-agents',
 		image: category10,
 	},
 ];

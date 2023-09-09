@@ -6,7 +6,7 @@ import styled from 'styled-components';
 type CardType = {
 	image: StaticImageData | string;
 	name: string;
-	slug: string;
+	url: string;
 };
 
 export type CategoryViewMoreType = {
@@ -16,7 +16,7 @@ export type CategoryViewMoreType = {
 
 type CategorySectionProps = {
 	cards: CardType[];
-	viewMore: CategoryViewMoreType;
+	viewMore?: CategoryViewMoreType;
 };
 
 const CategorySection: React.FC<CategorySectionProps> = ({
@@ -27,9 +27,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({
 		<>
 			<CardsContainer>
 				{cards.map((card, index) => (
-					<Link
-						href={`/composites/categories/${card.slug}`}
-						key={`cards-${index}`}>
+					<Link href={`${card.url}`} key={`cards-${index}`}>
 						<Card>
 							<ImageContainer>
 								<Image
@@ -44,10 +42,12 @@ const CategorySection: React.FC<CategorySectionProps> = ({
 					</Link>
 				))}
 			</CardsContainer>
-			<CategoriesLink>
-				<Link href={viewMore.link}>{viewMore.text}</Link>
-				<Icon>&gt;</Icon>
-			</CategoriesLink>
+			{viewMore && (
+				<CategoriesLink>
+					<Link href={viewMore.link}>{viewMore.text}</Link>
+					<Icon>&gt;</Icon>
+				</CategoriesLink>
+			)}
 		</>
 	);
 };
@@ -59,8 +59,6 @@ const CardsContainer = styled.div`
 	grid-template-columns: repeat(5, 1fr);
 	overflow-x: scroll;
 	grid-gap: 0.8rem;
-	margin-top: 2rem;
-	padding: 1rem 0rem;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		&::-webkit-scrollbar {

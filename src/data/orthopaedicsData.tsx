@@ -86,52 +86,52 @@ export const productVerticalData: ProductVerticalSectionType = {
 		{
 			name: 'Prosthetic Components',
 			image: Prosthetic,
-			slug: 'prosthetic-components',
+			url: '/contact',
 		},
 		{
 			name: 'Liners and Sleeves',
 			image: LinesAndSleeves,
-			slug: 'liners-and-sleeves',
+			url: '/contact',
 		},
 		{
 			name: 'Orthotic components',
 			image: OrthoicEquipments,
-			slug: 'orthotic-components',
+			url: '/contact',
 		},
 		{
 			name: 'Fabrication Materials and Supply',
 			image: FabricationAndSupply,
-			slug: 'fabrication-materials-and-supply',
+			url: '/contact',
 		},
 		{
 			name: 'Orthopaedic Braces',
 			image: OrthopaedicBraces,
-			slug: 'orthopaedic-braces',
+			url: '/contact',
 		},
 		{
 			name: 'Paediatrics',
 			image: Paediatrics,
-			slug: 'paediatrics',
+			url: '/contact',
 		},
 		{
 			name: 'Stump Care & Patients Aids',
 			image: PatientAids,
-			slug: 'stump-care-and-patients-aids',
+			url: '/contact',
 		},
 		{
 			name: 'Diabetic Footwear & Care Products',
 			image: DiabeticFootwear,
-			slug: 'diabetic-footwear-and-care-products',
+			url: '/contact',
 		},
 		{
 			name: 'Compression Garment',
 			image: CompressionGarment,
-			slug: 'compression-garment',
+			url: '/contact',
 		},
 		{
 			name: 'Tools & Equipment',
 			image: ToolsAndEquipments,
-			slug: 'tools-and-equipment',
+			url: '/contact',
 		},
 	],
 	viewMore: {
