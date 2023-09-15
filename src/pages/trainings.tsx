@@ -18,7 +18,7 @@ const data: ImageInfoHeaderType = {
 	image: LadyImage,
 	heading: 'Our workshops are tailored for you!',
 	paragraph:
-		'Available workshops include silicone mould making, Epoxy River Tables, Lifecasting, Glass Fibre Reinforced Concrete, jewellery making,  modelling, sculptures, Resin Art, e.t.c. Immerse yourself in a world of unlimited possibilities!',
+		'Available workshops include Silicone Mould Making, Epoxy River Tables, Lifecasting, Glass Fibre Reinforced Concrete, Jewellery Making, Modelling, Sculptures, Resin Art, e.t.c. Immerse yourself in a world of unlimited possibilities!',
 	cta: { link: '#featured-events', text: 'View Events' },
 };
 

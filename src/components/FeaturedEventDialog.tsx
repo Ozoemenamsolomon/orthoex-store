@@ -194,15 +194,15 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 											</FormRadioLabel>
 										</div>
 										<div className="radio-input">
-											<FormRadioLabel htmlFor="friends">
+											<FormRadioLabel htmlFor="google">
 												<input
 													type="radio"
 													name="aboutUs"
-													id="friends"
+													id="google"
 													value={aboutUsChannel}
 													onChange={onAboutUsChange}
 												/>
-												Friends
+												Google
 											</FormRadioLabel>
 										</div>
 									</AboutUs>
@@ -231,7 +231,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 								</CourseImageDiv>
 								<Summary>Order Summary</Summary>
 								<Attendance>
-									<People>{numPeople} X People Attending</People>
+									<People>{numPeople}x People Attending</People>
 									<Price>
 										{priceFormatter.format(trainingPrice * numPeople)}
 									</Price>

@@ -1,6 +1,7 @@
 import Calender from '@assets/new/icons/Calender';
 import CancelIcon from '@assets/new/icons/CancelIcon';
 import Location from '@assets/new/icons/Location';
+import Title from '@assets/new/icons/Title';
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { useRouter } from 'next/router';
 import React, { ReactNode, SetStateAction, useCallback } from 'react';
@@ -215,7 +216,7 @@ const FeaturedEventsFilter: React.FC<FeaturedEventsFilter> = ({
 								}
 							}}>
 							<DivSection>
-								<Location />
+								<Title />
 								<span>Title</span>
 							</DivSection>
 						</CheckboxGroup>
@@ -327,7 +328,9 @@ const FilterWrapper = styled.div`
 const FilterInputs = styled.div`
 	background-color: white;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	gap: 1rem;
+	justify-content: space-around;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		gap: 1rem;
@@ -338,7 +341,6 @@ const FilterInputs = styled.div`
 const CheckBoxGroupWrapper = styled.div`
 	position: relative;
 	display: inline-block;
-	width: 200px;
 	cursor: pointer;
 
 	&:hover .checkbox-title {
@@ -385,6 +387,7 @@ const CheckBoxGroupWrapper = styled.div`
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		border-left: 1px solid var(--text-colour-grey);
+		width: 200px;
 	}
 `;
 
@@ -404,11 +407,9 @@ const DivSection = styled.div`
 const DatePickerWrapper = styled.div`
 	position: relative;
 	display: flex;
-	width: 100%;
 	color: var(--text-colour-grey);
 	min-height: 50px;
 	justify-content: center;
-	min-width: 140px;
 
 	& .date-title {
 		display: flex;
@@ -465,6 +466,7 @@ const DatePickerWrapper = styled.div`
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		justify-content: left;
+		min-width: 140px;
 
 		& .date-title {
 			padding-left: 20px;
@@ -476,6 +478,10 @@ const CheckBoxWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 1rem;
+	gap: 3rem;
 	min-height: 50px;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		gap: 1rem;
+	}
 `;

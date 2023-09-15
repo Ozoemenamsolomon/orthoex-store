@@ -100,7 +100,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 	}, []);
 
 	const LoadMoreEvent = () => {
-		setEventCount(prev => prev + 3);
+		setEventCount(eventCount + 3);
 	};
 
 	return (
@@ -122,7 +122,7 @@ const FeaturedEvents: React.FC<FeaturedEventsProp> = ({
 
 				{filteredAndSortedTrainingData.length > eventCount && (
 					<StyledLoadMore>
-						<CTA className="btn-width" onClick={LoadMoreEvent} white>
+						<CTA onClick={LoadMoreEvent} white>
 							Load more events
 						</CTA>
 					</StyledLoadMore>
@@ -136,7 +136,7 @@ export default FeaturedEvents;
 
 const StyledWrapperDiv = styled.div`
 	background-color: var(--oex-off-white);
-	padding: 3rem 0rem 0rem;
+	padding-bottom:3rem;
 `;
 
 export const StyledHeading = styled.h3<{ align?: string; padding?: boolean }>`
@@ -157,11 +157,7 @@ export const StyledHeading = styled.h3<{ align?: string; padding?: boolean }>`
 `;
 
 const StyledLoadMore = styled.div`
+	display: flex;
 	text-align: center;
-	margin: 3rem 0;
-
-	& .btn-width {
-		display: block;
-		margin: 3rem auto;
-	}
+	justify-content: center;
 `;

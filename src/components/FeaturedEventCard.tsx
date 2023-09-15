@@ -341,6 +341,10 @@ const StyledWrapperDiv = styled.div`
 		-2px 0px 4px rgba(207, 207, 207, 0.1), 0px 2px 12px rgba(207, 207, 207, 0.1),
 		0px -2px 16px rgba(207, 207, 207, 0.1);
 
+	&:last-child {
+		margin-bottom: 0rem;
+	}
+
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 2rem 2rem 1rem;
 		width: 700px;
