@@ -12,6 +12,7 @@ import { FormRadioLabel } from './styled/Forms';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Checkout from '@assets/new/icons/CheckoutIcon';
 
 type Props = {
 	isOpen: boolean;
@@ -259,7 +260,10 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 									<CTA
 										onClick={handleSubmit}
 										className="no-animate register-btn">
-										Register Event
+										<span>
+											<Checkout />
+										</span>
+										<span>Check out</span>
 									</CTA>
 								</EditInfo>
 							</EditSection>
@@ -353,10 +357,6 @@ const LoginWrapper = styled.div`
 		padding: 10px 15px;
 		width: 100%;
 	}
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-	}
-	@media ${({ theme }) => theme.breakpoints.above.lg} {
-	}
 `;
 
 const ContentWrapper = styled.div`
@@ -405,10 +405,13 @@ const EditInfo = styled.div`
 	padding: 1rem;
 
 	.register-btn {
+		display: flex;
+		align-items: center;
+		gap: 5px;
 		margin-top: 2rem;
 		border: 1px solid var(--oex-orange);
-		font-size: 0.8rem;
-		padding: 0.7rem 3rem;
+		font-size: 1rem;
+		padding: 0.4rem 3rem;
 
 		&:hover {
 			background-color: white;
