@@ -9,6 +9,9 @@ import CTA from './CTA';
 import styles from './FeaturedEventCard.module.css';
 import { priceFormatter } from './ProductCard';
 import { FormRadioLabel } from './styled/Forms';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 type Props = {
 	isOpen: boolean;
@@ -25,6 +28,8 @@ interface FormDataType {
 	phone: string;
 }
 const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
+	const { user } = useUser();
+	const router = useRouter();
 	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
 	const [otherChannel, setOtherChannel] = useState('');
@@ -78,6 +83,18 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 	const handleCloseModal = () => {
 		setIsModalClose(prev => !prev);
 	};
+
+	if (!user)
+		return (
+			<LoginWrapper>
+				<Link
+					href={`/api/auth/login?returnTo=${encodeURIComponent(
+						router.asPath,
+					)}`}>
+					<CTA className="no-animate login-btn">Login to Book</CTA>
+				</Link>
+			</LoginWrapper>
+		);
 
 	return (
 		<Dialog.Root>
@@ -327,6 +344,18 @@ const CTAButton = styled.span`
 	&:hover {
 		background-color: white;
 		color: var(--oex-orange);
+	}
+`;
+
+const LoginWrapper = styled.div`
+	& .login-btn {
+		font-size: 15px;
+		padding: 10px 15px;
+		width: 100%;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+	}
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
 	}
 `;
 
