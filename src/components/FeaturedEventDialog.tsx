@@ -27,6 +27,7 @@ interface FormDataType {
 const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
+	const [otherChannel, setOtherChannel] = useState('');
 	const [formData, setFormData] = useState<FormDataType[]>([
 		{ firstname: '', lastname: '', email: '', phone: '' },
 	]);
@@ -35,7 +36,13 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 	const numPeople = formData.length;
 
 	const onAboutUsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setAboutUsChannel(e.target.id);
+		setAboutUsChannel(e.target.value);
+		if (e.target.value !== 'other') {
+			setOtherChannel('');
+		}
+	};
+	const onOtherChannelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setOtherChannel(e.target.value);
 	};
 
 	const handleIncrease = () => {
@@ -66,6 +73,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 		// You can send the formData to the API here
 		console.log(formData);
 		console.log(aboutUsChannel);
+		console.log(otherChannel);
 	};
 	const handleCloseModal = () => {
 		setIsModalClose(prev => !prev);
@@ -163,7 +171,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 													type="radio"
 													name="aboutUs"
 													id="instagram"
-													value={aboutUsChannel}
+													value="instagram"
 													onChange={onAboutUsChange}
 												/>
 												Instagram
@@ -175,7 +183,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 													type="radio"
 													name="aboutUs"
 													id="facebook"
-													value={aboutUsChannel}
+													value="facebook"
 													onChange={onAboutUsChange}
 												/>
 												Facebook
@@ -187,7 +195,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 													type="radio"
 													name="aboutUs"
 													id="whatsapp"
-													value={aboutUsChannel}
+													value="whatsapp"
 													onChange={onAboutUsChange}
 												/>
 												Whatsapp
@@ -199,12 +207,36 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 													type="radio"
 													name="aboutUs"
 													id="google"
-													value={aboutUsChannel}
+													value="google"
 													onChange={onAboutUsChange}
 												/>
 												Google
 											</FormRadioLabel>
 										</div>
+										<div className="radio-input">
+											<FormRadioLabel htmlFor="other">
+												<input
+													type="radio"
+													name="aboutUs"
+													id="other"
+													value="other"
+													onChange={onAboutUsChange}
+												/>
+												Other
+											</FormRadioLabel>
+										</div>
+										{aboutUsChannel === 'other' && (
+											<AtendeeFormControl>
+												<input
+													required
+													type="text"
+													name="other"
+													id="other"
+													value={otherChannel}
+													onChange={onOtherChannelChange}
+												/>
+											</AtendeeFormControl>
+										)}
 									</AboutUs>
 
 									<CTA
