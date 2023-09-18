@@ -13,6 +13,8 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Checkout from '@assets/new/icons/CheckoutIcon';
+import KeyLock from '@assets/new/icons/KeyLockIcon';
+import ArrowBack from '@assets/new/icons/ArrowBack';
 
 type Props = {
 	isOpen: boolean;
@@ -312,24 +314,44 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 							</ContentWrapper>
 						) : (
 							<OrderSummary>
-								<h3>Order Summary</h3>
+								<span
+									className="back-btn"
+									onClick={() => setModalLocation(ModalEnum.Checkout)}>
+									<ArrowBack />
+								</span>
+								<h5 className="heading">Order summary</h5>
 								<OrderInfo>
-									<h5>Orders</h5>
+									<h5 className="title">Orders</h5>
 									<OrderDetails>
-										<span className='description'>{numPeople}x Subtotal</span>
-										<span className='amount'>{priceFormatter.format(training.price * numPeople)}</span>
+										<span className="description">{numPeople}x Subtotal</span>
+										<span className="amount">
+											{priceFormatter.format(training.price * numPeople)}
+										</span>
 									</OrderDetails>
 									<OrderDetails>
-										<span className='description'>{numPeople}x Discount</span>
-										<span className='amount'>{priceFormatter.format(training.price * numPeople)}</span>
+										<span className="description">{numPeople}x Discount</span>
+										<span className="amount">
+											{priceFormatter.format(
+												training.price * numPeople - trainingPrice * numPeople,
+											)}
+										</span>
 									</OrderDetails>
 									<OrderDetails>
-										<span className='description'>Total</span>
-										<span className='amount'>{priceFormatter.format(trainingPrice * numPeople)}</span>
+										<span className="description">Total</span>
+										<span className="amount">
+											{priceFormatter.format(trainingPrice * numPeople)}
+										</span>
 									</OrderDetails>
 								</OrderInfo>
 
-								<CTA className='order-btn'>Pay {priceFormatter.format(trainingPrice * numPeople)}</CTA>
+								<CTA className="no-animat order-btn">
+									<span>
+										<KeyLock />
+									</span>
+									<span>
+										Pay {priceFormatter.format(trainingPrice * numPeople)}
+									</span>
+								</CTA>
 							</OrderSummary>
 						)
 					) : (
@@ -409,25 +431,58 @@ const ContentWrapper = styled.div`
 const OrderSummary = styled.div`
 	height: 100vh;
 	position: relative;
+	padding: 2rem;
 
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-		height: 35rem;
-		padding: 0rem;
+	& .back-btn {
+		cursor: pointer;
+		font-size: 2rem;
 	}
-	@media ${({ theme }) => theme.breakpoints.above.lg} {
-		height: 37rem;
+
+	& .heading {
+		font-weight: 500;
+		font-size: 1.3rem;
+		margin: 1rem 0;
+	}
+
+	& .order-btn {
+		display: flex;
+		gap: 10px;
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+		padding: 10px 15px;
+		border: 1px solid var(--oex-orange);
+		margin-top: 3rem;
 	}
 `;
 const OrderInfo = styled.div`
+	background-color: var(--oex-off-white);
+	padding: 2rem 1rem;
 
+	& .title {
+		margin: 0;
+		font-weight: 500;
+		font-size: 1.2rem;
+	}
 `;
 const OrderDetails = styled.div`
 	display: flex;
 	gap: 2rem;
-	justfy-content: space-between;
+	justify-content: space-between;
+	margin: 1rem 0;
+	font-size: 1.2rem;
+
+	&:last-child {
+		margin: 0;
+	}
+
+	& .description {
+		color: var(--text-colour-grey);
+	}
+	& .amount {
+		font-weight: 600;
+	}
 `;
-
-
 
 const EditSection = styled.div`
 	overflow-y: scroll;
