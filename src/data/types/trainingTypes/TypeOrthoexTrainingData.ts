@@ -21,6 +21,7 @@ export interface TrainingSupbaseDataType {
 	trainingexperience?: string | null;
 	trainingbenefactors?: string[] | null;
 	trainingitems?: string | null;
+	bookedspot: number | null;
 }
 
 export interface TrainingPromoDataType {

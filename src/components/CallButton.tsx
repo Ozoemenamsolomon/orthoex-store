@@ -4,7 +4,7 @@ import { CTALink } from './CTA';
 const CallButton = () => {
 	return (
 		<StyledCallButtonDiv>
-			<CTALink href="tel:+2347030324696" className="btn">
+			<CTALink href="tel:+2347030324696" className="no-animate btn">
 				<svg
 					width="14"
 					height="14"

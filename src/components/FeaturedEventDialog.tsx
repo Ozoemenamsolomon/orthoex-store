@@ -454,6 +454,13 @@ const OrderSummary = styled.div`
 		border: 1px solid var(--oex-orange);
 		margin-top: 3rem;
 	}
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		height: 35rem;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
+		height: 37rem;
+	}
 `;
 const OrderInfo = styled.div`
 	background-color: var(--oex-off-white);

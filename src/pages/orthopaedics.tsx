@@ -1,6 +1,7 @@
 import HeaderBG from '@assets/new/images/header-background.png';
 
 import { CTALink } from '@components/CTA';
+import CallButton from '@components/CallButton';
 import { StyledHeading } from '@components/FeaturedEvents';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
@@ -43,6 +44,7 @@ function Orthopaedics() {
 			</PaddingContainer>
 			<HelpSection />
 			<InfoTestmonial />
+			<CallButton />
 		</>
 	);
 }
