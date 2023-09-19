@@ -248,7 +248,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 									src={training.eventPosterImage}
 									fill
 									sizes="100"
-									alt="image"
+									alt="training poster image"
 								/>
 							</CourseImageDiv>
 						)}

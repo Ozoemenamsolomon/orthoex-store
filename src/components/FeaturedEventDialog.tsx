@@ -15,6 +15,7 @@ import Link from 'next/link';
 import Checkout from '@assets/new/icons/CheckoutIcon';
 import KeyLock from '@assets/new/icons/KeyLockIcon';
 import ArrowBack from '@assets/new/icons/ArrowBack';
+import { usePaystackPayment } from 'react-paystack';
 
 type Props = {
 	isOpen: boolean;
@@ -37,6 +38,13 @@ interface FormDataType {
 }
 const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 	const { user } = useUser();
+	const config = {
+		email: user?.email || '',
+		amount: trainingPrice * 100,
+		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_KEY || '',
+	};
+	const initializePayment = usePaystackPayment(config);
+
 	const router = useRouter();
 	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
@@ -45,9 +53,63 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 	const [formData, setFormData] = useState<FormDataType[]>([
 		{ firstname: '', lastname: '', email: '', phone: '' },
 	]);
+	const [_, setIsPaymentSuccessful] = useState(false);
 
 	// derived state from formData, update when formData changes
 	const numPeople = formData.length;
+
+	const isFormValid = (form: FormDataType) => {
+		return (
+			form.firstname !== '' &&
+			form.lastname !== '' &&
+			form.email !== '' &&
+			form.phone !== ''
+		);
+	};
+
+	const isAllFormsValid = () => {
+		return formData.every(form => isFormValid(form));
+	};
+
+	// Ensure all required inputs are filled.
+	const isPaymentFormFilled =
+		aboutUsChannel !== '' &&
+		(aboutUsChannel !== 'other' || otherChannel !== '') &&
+		isAllFormsValid();
+
+	const onClose = () => {
+		console.log('closed');
+	};
+
+	const onSuccess = (reference: any) => {
+		fetch('/api/verify-training', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ reference }),
+		})
+			.then(res => res.json())
+			.then(data => {
+				setIsPaymentSuccessful(true);
+				//router.push('/account/orders');
+			})
+			.catch(err => {
+				console.log(err);
+				setIsPaymentSuccessful(false);
+			});
+	};
+
+	const onPaymentClick = (
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+	) => {
+		e.preventDefault();
+		const userFoundTraining = aboutUsChannel !== "other" ? aboutUsChannel : otherChannel;
+		console.log(formData);
+		console.log(userFoundTraining);
+		// @ts-ignore
+		initializePayment(onSuccess, onClose);
+	};
 
 	const onAboutUsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setAboutUsChannel(e.target.value);
@@ -85,10 +147,6 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 	const onCheckoutClick = (event: any) => {
 		event.preventDefault();
 		setModalLocation(ModalEnum.OrderSummary);
-		// You can send the formData to the API here
-		console.log(formData);
-		console.log(aboutUsChannel);
-		console.log(otherChannel);
 	};
 	const handleCloseModal = () => {
 		setIsModalClose(prev => !prev);
@@ -138,6 +196,11 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 										</PeopleFee>
 
 										<RegisterFormSection>
+											{!isPaymentFormFilled && (
+												<FormInfo>
+													Please fill all form fields to proceed.
+												</FormInfo>
+											)}
 											<form>
 												{formData.map((participant, index) => (
 													<AtendeeForm key={index}>
@@ -209,6 +272,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 												<FormRadioLabel htmlFor="facebook">
 													<input
 														type="radio"
+														required
 														name="aboutUs"
 														id="facebook"
 														value="facebook"
@@ -221,6 +285,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 												<FormRadioLabel htmlFor="whatsapp">
 													<input
 														type="radio"
+														required
 														name="aboutUs"
 														id="whatsapp"
 														value="whatsapp"
@@ -232,6 +297,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 											<div className="radio-input">
 												<FormRadioLabel htmlFor="google">
 													<input
+														required
 														type="radio"
 														name="aboutUs"
 														id="google"
@@ -244,6 +310,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 											<div className="radio-input">
 												<FormRadioLabel htmlFor="other">
 													<input
+														required
 														type="radio"
 														name="aboutUs"
 														id="other"
@@ -267,14 +334,16 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 											)}
 										</AboutUs>
 
-										<CTA
-											onClick={onCheckoutClick}
-											className="no-animate register-btn">
-											<span>
-												<Checkout />
-											</span>
-											<span>Check out</span>
-										</CTA>
+										{isPaymentFormFilled && (
+											<CTA
+												onClick={onCheckoutClick}
+												className="no-animate register-btn">
+												<span>
+													<Checkout />
+												</span>
+												<span>Check out</span>
+											</CTA>
+										)}
 									</EditInfo>
 								</EditSection>
 								<ViewSection>
@@ -331,6 +400,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 									<OrderDetails>
 										<span className="description">{numPeople}x Discount</span>
 										<span className="amount">
+											-{' '}
 											{priceFormatter.format(
 												training.price * numPeople - trainingPrice * numPeople,
 											)}
@@ -344,7 +414,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 									</OrderDetails>
 								</OrderInfo>
 
-								<CTA className="no-animat order-btn">
+								<CTA onClick={onPaymentClick} className="no-animat order-btn">
 									<span>
 										<KeyLock />
 									</span>
@@ -638,13 +708,22 @@ const FeePrice = styled.div`
 `;
 
 const RegisterFormSection = styled.div`
-	margin: 2rem 0 0;
+	margin: 1rem 0 0;
 `;
 
 const AtendeeText = styled.p`
 	color: var(--text-colour-grey);
+	margin-bottom: 0rem;
 `;
-const AtendeeForm = styled.div``;
+const FormInfo = styled.p`
+	color: var(--oex-danger);
+	font-size: 0.7rem;
+	text-align: center;
+`;
+
+const AtendeeForm = styled.div`
+	margin-bottom: 1rem;
+`;
 
 const FormFlex = styled.div`
 	display: flex;
@@ -693,9 +772,6 @@ const AboutUs = styled.div`
 	}
 	input[type='radio']:checked {
 		border: 1px solid var(--oex-orange);
-	}
-
-	@media ${({ theme }) => theme.breakpoints.above.md} {
 	}
 `;
 
