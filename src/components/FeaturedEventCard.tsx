@@ -271,13 +271,13 @@ const MoreInfoBox = styled.div`
 	text-align: center;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		padding: 2rem;
-		font-size: 1rem;
+		padding: 0.2rem;
+		font-size: 0.8rem;
 		margin: 0 1rem;
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.lg} {
-		padding: 2rem;
+		padding: 10px;
 	}
 `;
 

@@ -108,7 +108,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 		console.log(formData);
 		console.log(userFoundTraining);
 		// @ts-ignore
-		initializePayment(onSuccess, onClose);
+		//initializePayment(onSuccess, onClose);
 	};
 
 	const onAboutUsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
