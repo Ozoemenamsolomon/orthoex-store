@@ -8,6 +8,7 @@ import Location from '@assets/new/icons/Location';
 import Link from 'next/link';
 import People from '@assets/new/icons/People';
 import { priceFormatter } from './ProductCard';
+import MoneyIcon from '@assets/new/icons/MoneyIcon';
 
 type Props = {
 	training: TrainingOrderType;
@@ -34,7 +35,7 @@ const TrainingOrder: React.FC<Props> = ({ training }) => {
 					} participant${training.numOfParticipants > 1 ? 's' : ''}`}</span>
 				</StyledInfoDiv>
 				<StyledInfoDiv>
-					<People />
+					<MoneyIcon />
 					<span>{`${priceFormatter.format(training.amountPaid)}`}</span>
 				</StyledInfoDiv>
 			</Link>
