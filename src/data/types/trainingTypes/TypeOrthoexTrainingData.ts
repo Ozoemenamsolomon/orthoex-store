@@ -32,3 +32,27 @@ export interface TrainingPromoDataType {
 	promo_percentage: number | null;
 	valid_until: string;
 }
+
+export interface TrainingOrderType extends TrainingOrderCreateType {
+	id: number;
+	paid: boolean;
+	reference: string;
+}
+export interface TrainingOrderCreateType {
+	createdAt: string;
+	expiredAt: string;
+	trainingId: number;
+	title: string;
+	trainingDate: string;
+	location: string;
+	user: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	phone: string;
+	referalSource: string;
+	trainingPrice: number;
+	discount: number;
+	appliedPromoCode: string;
+	amountPaid: number;
+}

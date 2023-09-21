@@ -1,11 +1,12 @@
 import { Claims, getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseTrainingClient } from '@utils/supabase';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 
 const Checkout: NextPage<{
 	user: Claims;
-	trainingOrders: any;
+	trainingOrders: TrainingOrderType[];
 }> = ({ user, trainingOrders }) => {
 	return (
 		<CheckoutWrapper>
@@ -15,7 +16,7 @@ const Checkout: NextPage<{
 			) : (
 				<div>
 					{trainingOrders.map((training: any) => (
-						<p key={training?.id}> {training?.name}</p>
+						<p key={training.id}> {training.title}</p>
 					))}
 				</div>
 			)}
@@ -34,7 +35,7 @@ export const getServerSideProps = withPageAuthRequired({
 			.select('*')
 			.eq('user', user)
 			.eq('paid', false);
-		const trainingOrders = response.data || [];
+		const trainingOrders = response.data as unknown as TrainingOrderType[] || [];
 
 		console.log(user);
 		console.log(trainingOrders);

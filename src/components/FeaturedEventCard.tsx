@@ -169,6 +169,8 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 							)}
 						</PromoSection>
 						<FeaturedEventDialog
+							promoCode={promoCode}
+							promoIsValid={promoIsValid}
 							trainingPrice={trainingPrice}
 							training={training}
 							onOpen={openBookingDialog}

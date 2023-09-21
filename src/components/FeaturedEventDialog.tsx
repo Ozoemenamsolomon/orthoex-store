@@ -1,21 +1,21 @@
 import CancelIcon from '@assets/new/icons/CancelIcon';
-import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import Checkout from '@assets/new/icons/CheckoutIcon';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import {
+	TrainingOrderCreateType,
+	TrainingSupbaseDataType,
+} from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import * as Dialog from '@radix-ui/react-dialog';
 import { formatDate } from '@utils/index';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
 import styles from './FeaturedEventCard.module.css';
 import { priceFormatter } from './ProductCard';
 import { FormRadioLabel } from './styled/Forms';
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import Checkout from '@assets/new/icons/CheckoutIcon';
-import KeyLock from '@assets/new/icons/KeyLockIcon';
-import ArrowBack from '@assets/new/icons/ArrowBack';
-import { usePaystackPayment } from 'react-paystack';
 
 type Props = {
 	isOpen: boolean;
@@ -23,12 +23,9 @@ type Props = {
 	onOpen: () => void;
 	training: TrainingSupbaseDataType;
 	trainingPrice: number;
+	promoIsValid: boolean;
+	promoCode: string;
 };
-
-enum ModalEnum {
-	Checkout = 'checkout',
-	OrderSummary = 'orderSummary',
-}
 
 interface FormDataType {
 	firstname: string;
@@ -36,24 +33,22 @@ interface FormDataType {
 	email: string;
 	phone: string;
 }
-const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
+const FeaturedEventDialog: React.FC<Props> = ({
+	training,
+	trainingPrice,
+	promoCode,
+	promoIsValid,
+}) => {
+	// @ts-ignore
 	const { user } = useUser();
-	const config = {
-		email: user?.email || '',
-		amount: trainingPrice * 100,
-		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_KEY || '',
-	};
-	const initializePayment = usePaystackPayment(config);
 
 	const router = useRouter();
 	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
 	const [otherChannel, setOtherChannel] = useState('');
-	const [modalLocation, setModalLocation] = useState(ModalEnum.Checkout);
 	const [formData, setFormData] = useState<FormDataType[]>([
 		{ firstname: '', lastname: '', email: '', phone: '' },
 	]);
-	const [_, setIsPaymentSuccessful] = useState(false);
 
 	// derived state from formData, update when formData changes
 	const numPeople = formData.length;
@@ -76,40 +71,6 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 		aboutUsChannel !== '' &&
 		(aboutUsChannel !== 'other' || otherChannel !== '') &&
 		isAllFormsValid();
-
-	const onClose = () => {
-		console.log('closed');
-	};
-
-	const onSuccess = (reference: any) => {
-		fetch('/api/verify-training', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ reference }),
-		})
-			.then(res => res.json())
-			.then(data => {
-				setIsPaymentSuccessful(true);
-				//router.push('/account/orders');
-			})
-			.catch(err => {
-				console.log(err);
-				setIsPaymentSuccessful(false);
-			});
-	};
-
-	const onPaymentClick = (
-		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-	) => {
-		e.preventDefault();
-		const userFoundTraining = aboutUsChannel !== "other" ? aboutUsChannel : otherChannel;
-		console.log(formData);
-		console.log(userFoundTraining);
-		// @ts-ignore
-		//initializePayment(onSuccess, onClose);
-	};
 
 	const onAboutUsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setAboutUsChannel(e.target.value);
@@ -144,9 +105,53 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 		});
 	};
 
-	const onCheckoutClick = (event: any) => {
+	const onCheckoutClick = async (event: any) => {
 		event.preventDefault();
-		setModalLocation(ModalEnum.OrderSummary);
+
+		const hour = 60 * 60 * 1000;
+		const currentDate = new Date();
+		const expiryTime = new Date(currentDate.getTime() + 24 * hour);
+		const userEmail = user?.email as string;
+		const discountedPrice = training.price - trainingPrice;
+
+		const trainingOrder: TrainingOrderCreateType = {
+			createdAt: currentDate.toISOString(),
+			expiredAt: expiryTime.toISOString(),
+			trainingId: training.id,
+			title: training.title,
+			trainingDate: training.startDateTime,
+			location: training.location,
+			user: userEmail,
+			// TODO: This formData is currently using only one partcipants submitted, adjust to use all.
+			firstName: formData[0].firstname,
+			lastName: formData[0].lastname,
+			email: formData[0].email,
+			phone: formData[0].phone,
+			referalSource: aboutUsChannel === "other" ? otherChannel : aboutUsChannel,
+			trainingPrice: training.price,
+			discount: discountedPrice,
+			appliedPromoCode: promoIsValid ? promoCode : '',
+			amountPaid: trainingPrice,
+		};
+
+		try {
+			const response = await fetch('/api/checkout-training', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ trainingOrder }),
+			});
+			if (!response.ok) {
+				console.log(response.json());
+				throw new Error("couldn't checkout training");
+			}
+			const { reference } = await response.json();
+
+			router.replace(`/trainings/checkout/${reference}`);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 	const handleCloseModal = () => {
 		setIsModalClose(prev => !prev);
@@ -159,7 +164,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 					href={`/api/auth/login?returnTo=${encodeURIComponent(
 						router.asPath,
 					)}`}>
-					<CTA className="no-animate login-btn">Login to Book</CTA>
+					<CTA className="no-animate login-btn">Book Now</CTA>
 				</Link>
 			</LoginWrapper>
 		);
@@ -175,255 +180,209 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 					onInteractOutside={e => e.preventDefault()}
 					className={styles.DialogContent}>
 					{!isModalClose ? (
-						modalLocation === ModalEnum.Checkout ? (
-							<ContentWrapper>
-								<EditSection>
-									<EditHeading>Checkout</EditHeading>
-									<EditInfo>
-										<PeopleAttendance>
-											<PeopleText>People attending</PeopleText>
-											<PeopleNumber>
-												<button onClick={handleDecrease}>-</button>
-												{numPeople}
-												<button onClick={handleIncrease}>+</button>
-											</PeopleNumber>
-										</PeopleAttendance>
-										<PeopleFee>
-											<FeeText>Fee:</FeeText>
-											<FeePrice>
-												{priceFormatter.format(trainingPrice * numPeople)}
-											</FeePrice>
-										</PeopleFee>
+						<ContentWrapper>
+							<EditSection>
+								<EditHeading>Checkout</EditHeading>
+								<EditInfo>
+									<PeopleAttendance>
+										<PeopleText>People attending</PeopleText>
+										<PeopleNumber>
+											<button onClick={handleDecrease}>-</button>
+											{numPeople}
+											<button onClick={handleIncrease}>+</button>
+										</PeopleNumber>
+									</PeopleAttendance>
+									<PeopleFee>
+										<FeeText>Fee:</FeeText>
+										<FeePrice>
+											{priceFormatter.format(trainingPrice * numPeople)}
+										</FeePrice>
+									</PeopleFee>
 
-										<RegisterFormSection>
-											{!isPaymentFormFilled && (
-												<FormInfo>
-													Please fill all form fields to proceed.
-												</FormInfo>
-											)}
-											<form>
-												{formData.map((participant, index) => (
-													<AtendeeForm key={index}>
-														<AtendeeText>Attendee {index + 1}:</AtendeeText>
-														<FormFlex>
-															<AtendeeFormControl>
-																<label>First Name:</label>
-																<input
-																	required
-																	type="text"
-																	name="firstname"
-																	value={participant.firstname}
-																	onChange={e => handleChange(index, e)}
-																/>
-															</AtendeeFormControl>
-															<AtendeeFormControl>
-																<label>Last Name:</label>
-																<input
-																	required
-																	type="text"
-																	name="lastname"
-																	value={participant.lastname}
-																	onChange={e => handleChange(index, e)}
-																/>
-															</AtendeeFormControl>
-														</FormFlex>
-														<FormFlex>
-															<AtendeeFormControl>
-																<label>Email:</label>
-																<input
-																	required
-																	type="email"
-																	name="email"
-																	value={participant.email}
-																	onChange={e => handleChange(index, e)}
-																/>
-															</AtendeeFormControl>
-															<AtendeeFormControl>
-																<label>Phone:</label>
-																<input
-																	required
-																	type="tel"
-																	name="phone"
-																	value={participant.phone}
-																	onChange={e => handleChange(index, e)}
-																/>
-															</AtendeeFormControl>
-														</FormFlex>
-													</AtendeeForm>
-												))}
-											</form>
-										</RegisterFormSection>
-										<AboutUs>
-											<p className="title">How did you hear about us?</p>
-											<div className="radio-input">
-												<FormRadioLabel htmlFor="instagram">
-													<input
-														required
-														type="radio"
-														name="aboutUs"
-														id="instagram"
-														value="instagram"
-														onChange={onAboutUsChange}
-													/>
-													Instagram
-												</FormRadioLabel>
-											</div>
-											<div className="radio-input">
-												<FormRadioLabel htmlFor="facebook">
-													<input
-														type="radio"
-														required
-														name="aboutUs"
-														id="facebook"
-														value="facebook"
-														onChange={onAboutUsChange}
-													/>
-													Facebook
-												</FormRadioLabel>
-											</div>
-											<div className="radio-input">
-												<FormRadioLabel htmlFor="whatsapp">
-													<input
-														type="radio"
-														required
-														name="aboutUs"
-														id="whatsapp"
-														value="whatsapp"
-														onChange={onAboutUsChange}
-													/>
-													Whatsapp
-												</FormRadioLabel>
-											</div>
-											<div className="radio-input">
-												<FormRadioLabel htmlFor="google">
-													<input
-														required
-														type="radio"
-														name="aboutUs"
-														id="google"
-														value="google"
-														onChange={onAboutUsChange}
-													/>
-													Google
-												</FormRadioLabel>
-											</div>
-											<div className="radio-input">
-												<FormRadioLabel htmlFor="other">
-													<input
-														required
-														type="radio"
-														name="aboutUs"
-														id="other"
-														value="other"
-														onChange={onAboutUsChange}
-													/>
-													Other
-												</FormRadioLabel>
-											</div>
-											{aboutUsChannel === 'other' && (
-												<AtendeeFormControl>
-													<input
-														required
-														type="text"
-														name="other"
-														id="other"
-														value={otherChannel}
-														onChange={onOtherChannelChange}
-													/>
-												</AtendeeFormControl>
-											)}
-										</AboutUs>
-
-										{isPaymentFormFilled && (
-											<CTA
-												onClick={onCheckoutClick}
-												className="no-animate register-btn">
-												<span>
-													<Checkout />
-												</span>
-												<span>Check out</span>
-											</CTA>
+									<RegisterFormSection>
+										{!isPaymentFormFilled && (
+											<FormInfo>
+												Please fill all form fields to proceed.
+											</FormInfo>
 										)}
-									</EditInfo>
-								</EditSection>
-								<ViewSection>
-									<Heading>{training.title}</Heading>
-									<DateInfo>{`${formatDate(
-										new Date(training.startDateTime),
-									)} - ${formatDate(
-										new Date(training.endDateTime),
-									)}`}</DateInfo>
-									<CourseImageDiv>
-										<Image
-											className="image"
-											src={`${training.eventPosterImage}`}
-											fill
-											style={{ objectFit: 'cover' }}
-											sizes="100"
-											alt="image"
-										/>
-									</CourseImageDiv>
-									<Summary>Order Summary</Summary>
-									<Attendance>
-										<People>{numPeople}x People Attending</People>
-										<Price>
-											{priceFormatter.format(trainingPrice * numPeople)}
-										</Price>
-									</Attendance>
-									<TotalSection>
-										<Info>Total</Info>
-										<Amount>
-											{priceFormatter.format(trainingPrice * numPeople)}
-										</Amount>
-									</TotalSection>
-								</ViewSection>
-								<CloseButton onClick={handleCloseModal}>
-									<CancelIcon />
-								</CloseButton>
-							</ContentWrapper>
-						) : (
-							<OrderSummary>
-								<span
-									className="back-btn"
-									onClick={() => setModalLocation(ModalEnum.Checkout)}>
-									<ArrowBack />
-								</span>
-								<h5 className="heading">Order summary</h5>
-								<OrderInfo>
-									<h5 className="title">Orders</h5>
-									<OrderDetails>
-										<span className="description">{numPeople}x Subtotal</span>
-										<span className="amount">
-											{priceFormatter.format(training.price * numPeople)}
-										</span>
-									</OrderDetails>
-									<OrderDetails>
-										<span className="description">{numPeople}x Discount</span>
-										<span className="amount">
-											-{' '}
-											{priceFormatter.format(
-												training.price * numPeople - trainingPrice * numPeople,
-											)}
-										</span>
-									</OrderDetails>
-									<OrderDetails>
-										<span className="description">Total</span>
-										<span className="amount">
-											{priceFormatter.format(trainingPrice * numPeople)}
-										</span>
-									</OrderDetails>
-								</OrderInfo>
+										<form>
+											{formData.map((participant, index) => (
+												<AtendeeForm key={index}>
+													<AtendeeText>Attendee {index + 1}:</AtendeeText>
+													<FormFlex>
+														<AtendeeFormControl>
+															<label>First Name:</label>
+															<input
+																required
+																type="text"
+																name="firstname"
+																value={participant.firstname}
+																onChange={e => handleChange(index, e)}
+															/>
+														</AtendeeFormControl>
+														<AtendeeFormControl>
+															<label>Last Name:</label>
+															<input
+																required
+																type="text"
+																name="lastname"
+																value={participant.lastname}
+																onChange={e => handleChange(index, e)}
+															/>
+														</AtendeeFormControl>
+													</FormFlex>
+													<FormFlex>
+														<AtendeeFormControl>
+															<label>Email:</label>
+															<input
+																required
+																type="email"
+																name="email"
+																value={participant.email}
+																onChange={e => handleChange(index, e)}
+															/>
+														</AtendeeFormControl>
+														<AtendeeFormControl>
+															<label>Phone:</label>
+															<input
+																required
+																type="tel"
+																name="phone"
+																value={participant.phone}
+																onChange={e => handleChange(index, e)}
+															/>
+														</AtendeeFormControl>
+													</FormFlex>
+												</AtendeeForm>
+											))}
+										</form>
+									</RegisterFormSection>
+									<AboutUs>
+										<p className="title">How did you hear about us?</p>
+										<div className="radio-input">
+											<FormRadioLabel htmlFor="instagram">
+												<input
+													required
+													type="radio"
+													name="aboutUs"
+													id="instagram"
+													value="instagram"
+													onChange={onAboutUsChange}
+												/>
+												Instagram
+											</FormRadioLabel>
+										</div>
+										<div className="radio-input">
+											<FormRadioLabel htmlFor="facebook">
+												<input
+													type="radio"
+													required
+													name="aboutUs"
+													id="facebook"
+													value="facebook"
+													onChange={onAboutUsChange}
+												/>
+												Facebook
+											</FormRadioLabel>
+										</div>
+										<div className="radio-input">
+											<FormRadioLabel htmlFor="whatsapp">
+												<input
+													type="radio"
+													required
+													name="aboutUs"
+													id="whatsapp"
+													value="whatsapp"
+													onChange={onAboutUsChange}
+												/>
+												Whatsapp
+											</FormRadioLabel>
+										</div>
+										<div className="radio-input">
+											<FormRadioLabel htmlFor="google">
+												<input
+													required
+													type="radio"
+													name="aboutUs"
+													id="google"
+													value="google"
+													onChange={onAboutUsChange}
+												/>
+												Google
+											</FormRadioLabel>
+										</div>
+										<div className="radio-input">
+											<FormRadioLabel htmlFor="other">
+												<input
+													required
+													type="radio"
+													name="aboutUs"
+													id="other"
+													value="other"
+													onChange={onAboutUsChange}
+												/>
+												Other
+											</FormRadioLabel>
+										</div>
+										{aboutUsChannel === 'other' && (
+											<AtendeeFormControl>
+												<input
+													required
+													type="text"
+													name="other"
+													id="other"
+													value={otherChannel}
+													onChange={onOtherChannelChange}
+												/>
+											</AtendeeFormControl>
+										)}
+									</AboutUs>
 
-								<CTA onClick={onPaymentClick} className="no-animat order-btn">
-									<span>
-										<KeyLock />
-									</span>
-									<span>
-										Pay {priceFormatter.format(trainingPrice * numPeople)}
-									</span>
-								</CTA>
-							</OrderSummary>
-						)
+									{isPaymentFormFilled && (
+										<CTA
+											onClick={onCheckoutClick}
+											className="no-animate register-btn">
+											<span>
+												<Checkout />
+											</span>
+											<span>Check out</span>
+										</CTA>
+									)}
+								</EditInfo>
+							</EditSection>
+							<ViewSection>
+								<Heading>{training.title}</Heading>
+								<DateInfo>{`${formatDate(
+									new Date(training.startDateTime),
+								)} - ${formatDate(new Date(training.endDateTime))}`}</DateInfo>
+								<CourseImageDiv>
+									<Image
+										className="image"
+										src={`${training.eventPosterImage}`}
+										fill
+										style={{ objectFit: 'cover' }}
+										sizes="100"
+										alt="image"
+									/>
+								</CourseImageDiv>
+								<Summary>Order Summary</Summary>
+								<Attendance>
+									<People>{numPeople}x People Attending</People>
+									<Price>
+										{priceFormatter.format(trainingPrice * numPeople)}
+									</Price>
+								</Attendance>
+								<TotalSection>
+									<Info>Total</Info>
+									<Amount>
+										{priceFormatter.format(trainingPrice * numPeople)}
+									</Amount>
+								</TotalSection>
+							</ViewSection>
+							<CloseButton onClick={handleCloseModal}>
+								<CancelIcon />
+							</CloseButton>
+						</ContentWrapper>
 					) : (
 						<LeaveCheckout>
 							<h4>Leave Checkout?</h4>
@@ -496,68 +455,6 @@ const ContentWrapper = styled.div`
 	}
 	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		height: 37rem;
-	}
-`;
-const OrderSummary = styled.div`
-	height: 100vh;
-	position: relative;
-	padding: 2rem;
-
-	& .back-btn {
-		cursor: pointer;
-		font-size: 2rem;
-	}
-
-	& .heading {
-		font-weight: 500;
-		font-size: 1.3rem;
-		margin: 1rem 0;
-	}
-
-	& .order-btn {
-		display: flex;
-		gap: 10px;
-		width: 100%;
-		align-items: center;
-		justify-content: center;
-		padding: 10px 15px;
-		border: 1px solid var(--oex-orange);
-		margin-top: 3rem;
-	}
-
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-		height: 35rem;
-	}
-	@media ${({ theme }) => theme.breakpoints.above.lg} {
-		height: 37rem;
-	}
-`;
-const OrderInfo = styled.div`
-	background-color: var(--oex-off-white);
-	padding: 2rem 1rem;
-
-	& .title {
-		margin: 0;
-		font-weight: 500;
-		font-size: 1.2rem;
-	}
-`;
-const OrderDetails = styled.div`
-	display: flex;
-	gap: 2rem;
-	justify-content: space-between;
-	margin: 1rem 0;
-	font-size: 1.2rem;
-
-	&:last-child {
-		margin: 0;
-	}
-
-	& .description {
-		color: var(--text-colour-grey);
-	}
-	& .amount {
-		font-weight: 600;
 	}
 `;
 
