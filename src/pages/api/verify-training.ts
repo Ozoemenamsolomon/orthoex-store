@@ -1,5 +1,5 @@
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
-import { supabaseClient } from '@utils/supabase';
+import { supabaseTrainingClient } from '@utils/supabase';
 
 const logger = (e: any) => {
 	console.log('from verify-training.ts');
@@ -12,8 +12,8 @@ export default withApiAuthRequired(async function verify(req, res) {
 		reference: { reference },
 	} = req.body;
 
-	const { data, error } = await supabaseClient
-		.from('orders')
+	const { data, error } = await supabaseTrainingClient
+		.from('training_orders')
 		.select('*')
 		.eq('reference', reference)
 		.eq('user', session?.user?.email)
@@ -41,8 +41,8 @@ export default withApiAuthRequired(async function verify(req, res) {
 		return res.status(400).json({ error: 'Transaction not successful' });
 	}
 
-	const { data: _updatedData, error: updatedError } = await supabaseClient
-		.from('orders')
+	const { data: _updatedData, error: updatedError } = await supabaseTrainingClient
+		.from('training_orders')
 		.update({ paid: true })
 		.eq('reference', reference)
 		.eq('user', session?.user?.email);
