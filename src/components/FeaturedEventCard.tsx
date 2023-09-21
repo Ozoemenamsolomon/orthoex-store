@@ -392,7 +392,7 @@ const StyledCourseFormat = styled.p<{ type: string }>`
 	display: inline-block;
 `;
 
-const StyledInfoDiv = styled.div`
+export const StyledInfoDiv = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;

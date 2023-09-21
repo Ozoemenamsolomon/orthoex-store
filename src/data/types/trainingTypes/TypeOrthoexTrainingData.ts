@@ -46,13 +46,11 @@ export interface TrainingOrderCreateType {
 	trainingDate: string;
 	location: string;
 	user: string;
-	firstName: string;
-	lastName: string;
-	email: string;
-	phone: string;
 	referalSource: string;
 	trainingPrice: number;
 	discount: number;
 	appliedPromoCode: string;
 	amountPaid: number;
+	participants: string;
+	numOfParticipants: number;
 }

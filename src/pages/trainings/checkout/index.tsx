@@ -1,4 +1,5 @@
 import { Claims, getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import TrainingOrder from '@components/TrainingOrder';
 import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseTrainingClient } from '@utils/supabase';
 import { NextPage } from 'next';
@@ -9,18 +10,18 @@ const Checkout: NextPage<{
 	trainingOrders: TrainingOrderType[];
 }> = ({ user, trainingOrders }) => {
 	return (
-		<CheckoutWrapper>
-			<h1>Checkout</h1>
-			{trainingOrders.length === 0 ? (
-				<p>You currently have no orders</p>
-			) : (
-				<div>
-					{trainingOrders.map((training: any) => (
-						<p key={training.id}> {training.title}</p>
-					))}
-				</div>
-			)}
-		</CheckoutWrapper>
+			<CheckoutWrapper>
+				<Heading>Checkout Training</Heading>
+				{trainingOrders.length === 0 ? (
+					<p>You currently have no orders</p>
+				) : (
+					<div>
+						{trainingOrders.map(training => (
+							<TrainingOrder key={training.id} training={training} />
+						))}
+					</div>
+				)}
+			</CheckoutWrapper>
 	);
 };
 
@@ -35,10 +36,11 @@ export const getServerSideProps = withPageAuthRequired({
 			.select('*')
 			.eq('user', user)
 			.eq('paid', false);
-		const trainingOrders = response.data as unknown as TrainingOrderType[] || [];
+		const trainingOrders =
+			(response.data as unknown as TrainingOrderType[]) || [];
 
 		console.log(user);
-		console.log(trainingOrders);
+		console.log(response.data);
 
 		return {
 			props: { trainingOrders },
@@ -46,4 +48,11 @@ export const getServerSideProps = withPageAuthRequired({
 	},
 });
 
-const CheckoutWrapper = styled.div``;
+const CheckoutWrapper = styled.div`
+  padding: 0 1rem;
+`;
+
+const Heading = styled.h3`
+	margin: 2rem 0;
+	text-align: center;
+`;
