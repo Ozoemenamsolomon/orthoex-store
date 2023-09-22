@@ -1,14 +1,15 @@
 import ArrowBack from '@assets/new/icons/ArrowBack';
+import CheckMark from '@assets/new/icons/CheckMark';
 import KeyLock from '@assets/new/icons/KeyLockIcon';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
-import CTA from '@components/CTA';
+import CTA, { CTALink } from '@components/CTA';
 import { priceFormatter } from '@components/ProductCard';
 import { getUnpaidTrainingOrder } from '@data/trainingOrderSupabase';
 import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { formatDate, formatTime } from '@utils/index';
 import { NextPage } from 'next';
 import Link from 'next/link';
-import router from 'next/router';
 import { useState } from 'react';
 import { usePaystackPayment } from 'react-paystack';
 import styled from 'styled-components';
@@ -30,6 +31,7 @@ const CheckoutPage: NextPage<{
 
 	const initializePayment = usePaystackPayment(config);
 	const [isSuccessful, setIsSuccessful] = useState(false);
+	const [paidOrder, setPaidOrder] = useState<TrainingOrderType | null>(null);
 
 	const isxpired = new Date(trainingOrder.expiredAt).getTime() < Date.now();
 
@@ -51,7 +53,7 @@ const CheckoutPage: NextPage<{
 			.then(res => res.json())
 			.then(data => {
 				setIsSuccessful(true);
-				router.push('/training/checkout');
+				setPaidOrder(data);
 			})
 			.catch(err => {
 				console.log(err);
@@ -73,10 +75,52 @@ const CheckoutPage: NextPage<{
 	return (
 		<>
 			{isSuccessful ? (
-				<div>
-					<h5>Order</h5>
-					<p>Order Successful</p>
-				</div>
+				<OrderSuccess>
+					<ButtonWrapper>
+						<CTALink className="back-btn" href="/trainings">
+							<span>
+								<ArrowBack color="var(--oex-orange)" />
+							</span>
+							<span>Trainings</span>
+						</CTALink>
+					</ButtonWrapper>
+					<Container>
+						<Header>
+							<CheckMark color="#00D685"></CheckMark>
+							<ThankYouBox>
+								<h5 className="title">Thanks for your order</h5>
+								<span className="order-details">
+									Order ID:
+									<span className="order-id">#{paidOrder?.id}</span>
+								</span>
+							</ThankYouBox>
+						</Header>
+						<OrderInfoDetails>
+							<InfoTitle>
+								<p className="title">You are attending</p>
+								<p className="description">{paidOrder?.title}</p>
+							</InfoTitle>
+							<MetaDetails>
+								<MetaData>
+									<span className="title">payment info:</span>
+									<span className="description">{paidOrder?.user}</span>
+								</MetaData>
+								<MetaData>
+									<span className="title">Date:</span>
+									<span className="description">{`${formatDate(
+										new Date(paidOrder?.trainingDate as string),
+									)} , ${formatTime(
+										new Date(paidOrder?.trainingDate as string),
+									)}`}</span>
+								</MetaData>
+								<MetaData>
+									<span className="title">Location:</span>
+									<span className="description">{paidOrder?.location}</span>
+								</MetaData>
+							</MetaDetails>
+						</OrderInfoDetails>
+					</Container>
+				</OrderSuccess>
 			) : (
 				<OrderSummary>
 					<span className="back-btn">
@@ -157,6 +201,8 @@ const OrderSummary = styled.div`
 	height: 100vh;
 	position: relative;
 	padding: 2rem;
+	max-width: 600px;
+	margin: 0 auto;
 
 	& .back-btn {
 		cursor: pointer;
@@ -206,5 +252,124 @@ const OrderDetails = styled.div`
 	}
 	& .amount {
 		font-weight: 600;
+	}
+`;
+
+const OrderSuccess = styled.div`
+	background-color: var(--oex-off-white);
+	min-height: 40vh;
+`;
+
+const ButtonWrapper = styled.div`
+	max-width: 700px;
+	margin: 0rem auto 0;
+	padding: 2rem 0rem 1rem;
+
+	& .back-btn {
+		display: flex;
+		gap: 0.8rem;
+		border: 1px solid var(--oex-orange);
+		font-size: 0.8rem;
+		padding: 0.6rem 1rem;
+		color: var(--oex-orange);
+		background-color: white;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		max-width: 700px;
+		margin: 0rem auto 0;
+		padding: 2rem 0rem 1rem;
+	}
+`;
+
+const Header = styled.div`
+	display: flex;
+	align-items: flex-start;
+	padding: 1rem;
+	font-size: 1.2rem;
+	gap: 1rem;
+	border-bottom: 2px solid var(--oex-light-grey);
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		padding: 2rem 3rem 1rem;
+	}
+`;
+const ThankYouBox = styled.div`
+	& .title {
+		margin: 0;
+		font-size: 1.5rem;
+		margin-bottom: 0.4rem;
+	}
+	& .order-id {
+		color: var(--oex-orange);
+		font-weight: 600;
+		margin-left: 0.5rem;
+	}
+	& .order-details {
+		margin: 0;
+	}
+`;
+
+const Container = styled.div`
+	max-width: 700px;
+	background-color: white;
+	margin: 0rem auto 0;
+	border-radius: 10px;
+`;
+const OrderInfoDetails = styled.div`
+	padding: 2rem 1rem 0;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		padding: 2rem 3rem 1rem;
+	}
+`;
+
+const InfoTitle = styled.div`
+	& .title {
+		text-transform: uppercase;
+		font-weight: 500;
+		font-size: 1.2rem;
+	}
+	& .description {
+		text-transform: capitalize;
+		font-weight: 700;
+		font-size: 1.7rem;
+		line-height: 1.4;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		& .description {
+			font-size: 2rem;
+		}
+	}
+`;
+
+const MetaDetails = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-top: 3rem;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		flex-direction: row;
+		gap: 2rem;
+		justify-content: space-between;
+	}
+`;
+const MetaData = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1.5rem;
+	gap: 0.5rem;
+
+	& .title {
+		text-transform: uppercase;
+		font-weight: 600;
+		font-size: 1rem;
+	}
+	& .description {
+		color: var(--text-colour-grey);
+		font-weight: 500;
+		font-size: 1rem;
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
 	}
 `;

@@ -41,7 +41,7 @@ export default withApiAuthRequired(async function verify(req, res) {
 		return res.status(400).json({ error: 'Transaction not successful' });
 	}
 
-	const { data: _updatedData, error: updatedError } = await supabaseTrainingClient
+	const { data: updatedData, error: updatedError } = await supabaseTrainingClient
 		.from('training_orders')
 		.update({ paid: true })
 		.eq('reference', reference)
@@ -51,5 +51,11 @@ export default withApiAuthRequired(async function verify(req, res) {
 		logger({ updatedError });
 		return res.status(400).json({ okay: false });
 	}
-	res.status(200).json({ okay: true });
+  // update training database for the training that has just been paid for.
+  // const { data: _trainingData, error: _trainingDataError } = await supabaseTrainingClient
+  // .from('training')
+  // .update({ paid: true })
+  // .eq('id', data?.id)
+
+	res.status(200).json({ data: updatedData });
 });

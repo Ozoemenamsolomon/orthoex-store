@@ -161,3 +161,4 @@ const StyledLoadMore = styled.div`
 	text-align: center;
 	justify-content: center;
 `;
+ 
