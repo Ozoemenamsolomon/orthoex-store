@@ -139,7 +139,10 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 					<StyledInfoDiv>
 						<People />
 						<span>{training.participants} participants</span>
-						<StyledSpot>3 Spots left</StyledSpot>
+						{training.bookedspot &&
+							training.participants - training.bookedspot < 6 && (
+								<StyledSpot>3 Spots left</StyledSpot>
+							)}
 					</StyledInfoDiv>
 					<StyledPrice>
 						<p className="price">{priceFormatter.format(trainingPrice)}</p>
@@ -167,6 +170,8 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 							)}
 						</PromoSection>
 						<FeaturedEventDialog
+							promoCode={promoCode}
+							promoIsValid={promoIsValid}
 							trainingPrice={trainingPrice}
 							training={training}
 							onOpen={openBookingDialog}
@@ -246,7 +251,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 									src={training.eventPosterImage}
 									fill
 									sizes="100"
-									alt="image"
+									alt="training poster image"
 								/>
 							</CourseImageDiv>
 						)}
@@ -269,13 +274,13 @@ const MoreInfoBox = styled.div`
 	text-align: center;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		padding: 2rem;
-		font-size: 1rem;
+		padding: 0.2rem;
+		font-size: 0.8rem;
 		margin: 0 1rem;
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.lg} {
-		padding: 2rem;
+		padding: 10px;
 	}
 `;
 
@@ -299,6 +304,7 @@ const CourseImageDiv = styled.div`
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex: 1;
+		height: 50%;
 	}
 `;
 const CourseInfoDiv = styled.div`
@@ -340,6 +346,10 @@ const StyledWrapperDiv = styled.div`
 	box-shadow: 2px 0px 16px rgba(207, 207, 207, 0.1),
 		-2px 0px 4px rgba(207, 207, 207, 0.1), 0px 2px 12px rgba(207, 207, 207, 0.1),
 		0px -2px 16px rgba(207, 207, 207, 0.1);
+
+	&:last-child {
+		margin-bottom: 0rem;
+	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 2rem 2rem 1rem;
@@ -383,7 +393,7 @@ const StyledCourseFormat = styled.p<{ type: string }>`
 	display: inline-block;
 `;
 
-const StyledInfoDiv = styled.div`
+export const StyledInfoDiv = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;

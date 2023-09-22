@@ -21,6 +21,7 @@ export interface TrainingSupbaseDataType {
 	trainingexperience?: string | null;
 	trainingbenefactors?: string[] | null;
 	trainingitems?: string | null;
+	bookedspot: number | null;
 }
 
 export interface TrainingPromoDataType {
@@ -30,4 +31,26 @@ export interface TrainingPromoDataType {
 	promo_description: string;
 	promo_percentage: number | null;
 	valid_until: string;
+}
+
+export interface TrainingOrderType extends TrainingOrderCreateType {
+	id: number;
+	paid: boolean;
+	reference: string;
+}
+export interface TrainingOrderCreateType {
+	createdAt: string;
+	expiredAt: string;
+	trainingId: number;
+	title: string;
+	trainingDate: string;
+	location: string;
+	user: string;
+	referalSource: string;
+	trainingPrice: number;
+	discount: number;
+	appliedPromoCode: string;
+	amountPaid: number;
+	participants: string;
+	numOfParticipants: number;
 }

@@ -1,8 +1,15 @@
 import CancelIcon from '@assets/new/icons/CancelIcon';
-import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import Checkout from '@assets/new/icons/CheckoutIcon';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import {
+	TrainingOrderCreateType,
+	TrainingSupbaseDataType,
+} from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import * as Dialog from '@radix-ui/react-dialog';
 import { formatDate } from '@utils/index';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
@@ -16,6 +23,8 @@ type Props = {
 	onOpen: () => void;
 	training: TrainingSupbaseDataType;
 	trainingPrice: number;
+	promoIsValid: boolean;
+	promoCode: string;
 };
 
 interface FormDataType {
@@ -24,9 +33,19 @@ interface FormDataType {
 	email: string;
 	phone: string;
 }
-const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
+const FeaturedEventDialog: React.FC<Props> = ({
+	training,
+	trainingPrice,
+	promoCode,
+	promoIsValid,
+}) => {
+	// @ts-ignore
+	const { user } = useUser();
+
+	const router = useRouter();
 	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
+	const [otherChannel, setOtherChannel] = useState('');
 	const [formData, setFormData] = useState<FormDataType[]>([
 		{ firstname: '', lastname: '', email: '', phone: '' },
 	]);
@@ -34,8 +53,33 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 	// derived state from formData, update when formData changes
 	const numPeople = formData.length;
 
+	const isFormValid = (form: FormDataType) => {
+		return (
+			form.firstname !== '' &&
+			form.lastname !== '' &&
+			form.email !== '' &&
+			form.phone !== ''
+		);
+	};
+
+	const isAllFormsValid = () => {
+		return formData.every(form => isFormValid(form));
+	};
+
+	// Ensure all required inputs are filled.
+	const isPaymentFormFilled =
+		aboutUsChannel !== '' &&
+		(aboutUsChannel !== 'other' || otherChannel !== '') &&
+		isAllFormsValid();
+
 	const onAboutUsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setAboutUsChannel(e.target.id);
+		setAboutUsChannel(e.target.value);
+		if (e.target.value !== 'other') {
+			setOtherChannel('');
+		}
+	};
+	const onOtherChannelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setOtherChannel(e.target.value);
 	};
 
 	const handleIncrease = () => {
@@ -61,15 +105,68 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 		});
 	};
 
-	const handleSubmit = (event: any) => {
+	const onCheckoutClick = async (event: any) => {
 		event.preventDefault();
-		// You can send the formData to the API here
-		console.log(formData);
-		console.log(aboutUsChannel);
+
+		const hour = 60 * 60 * 1000;
+		const currentDate = new Date();
+		const expiryTime = new Date(currentDate.getTime() + 24 * hour);
+		const userEmail = user?.email as string;
+		const discountedPrice = training.price - trainingPrice;
+
+		const participantsData = JSON.stringify(formData);
+
+		const trainingOrder: TrainingOrderCreateType = {
+			createdAt: currentDate.toISOString(),
+			expiredAt: expiryTime.toISOString(),
+			trainingId: training.id,
+			title: training.title,
+			trainingDate: training.startDateTime,
+			location: training.location,
+			user: userEmail,
+			referalSource: aboutUsChannel === 'other' ? otherChannel : aboutUsChannel,
+			trainingPrice: training.price,
+			discount: discountedPrice,
+			appliedPromoCode: promoIsValid ? promoCode : '',
+			amountPaid: trainingPrice * numPeople,
+			participants: participantsData,
+			numOfParticipants: numPeople,
+		};
+
+		try {
+			const response = await fetch('/api/checkout-training', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ trainingOrder }),
+			});
+			if (!response.ok) {
+				console.log(response.json());
+				throw new Error("couldn't checkout training");
+			}
+			const { reference } = await response.json();
+
+			router.replace(`/trainings/checkout/${reference}`);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 	const handleCloseModal = () => {
 		setIsModalClose(prev => !prev);
 	};
+
+	if (!user)
+		return (
+			<LoginWrapper>
+				<Link
+					href={`/api/auth/login?returnTo=${encodeURIComponent(
+						router.asPath,
+					)}`}>
+					<CTA className="no-animate login-btn">Book Now</CTA>
+				</Link>
+			</LoginWrapper>
+		);
 
 	return (
 		<Dialog.Root>
@@ -102,6 +199,11 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 									</PeopleFee>
 
 									<RegisterFormSection>
+										{!isPaymentFormFilled && (
+											<FormInfo>
+												Please fill all form fields to proceed.
+											</FormInfo>
+										)}
 										<form>
 											{formData.map((participant, index) => (
 												<AtendeeForm key={index}>
@@ -163,7 +265,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 													type="radio"
 													name="aboutUs"
 													id="instagram"
-													value={aboutUsChannel}
+													value="instagram"
 													onChange={onAboutUsChange}
 												/>
 												Instagram
@@ -173,9 +275,10 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 											<FormRadioLabel htmlFor="facebook">
 												<input
 													type="radio"
+													required
 													name="aboutUs"
 													id="facebook"
-													value={aboutUsChannel}
+													value="facebook"
 													onChange={onAboutUsChange}
 												/>
 												Facebook
@@ -185,33 +288,65 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 											<FormRadioLabel htmlFor="whatsapp">
 												<input
 													type="radio"
+													required
 													name="aboutUs"
 													id="whatsapp"
-													value={aboutUsChannel}
+													value="whatsapp"
 													onChange={onAboutUsChange}
 												/>
 												Whatsapp
 											</FormRadioLabel>
 										</div>
 										<div className="radio-input">
-											<FormRadioLabel htmlFor="friends">
+											<FormRadioLabel htmlFor="google">
 												<input
+													required
 													type="radio"
 													name="aboutUs"
-													id="friends"
-													value={aboutUsChannel}
+													id="google"
+													value="google"
 													onChange={onAboutUsChange}
 												/>
-												Friends
+												Google
 											</FormRadioLabel>
 										</div>
+										<div className="radio-input">
+											<FormRadioLabel htmlFor="other">
+												<input
+													required
+													type="radio"
+													name="aboutUs"
+													id="other"
+													value="other"
+													onChange={onAboutUsChange}
+												/>
+												Other
+											</FormRadioLabel>
+										</div>
+										{aboutUsChannel === 'other' && (
+											<AtendeeFormControl>
+												<input
+													required
+													type="text"
+													name="other"
+													id="other"
+													value={otherChannel}
+													onChange={onOtherChannelChange}
+												/>
+											</AtendeeFormControl>
+										)}
 									</AboutUs>
 
-									<CTA
-										onClick={handleSubmit}
-										className="no-animate register-btn">
-										Register Event
-									</CTA>
+									{isPaymentFormFilled && (
+										<CTA
+											onClick={onCheckoutClick}
+											className="no-animate register-btn">
+											<span>
+												<Checkout />
+											</span>
+											<span>Check out</span>
+										</CTA>
+									)}
 								</EditInfo>
 							</EditSection>
 							<ViewSection>
@@ -231,7 +366,7 @@ const FeaturedEventDialog: React.FC<Props> = ({ training, trainingPrice }) => {
 								</CourseImageDiv>
 								<Summary>Order Summary</Summary>
 								<Attendance>
-									<People>{numPeople} X People Attending</People>
+									<People>{numPeople}x People Attending</People>
 									<Price>
 										{priceFormatter.format(trainingPrice * numPeople)}
 									</Price>
@@ -298,6 +433,14 @@ const CTAButton = styled.span`
 	}
 `;
 
+const LoginWrapper = styled.div`
+	& .login-btn {
+		font-size: 15px;
+		padding: 10px 15px;
+		width: 100%;
+	}
+`;
+
 const ContentWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -344,10 +487,13 @@ const EditInfo = styled.div`
 	padding: 1rem;
 
 	.register-btn {
+		display: flex;
+		align-items: center;
+		gap: 5px;
 		margin-top: 2rem;
 		border: 1px solid var(--oex-orange);
-		font-size: 0.8rem;
-		padding: 0.7rem 3rem;
+		font-size: 1rem;
+		padding: 0.4rem 3rem;
 
 		&:hover {
 			background-color: white;
@@ -458,13 +604,22 @@ const FeePrice = styled.div`
 `;
 
 const RegisterFormSection = styled.div`
-	margin: 2rem 0 0;
+	margin: 1rem 0 0;
 `;
 
 const AtendeeText = styled.p`
 	color: var(--text-colour-grey);
+	margin-bottom: 0rem;
 `;
-const AtendeeForm = styled.div``;
+const FormInfo = styled.p`
+	color: var(--oex-danger);
+	font-size: 0.7rem;
+	text-align: center;
+`;
+
+const AtendeeForm = styled.div`
+	margin-bottom: 1rem;
+`;
 
 const FormFlex = styled.div`
 	display: flex;
@@ -513,9 +668,6 @@ const AboutUs = styled.div`
 	}
 	input[type='radio']:checked {
 		border: 1px solid var(--oex-orange);
-	}
-
-	@media ${({ theme }) => theme.breakpoints.above.md} {
 	}
 `;
 

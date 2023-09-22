@@ -1,5 +1,5 @@
 import { TrainingPromoDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
-import { supabaseClient } from '@utils/supabase';
+import { supabaseTrainingClient } from '@utils/supabase';
 import { NextApiHandler } from 'next';
 
 type RequestType = { promoCode: string; price: number };
@@ -7,7 +7,7 @@ type RequestType = { promoCode: string; price: number };
 const handler: NextApiHandler = async (req, res) => {
 	const { promoCode, price }: RequestType = req.body;
 
-	const { data, error: errorFetchingPromo } = await supabaseClient
+	const { data, error: errorFetchingPromo } = await supabaseTrainingClient
 		.from('promo')
 		.select('*')
 		.eq('promo_code', promoCode)

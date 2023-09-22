@@ -1,5 +1,6 @@
 import heroBG from '@assets/new/images/hero-bg.jpg';
 import { CTALink } from '@components/CTA';
+import CallButton from '@components/CallButton';
 import { StyledHeading } from '@components/FeaturedEvents';
 import { HeroComp as Hero } from '@components/Hero';
 import HeroContent from '@components/HeroContent';
@@ -46,6 +47,7 @@ const Composite: NextPage<{
 			</PaddingContainer>
 			<HelpSection />
 			<InfoTestimonial />
+			<CallButton />
 		</>
 	);
 };
