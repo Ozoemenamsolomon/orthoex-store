@@ -10,18 +10,18 @@ const Checkout: NextPage<{
 	trainingOrders: TrainingOrderType[];
 }> = ({ user, trainingOrders }) => {
 	return (
-			<CheckoutWrapper>
-				<Heading>Checkout Training</Heading>
-				{trainingOrders.length === 0 ? (
-					<p>You currently have no orders</p>
-				) : (
-					<div>
-						{trainingOrders.map(training => (
-							<TrainingOrder key={training.id} training={training} />
-						))}
-					</div>
-				)}
-			</CheckoutWrapper>
+		<CheckoutWrapper>
+			<Heading>Checkout Training</Heading>
+			{trainingOrders.length === 0 ? (
+				<p>You currently have no orders</p>
+			) : (
+				<div>
+					{trainingOrders.map(training => (
+						<TrainingOrder key={training.id} training={training} />
+					))}
+				</div>
+			)}
+		</CheckoutWrapper>
 	);
 };
 
@@ -49,7 +49,7 @@ export const getServerSideProps = withPageAuthRequired({
 });
 
 const CheckoutWrapper = styled.div`
-  padding: 0 1rem;
+	padding: 0 1rem;
 `;
 
 const Heading = styled.h3`

@@ -14,7 +14,7 @@ export default withApiAuthRequired(async function checkout(req, res) {
 			.update(JSON.stringify(trainingOrder))
 			.digest('hex');
 
-		await createTrainingOrder({...trainingOrder, reference: hash});
+		await createTrainingOrder({ ...trainingOrder, reference: hash });
 
 		res.status(200).json({ reference: hash });
 	} catch (error) {

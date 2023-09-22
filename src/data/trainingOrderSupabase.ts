@@ -13,7 +13,7 @@ export const createTrainingOrder = async (trainingOrder: TrainingType) => {
 	if (error) {
 		throw error;
 	}
-  return data;
+	return data;
 };
 
 export const getUnpaidTrainingOrder = async (reference: string) => {
@@ -22,8 +22,8 @@ export const getUnpaidTrainingOrder = async (reference: string) => {
 		.select('*')
 		.eq('reference', reference)
 		.eq('paid', false)
-    // TODO: add this later
-    //.gte('expiredAt', new Date()) 
+		// TODO: add this later
+		//.gte('expiredAt', new Date())
 		.single();
 
 	if (error) {
@@ -33,4 +33,3 @@ export const getUnpaidTrainingOrder = async (reference: string) => {
 
 	return data;
 };
-

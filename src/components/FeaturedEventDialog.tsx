@@ -114,7 +114,7 @@ const FeaturedEventDialog: React.FC<Props> = ({
 		const userEmail = user?.email as string;
 		const discountedPrice = training.price - trainingPrice;
 
-		const participantsData = JSON.stringify(formData)
+		const participantsData = JSON.stringify(formData);
 
 		const trainingOrder: TrainingOrderCreateType = {
 			createdAt: currentDate.toISOString(),
@@ -124,7 +124,7 @@ const FeaturedEventDialog: React.FC<Props> = ({
 			trainingDate: training.startDateTime,
 			location: training.location,
 			user: userEmail,
-			referalSource: aboutUsChannel === "other" ? otherChannel : aboutUsChannel,
+			referalSource: aboutUsChannel === 'other' ? otherChannel : aboutUsChannel,
 			trainingPrice: training.price,
 			discount: discountedPrice,
 			appliedPromoCode: promoIsValid ? promoCode : '',

@@ -139,9 +139,10 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 					<StyledInfoDiv>
 						<People />
 						<span>{training.participants} participants</span>
-						{training.bookedspot && training.participants - training.bookedspot < 6 && (
-							<StyledSpot>3 Spots left</StyledSpot>
-						)}
+						{training.bookedspot &&
+							training.participants - training.bookedspot < 6 && (
+								<StyledSpot>3 Spots left</StyledSpot>
+							)}
 					</StyledInfoDiv>
 					<StyledPrice>
 						<p className="price">{priceFormatter.format(trainingPrice)}</p>

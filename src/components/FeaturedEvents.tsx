@@ -136,7 +136,7 @@ export default FeaturedEvents;
 
 const StyledWrapperDiv = styled.div`
 	background-color: var(--oex-off-white);
-	padding-bottom:3rem;
+	padding-bottom: 3rem;
 `;
 
 export const StyledHeading = styled.h3<{ align?: string; padding?: boolean }>`
@@ -161,4 +161,3 @@ const StyledLoadMore = styled.div`
 	text-align: center;
 	justify-content: center;
 `;
- 
