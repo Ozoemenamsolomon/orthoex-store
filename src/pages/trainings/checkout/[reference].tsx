@@ -12,6 +12,7 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import { useState } from 'react';
 import { usePaystackPayment } from 'react-paystack';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 const onClose = () => {
@@ -66,6 +67,7 @@ const CheckoutPage: NextPage<{
 	) => {
 		e.preventDefault();
 		if (isxpired) {
+			toast.error('Order is expired');
 			return;
 		}
 		// @ts-ignore
@@ -118,7 +120,10 @@ const CheckoutPage: NextPage<{
 									<span className="description">{trainingOrder?.location}</span>
 								</MetaData>
 							</MetaDetails>
-							<Text>The training ticket and address will be sent to participants email.</Text>
+							<Text>
+								The training ticket and address will be sent to participants
+								email.
+							</Text>
 						</OrderInfoDetails>
 					</Container>
 				</OrderSuccess>
@@ -133,15 +138,22 @@ const CheckoutPage: NextPage<{
 					<OrderInfo>
 						<h5 className="title">Orders</h5>
 						<OrderDetails>
-							<span className="description">{`${trainingOrder.numOfParticipants}`}x Subtotal</span>
+							<span className="description">
+								{`${trainingOrder.numOfParticipants}`}x Subtotal
+							</span>
 							<span className="amount">
 								{priceFormatter.format(trainingOrder.trainingPrice)}
 							</span>
 						</OrderDetails>
 						<OrderDetails>
-							<span className="description">{`${trainingOrder.numOfParticipants}`}x Discount</span>
+							<span className="description">
+								{`${trainingOrder.numOfParticipants}`}x Discount
+							</span>
 							<span className="amount">
-								- {priceFormatter.format(trainingOrder.discount * trainingOrder.numOfParticipants)}
+								-{' '}
+								{priceFormatter.format(
+									trainingOrder.discount * trainingOrder.numOfParticipants,
+								)}
 							</span>
 						</OrderDetails>
 						<OrderDetails>
