@@ -5,10 +5,10 @@ import Calender from '@assets/new/icons/Calender';
 import { formatDate } from '@utils/index';
 import { StyledInfoDiv } from './FeaturedEventCard';
 import Location from '@assets/new/icons/Location';
-import Link from 'next/link';
 import People from '@assets/new/icons/People';
 import { priceFormatter } from './ProductCard';
 import MoneyIcon from '@assets/new/icons/MoneyIcon';
+import CTA, { CTALink } from './CTA';
 
 type Props = {
 	training: TrainingOrderType;
@@ -16,7 +16,7 @@ type Props = {
 const TrainingOrder: React.FC<Props> = ({ training }) => {
 	return (
 		<Wrapper>
-			<Link className="link" href={`/trainings/checkout/${training.reference}`}>
+			<DetailGroup>
 				<Title>{training.title}</Title>
 				<StyledInfoDiv>
 					<Calender />
@@ -38,7 +38,15 @@ const TrainingOrder: React.FC<Props> = ({ training }) => {
 					<MoneyIcon />
 					<span>{`${priceFormatter.format(training.amountPaid)}`}</span>
 				</StyledInfoDiv>
-			</Link>
+			</DetailGroup>
+			<ButtonGroup>
+				<CTA className="delete btn">Delete</CTA>
+				<CTALink
+					className="pay btn"
+					href={`/trainings/checkout/${training.reference}`}>
+					Pay Order
+				</CTALink>
+			</ButtonGroup>
 		</Wrapper>
 	);
 };
@@ -46,6 +54,9 @@ const TrainingOrder: React.FC<Props> = ({ training }) => {
 export default TrainingOrder;
 
 const Wrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	margin: 0 auto 2rem;
 	min-height: 100px;
 	padding: 1rem;
@@ -56,18 +67,45 @@ const Wrapper = styled.div`
 		0px -2px 16px rgba(207, 207, 207, 0.1);
 
 	&:hover {
-		cursor: pointer;
-		transform: scale(1.1);
-		transition: transform 0.2s;
 		background-color: var(--oex-orange-mute);
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		width: 700px;
+		flex-direction: row;
 	}
 `;
 
 const Title = styled.p`
 	font-size: 1.3rem;
 	font-weight: 500;
+`;
+
+const DetailGroup = styled.div``;
+const ButtonGroup = styled.div`
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	justify-content: center;
+	& .btn {
+		width: 100%;
+		padding: 0.4rem 1.5rem;
+		cursor: pointer;
+		font-size: 0.9rem;
+	}
+	& .pay {
+		border: 1px solid var(--oex-orange);
+	}
+	& .delete {
+		color: white;
+		border: 1px solid var(--oex-danger);
+		background-color: var(--oex-danger);
+		&:hover {
+			color: var(--oex-danger);
+		}
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		flex-direction: column;
+		width: 40%;
+	}
 `;

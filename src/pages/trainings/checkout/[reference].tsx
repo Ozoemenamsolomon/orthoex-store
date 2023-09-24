@@ -5,7 +5,10 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import CTA, { CTALink } from '@components/CTA';
 import { priceFormatter } from '@components/ProductCard';
-import { getUnpaidTrainingOrder } from '@data/trainingOrderSupabase';
+import {
+	getUnpaidTrainingOrder,
+	updateTrainingOrderToPaid,
+} from '@data/trainingOrderSupabase';
 import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { formatDate, formatTime } from '@utils/index';
 import { NextPage } from 'next';
@@ -62,12 +65,20 @@ const CheckoutPage: NextPage<{
 			});
 	};
 
-	const onPaymentClick = (
+	const onPaymentClick = async (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	) => {
 		e.preventDefault();
 		if (isxpired) {
 			toast.error('Order is expired');
+			return;
+		}
+		if (trainingOrder.amountPaid === 0) {
+			await updateTrainingOrderToPaid(
+				trainingOrder.reference,
+				user.email as string,
+			);
+			setIsSuccessful(true);
 			return;
 		}
 		// @ts-ignore
@@ -142,7 +153,7 @@ const CheckoutPage: NextPage<{
 								{`${trainingOrder.numOfParticipants}`}x Subtotal
 							</span>
 							<span className="amount">
-								{priceFormatter.format(trainingOrder.trainingPrice)}
+								{priceFormatter.format(trainingOrder.trainingPrice * trainingOrder.numOfParticipants)}
 							</span>
 						</OrderDetails>
 						<OrderDetails>
