@@ -9,11 +9,26 @@ import People from '@assets/new/icons/People';
 import { priceFormatter } from './ProductCard';
 import MoneyIcon from '@assets/new/icons/MoneyIcon';
 import CTA, { CTALink } from './CTA';
+import { toast } from 'react-toastify';
 
 type Props = {
 	training: TrainingOrderType;
+	deleteTraining: (
+		reference: string,
+		id: number,
+	) => Promise<void>;
 };
-const TrainingOrder: React.FC<Props> = ({ training }) => {
+const TrainingOrder: React.FC<Props> = ({ training, deleteTraining }) => {
+	const onClickDelete = async (
+		id: number,
+	) => {
+		if (confirm('Are you sure to delete order?')) {
+			await deleteTraining(training.reference, id);
+			toast.success('Order deleted');
+		} else {
+			return;
+		}
+	};
 	return (
 		<Wrapper>
 			<DetailGroup>
@@ -40,7 +55,9 @@ const TrainingOrder: React.FC<Props> = ({ training }) => {
 				</StyledInfoDiv>
 			</DetailGroup>
 			<ButtonGroup>
-				<CTA className="delete btn">Delete</CTA>
+				<CTA className="delete btn" onClick={() => onClickDelete(training.id)}>
+					Delete
+				</CTA>
 				<CTALink
 					className="pay btn"
 					href={`/trainings/checkout/${training.reference}`}>

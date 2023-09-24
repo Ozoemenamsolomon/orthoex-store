@@ -1,23 +1,35 @@
 import { Claims, getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import TrainingOrder from '@components/TrainingOrder';
+import { deleteTrainingOrder } from '@data/trainingOrderSupabase';
 import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseTrainingClient } from '@utils/supabase';
 import { NextPage } from 'next';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const Checkout: NextPage<{
 	user: Claims;
 	trainingOrders: TrainingOrderType[];
 }> = ({ user, trainingOrders }) => {
+	const [trainings, setTrainings] = useState(trainingOrders);
+	const deleteTrainingWithId = async (reference: string, id: number) => {
+		await deleteTrainingOrder(reference, user.email);
+		const updatedTrainings = trainings.filter(training => training.id !== id);
+		setTrainings(updatedTrainings);
+	};
 	return (
 		<CheckoutWrapper>
 			<Heading>Checkout Training</Heading>
-			{trainingOrders.length === 0 ? (
+			{trainings.length === 0 ? (
 				<p>You currently have no orders</p>
 			) : (
 				<div>
-					{trainingOrders.map(training => (
-						<TrainingOrder key={training.id} training={training} />
+					{trainings.map(training => (
+						<TrainingOrder
+							key={training.id}
+							training={training}
+							deleteTraining={deleteTrainingWithId}
+						/>
 					))}
 				</div>
 			)}
@@ -38,9 +50,6 @@ export const getServerSideProps = withPageAuthRequired({
 			.eq('paid', false);
 		const trainingOrders =
 			(response.data as unknown as TrainingOrderType[]) || [];
-
-		console.log(user);
-		console.log(response.data);
 
 		return {
 			props: { trainingOrders },

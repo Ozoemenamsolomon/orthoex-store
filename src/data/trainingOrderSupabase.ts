@@ -33,13 +33,15 @@ export const getUnpaidTrainingOrder = async (reference: string) => {
 
 	return data;
 };
-export const updateTrainingOrderToPaid = async (reference: string, user: string) => {
-	const { data, error } =
-		await supabaseTrainingClient
-			.from('training_orders')
-			.update({ paid: true })
-			.eq('reference', reference)
-			.eq('user', user);
+export const updateTrainingOrderToPaid = async (
+	reference: string,
+	user: string,
+) => {
+	const { data, error } = await supabaseTrainingClient
+		.from('training_orders')
+		.update({ paid: true })
+		.eq('reference', reference)
+		.eq('user', user);
 
 	if (error) {
 		console.log(error);
@@ -48,4 +50,17 @@ export const updateTrainingOrderToPaid = async (reference: string, user: string)
 
 	return data;
 };
+export const deleteTrainingOrder = async (reference: string, user: string) => {
+	const { data, error } = await supabaseTrainingClient
+		.from('training_orders')
+		.delete()
+		.eq('reference', reference)
+		.eq('user', user);
 
+	if (error) {
+		console.log(error);
+		return null;
+	}
+
+	return data;
+};
