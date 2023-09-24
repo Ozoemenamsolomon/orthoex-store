@@ -1,9 +1,11 @@
+import ArrowBack from '@assets/new/icons/ArrowBack';
 import { Claims, getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import TrainingOrder from '@components/TrainingOrder';
 import { deleteTrainingOrder } from '@data/trainingOrderSupabase';
 import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseTrainingClient } from '@utils/supabase';
 import { NextPage } from 'next';
+import Link from 'next/link';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -19,9 +21,14 @@ const Checkout: NextPage<{
 	};
 	return (
 		<CheckoutWrapper>
+			<div className="back-btn">
+				<Link href={'/trainings'}>
+					<ArrowBack />
+				</Link>
+			</div>
 			<Heading>Checkout Training</Heading>
 			{trainings.length === 0 ? (
-				<p>You currently have no orders</p>
+				<p className='info-text'>You currently have no orders</p>
 			) : (
 				<div>
 					{trainings.map(training => (
@@ -59,6 +66,19 @@ export const getServerSideProps = withPageAuthRequired({
 
 const CheckoutWrapper = styled.div`
 	padding: 0 1rem;
+	& .back-btn {
+		cursor: pointer;
+		font-size: 2rem;
+	}
+	& .info-text {
+		text-align: center;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		& .back-btn {
+			width: 700px;
+			margin: 1rem auto 0;
+		}
+	}
 `;
 
 const Heading = styled.h3`

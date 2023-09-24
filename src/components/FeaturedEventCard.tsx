@@ -58,7 +58,12 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	const openBookingDialog = () => setIsBookingDialogOpen(true);
 	const closeBookingDialog = () => setIsBookingDialogOpen(false);
 
-	const trainingPrice = discountedPrice === null ? training.price : discountedPrice;
+	const trainingPrice =
+		discountedPrice === null
+			? training.price
+			: discountedPrice === 0
+			? discountedPrice
+			: training.price;
 
 	const redeemPromoCode = async () => {
 		if (!promoCode) {
