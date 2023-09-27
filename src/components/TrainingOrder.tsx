@@ -1,29 +1,24 @@
-import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
-import React from 'react';
-import styled from 'styled-components';
 import Calender from '@assets/new/icons/Calender';
-import { formatDate } from '@utils/index';
-import { StyledInfoDiv } from './FeaturedEventCard';
 import Location from '@assets/new/icons/Location';
-import People from '@assets/new/icons/People';
-import { priceFormatter } from './ProductCard';
 import MoneyIcon from '@assets/new/icons/MoneyIcon';
-import CTA, { CTALink } from './CTA';
+import People from '@assets/new/icons/People';
+import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { formatDate } from '@utils/index';
+import React from 'react';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
+import CTA, { CTALink } from './CTA';
+import { StyledInfoDiv } from './FeaturedEventCard';
+import { priceFormatter } from './ProductCard';
 
 type Props = {
 	training: TrainingOrderType;
-	deleteTraining: (
-		reference: string,
-		id: number,
-	) => Promise<void>;
+	deleteTraining: (reference: string) => Promise<void>;
 };
 const TrainingOrder: React.FC<Props> = ({ training, deleteTraining }) => {
-	const onClickDelete = async (
-		id: number,
-	) => {
+	const onClickDelete = async (id: number) => {
 		if (confirm('Are you sure to delete order?')) {
-			await deleteTraining(training.reference, id);
+			await deleteTraining(training.reference);
 			toast.success('Order deleted');
 		} else {
 			return;

@@ -153,7 +153,9 @@ const CheckoutPage: NextPage<{
 								{`${trainingOrder.numOfParticipants}`}x Subtotal
 							</span>
 							<span className="amount">
-								{priceFormatter.format(trainingOrder.trainingPrice * trainingOrder.numOfParticipants)}
+								{priceFormatter.format(
+									trainingOrder.trainingPrice * trainingOrder.numOfParticipants,
+								)}
 							</span>
 						</OrderDetails>
 						<OrderDetails>

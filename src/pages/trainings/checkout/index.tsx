@@ -6,18 +6,17 @@ import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTraining
 import { supabaseTrainingClient } from '@utils/supabase';
 import { NextPage } from 'next';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 const Checkout: NextPage<{
 	user: Claims;
 	trainingOrders: TrainingOrderType[];
 }> = ({ user, trainingOrders }) => {
-	const [trainings, setTrainings] = useState(trainingOrders);
-	const deleteTrainingWithId = async (reference: string, id: number) => {
+	const router = useRouter();
+	const deleteTrainingWithId = async (reference: string) => {
 		await deleteTrainingOrder(reference, user.email);
-		const updatedTrainings = trainings.filter(training => training.id !== id);
-		setTrainings(updatedTrainings);
+		router.reload();
 	};
 	return (
 		<CheckoutWrapper>
@@ -27,11 +26,11 @@ const Checkout: NextPage<{
 				</Link>
 			</div>
 			<Heading>Checkout Training</Heading>
-			{trainings.length === 0 ? (
-				<p className='info-text'>You currently have no orders</p>
+			{trainingOrders.length === 0 ? (
+				<p className="info-text">You currently have no orders</p>
 			) : (
 				<div>
-					{trainings.map(training => (
+					{trainingOrders.map(training => (
 						<TrainingOrder
 							key={training.id}
 							training={training}
