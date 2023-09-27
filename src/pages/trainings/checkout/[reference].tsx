@@ -30,7 +30,7 @@ const CheckoutPage: NextPage<{
 		reference: trainingOrder.reference,
 		email: user?.email || '',
 		amount: trainingOrder.amountPaid * 100,
-		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_KEY || '',
+		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_LVE_KEY || '',
 	};
 
 	const initializePayment = usePaystackPayment(config);

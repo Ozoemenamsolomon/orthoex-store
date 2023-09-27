@@ -27,7 +27,7 @@ export default withApiAuthRequired(async function verify(req, res) {
 
 	const verify = await fetch(verifyUrl, {
 		headers: {
-			Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+			Authorization: `Bearer ${process.env.PAYSTACK_LIVE_SECRET_KEY}`,
 		},
 	})
 		.then(res => res.json())
