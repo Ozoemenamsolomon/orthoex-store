@@ -108,9 +108,10 @@ const FeaturedEventDialog: React.FC<Props> = ({
 	const onCheckoutClick = async (event: any) => {
 		event.preventDefault();
 
-		const hour = 60 * 60 * 1000;
+		const days = 60 * 60 * 1000 * 24;
 		const currentDate = new Date();
-		const expiryTime = new Date(currentDate.getTime() + 24 * hour);
+		// 7 days expiry time for order.
+		const expiryTime = new Date(currentDate.getTime() + days * 7);
 		const userEmail = user?.email as string;
 		const discountedPrice = training.price - trainingPrice;
 

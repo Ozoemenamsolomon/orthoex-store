@@ -5,13 +5,17 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import CTA, { CTALink } from '@components/CTA';
 import { priceFormatter } from '@components/ProductCard';
-import { getUnpaidTrainingOrder } from '@data/trainingOrderSupabase';
+import {
+	getUnpaidTrainingOrder,
+	updateTrainingOrderToPaid,
+} from '@data/trainingOrderSupabase';
 import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { formatDate, formatTime } from '@utils/index';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useState } from 'react';
 import { usePaystackPayment } from 'react-paystack';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 const onClose = () => {
@@ -31,7 +35,7 @@ const CheckoutPage: NextPage<{
 
 	const initializePayment = usePaystackPayment(config);
 	const [isSuccessful, setIsSuccessful] = useState(false);
-	const [paidOrder, setPaidOrder] = useState<TrainingOrderType | null>(null);
+	const [_, setPaidOrder] = useState<TrainingOrderType | null>(null);
 
 	const isxpired = new Date(trainingOrder.expiredAt).getTime() < Date.now();
 
@@ -61,11 +65,20 @@ const CheckoutPage: NextPage<{
 			});
 	};
 
-	const onPaymentClick = (
+	const onPaymentClick = async (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	) => {
 		e.preventDefault();
 		if (isxpired) {
+			toast.error('Order is expired');
+			return;
+		}
+		if (trainingOrder.amountPaid === 0) {
+			await updateTrainingOrderToPaid(
+				trainingOrder.reference,
+				user.email as string,
+			);
+			setIsSuccessful(true);
 			return;
 		}
 		// @ts-ignore
@@ -91,33 +104,37 @@ const CheckoutPage: NextPage<{
 								<h5 className="title">Thanks for your order</h5>
 								<span className="order-details">
 									Order ID:
-									<span className="order-id">#{paidOrder?.id}</span>
+									<span className="order-id">#{trainingOrder?.id}</span>
 								</span>
 							</ThankYouBox>
 						</Header>
 						<OrderInfoDetails>
 							<InfoTitle>
 								<p className="title">You are attending</p>
-								<p className="description">{paidOrder?.title}</p>
+								<p className="description">{trainingOrder?.title}</p>
 							</InfoTitle>
 							<MetaDetails>
 								<MetaData>
 									<span className="title">payment info:</span>
-									<span className="description">{paidOrder?.user}</span>
+									<span className="description">{trainingOrder?.user}</span>
 								</MetaData>
 								<MetaData>
 									<span className="title">Date:</span>
 									<span className="description">{`${formatDate(
-										new Date(paidOrder?.trainingDate as string),
+										new Date(trainingOrder?.trainingDate as string),
 									)} , ${formatTime(
-										new Date(paidOrder?.trainingDate as string),
+										new Date(trainingOrder?.trainingDate as string),
 									)}`}</span>
 								</MetaData>
 								<MetaData>
 									<span className="title">Location:</span>
-									<span className="description">{paidOrder?.location}</span>
+									<span className="description">{trainingOrder?.location}</span>
 								</MetaData>
 							</MetaDetails>
+							<Text>
+								The training ticket and address will be sent to participants
+								email.
+							</Text>
 						</OrderInfoDetails>
 					</Container>
 				</OrderSuccess>
@@ -132,15 +149,24 @@ const CheckoutPage: NextPage<{
 					<OrderInfo>
 						<h5 className="title">Orders</h5>
 						<OrderDetails>
-							<span className="description">1x Subtotal</span>
+							<span className="description">
+								{`${trainingOrder.numOfParticipants}`}x Subtotal
+							</span>
 							<span className="amount">
-								{priceFormatter.format(trainingOrder.trainingPrice)}
+								{priceFormatter.format(
+									trainingOrder.trainingPrice * trainingOrder.numOfParticipants,
+								)}
 							</span>
 						</OrderDetails>
 						<OrderDetails>
-							<span className="description">1x Discount</span>
+							<span className="description">
+								{`${trainingOrder.numOfParticipants}`}x Discount
+							</span>
 							<span className="amount">
-								- {priceFormatter.format(trainingOrder.discount)}
+								-{' '}
+								{priceFormatter.format(
+									trainingOrder.discount * trainingOrder.numOfParticipants,
+								)}
 							</span>
 						</OrderDetails>
 						<OrderDetails>
@@ -372,4 +398,8 @@ const MetaData = styled.div`
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 	}
+`;
+
+const Text = styled.p`
+	margin: 2rem 0;
 `;
