@@ -30,12 +30,11 @@ const CheckoutPage: NextPage<{
 		reference: trainingOrder.reference,
 		email: user?.email || '',
 		amount: trainingOrder.amountPaid * 100,
-		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_KEY || '',
+		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_LVE_KEY || '',
 	};
 
 	const initializePayment = usePaystackPayment(config);
 	const [isSuccessful, setIsSuccessful] = useState(false);
-	const [_, setPaidOrder] = useState<TrainingOrderType | null>(null);
 
 	const isxpired = new Date(trainingOrder.expiredAt).getTime() < Date.now();
 
@@ -57,7 +56,6 @@ const CheckoutPage: NextPage<{
 			.then(res => res.json())
 			.then(data => {
 				setIsSuccessful(true);
-				setPaidOrder(data);
 			})
 			.catch(err => {
 				console.log(err);

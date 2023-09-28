@@ -89,9 +89,7 @@ const CTAGroup = styled.div`
 
 		& .training {
 			padding: 5px 8px;
-		font-size: 15px;
-
-		}
+			font-size: 15px;
 		}
 	}
 `;
