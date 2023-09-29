@@ -189,7 +189,7 @@ export const getProductsInGroup = async (code: string, custier: string) => {
 	return data;
 };
 
-export const singleDBProductToProductMapper = (product: ProductVariantType) => {
+const singleDBProductToProductMapper = (product: ProductVariantType) => {
 	const {
 		product: { cat, ...productData },
 		prices,

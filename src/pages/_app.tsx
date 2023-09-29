@@ -3,6 +3,7 @@ import { theme } from '@styles/theme';
 import { CartProvider } from 'context/cartContext';
 import type { AppProps } from 'next/app';
 import Script from 'next/script';
+import NextTopLoader from 'nextjs-toploader';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from 'styled-components';
@@ -15,6 +16,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 		<UserProvider>
 			<CartProvider>
 				<ThemeProvider theme={theme}>
+					<NextTopLoader
+						color="var(--oex-orange)"
+						showSpinner={false}
+						crawlSpeed={100}
+					/>
 					<Layout>
 						{process.env.NODE_ENV === 'production' && GA_MEASUREMENT_ID && (
 							<>
@@ -49,18 +55,5 @@ function MyApp({ Component, pageProps }: AppProps) {
 export default MyApp;
 
 /*
-<head>
-<title>Leading healthcare device and equipment, Provider of Medical devices and equipment, serving all segments of healthcare market with a niche in Prosthetics, Orthopaedics, Physiotherapy and Rehabilitation systems and support. | Home ::</title>
-<meta name="msvalidate.01" content="2B2E5D546865C86443857BC2482299B7">
-<!-- for-mobile-apps -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="provider of Medical devices and equipment, serving all segments of healthcare market with a niche in Prosthetics, Orthopaedics, Physiotherapy and Rehabilitation systems and support, leading healthcare device and equipment">
-<meta name="keywords" content="Medical devices and equipment, Prosthetics, Orthopaedics, Physiotherapy and Rehabilitation systems and support, leading healthcare device and equipment">
-<meta name="robots" content="index, follow">
-<meta name="googlebot" content="index, follow">
-<meta name="google" content="nositelinkssearchbox">
-<meta name="google" content="notranslate">
-<meta name="google" content="notranslate">
 <meta name="google-site-verification" content="2B2E5D546865C86443857BC2482299B7">
-</head>
 */

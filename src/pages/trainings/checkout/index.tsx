@@ -8,15 +8,16 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { format } from 'url';
 
 const Checkout: NextPage<{
 	user: Claims;
 	trainingOrders: TrainingOrderType[];
 }> = ({ user, trainingOrders }) => {
-	const router = useRouter();
+	const { push, pathname, query } = useRouter();
 	const deleteTrainingWithId = async (reference: string) => {
 		await deleteTrainingOrder(reference, user.email);
-		router.reload();
+		push(format({ pathname, query }));
 	};
 	return (
 		<CheckoutWrapper>

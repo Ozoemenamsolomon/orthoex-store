@@ -134,7 +134,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 					<FooterLinkGroups>
 						{footerLinks.map(({ title, links }, indexTop) => (
 							<FooterLinkGroup key={'2' + indexTop}>
-								<h5>{title}</h5>
+								<h4>{title}</h4>
 								<div
 									style={{
 										display: 'flex',
@@ -242,7 +242,7 @@ const FooterLinkGroup = styled.div`
 	width: 50%;
 	margin-bottom: 4rem;
 
-	> h5 {
+	> h4 {
 		margin: 0;
 		font-size: 1.2rem;
 	}
