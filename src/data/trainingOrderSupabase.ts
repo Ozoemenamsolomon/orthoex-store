@@ -1,5 +1,9 @@
 import { supabaseTrainingClient } from '@utils/supabase';
-import { TrainingOrderCreateType } from './types/trainingTypes/TypeOrthoexTrainingData';
+import {
+	TrainingOrderCreateType,
+	TrainingOrderType,
+	TrainingSupbaseDataType,
+} from './types/trainingTypes/TypeOrthoexTrainingData';
 
 interface TrainingType extends TrainingOrderCreateType {
 	reference: string;
@@ -41,16 +45,21 @@ export const updateTrainingOrderToPaid = async (
 		.from('training_orders')
 		.update({ paid: true })
 		.eq('reference', reference)
-		.eq('user', user);
+		.eq('user', user)
+		.select('*')
+		.single();
 
 	if (error) {
 		console.log(error);
 		return null;
 	}
 
-	return data;
+	return data as unknown as TrainingOrderType;
 };
-export const deleteTrainingOrder = async (reference: string, user: string) => {
+export const deleteTrainingOrderWithId = async (
+	reference: string,
+	user: string,
+) => {
 	const { data, error } = await supabaseTrainingClient
 		.from('training_orders')
 		.delete()
@@ -63,4 +72,46 @@ export const deleteTrainingOrder = async (reference: string, user: string) => {
 	}
 
 	return data;
+};
+
+type GenericKeyValueType<T> = {
+	[K in keyof T]?: T[K];
+};
+
+export type UpdateTrainingDataType =
+	GenericKeyValueType<TrainingSupbaseDataType>;
+
+export const updateTrainingWithId = async (
+	id: number,
+	updateData: UpdateTrainingDataType,
+) => {
+	const { data, error } = await supabaseTrainingClient
+		.from('training')
+		.update(updateData)
+		.eq('id', id)
+		.select('*')
+		.single();
+
+	if (error) {
+		console.log(error);
+		return null;
+	}
+
+	return data as unknown as TrainingSupbaseDataType;
+};
+
+
+export const getTrainingWithId = async (id: number) => {
+	const { data, error } = await supabaseTrainingClient
+		.from('training')
+		.select('*')
+		.eq('id', id)
+		.single();
+
+	if (error) {
+		console.log(error);
+		return null;
+	}
+
+	return data as unknown as TrainingSupbaseDataType;
 };

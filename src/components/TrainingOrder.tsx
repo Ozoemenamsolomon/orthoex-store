@@ -5,7 +5,6 @@ import People from '@assets/new/icons/People';
 import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { formatDate } from '@utils/index';
 import React from 'react';
-import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import CTA, { CTALink } from './CTA';
 import { StyledInfoDiv } from './FeaturedEventCard';
@@ -19,7 +18,6 @@ const TrainingOrder: React.FC<Props> = ({ training, deleteTraining }) => {
 	const onClickDelete = async (id: number) => {
 		if (confirm('Are you sure to delete order?')) {
 			await deleteTraining(training.reference);
-			toast.success('Order deleted');
 		} else {
 			return;
 		}

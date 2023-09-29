@@ -1,4 +1,7 @@
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
+import {
+	TrainingOrderType,
+} from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseTrainingClient } from '@utils/supabase';
 
 const logger = (e: any) => {
@@ -41,17 +44,26 @@ export default withApiAuthRequired(async function verify(req, res) {
 		return res.status(400).json({ error: 'Transaction not successful' });
 	}
 
-	const { data: updatedData, error: updatedError } =
-		await supabaseTrainingClient
-			.from('training_orders')
-			.update({ paid: true })
-			.eq('reference', reference)
-			.eq('user', session?.user?.email);
+	const updatedDataResponse = await supabaseTrainingClient
+		.from('training_orders')
+		.update({ paid: true })
+		.eq('reference', reference)
+		.eq('user', session?.user?.email)
+		.select('*')
+		.single();
 
-	if (updatedError) {
-		logger({ updatedError });
-		return res.status(400).json({ okay: false });
-	}
+	const updatedData = updatedDataResponse.data as unknown as TrainingOrderType;
+
+	// Also update the training booked spot
+	await fetch('/api/update-training-bookedspot', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ id: updatedData.trainingId }),
+	}).catch(err => {
+		console.log(err);
+	});
 
 	res.status(200).json({ data: updatedData });
 });

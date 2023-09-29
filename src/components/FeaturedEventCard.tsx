@@ -61,7 +61,7 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	const trainingPrice =
 		discountedPrice === null
 			? training.price
-			: discountedPrice === 0
+			: discountedPrice === 0 || discountedPrice !== null
 			? discountedPrice
 			: training.price;
 
@@ -144,10 +144,12 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 					<StyledInfoDiv>
 						<People />
 						<span>{training.participants} participants</span>
-						{training.bookedspot &&
-							training.participants - training.bookedspot < 6 && (
-								<StyledSpot>3 Spots left</StyledSpot>
-							)}
+						{(training.bookedspot === null ||
+							training.participants - training.bookedspot < 6) && (
+							<StyledSpot>
+								{training.participants - training.bookedspot} Spots left
+							</StyledSpot>
+						)}
 					</StyledInfoDiv>
 					<StyledPrice>
 						<p className="price">{priceFormatter.format(trainingPrice)}</p>
@@ -174,14 +176,17 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 								<span className="promo-notification">{promoNotification}</span>
 							)}
 						</PromoSection>
-						<FeaturedEventDialog
-							promoCode={promoCode}
-							promoIsValid={promoIsValid}
-							trainingPrice={trainingPrice}
-							training={training}
-							onOpen={openBookingDialog}
-							isOpen={isBookingDialogOpen}
-							onClose={closeBookingDialog}></FeaturedEventDialog>
+						{(training.bookedspot === null ||
+							training.bookedspot < training.participants) && (
+							<FeaturedEventDialog
+								promoCode={promoCode}
+								promoIsValid={promoIsValid}
+								trainingPrice={trainingPrice}
+								training={training}
+								onOpen={openBookingDialog}
+								isOpen={isBookingDialogOpen}
+								onClose={closeBookingDialog}></FeaturedEventDialog>
+						)}
 					</StyledPrice>
 					<StyledIconText>Speak with the Event Team</StyledIconText>
 					<StyledButtonGroup>
