@@ -29,8 +29,8 @@ let footerLinks: {
 	{
 		title: 'BUSINESSES',
 		links: [
-			{ title: 'Orthopaedics', href: '#' },
-			{ title: 'Composites', href: '#' },
+			{ title: 'Orthopaedics', href: '/orthopaedics' },
+			{ title: 'Composites', href: '/composites' },
 			{ title: 'Medical', href: '#' },
 			{ title: 'Consumables', href: '#' },
 			{ title: 'Partners', href: '#' },
@@ -58,7 +58,7 @@ let footerLinks: {
 		links: [
 			{ title: 'Privacy policy', href: '#' },
 			{ title: 'Terms & Conditions', href: '#' },
-			{ title: 'Site map', href: '#' },
+			{ title: 'Site map', href: '/sitemap.xml' },
 		],
 	},
 ];
@@ -78,8 +78,8 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 			{
 				title: 'BUSINESSES',
 				links: [
-					{ title: 'Orthopaedics', href: '#' },
-					{ title: 'Composites', href: '#' },
+					{ title: 'Orthopaedics', href: '/orthopaedics' },
+					{ title: 'Composites', href: '/composites' },
 					{ title: 'Medical', href: '#' },
 					{ title: 'Consumables', href: '#' },
 					{ title: 'Partners', href: '#' },
@@ -104,7 +104,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 				links: [
 					{ title: 'Privacy policy', href: '#' },
 					{ title: 'Terms & Conditions', href: '#' },
-					{ title: 'Site map', href: '#' },
+					{ title: 'Site map', href: '/sitemap.xml' },
 				],
 			},
 		];
