@@ -9,6 +9,7 @@ type LayoutProp = {};
 
 const Layout: React.FC<LayoutProp> = ({ children }) => {
 	const { asPath, pathname } = useRouter();
+	const titleString = asPath.charAt(1).toUpperCase() + asPath.slice(2);
 
 	return (
 		<LayoutWrapper>
@@ -36,24 +37,26 @@ const Layout: React.FC<LayoutProp> = ({ children }) => {
 				<meta name="theme-color" content="#ffffff" />
 				<meta
 					name="description"
-					content="Leading healthcare device and equipment, Provider of Medical devices and equipment, serving all segments of healthcare market with a niche in Prosthetics, Orthopaedics, Physiotherapy and Rehabilitation systems and support."
+					content="OrthoEx is the leading healthcare device and equipment, Provider of Medical devices and equipment, serving all segments of healthcare market with a niche in Prosthetics, Orthopaedics, Physiotherapy and Rehabilitation systems and support."
 				/>
 				<meta
 					name="keywords"
-					content="Leading healthcare device and equipment, Provider of Medical devices and equipment, serving all segments of healthcare market with a niche in Prosthetics, Orthopaedics, Physiotherapy and Rehabilitation systems and support."
+					content="OrthoEx is the leading healthcare device and equipment, Provider of Medical devices and equipment, serving all segments of healthcare market with a niche in Prosthetics, Orthopaedics, Physiotherapy and Rehabilitation systems and support."
 				/>
 				<meta name="author" content="Orthoex Nigeria Limited" />
 				<meta name="robots" content="index, follow" />
 				<meta name="googlebot" content="index, follow" />
 				<meta name="google" content="nositelinkssearchbox" />
 				<title>
-					Orthoex Nigeria Limited |{' '}
-					{(asPath.charAt(1).toUpperCase() + asPath.slice(2))
-						.replace(/-/g, ' ')
-						.replace('/', ' ')
-						.replace(/\//g, ' > ')}
+					{`${
+						titleString
+							.replace(/-/g, ' ')
+							.replace('/', ' ')
+							.replace(/\//g, ' > ') || 'Home'
+					} | OrthoEx Nigeria`}
 				</title>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+				<meta charSet="UTF-8" />
 			</Head>
 			<Header pathname={pathname} />
 			<Main>{children}</Main>
