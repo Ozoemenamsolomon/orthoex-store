@@ -248,7 +248,9 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 							</Text>
 							<MoreInfoBox>
 								To attend this training, please register at least two working
-								days before the event.{' '}
+								days before the event. We reserve the right to cancel classes if
+								the minimum number of participants is unmet. In such case, we
+								would offer to reschedule the workshop or make complete refund.
 								{training.nextTrainingDate && (
 									<span>
 										{`The next training will take place on ${formatDate(
@@ -256,6 +258,11 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 										)}`}
 									</span>
 								)}
+								<br />
+								<span className="bolden">Cancelation Policy:</span> The last day
+								to make a complete refund request for a workshop is 14 days
+								before the start of the class. Tickets can be used as credit for
+								another comparable available workshop.
 							</MoreInfoBox>
 						</CourseInfoDiv>
 
@@ -285,7 +292,11 @@ const MoreInfoBox = styled.div`
 	margin: 0 auto;
 	font-size: 0.8rem;
 	line-height: 1.5;
-	text-align: center;
+
+
+	& .bolden {
+		font-weight: 700;
+	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 0.2rem;
