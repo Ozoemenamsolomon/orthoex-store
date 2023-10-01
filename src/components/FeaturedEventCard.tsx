@@ -58,6 +58,11 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	const openBookingDialog = () => setIsBookingDialogOpen(true);
 	const closeBookingDialog = () => setIsBookingDialogOpen(false);
 
+	const trainingDays = calculateDateDifference(
+		training.startDateTime,
+		training.endDateTime,
+	);
+
 	const trainingPrice =
 		discountedPrice === null
 			? training.price
@@ -112,10 +117,9 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 						<span className="date">{`${formatDate(
 							new Date(training.startDateTime),
 						)} - ${formatDate(new Date(training.endDateTime))}`}</span>
-						<StyledDays>{`${calculateDateDifference(
-							training.startDateTime,
-							training.endDateTime,
-						)} DAYS`}</StyledDays>
+						<StyledDays>{`${trainingDays} DAY${
+							trainingDays > 1 ? 'S' : ''
+						}`}</StyledDays>
 					</StyledInfoDiv>
 					<StyledInfoDiv>
 						<Time />

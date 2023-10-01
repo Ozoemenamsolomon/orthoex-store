@@ -28,8 +28,8 @@ export function calculateDateDifference(
 	const diffInDays = Math.round(
 		Math.abs((start.getTime() - end.getTime()) / oneDay),
 	);
-
-	return diffInDays;
+	// Difference between same day returns, 0 days, adding 1 to make it 1 day
+	return diffInDays + 1;
 }
 
 export const formatPrice: (price: number) => string = price => {
