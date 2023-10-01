@@ -54,9 +54,7 @@ export default Trainings;
 export const getServerSideProps: GetServerSideProps = async ctx => {
 	const response = await supabaseTrainingClient.from('training').select('*').order('startDateTime', { ascending: false });
 	const trainingData = response.data as unknown as TrainingSupbaseDataType[];
-	console.log(trainingData);
 	
-
 	return {
 		props: {
 			trainingData: trainingData || [],
