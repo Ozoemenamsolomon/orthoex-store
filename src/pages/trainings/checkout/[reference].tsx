@@ -46,7 +46,6 @@ const CheckoutPage: NextPage<{
 			.then(res => res.json())
 			.then(data => {
 				setIsSuccessful(true);
-				setPaidOrder(data);
 			})
 			.catch(err => {
 				console.log(err);
