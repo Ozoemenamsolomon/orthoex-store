@@ -19,7 +19,7 @@ const Checkout: NextPage<{
 }> = ({ trainingOrders }) => {
 	const { push, pathname, query } = useRouter();
 	const deleteTrainingWithId = async (reference: string) => {
-		fetch('/api/delete-training-order', {
+		fetch('/api/training-order', {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',

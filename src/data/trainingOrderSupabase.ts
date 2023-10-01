@@ -74,12 +74,8 @@ export const deleteTrainingOrderWithId = async (
 	return data;
 };
 
-type GenericKeyValueType<T> = {
-	[K in keyof T]?: T[K];
-};
-
 export type UpdateTrainingDataType =
-	GenericKeyValueType<TrainingSupbaseDataType>;
+	Partial<TrainingSupbaseDataType>;
 
 export const updateTrainingWithId = async (
 	id: number,
@@ -94,7 +90,7 @@ export const updateTrainingWithId = async (
 
 	if (error) {
 		console.log(error);
-		return null;
+		throw new Error(error.message);
 	}
 
 	return data as unknown as TrainingSupbaseDataType;
@@ -110,7 +106,7 @@ export const getTrainingWithId = async (id: number) => {
 
 	if (error) {
 		console.log(error);
-		return null;
+		throw new Error(error.message);
 	}
 
 	return data as unknown as TrainingSupbaseDataType;

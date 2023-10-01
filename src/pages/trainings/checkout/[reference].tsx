@@ -36,7 +36,7 @@ const CheckoutPage: NextPage<{
 	const isxpired = new Date(trainingOrder.expiredAt).getTime() < Date.now();
 
 	const updateTrainingOrderData = async () => {
-		await fetch('/api/update-training-order', {
+		await fetch('/api/training-order', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ const CheckoutPage: NextPage<{
 	 * @description - this function is called when the transaction is successful
 	 *
 	 */
-	const onSuccess = (reference: string) => {
+	const onSuccess = (reference: any) => {
 		fetch('/api/verify-training', {
 			method: 'POST',
 			headers: {

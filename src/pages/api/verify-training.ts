@@ -1,6 +1,7 @@
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
 import {
 	TrainingOrderType,
+	TrainingSupbaseDataType,
 } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseTrainingClient } from '@utils/supabase';
 
@@ -44,7 +45,7 @@ export default withApiAuthRequired(async function verify(req, res) {
 		return res.status(400).json({ error: 'Transaction not successful' });
 	}
 
-	const updatedDataResponse = await supabaseTrainingClient
+	const updatedTrainingOrderResponseData = await supabaseTrainingClient
 		.from('training_orders')
 		.update({ paid: true })
 		.eq('reference', reference)
@@ -52,18 +53,37 @@ export default withApiAuthRequired(async function verify(req, res) {
 		.select('*')
 		.single();
 
-	const updatedData = updatedDataResponse.data as unknown as TrainingOrderType;
+	const updatedData =
+		updatedTrainingOrderResponseData.data as unknown as TrainingOrderType;
 
-	// Also update the training booked spot
-	await fetch('/api/update-training-bookedspot', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({ id: updatedData.trainingId }),
-	}).catch(err => {
-		console.log(err);
-	});
+	// fetch the training data for the paid order
+	const { data: trainingResponseData, error: trainingDataError } =
+		await supabaseTrainingClient
+			.from('training')
+			.select('*')
+			.eq('id', updatedData.trainingId)
+			.single();
+
+	if (trainingDataError) {
+		console.log(trainingDataError);
+		return res.status(400).json({ error: trainingDataError.message });
+	}
+
+	const trainingData =
+		trainingResponseData as unknown as TrainingSupbaseDataType;
+
+	// update the training data booked spot by +1 for the paid order
+	const { error: updatedTrainingErrorData } = await supabaseTrainingClient
+		.from('training')
+		.update({ bookedspot: trainingData.bookedspot++ })
+		.eq('id', trainingData.id)
+		.select('*')
+		.single();
+
+	if (updatedTrainingErrorData) {
+		console.log(updatedTrainingErrorData);
+		return res.status(400).json({ error: updatedTrainingErrorData.message });
+	}
 
 	res.status(200).json({ data: updatedData });
 });
