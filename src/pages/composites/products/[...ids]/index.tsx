@@ -320,7 +320,7 @@ const SingleProduct: NextPage<{
 									<li>Check the Model of resin</li>
 									<li>Preview the amount resin needed.</li>
 								</ul>
-								<CTA>View Calculator</CTA>
+								<CTALink href="/composites/calculator">View Calculator</CTALink>
 							</TabPanel>
 							<TabPanel>
 								<h2>Customer Review</h2>

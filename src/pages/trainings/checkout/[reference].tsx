@@ -32,7 +32,6 @@ const CheckoutPage: NextPage<{
 
 	const initializePayment = usePaystackPayment(config);
 	const [isSuccessful, setIsSuccessful] = useState(false);
-	const [_, setPaidOrder] = useState<TrainingOrderType | null>(null);
 
 	const isxpired = new Date(trainingOrder.expiredAt).getTime() < Date.now();
 
@@ -84,7 +83,6 @@ const CheckoutPage: NextPage<{
 			.then(res => res.json())
 			.then(data => {
 				setIsSuccessful(true);
-				setPaidOrder(data);
 			})
 			.catch(err => {
 				console.log(err);

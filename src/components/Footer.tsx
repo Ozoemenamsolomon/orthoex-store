@@ -29,8 +29,8 @@ let footerLinks: {
 	{
 		title: 'BUSINESSES',
 		links: [
-			{ title: 'Orthopaedics', href: '#' },
-			{ title: 'Composites', href: '#' },
+			{ title: 'Orthopaedics', href: '/orthopaedics' },
+			{ title: 'Composites', href: '/composites' },
 			{ title: 'Medical', href: '#' },
 			{ title: 'Consumables', href: '#' },
 			{ title: 'Partners', href: '#' },
@@ -58,7 +58,7 @@ let footerLinks: {
 		links: [
 			{ title: 'Privacy policy', href: '#' },
 			{ title: 'Terms & Conditions', href: '#' },
-			{ title: 'Site map', href: '#' },
+			{ title: 'Site map', href: '/sitemap.xml' },
 		],
 	},
 ];
@@ -78,8 +78,8 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 			{
 				title: 'BUSINESSES',
 				links: [
-					{ title: 'Orthopaedics', href: '#' },
-					{ title: 'Composites', href: '#' },
+					{ title: 'Orthopaedics', href: '/orthopaedics' },
+					{ title: 'Composites', href: '/composites' },
 					{ title: 'Medical', href: '#' },
 					{ title: 'Consumables', href: '#' },
 					{ title: 'Partners', href: '#' },
@@ -104,7 +104,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 				links: [
 					{ title: 'Privacy policy', href: '#' },
 					{ title: 'Terms & Conditions', href: '#' },
-					{ title: 'Site map', href: '#' },
+					{ title: 'Site map', href: '/sitemap.xml' },
 				],
 			},
 		];
@@ -134,7 +134,7 @@ const Footer: React.FC<FooterProp> = ({ pathname }) => {
 					<FooterLinkGroups>
 						{footerLinks.map(({ title, links }, indexTop) => (
 							<FooterLinkGroup key={'2' + indexTop}>
-								<h5>{title}</h5>
+								<h4>{title}</h4>
 								<div
 									style={{
 										display: 'flex',
@@ -242,7 +242,7 @@ const FooterLinkGroup = styled.div`
 	width: 50%;
 	margin-bottom: 4rem;
 
-	> h5 {
+	> h4 {
 		margin: 0;
 		font-size: 1.2rem;
 	}

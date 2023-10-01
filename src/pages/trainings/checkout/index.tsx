@@ -7,12 +7,17 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+
 import { toast } from 'react-toastify';
+
+import { format } from 'url';
+
 
 const Checkout: NextPage<{
 	trainingOrders: TrainingOrderType[];
+
 }> = ({ trainingOrders }) => {
-	const router = useRouter();
+	const { push, pathname, query } = useRouter();
 	const deleteTrainingWithId = async (reference: string) => {
 		fetch('/api/delete-training-order', {
 			method: 'DELETE',
@@ -24,12 +29,13 @@ const Checkout: NextPage<{
 			.then(res => res.json())
 			.then(data => {
 				toast.success('Training Order deleted');
-				router.reload();
+				push(format({ pathname, query }));
 			})
 			.catch(err => {
 				console.log(err);
 				toast.error('Training Order could not be deleted');
 			});
+
 	};
 	return (
 		<CheckoutWrapper>

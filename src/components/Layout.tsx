@@ -1,14 +1,15 @@
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
-import Head from 'next/head';
 import Footer from './Footer';
 import Header from './Header';
-import { useRouter } from 'next/router';
 
 type LayoutProp = {};
 
 const Layout: React.FC<LayoutProp> = ({ children }) => {
-	const { pathname } = useRouter();
+	const { asPath, pathname } = useRouter();
+	const titleString = asPath.charAt(1).toUpperCase() + asPath.slice(2);
 
 	return (
 		<LayoutWrapper>
@@ -32,8 +33,30 @@ const Layout: React.FC<LayoutProp> = ({ children }) => {
 				/>
 				<link rel="manifest" href="/site.webmanifest" />
 				<link rel="mask-icon" href="/safari-pinned-tab.svg" />
-				<meta name="msapplication-TileColor" content="#00aba9" />
+				<meta name="msapplication-TileColor" content="var(--oex-orange)" />
 				<meta name="theme-color" content="#ffffff" />
+				<meta
+					name="description"
+					content="OrthoEx is the leading healthcare device and equipment, Provider of Medical devices and equipment, serving all segments of healthcare market with a niche in Prosthetics, Orthopaedics, Physiotherapy and Rehabilitation systems and support."
+				/>
+				<meta
+					name="keywords"
+					content="OrthoEx is the leading healthcare device and equipment, Provider of Medical devices and equipment, serving all segments of healthcare market with a niche in Prosthetics, Orthopaedics, Physiotherapy and Rehabilitation systems and support."
+				/>
+				<meta name="author" content="Orthoex Nigeria Limited" />
+				<meta name="robots" content="index, follow" />
+				<meta name="googlebot" content="index, follow" />
+				<meta name="google" content="nositelinkssearchbox" />
+				<title>
+					{`${
+						titleString
+							.replace(/-/g, ' ')
+							.replace('/', ' ')
+							.replace(/\//g, ' > ') || 'Home'
+					} | OrthoEx Nigeria`}
+				</title>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+				<meta charSet="UTF-8" />
 			</Head>
 			<Header pathname={pathname} />
 			<Main>{children}</Main>
