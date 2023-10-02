@@ -58,10 +58,15 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 	const openBookingDialog = () => setIsBookingDialogOpen(true);
 	const closeBookingDialog = () => setIsBookingDialogOpen(false);
 
+	const trainingDays = calculateDateDifference(
+		training.startDateTime,
+		training.endDateTime,
+	);
+
 	const trainingPrice =
 		discountedPrice === null
 			? training.price
-			: discountedPrice === 0
+			: discountedPrice === 0 || discountedPrice !== null
 			? discountedPrice
 			: training.price;
 
@@ -112,10 +117,9 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 						<span className="date">{`${formatDate(
 							new Date(training.startDateTime),
 						)} - ${formatDate(new Date(training.endDateTime))}`}</span>
-						<StyledDays>{`${calculateDateDifference(
-							training.startDateTime,
-							training.endDateTime,
-						)} DAYS`}</StyledDays>
+						<StyledDays>{`${trainingDays} DAY${
+							trainingDays > 1 ? 'S' : ''
+						}`}</StyledDays>
 					</StyledInfoDiv>
 					<StyledInfoDiv>
 						<Time />
@@ -144,10 +148,12 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 					<StyledInfoDiv>
 						<People />
 						<span>{training.participants} participants</span>
-						{training.bookedspot &&
-							training.participants - training.bookedspot < 6 && (
-								<StyledSpot>3 Spots left</StyledSpot>
-							)}
+						{(training.bookedspot === null ||
+							training.participants - training.bookedspot < 6) && (
+							<StyledSpot>
+								{training.participants - training.bookedspot} Spots left
+							</StyledSpot>
+						)}
 					</StyledInfoDiv>
 					<StyledPrice>
 						<p className="price">{priceFormatter.format(trainingPrice)}</p>
@@ -174,14 +180,17 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 								<span className="promo-notification">{promoNotification}</span>
 							)}
 						</PromoSection>
-						<FeaturedEventDialog
-							promoCode={promoCode}
-							promoIsValid={promoIsValid}
-							trainingPrice={trainingPrice}
-							training={training}
-							onOpen={openBookingDialog}
-							isOpen={isBookingDialogOpen}
-							onClose={closeBookingDialog}></FeaturedEventDialog>
+						{(training.bookedspot === null ||
+							training.bookedspot < training.participants) && (
+							<FeaturedEventDialog
+								promoCode={promoCode}
+								promoIsValid={promoIsValid}
+								trainingPrice={trainingPrice}
+								training={training}
+								onOpen={openBookingDialog}
+								isOpen={isBookingDialogOpen}
+								onClose={closeBookingDialog}></FeaturedEventDialog>
+						)}
 					</StyledPrice>
 					<StyledIconText>Speak with the Event Team</StyledIconText>
 					<StyledButtonGroup>
@@ -238,8 +247,9 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 								Starter Pack: {training.starterPack === true ? 'Yes' : 'No'}
 							</Text>
 							<MoreInfoBox>
-								To attend this training, please register at least two working
-								days before the event.{' '}
+								We reserve the right to cancel classes if the minimum number of
+								participants is unmet. In such case, we would offer to
+								reschedule the workshop or make complete refund.
 								{training.nextTrainingDate && (
 									<span>
 										{`The next training will take place on ${formatDate(
@@ -247,6 +257,11 @@ const FeaturedEventCard: React.FC<FeaturedEventProp> = ({ training }) => {
 										)}`}
 									</span>
 								)}
+								<br />
+								<span className="bolden">Cancelation Policy:</span> The last day
+								to make a complete refund request for a workshop is 14 days
+								before the start of the class. Tickets can be used as credit for
+								another comparable available workshop.
 							</MoreInfoBox>
 						</CourseInfoDiv>
 
@@ -276,7 +291,10 @@ const MoreInfoBox = styled.div`
 	margin: 0 auto;
 	font-size: 0.8rem;
 	line-height: 1.5;
-	text-align: center;
+
+	& .bolden {
+		font-weight: 700;
+	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		padding: 0.2rem;

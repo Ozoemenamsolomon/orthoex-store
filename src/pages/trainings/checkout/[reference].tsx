@@ -5,10 +5,7 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import CTA, { CTALink } from '@components/CTA';
 import { priceFormatter } from '@components/ProductCard';
-import {
-	getUnpaidTrainingOrder,
-	updateTrainingOrderToPaid,
-} from '@data/trainingOrderSupabase';
+import { getUnpaidTrainingOrder } from '@data/trainingOrderSupabase';
 import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { formatDate, formatTime } from '@utils/index';
 import { NextPage } from 'next';
@@ -37,6 +34,35 @@ const CheckoutPage: NextPage<{
 	const [isSuccessful, setIsSuccessful] = useState(false);
 
 	const isxpired = new Date(trainingOrder.expiredAt).getTime() < Date.now();
+
+	const updateTrainingOrderData = async () => {
+		await fetch('/api/training-order', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ reference: trainingOrder.reference }),
+		})
+			.then(res => res.json())
+			.then(data => {
+				setIsSuccessful(true);
+			})
+			.catch(err => {
+				console.log(err);
+				setIsSuccessful(false);
+			});
+	};
+	const updateTrainingData = async () => {
+		await fetch('/api/update-training-bookedspot', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ id: trainingOrder.trainingId }),
+		}).catch(err => {
+			console.log(err);
+		});
+	};
 
 	/**
 	 *
@@ -72,11 +98,8 @@ const CheckoutPage: NextPage<{
 			return;
 		}
 		if (trainingOrder.amountPaid === 0) {
-			await updateTrainingOrderToPaid(
-				trainingOrder.reference,
-				user.email as string,
-			);
-			setIsSuccessful(true);
+			await updateTrainingOrderData();
+			await updateTrainingData();
 			return;
 		}
 		// @ts-ignore

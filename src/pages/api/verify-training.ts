@@ -1,4 +1,8 @@
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
+import {
+	TrainingOrderType,
+	TrainingSupbaseDataType,
+} from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseTrainingClient } from '@utils/supabase';
 
 const logger = (e: any) => {
@@ -41,16 +45,44 @@ export default withApiAuthRequired(async function verify(req, res) {
 		return res.status(400).json({ error: 'Transaction not successful' });
 	}
 
-	const { data: updatedData, error: updatedError } =
-		await supabaseTrainingClient
-			.from('training_orders')
-			.update({ paid: true })
-			.eq('reference', reference)
-			.eq('user', session?.user?.email);
+	const updatedTrainingOrderResponseData = await supabaseTrainingClient
+		.from('training_orders')
+		.update({ paid: true })
+		.eq('reference', reference)
+		.eq('user', session?.user?.email)
+		.select('*')
+		.single();
 
-	if (updatedError) {
-		logger({ updatedError });
-		return res.status(400).json({ okay: false });
+	const updatedData =
+		updatedTrainingOrderResponseData.data as unknown as TrainingOrderType;
+
+	// fetch the training data for the paid order
+	const { data: trainingResponseData, error: trainingDataError } =
+		await supabaseTrainingClient
+			.from('training')
+			.select('*')
+			.eq('id', updatedData.trainingId)
+			.single();
+
+	if (trainingDataError) {
+		console.log(trainingDataError);
+		return res.status(400).json({ error: trainingDataError.message });
+	}
+
+	const trainingData =
+		trainingResponseData as unknown as TrainingSupbaseDataType;
+
+	// update the training data booked spot by +1 for the paid order
+	const { error: updatedTrainingErrorData } = await supabaseTrainingClient
+		.from('training')
+		.update({ bookedspot: trainingData.bookedspot++ })
+		.eq('id', trainingData.id)
+		.select('*')
+		.single();
+
+	if (updatedTrainingErrorData) {
+		console.log(updatedTrainingErrorData);
+		return res.status(400).json({ error: updatedTrainingErrorData.message });
 	}
 
 	res.status(200).json({ data: updatedData });

@@ -1,23 +1,41 @@
 import ArrowBack from '@assets/new/icons/ArrowBack';
-import { Claims, getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import TrainingOrder from '@components/TrainingOrder';
-import { deleteTrainingOrder } from '@data/trainingOrderSupabase';
 import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseTrainingClient } from '@utils/supabase';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+
+import { toast } from 'react-toastify';
+
 import { format } from 'url';
 
+
 const Checkout: NextPage<{
-	user: Claims;
 	trainingOrders: TrainingOrderType[];
-}> = ({ user, trainingOrders }) => {
+
+}> = ({ trainingOrders }) => {
 	const { push, pathname, query } = useRouter();
 	const deleteTrainingWithId = async (reference: string) => {
-		await deleteTrainingOrder(reference, user.email);
-		push(format({ pathname, query }));
+		fetch('/api/training-order', {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ reference }),
+		})
+			.then(res => res.json())
+			.then(data => {
+				toast.success('Training Order deleted');
+				push(format({ pathname, query }));
+			})
+			.catch(err => {
+				console.log(err);
+				toast.error('Training Order could not be deleted');
+			});
+
 	};
 	return (
 		<CheckoutWrapper>
