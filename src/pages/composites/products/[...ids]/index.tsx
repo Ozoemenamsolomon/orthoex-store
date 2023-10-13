@@ -177,7 +177,6 @@ const SingleProduct: NextPage<{
 								)}
 								<Price>{formatPrice(price)}</Price>
 								<p style={{ color: '#575757' }}> {description}</p>
-								<ShareProduct forSmall />
 							</div>
 							<div>
 								<Title>Safe and secure payment </Title>
@@ -274,6 +273,7 @@ const SingleProduct: NextPage<{
 									Buy now
 								</CTA>
 							</div>
+							<ShareProduct forSmall />
 						</div>
 					</ProductData>
 				</SooSection>
