@@ -68,22 +68,25 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 							/>
 						</Logo>
 					</Link>
-					<HamburgerButton onClick={() => setIsNavOpen(true)}>
-						{isNavOpen ? (
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								id="Ebene_1"
-								data-name="Ebene 1"
-								viewBox="0 0 48.88 40"
-								height="32px"
-								width="32px"
-								fill="currentColor">
-								<path d="M28,19.85,39.64,8.18a2.5,2.5,0,0,0-3.53-3.54L24.44,16.31,12.77,4.64A2.5,2.5,0,0,0,9.24,8.18L20.91,19.85,9.24,31.51A2.5,2.5,0,0,0,11,35.78a2.45,2.45,0,0,0,1.76-.73L24.44,23.38,36.11,35.05a2.49,2.49,0,0,0,1.77.73,2.45,2.45,0,0,0,1.76-.73,2.5,2.5,0,0,0,0-3.54Z" />
-							</svg>
-						) : (
-							<HamburgerIcon colour={light ? 'black' : 'currentColor'} />
-						)}
-					</HamburgerButton>
+					<CartHamburgerContainer>
+						<NavLink name="Cart" to="/cart" icon={CartIcon} isRight />
+						<HamburgerButton onClick={() => setIsNavOpen(true)}>
+							{isNavOpen ? (
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									id="Ebene_1"
+									data-name="Ebene 1"
+									viewBox="0 0 48.88 40"
+									height="32px"
+									width="32px"
+									fill="currentColor">
+									<path d="M28,19.85,39.64,8.18a2.5,2.5,0,0,0-3.53-3.54L24.44,16.31,12.77,4.64A2.5,2.5,0,0,0,9.24,8.18L20.91,19.85,9.24,31.51A2.5,2.5,0,0,0,11,35.78a2.45,2.45,0,0,0,1.76-.73L24.44,23.38,36.11,35.05a2.49,2.49,0,0,0,1.77.73,2.45,2.45,0,0,0,1.76-.73,2.5,2.5,0,0,0,0-3.54Z" />
+								</svg>
+							) : (
+								<HamburgerIcon colour={light ? 'black' : 'currentColor'} />
+							)}
+						</HamburgerButton>
+					</CartHamburgerContainer>
 					<NavBar className={light ? 'light' : undefined}>
 						<LeftNav />
 						<RightNav light={light} />
@@ -292,13 +295,7 @@ const NavBar = styled.nav`
 `;
 
 const HamburgerButton = styled.span`
-	padding: 0.3rem 0.6rem;
-	align-self: center;
-	z-index: 2;
-
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-		display: none;
-	}
+	/* z-index: 2; */
 `;
 
 const StyledSideBar = styled.div`
@@ -330,4 +327,18 @@ const StyledCloseIcon = styled.button`
 	background: none;
 	position: absolute;
 	right: 2rem;
+`;
+
+const CartHamburgerContainer = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 0.3rem;
+
+	> a > span {
+		display: none;
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		display: none;
+	}
 `;
