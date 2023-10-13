@@ -463,18 +463,18 @@ const ShareandDataSheets = () => (
 const ShareProduct = ({ forSmall = false }) => {
 	const router = useRouter();
 
-	const { asPath } = router;
+	const url = `https://orthoex.ng${router.asPath}`;
 
 	const shareOnTwitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
 		'Check out this product',
-	)}&url=${encodeURIComponent(asPath)}`;
+	)}&url=${encodeURIComponent(url)}`;
 
 	const shareOnFacebookLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-		asPath,
+		url,
 	)}`;
 
 	const shareOnInstagramLink = `https://www.instagram.com/?url=${encodeURIComponent(
-		asPath,
+		url,
 	)}`;
 
 	return (
