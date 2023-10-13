@@ -12,10 +12,8 @@ import { toast } from 'react-toastify';
 
 import { format } from 'url';
 
-
 const Checkout: NextPage<{
 	trainingOrders: TrainingOrderType[];
-
 }> = ({ trainingOrders }) => {
 	const { push, pathname, query } = useRouter();
 	const deleteTrainingWithId = async (reference: string) => {
@@ -35,7 +33,6 @@ const Checkout: NextPage<{
 				console.log(err);
 				toast.error('Training Order could not be deleted');
 			});
-
 	};
 	return (
 		<CheckoutWrapper>
