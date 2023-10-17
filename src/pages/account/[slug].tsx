@@ -1,3 +1,4 @@
+import PlayLibraryIcon from '@assets/new/icons/PlayLibraryIcon';
 import Coupon from '@assets/new/icons/account/Coupon.svg';
 import DeliveryTruck from '@assets/new/icons/account/DeliveryTruck.svg';
 import Favourite from '@assets/new/icons/account/Favourite.svg';
@@ -9,9 +10,10 @@ import SupportAgent from '@assets/new/icons/account/SupportAgent.svg';
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import AccountSubNav from '@components/AccountSubNav';
-import CTA from '@components/CTA';
+import CTA, { CTALink } from '@components/CTA';
 import OrderItemCard from '@components/OrderItemCard';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+import TrainingOrder from '@components/TrainingOrder';
 import Details from '@components/account/Details';
 import { Container } from '@components/styled';
 import { Title } from '@components/styled/Temp';
@@ -20,12 +22,14 @@ import {
 	accountSubLinks,
 	isAccountSubLinkSlug,
 } from '@data/accountSublinks';
-import { supabaseClient } from '@utils/supabase';
+import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { supabaseClient, supabaseTrainingClient } from '@utils/supabase';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+import { format } from 'url';
 
 const accountOverviewLinks: ServiceCardType[] = [
 	{
@@ -65,15 +69,21 @@ const accountProductLinks: ServiceCardType[] = [
 	},
 ];
 
+type TrainingOrderDataProps = {
+	trainings: TrainingOrderType[];
+	title: string;
+};
+
 type Props = {
 	user: UserProfile;
 	data: {
 		orders: any[];
 		title: string;
 	};
+	trainingData: TrainingOrderDataProps;
 };
 
-const Account: NextPage<Props> = ({ user, data }) => {
+const Account: NextPage<Props> = ({ user, data, trainingData }) => {
 	const router = useRouter();
 	const slug = router.query.slug as TypeOfSlug;
 
@@ -108,6 +118,8 @@ const Account: NextPage<Props> = ({ user, data }) => {
 						<Overview />
 					) : slug === 'orders' ? (
 						<Orders orders={data.orders} />
+					) : slug === 'trainings' ? (
+						<TrainingOrders trainingOrders={trainingData.trainings} />
 					) : slug === 'details' ? (
 						<Details
 							user={user}
@@ -164,10 +176,35 @@ export const getServerSideProps = withPageAuthRequired({
 				data.orders = [];
 			}
 		}
+		const trainingData: TrainingOrderDataProps = {
+			trainings: [],
+			title:
+				accountSubLinks.find(({ slug }) => slug === query.slug)?.name || '',
+		};
+
+		if (query.slug === 'trainings') {
+			const { data: trainingOrderData, error } = await supabaseTrainingClient
+				.from('training_orders')
+				.select('*')
+				.eq('user', session?.user.email)
+				.order('createdAt', { ascending: false });
+
+			if (error) {
+				console.log({ error });
+				trainingData.trainings = [];
+			}
+
+			trainingData.trainings = trainingOrderData as TrainingOrderType[];
+			if (error) {
+				console.log({ error });
+				trainingData.trainings = [];
+			}
+		}
 
 		return {
 			props: {
 				data,
+				trainingData,
 			},
 		};
 	},
@@ -260,6 +297,124 @@ const Orders: FC<{
 		</>
 	);
 };
+const TrainingOrders: FC<{
+	trainingOrders: TrainingOrderType[];
+}> = ({ trainingOrders }) => {
+	const [paidTab, setPaidTab] = useState(false);
+	const { push, pathname, query } = useRouter();
+
+	const paidOrders = trainingOrders.filter(trainingOrder => trainingOrder.paid);
+	const unpaidOrders = trainingOrders.filter(
+		trainingOrder => !trainingOrder.paid,
+	);
+
+	const deleteTrainingWithId = async (reference: string) => {
+		fetch('/api/training-order', {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ reference }),
+		})
+			.then(res => res.json())
+			.then(data => {
+				toast.success('Training Order deleted');
+				push(format({ pathname, query }));
+			})
+			.catch(err => {
+				console.log(err);
+				toast.error('Training Order could not be deleted');
+			});
+	};
+
+	return (
+		<TrainingOrderWrapper>
+			<OrderFilterButtons>
+				<button
+					onClick={() => setPaidTab(true)}
+					className={paidTab ? 'active' : ''}>
+					Paid Trainings
+					<span>{paidOrders.length}</span>
+				</button>
+				<button
+					onClick={() => setPaidTab(false)}
+					className={!paidTab ? 'active' : ''}>
+					Unpaid Trainings
+					<span>{unpaidOrders.length}</span>
+				</button>
+			</OrderFilterButtons>
+
+			{paidTab ? (
+				paidOrders.length > 0 ? (
+					<div>
+						{paidOrders.map(order => (
+							<TrainingOrder key={order.id} training={order} />
+						))}
+					</div>
+				) : (
+					<BookTraining />
+				)
+			) : (
+				<div>
+					{unpaidOrders.map(order => (
+						<TrainingOrder
+							key={order.id}
+							training={order}
+							deleteTraining={deleteTrainingWithId}
+						/>
+					))}
+				</div>
+			)}
+		</TrainingOrderWrapper>
+	);
+};
+
+const BookTraining = () => {
+	return (
+		<BookTrainingWrapper>
+			<div className="icon">
+				<PlayLibraryIcon />
+			</div>
+			<p className="info">
+				There is nothing to report. You have not purchased any training so far.
+			</p>
+			<CTALink className="book-btn no-animate" href={'/trainings'}>
+				Book a Training
+			</CTALink>
+		</BookTrainingWrapper>
+	);
+};
+
+const BookTrainingWrapper = styled.div`
+	text-align: center;
+	min-height: 300px;
+
+	& .icon {
+		margin-bottom: 1.5rem;
+	}
+	& .info {
+		margin-bottom: 1.5rem;
+		color: var(--text-colour-grey);
+	}
+	& .book-btn {
+		width: 100%;
+		padding: 1rem 2rem;
+		font-size: 1rem;
+	}
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		& .book-btn {
+			width: 50%;
+		}
+	}
+`;
+const TrainingOrderWrapper = styled.div`
+	min-height: 300px;
+
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+
+	}
+`;
 
 const OrderFilterButtons = styled.div`
 	display: flex;

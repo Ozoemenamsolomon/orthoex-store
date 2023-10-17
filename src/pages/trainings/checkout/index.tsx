@@ -12,10 +12,8 @@ import { toast } from 'react-toastify';
 
 import { format } from 'url';
 
-
 const Checkout: NextPage<{
 	trainingOrders: TrainingOrderType[];
-
 }> = ({ trainingOrders }) => {
 	const { push, pathname, query } = useRouter();
 	const deleteTrainingWithId = async (reference: string) => {
@@ -35,7 +33,6 @@ const Checkout: NextPage<{
 				console.log(err);
 				toast.error('Training Order could not be deleted');
 			});
-
 	};
 	return (
 		<CheckoutWrapper>
@@ -48,7 +45,7 @@ const Checkout: NextPage<{
 			{trainingOrders.length === 0 ? (
 				<p className="info-text">You currently have no orders</p>
 			) : (
-				<div>
+				<OrderWrapper>
 					{trainingOrders.map(training => (
 						<TrainingOrder
 							key={training.id}
@@ -56,7 +53,7 @@ const Checkout: NextPage<{
 							deleteTraining={deleteTrainingWithId}
 						/>
 					))}
-				</div>
+				</OrderWrapper>
 			)}
 		</CheckoutWrapper>
 	);
@@ -102,4 +99,10 @@ const CheckoutWrapper = styled.div`
 const Heading = styled.h3`
 	margin: 2rem 0;
 	text-align: center;
+`;
+const OrderWrapper = styled.div`
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		width: 700px;
+		margin: 0 auto;
+	}
 `;

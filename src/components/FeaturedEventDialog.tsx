@@ -27,7 +27,7 @@ type Props = {
 	promoCode: string;
 };
 
-interface FormDataType {
+export interface ParticipantsDataType {
 	firstname: string;
 	lastname: string;
 	email: string;
@@ -46,14 +46,14 @@ const FeaturedEventDialog: React.FC<Props> = ({
 	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
 	const [otherChannel, setOtherChannel] = useState('');
-	const [formData, setFormData] = useState<FormDataType[]>([
+	const [formData, setFormData] = useState<ParticipantsDataType[]>([
 		{ firstname: '', lastname: '', email: '', phone: '' },
 	]);
 
 	// derived state from formData, update when formData changes
 	const numPeople = formData.length;
 
-	const isFormValid = (form: FormDataType) => {
+	const isFormValid = (form: ParticipantsDataType) => {
 		return (
 			form.firstname !== '' &&
 			form.lastname !== '' &&
