@@ -33,7 +33,7 @@ const VerifyTrainingTicket = () => {
 		}));
 	};
 
-	const onClickVerify = (
+	const onClickVerify = async (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	) => {
 		e.preventDefault();
@@ -41,7 +41,28 @@ const VerifyTrainingTicket = () => {
 			toast.error('Please fill all fields');
 			return;
 		}
-		setPageLocation(VerifyTicketEnum.TicketConfirmation);
+
+		fetch('/api/verify-training-ticket', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ trainingOrderId, ticketNumber }),
+		})
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+				if (!data.error) {
+					setPageLocation(VerifyTicketEnum.TicketConfirmation);
+				}
+				if (data.error) {
+					toast.error('Training Order or Ticket Id could not be found');
+				}
+			})
+			.catch(err => {
+				console.log(err);
+				toast.error('Training ticket could not be found');
+			});
 	};
 	const onClickConfirmAttendance = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
