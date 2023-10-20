@@ -57,9 +57,13 @@ const TrainingOrder: React.FC<Props> = ({ training, deleteTraining }) => {
 				<HeaderInfo>
 					<div className="title">Order ref:</div>
 					<div className="description">{`${training.reference}`}</div>
-					<div className="expiry-info">
-						Order expires in {`${expiryDays}`} Day(s).
-					</div>
+					{!training.paid && (
+						<div className="expiry-info">
+							Order
+							{expiryDays > 0 ? ` expires in ${expiryDays} Day(s)` : ` Expired`}
+							.
+						</div>
+					)}
 				</HeaderInfo>
 			</Header>
 			{!training.paid && (
@@ -104,7 +108,7 @@ const TrainingOrder: React.FC<Props> = ({ training, deleteTraining }) => {
 									<span>
 										{data.firstname} {data.lastname}
 									</span>
-									{training.paid && (
+									{data.completedTraining && (
 										<CTALink className="download-link" href={'#'}>
 											<DownloadIcon /> Download Certificate
 										</CTALink>

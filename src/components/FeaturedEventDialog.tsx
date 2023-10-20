@@ -32,6 +32,8 @@ export interface ParticipantsDataType {
 	lastname: string;
 	email: string;
 	phone: string;
+	id: string;
+	completedTraining: boolean;
 }
 const FeaturedEventDialog: React.FC<Props> = ({
 	training,
@@ -46,8 +48,19 @@ const FeaturedEventDialog: React.FC<Props> = ({
 	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
 	const [otherChannel, setOtherChannel] = useState('');
+
+	const generateUniqueId = () => {
+		return Math.floor(100000 + Math.random() * 900000).toString();
+	};
 	const [formData, setFormData] = useState<ParticipantsDataType[]>([
-		{ firstname: '', lastname: '', email: '', phone: '' },
+		{
+			firstname: '',
+			lastname: '',
+			email: '',
+			phone: '',
+			id: generateUniqueId(),
+			completedTraining: false,
+		},
 	]);
 
 	// derived state from formData, update when formData changes
@@ -85,7 +98,14 @@ const FeaturedEventDialog: React.FC<Props> = ({
 	const handleIncrease = () => {
 		setFormData(prevFormData => [
 			...prevFormData,
-			{ firstname: '', lastname: '', email: '', phone: '' },
+			{
+				firstname: '',
+				lastname: '',
+				email: '',
+				phone: '',
+				id: generateUniqueId(),
+				completedTraining: false,
+			},
 		]);
 	};
 
