@@ -16,21 +16,19 @@ export default withApiAuthRequired(async function verify(req, res) {
 		.select('*')
 		.eq('id', trainingOrderId)
 		// TODO: change back to true for only paid trainings
-		//.eq('paid', false)
-		.single()
+		//.eq('paid', true)
+		.single();
 
 	if (error) {
 		logger({ error });
-		return res.status(400).json({ error: error.message });
-	}
-	console.log(trainingOrder);
-
+		return res.status(400).json({ error: 'Error occured finding training order!!' });
+	} 
 
 	const trainingOrderData = trainingOrder as unknown as TrainingOrderType;
 
 	if (!trainingOrderData) {
 		logger({ error });
-		return res.status(400).json({ error: 'training not found!!!' });
+		return res.status(400).json({ error: 'Training Order not found!' });
 	}
 
 	const participants = JSON.parse(
@@ -40,8 +38,37 @@ export default withApiAuthRequired(async function verify(req, res) {
 	const participantData = participants.find(data => ticketNumber === data.id);
 
 	if (!participantData) {
-		res.status(404).json({ error: 'participants with ticket Id not found' });
+		res.status(404).json({ error: `particpants with ticket no ${ticketNumber} not found!` });
 	}
 
-	res.status(200).json({ data: {...trainingOrderData, ...participantData} });
+	const { data: trainingAttendanceData } =
+		await supabaseTrainingClient
+			.from('training_attendance')
+			.select('*')
+			.eq('trainingOrderId', trainingOrderId)
+			.eq('participantId', ticketNumber)
+			.single();
+
+	if (trainingAttendanceData) {
+		res
+			.status(404)
+			.json({ error: 'Participants ticket already been confirmed!' });
+	}
+
+	res.status(200).json({
+		data: {
+			title: trainingOrderData.title,
+			amountPaid: trainingOrderData.amountPaid,
+			trainingId: trainingOrderData.trainingId,
+			trainingOrderId: trainingOrderData.id,
+			trainingLocation: trainingOrderData.location,
+			trainingOrderedBy: trainingOrderData.user,
+			trainingDate: trainingOrderData.trainingDate,
+			firstName: participantData?.firstname,
+			lastName: participantData?.lastname,
+			phone: participantData?.phone,
+			completedTraining: participantData?.completedTraining,
+			participantId: participantData?.id,
+		},
+	});
 });

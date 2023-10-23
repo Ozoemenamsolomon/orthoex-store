@@ -1,18 +1,23 @@
-import CTA from '@components/CTA';
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Time from '@assets/new/icons/Time';
-import Location from '@assets/new/icons/Location';
 import Calender from '@assets/new/icons/Calender';
-import People from '@assets/new/icons/People';
-import MoneyIcon from '@assets/new/icons/MoneyIcon';
 import CheckMark from '@assets/new/icons/CheckMark';
+import Location from '@assets/new/icons/Location';
+import MoneyIcon from '@assets/new/icons/MoneyIcon';
+import People from '@assets/new/icons/People';
+import Time from '@assets/new/icons/Time';
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import CTA from '@components/CTA';
+import { priceFormatter } from '@components/ProductCard';
+import { TrainingAttendanceType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { formatDate } from '@utils/index';
+import { supabaseTrainingClient } from '@utils/supabase';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
 enum VerifyTicketEnum {
 	TicketEntryForm = 'TicketEntryForm',
 	TicketConfirmation = 'TicketConfirmation',
-	TicketSuccess = 'TicketSuccess',
+	TicketConfirmSuccess = 'TicketConfirmSuccess',
 }
 
 const VerifyTrainingTicket = () => {
@@ -23,6 +28,8 @@ const VerifyTrainingTicket = () => {
 		ticketNumber: '',
 		trainingOrderId: '',
 	});
+	const [attendanceData, setAttendanceData] =
+		useState<TrainingAttendanceType | null>(null);
 	const { ticketNumber, trainingOrderId } = formData;
 
 	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,13 +57,13 @@ const VerifyTrainingTicket = () => {
 			body: JSON.stringify({ trainingOrderId, ticketNumber }),
 		})
 			.then(res => res.json())
-			.then(data => {
-				console.log(data);
-				if (!data.error) {
+			.then(response => {
+				if (!response.error) {
+					setAttendanceData(response.data);
 					setPageLocation(VerifyTicketEnum.TicketConfirmation);
 				}
-				if (data.error) {
-					toast.error('Training Order or Ticket Id could not be found');
+				if (response.error) {
+					toast.error(response.error);
 				}
 			})
 			.catch(err => {
@@ -68,11 +75,32 @@ const VerifyTrainingTicket = () => {
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	) => {
 		e.preventDefault();
-		setPageLocation(VerifyTicketEnum.TicketSuccess);
+		fetch('/api/confirm-training-attendance', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ data: attendanceData }),
+		})
+			.then(res => res.json())
+			.then(response => {
+				if (!response.error) {
+					setPageLocation(VerifyTicketEnum.TicketConfirmSuccess);
+					toast.success('Training ticket confirmed successfully!');
+				}
+				if (response.error) {
+					toast.error(response.error);
+				}
+			})
+			.catch(err => {
+				console.log(err);
+				toast.error('Training ticket could not be confirmed!');
+			});
 	};
 
 	const reloadPage = () => {
 		setPageLocation(VerifyTicketEnum.TicketEntryForm);
+		setAttendanceData(null);
 		setformData({
 			ticketNumber: '',
 			trainingOrderId: '',
@@ -116,68 +144,80 @@ const VerifyTrainingTicket = () => {
 					</CTA>
 				</TicketForm>
 			)}
-			{pageLocation === VerifyTicketEnum.TicketConfirmation && (
-				<ConfirmSection>
-					<ConfirmTitle>
-						<p className="training-title">Resin Art Workshop</p>
-						<p className="training-email">Ordered By: test@gmail.com</p>
-					</ConfirmTitle>
-					<ConfirmBody>
-						<InfoTile>
-							<div className="icon">
-								<MoneyIcon />
-							</div>
-							<div className="info-section">
-								<p className="info">1 x Ticket</p>
-								<p className="description">
-									Amount <span className="outlined">NGN 10,000.00</span>
-								</p>
-							</div>
-						</InfoTile>
-						<InfoTile>
-							<div className="icon">
-								<People />
-							</div>
-							<div className="info-section">
-								<p className="info">Test Data</p>
-							</div>
-						</InfoTile>
-						<InfoTile>
-							<div className="icon">
-								<Time />
-							</div>
-							<div className="info-section">
-								<p className="info">Date</p>
-							</div>
-						</InfoTile>
-						<InfoTile>
-							<div className="icon">
-								<Location />
-							</div>
-							<div className="info-section">
-								<p className="info">Location</p>
-							</div>
-						</InfoTile>
-						<InfoTile>
-							<div className="icon">
-								<Calender />
-							</div>
-							<div className="info-section">
-								<p className="info">Ticket no.</p>
-								<p className="description">378839</p>
-							</div>
-						</InfoTile>
-					</ConfirmBody>
+			{pageLocation === VerifyTicketEnum.TicketConfirmation &&
+				attendanceData && (
+					<ConfirmSection>
+						<ConfirmTitle>
+							<p className="training-title">{attendanceData?.title}</p>
+							<p className="training-email">
+								Ordered By: {attendanceData?.trainingOrderedBy}
+							</p>
+						</ConfirmTitle>
+						<ConfirmBody>
+							<InfoTile>
+								<div className="icon">
+									<MoneyIcon />
+								</div>
+								<div className="info-section">
+									<p className="info">1 x Ticket</p>
+									<p className="description">
+										Amount{' '}
+										<span className="outlined">
+											{attendanceData?.amountPaid &&
+												priceFormatter.format(attendanceData?.amountPaid)}
+										</span>
+									</p>
+								</div>
+							</InfoTile>
+							<InfoTile>
+								<div className="icon">
+									<People />
+								</div>
+								<div className="info-section">
+									<p className="info">
+										{attendanceData?.firstName} {attendanceData?.lastName}
+									</p>
+								</div>
+							</InfoTile>
+							<InfoTile>
+								<div className="icon">
+									<Time />
+								</div>
+								<div className="info-section">
+									<p className="info">
+										{attendanceData?.trainingDate &&
+											formatDate(new Date(attendanceData.trainingDate))}
+									</p>
+								</div>
+							</InfoTile>
+							<InfoTile>
+								<div className="icon">
+									<Location />
+								</div>
+								<div className="info-section">
+									<p className="info">{attendanceData?.trainingLocation}</p>
+								</div>
+							</InfoTile>
+							<InfoTile>
+								<div className="icon">
+									<Calender />
+								</div>
+								<div className="info-section">
+									<p className="info">Ticket no.</p>
+									<p className="description">{attendanceData?.participantId}</p>
+								</div>
+							</InfoTile>
+						</ConfirmBody>
 
-					<CTA
-						className="no-animate submit-btn"
-						onClick={onClickConfirmAttendance}>
-						Confirm Attendance
-					</CTA>
-				</ConfirmSection>
-			)}
+						<CTA
+							className="no-animate submit-btn"
+							onClick={onClickConfirmAttendance}>
+							Confirm Attendance
+						</CTA>
+					</ConfirmSection>
+				)}
 
-			{pageLocation === VerifyTicketEnum.TicketSuccess && (
+			{pageLocation === VerifyTicketEnum.TicketConfirmSuccess && (
 				<SuccessSection>
 					<div className="icon">
 						<CheckMark color="#00D685" />
@@ -196,6 +236,30 @@ const VerifyTrainingTicket = () => {
 };
 
 export default VerifyTrainingTicket;
+
+export const getServerSideProps = withPageAuthRequired({
+	async getServerSideProps(ctx) {
+		const session = await getSession(ctx.req, ctx.res);
+
+		if (!session?.user) {
+			return {
+				redirect: {
+					destination: '/login',
+					permanent: false,
+				},
+			};
+		}
+
+		const { data } = await supabaseTrainingClient
+			.from('training_attendance')
+			.select();
+		console.log(data);
+
+		return {
+			props: {},
+		};
+	},
+});
 
 const WrapperDiv = styled.div`
 	padding: 1rem;
