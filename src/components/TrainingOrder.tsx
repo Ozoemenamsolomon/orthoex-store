@@ -32,6 +32,7 @@ const TrainingOrder: React.FC<Props> = ({ training, deleteTraining }) => {
 			return;
 		}
 	};
+
 	return (
 		<Wrapper>
 			<Header>
@@ -102,16 +103,26 @@ const TrainingOrder: React.FC<Props> = ({ training, deleteTraining }) => {
 					<DetailLeft>
 						<Title>{training.title}</Title>
 						<ParticipantInfo>
-							{participants.map((data, index) => (
+							{participants.map((ParticipantData, index) => (
 								<div className="info" key={index}>
 									<People />
 									<span>
-										{data.firstname} {data.lastname}
+										{ParticipantData.firstname} {ParticipantData.lastname}
 									</span>
-									{data.completedTraining && (
-										<CTALink className="download-link" href={'#'}>
-											<DownloadIcon /> Download Certificate
-										</CTALink>
+									{training.paid && (
+										<>
+											<CTALink className="download-link" href={'#'}>
+												<DownloadIcon /> Download Ticket
+											</CTALink>
+											{ParticipantData.completedTraining && (
+												<CTALink
+													className="download-link"
+													target="_blank"
+													href={`/docs/training-certificate/${training.id}/${ParticipantData.id}`}>
+													<DownloadIcon /> Download Certificate
+												</CTALink>
+											)}
+										</>
 									)}
 								</div>
 							))}
@@ -269,6 +280,9 @@ const DetailSection = styled.div`
 	flex-direction: column;
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		flex-direction: row;
+		gap: 2rem;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		gap: 5rem;
 	}
 `;
