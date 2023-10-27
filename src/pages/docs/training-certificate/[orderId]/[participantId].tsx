@@ -22,7 +22,6 @@ const TrainingCertificate = () => {
 		useState<TrainingAttendanceType | null>(null);
 	const orderId = router.query.orderId as string;
 	const participantId = router.query.participantId as string;
-	console.log(attendanceData);
 
 	useEffect(() => {
 		if (orderId && participantId) {

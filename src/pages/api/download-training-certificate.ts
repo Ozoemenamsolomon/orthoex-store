@@ -12,7 +12,6 @@ export default withApiAuthRequired(async function downloadTrainingTicket(
 	res,
 ) {
 	const { participantId, orderId } = req.body;
-	console.log(orderId, participantId);
 	const session = await getSession(req, res);
 	const user = session?.user.email as string;
 	
