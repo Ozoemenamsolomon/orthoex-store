@@ -1,3 +1,4 @@
+import ArrowBack from '@assets/new/icons/ArrowBack';
 import Calender from '@assets/new/icons/Calender';
 import CheckMark from '@assets/new/icons/CheckMark';
 import Location from '@assets/new/icons/Location';
@@ -9,7 +10,6 @@ import CTA from '@components/CTA';
 import { priceFormatter } from '@components/ProductCard';
 import { TrainingAttendanceType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { formatDate } from '@utils/index';
-import { supabaseTrainingClient } from '@utils/supabase';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -147,6 +147,12 @@ const VerifyTrainingTicket = () => {
 			{pageLocation === VerifyTicketEnum.TicketConfirmation &&
 				attendanceData && (
 					<ConfirmSection>
+						<span
+							className="back-btn"
+							onClick={() => setPageLocation(VerifyTicketEnum.TicketEntryForm)}>
+							<ArrowBack />
+							<span>Back</span>
+						</span>
 						<ConfirmTitle>
 							<p className="training-title">{attendanceData?.title}</p>
 							<p className="training-email">
@@ -250,11 +256,6 @@ export const getServerSideProps = withPageAuthRequired({
 			};
 		}
 
-		const { data } = await supabaseTrainingClient
-			.from('training_attendance')
-			.select();
-		console.log(data);
-
 		return {
 			props: {},
 		};
@@ -320,6 +321,15 @@ const ConfirmSection = styled.div`
 		width: 100%;
 		margin-top: 1rem;
 		font-size: 1rem;
+	}
+
+	& .back-btn {
+		cursor: pointer;
+		margin-bottom: 1rem;
+		display: flex;
+		align-items: center;
+		gap: 0.7rem;
+		font-size: 0.8rem;
 	}
 `;
 

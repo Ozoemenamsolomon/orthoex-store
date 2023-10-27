@@ -15,13 +15,12 @@ export default withApiAuthRequired(async function verify(req, res) {
 		.from('training_orders')
 		.select('*')
 		.eq('id', trainingOrderId)
-		// TODO: change back to true for only paid trainings
-		//.eq('paid', true)
+		.eq('paid', true)
 		.single();
 
 	if (error) {
 		logger({ error });
-		return res.status(400).json({ error: 'Error occured finding training order!!' });
+		return res.status(400).json({ error: 'Error occured finding paid training order!' });
 	} 
 
 	const trainingOrderData = trainingOrder as unknown as TrainingOrderType;

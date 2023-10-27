@@ -153,11 +153,12 @@ const Wrapper = styled.div`
 	}
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		min-width: 700px;
-
 		&:last-child {
-			margin-bottom: 0;
+			margin-bottom: 1rem;
 		}
+	}
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
+		min-width: 700px;
 	}
 `;
 
@@ -187,8 +188,9 @@ const HeaderInfo = styled.span`
 		font-size: 0.7rem;
 		font-weight: 500;
 		overflow: hidden;
-		white-space: nowrap;
+		// white-space: nowrap;
 		text-overflow: ellipsis;
+		width: 100px;
 	}
 	& .meta-info {
 		color: var(--text-colour-grey);
@@ -204,9 +206,6 @@ const HeaderInfo = styled.span`
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		&:last-child {
 			display: flex;
-		}
-		& .description {
-			width: 200px;
 		}
 	}
 `;
@@ -324,8 +323,9 @@ const ButtonGroup = styled.div`
 	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
 		margin-top: 1rem;
-
 		flex-direction: row;
-		width: 40%;
+	}
+	@media ${({ theme }) => theme.breakpoints.above.lg} {
+		width: 50%;
 	}
 `;
