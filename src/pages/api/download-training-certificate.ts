@@ -16,10 +16,6 @@ export default withApiAuthRequired(async function downloadTrainingTicket(
 	const session = await getSession(req, res);
 	const user = session?.user.email as string;
 	
-
-	// const { data, error } = await supabaseTrainingClient
-	// 	.from('training_orders')
-	// 	.select('*')
 	const { data, error } = await supabaseTrainingClient
 		.from('training_attendance')
 		.select('*')
