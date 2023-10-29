@@ -118,7 +118,9 @@ const TrainingCertificate = () => {
 							{attendanceData?.firstName} {attendanceData?.lastName}
 						</p>
 
-						<p className="training-title">for attending {attendanceData?.title}</p>
+						<p className="training-title">
+							for attending {attendanceData?.title}
+						</p>
 						<p className="location-date">
 							<span>{formatDate(new Date(attendanceData.trainingDate))}</span>
 							<span>, {attendanceData.trainingLocation}</span>
@@ -207,6 +209,8 @@ const CertificateSection = styled.div`
 	}
 	& .participant {
 		font-size: 1rem;
+		font-family: 'Dancing Script', 'Lucida Handwriting', cursive;
+		font-weight: 400;
 		margin: 2rem 0;
 	}
 
