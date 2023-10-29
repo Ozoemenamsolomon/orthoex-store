@@ -8,6 +8,8 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Image from 'next/image';
 import Logo from '@assets/new/logos/brand-logo.png';
+import TopPaintIcon from '@assets/new/images/top_cert_paint.png';
+import BottomPaintIcon from '@assets/new/images/bottom_cert_paint.png';
 import { TrainingAttendanceType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { formatDate } from '@utils/index';
 import { toast } from 'react-toastify';
@@ -94,6 +96,14 @@ const TrainingCertificate = () => {
 						</CTA>
 					</DownloadSection>
 					<CertificateSection ref={pdfRef}>
+						<TopPaint>
+							<Image
+								className="top-image-icon"
+								src={TopPaintIcon}
+								sizes="50"
+								alt="top-paint-icon"
+							/>
+						</TopPaint>
 						<ImageDiv>
 							<Image
 								className="image"
@@ -108,12 +118,20 @@ const TrainingCertificate = () => {
 							{attendanceData?.firstName} {attendanceData?.lastName}
 						</p>
 
-						<p className="training-title">{attendanceData?.title}</p>
+						<p className="training-title">for attending {attendanceData?.title}</p>
 						<p className="location-date">
 							<span>{formatDate(new Date(attendanceData.trainingDate))}</span>
 							<span>, {attendanceData.trainingLocation}</span>
 						</p>
 						<p className="signature">.......................</p>
+						<BottomPaint>
+							<Image
+								className="image-icon"
+								src={BottomPaintIcon}
+								sizes="50"
+								alt="top-paint-icon"
+							/>
+						</BottomPaint>
 					</CertificateSection>
 				</Wrapper>
 			)}
@@ -141,6 +159,26 @@ const Wrapper = styled.div`
 	text-align: center;
 	background-color: var(--oex-off-white);
 `;
+const TopPaint = styled.div`
+	position: relative;
+	margin-bottom: 1rem;
+
+	& .top-image-icon {
+		color: red;
+		height: 50%;
+		width: 80%;
+	}
+`;
+const BottomPaint = styled.div`
+	position: relative;
+	margin-top: 1rem;
+
+	& .image-icon {
+		color: red;
+		height: 50%;
+		width: 80%;
+	}
+`;
 const DownloadSection = styled.div`
 	padding-top: 2rem;
 	text-align: center;
@@ -155,7 +193,6 @@ const CertificateSection = styled.div`
 	text-align: center;
 	background-color: white;
 	width: 80%;
-	padding-bottom: 3rem;
 
 	& .heading-training {
 		text-transform: uppercase;
@@ -193,7 +230,7 @@ const CertificateSection = styled.div`
 		margin: 2rem 0;
 	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-		padding: 4rem 0;
+		// padding: 4rem 0;
 
 		& .heading-training {
 			text-transform: uppercase;
