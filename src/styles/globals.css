@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 html,
 body {
 	padding: 0;
@@ -79,4 +84,10 @@ p {
 
 img[object-fit='contain'] {
 	object-fit: contain;
+}
+
+
+/* ==== Rehabspace ==== */
+.section-padding { 
+	@apply mx-auto max-w-[1500px] max-md:px-[1rem] px-[4rem]  
 }

@@ -187,6 +187,7 @@ const LeftNav: FC<{ forMobile?: boolean }> = ({ forMobile = false }) => {
 		{ name: 'Composites', to: '/composites' },
 		{ name: 'Orthopaedics', to: '/orthopaedics' },
 		{ name: 'Trainings', to: '/trainings' },
+		{ name: 'Rehabspace', to: '/rehabspace' },
 		{ name: 'About us', to: '/about' },
 		{ name: 'Careers', to: '/careers' },
 	];
