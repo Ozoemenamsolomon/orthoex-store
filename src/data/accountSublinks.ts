@@ -8,6 +8,10 @@ export const accountSubLinks = [
 		slug: 'details',
 	},
 	{
+		name: 'Trainings',
+		slug: 'trainings',
+	},
+	{
 		name: 'Orders',
 		slug: 'orders',
 	},

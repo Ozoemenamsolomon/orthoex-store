@@ -45,7 +45,7 @@ const Checkout: NextPage<{
 			{trainingOrders.length === 0 ? (
 				<p className="info-text">You currently have no orders</p>
 			) : (
-				<div>
+				<OrderWrapper>
 					{trainingOrders.map(training => (
 						<TrainingOrder
 							key={training.id}
@@ -53,7 +53,7 @@ const Checkout: NextPage<{
 							deleteTraining={deleteTrainingWithId}
 						/>
 					))}
-				</div>
+				</OrderWrapper>
 			)}
 		</CheckoutWrapper>
 	);
@@ -99,4 +99,10 @@ const CheckoutWrapper = styled.div`
 const Heading = styled.h3`
 	margin: 2rem 0;
 	text-align: center;
+`;
+const OrderWrapper = styled.div`
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		width: 700px;
+		margin: 0 auto;
+	}
 `;

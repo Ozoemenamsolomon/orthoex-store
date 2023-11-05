@@ -27,11 +27,13 @@ type Props = {
 	promoCode: string;
 };
 
-interface FormDataType {
+export interface ParticipantsDataType {
 	firstname: string;
 	lastname: string;
 	email: string;
 	phone: string;
+	id: string;
+	completedTraining: boolean;
 }
 const FeaturedEventDialog: React.FC<Props> = ({
 	training,
@@ -46,14 +48,25 @@ const FeaturedEventDialog: React.FC<Props> = ({
 	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
 	const [otherChannel, setOtherChannel] = useState('');
-	const [formData, setFormData] = useState<FormDataType[]>([
-		{ firstname: '', lastname: '', email: '', phone: '' },
+
+	const generateUniqueId = () => {
+		return Math.floor(100000 + Math.random() * 900000).toString();
+	};
+	const [formData, setFormData] = useState<ParticipantsDataType[]>([
+		{
+			firstname: '',
+			lastname: '',
+			email: '',
+			phone: '',
+			id: generateUniqueId(),
+			completedTraining: false,
+		},
 	]);
 
 	// derived state from formData, update when formData changes
 	const numPeople = formData.length;
 
-	const isFormValid = (form: FormDataType) => {
+	const isFormValid = (form: ParticipantsDataType) => {
 		return (
 			form.firstname !== '' &&
 			form.lastname !== '' &&
@@ -85,7 +98,14 @@ const FeaturedEventDialog: React.FC<Props> = ({
 	const handleIncrease = () => {
 		setFormData(prevFormData => [
 			...prevFormData,
-			{ firstname: '', lastname: '', email: '', phone: '' },
+			{
+				firstname: '',
+				lastname: '',
+				email: '',
+				phone: '',
+				id: generateUniqueId(),
+				completedTraining: false,
+			},
 		]);
 	};
 

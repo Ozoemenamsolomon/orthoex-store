@@ -54,3 +54,18 @@ export interface TrainingOrderCreateType {
 	participants: string;
 	numOfParticipants: number;
 }
+
+export interface TrainingAttendanceType {
+	title: string;
+	amountPaid: number;
+	trainingId: number;
+	trainingOrderId: number;
+	trainingLocation: string;
+	trainingOrderedBy: string;
+	trainingDate: string;
+	firstName: string;
+	lastName: string;
+	phone: string;
+	completedTraining: boolean;
+	participantId: string;
+}
