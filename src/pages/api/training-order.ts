@@ -36,4 +36,5 @@ export default withApiAuthRequired(async function trainingOrderHandler(req, res)
     // Handle other HTTP methods (e.g., PUT) or return an error if needed.
     res.status(405).json({ error: 'Method not allowed' });
   }
+
 });

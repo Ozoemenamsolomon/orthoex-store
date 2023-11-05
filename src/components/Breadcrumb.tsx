@@ -11,12 +11,10 @@ const Breadcrumb: React.FC<{ breadcrumb: BreadcrumProps[] }> = ({
 }) => (
 	<BreadcrumbContainer>
 		{breadcrumb.map(({ name, link }, index) => (
-			<>
-				<span key={`breadcrumb-${index}`}>
-					<Link href={link}>{name} </Link>
-					<Divisor>&gt;&gt;</Divisor>
-				</span>
-			</>
+			<span key={`breadcrumb-${index}`}>
+				<Link href={link}>{name} </Link>
+				<Divisor>&gt;&gt;</Divisor>
+			</span>
 		))}
 	</BreadcrumbContainer>
 );

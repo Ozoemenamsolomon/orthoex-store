@@ -74,8 +74,7 @@ export const deleteTrainingOrderWithId = async (
 	return data;
 };
 
-export type UpdateTrainingDataType =
-	Partial<TrainingSupbaseDataType>;
+export type UpdateTrainingDataType = Partial<TrainingSupbaseDataType>;
 
 export const updateTrainingWithId = async (
 	id: number,
