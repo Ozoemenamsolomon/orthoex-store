@@ -1,9 +1,8 @@
 import CTA from '@components/CTA';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import styled from 'styled-components';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Image from 'next/image';
@@ -12,43 +11,15 @@ import TopPaintIcon from '@assets/new/images/top_cert_paint.png';
 import BottomPaintIcon from '@assets/new/images/bottom_cert_paint.png';
 import { TrainingAttendanceType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { formatDate } from '@utils/index';
-import { toast } from 'react-toastify';
+import { NextPage } from 'next';
+import { supabaseTrainingClient } from '@utils/supabase';
 
-const TrainingCertificate = () => {
+const TrainingCertificate: NextPage<{
+	attendanceData: TrainingAttendanceType | null;
+}> = ({ attendanceData }) => {
 	// @ts-ignore
 	const { user } = useUser();
-	const router = useRouter();
 	const pdfRef = useRef<HTMLDivElement>(null);
-
-	const [attendanceData, setAttendanceData] =
-		useState<TrainingAttendanceType | null>(null);
-	const orderId = router.query.orderId as string;
-	const participantId = router.query.participantId as string;
-
-	useEffect(() => {
-		if (orderId && participantId) {
-			fetch('/api/download-training-certificate', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ orderId, participantId }),
-			})
-				.then(res => res.json())
-				.then(response => {
-					if (!response.error) {
-						setAttendanceData(response.data);
-					}
-					if (response.error) {
-						toast.error(response.error);
-					}
-				})
-				.catch(err => {
-					console.log(err);
-					toast.error('Training Certificate could not be found');
-				});
-		}
-	}, [orderId, participantId]);
 
 	const downloadPdf = () => {
 		const input = pdfRef.current as HTMLDivElement;
@@ -75,17 +46,6 @@ const TrainingCertificate = () => {
 		});
 	};
 
-	if (!user)
-		return (
-			<LoginWrapper>
-				<Link
-					href={`/api/auth/login?returnTo=${encodeURIComponent(
-						router.asPath,
-					)}`}>
-					<CTA className="no-animate login-btn">Login to View Certificate</CTA>
-				</Link>
-			</LoginWrapper>
-		);
 	return (
 		<div>
 			{attendanceData && (
@@ -143,16 +103,43 @@ const TrainingCertificate = () => {
 
 export default TrainingCertificate;
 
-const LoginWrapper = styled.div`
-	margin: 5rem auto 5rem;
-	max-width: 200px;
-	min-height: 10vh;
+export const getServerSideProps = withPageAuthRequired({
+	async getServerSideProps(ctx) {
+		const session = await getSession(ctx.req, ctx.res);
 
-	& .login-btn {
-		font-size: 15px;
-		padding: 10px 15px;
-	}
-`;
+		const { orderId, participantId } = ctx.query;
+
+		const user = session?.user.email as string;
+
+		const { data } = await supabaseTrainingClient
+			.from('training_attendance')
+			.select('*')
+			.eq('participantId', participantId)
+			.eq('trainingOrderId', orderId)
+			.eq('completedTraining', true)
+			.eq('trainingOrderedBy', user)
+			.single();
+
+		if (!data) {
+			return {
+				redirect: {
+					destination: `/account/trainings`,
+					permanent: false,
+				},
+			};
+		}
+
+		const trainingAttendanceData = data as unknown as TrainingAttendanceType;
+
+		return {
+			props: {
+				user: session?.user,
+				attendanceData: trainingAttendanceData,
+			},
+		};
+	},
+});
+
 const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
