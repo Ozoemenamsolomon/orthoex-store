@@ -28,19 +28,26 @@ type Props = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 interface FormDataType {
 =======
 export interface ParticipantsDataType {
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+interface FormDataType {
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 	firstname: string;
 	lastname: string;
 	email: string;
 	phone: string;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	id: string;
 	completedTraining: boolean;
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 }
 const FeaturedEventDialog: React.FC<Props> = ({
 	training,
@@ -55,6 +62,7 @@ const FeaturedEventDialog: React.FC<Props> = ({
 	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
 	const [otherChannel, setOtherChannel] = useState('');
+<<<<<<< HEAD
 <<<<<<< HEAD
 	const [formData, setFormData] = useState<FormDataType[]>([
 		{ firstname: '', lastname: '', email: '', phone: '' },
@@ -73,16 +81,24 @@ const FeaturedEventDialog: React.FC<Props> = ({
 			completedTraining: false,
 		},
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+	const [formData, setFormData] = useState<FormDataType[]>([
+		{ firstname: '', lastname: '', email: '', phone: '' },
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 	]);
 
 	// derived state from formData, update when formData changes
 	const numPeople = formData.length;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const isFormValid = (form: FormDataType) => {
 =======
 	const isFormValid = (form: ParticipantsDataType) => {
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+	const isFormValid = (form: FormDataType) => {
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 		return (
 			form.firstname !== '' &&
 			form.lastname !== '' &&
@@ -115,6 +131,7 @@ const FeaturedEventDialog: React.FC<Props> = ({
 		setFormData(prevFormData => [
 			...prevFormData,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			{ firstname: '', lastname: '', email: '', phone: '' },
 =======
 			{
@@ -126,6 +143,9 @@ const FeaturedEventDialog: React.FC<Props> = ({
 				completedTraining: false,
 			},
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+			{ firstname: '', lastname: '', email: '', phone: '' },
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 		]);
 	};
 

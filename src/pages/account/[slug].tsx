@@ -1,7 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import PlayLibraryIcon from '@assets/new/icons/PlayLibraryIcon';
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 import Coupon from '@assets/new/icons/account/Coupon.svg';
 import DeliveryTruck from '@assets/new/icons/account/DeliveryTruck.svg';
 import Favourite from '@assets/new/icons/account/Favourite.svg';
@@ -14,6 +17,7 @@ import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import AccountSubNav from '@components/AccountSubNav';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import CTA from '@components/CTA';
 import OrderItemCard from '@components/OrderItemCard';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
@@ -23,6 +27,11 @@ import OrderItemCard from '@components/OrderItemCard';
 import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
 import TrainingOrder from '@components/TrainingOrder';
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+import CTA from '@components/CTA';
+import OrderItemCard from '@components/OrderItemCard';
+import ServiceCard, { ServiceCardType } from '@components/ServiceCard';
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 import Details from '@components/account/Details';
 import { Container } from '@components/styled';
 import { Title } from '@components/styled/Temp';
@@ -32,20 +41,27 @@ import {
 	isAccountSubLinkSlug,
 } from '@data/accountSublinks';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { supabaseClient } from '@utils/supabase';
 =======
 import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { supabaseClient, supabaseTrainingClient } from '@utils/supabase';
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+import { supabaseClient } from '@utils/supabase';
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { format } from 'url';
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 
 const accountOverviewLinks: ServiceCardType[] = [
 	{
@@ -86,6 +102,7 @@ const accountProductLinks: ServiceCardType[] = [
 ];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 type TrainingOrderDataProps = {
 	trainings: TrainingOrderType[];
@@ -93,12 +110,15 @@ type TrainingOrderDataProps = {
 };
 
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 type Props = {
 	user: UserProfile;
 	data: {
 		orders: any[];
 		title: string;
 	};
+<<<<<<< HEAD
 <<<<<<< HEAD
 };
 
@@ -109,6 +129,11 @@ const Account: NextPage<Props> = ({ user, data }) => {
 
 const Account: NextPage<Props> = ({ user, data, trainingData }) => {
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+};
+
+const Account: NextPage<Props> = ({ user, data }) => {
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 	const router = useRouter();
 	const slug = router.query.slug as TypeOfSlug;
 
@@ -144,10 +169,13 @@ const Account: NextPage<Props> = ({ user, data, trainingData }) => {
 					) : slug === 'orders' ? (
 						<Orders orders={data.orders} />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 					) : slug === 'trainings' ? (
 						<TrainingOrders trainingOrders={trainingData.trainings} />
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 					) : slug === 'details' ? (
 						<Details
 							user={user}
@@ -205,6 +233,7 @@ export const getServerSideProps = withPageAuthRequired({
 			}
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		const trainingData: TrainingOrderDataProps = {
 			trainings: [],
@@ -231,14 +260,19 @@ export const getServerSideProps = withPageAuthRequired({
 			}
 		}
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 
 		return {
 			props: {
 				data,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 				trainingData,
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 			},
 		};
 	},
@@ -331,6 +365,7 @@ const Orders: FC<{
 		</>
 	);
 };
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 const TrainingOrders: FC<{
@@ -452,6 +487,8 @@ const TrainingOrderWrapper = styled.div`
 	}
 `;
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 
 const OrderFilterButtons = styled.div`
 	display: flex;

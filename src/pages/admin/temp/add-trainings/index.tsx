@@ -3,10 +3,14 @@ import { CTALink } from '@components/CTA';
 import TrainingEventCard from '@components/TrainingEventCard';
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { supabaseClient } from '@utils/supabase';
 =======
 import { supabaseTrainingClient } from '@utils/supabase';
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+import { supabaseClient } from '@utils/supabase';
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 import { NextPage } from 'next';
 import styled from 'styled-components';
 
@@ -48,10 +52,14 @@ export const getServerSideProps = withPageAuthRequired({
 		const session = await getSession(ctx.req, ctx.res);
 		//TODO: Add try catch block for the api call
 <<<<<<< HEAD
+<<<<<<< HEAD
 		const trainingFromSupabase = await supabaseClient
 =======
 		const trainingFromSupabase = await supabaseTrainingClient
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+		const trainingFromSupabase = await supabaseClient
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 			.from('training')
 			.select('*');
 

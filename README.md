@@ -47,3 +47,7 @@ To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<<<<<<< HEAD
+=======
+# orthoex-store
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d

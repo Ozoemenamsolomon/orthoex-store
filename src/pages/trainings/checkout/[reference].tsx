@@ -54,12 +54,17 @@ const CheckoutPage: NextPage<{
 	};
 	const updateTrainingData = async () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		await fetch('/api/update-training-bookedspot', {
 			method: 'POST',
 =======
 		await fetch('/api/training-spot', {
 			method: 'PUT',
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+		await fetch('/api/update-training-bookedspot', {
+			method: 'POST',
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 			headers: {
 				'Content-Type': 'application/json',
 			},

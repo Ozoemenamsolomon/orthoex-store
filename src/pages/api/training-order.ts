@@ -1,5 +1,8 @@
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 import {
 	updateTrainingOrderToPaid,
 	deleteTrainingOrderWithId,
@@ -43,6 +46,7 @@ export default withApiAuthRequired(async function trainingOrderHandler(
 		// Handle other HTTP methods (e.g., PUT) or return an error if needed.
 		res.status(405).json({ error: 'Method not allowed' });
 	}
+<<<<<<< HEAD
 =======
 import { updateTrainingOrderToPaid, deleteTrainingOrderWithId } from '@data/trainingOrderSupabase';
 
@@ -83,4 +87,6 @@ export default withApiAuthRequired(async function trainingOrderHandler(req, res)
   }
 
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 });

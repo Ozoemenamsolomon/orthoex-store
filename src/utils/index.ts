@@ -26,12 +26,17 @@ export function calculateDateDifference(
 
 	// Calculate the difference in days
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const diffInDays = Math.round(
 		Math.abs((start.getTime() - end.getTime()) / oneDay),
 =======
 	const diffInDays = Math.floor(
 		(Number(end) - Number(start)) / oneDay
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+	const diffInDays = Math.round(
+		Math.abs((start.getTime() - end.getTime()) / oneDay),
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 	);
 	// Difference between same day returns, 0 days, adding 1 to make it 1 day
 	return diffInDays + 1;

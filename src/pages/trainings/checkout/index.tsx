@@ -46,10 +46,14 @@ const Checkout: NextPage<{
 				<p className="info-text">You currently have no orders</p>
 			) : (
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<div>
 =======
 				<OrderWrapper>
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+				<div>
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 					{trainingOrders.map(training => (
 						<TrainingOrder
 							key={training.id}
@@ -58,10 +62,14 @@ const Checkout: NextPage<{
 						/>
 					))}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				</div>
 =======
 				</OrderWrapper>
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+				</div>
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 			)}
 		</CheckoutWrapper>
 	);
@@ -109,6 +117,7 @@ const Heading = styled.h3`
 	text-align: center;
 `;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 const OrderWrapper = styled.div`
 	@media ${({ theme }) => theme.breakpoints.above.md} {
@@ -117,3 +126,5 @@ const OrderWrapper = styled.div`
 	}
 `;
 >>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
+=======
+>>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
