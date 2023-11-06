@@ -95,6 +95,10 @@ export const updateTrainingWithId = async (
 	return data as unknown as TrainingSupbaseDataType;
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 export const getTrainingWithId = async (id: number) => {
 	const { data, error } = await supabaseTrainingClient
 		.from('training')

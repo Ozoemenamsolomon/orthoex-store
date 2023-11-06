@@ -53,8 +53,13 @@ const CheckoutPage: NextPage<{
 			});
 	};
 	const updateTrainingData = async () => {
+<<<<<<< HEAD
 		await fetch('/api/update-training-bookedspot', {
 			method: 'POST',
+=======
+		await fetch('/api/training-spot', {
+			method: 'PUT',
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 			headers: {
 				'Content-Type': 'application/json',
 			},

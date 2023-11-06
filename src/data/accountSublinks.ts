@@ -8,6 +8,13 @@ export const accountSubLinks = [
 		slug: 'details',
 	},
 	{
+<<<<<<< HEAD
+=======
+		name: 'Trainings',
+		slug: 'trainings',
+	},
+	{
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 		name: 'Orders',
 		slug: 'orders',
 	},

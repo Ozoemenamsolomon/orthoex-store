@@ -52,12 +52,20 @@ const Trainings: NextPage<{
 export default Trainings;
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
+<<<<<<< HEAD
+=======
+
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 	const response = await supabaseTrainingClient
 		.from('training')
 		.select('*')
 		.order('startDateTime', { ascending: false });
 	const trainingData = response.data as unknown as TrainingSupbaseDataType[];
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 	return {
 		props: {
 			trainingData: trainingData || [],

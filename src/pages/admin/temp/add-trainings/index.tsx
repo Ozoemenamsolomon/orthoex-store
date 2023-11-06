@@ -2,7 +2,11 @@ import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { CTALink } from '@components/CTA';
 import TrainingEventCard from '@components/TrainingEventCard';
 import { TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+<<<<<<< HEAD
 import { supabaseClient } from '@utils/supabase';
+=======
+import { supabaseTrainingClient } from '@utils/supabase';
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 import { NextPage } from 'next';
 import styled from 'styled-components';
 
@@ -43,7 +47,11 @@ export const getServerSideProps = withPageAuthRequired({
 	async getServerSideProps(ctx) {
 		const session = await getSession(ctx.req, ctx.res);
 		//TODO: Add try catch block for the api call
+<<<<<<< HEAD
 		const trainingFromSupabase = await supabaseClient
+=======
+		const trainingFromSupabase = await supabaseTrainingClient
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 			.from('training')
 			.select('*');
 

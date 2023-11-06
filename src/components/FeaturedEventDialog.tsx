@@ -27,11 +27,20 @@ type Props = {
 	promoCode: string;
 };
 
+<<<<<<< HEAD
 interface FormDataType {
+=======
+export interface ParticipantsDataType {
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 	firstname: string;
 	lastname: string;
 	email: string;
 	phone: string;
+<<<<<<< HEAD
+=======
+	id: string;
+	completedTraining: boolean;
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 }
 const FeaturedEventDialog: React.FC<Props> = ({
 	training,
@@ -46,14 +55,34 @@ const FeaturedEventDialog: React.FC<Props> = ({
 	const [isModalClose, setIsModalClose] = useState(false);
 	const [aboutUsChannel, setAboutUsChannel] = useState('');
 	const [otherChannel, setOtherChannel] = useState('');
+<<<<<<< HEAD
 	const [formData, setFormData] = useState<FormDataType[]>([
 		{ firstname: '', lastname: '', email: '', phone: '' },
+=======
+
+	const generateUniqueId = () => {
+		return Math.floor(100000 + Math.random() * 900000).toString();
+	};
+	const [formData, setFormData] = useState<ParticipantsDataType[]>([
+		{
+			firstname: '',
+			lastname: '',
+			email: '',
+			phone: '',
+			id: generateUniqueId(),
+			completedTraining: false,
+		},
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 	]);
 
 	// derived state from formData, update when formData changes
 	const numPeople = formData.length;
 
+<<<<<<< HEAD
 	const isFormValid = (form: FormDataType) => {
+=======
+	const isFormValid = (form: ParticipantsDataType) => {
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 		return (
 			form.firstname !== '' &&
 			form.lastname !== '' &&
@@ -85,7 +114,18 @@ const FeaturedEventDialog: React.FC<Props> = ({
 	const handleIncrease = () => {
 		setFormData(prevFormData => [
 			...prevFormData,
+<<<<<<< HEAD
 			{ firstname: '', lastname: '', email: '', phone: '' },
+=======
+			{
+				firstname: '',
+				lastname: '',
+				email: '',
+				phone: '',
+				id: generateUniqueId(),
+				completedTraining: false,
+			},
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 		]);
 	};
 

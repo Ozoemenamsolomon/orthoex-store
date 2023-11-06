@@ -45,7 +45,11 @@ const Checkout: NextPage<{
 			{trainingOrders.length === 0 ? (
 				<p className="info-text">You currently have no orders</p>
 			) : (
+<<<<<<< HEAD
 				<div>
+=======
+				<OrderWrapper>
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 					{trainingOrders.map(training => (
 						<TrainingOrder
 							key={training.id}
@@ -53,7 +57,11 @@ const Checkout: NextPage<{
 							deleteTraining={deleteTrainingWithId}
 						/>
 					))}
+<<<<<<< HEAD
 				</div>
+=======
+				</OrderWrapper>
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
 			)}
 		</CheckoutWrapper>
 	);
@@ -100,3 +108,12 @@ const Heading = styled.h3`
 	margin: 2rem 0;
 	text-align: center;
 `;
+<<<<<<< HEAD
+=======
+const OrderWrapper = styled.div`
+	@media ${({ theme }) => theme.breakpoints.above.md} {
+		width: 700px;
+		margin: 0 auto;
+	}
+`;
+>>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
