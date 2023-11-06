@@ -3,120 +3,6 @@
 
 import { FaStar, FaCheck } from 'react-icons/fa';
 
-export const StarWithTickIcon = () => (
-  <div className="inline-block relative">
-    <FaStar className="text-orange-500 text-4xl" />
-    <FaCheck className="absolute top-0 right-0 text-white text-sm" />
-  </div>
-);
-
- 
-
-export const rehabspaceHero = {
-    heading : 'RehabSpace',
-    description : 'A dynamic shared workspace that gives you control over the area you need without the costly investment in an entire office. This space is ideal for licenced healthcare professionals seeking a facility to see their patients without the additional overhead cost of maintaining an office. Our spacious treatment rooms and well-equipped facility provide the perfect backdrop for delivering personalized care to your patients.',
-    btnText : 'Book a Session',
-}
-
-export const benefits = {
-    heading : 'Your Benefits',
-    benefitsList :  [
-        {
-            id: 0,
-            icon: <StarWithTickIcon/>,
-            title: 'Personalized Space',
-            description: 'Personalize your workspace to your preferences while ensuring patient privacy and comfort.',
-        },
-        {
-            id: 0,
-            icon: <StarWithTickIcon/>,
-            title: 'Cost control',
-            description: 'You pay for only the time you spend.',
-        },
-        {
-            id: 0,
-            icon: <StarWithTickIcon/>,
-            title: 'Central location',
-            description: 'Impress your patients with a contemporary atmosphere in a central location, conveniently situated between local and international airports.',
-        },
-        {
-            id: 0,
-            icon: <StarWithTickIcon/>,
-            title: 'Administrative support',
-            description: 'Our professional staff provides administrative support, allowing you to focus on your clients.',
-        },
-        {
-            id: 0,
-            icon: <StarWithTickIcon/>,
-            title: 'Secure Environment:',
-            description: 'We prioritize the security of your practice and offer a safe and private space for your consultations.',
-        },
-        {
-            id: 0,
-            icon: <StarWithTickIcon/>,
-            title: 'Office essentials',
-            description: 'We provide high-speed Wi-Fi, printing, copying, scanning, and spacious parking space.',
-        },
-    ],
-    clipUrl : 'https://google.com/',
-    playBtn : <PlayBtn/>
-}
-
-export const paymentCard = {
-    heading : 'RehabSpace Payment',
-    description: 'Schedule an appointment to use the space according to your preferred time.',
-    phoneNumber: '+2347030324696',
-    btnText: 'Book  now',
-    CreditCardSvg: <CreditCardSvg/>,
-}
-
-export const bookingCard = {
-    heading : 'Book an Appointment',
-    description: 'Easy, secure and automated payment process',
-    phoneNumber: '+2347030324696',
-    btnText: 'Pay now!',
-    CreditCardSvg: <OfficeLadySvg/>,
-}
-
-export const bookingDetails = {
-    svg: <RehabSvg/>,
-    title: 'Booking budget and schedule fit for you.',
-    typesIcon: <FaCheck/>,
-    types: [
-        {
-            id: 0,
-            type: '1-Session',
-            value: '₦5,000.00',
-        },
-        {
-            id: 0,
-            type: '3-Sessions',
-            value: '₦14,000.00 ',
-        },
-        {
-            id: 0,
-            type: '6-Sessions',
-            value: '₦25,000.00 ',
-        },
-        {
-            id: 0,
-            type: '12-Sessions',
-            value: '₦40,000.00',
-        },
-    ],
-    footerText: 'A session duration is 1hr 20mins.'
-}
-
-export const schedulSession = {
-    heading: 'Schedule a session',
-    description: 'Enter your email address to schedule a session',
-    placeholder: 'Idrisrash2017@gmail.com ',
-    errorMessage: 'This email has no assign token. Pay for a session to get one. ',
-    btnText: 'Book an Appointment',
-    imgUrl: '/'
-}
-
-
 export const StarIcon = () => (
     <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M15.788 5.40125C17.2366 2.96535 20.7634 2.96535 22.212 5.40125C23.0582 6.82429 24.7399 7.52087 26.3446 7.11302C29.0913 6.41487 31.5851 8.90871 30.887 11.6554C30.4791 13.2601 31.1757 14.9418 32.5987 15.788C35.0347 17.2366 35.0347 20.7634 32.5987 22.212C31.1757 23.0582 30.4791 24.7399 30.887 26.3446C31.5851 29.0913 29.0913 31.5851 26.3446 30.887C24.7399 30.4791 23.0582 31.1757 22.212 32.5987C20.7634 35.0347 17.2366 35.0347 15.788 32.5987C14.9418 31.1757 13.2601 30.4791 11.6554 30.887C8.90871 31.5851 6.41487 29.0913 7.11302 26.3446C7.52087 24.7399 6.82429 23.0582 5.40125 22.212C2.96535 20.7634 2.96535 17.2366 5.40125 15.788C6.82429 14.9418 7.52087 13.2601 7.11302 11.6554C6.41487 8.90871 8.90871 6.41487 11.6554 7.11302C13.2601 7.52087 14.9418 6.82429 15.788 5.40125Z" fill="#FF863D"/>
@@ -472,4 +358,120 @@ export const RehabSvg = () => (
 </defs>
 </svg>
 )
+
+
+
+export const StarWithTickIcon = () => (
+  <div className="inline-block relative">
+    <FaStar className="text-[--oex-orange] text-3xl" />
+    <FaCheck className="absolute inset-0 text-white font-bold" />
+  </div>
+);
+
+ 
+
+export const rehabspaceHero = {
+    heading : 'RehabSpace',
+    description : 'A dynamic shared workspace that gives you control over the area you need without the costly investment in an entire office. This space is ideal for licenced healthcare professionals seeking a facility to see their patients without the additional overhead cost of maintaining an office. Our spacious treatment rooms and well-equipped facility provide the perfect backdrop for delivering personalized care to your patients.',
+    btnText : 'Book a Session',
+}
+
+export const benefits = {
+    heading : 'Your Benefits',
+    benefitsList :  [
+        {
+            id: 0,
+            icon: <StarIcon/>,
+            title: 'Personalized Space',
+            description: 'Personalize your workspace to your preferences while ensuring patient privacy and comfort.',
+        },
+        {
+            id: 0,
+            icon: <StarIcon/>,
+            title: 'Cost control',
+            description: 'You pay for only the time you spend.',
+        },
+        {
+            id: 0,
+            icon: <StarIcon/>,
+            title: 'Central location',
+            description: 'Impress your patients with a contemporary atmosphere in a central location, conveniently situated between local and international airports.',
+        },
+        {
+            id: 0,
+            icon: <StarIcon/>,
+            title: 'Administrative support',
+            description: 'Our professional staff provides administrative support, allowing you to focus on your clients.',
+        },
+        {
+            id: 0,
+            icon: <StarIcon/>,
+            title: 'Secure Environment:',
+            description: 'We prioritize the security of your practice and offer a safe and private space for your consultations.',
+        },
+        {
+            id: 0,
+            icon: <StarIcon/>,
+            title: 'Office essentials',
+            description: 'We provide high-speed Wi-Fi, printing, copying, scanning, and spacious parking space.',
+        },
+    ],
+    clipUrl : 'https://google.com/',
+    playBtn : <PlayBtn/>
+}
+
+export const paymentCard = {
+    heading : 'RehabSpace Payment',
+    description: 'Schedule an appointment to use the space according to your preferred time.',
+    phoneNumber: '+2347030324696',
+    btnText: 'Book  now',
+    CreditCardSvg: <CreditCardSvg/>,
+}
+
+export const bookingCard = {
+    heading : 'Book an Appointment',
+    description: 'Easy, secure and automated payment process',
+    phoneNumber: '+2347030324696',
+    btnText: 'Pay now!',
+    CreditCardSvg: <OfficeLadySvg/>,
+}
+
+export const bookingDetails = {
+    svg: <RehabSvg/>,
+    title: 'Booking budget and schedule fit for you.',
+    typesIcon: <FaCheck/>,
+    types: [
+        {
+            id: 0,
+            type: '1-Session',
+            value: '₦5,000.00',
+        },
+        {
+            id: 0,
+            type: '3-Sessions',
+            value: '₦14,000.00 ',
+        },
+        {
+            id: 0,
+            type: '6-Sessions',
+            value: '₦25,000.00 ',
+        },
+        {
+            id: 0,
+            type: '12-Sessions',
+            value: '₦40,000.00',
+        },
+    ],
+    footerText: 'A session duration is 1hr 20mins.'
+}
+
+export const schedulSession = {
+    heading: 'Schedule a session',
+    description: 'Enter your email address to schedule a session',
+    placeholder: 'Idrisrash2017@gmail.com ',
+    errorMessage: 'This email has no assign token. Pay for a session to get one. ',
+    btnText: 'Book an Appointment',
+    imgUrl: '/'
+}
+
 

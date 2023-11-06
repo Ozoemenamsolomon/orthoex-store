@@ -1,11 +1,7 @@
-<<<<<<< HEAD
-=======
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 html,
 body {
 	padding: 0;
@@ -88,12 +84,9 @@ p {
 img[object-fit='contain'] {
 	object-fit: contain;
 }
-<<<<<<< HEAD
-=======
-
 
 /* ==== Rehabspace ==== */
 .section-padding { 
-	@apply mx-auto max-w-[1500px] max-md:px-[1rem] px-[4rem]  
+	@apply mx-auto mb-40 max-w-[1500px] max-md:px-[1rem] px-[4rem]  
 }
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
+/* md:min-w-[980px] */
