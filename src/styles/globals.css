@@ -19,10 +19,12 @@ body {
 	--oex-lighter-grey: #e5e5e5;
 	--oex-lightest-grey: #f2f0f0;
 	--oex-orange: #fe7624;
+	--oex-orange-light: #fdd2b8;
 	--oex-danger: #ea4237;
 	--oex-success: #3f845f;
 	--oex-orange-mute: #fff9f5;
 	--oex-yellow: #edbf37;
+	--oex-yellow-lighter: #FFF8F3;
 	--oex-orange-dark: #e74803;
 	--oex-bg-grey: #2e2e2e;
 	--text-colour-light: white;
@@ -90,3 +92,7 @@ img[object-fit='contain'] {
 	@apply mx-auto mb-40 max-w-[1500px] max-md:px-[1rem] px-[4rem]  
 }
 /* md:min-w-[980px] */
+
+.imgcover {
+	@apply w-full h-full object-cover
+}

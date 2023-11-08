@@ -1,42 +1,13 @@
 import Calender from '@assets/new/icons/Calender';
 import Location from '@assets/new/icons/Location';
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
-import MoneyIcon from '@assets/new/icons/MoneyIcon';
-import People from '@assets/new/icons/People';
-import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
-import { formatDate } from '@utils/index';
-import React from 'react';
-<<<<<<< HEAD
-=======
 import People from '@assets/new/icons/People';
 import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
 import { calculateDateDifference, formatDate } from '@utils/index';
 import React, { useState } from 'react';
->>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
-=======
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 import styled from 'styled-components';
 import CTA, { CTALink } from './CTA';
 import { StyledInfoDiv } from './FeaturedEventCard';
 import { priceFormatter } from './ProductCard';
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
-
-type Props = {
-	training: TrainingOrderType;
-	deleteTraining: (reference: string) => Promise<void>;
-};
-const TrainingOrder: React.FC<Props> = ({ training, deleteTraining }) => {
-	const onClickDelete = async (id: number) => {
-		if (confirm('Are you sure to delete order?')) {
-			await deleteTraining(training.reference);
-<<<<<<< HEAD
-=======
 import BoxArrow from '@assets/new/icons/BoxArrow';
 import { ParticipantsDataType } from './FeaturedEventDialog';
 import DownloadIcon from '@assets/new/icons/DownloadIcon';
@@ -57,54 +28,10 @@ const TrainingOrder: React.FC<Props> = ({ training, deleteTraining }) => {
 			if (deleteTraining) {
 				await deleteTraining(training.reference);
 			}
->>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
-=======
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 		} else {
 			return;
 		}
 	};
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
-	return (
-		<Wrapper>
-			<DetailGroup>
-				<Title>{training.title}</Title>
-				<StyledInfoDiv>
-					<Calender />
-					<span className="date">{`${formatDate(
-						new Date(training.trainingDate),
-					)}`}</span>
-				</StyledInfoDiv>
-				<StyledInfoDiv>
-					<Location />
-					<span>{`${training.location}`}</span>
-				</StyledInfoDiv>
-				<StyledInfoDiv>
-					<People />
-					<span>{`${
-						training.numOfParticipants ? training.numOfParticipants : 1
-					} participant${training.numOfParticipants > 1 ? 's' : ''}`}</span>
-				</StyledInfoDiv>
-				<StyledInfoDiv>
-					<MoneyIcon />
-					<span>{`${priceFormatter.format(training.amountPaid)}`}</span>
-				</StyledInfoDiv>
-			</DetailGroup>
-			<ButtonGroup>
-				<CTA className="delete btn" onClick={() => onClickDelete(training.id)}>
-					Delete
-				</CTA>
-				<CTALink
-					className="pay btn"
-					href={`/trainings/checkout/${training.reference}`}>
-					Pay Order
-				</CTALink>
-			</ButtonGroup>
-<<<<<<< HEAD
-=======
 
 	return (
 		<Wrapper>
@@ -215,9 +142,6 @@ const TrainingOrder: React.FC<Props> = ({ training, deleteTraining }) => {
 					</DetailRight>
 				</DetailSection>
 			</DetailGroup>
->>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
-=======
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 		</Wrapper>
 	);
 };
@@ -225,44 +149,14 @@ const TrainingOrder: React.FC<Props> = ({ training, deleteTraining }) => {
 export default TrainingOrder;
 
 const Wrapper = styled.div`
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	margin: 0 auto 2rem;
-	min-height: 100px;
-	padding: 1rem;
-	border-radius: 5px;
-	background-color: var(--oex-light-grey);
-<<<<<<< HEAD
-=======
 	margin: 0 auto 2rem;
 	min-height: 100px;
 	border-radius: 5px;
 	border: 1px solid var(--oex-light-grey);
->>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
-=======
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 	box-shadow: 2px 0px 16px rgba(207, 207, 207, 0.1),
 		-2px 0px 4px rgba(207, 207, 207, 0.1), 0px 2px 12px rgba(207, 207, 207, 0.1),
 		0px -2px 16px rgba(207, 207, 207, 0.1);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
-	&:hover {
-		background-color: var(--oex-orange-mute);
-	}
-
-	@media ${({ theme }) => theme.breakpoints.above.md} {
-		width: 700px;
-		flex-direction: row;
-<<<<<<< HEAD
-=======
 	& .pay-btn {
 		font-size: 0.8rem;
 		padding: 0.7rem 1rem;
@@ -276,9 +170,6 @@ const Wrapper = styled.div`
 	}
 	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		min-width: 700px;
->>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
-=======
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 	}
 `;
 
@@ -287,21 +178,6 @@ const Title = styled.p`
 	font-weight: 500;
 `;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
-const DetailGroup = styled.div``;
-const ButtonGroup = styled.div`
-	display: flex;
-	flex-direction: row;
-	gap: 1rem;
-	justify-content: center;
-	& .btn {
-		width: 100%;
-		padding: 0.4rem 1.5rem;
-<<<<<<< HEAD
-=======
 const Header = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -445,9 +321,6 @@ const ButtonGroup = styled.div`
 	& .btn {
 		width: 100%;
 		padding: 0.4rem 1rem;
->>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
-=======
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 		cursor: pointer;
 		font-size: 0.9rem;
 	}
@@ -463,20 +336,10 @@ const ButtonGroup = styled.div`
 		}
 	}
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		flex-direction: column;
-		width: 40%;
-=======
 		margin-top: 1rem;
 		flex-direction: row;
 	}
 	@media ${({ theme }) => theme.breakpoints.above.lg} {
 		width: 50%;
->>>>>>> efc9d516a1b0483982531c700c19ea7a663b7c20
-=======
-		flex-direction: column;
-		width: 40%;
->>>>>>> 4b087e838ccaa002c15ca81d6f3e5cd1241bca4d
 	}
 `;

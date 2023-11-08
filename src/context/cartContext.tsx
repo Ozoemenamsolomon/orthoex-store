@@ -201,6 +201,8 @@ export const CartProvider: React.FC = ({ children }) => {
 		}
 	};
 
+	const [rehabspacePayment, setRehabspacePayment] = useState([]);
+
 	return (
 		<CartContext.Provider
 			value={{
@@ -212,6 +214,8 @@ export const CartProvider: React.FC = ({ children }) => {
 				address,
 				deliveryFee,
 				handleAddressChange: handleChange,
+				rehabspacePayment,
+				setRehabspacePayment,
 			}}>
 			{children}
 		</CartContext.Provider>
