@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import ReactPDF from '@react-pdf/renderer';
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { formatDate } from '@utils/index';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import styled from 'styled-components';
-import CTA from './CTA';
-import styles from './FeaturedEventCard.module.css';
-import { priceFormatter } from './ProductCard';
-import * as Dialog from '@radix-ui/react-dialog';
 import CancelIcon from '@assets/new/icons/CancelIcon';
 import Checkout from '@assets/new/icons/CheckoutIcon';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import {
 	TrainingOrderCreateType,
 	TrainingSupbaseDataType,
 } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import * as Dialog from '@radix-ui/react-dialog';
+import { formatDate } from '@utils/index';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import CTA from './CTA';
+import styles from './FeaturedEventCard.module.css';
+import { priceFormatter } from './ProductCard';
+import { FormRadioLabel } from './styled/Forms';
 
 type Props = {
 	isOpen: boolean;
@@ -35,13 +35,13 @@ export interface ParticipantsDataType {
 	id: string;
 	completedTraining: boolean;
 }
-
 const FeaturedEventDialog: React.FC<Props> = ({
 	training,
 	trainingPrice,
 	promoCode,
 	promoIsValid,
 }) => {
+	// @ts-ignore
 	const { user } = useUser();
 
 	const router = useRouter();
@@ -52,7 +52,6 @@ const FeaturedEventDialog: React.FC<Props> = ({
 	const generateUniqueId = () => {
 		return Math.floor(100000 + Math.random() * 900000).toString();
 	};
-
 	const [formData, setFormData] = useState<ParticipantsDataType[]>([
 		{
 			firstname: '',
@@ -64,6 +63,7 @@ const FeaturedEventDialog: React.FC<Props> = ({
 		},
 	]);
 
+	// derived state from formData, update when formData changes
 	const numPeople = formData.length;
 
 	const isFormValid = (form: ParticipantsDataType) => {
@@ -79,6 +79,7 @@ const FeaturedEventDialog: React.FC<Props> = ({
 		return formData.every(form => isFormValid(form));
 	};
 
+	// Ensure all required inputs are filled.
 	const isPaymentFormFilled =
 		aboutUsChannel !== '' &&
 		(aboutUsChannel !== 'other' || otherChannel !== '') &&
@@ -90,7 +91,6 @@ const FeaturedEventDialog: React.FC<Props> = ({
 			setOtherChannel('');
 		}
 	};
-
 	const onOtherChannelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setOtherChannel(e.target.value);
 	};
@@ -130,6 +130,7 @@ const FeaturedEventDialog: React.FC<Props> = ({
 
 		const days = 60 * 60 * 1000 * 24;
 		const currentDate = new Date();
+		// 7 days expiry time for order.
 		const expiryTime = new Date(currentDate.getTime() + days * 7);
 		const userEmail = user?.email as string;
 		const discountedPrice = training.price - trainingPrice;
@@ -162,22 +163,21 @@ const FeaturedEventDialog: React.FC<Props> = ({
 				body: JSON.stringify({ trainingOrder }),
 			});
 			if (!response.ok) {
-				console.log(await response.json());
-				throw new Error("Couldn't checkout training");
+				console.log(response.json());
+				throw new Error("couldn't checkout training");
 			}
 			const { reference } = await response.json();
 
 			router.replace(`/trainings/checkout/${reference}`);
 		} catch (error) {
-			console.error(error);
+			console.log(error);
 		}
 	};
-
 	const handleCloseModal = () => {
 		setIsModalClose(prev => !prev);
 	};
 
-	if (!user) {
+	if (!user)
 		return (
 			<LoginWrapper>
 				<Link
@@ -188,7 +188,6 @@ const FeaturedEventDialog: React.FC<Props> = ({
 				</Link>
 			</LoginWrapper>
 		);
-	}
 
 	return (
 		<Dialog.Root>

@@ -1,5 +1,48 @@
 import { FaStar, FaCheck } from 'react-icons/fa';
 
+export const playIcon = () => (
+	<svg
+		width="186"
+		height="186"
+		viewBox="0 0 186 186"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg">
+		<g style="mix-blend-mode:multiply">
+			<circle cx="93.0006" cy="93.0001" r="92.0846" fill="#FF9A5C" />
+		</g>
+		<circle cx="93.0005" cy="93" r="36.2993" fill="white" />
+		<mask
+			id="mask0_8548_11021"
+			style="mask-type:luminance"
+			maskUnits="userSpaceOnUse"
+			x="22"
+			y="22"
+			width="142"
+			height="142">
+			<path
+				d="M93.0003 161.375C130.764 161.375 161.376 130.764 161.376 92.9998C161.376 55.2361 130.764 24.6245 93.0003 24.6245C55.2366 24.6245 24.625 55.2361 24.625 92.9998C24.625 130.764 55.2366 161.375 93.0003 161.375Z"
+				fill="white"
+				stroke="white"
+				stroke-width="4.37602"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M79.3252 92.9997V69.3145L99.8378 81.1571L120.35 92.9997L99.8378 104.842L79.3252 116.685V92.9997Z"
+				fill="black"
+				stroke="black"
+				stroke-width="4.37602"
+				stroke-linejoin="round"
+			/>
+		</mask>
+		<g mask="url(#mask0_8548_11021)">
+			<path
+				d="M10.9492 10.9487H175.05V175.049H10.9492V10.9487Z"
+				fill="#FF863D"
+			/>
+		</g>
+	</svg>
+);
+
 export const StarIcon = () => (
 	<svg
 		width="38"

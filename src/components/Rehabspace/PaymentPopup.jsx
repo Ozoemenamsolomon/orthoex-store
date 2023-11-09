@@ -38,6 +38,7 @@ const PaymentPopup = ({ popup, setPopup }) => {
 						src={'/rehabspace/office-desk.jpg'}
 						width={400}
 						height={600}
+						alt="sessions"
 						className="object-cover w-full h-full"
 					/>
 				</div>

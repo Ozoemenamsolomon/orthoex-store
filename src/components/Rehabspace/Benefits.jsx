@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { benefits } from '../../data/rehabspace';
+import { benefits, playIcon } from '../../data/rehabspace';
+import { FaPlayCircle } from 'react-icons/fa';
 
 const Benefits = () => {
 	return (
@@ -22,14 +23,19 @@ const Benefits = () => {
 				</div>
 
 				{/* video */}
-				<div className="w-full h-96 lg:h-full rounded-3xl overflow-hidden bg-gray-300">
+				<div className="w-full h-96 lg:h-full rounded-3xl overflow-hidden bg-gray-300 relative inset-0 ">
 					<Image
-						src={'/rehabspace/office-desk.jpg'}
+						src={'/rehabspace/oo.jpg'}
 						alt="benefits"
 						width={500}
 						height={600}
 						className="imgcover"
 					/>
+					<div className="absolute inset-0 flex justify-center items-center  font-bold text-6xl  ">
+						<div className="bg-orange-500 p-6 rounded-full text-white">
+							<FaPlayCircle />
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
