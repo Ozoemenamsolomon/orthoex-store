@@ -98,12 +98,12 @@ const SessionBookingForm = ({ onSubmit }) => {
 			setTimeout(() => {
 				setIsLoading(false);
 				router.push('/rehabspace/payment');
-				console.log(rehabspacePayment);
+				console.log('formdata==', rehabspacePayment);
 			}, 2000);
 		}
 	};
 
-	const totalValue = sumOrderList(formData?.selectedSessions);
+	const { total } = sumOrderList(formData?.selectedSessions);
 
 	const inputstyle = `appearance-none border rounded-sm w-full py-4 px-3 text-gray-700 leading-tight focus:outline-orange-500 focus:shadow-outline focus:bg-transparent bg-transparent`;
 
@@ -217,7 +217,7 @@ const SessionBookingForm = ({ onSubmit }) => {
 						))}
 						<div className="flex justify-between items-center pt-1 mt-1 border-t border-gray-300">
 							<div className="">Total value:</div>
-							<div className="">₦{totalValue}.00</div>
+							<div className="">₦{total}.00</div>
 						</div>
 					</>
 				) : (
