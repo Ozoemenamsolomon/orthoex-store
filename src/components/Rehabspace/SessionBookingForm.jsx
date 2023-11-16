@@ -4,6 +4,7 @@ import { FaLongArrowAltRight } from 'react-icons/fa';
 import { bookingDetails } from '../../data/rehabspace';
 import { sumOrderList } from './OrderSummary';
 import { useCart } from '../../context/cartContext.tsx';
+import { insertBooking } from '../../utils/rehabspcetable.js';
 import { useRouter } from 'next/router';
 
 const SessionBookingForm = ({ onSubmit }) => {
@@ -87,23 +88,35 @@ const SessionBookingForm = ({ onSubmit }) => {
 		return isValid;
 	};
 
-	const handleSubmit = e => {
+	const { total, totalSessions } = sumOrderList(formData?.selectedSessions);
+
+	const handleSubmit = async e => {
 		e.preventDefault();
-
-		if (validateForm()) {
-			// onSubmit(formData);
-			setRehabspacePayment(formData);
-			setIsLoading(true);
-
-			setTimeout(() => {
-				setIsLoading(false);
-				router.push('/rehabspace/payment');
-				console.log('formdata==', rehabspacePayment);
-			}, 2000);
+		setIsLoading(true);
+		try {
+			if (validateForm()) {
+				const data = await insertBooking({
+					email: formData?.email,
+					firstName: formData?.firstName,
+					lastName: formData?.lastName,
+					phone: formData?.phoneNumber,
+					cart: formData?.selectedSessions,
+					amountPaid: total,
+					sessions: totalSessions,
+					paid: true,
+				});
+				if (data.success) {
+					router.push('/rehabspace/payment');
+					console.log('formdata==', rehabspacePayment);
+					setRehabspacePayment(formData);
+				}
+			}
+		} catch (error) {
+			console.log('Catch error', error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
-
-	const { total } = sumOrderList(formData?.selectedSessions);
 
 	const inputstyle = `appearance-none border rounded-sm w-full py-4 px-3 text-gray-700 leading-tight focus:outline-orange-500 focus:shadow-outline focus:bg-transparent bg-transparent`;
 

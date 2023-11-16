@@ -5,7 +5,8 @@ import BookingForm from './BookingForm';
 
 const SchedulSession = () => {
 	return (
-		<section className="section-padding">
+		<section className="section-padding ">
+			<div id="booking" className="h-40"></div>
 			<div className="grid gap-10 lg:grid-cols-2 items-center">
 				<div className="">
 					<h3 className="font-semibold">{schedulSession?.heading}</h3>

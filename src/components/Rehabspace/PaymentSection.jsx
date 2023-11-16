@@ -5,9 +5,18 @@ import { paymentCard, bookingCard } from '../../data/rehabspace';
 import BtnBasic from './Buttons';
 import PaymentPopup from './PaymentPopup';
 import { useState } from 'react';
+import Link from 'next/link';
 
 const PaymentSection = () => {
 	const [popup, setPopup] = useState(false);
+
+	const scrollToSection = () => {
+		const targetSection = document.getElementById('booking');
+		if (targetSection) {
+			targetSection.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
+
 	return (
 		<section className="sm:section-padding pb-40">
 			<div className="grid  lg:grid-cols-2 gap-10 xl:gap-20 ">
@@ -40,7 +49,13 @@ const PaymentSection = () => {
 						<h3 className="">{bookingCard?.heading}</h3>
 						<p className="sm:pb-6 max-lg:pr-6">{bookingCard?.description}</p>
 
-						<BtnBasic text={bookingCard?.btnText} href={'#'} />
+						<div className="flex">
+							<button
+								onClick={scrollToSection}
+								className={`px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)] hover:bg-[var(--oex-orange-dark)] duration-300`}>
+								{bookingCard?.btnText}
+							</button>
+						</div>
 					</div>
 					<div className="translate-y-[10px] flex justify-end ">
 						{bookingCard?.CreditCardSvg}

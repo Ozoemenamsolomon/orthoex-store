@@ -1416,34 +1416,34 @@ export const benefits = {
 				'Personalize your workspace to your preferences while ensuring patient privacy and comfort.',
 		},
 		{
-			id: 0,
+			id: 1,
 			icon: <StarIcon />,
 			title: 'Cost control',
 			description: 'You pay for only the time you spend.',
 		},
 		{
-			id: 0,
+			id: 2,
 			icon: <StarIcon />,
 			title: 'Central location',
 			description:
 				'Impress your patients with a contemporary atmosphere in a central location, conveniently situated between local and international airports.',
 		},
 		{
-			id: 0,
+			id: 3,
 			icon: <StarIcon />,
 			title: 'Administrative support',
 			description:
 				'Our professional staff provides administrative support, allowing you to focus on your clients.',
 		},
 		{
-			id: 0,
+			id: 4,
 			icon: <StarIcon />,
 			title: 'Secure Environment:',
 			description:
 				'We prioritize the security of your practice and offer a safe and private space for your consultations.',
 		},
 		{
-			id: 0,
+			id: 5,
 			icon: <StarIcon />,
 			title: 'Office essentials',
 			description:

@@ -2,7 +2,7 @@ import { bookingDetails } from '../../data/rehabspace';
 
 const BookingTypes = () => {
 	return (
-		<section className="section-padding ">
+		<section className="mx-auto mb- max-w-[1500px] max-md:px-[1rem] px-[4rem]  ">
 			<div className="grid gap-10 lg:grid-cols-2">
 				{/* video */}
 				<div className="w-full h-86  lg:h-full rounded-3xl overflow-hidden ">
