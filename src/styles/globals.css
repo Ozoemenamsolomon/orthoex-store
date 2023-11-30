@@ -17,7 +17,7 @@ body {
 	--oex-dark-grey: #707070;
 	--oex-light-grey: #f3f3f3;
 	--oex-lighter-grey: #e5e5e5;
-	--oex-lightest-grey: #f2f0f0;
+	--oex-lightest-grey: #FBFBFB;
 	--oex-orange: #fe7624;
 	--oex-danger: #ea4237;
 	--oex-success: #3f845f;
@@ -30,6 +30,7 @@ body {
 	--text-colour-grey: #6d6a6a;
 	--text-colour-light-grey: #cfcfcf;
 }
+
 
 a {
 	color: inherit;
@@ -89,4 +90,7 @@ img[object-fit='contain'] {
 .section-padding { 
 	@apply mx-auto mb-40 max-w-[1500px] max-md:px-[1rem] px-[4rem]  
 }
-/* md:min-w-[980px] */
+.hover-grey {
+	@apply hover:bg-[var(--oex-light-grey)] duration-300
+}
+
