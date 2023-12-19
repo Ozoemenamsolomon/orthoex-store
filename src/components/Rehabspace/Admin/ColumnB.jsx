@@ -9,7 +9,7 @@ const ColumnB = ({type, toggle, setToggle}) => {
 
          
 
-        <div className="pt-6">
+        <div className="py-6">
           
           <div className="flex flex-col gap-6 justify-center text-center">
               <div className="flex justify-center">
