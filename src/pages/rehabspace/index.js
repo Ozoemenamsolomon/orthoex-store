@@ -1,9 +1,7 @@
-import Rehabspace from '../../components/Rehabspace'
+import Rehabspace from '../../components/Rehabspace';
 
 const RehabspacePage = () => {
-  return (
-    <Rehabspace/>
-  )
-}
+	return <Rehabspace />;
+};
 
-export default RehabspacePage
+export default RehabspacePage;

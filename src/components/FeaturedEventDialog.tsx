@@ -1,190 +1,193 @@
-import React, { useState } from 'react';
-import ReactPDF from '@react-pdf/renderer';
+import CancelIcon from '@assets/new/icons/CancelIcon';
+import Checkout from '@assets/new/icons/CheckoutIcon';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import {
+	TrainingOrderCreateType,
+	TrainingSupbaseDataType,
+} from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import * as Dialog from '@radix-ui/react-dialog';
 import { formatDate } from '@utils/index';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import CTA from './CTA';
 import styles from './FeaturedEventCard.module.css';
 import { priceFormatter } from './ProductCard';
-import * as Dialog from '@radix-ui/react-dialog';
-import CancelIcon from '@assets/new/icons/CancelIcon';
-import Checkout from '@assets/new/icons/CheckoutIcon';
-import { TrainingOrderCreateType, TrainingSupbaseDataType } from '@data/types/trainingTypes/TypeOrthoexTrainingData';
+import { FormRadioLabel } from './styled/Forms';
 
 type Props = {
-  isOpen: boolean;
-  onClose: () => void;
-  onOpen: () => void;
-  training: TrainingSupbaseDataType;
-  trainingPrice: number;
-  promoIsValid: boolean;
-  promoCode: string;
+	isOpen: boolean;
+	onClose: () => void;
+	onOpen: () => void;
+	training: TrainingSupbaseDataType;
+	trainingPrice: number;
+	promoIsValid: boolean;
+	promoCode: string;
 };
 
 export interface ParticipantsDataType {
-  firstname: string;
-  lastname: string;
-  email: string;
-  phone: string;
-  id: string;
-  completedTraining: boolean;
+	firstname: string;
+	lastname: string;
+	email: string;
+	phone: string;
+	id: string;
+	completedTraining: boolean;
 }
-
 const FeaturedEventDialog: React.FC<Props> = ({
-  training,
-  trainingPrice,
-  promoCode,
-  promoIsValid,
+	training,
+	trainingPrice,
+	promoCode,
+	promoIsValid,
 }) => {
-  const { user } = useUser();
+	// @ts-ignore
+	const { user } = useUser();
 
-  const router = useRouter();
-  const [isModalClose, setIsModalClose] = useState(false);
-  const [aboutUsChannel, setAboutUsChannel] = useState('');
-  const [otherChannel, setOtherChannel] = useState('');
+	const router = useRouter();
+	const [isModalClose, setIsModalClose] = useState(false);
+	const [aboutUsChannel, setAboutUsChannel] = useState('');
+	const [otherChannel, setOtherChannel] = useState('');
 
-  const generateUniqueId = () => {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-  };
+	const generateUniqueId = () => {
+		return Math.floor(100000 + Math.random() * 900000).toString();
+	};
+	const [formData, setFormData] = useState<ParticipantsDataType[]>([
+		{
+			firstname: '',
+			lastname: '',
+			email: '',
+			phone: '',
+			id: generateUniqueId(),
+			completedTraining: false,
+		},
+	]);
 
-  const [formData, setFormData] = useState<ParticipantsDataType[]>([
-    {
-      firstname: '',
-      lastname: '',
-      email: '',
-      phone: '',
-      id: generateUniqueId(),
-      completedTraining: false,
-    },
-  ]);
+	// derived state from formData, update when formData changes
+	const numPeople = formData.length;
 
-  const numPeople = formData.length;
+	const isFormValid = (form: ParticipantsDataType) => {
+		return (
+			form.firstname !== '' &&
+			form.lastname !== '' &&
+			form.email !== '' &&
+			form.phone !== ''
+		);
+	};
 
-  const isFormValid = (form: ParticipantsDataType) => {
-    return (
-      form.firstname !== '' &&
-      form.lastname !== '' &&
-      form.email !== '' &&
-      form.phone !== ''
-    );
-  };
+	const isAllFormsValid = () => {
+		return formData.every(form => isFormValid(form));
+	};
 
-  const isAllFormsValid = () => {
-    return formData.every((form) => isFormValid(form));
-  };
+	// Ensure all required inputs are filled.
+	const isPaymentFormFilled =
+		aboutUsChannel !== '' &&
+		(aboutUsChannel !== 'other' || otherChannel !== '') &&
+		isAllFormsValid();
 
-  const isPaymentFormFilled =
-    aboutUsChannel !== '' &&
-    (aboutUsChannel !== 'other' || otherChannel !== '') &&
-    isAllFormsValid();
+	const onAboutUsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setAboutUsChannel(e.target.value);
+		if (e.target.value !== 'other') {
+			setOtherChannel('');
+		}
+	};
+	const onOtherChannelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setOtherChannel(e.target.value);
+	};
 
-  const onAboutUsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAboutUsChannel(e.target.value);
-    if (e.target.value !== 'other') {
-      setOtherChannel('');
-    }
-  };
+	const handleIncrease = () => {
+		setFormData(prevFormData => [
+			...prevFormData,
+			{
+				firstname: '',
+				lastname: '',
+				email: '',
+				phone: '',
+				id: generateUniqueId(),
+				completedTraining: false,
+			},
+		]);
+	};
 
-  const onOtherChannelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOtherChannel(e.target.value);
-  };
+	const handleDecrease = () => {
+		if (numPeople === 1) return;
+		if (numPeople > 1) {
+			setFormData(prevFormData => prevFormData.slice(0, -1));
+		}
+	};
 
-  const handleIncrease = () => {
-    setFormData((prevFormData) => [
-      ...prevFormData,
-      {
-        firstname: '',
-        lastname: '',
-        email: '',
-        phone: '',
-        id: generateUniqueId(),
-        completedTraining: false,
-      },
-    ]);
-  };
+	const handleChange = (index: number, event: any) => {
+		const { name, value } = event.target;
+		setFormData(prevFormData => {
+			const updatedFormData = [...prevFormData];
+			updatedFormData[index] = { ...updatedFormData[index], [name]: value };
+			return updatedFormData;
+		});
+	};
 
-  const handleDecrease = () => {
-    if (numPeople === 1) return;
-    if (numPeople > 1) {
-      setFormData((prevFormData) => prevFormData.slice(0, -1));
-    }
-  };
+	const onCheckoutClick = async (event: any) => {
+		event.preventDefault();
 
-  const handleChange = (index: number, event: any) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => {
-      const updatedFormData = [...prevFormData];
-      updatedFormData[index] = { ...updatedFormData[index], [name]: value };
-      return updatedFormData;
-    });
-  };
+		const days = 60 * 60 * 1000 * 24;
+		const currentDate = new Date();
+		// 7 days expiry time for order.
+		const expiryTime = new Date(currentDate.getTime() + days * 7);
+		const userEmail = user?.email as string;
+		const discountedPrice = training.price - trainingPrice;
 
-  const onCheckoutClick = async (event: any) => {
-    event.preventDefault();
+		const participantsData = JSON.stringify(formData);
 
-    const days = 60 * 60 * 1000 * 24;
-    const currentDate = new Date();
-    const expiryTime = new Date(currentDate.getTime() + days * 7);
-    const userEmail = user?.email as string;
-    const discountedPrice = training.price - trainingPrice;
+		const trainingOrder: TrainingOrderCreateType = {
+			createdAt: currentDate.toISOString(),
+			expiredAt: expiryTime.toISOString(),
+			trainingId: training.id,
+			title: training.title,
+			trainingDate: training.startDateTime,
+			location: training.location,
+			user: userEmail,
+			referalSource: aboutUsChannel === 'other' ? otherChannel : aboutUsChannel,
+			trainingPrice: training.price,
+			discount: discountedPrice,
+			appliedPromoCode: promoIsValid ? promoCode : '',
+			amountPaid: trainingPrice * numPeople,
+			participants: participantsData,
+			numOfParticipants: numPeople,
+		};
 
-    const participantsData = JSON.stringify(formData);
+		try {
+			const response = await fetch('/api/checkout-training', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ trainingOrder }),
+			});
+			if (!response.ok) {
+				console.log(response.json());
+				throw new Error("couldn't checkout training");
+			}
+			const { reference } = await response.json();
 
-    const trainingOrder: TrainingOrderCreateType = {
-      createdAt: currentDate.toISOString(),
-      expiredAt: expiryTime.toISOString(),
-      trainingId: training.id,
-      title: training.title,
-      trainingDate: training.startDateTime,
-      location: training.location,
-      user: userEmail,
-      referalSource: aboutUsChannel === 'other' ? otherChannel : aboutUsChannel,
-      trainingPrice: training.price,
-      discount: discountedPrice,
-      appliedPromoCode: promoIsValid ? promoCode : '',
-      amountPaid: trainingPrice * numPeople,
-      participants: participantsData,
-      numOfParticipants: numPeople,
-    };
+			router.replace(`/trainings/checkout/${reference}`);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	const handleCloseModal = () => {
+		setIsModalClose(prev => !prev);
+	};
 
-    try {
-      const response = await fetch('/api/checkout-training', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ trainingOrder }),
-      });
-      if (!response.ok) {
-        console.log(await response.json());
-        throw new Error("Couldn't checkout training");
-      }
-      const { reference } = await response.json();
-
-      router.replace(`/trainings/checkout/${reference}`);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleCloseModal = () => {
-    setIsModalClose((prev) => !prev);
-  };
-
-  if (!user) {
-    return (
-      <LoginWrapper>
-        <Link
-          href={`/api/auth/login?returnTo=${encodeURIComponent(router.asPath)}`}
-        >
-          <CTA className="no-animate login-btn">Book Now</CTA>
-        </Link>
-      </LoginWrapper>
-    );
-  }
+	if (!user)
+		return (
+			<LoginWrapper>
+				<Link
+					href={`/api/auth/login?returnTo=${encodeURIComponent(
+						router.asPath,
+					)}`}>
+					<CTA className="no-animate login-btn">Book Now</CTA>
+				</Link>
+			</LoginWrapper>
+		);
 
 	return (
 		<Dialog.Root>
