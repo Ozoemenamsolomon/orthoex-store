@@ -107,7 +107,6 @@ const SessionBookingForm = ({ onSubmit }) => {
 				});
 				if (data.success) {
 					router.push('/rehabspace/payment');
-					console.log('formdata==', rehabspacePayment);
 					setRehabspacePayment(formData);
 				}
 			}

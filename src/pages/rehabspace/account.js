@@ -1,9 +1,7 @@
-import Account from '../../components/Rehabspace/Account/Account'
+import Account from '../../components/Rehabspace/Account/Account';
 
 const RehabspaceAccount = () => {
-  return (
-    <Account/>
-  )
-}
+	return <Account />;
+};
 
-export default RehabspaceAccount
+export default RehabspaceAccount;

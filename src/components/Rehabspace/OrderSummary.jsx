@@ -1,11 +1,8 @@
-import Link from 'next/link';
-import React, { useState } from 'react';
-import { FaLock } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { FaCheck, FaLock, FaMarker } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { useCart } from '../../context/cartContext.tsx';
-import { insertBooking } from '../../utils/rehabspcetable.js';
 import { usePaystackPayment } from 'react-paystack';
-// import {toast} from 'toastify'
 
 export function sumOrderList(orderList) {
 	let total = 0,
@@ -33,7 +30,7 @@ const OrderSummary = () => {
 		email: rehabspacePayment?.email,
 		sessions: summary?.totalSessions,
 		amount: summary?.total * 100,
-		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY_O,
+		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
 		firstName: rehabspacePayment?.firstName,
 		lastName: rehabspacePayment?.lastName,
 		phone: rehabspacePayment?.phoneNumber,
@@ -47,6 +44,12 @@ const OrderSummary = () => {
 	const onClose = reference => {
 		console.log(reference);
 	};
+
+	useEffect(() => {
+		if (!rehabspacePayment?.email) {
+			router.push('/rehabspace');
+		}
+	}, [rehabspacePayment?.email]);
 
 	const initializePayment = usePaystackPayment(config);
 
@@ -64,7 +67,11 @@ const OrderSummary = () => {
 	return (
 		<div className="inset-0 fixed flex w-full h-full  justify-center items-center z-50 bg-[var(--oex-lightest-grey)] px-2">
 			{success && (
-				<SuccessFulPayment setSuccess={setSuccess} success={success} />
+				<SuccessFulPayment
+					setSuccess={setSuccess}
+					success={success}
+					summary={summary}
+				/>
 			)}
 			<div className="w-full  sm:w-[450px] rounded-md bg-zinc-200 shadow-lg  py-10 px-4  ">
 				<h5 className="font-semibold pb-4">Order Summary</h5>
@@ -90,7 +97,7 @@ const OrderSummary = () => {
 						<div>
 							<FaLock />
 						</div>
-						{loading ? <p>Submiting...</p> : <div>Pay N{summary?.total}</div>}
+						{loading ? <p>Submiting...</p> : <div>Pay ₦{summary?.total}</div>}
 					</button>
 					<button
 						onClick={() => router.push(`/rehabspace`)}
@@ -106,23 +113,50 @@ const OrderSummary = () => {
 
 export default OrderSummary;
 
-export const SuccessFulPayment = ({ setSuccess, success }) => {
+export const SuccessFulPayment = ({ setSuccess, success, summary }) => {
 	const router = useRouter();
 
 	return (
 		<div className="inset-0 fixed flex  justify-center items-center z-50 bg-[var(--oex-lightest-grey)] px-2">
-			<div className="h-96 w-full sm:w-96 text-white bg-[var(--oex-orange)] rounded-lg p-6  flex justify-center flex-col gap-6">
-				<h4>{'Payment complete! Reference ID: ' + success?.reference}</h4>
+			<div className="py-10 w-full sm:w-[450px]  bg-white rounded-lg p-6  space-y-4">
+				<div className="bg-green-500 w-full mx-auto rounded-full h-10 w-10 flex justify-center items-center text-xl font-bold text-white">
+					<FaCheck size={24} />
+				</div>
+				{/* {'Payment complete! Reference ID: ' + success?.reference} */}
+				<div className="flex justify-between">
+					<div className="text-[var(--text-colour-grey)]">Payment Method</div>
+					<div className="">Bank Transfer</div>
+				</div>
+				<div className="flex justify-between">
+					<div className="text-[var(--text-colour-grey)]">Transaction ID</div>
+					<div className="">{success?.reference}</div>
+				</div>
+				<div className="flex justify-between">
+					<div className="text-[var(--text-colour-grey)]">
+						Session purchased
+					</div>
+					<div className="">{summary?.totalSessions}</div>
+				</div>
+				<div className="flex justify-between">
+					<div className="text-[var(--text-colour-grey)]">Amount Paid</div>
+					<div className="">₦{summary?.total}</div>
+				</div>
+
 				<div className="flex w-full justify-center gap-4">
 					<button
 						onClick={() => {
 							setSuccess('');
-							router.push(`/rehabspace`);
+							router.push(`/rehabspace/account`);
 						}}
 						type="button"
-						className="mt-4 rounded-md w-full bg-orange-600  text-center py-4 px-8 hover:bg-orange-500  duration-300">
-						Go Rehabspace
+						className="mt-4 text-white rounded-md w-full bg-[var(--oex-orange)] text-center py-3 px-8 hover:bg-orange-500  duration-300">
+						Go to account
 					</button>
+				</div>
+
+				<div className="text-[12px] text-center px-8 text-[var(--text-colour-grey)]">
+					Sessions purchased should reflect in your account and can be used at
+					any RehbSpace near you.
 				</div>
 			</div>
 		</div>
