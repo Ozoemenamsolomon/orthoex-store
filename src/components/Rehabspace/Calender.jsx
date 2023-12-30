@@ -53,8 +53,9 @@ export default function Calender({ setBooking }) {
 	}
 
 	return (
-		<div className="sm:grid sm:grid-cols-2 gap-4 lg:divide-x sm:divide-gray-200">
-			<div className="md:pr-14">
+		<div className="grid sm:grid-cols-2 gap-14  ">
+
+			<section className="">
 				<div className="flex items-center">
 					<h5 className="flex-auto ">
 						{format(firstDayCurrentMonth, 'MMMM yyyy')}
@@ -98,7 +99,7 @@ export default function Calender({ setBooking }) {
 									isEqual(day, selectedDay) && 'text-white',
 									!isEqual(day, selectedDay) &&
 										isToday(day) &&
-										'text-orange-500',
+										'text-orange- font-semibold',
 									!isEqual(day, selectedDay) &&
 										!isToday(day) &&
 										isSameMonth(day, firstDayCurrentMonth) &&
@@ -108,7 +109,7 @@ export default function Calender({ setBooking }) {
 										!isSameMonth(day, firstDayCurrentMonth) &&
 										'text-gray-400',
 									isEqual(day, selectedDay) && isToday(day) && 'bg-orange-500',
-									isEqual(day, selectedDay) && !isToday(day) && 'bg-gray-900',
+									isEqual(day, selectedDay) && !isToday(day) && 'bg-orange-500 ',
 									!isEqual(day, selectedDay) && 'hover:bg-gray-200',
 									(isEqual(day, selectedDay) || isToday(day)) &&
 										'font-semibold',
@@ -121,7 +122,7 @@ export default function Calender({ setBooking }) {
 						</div>
 					))}
 				</div>
-			</div>
+			</section>
 
 			<section className="">
 				<div className="flex justify-between items-center ">
