@@ -28,17 +28,17 @@ const Account = () => {
 				</div>
 			</div>
 
-			<div className="grid lg:flex lg:justify-between gap-14">
+			<div className="grid lg:flex lg:justify-between gap-10">
 				<div className="lg:w-1/4">
 					<h5 className="pb-8">Select location</h5>
-					<div className="grid sm:flex lg:grid gap-6">
-						<button className="border border-[var(--oex-grey)] px-10 py-3 rounded-md">
+					<div className="grid sm:flex lg: gap-6">
+						<button className="border text-center border-[var(--oex-grey)] px-4 py-2 rounded-md">
 							Mafoluku
 						</button>
-						<button className="border border-[var(--oex-grey)] px-10 py-3 rounded-md">
+						<button className="border text-center border-[var(--oex-grey)] px-10 py-3 rounded-md">
 							Mafoluku
 						</button>
-						<button className="border border-[var(--oex-orange)] px-10 py-3 rounded-md">
+						<button className="border text-center border-[var(--oex-orange)] px-10 py-3 rounded-md">
 							Mafoluku
 						</button>
 					</div>

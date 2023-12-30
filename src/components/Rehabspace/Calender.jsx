@@ -118,20 +118,12 @@ export default function Calender({ setBooking }) {
 									{format(day, 'd')}
 								</time>
 							</button>
-							{/*   
-                    <div className="w-1 h-1 mx-auto mt-1">
-                      {meetings.some((meeting) =>
-                        isSameDay(parseISO(meeting.startDatetime), day)
-                      ) && (
-                        <div className="w-1 h-1 rounded-full bg-sky-500"></div>
-                      )}
-                    </div> */}
 						</div>
 					))}
 				</div>
 			</div>
 
-			<section className="mt-12 sm:mt-0 md:pl-14">
+			<section className="">
 				<div className="flex justify-between items-center ">
 					<h5 className="">
 						Schedule for{' '}
