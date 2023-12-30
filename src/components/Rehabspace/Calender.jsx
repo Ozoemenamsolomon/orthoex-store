@@ -20,6 +20,9 @@ function classNames(...classes) {
 }
 
 export default function Calender({ setBooking }) {
+	const [active, setActive] = useState(1)
+
+
 	let today = startOfToday();
 	let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
 	let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
@@ -53,9 +56,26 @@ export default function Calender({ setBooking }) {
 	}
 
 	return (
-		<div className="grid sm:grid-cols-2 gap-14  ">
+		<div className="flex justify-between gap-12  flex-wrap ">
 
-			<section className="">
+			<div className="max-xl:w-full">
+					<h5 className="pb-8">Select location</h5>
+					<div className="flex flex-wrap gap-6">
+						{
+							[1,2,3]?.map((item,i)=>
+							<div key={i} className="">
+								<button onClick={()=>{
+									setActive(i)
+								}}  className={`${active===i?'border-[var(--oex-orange)]':''} border text-center border-[var(--oex-grey)] px-4 py-2 rounded-md `}>
+								Mafoluku
+								</button>
+							</div>
+							)
+						}
+					</div>
+			</div>
+
+			<div className=" w-full md:w-80 ">
 				<div className="flex items-center">
 					<h5 className="flex-auto ">
 						{format(firstDayCurrentMonth, 'MMMM yyyy')}
@@ -75,7 +95,8 @@ export default function Calender({ setBooking }) {
 						<FaAngleRight className="w-5 h-5" aria-hidden="true" />
 					</button>
 				</div>
-				<div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
+
+				<div className=" grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
 					<div>S</div>
 					<div>M</div>
 					<div>T</div>
@@ -84,6 +105,7 @@ export default function Calender({ setBooking }) {
 					<div>F</div>
 					<div>S</div>
 				</div>
+
 				<div className="grid grid-cols-7 mt-2 text-sm">
 					{days.map((day, dayIdx) => (
 						<div
@@ -122,9 +144,9 @@ export default function Calender({ setBooking }) {
 						</div>
 					))}
 				</div>
-			</section>
+			</div>
 
-			<section className="">
+			<div className="w-full md:w-80 ">
 				<div className="flex justify-between items-center ">
 					<h5 className="">
 						Schedule for{' '}
@@ -152,7 +174,8 @@ export default function Calender({ setBooking }) {
 				<ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
 					<TimeSlots date={selectedDay} setBooking={setBooking} />
 				</ol>
-			</section>
+			</div>
+
 		</div>
 	);
 }

@@ -4,10 +4,22 @@ import Calender from '../Calender';
 
 const Account = () => {
 	const [booking, setBooking] = useState('');
-	const [active, setActive] = useState(1)
+	
 	return (
-		<div className="section-padding">
-			<div className="py-14">
+		<div className="fixed inset-0 z-50 bg-white overflow-auto">
+			<header className='fixed flex items-center border-b h-20 w-full bg-white  '> 
+				<div className='section-padding-x flex  w-full  justify-between  items-center gap-20'>
+					<div className="">Logo here</div>
+					<div className="">
+						x
+					</div>
+				</div>
+
+			</header>
+
+			
+
+			<section className="pt-28  section-padding-x">
 				<div className="flex justify-between items-center flex-wrap gap-14">
 					<div className="">
 						<div className="flex gap-4">
@@ -27,29 +39,14 @@ const Account = () => {
 						<p className="text-orange-600">{booking}</p>
 					</div>
 				</div>
-			</div>
+			</section>
 
-			<div className="grid lg:flex lg:justify-between gap-14 flex-wrap">
-				<div className="">
-					<h5 className="pb-8">Select location</h5>
-					<div className="flex flex-wrap gap-6">
-						{
-							[1,2,3]?.map((item,i)=>
-							<div key={i} className="">
-								<button onClick={()=>{
-									setActive(i)
-								}}  className={`${active===i?'border-[var(--oex-orange)]':''} border text-center border-[var(--oex-grey)] px-4 py-2 rounded-md `}>
-								Mafoluku
-								</button>
-							</div>
-							)
-						}
-					</div>
-				</div>
-				<div className="">
+			<section className="section-padding-x py-20 ">
+				
+			
 					<Calender setBooking={setBooking} />
-				</div>
-			</div>
+				
+			</section>
 		</div>
 	);
 };

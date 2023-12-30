@@ -92,6 +92,11 @@ img[object-fit='contain'] {
 .section-padding { 
 	@apply mx-auto mb-40 max-w-[1500px] max-md:px-[1rem] px-[4rem]  
 }
+
+.section-padding-x { 
+	@apply mx-auto max-w-[1500px] max-md:px-[1rem] px-[4rem]  
+}
+
 .hover-grey {
 	@apply hover:bg-[var(--oex-light-grey)] duration-300
 }
