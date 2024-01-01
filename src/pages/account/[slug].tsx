@@ -172,7 +172,7 @@ export const getServerSideProps = withPageAuthRequired({
 
 			data.orders = orders as any;
 			if (error) {
-				console.log({ error });
+				console.log({type: 'orders', error });
 				data.orders = [];
 			}
 		}
