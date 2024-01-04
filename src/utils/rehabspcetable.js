@@ -24,8 +24,15 @@ export const insertBooking = async bookingData => {
 export const fetchAll = async (table) => await supabase
   .from(table)
   .select('*')
+
+// read a specific row, e.g fetch a user with user id.
+export const fetchOneRow = async (table, column, columnValue) => await supabase
+.from(table)
+.select('*')
+.eq(column,columnValue)
+		
           
-// resd specific column
+// resd specific column like all categories, or all emails
 export const fetchSpecificColumn = async (table,column ) =>  await supabase
   .from(table)
   .select(column)
