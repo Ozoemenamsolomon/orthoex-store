@@ -1,8 +1,6 @@
 import { FaStar, FaCheck } from 'react-icons/fa';
 
-// export const PhoneIcon = () => (
 
-// )
 export const ClockIcon = () => (
 	<svg
 		width="18"

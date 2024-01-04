@@ -2,15 +2,17 @@
 
 import Link from 'next/link';
 
-const BtnBasic = ({ href, text }) => {
+const BtnBasic = ({ href, text, onClick, className }) => {
 	return (
-		<div className="flex">
-			<Link
-				href={href}
-				className={`px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)] hover:bg-[var(--oex-orange-dark)] duration-300`}>
+		<button onClick={onClick} className={`px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)] hover:bg-[var(--oex-orange-dark)] duration-300 ${className}` }>
+			{href ? <Link
+				href={href} className='w-full h-full '
+				>
 				{text}
-			</Link>
-		</div>
+			</Link> : 
+			text
+			}
+		</button>
 	);
 };
 

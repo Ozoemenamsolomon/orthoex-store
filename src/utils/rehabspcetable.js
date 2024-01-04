@@ -19,3 +19,48 @@ export const insertBooking = async bookingData => {
 		return { success: false, error: error.message };
 	}
 };
+
+// read all rows
+export const fetchAll = async (table) => await supabase
+  .from(table)
+  .select('*')
+          
+// resd specific column
+export const fetchSpecificColumn = async (table,column ) =>  await supabase
+  .from(table)
+  .select(column)
+
+// read reference table
+export const fetchReferencedTable = async (table, column, other_table, foreign_key  ) => await supabase
+  .from(table)
+  .select(`
+    ${column},
+    ${other_table} (
+      ${foreign_key}
+    )
+  `)
+
+// with pagination
+export const fetchWithPagination = async (table, start, end ) => await supabase
+  .from(table)
+  .select('*')
+  .range(start, end)
+
+// insert a row
+export const insert = async (table, list ) => await supabase
+  .from(table)
+  .insert(list)
+  .select()
+
+//  Update matching rows
+export const updateItem = async (table, data, column, columnValue, ) => await supabase
+	.from(table)
+	.update(data)
+	.eq(column, columnValue)
+	.select()
+
+// Delete matching rows
+export const deleteItem = async (table,  column, columnValue, ) => await supabase
+	.from(table)
+	.delete()
+	.eq( column, columnValue)

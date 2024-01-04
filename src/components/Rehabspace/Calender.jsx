@@ -1,4 +1,5 @@
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import SessionBookingBtn from "@components/Rehabspace/Account/SessionBookingBtn"
 import {
 	add,
 	eachDayOfInterval,
@@ -19,7 +20,8 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
 }
 
-export default function Calender({ setBooking }) {
+export default function Calender({ setBooking,booking, user }) {
+	const [selectedSlot, setSelectedSlot] = useState(null);
 	const [active, setActive] = useState(1)
 
 
@@ -107,8 +109,9 @@ export default function Calender({ setBooking }) {
 				</div>
 
 				<div className="grid grid-cols-7 mt-2 text-sm">
-					{days.map((day, dayIdx) => (
-						<div
+					{days.map((day, dayIdx) => {
+						console.log('==', day, '==', selectedDay, selectedSlot)
+						return <div
 							key={day.toString()}
 							className={classNames(
 								dayIdx === 0 && colStartClasses[getDay(day)],
@@ -116,12 +119,16 @@ export default function Calender({ setBooking }) {
 							)}>
 							<button
 								type="button"
-								onClick={() => setSelectedDay(day)}
+								onClick={() => {
+									setSelectedDay(day)
+									setBooking('')
+									setSelectedSlot('')
+								}}
 								className={classNames(
 									isEqual(day, selectedDay) && 'text-white',
 									!isEqual(day, selectedDay) &&
 										isToday(day) &&
-										'text-orange- font-semibold',
+										' font-semibold',
 									!isEqual(day, selectedDay) &&
 										!isToday(day) &&
 										isSameMonth(day, firstDayCurrentMonth) &&
@@ -130,8 +137,8 @@ export default function Calender({ setBooking }) {
 										!isToday(day) &&
 										!isSameMonth(day, firstDayCurrentMonth) &&
 										'text-gray-400',
-									isEqual(day, selectedDay) && isToday(day) && 'bg-orange-500',
-									isEqual(day, selectedDay) && !isToday(day) && 'bg-orange-500 ',
+									// isEqual(day, selectedDay) && isToday(day) && 'bg-orange-500',
+									isEqual(day, selectedDay)  && 'bg-orange-500 ',
 									!isEqual(day, selectedDay) && 'hover:bg-gray-200',
 									(isEqual(day, selectedDay) || isToday(day)) &&
 										'font-semibold',
@@ -142,7 +149,7 @@ export default function Calender({ setBooking }) {
 								</time>
 							</button>
 						</div>
-					))}
+					})}
 				</div>
 			</div>
 
@@ -171,8 +178,9 @@ export default function Calender({ setBooking }) {
 						</button>
 					</div>
 				</div>
-				<ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
-					<TimeSlots date={selectedDay} setBooking={setBooking} />
+				<ol className="mt-4 space-y-4 text- leading-6 text-gray-500 ">
+					<TimeSlots date={selectedDay} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} setBooking={setBooking} />
+					<SessionBookingBtn selectedDay={booking} location={''} user={user}/>
 				</ol>
 			</div>
 
@@ -209,8 +217,7 @@ function generateTimeSlots(date, numSlots, intervalMinutes) {
 	return timeSlots;
 }
 
-const TimeSlotPicker = ({ timeSlots, setBooking }) => {
-	const [selectedSlot, setSelectedSlot] = useState(null);
+const TimeSlotPicker = ({ timeSlots, setBooking, selectedSlot, setSelectedSlot }) => {
 
 	return (
 		<div className="flex flex-col gap-4 items-center">
@@ -231,7 +238,7 @@ const TimeSlotPicker = ({ timeSlots, setBooking }) => {
 	);
 };
 
-const TimeSlots = ({ date, setBooking }) => {
+const TimeSlots = ({ date, setBooking, selectedSlot, setSelectedSlot }) => {
 	const [startTime, setstartTime] = useState(new Date());
 	useEffect(() => {
 		setstartTime(date.setHours(9, 0, 0, 0));
@@ -240,8 +247,8 @@ const TimeSlots = ({ date, setBooking }) => {
 	const interval = 90; // Interval in minutes
 	const timeSlotsArray = generateTimeSlots(startTime, numSlots, interval);
 	return (
-		<div className="container mx-auto mt-8 pr-8">
-			<TimeSlotPicker timeSlots={timeSlotsArray} setBooking={setBooking} />
+		<div className="container mx-auto mt-8 pr-">
+			<TimeSlotPicker timeSlots={timeSlotsArray} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} setBooking={setBooking} />
 		</div>
 	);
 };

@@ -31,6 +31,9 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { format } from 'url';
 
+import RehabspaceAccount from "@components/Rehabspace/Account"
+import {fetchAll} from "@utils/rehabspcetable"
+
 const accountOverviewLinks: ServiceCardType[] = [
 	{
 		image: Favourite,
@@ -74,6 +77,11 @@ type TrainingOrderDataProps = {
 	title: string;
 };
 
+type RehabspaceDataProps = {
+	location: any,
+	title: string;
+};
+
 type Props = {
 	user: UserProfile;
 	data: {
@@ -81,9 +89,10 @@ type Props = {
 		title: string;
 	};
 	trainingData: TrainingOrderDataProps;
+	rehabspaceData: RehabspaceDataProps;
 };
 
-const Account: NextPage<Props> = ({ user, data, trainingData }) => {
+const Account: NextPage<Props> = ({ user, data, trainingData, rehabspaceData }) => {
 	const router = useRouter();
 	const slug = router.query.slug as TypeOfSlug;
 
@@ -120,6 +129,8 @@ const Account: NextPage<Props> = ({ user, data, trainingData }) => {
 						<Orders orders={data.orders} />
 					) : slug === 'trainings' ? (
 						<TrainingOrders trainingOrders={trainingData.trainings} />
+					) : slug === 'rehabspace' ? (
+						<RehabspaceAccount user={user} rehabspaceData={rehabspaceData}/>
 					) : slug === 'details' ? (
 						<Details
 							user={user}
@@ -156,6 +167,7 @@ export const getServerSideProps = withPageAuthRequired({
 		}
 
 		const session = await getSession(req, res);
+		const user = session?.user;
 
 		const data = {
 			orders: [],
@@ -190,7 +202,7 @@ export const getServerSideProps = withPageAuthRequired({
 				.order('createdAt', { ascending: false });
 
 			if (error) {
-				console.log({ error });
+				console.log({type: 'trainings', error });
 				trainingData.trainings = [];
 			}
 
@@ -201,10 +213,28 @@ export const getServerSideProps = withPageAuthRequired({
 			}
 		}
 
+		const rehabspaceData: RehabspaceDataProps = {
+			location: [],
+			title:
+				accountSubLinks.find(({ slug }) => slug === query.slug)?.name || '',
+		};
+
+		if (query.slug === 'rehabspace') {
+			const { data, error } = await fetchAll('location')
+			console.log('rehabspace', { data, error })
+			// rehabspaceData.location = location as any;
+			if (error) {
+				console.log({type: 'rehabspace location:', error });
+				rehabspaceData.location = [];
+			}
+		}
+
 		return {
 			props: {
 				data,
 				trainingData,
+				rehabspaceData,
+				user,
 			},
 		};
 	},

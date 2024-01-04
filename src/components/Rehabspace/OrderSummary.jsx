@@ -19,14 +19,14 @@ export function sumOrderList(orderList) {
 
 const OrderSummary = () => {
 	const { rehabspacePayment, setRehabspacePayment } = useCart();
-	const summary = sumOrderList(rehabspacePayment?.selectedSessions);
+	const [summary, setSummary] = useState(sumOrderList(rehabspacePayment?.selectedSessions))
 
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState('');
+	const [date, setDate] = useState('');
 
 	const config = {
-		// reference: (new Date()).getTime().toString(),
 		email: rehabspacePayment?.email,
 		sessions: summary?.totalSessions,
 		amount: summary?.total * 100,
@@ -38,12 +38,58 @@ const OrderSummary = () => {
 
 	const onSuccess = reference => {
 		console.log(reference);
-		setSuccess(reference);
+		setSummary({...summary, reference: reference?.reference})
+		setDate(new Date().toISOString())
 	};
 
 	const onClose = reference => {
 		console.log(reference);
 	};
+
+	useEffect(() => {
+		const insertData = async () => {
+			if (date) {
+				try {
+					setLoading(1)
+					const response = await fetch('/api/rehabspace/insert-data', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(
+							{table: 'rehabspace_booking', 
+							data:{
+								email: rehabspacePayment?.email,
+								firstName: rehabspacePayment?.firstName,
+								lastName: rehabspacePayment?.lastName,
+								phone: rehabspacePayment?.phoneNumber,
+								cart: rehabspacePayment?.selectedSessions,
+								amountPaid: summary?.total,
+								sessions: summary?.totalSessions,
+								paid: true,
+							}}),
+						});
+						if (!response.ok) {
+							console.log(response.json());
+							setSuccess('');
+							throw new Error("session booking was not completed");
+						}
+						const res = await response.json();
+						setSuccess(1);
+						console.log('==', res)
+				} catch (error) {
+					console.log(error)
+				}
+				finally{
+					setDate('')
+					setLoading(0)
+				}
+			}
+		}
+
+	insertData()
+	}, [date])
+	
 
 	useEffect(() => {
 		if (!rehabspacePayment?.email) {
@@ -55,12 +101,9 @@ const OrderSummary = () => {
 
 	const handleClick = async () => {
 		try {
-			setLoading(true);
 			initializePayment(onSuccess, onClose);
 		} catch (error) {
 			console.error('catch error==', error);
-		} finally {
-			setLoading(false);
 		}
 	};
 
@@ -73,6 +116,11 @@ const OrderSummary = () => {
 					summary={summary}
 				/>
 			)}
+			{
+				loading ? <div className="inset-0 fixed flex  justify-center items-center z-50 bg-[var(--oex-lightest-grey)] px-2">
+					Loading...
+				</div> : null
+			}
 			<div className="w-full  sm:w-[450px] rounded-md bg-zinc-200 shadow-lg  py-10 px-4  ">
 				<h5 className="font-semibold pb-4">Order Summary</h5>
 				<div className="mb-8 rounded-md bg-[var(--oex-lightest-grey)] px-4 pt-6 pb-2 ">
@@ -129,7 +177,7 @@ export const SuccessFulPayment = ({ setSuccess, success, summary }) => {
 				</div>
 				<div className="flex justify-between">
 					<div className="text-[var(--text-colour-grey)]">Transaction ID</div>
-					<div className="">{success?.reference}</div>
+					<div className="">{summary?.reference}</div>
 				</div>
 				<div className="flex justify-between">
 					<div className="text-[var(--text-colour-grey)]">
@@ -146,7 +194,7 @@ export const SuccessFulPayment = ({ setSuccess, success, summary }) => {
 					<button
 						onClick={() => {
 							setSuccess('');
-							router.push(`/rehabspace/account`);
+							router.push(`/account/rehabspace`);
 						}}
 						type="button"
 						className="mt-4 text-white rounded-md w-full bg-[var(--oex-orange)] text-center py-3 px-8 hover:bg-orange-500  duration-300">

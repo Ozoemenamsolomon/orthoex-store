@@ -6,17 +6,20 @@ import { sumOrderList } from './OrderSummary';
 import { useCart } from '../../context/cartContext.tsx';
 import { insertBooking } from '../../utils/rehabspcetable.js';
 import { useRouter } from 'next/router';
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 const SessionBookingForm = ({ onSubmit }) => {
 	const { rehabspacePayment, setRehabspacePayment } = useCart();
 	const router = useRouter();
+	const {user}=useUser()
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [formData, setFormData] = useState({
 		firstName: '',
 		lastName: '',
 		phoneNumber: '',
-		email: '',
+		email: user?.email,
 		selectedSessions: [bookingDetails?.types[0]],
 	});
 
@@ -90,30 +93,21 @@ const SessionBookingForm = ({ onSubmit }) => {
 
 	const { total, totalSessions } = sumOrderList(formData?.selectedSessions);
 
-	const handleSubmit = async e => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setIsLoading(true);
+
 		try {
-			if (validateForm()) {
-				const data = await insertBooking({
-					email: formData?.email,
-					firstName: formData?.firstName,
-					lastName: formData?.lastName,
-					phone: formData?.phoneNumber,
-					cart: formData?.selectedSessions,
-					amountPaid: total,
-					sessions: totalSessions,
-					paid: true,
-				});
-				if (data.success) {
-					router.push('/rehabspace/payment');
-					setRehabspacePayment(formData);
-				}
+			if(user){
+				setRehabspacePayment(formData)
+				router.push('/rehabspace/payment')
+			} else {
+				router.push("/api/auth/login?returnTo=/rehabspace?pay=1")
 			}
 		} catch (error) {
-			console.log('Catch error', error);
-		} finally {
-			setIsLoading(false);
+			console.log(error);
+		}finally{
+			setIsLoading(0)
 		}
 	};
 
@@ -124,6 +118,10 @@ const SessionBookingForm = ({ onSubmit }) => {
 			{formErrors.selectedSessions && (
 				<p className="text-red-500 text-sm ">{formErrors.selectedSessions}</p>
 			)}
+
+		<div>
+        Welcome {user?.name}! <a href="/api/auth/logout">Logout</a>
+      </div>
 
 			<div className="w-full grid sm:grid-cols-2 gap-6">
 				<div className="mb-">
@@ -183,7 +181,7 @@ const SessionBookingForm = ({ onSubmit }) => {
 					<input
 						type="email"
 						name="email"
-						value={formData.email}
+						value={formData.email }
 						onChange={handleInputChange}
 						className={inputstyle}
 					/>
@@ -239,21 +237,45 @@ const SessionBookingForm = ({ onSubmit }) => {
 				)}
 			</div>
 
-			<div className="flex items-center ">
-				<button
-					type="submit"
-					className={`px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)] hover:bg-[var(--oex-orange-dark)] duration-300 ${
-						isLoading ? 'opacity-50 cursor-not-allowed' : ''
-					}`}
-					disabled={isLoading}>
-					{isLoading ? (
-						'Submitting...'
-					) : (
-						<div className="flex gap-2">
-							Proceed <FaLongArrowAltRight size={24} />{' '}
+			<div className=" ">
+				{
+					user ? 
+						<button
+							type="submit"
+							className={`px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)] hover:bg-[var(--oex-orange-dark)] duration-300 ${
+								isLoading ? 'opacity-50 cursor-not-allowed' : ''
+							}`}
+							disabled={isLoading}>
+							{isLoading ? (
+								'Submitting...'
+							) : (
+								<div className="flex gap-2">
+									Proceed <FaLongArrowAltRight size={24} />{' '}
+								</div>
+							)}
+						</button>
+					: 
+						<div className="">
+							<p>You are not signed in.</p>
+							<button
+								type="submit"
+								className={`px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)] hover:bg-[var(--oex-orange-dark)] duration-300 ${
+									isLoading ? 'opacity-50 cursor-not-allowed' : ''
+								}`}
+								disabled={isLoading}>
+								{isLoading ? (
+									'Submitting...'
+								) : (
+									<a className="flex gap-2" href='/api/auth/login?returnTo=/rehabspace?pay=1'>
+										Proceed to signin
+									</a>
+								)}
+							</button>
 						</div>
-					)}
-				</button>
+						
+				}
+
+				
 			</div>
 		</form>
 	);

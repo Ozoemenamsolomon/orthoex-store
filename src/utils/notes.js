@@ -179,3 +179,11 @@ const location = {
   availableSunday: false,
   organisationId: 'org123',
 };
+
+
+// Add handleAuth() to your app, which creates the following route handlers under the hood that perform different parts of the authentication flow:
+
+// /api/auth/login: Your Next.js application redirects users to your identity provider for them to log in (you can optionally pass a returnTo parameter to return to a custom relative URL after login, for example /api/auth/login?returnTo=/profile).
+// /api/auth/callback: Your identity provider redirects users to this route after they successfully log in.
+// /api/auth/logout: Your Next.js application logs out the user.
+// /api/auth/me: You can fetch user profile information in JSON format.

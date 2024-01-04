@@ -1,25 +1,35 @@
 import { FaTimes } from 'react-icons/fa';
 import Image from 'next/image';
 import SessionBookingForm from './SessionBookingForm';
+import { useRouter } from 'next/router';
 
 const PaymentPopup = ({ popup, setPopup }) => {
+	const {query, push, replace, pathname, } = useRouter()
 	const stopPropagation = e => {
 		e.stopPropagation();
 	};
 
 	return (
 		<div
-			onClick={() => setPopup(false)}
+			onClick={() => {
+						setPopup(false) 
+						if(!pathname?.startsWith('/account')){
+							push('/rehabspace')
+						}
+					}}
 			className={`${
-				popup ? ' scale-100 fixed' : 'hidden scale-0'
-			}   inset-0  flex justify-center  bg-opacity-50 bg-black z-50 py-10 md:items-center`}>
+				popup  || query?.pay ? ' scale-100' : ' scale-0'
+			}  transform transition-transform duration-500  fixed inset-0 flex justify-center  bg-opacity-50 bg-black z-50 py-10 md:items-center`}>
 			<div
 				onClick={stopPropagation}
-				className={`${
-					popup ? 'scale-100' : 'scale-0'
-				} transition-transform transform duration-500 overflow-y-auto relative bg-[var(--oex-off-white)] lg:w-[960px]  mx-4 w-full md:flex md:justify-between rounded-lg `}>
+				className={`overflow-y-auto relative bg-[var(--oex-off-white)] lg:w-[960px]  mx-4 w-full md:flex md:justify-between rounded-lg `}>
 				<button
-					onClick={() => setPopup(false)}
+					onClick={() => {
+						setPopup(false) 
+						if(!pathname?.startsWith('/account')){
+							push('/rehabspace')
+						}
+					}}
 					className="absolute top-6 right-6 p-3 bg-[var(--oex-lightest-grey)]  hover:shadow duration-300 rounded-full z-50">
 					<FaTimes />
 				</button>
