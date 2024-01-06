@@ -11,13 +11,14 @@ export default withApiAuthRequired(async function verify(req, res) {
 
 	const { data: attendaceData, error } = await supabaseTrainingClient
 		.from('training_attendance')
-		.insert(data)
+		.insert(data);
 
 	if (error) {
 		logger({ error });
-		return res.status(400).json({ error: 'Error occured confirming attendance!!' });
+		return res
+			.status(400)
+			.json({ error: 'Error occured confirming attendance!!' });
 	}
 
-
-	res.status(200).json({data: attendaceData});
+	res.status(200).json({ data: attendaceData });
 });

@@ -412,7 +412,6 @@ const TrainingOrderWrapper = styled.div`
 	min-height: 300px;
 
 	@media ${({ theme }) => theme.breakpoints.above.md} {
-
 	}
 `;
 

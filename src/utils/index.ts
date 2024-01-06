@@ -25,9 +25,7 @@ export function calculateDateDifference(
 	const end = new Date(endDate);
 
 	// Calculate the difference in days
-	const diffInDays = Math.floor(
-		(Number(end) - Number(start)) / oneDay
-	);
+	const diffInDays = Math.floor((Number(end) - Number(start)) / oneDay);
 	// Difference between same day returns, 0 days, adding 1 to make it 1 day
 	return diffInDays + 1;
 }

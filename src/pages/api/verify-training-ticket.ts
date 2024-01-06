@@ -20,8 +20,10 @@ export default withApiAuthRequired(async function verify(req, res) {
 
 	if (error) {
 		logger({ error });
-		return res.status(400).json({ error: 'Error occured finding paid training order!' });
-	} 
+		return res
+			.status(400)
+			.json({ error: 'Error occured finding paid training order!' });
+	}
 
 	const trainingOrderData = trainingOrder as unknown as TrainingOrderType;
 
@@ -37,16 +39,17 @@ export default withApiAuthRequired(async function verify(req, res) {
 	const participantData = participants.find(data => ticketNumber === data.id);
 
 	if (!participantData) {
-		res.status(404).json({ error: `particpants with ticket no ${ticketNumber} not found!` });
+		res
+			.status(404)
+			.json({ error: `particpants with ticket no ${ticketNumber} not found!` });
 	}
 
-	const { data: trainingAttendanceData } =
-		await supabaseTrainingClient
-			.from('training_attendance')
-			.select('*')
-			.eq('trainingOrderId', trainingOrderId)
-			.eq('participantId', ticketNumber)
-			.single();
+	const { data: trainingAttendanceData } = await supabaseTrainingClient
+		.from('training_attendance')
+		.select('*')
+		.eq('trainingOrderId', trainingOrderId)
+		.eq('participantId', ticketNumber)
+		.single();
 
 	if (trainingAttendanceData) {
 		res
