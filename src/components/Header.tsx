@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import { CTALink } from './CTA';
 import NavLink from './NavLink';
 import { Container } from './styled';
+import { FaRegUserCircle } from 'react-icons/fa';
 
 type HeaderProp = { pathname: string };
 
@@ -148,9 +149,27 @@ const RightNav: FC<{
 
 	const rightNavLinks = [
 		{ name: 'Search', to: '/search', Icon: SearchIcon },
-		{ name: 'Account', to: '/account/overview', Icon: AccountIcon },
+		// { name: 'Account', to: '/account/overview', Icon: AccountIcon },
 		...(user ? [{ name: 'Cart', to: '/cart', Icon: CartIcon }] : []),
 	];
+
+	const Dropdown = () => {
+		const [drop, setDrop] = useState(0)
+		const { user } = useUser();
+
+		return (
+			<>
+			<FaRegUserCircle size={24} onClick={()=>setDrop(1)}/>
+			<div onClick={()=>setDrop(0)} className={`${drop ? 'translate-y-0 opacity-100':'-translate-y-full opacity-0'} z-50 transform transition-transform duration-500 fixed inset-0 `}>
+				<div onClick={e=>e.stopPropagation()} className="bg-white shadow border text-black absolute right-8 top-20 rounded-md w-60 p-8 space-y-4 ">
+					<Link href={'/account/overview'} onClick={()=>setDrop(0)} className='block'>{user ? 'My Account' : 'Signin'}</Link>
+					<div className=""><a className='block w-full border-t pt-4' href="/api/auth/logout" onClick={()=>setDrop(0)}>Logout</a></div>
+					
+				</div>
+			</div>
+			</>
+		)
+	}
 
 	return (
 		<RightNavWrapper>
@@ -167,6 +186,7 @@ const RightNav: FC<{
 					)}
 				/>
 			))}
+			<Dropdown/>
 		</RightNavWrapper>
 	);
 };

@@ -5,17 +5,42 @@ import { useCart } from '../../context/cartContext.tsx';
 import { usePaystackPayment } from 'react-paystack';
 
 export function sumOrderList(orderList) {
+	// Initialize totals to avoid NaN issues
 	let total = 0,
-		totalSessions = 0;
+	  totalSessions = 0;
+  
+	// Check if orderList is defined and not empty
 	if (orderList && orderList.length !== 0) {
-		for (const order of orderList) {
-			const numericValue = parseFloat(order.value.replace(/[^0-9.]/g, ''));
-			total += numericValue;
-			totalSessions += order?.session;
+	  // Iterate through each order in the list
+	  for (const order of orderList) {
+		// Ensure that the 'price' property is a valid number
+		const numericValue = parseFloat(order?.price);
+		if (!isNaN(numericValue)) {
+		  total += numericValue; // Add the price to the total
+  
+		  // Ensure that the 'sessionValue' property is a valid number
+		  const sessionValue = parseInt(order?.sessionValue, 10);
+		  if (!isNaN(sessionValue)) {
+			totalSessions += sessionValue; // Add the sessionValue to the totalSessions
+		  } else {
+			console.warn(`Invalid sessionValue for order with id ${order?.id}`);
+		  }
+		} else {
+		  console.warn(`Invalid price for order with id ${order?.id}`);
 		}
-		return { total, totalSessions };
+	  }
+  
+	  // Return the calculated totals
+	  return { total, totalSessions };
 	}
-}
+  
+	// Log totals and orderList if orderList is empty or undefined
+	console.log({ total, totalSessions, orderList });
+  
+	// Return an object with zeros if orderList is empty or undefined
+	return { total: 0, totalSessions: 0 };
+  }
+  
 
 const OrderSummary = () => {
 	const { rehabspacePayment, setRehabspacePayment } = useCart();
@@ -67,6 +92,7 @@ const OrderSummary = () => {
 								amountPaid: summary?.total,
 								sessions: summary?.totalSessions,
 								paid: true,
+								// TODO: add customerId as user?.id
 							}}),
 						});
 						if (!response.ok) {
@@ -114,6 +140,7 @@ const OrderSummary = () => {
 					setSuccess={setSuccess}
 					success={success}
 					summary={summary}
+					setLoading={setLoading}
 				/>
 			)}
 			{
@@ -125,10 +152,10 @@ const OrderSummary = () => {
 				<h5 className="font-semibold pb-4">Order Summary</h5>
 				<div className="mb-8 rounded-md bg-[var(--oex-lightest-grey)] px-4 pt-6 pb-2 ">
 					<h5 className="font-semibold pb-2">Order</h5>
-					{rehabspacePayment?.selectedSessions?.map(({ id, type, value }) => (
+					{rehabspacePayment?.selectedSessions?.map(({ id, plan, price }) => (
 						<div key={id} className="flex justify-between items-center ">
-							<p>{type}</p>
-							<p className="font-semibold">{value}</p>
+							<p>{plan}</p>
+							<p className="font-semibold">{price}</p>
 						</div>
 					))}
 				</div>
@@ -139,7 +166,7 @@ const OrderSummary = () => {
 						onClick={handleClick}
 						className={`${
 							!rehabspacePayment?.email || !summary?.total
-								? 'bg-gray-400 cursor-not-allowed'
+								? 'bg-gray-300 text-gray-500 cursor-not-allowed'
 								: 'text-white bg-[var(--oex-orange)] hover:bg-[var(--oex-orange-dark)] duration-300'
 						} w-full flex items-center justify-center gap-4 px-8 py-4 rounded-md  `}>
 						<div>
@@ -161,11 +188,12 @@ const OrderSummary = () => {
 
 export default OrderSummary;
 
-export const SuccessFulPayment = ({ setSuccess, success, summary }) => {
+export const SuccessFulPayment = ({ setSuccess, setLoading, success, summary }) => {
 	const router = useRouter();
 
 	return (
 		<div className="inset-0 fixed flex  justify-center items-center z-50 bg-[var(--oex-lightest-grey)] px-2">
+
 			<div className="py-10 w-full sm:w-[450px]  bg-white rounded-lg p-6  space-y-4">
 				<div className="bg-green-500 w-full mx-auto rounded-full h-10 w-10 flex justify-center items-center text-xl font-bold text-white">
 					<FaCheck size={24} />
@@ -195,6 +223,7 @@ export const SuccessFulPayment = ({ setSuccess, success, summary }) => {
 						onClick={() => {
 							setSuccess('');
 							router.push(`/account/rehabspace`);
+							setLoading(1)
 						}}
 						type="button"
 						className="mt-4 text-white rounded-md w-full bg-[var(--oex-orange)] text-center py-3 px-8 hover:bg-orange-500  duration-300">

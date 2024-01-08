@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
 	EmailIcon,
 	PhoneIcon,
@@ -9,17 +10,19 @@ import {
 	SessionsIcon,
 	WhatsAppIcon,
 } from '../../../data/rehabspace';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { fetchRow } from '@utils/rehabspcetable';
 
-const AccountHistory = ({ type, toggle, setToggle }) => {
-  
+const AccountHistory = ({log, customer}) => {
+	const {user}=useUser()
+	const [activities, setActivities] = useState(log?.data || [])
+
 	return (
-		<div className="p-4 border overflow-hidden ">
-			{type && (
-				<button type="button" onClick={() => setToggle('')}>{`< Back`}</button>
-			)}
+		<div className=" overflow-hidden ">
+			
 
-			<div className="py-6">
-				<div className="flex flex-col gap-6 justify-center text-center">
+			<div className="py-">
+				{/* <div className="flex flex-col gap-6 justify-center text-center">
 					<div className="flex justify-center">
 						<div className="shrink-0 rounded-full h-14 w-14 flex justify-center items-center bg-[var(--oex-grey)] text-[var(--oex-off-white)]">
 							AI
@@ -36,7 +39,7 @@ const AccountHistory = ({ type, toggle, setToggle }) => {
 							<div className="text-[var(--oex-grey)]">Added April 1 2023</div>
 						</div>
 					</div>
-				</div>
+				</div> */}
 
 				{/* <div className="flex justify-center pt-8 gap-4 text-sm items-start">
 					<div className="text-center flex flex-col justify-center">
@@ -72,11 +75,11 @@ const AccountHistory = ({ type, toggle, setToggle }) => {
 				</div> */}
 			</div>
 
-			<div className="flex">
+			<div className="flex  ">
 				<div className="p-6 border broder-[var(--oex-light-grey)] flex gap-4 items-center">
 					<SessionsIcon />
 					<div className="">
-						<div className="">27 Sessions</div>
+						<div className="">{customer?.sessionBalance} Sessions</div>
 						<small className="text-green-500">Balance</small>
 					</div>
 				</div>
@@ -84,24 +87,28 @@ const AccountHistory = ({ type, toggle, setToggle }) => {
 
 			<h4 className="font-medium pt-6">Recent History</h4>
 
-			{['cancelled', 'booked', 'purchased', 'used', 'used', 'used']?.map(
+			{activities?.map(
 				(item, i) => (
 					<div className="flex justify-between gap-4 border-b  py-4" key={i}>
 						<div className="flex gap-4">
-							{item === 'cancelled' && <SessionCancelled />}
-							{item === 'booked' && <SessionBooked />}
-							{item === 'purchased' && <SessionPurchsed />}
-							{item === 'used' && <SessionUsed />}
+
+							{item?.activityType?.action === 'Session cancelled' && <SessionCancelled />}
+
+							{item?.activityType?.action === 'booked' && <SessionBooked  />}
+
+							{item?.activityType?.action === 'Session purchased' && <SessionPurchsed />}
+
+							{item?.activityType?.action === 'Session used' && <SessionUsed />}
 
 							<div className="">
-								<div className="">Session {item}</div>
-								<div className="">Today</div>
+								<div className="">{item?.activityType?.action}</div>
+								<div className="">{new Date(item?.createdAt).toLocaleDateString()}</div>
 							</div>
 						</div>
 
 						<div className="">
-							<div className="font-semibold">N12000</div>
-							<div className="text-sm">2 Sessiosns</div>
+							<div className="font-semibold">N{item?.activityType?.amount}</div>
+							<div className="text-sm">{item?.activityType?.sessions} Sessiosns</div>
 						</div>
 					</div>
 				),

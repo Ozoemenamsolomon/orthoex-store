@@ -20,7 +20,7 @@ const OnboardingForm = ({user}) => {
   const clearForm = () => {
     setFormData({
         registrationDate: '',
-        userEmail: '',
+        customerEmail: '',
         firstName: '',
         lastName: '',
         profession: '',
@@ -73,7 +73,7 @@ const OnboardingForm = ({user}) => {
     setLoading(true);
 
     try {
-      const {data,error} = await updateItem('users', formData, 'id', user?.id, );
+      const {data,error} = await updateItem('customers', formData, 'id', user?.id, );
       if (data) {
         clearForm();
         setErrors({});
@@ -81,7 +81,7 @@ const OnboardingForm = ({user}) => {
         toast.success('successfull')
       }else {
         console.log(error)
-        toast.error('successfull')
+        toast.error('Unsuccessfull')
       }
       console.log({data,error})
     } catch (error) {

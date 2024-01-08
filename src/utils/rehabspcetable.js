@@ -26,11 +26,16 @@ export const fetchAll = async (table) => await supabase
   .select('*')
 
 // read a specific row, e.g fetch a user with user id.
-export const fetchOneRow = async (table, column, columnValue) => await supabase
+export const fetchRow = async (table, column, columnValue) => await supabase
 .from(table)
 .select('*')
 .eq(column,columnValue)
-		
+
+// fetch specific customer
+export const fetchCustomer = async (email) => await supabase
+.from('customers')
+.select('*')
+.eq('customerEmail', email)
           
 // resd specific column like all categories, or all emails
 export const fetchSpecificColumn = async (table,column ) =>  await supabase
@@ -71,3 +76,13 @@ export const deleteItem = async (table,  column, columnValue, ) => await supabas
 	.from(table)
 	.delete()
 	.eq( column, columnValue)
+
+// api
+export const addActivity = async (list) => {
+	try {
+		return await insert('activityHistory', list)
+	} catch (error) {
+		console.log(error)
+		return {data: null, error: error}
+	}
+}

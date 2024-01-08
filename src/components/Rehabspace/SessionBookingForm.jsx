@@ -1,10 +1,9 @@
 'use client';
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
-import { bookingDetails } from '../../data/rehabspace';
 import { sumOrderList } from './OrderSummary';
 import { useCart } from '../../context/cartContext.tsx';
-import { insertBooking } from '../../utils/rehabspcetable.js';
+import { fetchAll, fetchCustomer, fetchRow, insertBooking } from '../../utils/rehabspcetable.js';
 import { useRouter } from 'next/router';
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -13,14 +12,16 @@ const SessionBookingForm = ({ onSubmit }) => {
 	const { rehabspacePayment, setRehabspacePayment } = useCart();
 	const router = useRouter();
 	const {user}=useUser()
+	const [customer, setCustomer] = useState({})
 
 	const [isLoading, setIsLoading] = useState(false);
+	const [sessionPrices, setSessionPrices] = useState([]);
 	const [formData, setFormData] = useState({
 		firstName: '',
 		lastName: '',
 		phoneNumber: '',
-		email: user?.email,
-		selectedSessions: [bookingDetails?.types[0]],
+		email: user?.email || '',
+		selectedSessions: [sessionPrices[0]],
 	});
 
 	const [formErrors, setFormErrors] = useState({
@@ -29,6 +30,34 @@ const SessionBookingForm = ({ onSubmit }) => {
 		phoneNumber: '',
 		email: '',
 	});
+
+	useEffect(() => {
+		const fetchData = async () => {
+		  try {
+			const { data: customerData, error: customerError } = await fetchCustomer(user?.email);
+	  
+			const { data: pricesData, error: pricesError } = await fetchAll('bookingPrice');
+	  
+			if (pricesData) {
+			  setSessionPrices(pricesData);
+			  setFormData({ 
+					...formData, 
+					firstName: customerData[0]?.firstName || '',
+					lastName: customerData[0]?.lastName || '',
+					phoneNumber: customerData[0]?.phoneNumber || '',
+					selectedSessions: [pricesData[0]], 
+					email: user?.email 
+				});
+			} else {
+			  console.log(pricesError);
+			}
+		  } catch (error) {
+			console.log(error);
+		  }
+		};
+	  
+		fetchData();
+	  }, [user]);
 
 	const handleInputChange = e => {
 		const { name, value } = e.target;
@@ -40,13 +69,13 @@ const SessionBookingForm = ({ onSubmit }) => {
 	const handleSessionSelection = session => {
 		// Check if the session is already selected
 		if (
-			formData.selectedSessions.some(selected => selected.type === session.type)
+			formData?.selectedSessions?.some(selected => selected?.plan === session?.plan)
 		) {
 			// If selected, remove it
 			setFormData({
 				...formData,
 				selectedSessions: formData.selectedSessions.filter(
-					selected => selected.type !== session.type,
+					selected => selected?.id !== session?.id,
 				),
 			});
 		} else {
@@ -95,19 +124,21 @@ const SessionBookingForm = ({ onSubmit }) => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setIsLoading(true);
-
-		try {
-			if(user){
-				setRehabspacePayment(formData)
-				router.push('/rehabspace/payment')
-			} else {
-				router.push("/api/auth/login?returnTo=/rehabspace?pay=1")
+		
+		if (validateForm()) {
+			setIsLoading(true);
+			try {
+				if(user){
+					setRehabspacePayment(formData)
+					router.push('/rehabspace/payment')
+				} else {
+					router.push("/api/auth/login?returnTo=/rehabspace?pay=1")
+				}
+			} catch (error) {
+				console.log(error);
+			}finally{
+				setIsLoading(0)
 			}
-		} catch (error) {
-			console.log(error);
-		}finally{
-			setIsLoading(0)
 		}
 	};
 
@@ -115,12 +146,10 @@ const SessionBookingForm = ({ onSubmit }) => {
 
 	return (
 		<form onSubmit={handleSubmit} className="">
-			{formErrors.selectedSessions && (
-				<p className="text-red-500 text-sm ">{formErrors.selectedSessions}</p>
-			)}
-
+			{formErrors.selectedSessions ? (
+				<p className="text-red-500 text-sm ">{formErrors.selectedSessions}</p> 
+			) : null}
 		<div>
-        Welcome {user?.name}! <a href="/api/auth/logout">Logout</a>
       </div>
 
 			<div className="w-full grid sm:grid-cols-2 gap-6">
@@ -181,7 +210,7 @@ const SessionBookingForm = ({ onSubmit }) => {
 					<input
 						type="email"
 						name="email"
-						value={formData.email }
+						value={formData.email || ''}
 						onChange={handleInputChange}
 						className={inputstyle}
 					/>
@@ -196,19 +225,19 @@ const SessionBookingForm = ({ onSubmit }) => {
 					Choose a plan
 				</label>
 				<div className="flex flex-wrap gap-2">
-					{bookingDetails?.types?.map(session => (
+					{sessionPrices?.map(session => (
 						<button
-							key={session?.type}
+							key={session?.id}
 							type="button"
 							onClick={() => handleSessionSelection(session)}
 							className={`py-3 px-6 rounded-full focus:outline-none focus:shadow-outline ${
 								formData.selectedSessions.some(
-									selected => selected.type === session.type,
+									selected => selected?.id === session?.id,
 								)
 									? 'bg-orange-500 text-white'
 									: 'border border-gray-400 text-gray-700 hover:border-gray-700 duration-300'
 							}`}>
-							{session?.type}
+							{session?.plan}
 						</button>
 					))}
 				</div>
@@ -221,8 +250,8 @@ const SessionBookingForm = ({ onSubmit }) => {
 					<>
 						{formData.selectedSessions.map((selected, i) => (
 							<div className="flex justify-between items-center" key={i}>
-								<div className="">{selected.type}</div>
-								<div className="">{selected.value}</div>
+								<div className="">{selected?.plan}</div>
+								<div className="">{selected?.price}</div>
 							</div>
 						))}
 						<div className="flex justify-between items-center pt-1 mt-1 border-t border-gray-300">

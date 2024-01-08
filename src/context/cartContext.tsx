@@ -1,5 +1,7 @@
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { getProductsByMultipleIDs } from '@data/client';
 import { ProductType } from '@data/products';
+import { fetchRow } from '@utils/rehabspcetable';
 import { useRouter } from 'next/router';
 import {
 	ChangeEventHandler,

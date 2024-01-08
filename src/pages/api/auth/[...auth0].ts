@@ -17,7 +17,7 @@ const afterCallback: AfterCallback = async (req, res, session, state) => {
 		try {
 			const data = [{
 				registrationDate: new Date().toISOString(),
-				userEmail: session?.user?.email,
+				customerEmail: session?.user?.email,
 				firstName: session?.user?.given_name,
 				lastName: session?.user?.family_name,
 				profession: '',
@@ -26,7 +26,7 @@ const afterCallback: AfterCallback = async (req, res, session, state) => {
 				whatsappNumber: '',
 				userType: '',
 			}]
-			const insertionResult = await insert('users', data);
+			const insertionResult = await insert('customers', data);
 			// console.log('user', insertionResult);
 			res.setHeader('Location', '/onboarding');
 		  } catch (error) {

@@ -23,7 +23,7 @@ export const getServerSideProps = withPageAuthRequired({
       }
 
       const userEmail = session.user.email;
-      const user = await fetchOneRow('users', 'userEmail', userEmail);
+      const user = await fetchOneRow('customers', 'customerEmail', userEmail);
 
       console.log('user ==', user);
 

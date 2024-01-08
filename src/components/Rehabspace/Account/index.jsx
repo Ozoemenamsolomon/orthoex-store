@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ClockIcon, MapIcon } from '../../../data/rehabspace';
 import Calender from '../Calender';
 import { FaTimes } from 'react-icons/fa';
 import BtnBasic from "../Buttons"
 import AccountHistory from "../Account/AccountHistory"
 import {PaymentGrid, BookingGrid} from "../PaymentSection"
+import BookingModal from "./BookingModal"
 
-
-const index = ({user, rehabspaceData}) => {
-	const [booking, setBooking] = useState('');
+const index = ({user, rehabspaceData, customer}) => {
+	const [booking, setBooking] = useState(new Date().toLocaleString());
 	const [show, setShow] = useState(0);
 
-	console.log('rehabspaceData', rehabspaceData, 'user', user)
+	// console.log({rehabspaceData, user, customer})
 	
 	return (
-
 		<>
 		<div className="">
 			{/* <div className="sm:flex justify-between items-center gap-10 py-4 border-b rounded px-4 grid">
@@ -31,52 +30,16 @@ const index = ({user, rehabspaceData}) => {
 			</div> */}
 
 			<div className="py-10 grid sm:grid-cols-2 gap-10">
-				<AccountHistory/>
+				<AccountHistory log={rehabspaceData?.activityHistory} customer={customer}/>
 				<div className="space-y-12">
-					<PaymentGrid/>
-					<BookingGrid setShowBookingPage={()=>setShow('booking')}/>
+					<PaymentGrid customer={customer}/>
+					<BookingGrid location={rehabspaceData?.location} setShowBookingPage={()=>setShow('booking')}/>
 				</div>
 			</div>
-
 		</div>
 		
-
-		{show ? <div className="fixed inset-0 z-50 bg-white overflow-auto">
-			<header className='fixed flex items-center border-b h-20 w-full bg-white  '> 
-				<div className='section-padding-x flex  w-full  justify-between  items-center gap-20'>
-					<div className="">Logo here</div>
-					<div className="" >
-						<FaTimes onClick={()=>setShow(0)} />
-					</div>
-				</div>
-			</header>
-
-			<section className="pt-28  section-padding-x">
-				<div className="flex justify-between items-center flex-wrap gap-14">
-					<div className="">
-						<div className="flex gap-4">
-							<ClockIcon />
-							<div className="">80 min appointments</div>
-						</div>
-						<div className="flex gap-4">
-							<MapIcon />
-							<div className="sm:w-80">
-								2A, Musari Apena Street, Ewu-Titan, Off Labinjo Kalejaiye
-								Street, Mafoluku, Oshodi, Lagos State.
-							</div>
-						</div>
-					</div>
-					<div className="text-lg space-y-2">
-						<p>Selected Schedule:</p>
-						<p className="text-orange-600">{booking}</p>
-					</div>
-				</div>
-			</section>
-
-			<section className="section-padding-x py-20 ">
-					<Calender setBooking={setBooking} booking={booking} user={user}/>
-			</section>
-		</div> : null}
+{/* booking modal */}
+		{show ? <BookingModal customer={customer} location={rehabspaceData?.location} booking={booking} setBooking={setBooking} setShow={setShow}/> : null}
 		</>
 
 	);

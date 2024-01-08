@@ -57,7 +57,7 @@ export const PaymentGrid = ({setShowPaymentModal}) => {
 		)
 	}
 
-export const BookingGrid = ({setShowBookingPage}) => {
+export const BookingGrid = ({setShowBookingPage, location}) => {
 
 	const scrollToSection = () => {
 		const targetSection = document.getElementById('booking');
