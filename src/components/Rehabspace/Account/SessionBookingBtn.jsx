@@ -17,7 +17,7 @@ const SessionBookingBtn = ({ booking, chosenLocation, customer, setInactiveSlots
 
 const bookedDate = new Date(booking)
 // console.log('bookedDate=', new Date(bookedDate.setHours(bookedDate.getHours() + 1)), 'actualTime=', booking)
-console.log('bookedDate=', new Date(bookedDate), 'actualTime=', booking)
+// console.log('bookedDate=', new Date(booking), 'actualTime=', booking)
 
 // status: (check-in, cancelled, checked-in)
   const appointment = {

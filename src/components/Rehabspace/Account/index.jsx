@@ -11,7 +11,7 @@ const index = ({user, rehabspaceData, customer}) => {
 	const [booking, setBooking] = useState(new Date().toLocaleString());
 	const [show, setShow] = useState(0);
 
-	// console.log({rehabspaceData, user, customer})
+	console.log({rehabspaceData, user, customer})
 	
 	return (
 		<>
@@ -25,7 +25,6 @@ const index = ({user, rehabspaceData, customer}) => {
 					<div className="">Date from:</div>
 					<input type="text" className='py-3 border'/>
 					<BtnBasic onClick={()=>setShow(1)} href={'#'} text={'Filter'} />
-
 				</div>
 			</div> */}
 
@@ -38,8 +37,8 @@ const index = ({user, rehabspaceData, customer}) => {
 			</div>
 		</div>
 		
-{/* booking modal */}
-		{show ? <BookingModal customer={customer} location={rehabspaceData?.location} booking={booking} setBooking={setBooking} setShow={setShow}/> : null}
+		{/* booking modal */}
+		{show ? <BookingModal customer={customer} location={rehabspaceData?.location} holidays={rehabspaceData?.holidays} booking={booking} setBooking={setBooking} setShow={setShow}/> : null}
 		</>
 
 	);

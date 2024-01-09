@@ -6,11 +6,9 @@ import BtnBasic from "../Buttons"
 import { updateItem } from '@utils/rehabspcetable';
 import { toast } from 'react-toastify';
 
-const BookingModal = ({location, customer, booking, setBooking, setShow}) => {
+const BookingModal = ({location, holidays, customer, booking, setBooking, setShow}) => {
 
     const [chosenLocation, setChosenLocation] = useState(location?.data[0])
-
-	
 
   return (
     <div className="fixed inset-0 z-50 bg-white overflow-auto">
@@ -45,7 +43,7 @@ const BookingModal = ({location, customer, booking, setBooking, setShow}) => {
 			</section>
 
 			<section className="section-padding-x py-20 ">
-					<Calender chosenLocation={chosenLocation} setChosenLocation={setChosenLocation} location={location} setBooking={setBooking} booking={booking} customer={customer}/>
+					<Calender chosenLocation={chosenLocation} setChosenLocation={setChosenLocation} location={location} setBooking={setBooking} booking={booking} customer={customer} holidays={holidays?.data}/>
 			</section>
 		</div>
   )

@@ -21,7 +21,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
 }
 
-export default function Calender({location, chosenLocation, setChosenLocation, setBooking,booking, customer }) {
+export default function Calender({location, chosenLocation, setChosenLocation, setBooking,booking, customer, holidays }) {
 
 	let today = startOfToday();
 	let [selectedDay, setSelectedDay] = useState(today);
@@ -31,24 +31,47 @@ export default function Calender({location, chosenLocation, setChosenLocation, s
 	const [selectedSlot, setSelectedSlot] = useState(null);
 	const [active, setActive] = useState(chosenLocation?.locationId)
 
+	const isDayDisabled = (day) => {
+		const dayOfWeek = new Date(day).getDay();
+		// Disable Sunday if isSunday is not available
+		if (dayOfWeek === 0 && !chosenLocation?.availableSunday) {
+		  return true;
+		}
+		// Disable Saturday if isSaturday is not available
+		if (dayOfWeek === 6 && !chosenLocation?.availableSaturday) {
+		  return true;
+		}
+		// Disable the day if it exists in the holidays list
+		// const holidays = ['2024-01-01', '2024-07-04', '2024-12-25'];
+		const formattedDay = new Date(day).toISOString().split('T')[0];
+		if (holidays?.includes(formattedDay)) {
+		  return true;
+		}
+		return false;
+	  };
+
 	// mount booked slots for the selected date
 	useEffect(() => {
-	const handleInactiveSlots = async () => {
-		const {data, error} = await fetchRow('appointment', 'appointmentDate', format(selectedDay, 'EEE dd MMM yyyy'))
-		if (data) {
-			const bookingList = data?.map(item => {
-				  return item?.appointmentDateTime
-				} 
-			)
-
-			setInactiveSlots(bookingList)
-			console.log('inactive slots', bookingList,)
-		} else {
-			console.log({data, error})
-		}
-		}
-	handleInactiveSlots()
-	}, [selectedDay])
+		const handleInactiveSlots = async () => {
+			try {
+				const { data, error } = await fetchRow('appointment', 'appointmentDate', format(selectedDay, 'EEE dd MMM yyyy'));
+	
+				if (data) {
+					const bookingList = data.map(item => new Date(new Date(item?.appointmentDateTime).getTime() + 60 * 60 * 1000));
+	
+					setInactiveSlots(bookingList);
+					// console.log('inactive slots', bookingList);
+				} else {
+					console.log({ data, error });
+				}
+			} catch (error) {
+				console.error('Error fetching inactive slots:', error);
+			}
+		};
+	
+		handleInactiveSlots();
+	}, [selectedDay]);
+	
 
 
 	let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
@@ -144,6 +167,7 @@ export default function Calender({location, chosenLocation, setChosenLocation, s
 							)}>
 							<button
 								type="button"
+								disabled={isDayDisabled(day)}
 								onClick={() => {
 									setSelectedDay(day)
 									setBooking('')
@@ -153,21 +177,20 @@ export default function Calender({location, chosenLocation, setChosenLocation, s
 									isEqual(day, selectedDay) && 'text-white',
 									!isEqual(day, selectedDay) &&
 										isToday(day) &&
-										' font-semibold',
+										' font-bold',
 									!isEqual(day, selectedDay) &&
 										!isToday(day) &&
 										isSameMonth(day, firstDayCurrentMonth) &&
 										'text-gray-90',
 									!isEqual(day, selectedDay) &&
-									    // appointmentDate:  booking,
-    // appointmentStartTime1 :  new Date(booking).toLocaleTimeString(),	!isToday(day) &&
-										!isSameMonth(day, firstDayCurrentMonth) &&
+									!isSameMonth(day, firstDayCurrentMonth) &&
 										'text-gray-400',
 									// isEqual(day, selectedDay) && isToday(day) && 'bg-orange-500',
 									isEqual(day, selectedDay)  && 'bg-orange-500 ',
 									!isEqual(day, selectedDay) && 'hover:bg-gray-200',
+									isDayDisabled(day) && 'disabled text-gray-400 cursor-not-allowed',
 									(isEqual(day, selectedDay) || isToday(day)) &&
-										'font-semibold',
+										'font-bold',
 									'mx-auto flex h-8 w-8 items-center justify-center rounded-full',
 								)}>
 								<time dateTime={format(day, 'yyyy-MM-dd')}>
@@ -245,48 +268,39 @@ function generateTimeSlots(date, numSlots, intervalMinutes, chosenLocation) {
 	return timeSlots;
 }
 
-const TimeSlotPicker = ({ timeSlots, setBooking, selectedSlot, setSelectedSlot, inactiveSlots }) => {
+const TimeSlotPicker = ({ timeSlots, setBooking, selectedSlot, setSelectedSlot, inactiveSlots, chosenLocation }) => {
 	return (
 	  <div className="flex flex-col gap-4 items-center">
 		{timeSlots.map((slot, index) => {
-		  const isSlotInactive = inactiveSlots?.some(inactiveSlot => {
-			if (inactiveSlot === null) {
-			  return false; // Skip null values
-			}
-		  
-			// Convert the inactiveSlot to the desired format
-			const formattedInactiveSlot = `${new Date(inactiveSlot).getFullYear()}-${(new Date(inactiveSlot).getMonth() + 1).toString().padStart(2, '0')}-${new Date(inactiveSlot).getDate().toString().padStart(2, '0')}T${new Date(inactiveSlot).getHours().toString().padStart(2, '0')}:${new Date(inactiveSlot).getMinutes().toString().padStart(2, '0')}:${new Date(inactiveSlot).getSeconds().toString().padStart(2, '0')}`;
-		  
-			// Convert the slot.date to the desired format
-			const formattedSlotDate = `${new Date(slot.date).getFullYear()}-${(new Date(slot.date).getMonth() + 1).toString().padStart(2, '0')}-${new Date(slot.date).getDate().toString().padStart(2, '0')}T${new Date(slot.date).getHours().toString().padStart(2, '0')}:${new Date(slot.date).getMinutes().toString().padStart(2, '0')}:${new Date(slot.date).getSeconds().toString().padStart(2, '0')}`;
-		  console.log(formattedInactiveSlot, formattedSlotDate)
-			return formattedInactiveSlot === formattedSlotDate;
-		  });
-		  
-  
-		  selectedSlot === index && console.log(slot, 'conditional===', isSlotInactive, '===', new Date(slot.date).toISOString());
+		  const isSlotInactive = inactiveSlots?.filter(inactiveSlot => {
+			return (
+			  inactiveSlot !== null &&
+			  new Date(inactiveSlot).getTime() === new Date(slot?.date).getTime()
+			);
+			// check if the slot appeared 'maxBookingPerSlot' times in the inactiveSlot list.
+		  }).length >= chosenLocation?.maxBookingPerSlot;
   
 		  return (
 			<button
 			  key={index}
 			  disabled={isSlotInactive}
-			  className={`w-full text-center p-4 border  rounded-md 
-				${
-				  isSlotInactive ? 'border-green-500 cursor-not-allowed' : selectedSlot === index ? 'border-orange-500' : 'border-gray-300'
-				}
+			  className={`w-full text-center p-4 border rounded-md 
+				${isSlotInactive ? 'border-gray-300 hover:border-gray-300 text-gray-400 cursor-not-allowed' : selectedSlot === index ? 'border-orange-500' : 'border-gray-700'}
 				hover:border-orange-500`}
 			  onClick={() => {
 				setSelectedSlot(index);
 				setBooking(new Date(slot?.date).toISOString());
 			  }}
 			>
-			  {slot.slot}
+			  {slot.slot}{isSlotInactive ? <span className='pl-2'>Slot booked</span>:''}
 			</button>
 		  );
 		})}
 	  </div>
 	);
   };
+  ;
+  
   
 
 const TimeSlots = ({chosenLocation, inactiveSlots, date, setBooking, selectedSlot, setSelectedSlot }) => {
@@ -313,7 +327,7 @@ const TimeSlots = ({chosenLocation, inactiveSlots, date, setBooking, selectedSlo
 	const timeSlotsArray = generateTimeSlots(startTime, numSlots, interval, chosenLocation);
 	return (
 		<div className="container mx-auto mt-8 pr-">
-			<TimeSlotPicker timeSlots={timeSlotsArray} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} setBooking={setBooking} inactiveSlots={inactiveSlots}/>
+			<TimeSlotPicker timeSlots={timeSlotsArray} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} setBooking={setBooking} inactiveSlots={inactiveSlots} chosenLocation={chosenLocation}/>
 		</div>
 	);
 };
