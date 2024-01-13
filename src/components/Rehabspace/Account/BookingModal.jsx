@@ -5,10 +5,12 @@ import { FaTimes } from 'react-icons/fa';
 import BtnBasic from "../Buttons"
 import { updateItem } from '@utils/rehabspcetable';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 const BookingModal = ({location, holidays, customer, booking, setBooking, setShow}) => {
+	const {push} = useRouter()
 
-    const [chosenLocation, setChosenLocation] = useState(location?.data[0])
+    const [chosenLocation, setChosenLocation] = useState(location?.data && location?.data?.length && location?.data[0])
 
   return (
     <div className="fixed inset-0 z-50 bg-white overflow-auto">
@@ -16,7 +18,7 @@ const BookingModal = ({location, holidays, customer, booking, setBooking, setSho
 				<div className='section-padding-x flex  w-full  justify-between  items-center gap-20'>
 					<div className="">{chosenLocation?.organisationLogo || 'Logo null'} </div>
 					<div className="" >
-						<FaTimes onClick={()=>setShow(0)} />
+						<FaTimes onClick={()=>push(`/account/rehabspace`)} />
 					</div>
 				</div>
 			</header>
@@ -24,12 +26,12 @@ const BookingModal = ({location, holidays, customer, booking, setBooking, setSho
 			<section className="pt-28  section-padding-x">
 				<div className="flex justify-between items-center flex-wrap gap-14">
 					<div className="">
-						<div className="flex gap-4">
+						<div className="flex gap-4 items-center">
 							<ClockIcon />
-							<div className="">Duration: {chosenLocation?.bookingDuration} minutes appointments</div>
+							<div className="pb-1">{chosenLocation?.bookingDuration} minutes appointments</div>
 						</div>
-						<div className="flex gap-4">
-							<MapIcon />
+						<div className="flex gap-4 items-center">
+							<MapIcon size={20} />
 							<div className="sm:w-80">
 								{chosenLocation?.locationAddress}
 							</div>

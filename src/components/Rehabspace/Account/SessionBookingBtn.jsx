@@ -1,23 +1,34 @@
 import { useEffect, useState } from "react";
 import BtnBasic from "../Buttons";
 import { toast } from "react-toastify";
-import { fetchAll } from "@utils/rehabspcetable";
+import { fetchAll, fetchCustomer, fetchRow } from "@utils/rehabspcetable";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useRouter } from "next/router";
 
-const SessionBookingBtn = ({ booking, chosenLocation, customer, setInactiveSlots}) => {
+const SessionBookingBtn = ({ booking, chosenLocation, setInactiveSlots}) => {
+  const router = useRouter()
   const [loading, setLoading] = useState(0);
 	const [apiError, setApiError] = useState('')
+  const {user} = useUser()
 
-  // handle inactive slots
-  // take this to Calender.
-  // when date is oicked, use picked date to get all appointmanents for that date, then setInactive dates to the list.
-  // from the timeslots ui, check if a particular slot is in the list, then change the border line to green and disable button.
-  //  add a accordion to show that the date is not available.
-  // when a new slot is picked, add the booking to the setInactive list.
-  // when refreshed or page mounts, the procedure repeats with ueEffect.
+  const [customer, setCustomer] = useState('')
+  const [refresh, setRefresh] = useState(0)
 
-const bookedDate = new Date(booking)
-// console.log('bookedDate=', new Date(bookedDate.setHours(bookedDate.getHours() + 1)), 'actualTime=', booking)
-// console.log('bookedDate=', new Date(booking), 'actualTime=', booking)
+  const bookedDate = new Date(booking)
+
+  useEffect(() => {
+    const fetch= async ()=> {
+      const {data, error} = await fetchCustomer(user?.email)
+      if (data) {
+        setCustomer(data?.[0])
+        console.log({data, error})
+      } else {
+        console.log({data,error})
+      }
+    }
+    fetch()
+  }, [refresh])
+  
 
 // status: (check-in, cancelled, checked-in)
   const appointment = {
@@ -42,43 +53,55 @@ const bookedDate = new Date(booking)
   }
 
   const handleClick = async () => {
-    try {
-      setLoading(1);
-      const response = await fetch('/api/rehabspace/insert-data', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ table: 'appointment', data: appointment }),
-      });
-
-      if (!response.ok) {
-        const errorResponse = await response.json();
-        console.error(errorResponse);
-        toast.error('Booking was unsuccessful');
-      } else {
-        const {data, error} = await response.json();
-        if(error){
-            console.log('=====', {data, error});
-            toast.error('Booking was unsuccessful');
+    console.log(customer?.sessionBalance < 1 , customer?.sessionBalance)
+    if (customer?.sessionBalance < 1 ) {
+      toast.warning('Your session balance is empty. Purchase a new session.') 
+      return
+    } else { 
+      try {
+        setLoading(1);
+        const response = await fetch('/api/rehabspace/insert-data', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            table: 'appointment', 
+            data: appointment, 
+            customer: customer,
+            user: user,
+          }),
+        });
+  
+        if (!response.ok) {
+          const errorResponse = await response.json();
+          console.error(errorResponse);
+          toast.error('Booking was unsuccessful');
         } else {
-            console.log('=====', {data, error});
-            toast.success('Booking was successful');
-            // add to the inactive slots
-            setInactiveSlots(prev=>[...prev, booking])
+          const {data, error} = await response.json();
+          if(error){
+              toast.error('Booking was unsuccessful');
+          } else {
+              toast.success('Booking was successful');
+              // add to the inactive slots
+              setInactiveSlots(prev=>[...prev, booking])
+              setRefresh(prev=>!prev)
+          }
         }
+      } catch (error) {
+        console.error(error);
+        toast.error('Booking was unsuccessful');
+      } finally {
+        setLoading(0);
       }
-    } catch (error) {
-      console.error(error);
-      toast.error('Booking was unsuccessful');
-    } finally {
-      setLoading(0);
+
     }
+    
   };
 
   return (
     <div>
-      <BtnBasic onClick={handleClick} text={loading ? 'Booking...' : 'Book session'} className='w-full' />
+      <BtnBasic onClick={handleClick} text={loading ? 'Booking...' : 'Book session'} className={` w-full ${customer?.sessionBalance < 1 ? 'bg-orange-300' : 'bg-[var(--oex-orange)]'}`} />
     </div>
   );
 };

@@ -152,7 +152,7 @@ const SessionBookingForm = ({ onSubmit }) => {
 		<div>
       </div>
 
-			<div className="w-full grid sm:grid-cols-2 gap-6">
+			<div className="w-full grid sm:grid-cols-2 gap-4">
 				<div className="mb-">
 					<label
 						className="block text-gray-700 text-sm font-bold mb-2"
@@ -244,19 +244,19 @@ const SessionBookingForm = ({ onSubmit }) => {
 				<p className="text-gray-500 pt-2">* A session duration is 1hr 20mins</p>
 			</div>
 
-			<div className="p-4 py-6 my-4 bg-gray-200 rounded-lg ">
+			<div className="p-4 py-6 mb-6 mt-8 border border-gray-00 rounded-lg ">
 				<h5 className="font-semibold">Order summary</h5>
 				{formData?.selectedSessions?.length !== 0 ? (
 					<>
 						{formData.selectedSessions.map((selected, i) => (
 							<div className="flex justify-between items-center" key={i}>
 								<div className="">{selected?.plan}</div>
-								<div className="">{selected?.price}</div>
+								<div className="">{selected?.price.toLocaleString('en-US')}</div>
 							</div>
 						))}
 						<div className="flex justify-between items-center pt-1 mt-1 border-t border-gray-300">
 							<div className="">Total value:</div>
-							<div className="">₦{total}.00</div>
+							<div className="">₦{total.toLocaleString('en-US')}</div>
 						</div>
 					</>
 				) : (
@@ -271,7 +271,7 @@ const SessionBookingForm = ({ onSubmit }) => {
 					user ? 
 						<button
 							type="submit"
-							className={`px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)] hover:bg-[var(--oex-orange-dark)] duration-300 ${
+							className={`px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)]  ${
 								isLoading ? 'opacity-50 cursor-not-allowed' : ''
 							}`}
 							disabled={isLoading}>
@@ -288,7 +288,7 @@ const SessionBookingForm = ({ onSubmit }) => {
 							<p>You are not signed in.</p>
 							<button
 								type="submit"
-								className={`px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)] hover:bg-[var(--oex-orange-dark)] duration-300 ${
+								className={`px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)]  ${
 									isLoading ? 'opacity-50 cursor-not-allowed' : ''
 								}`}
 								disabled={isLoading}>

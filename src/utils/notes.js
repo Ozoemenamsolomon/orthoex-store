@@ -326,3 +326,15 @@ const customersData =
 //     "customerId" bigint null,
 //     constraint useraccount_pkey primary key (id)
 //   ) tablespace pg_default;
+
+
+
+
+// TODO:
+// add update customer.sessionbalance 
+// insert data to activyHistory and accountHistory table at every action point.
+// correct the holidays.
+// differentiate calender and timeslots by locationid.
+// ui buttons.
+// correct the email field in the customer id.
+// add customerId for as reference Id to each table including activityHistory

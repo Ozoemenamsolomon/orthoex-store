@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FaCheck, FaLock, FaMarker } from 'react-icons/fa';
+import { FaCheck, FaLock, FaMarker, FaRegTimesCircle, FaTimes } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { useCart } from '../../context/cartContext.tsx';
 import { usePaystackPayment } from 'react-paystack';
+import { updateHistoryAndSessionBalance } from '@utils/rehabspcetable.js';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 export function sumOrderList(orderList) {
 	// Initialize totals to avoid NaN issues
@@ -46,10 +48,13 @@ const OrderSummary = () => {
 	const { rehabspacePayment, setRehabspacePayment } = useCart();
 	const [summary, setSummary] = useState(sumOrderList(rehabspacePayment?.selectedSessions))
 
+	const {user} = useUser()
+
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState('');
 	const [date, setDate] = useState('');
+	const {customerDetails} = useCart()
 
 	const config = {
 		email: rehabspacePayment?.email,
@@ -64,6 +69,7 @@ const OrderSummary = () => {
 	const onSuccess = reference => {
 		console.log(reference);
 		setSummary({...summary, reference: reference?.reference})
+		// use this to mount api actions
 		setDate(new Date().toISOString())
 	};
 
@@ -92,17 +98,20 @@ const OrderSummary = () => {
 								amountPaid: summary?.total,
 								sessions: summary?.totalSessions,
 								paid: true,
-								// TODO: add customerId as user?.id
-							}}),
+							},
+							customer: customerDetails,
+							user: user,
+							type: 'purchase',
+						}),
 						});
-						if (!response.ok) {
+						if (response.ok) {
+							const res = await response.json();
+							setSuccess(1);
+							console.log('==', res)
+						} else {
 							console.log(response.json());
-							setSuccess('');
 							throw new Error("session booking was not completed");
 						}
-						const res = await response.json();
-						setSuccess(1);
-						console.log('==', res)
 				} catch (error) {
 					console.log(error)
 				}
@@ -148,9 +157,11 @@ const OrderSummary = () => {
 					Loading...
 				</div> : null
 			}
-			<div className="w-full  sm:w-[450px] rounded-md bg-zinc-200 shadow-lg  py-10 px-4  ">
+			<div className="w-full relative sm:w-[450px] rounded-md bg-gray-100 shadow-lg  py-10 px-4  ">
+				<FaTimes size={20} className='cursor-pointer absolute right-10 top-8 text-gray-400' onClick={() => router.back()}/>
+
 				<h5 className="font-semibold pb-4">Order Summary</h5>
-				<div className="mb-8 rounded-md bg-[var(--oex-lightest-grey)] px-4 pt-6 pb-2 ">
+				<div className="mb-8 border rounded-md bg-[var(--oex-lightest-gre)] px-4 pt-6 pb-2 border-gray-300">
 					<h5 className="font-semibold pb-2">Order</h5>
 					{rehabspacePayment?.selectedSessions?.map(({ id, plan, price }) => (
 						<div key={id} className="flex justify-between items-center ">
@@ -167,19 +178,19 @@ const OrderSummary = () => {
 						className={`${
 							!rehabspacePayment?.email || !summary?.total
 								? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-								: 'text-white bg-[var(--oex-orange)] hover:bg-[var(--oex-orange-dark)] duration-300'
+								: 'text-white bg-[var(--oex-orange)]  '
 						} w-full flex items-center justify-center gap-4 px-8 py-4 rounded-md  `}>
 						<div>
 							<FaLock />
 						</div>
 						{loading ? <p>Submiting...</p> : <div>Pay ₦{summary?.total}</div>}
 					</button>
-					<button
+					{/* <button
 						onClick={() => router.push(`/rehabspace`)}
 						type="button"
 						className="mt-4 rounded-md w-full bg-gray-400 text-center py-4 px-8 hover:bg-gray-500 duration-300">
 						Cancel
-					</button>
+					</button> */}
 				</div>
 			</div>
 		</div>
@@ -195,9 +206,15 @@ export const SuccessFulPayment = ({ setSuccess, setLoading, success, summary }) 
 		<div className="inset-0 fixed flex  justify-center items-center z-50 bg-[var(--oex-lightest-grey)] px-2">
 
 			<div className="py-10 w-full sm:w-[450px]  bg-white rounded-lg p-6  space-y-4">
-				<div className="bg-green-500 w-full mx-auto rounded-full h-10 w-10 flex justify-center items-center text-xl font-bold text-white">
-					<FaCheck size={24} />
+
+				<div className="flex flex-col justify-center gap-2 items-center ">
+					<div className="bg-green-500 rounded-full h-8 w-8 flex justify-center items-center text-lg font-bold text-white">
+					<FaCheck size={16} />
+					</div>
+					<div className="">Payment confirmed</div>
+
 				</div>
+				
 				{/* {'Payment complete! Reference ID: ' + success?.reference} */}
 				<div className="flex justify-between">
 					<div className="text-[var(--text-colour-grey)]">Payment Method</div>

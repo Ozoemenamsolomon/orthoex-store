@@ -1,46 +1,20 @@
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import CTA from '@components/CTA';
 import { FormControl } from '@components/styled/Forms';
-import { insert, updateItem } from '@utils/rehabspcetable';
+import { updateItem } from '@utils/rehabspcetable';
 import { FC, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+import { CustomerType } from '@data/rehabspace/types';
 
-type UserFromDB = {
-	id: string;
-	email: string;
-	firstName: string;
-	lastName: string;
-	phone: string;
-	profession: string;
-	gender: string;
-	birthday: string;
-};
-
-type Customer = {
-	id?: bigint;
-	registrationDate: Date;
-	customerEmail: string;
-	firstName: string;
-	lastName: string;
-	profession?: string | null;
-	city?: string | null;
-	phoneNumber: string;
-	whatsappNumber?: string | null;
-	customerType?: string | null;
-	sessionBalance?: number | null;
-	birthDay?: string | null; // Change the type to match the actual data type of your "birthDay" column
-	gender?: string | null;
-  };
-  
 
 const Details: FC<{
 	user: UserProfile;
-	customer: Customer;
-	savedUserData: Partial<UserFromDB>;
-	}> = ({ user, savedUserData, customer }) => {
+	customer: CustomerType;
+	}> = ({ user,  customer }) => {
 
-	const [formData, setFormData] = useState<Partial<Customer>>(
+
+	const [formData, setFormData] = useState<Partial<CustomerType>>(
 		customer || {
 			registrationDate: new Date(),
 			customerEmail: user?.email || '',
@@ -50,13 +24,13 @@ const Details: FC<{
 			city: "",
 			phoneNumber: "",
 			whatsappNumber: "",
-			customerType: "Patient and Clinician", //TODO
+			customerType: "Clinician", //TODO
 			sessionBalance: 10,
 			birthDay: "",
 			gender: "",
+			email: user?.email,
 		  }
 	);
-
 	const [errors, setErrors] = useState({});
 	const [loading, setLoading] = useState(false);
 
@@ -75,7 +49,7 @@ const Details: FC<{
 		setLoading(true);
 	  
 		try {
-		  const { data, error } = await updateItem('customers', formData, 'id', customer?.id);
+		  const { data, error } = await updateItem('customers',formData, 'id', customer?.id);
 		  if (data) {
 			setFormData(data[0])
 			setErrors({});

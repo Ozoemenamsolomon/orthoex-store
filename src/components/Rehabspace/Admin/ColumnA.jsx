@@ -7,7 +7,8 @@ import {
 	UserIcon,
 } from '../../../data/rehabspace';
 
-const ColumnA = ({ setToggle, toggle }) => {
+const ColumnA = ({ setToggle, toggle , customers}) => {
+
 	return (
 		<div className="border border-[var(--oex-light-grey)]">
 			<h5 className="border-b border-[var(--oex-light-grey)]  px-4 py-6  ">
@@ -42,7 +43,7 @@ const ColumnA = ({ setToggle, toggle }) => {
 				<div className="text-[14px]">2/4 customers listed in your view</div>
 			</div>
 
-			{[1, 2, 3, 4, 5].map((item, i) => (
+			{customers?.map(({id, customerEmail, firstName, lastName, registrationDate, sessionBalance, gender, profession,  customerType, city, }, i) => (
 				<div
 					onClick={() => setToggle(i)}
 					key={i}
@@ -51,11 +52,11 @@ const ColumnA = ({ setToggle, toggle }) => {
 					}  px-4 py-6 border-y border-[var(--oex-light-grey)]  hover-grey flex gap-2 justify-between items-center `}>
 					<div className="flex gap-4">
 						<div className="shrink-0 rounded-full h-14 w-14 flex justify-center items-center bg-[var(--oex-grey)] text-[var(--oex-off-white)]">
-							AI
+							{'AI'}
 						</div>
 
 						<div className="">
-							<h5 className="">{'Abdur-rasheed Idris'}</h5>
+							<h5 className="">{firstName} {lastName}</h5>
 							<div className="flex gap-4 items-center  text-sm">
 								<div className="text-[var(--oex-dark-grey)]">
 									{'17.Nov.2023 '}

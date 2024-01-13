@@ -26,13 +26,15 @@ import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTraining
 import { supabaseClient, supabaseTrainingClient } from '@utils/supabase';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { format } from 'url';
 
 import RehabspaceAccount from "@components/Rehabspace/Account"
 import {fetchAll, fetchRow} from "@utils/rehabspcetable"
+import { useCart } from 'context/cartContext';
+import { CustomerType } from '@data/rehabspace/types';
 
 const accountOverviewLinks: ServiceCardType[] = [
 	{
@@ -87,7 +89,7 @@ type RehabspaceDataProps = {
 
 type Props = {
 	user: UserProfile;
-	customerDetails: any;
+	customerData: CustomerType;
 	data: {
 		orders: any[];
 		title: string;
@@ -96,10 +98,16 @@ type Props = {
 	rehabspaceData: RehabspaceDataProps;
 };
 
-const Account: NextPage<Props> = ({ user,customerDetails, data, trainingData, rehabspaceData }) => {
+const Account: NextPage<Props> = ({ user,customerData, data, trainingData, rehabspaceData }) => {
 	const router = useRouter();
 	const slug = router.query.slug as TypeOfSlug;
+	const { setCustomerDetails} = useCart()
 
+	useEffect(() => {
+		setCustomerDetails(customerData)
+	}, [customerData?.id])
+	
+	setCustomerDetails(customerData)
 	return (
 		<Container
 			verticalPaddingInREM={2}
@@ -134,19 +142,11 @@ const Account: NextPage<Props> = ({ user,customerDetails, data, trainingData, re
 					) : slug === 'trainings' ? (
 						<TrainingOrders trainingOrders={trainingData.trainings} />
 					) : slug === 'rehabspace' ? (
-						<RehabspaceAccount user={user} customer={customerDetails} rehabspaceData={rehabspaceData}/>
+						<RehabspaceAccount user={user} customer={customerData} rehabspaceData={rehabspaceData}/>
 					) : slug === 'details' ? (
 						<Details
 							user={user}
-							customer={customerDetails}
-							savedUserData={{
-								phone: '08012345678',
-								profession: 'Software Engineer',
-								firstName: 'John',
-								lastName: 'Doe',
-								birthday: '1990-01-01',
-								gender: 'male',
-							}}
+							customer={customerData}
 						/>
 					) : slug === 'password' ? (
 						<ResetPassword />
@@ -174,7 +174,6 @@ export const getServerSideProps = withPageAuthRequired({
 		const session = await getSession(req, res);
 
 		const {data: customer} = await fetchRow('customers', 'customerEmail', session?.user?.email)
-		console.log('customer=====', customer)
 
 		const data = {
 			orders: [],
@@ -251,7 +250,7 @@ export const getServerSideProps = withPageAuthRequired({
 				trainingData,
 				rehabspaceData,
 				user: session?.user,
-				customerDetails: customer[0] || {}
+				customerData: customer?.[0] || {},
 			},
 		};
 	},

@@ -1,7 +1,6 @@
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { getProductsByMultipleIDs } from '@data/client';
 import { ProductType } from '@data/products';
-import { fetchRow } from '@utils/rehabspcetable';
+import { CustomerType } from '@data/rehabspace/types';
 import { useRouter } from 'next/router';
 import {
 	ChangeEventHandler,
@@ -33,6 +32,8 @@ type CartContextType = {
 	cartProductDetails?: ProductType[];
 	address: AddressType;
 	deliveryFee: number;
+	customerDetails: CustomerType | null;
+	setCustomerDetails: React.Dispatch<React.SetStateAction<CustomerType | null>>;
 	handleAddressChange: ChangeEventHandler<
 		HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 	>;
@@ -204,6 +205,7 @@ export const CartProvider: React.FC = ({ children }) => {
 	};
 
 	const [rehabspacePayment, setRehabspacePayment] = useState([]);
+	const [customerDetails, setCustomerDetails] = useState<CustomerType | null>(null);
 
 	return (
 		<CartContext.Provider
@@ -218,6 +220,7 @@ export const CartProvider: React.FC = ({ children }) => {
 				handleAddressChange: handleChange,
 				rehabspacePayment,
 				setRehabspacePayment,
+				customerDetails, setCustomerDetails,
 			}}>
 			{children}
 		</CartContext.Provider>

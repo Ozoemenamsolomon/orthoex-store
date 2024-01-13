@@ -11,7 +11,7 @@ import {
 	isSameMonth,
 	isToday,
 	parse,
-	parseISO,
+	parseISO,isBefore,
 	startOfToday,
 } from 'date-fns';
 import { Fragment, useEffect, useState } from 'react';
@@ -32,6 +32,7 @@ export default function Calender({location, chosenLocation, setChosenLocation, s
 	const [active, setActive] = useState(chosenLocation?.locationId)
 
 	const isDayDisabled = (day) => {
+		let newHolidayList = [];
 		const dayOfWeek = new Date(day).getDay();
 		// Disable Sunday if isSunday is not available
 		if (dayOfWeek === 0 && !chosenLocation?.availableSunday) {
@@ -41,10 +42,19 @@ export default function Calender({location, chosenLocation, setChosenLocation, s
 		if (dayOfWeek === 6 && !chosenLocation?.availableSaturday) {
 		  return true;
 		}
+		if (isBefore(day, new Date())) {
+			return true
+		}
 		// Disable the day if it exists in the holidays list
 		// const holidays = ['2024-01-01', '2024-07-04', '2024-12-25'];
+		newHolidayList = holidays?.map(item => {
+			const originalDate = new Date(item?.date);
+			originalDate.setDate(originalDate.getDate() - 1);
+			return originalDate.toISOString().split('T')[0];
+		  });
+		  
 		const formattedDay = new Date(day).toISOString().split('T')[0];
-		if (holidays?.includes(formattedDay)) {
+		if (newHolidayList?.includes(formattedDay)) {
 		  return true;
 		}
 		return false;
@@ -116,7 +126,7 @@ export default function Calender({location, chosenLocation, setChosenLocation, s
 								<button onClick={()=>{
 									setActive(item?.locationId)
 									setChosenLocation(item)
-								}}  className={`${active===item?.locationId?'border-[var(--oex-orange)]':''} border text-center border-[var(--oex-grey)] px-4 py-2 rounded-md `}>
+								}}  className={`${active===item?.locationId?'border-[var(--oex-orange)] bg-orange-50':''} border text-center   border-[var(--oex-grey)] px-4 py-2 rounded-md `}>
 								{item?.locationName}
 								</button>
 							</div>
@@ -185,6 +195,7 @@ export default function Calender({location, chosenLocation, setChosenLocation, s
 									!isEqual(day, selectedDay) &&
 									!isSameMonth(day, firstDayCurrentMonth) &&
 										'text-gray-400',
+									
 									// isEqual(day, selectedDay) && isToday(day) && 'bg-orange-500',
 									isEqual(day, selectedDay)  && 'bg-orange-500 ',
 									!isEqual(day, selectedDay) && 'hover:bg-gray-200',
@@ -285,8 +296,8 @@ const TimeSlotPicker = ({ timeSlots, setBooking, selectedSlot, setSelectedSlot, 
 			  key={index}
 			  disabled={isSlotInactive}
 			  className={`w-full text-center p-4 border rounded-md 
-				${isSlotInactive ? 'border-gray-300 hover:border-gray-300 text-gray-400 cursor-not-allowed' : selectedSlot === index ? 'border-orange-500' : 'border-gray-700'}
-				hover:border-orange-500`}
+				${isSlotInactive ? 'border-gray-300 hover:border-gray-300 text-gray-400 cursor-not-allowed' : selectedSlot === index ? 'border-orange-500 bg-orange-50' : 'border-gray-700 hover:border-orange-500'}
+				`}
 			  onClick={() => {
 				setSelectedSlot(index);
 				setBooking(new Date(slot?.date).toISOString());

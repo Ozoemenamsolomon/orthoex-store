@@ -24,6 +24,8 @@ export const insertBooking = async bookingData => {
 export const fetchAll = async (table) => await supabase
   .from(table)
   .select('*')
+//   .order('id', { ascending: false });
+
 
 // read a specific row, e.g fetch a user with user id.
 export const fetchRow = async (table, column, columnValue) => await supabase
@@ -31,12 +33,7 @@ export const fetchRow = async (table, column, columnValue) => await supabase
 .select('*')
 .eq(column,columnValue)
 
-// fetch specific customer
-export const fetchCustomer = async (email) => await supabase
-.from('customers')
-.select('*')
-.eq('customerEmail', email)
-          
+
 // resd specific column like all categories, or all emails
 export const fetchSpecificColumn = async (table,column ) =>  await supabase
   .from(table)
@@ -86,3 +83,70 @@ export const addActivity = async (list) => {
 		return {data: null, error: error}
 	}
 }
+
+
+// fetch specific customer
+export const fetchCustomer = async (email) => await supabase
+.from('customers')
+.select('*')
+.eq('customerEmail', email)
+
+export const updateHistoryAndSessionBalance = async (sessionPurchaseData) => {
+	let response = {};
+
+	const updatedUserSessionBalance = await updateItem(
+		'customers', 
+		{...sessionPurchaseData?.customer, 
+			sessionBalance: sessionPurchaseData?.table !== 'appointment' ? sessionPurchaseData?.customer?.sessionBalance + sessionPurchaseData?.sessions 
+			: 
+			sessionPurchaseData?.customer?.sessionBalance - 1
+		}, 
+		'id', sessionPurchaseData?.customer?.id
+		)
+		response = {updatedUserSessionBalance: updatedUserSessionBalance?.data?.[0]}
+
+	const activityHistory = await insert('activityHistory', {
+		createdAt: new Date(), 
+		customerEmail: sessionPurchaseData?.customer?.email, 
+		activityType: sessionPurchaseData?.table !== 'appointment' ? 
+		  {
+			action: 'Session purchased',
+			sessions: sessionPurchaseData?.sessions,
+			amount: sessionPurchaseData?.amountPaid,
+			details: `Purchased ${sessionPurchaseData?.sessions} sessions with N${sessionPurchaseData?.amountPaid}`,
+		  } 
+		  	: 
+		  {
+			action: 'Session booked',
+			sessions: 1,
+			amount: 5000,
+			details: `Booked ${'1'} session with N${'5000'}`,
+		  },
+		customerId: sessionPurchaseData?.customer?.id
+	})
+	response = {...response, activityHistory: activityHistory.data?.[0]}
+
+	if (activityHistory?.data?.[0]) {
+		const customerAccountHistory = await insert(
+			'customerAccountHistory', 
+			{
+				created_at: new Date(),
+				userEmail: sessionPurchaseData?.user?.email,
+				customerEmail: sessionPurchaseData?.customer?.email,
+				activityId: activityHistory?.data[0]?.activityId,
+				Activity: sessionPurchaseData?.table !== 'appointment' ? 
+					`Purchased ${sessionPurchaseData?.sessions} sessions with N${sessionPurchaseData?.amountPaid}` : 
+					`Booked ${'1'} session with N${'5000'}`,
+				session: sessionPurchaseData?.table !== 'appointment' ?
+					sessionPurchaseData?.sessions 
+					: 
+					1,
+				userId: sessionPurchaseData?.customer?.id,
+				customerId: sessionPurchaseData?.customer?.id,
+			}
+		)
+		response = {...response, customerAccountHistory: customerAccountHistory?.data?.[0]}
+	}
+	
+	return response
+} 

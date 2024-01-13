@@ -7,7 +7,8 @@ import PaymentPopup from './PaymentPopup';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
+import { useCart } from 'context/cartContext';
+import { toast } from 'react-toastify';
 
 const PaymentSection = () => {
 	const [popup, setPopup] = useState(false);
@@ -18,8 +19,6 @@ const PaymentSection = () => {
 				<PaymentGrid/>
 				<BookingGrid/>
 			</div>
-
-			
 		</section>
 	);
 };
@@ -47,7 +46,7 @@ export const PaymentGrid = ({setShowPaymentModal}) => {
 
 				<button
 					onClick={()=>setPopup(true)}
-					className="px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)] hover:bg-[var(--oex-orange-dark)] duration-300">
+					className="px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)] ">
 					{paymentCard?.btnText}
 				</button>
 			</div>
@@ -57,7 +56,8 @@ export const PaymentGrid = ({setShowPaymentModal}) => {
 		)
 	}
 
-export const BookingGrid = ({setShowBookingPage, location}) => {
+export const BookingGrid = ({setShowBookingPage,  location}) => {
+	const router = useRouter()
 
 	const scrollToSection = () => {
 		const targetSection = document.getElementById('booking');
@@ -65,6 +65,8 @@ export const BookingGrid = ({setShowBookingPage, location}) => {
 			targetSection.scrollIntoView({ behavior: 'smooth' });
 		}
 	};
+
+	const {customerDetails} = useCart()
 
 return (
 <div className="overflow-hidden pl-4 sm:pl-8 max-lg:max-w-[600px] max-lg:mx-auto grid md:flex   sm:gap-6  items-center pt-10 rounded-xl bg-[var(-oex-off-white)] ">
@@ -74,8 +76,10 @@ return (
 
 	<div className="flex">
 		<button
-			onClick={()=>setShowBookingPage()}
-			className={`px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)] hover:bg-[var(--oex-orange-dark)] duration-300`}>
+			onClick={()=>{
+				customerDetails?.sessionBalance < 1 ? toast.warning('Your session balance is empty. Purshcase a new session.') : router.push(`/account/rehabspace?action=booking`)}
+			}
+			className={` ${customerDetails?.sessionBalance < 1 ? 'bg-orange-300' : 'bg-[var(--oex-orange)]'} px-8 py-4 font- rounded-md text-white   duration-300`}>
 			Book session
 		</button>
 	</div>

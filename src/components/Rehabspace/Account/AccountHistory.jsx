@@ -14,13 +14,10 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { fetchRow } from '@utils/rehabspcetable';
 
 const AccountHistory = ({log, customer}) => {
-	const {user}=useUser()
 	const [activities, setActivities] = useState(log?.data || [])
 
 	return (
-		<div className=" overflow-hidden ">
-			
-
+		<div className=" overflow-auto h-screen ">
 			<div className="py-">
 				{/* <div className="flex flex-col gap-6 justify-center text-center">
 					<div className="flex justify-center">
@@ -89,12 +86,12 @@ const AccountHistory = ({log, customer}) => {
 
 			{activities?.map(
 				(item, i) => (
-					<div className="flex justify-between gap-4 border-b  py-4" key={i}>
-						<div className="flex gap-4">
+					<div className="flex  gap-4 border-b  py-4" key={i}>
+						<div className="flex gap-4 w-3/4">
 
 							{item?.activityType?.action === 'Session cancelled' && <SessionCancelled />}
 
-							{item?.activityType?.action === 'booked' && <SessionBooked  />}
+							{item?.activityType?.action === 'Session booked' && <SessionBooked  />}
 
 							{item?.activityType?.action === 'Session purchased' && <SessionPurchsed />}
 
@@ -102,12 +99,12 @@ const AccountHistory = ({log, customer}) => {
 
 							<div className="">
 								<div className="">{item?.activityType?.action}</div>
-								<div className="">{new Date(item?.createdAt).toLocaleDateString()}</div>
+								<div className="">{new Date(item?.createdAt).toLocaleString()}</div>
 							</div>
 						</div>
 
-						<div className="">
-							<div className="font-semibold">N{item?.activityType?.amount}</div>
+						<div className="w-1/4 text-left">
+							<div className="font-semibold">₦{item?.activityType?.amount?.toLocaleString('en-US')}</div>
 							<div className="text-sm">{item?.activityType?.sessions} Sessiosns</div>
 						</div>
 					</div>

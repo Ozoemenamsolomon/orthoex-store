@@ -158,12 +158,11 @@ const RightNav: FC<{
 		const [drop, setDrop] = useState(0)
 		const { user } = useUser();
 		const {push}=useRouter()
-console.log('user' , user, drop)
 		return (
 			<>
 			<FaRegUserCircle size={24} onClick={()=>user ? setDrop(1) : push('/account/overview')}/>
 			<div onClick={()=>setDrop(0)} className={`${drop && user ? 'translate-y-0 opacity-100':'-translate-y-full opacity-0'} z-50 transform transition-transform duration-500 fixed inset-0 `}>
-				<div onClick={e=>e.stopPropagation()} className="bg-white shadow border text-black absolute right-8 top-20 rounded-md w-60 p-8 space-y-4 ">
+				<div onClick={e=>e.stopPropagation()} className="bg-[var(--oex-off-white)] shadow border text-[var(--text-colour-dark)] absolute right-8 top-20 rounded-md w-60 p-8 space-y-4 ">
 					<Link href={'/account/overview'} onClick={()=>setDrop(0)} className='block'>{user ? 'My Account' : 'Signin'}</Link>
 					{user ? <div className=""><a className='block w-full border-t pt-4' href="/api/auth/logout" onClick={()=>setDrop(0)}>Logout</a></div> : ''}
 					
