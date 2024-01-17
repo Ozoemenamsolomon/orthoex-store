@@ -21,10 +21,10 @@ export const insertBooking = async bookingData => {
 };
 
 // read all rows
-export const fetchAll = async (table) => await supabase
+export const fetchAll = async (table, orderBy) => await supabase
   .from(table)
   .select('*')
-//   .order('id', { ascending: false });
+  .order(orderBy, { ascending: false });
 
 
 // read a specific row, e.g fetch a user with user id.
@@ -50,10 +50,11 @@ export const fetchReferencedTable = async (table, column, other_table, foreign_k
   `)
 
 // with pagination
-export const fetchWithPagination = async (table, start, end ) => await supabase
+export const fetchWithPagination = async (table, start, end, orderBy ) => await supabase
   .from(table)
   .select('*')
   .range(start, end)
+  .order(orderBy, {ascending: false})
 
 // insert a row
 export const insert = async (table, list ) => await supabase

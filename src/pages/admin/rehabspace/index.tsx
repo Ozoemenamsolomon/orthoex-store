@@ -7,7 +7,7 @@ import RehabspaceAdmin from '@components/Rehabspace/Admin/RehabspaceAdmin'
 
 type RehabspaceDataProps = {
 	location: any,
-	holidays: any,
+	customers: any,
 	bookingPrice: any,
 	activityHistory: any,
 	title: string;
@@ -21,7 +21,7 @@ type Props = {
 
 const index: NextPage<Props> = ({rehabspaceData, user, customerData}) => {
   return (
-    <RehabspaceAdmin />
+    <RehabspaceAdmin rehabspaceData={rehabspaceData}/>
   )
 }
 
@@ -44,25 +44,24 @@ export const getServerSideProps = withPageAuthRequired({
 		
 		const {data: customer} = await fetchRow('customers', 'customerEmail', session?.user?.email)
 
-
 		const rehabspaceData: RehabspaceDataProps = {
 			location: [],
-			holidays: [],
+			customers: [],
 			bookingPrice: [],
 			activityHistory: [],
 			title: '',
 		};
 
 
-        const holidays = await fetchAll('holidays')
+        const customers = await fetchAll('customers')
         const location= await fetchAll('location')
         const bookingPrice = await fetchAll('bookingPrice')
         const activityHistory = await fetchRow('activityHistory', 'customerEmail', session?.user?.email)
 
-        console.log('rehabspace===', { holidays, location, bookingPrice, activityHistory })
+        console.log('rehabspace===', { customers, location, bookingPrice, activityHistory })
 
         rehabspaceData.location = location as any;
-        rehabspaceData.holidays = holidays as any;
+        rehabspaceData.customers = customers as any;
         rehabspaceData.bookingPrice = bookingPrice as any;
         rehabspaceData.activityHistory = activityHistory as any;
 

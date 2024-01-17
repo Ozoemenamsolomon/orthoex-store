@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	EmailIcon,
 	PhoneIcon,
@@ -10,54 +10,81 @@ import {
 	SessionsIcon,
 	WhatsAppIcon,
 } from '../../../data/rehabspace';
+import { toast } from 'react-toastify';
+import AccountHistory from '../Account/AccountHistory';
+import { fetchAll, fetchRow } from '@utils/rehabspcetable';
 
 const ColumnB = ({ type, toggle, setToggle }) => {
+	const {id, customerEmail, firstName, lastName, registrationDate, sessionBalance, gender, profession,  customerType, city, whatsappNumber, phoneNumber, email} = toggle || {};
+
+	const [loading, setLoading] = useState(0)
+	const [customerLog, setCustomerLog] = useState([])
+
+	useEffect(() => {
+		const fetchLog = async () => {
+			try {
+				setLoading(1)
+				const {data,error} = await fetchRow('activityHistory', 'customerEmail', email || customerEmail)
+				
+				console.log({data,error})
+				if(data) {
+					data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+					setCustomerLog(data)
+				} else {
+					toast.error('Error fetching customer log')
+				}
+			} catch (error) {
+				console.log(error)
+			} finally {
+				setLoading(0)
+			}
+		}
+		fetchLog()
+	}, [id])
+	
 	return (
-		<div className="p-4 overflow-hidden ">
+		<div className="px-4  overflow-hidden ">
 			{type && (
 				<button type="button" onClick={() => setToggle('')}>{`< Back`}</button>
 			)}
 
-			<div className="py-6">
-				<div className="flex flex-col gap-6 justify-center text-center">
-					<div className="flex justify-center">
+			<div className="pb-6">
+				<div className="flex flex-col gap-4 justify-center items-center text-center">
 						<div className="shrink-0 rounded-full h-14 w-14 flex justify-center items-center bg-[var(--oex-grey)] text-[var(--oex-off-white)]">
-							AI
+							{firstName?.[0]}{lastName?.[0] || firstName?.[1]}
 						</div>
-					</div>
 
 					<div className="">
-						<h5>Adbur-rasheed Idris {toggle} </h5>
+						<h5>{`${firstName} ${lastName} `}</h5>
 						<div className="text-sm">
-							Idrisrash2017@gmail.com
+							{customerEmail}
 							<br />
-							+2348109945686
+							 {phoneNumber}
 							<br />
-							<div className="text-[var(--oex-grey)]">Added April 1 2023</div>
+							<div className="text-[var(--text-colour-grey)]">Added {new Date(registrationDate).toDateString()}</div>
 						</div>
 					</div>
 				</div>
 
-				<div className="flex justify-center pt-8 gap-4 text-sm items-start">
+				<div className="flex justify-center pt-4 gap-4 text-sm items-start">
 					<div className="text-center flex flex-col justify-center">
-						<div className="flex justify-center">
-							{' '}
+						<a href={phoneNumber ? `tel:+${phoneNumber}` : ()=>toast.warning('Phonenumber is missing')} className="flex justify-center">
 							<PhoneIcon />
-						</div>
+						</a>
 						<div className="">Call</div>
 					</div>
 					<div className="text-center flex flex-col justify-center">
-						<div className="flex justify-center">
-							{' '}
+						<a href={whatsappNumber ? `tel:+${phoneNumber}` : ()=>toast.warning('Whatsapp number is missing')} 
+						className="flex justify-center">
 							<WhatsAppIcon />
-						</div>
+						</a>
 						<div className="">Whatsapp</div>
 					</div>
 					<div className="text-center flex flex-col justify-center">
-						<div className="flex justify-center">
-							{' '}
+						<a href={customerEmail ? `mailto:${customerEmail}` : ()=>toast.warning('email is missing')}
+						className="flex justify-center">
 							<EmailIcon />
-						</div>
+						</a>
 						<div className="">Email</div>
 					</div>
 					<div className="text-center flex flex-col justify-center">
@@ -76,7 +103,7 @@ const ColumnB = ({ type, toggle, setToggle }) => {
 				<div className="p-6 border broder-[var(--oex-light-grey)] flex gap-4 items-center">
 					<SessionsIcon />
 					<div className="">
-						<div className="">27 Sessions</div>
+						<div className="">{sessionBalance | 0} Sessions</div>
 						<small className="text-green-500">Balance</small>
 					</div>
 				</div>
@@ -84,28 +111,15 @@ const ColumnB = ({ type, toggle, setToggle }) => {
 
 			<h4 className="font-medium pt-6">Recent History</h4>
 
-			{['cancelled', 'booked', 'purchased', 'used', 'used', 'used']?.map(
-				(item, i) => (
-					<div className="flex justify-between gap-4 border-b  py-4" key={i}>
-						<div className="flex gap-4">
-							{item === 'cancelled' && <SessionCancelled />}
-							{item === 'booked' && <SessionBooked />}
-							{item === 'purchased' && <SessionPurchsed />}
-							{item === 'used' && <SessionUsed />}
+			<div className="max-h-[500px] overflow-auto ">
+				{
+					loading ? <p className='h-80 w-full flex justify-center items-center'>Loading...</p> :
+					customerLog.length ? <AccountHistory admin={true} log={customerLog} customer={toggle}/> :
+					<p className='h-80 w-full flex justify-center items-center'>No user log</p>
+				}
+			</div>
 
-							<div className="">
-								<div className="">Session {item}</div>
-								<div className="">Today</div>
-							</div>
-						</div>
-
-						<div className="">
-							<div className="font-semibold">N12000</div>
-							<div className="text-sm">2 Sessiosns</div>
-						</div>
-					</div>
-				),
-			)}
+			
 		</div>
 	);
 };

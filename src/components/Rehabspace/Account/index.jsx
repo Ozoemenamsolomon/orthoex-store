@@ -19,7 +19,7 @@ const index = ({user, rehabspaceData, customer}) => {
 		<>
 		<div className="">
 			<div className="py-10 grid sm:grid-cols-2 gap-10">
-				<AccountHistory log={rehabspaceData?.activityHistory} customer={customer}/>
+				<AccountHistory log={rehabspaceData?.activityHistory?.data} customer={customer}/>
 				<div className="space-y-12">
 					<PaymentGrid customer={customer}/>
 					<BookingGrid customer={customer} location={rehabspaceData?.location} setShowBookingPage={()=>setShow('booking')}/>
