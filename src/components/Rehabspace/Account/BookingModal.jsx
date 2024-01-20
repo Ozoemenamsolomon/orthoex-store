@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
 const BookingModal = ({location, holidays, customer, booking, setBooking, setShow}) => {
-	const {push} = useRouter()
+	const { back} = useRouter()
 
     const [chosenLocation, setChosenLocation] = useState(location?.data && location?.data?.length && location?.data[0])
 
@@ -18,7 +18,7 @@ const BookingModal = ({location, holidays, customer, booking, setBooking, setSho
 				<div className='section-padding-x flex  w-full  justify-between  items-center gap-20'>
 					<div className="">{chosenLocation?.organisationLogo || 'Logo null'} </div>
 					<div className="" >
-						<FaTimes onClick={()=>push(`/account/rehabspace`)} />
+						<FaTimes onClick={()=>back()} />
 					</div>
 				</div>
 			</header>

@@ -13,8 +13,10 @@ import {
 import { toast } from 'react-toastify';
 import AccountHistory from '../Account/AccountHistory';
 import { fetchAll, fetchRow } from '@utils/rehabspcetable';
+import { useRouter } from 'next/navigation';
 
 const ColumnB = ({ type, toggle, setToggle }) => {
+	const {push} = useRouter()
 	const {id, customerEmail, firstName, lastName, registrationDate, sessionBalance, gender, profession,  customerType, city, whatsappNumber, phoneNumber, email} = toggle || {};
 
 	const [loading, setLoading] = useState(0)
@@ -88,7 +90,8 @@ const ColumnB = ({ type, toggle, setToggle }) => {
 						<div className="">Email</div>
 					</div>
 					<div className="text-center flex flex-col justify-center">
-						<div className="flex justify-center">
+						<div onClick={()=>push('?action=booking')} 
+						className="flex justify-center">
 							{' '}
 							<ScheduleIcon />
 						</div>

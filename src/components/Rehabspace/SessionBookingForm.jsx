@@ -36,7 +36,7 @@ const SessionBookingForm = ({ onSubmit }) => {
 		  try {
 			const { data: customerData, error: customerError } = await fetchCustomer(user?.email);
 	  
-			const { data: pricesData, error: pricesError } = await fetchAll('bookingPrice');
+			const { data: pricesData, error: pricesError } = await fetchAll('bookingPrice', 'id');
 	  
 			if (pricesData) {
 			  setSessionPrices(pricesData);
@@ -49,7 +49,7 @@ const SessionBookingForm = ({ onSubmit }) => {
 					email: user?.email 
 				});
 			} else {
-			  console.log(pricesError);
+			  console.log({pricesError});
 			}
 		  } catch (error) {
 			console.log(error);

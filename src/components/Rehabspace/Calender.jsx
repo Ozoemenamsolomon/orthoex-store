@@ -310,11 +310,10 @@ const TimeSlotPicker = ({ timeSlots, setBooking, selectedSlot, setSelectedSlot, 
 	  </div>
 	);
   };
-  ;
-  
-  
 
 const TimeSlots = ({chosenLocation, inactiveSlots, date, setBooking, selectedSlot, setSelectedSlot }) => {
+
+	console.log({chosenLocation})
 	const [startTime, setstartTime] = useState(new Date(chosenLocation?.startTime));
 	
 	useEffect(() => {

@@ -229,9 +229,9 @@ export const getServerSideProps = withPageAuthRequired({
 		};
 
 		if (query.slug === 'rehabspace') {
-			const holidays = await fetchAll('holidays')
-			const location= await fetchAll('location')
-			const bookingPrice = await fetchAll('bookingPrice')
+			const holidays = await fetchAll('holidays', 'created_at')
+			const location= await fetchAll('location', 'created_at')
+			const bookingPrice = await fetchAll('bookingPrice', 'created_at')
 			const activityHistory = await fetchRow('activityHistory', 'customerEmail', session?.user?.email)
 			console.log('rehabspace===', { holidays, location, bookingPrice, activityHistory })
 			rehabspaceData.location = location as any;

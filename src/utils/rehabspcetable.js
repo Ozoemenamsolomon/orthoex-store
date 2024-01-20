@@ -50,11 +50,22 @@ export const fetchReferencedTable = async (table, column, other_table, foreign_k
   `)
 
 // with pagination
-export const fetchWithPagination = async (table, start, end, orderBy ) => await supabase
-  .from(table)
-  .select('*')
-  .range(start, end)
-  .order(orderBy, {ascending: false})
+export const fetchWithPagination = async (table, start, end, orderBy ) => {
+	const {count, error} = await supabase
+				.from(table)
+				.select('*', { count: 'exact', head: true })
+
+	const res = await supabase
+		.from(table)
+		.select('*')
+		.range(start, end)
+		.order(orderBy, {ascending: false})
+
+	return {
+		count: {count, error},
+		data: res.data, error: res.error, res
+	}
+}
 
 // insert a row
 export const insert = async (table, list ) => await supabase
@@ -148,6 +159,6 @@ export const updateHistoryAndSessionBalance = async (sessionPurchaseData) => {
 		)
 		response = {...response, customerAccountHistory: customerAccountHistory?.data?.[0]}
 	}
-	
+	console.log({updatedUserSessionBalance,activityHistory, customerAccountHistory})
 	return response
 } 

@@ -12,6 +12,8 @@ import PageLoading from "@components/Loader/PageLoading"
 import BookingCountdown from './BookingCountdown';
 import SearchBar from './SearchBar'
 import {MdRefresh} from 'react-icons/md'
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const ColumnA = ({ setToggle, toggle }) => {
 	const loadingRef = useRef();
@@ -21,25 +23,32 @@ const ColumnA = ({ setToggle, toggle }) => {
 	const [start, setStart] = useState(0);
 	const [end, setEnd] = useState(12);
 	const [refresh, setRefresh] = useState('');
-	
-
+	const [currentPage, setCurrentPage] = useState(1);
+	const [totalPages, setTotalPages] = useState(1);
+	const [counting, setCounting] = useState({});
 
   
 	useEffect(() => {
 	  const fetchData = async () => {
+		const pageSize = 12; 
+		const offset = (currentPage - 1) * pageSize;
 		try {
 			setLoading(true)
-		  const { data, error } = await fetchWithPagination('appointment', start, end, 'id');
+		  const { data, error, count:{count, } } = await fetchWithPagination('appointment', offset, offset + pageSize - 1, 'id');
+
 		  if (data) {
 			setAppointments(prevData => [...prevData, ...(data || [])]);
 			console.log('appointment', data)
 			if(!toggle){
 				setToggle(data?.[0]?.user)
 			}
+			setTotalPages(Math.ceil(count / pageSize));
+			setCounting({total: count, result: data?.length})
+			
 		  } else {
 			toast.error('Cannot access customer table');
 			setError(error?.message);
-		  }
+		  }error
 		} catch (error) {
 		  console.error(error);
 		} finally {
@@ -49,7 +58,19 @@ const ColumnA = ({ setToggle, toggle }) => {
   
 	  fetchData();
 	
-	}, [start, end, refresh]);
+	}, [currentPage, refresh]);
+
+	const handleNextPage = () => {
+		if (currentPage < totalPages) {
+		  setCurrentPage((prevPage) => prevPage + 1);
+		}
+	  };
+	
+	  const handlePrevPage = () => {
+		if (currentPage > 1) {
+		  setCurrentPage((prevPage) => prevPage - 1);
+		}
+	  };
 
 	return (
 		<div className="border border-[var(--oex-light-grey)]">
@@ -57,23 +78,28 @@ const ColumnA = ({ setToggle, toggle }) => {
 				Appointments
 			</h5>
 
-			<div className="flex items-center justify-between w-full gap-4 pt-6 px-4">
-				<SearchBar setResult={setAppointments} setLoading={setLoading}/>
-				<div className=" shrink-0 p">
-					<FilterIcon />
-					<div className="text-[12px] text-[var(--oex-dark-grey)]">View</div>
+			<SearchBar setResult={setAppointments} setLoading={setLoading} setCounting={setCounting}/>
+
+			<div className="flex justify-between items-center gap-2 px-4 pb-3 pt-2">
+				<div className="flex items-center gap-2 ">
+					<UserIcon />
+					<div className="text-[14px]">{`${counting?.result || '' }/ ${counting?.total || ''}`} appointments listed in your view</div>
 				</div>
 			</div>
 
-			<div className="flex justify-between items-center gap-2 px-4 pb-6 pt-2">
-				<div className="flex items-center gap-2 pb-2">
-					<UserIcon />
-					<div className="text-[14px]">2/4 appointments listed in your view</div>
-				</div>
+			<div className="flex px-4  pb-3 gap-8 justify-between">
 				<button className="shadow-md p-1 rounded-full hover:border duration-300 ">
 					<MdRefresh size={20} onClick={()=>setRefresh(new Date())}/>
 				</button>
+				<div className=" flex gap-3 justify-end">
+					<button disabled={currentPage===1} onClick={handlePrevPage}
+					className={`${currentPage===1 ? 'disabled cursor-not-allowed' : ''}`}><FaAngleLeft/></button>
+					<span> Page {currentPage} of {totalPages} </span>
+					<button disabled={currentPage===totalPages} onClick={handleNextPage}
+					className={`${currentPage===totalPages ? 'disabled cursor-not-allowed' : ''}`}><FaAngleRight/></button>
+				</div>
 			</div>
+
 			
 
 			<div ref={loadingRef} className="h-[740px]  overflow-auto">
@@ -91,6 +117,8 @@ const ColumnA = ({ setToggle, toggle }) => {
 					className={`${
 						toggle?.id === id ? 'bg-[var(--oex-light-grey)]' : ''
 					}  px-4 py-6 border-y border-[var(--oex-light-grey)] flex gap-2 justify-between items-center `}>
+
+					
 
 					<div className="flex gap-4">
 						<div className="shrink-0 rounded-full h-14 w-14 flex justify-center items-center bg-[var(--oex-grey)] text-[var(--oex-off-white)] uppercase">
