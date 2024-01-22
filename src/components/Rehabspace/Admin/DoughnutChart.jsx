@@ -3,9 +3,9 @@ import React, { useEffect, useRef } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 
-const BookingStatusDoughnutChart = () => {
+const BookingStatusDoughnutChart = ({rehabspaceData}) => {
 	const chartRef = useRef(null);
-
+console.log(rehabspaceData?.stats)
 	useEffect(() => {
 		if (chartRef.current) {
 			const data = {
@@ -44,7 +44,18 @@ const BookingStatusDoughnutChart = () => {
 		}
 	}, []); // Empty dependency array to ensure this effect runs only once
 
-	return <canvas ref={chartRef} style={{ height: '300px' }} />; // Set your desired height
+	return <div className="">
+		<div className="relative">
+			<canvas ref={chartRef} style={{ height: '200px' }} />
+			<div className="absolute inset-0 flex flex-col justify-center items-center">
+				<h4> {rehabspaceData?.stats?.appointmentCount?.count}</h4>
+				<p>Bookings</p>
+				<p > {rehabspaceData?.stats?.customersCount?.count} Customers</p>
+			</div>
+		</div>
+		
+		
+		</div>; // Set your desired height
 };
 
 export default BookingStatusDoughnutChart;

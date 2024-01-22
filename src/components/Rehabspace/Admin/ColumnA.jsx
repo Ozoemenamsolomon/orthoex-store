@@ -15,7 +15,7 @@ import {MdRefresh} from 'react-icons/md'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
-const ColumnA = ({ setToggle, toggle }) => {
+const ColumnA = ({ setToggle, customer, setCustomerLog }) => {
 	const loadingRef = useRef();
 	const [appointments, setAppointments] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -37,9 +37,9 @@ const ColumnA = ({ setToggle, toggle }) => {
 		  const { data, error, count:{count, } } = await fetchWithPagination('appointment', offset, offset + pageSize - 1, 'id');
 
 		  if (data) {
-			setAppointments(prevData => [...prevData, ...(data || [])]);
+			setAppointments(data);
 			console.log('appointment', data)
-			if(!toggle){
+			if(!customer){
 				setToggle(data?.[0]?.user)
 			}
 			setTotalPages(Math.ceil(count / pageSize));
@@ -100,8 +100,6 @@ const ColumnA = ({ setToggle, toggle }) => {
 				</div>
 			</div>
 
-			
-
 			<div ref={loadingRef} className="h-[740px]  overflow-auto">
 			{
 			loading ? 
@@ -115,13 +113,11 @@ const ColumnA = ({ setToggle, toggle }) => {
 					key={i}
 					onClick={()=>setToggle(user)}
 					className={`${
-						toggle?.id === id ? 'bg-[var(--oex-light-grey)]' : ''
+						customer?.id === id ? 'bg-[var(--oex-light-grey)]' : ''
 					}  px-4 py-6 border-y border-[var(--oex-light-grey)] flex gap-2 justify-between items-center `}>
 
-					
-
 					<div className="flex gap-4">
-						<div className="shrink-0 rounded-full h-14 w-14 flex justify-center items-center bg-[var(--oex-grey)] text-[var(--oex-off-white)] uppercase">
+						<div className="shrink-0 rounded-full h-10 w-10 flex justify-center items-center bg-[var(--oex-grey)] text-[var(--oex-off-white)] uppercase">
 							{customerName?.[0]}{customerSurname?.[0] || customerName?.[1]}
 						</div>
 
@@ -145,7 +141,7 @@ const ColumnA = ({ setToggle, toggle }) => {
 						</div>
 					</div>
 
-					<BookingCountdown bookingDate={appointmentDateTime}/>
+					<BookingCountdown bookingDate={appointmentDateTime} appointment={appointments[i]} setRefresh={setRefresh} setCustomerLog={setCustomerLog}/>
 				</div>
 				
 			))

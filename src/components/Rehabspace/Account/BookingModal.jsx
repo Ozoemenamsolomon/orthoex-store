@@ -7,7 +7,7 @@ import { updateItem } from '@utils/rehabspcetable';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
-const BookingModal = ({location, holidays, customer, booking, setBooking, setShow}) => {
+const BookingModal = ({location, holidays, customer, booking, setBooking,setCustomer, }) => {
 	const { back} = useRouter()
 
     const [chosenLocation, setChosenLocation] = useState(location?.data && location?.data?.length && location?.data[0])
@@ -45,7 +45,7 @@ const BookingModal = ({location, holidays, customer, booking, setBooking, setSho
 			</section>
 
 			<section className="section-padding-x py-20 ">
-					<Calender chosenLocation={chosenLocation} setChosenLocation={setChosenLocation} location={location} setBooking={setBooking} booking={booking} customer={customer} holidays={holidays?.data}/>
+					<Calender chosenLocation={chosenLocation} setChosenLocation={setChosenLocation} location={location} setBooking={setBooking} booking={booking} customer={customer} setCustomer={setCustomer} holidays={holidays?.data}/>
 			</section>
 		</div>
   )

@@ -5,20 +5,19 @@ import { fetchAll, fetchCustomer, fetchRow } from "@utils/rehabspcetable";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 
-const SessionBookingBtn = ({ booking, chosenLocation, setInactiveSlots}) => {
+const SessionBookingBtn = ({ booking, chosenLocation, setCustomer, customer, setInactiveSlots}) => {
   const router = useRouter()
   const [loading, setLoading] = useState(0);
 	const [apiError, setApiError] = useState('')
   const {user} = useUser()
 
-  const [customer, setCustomer] = useState('')
   const [refresh, setRefresh] = useState(0)
 
   const bookedDate = new Date(booking)
 
   useEffect(() => {
     const fetch= async ()=> {
-      const {data, error} = await fetchCustomer(user?.email)
+      const {data, error} = await fetchCustomer(customer?.email || customer?.customerEmail)
       if (data) {
         setCustomer(data?.[0])
         console.log({data, error})
@@ -43,7 +42,7 @@ const SessionBookingBtn = ({ booking, chosenLocation, setInactiveSlots}) => {
 		AppointmentStartTime: new Date(booking).toLocaleTimeString(),
     appointmentDateTime: new Date(booking),
 		status: {
-      status: 'check-in', 
+      status: 'booked', 
       userID: customer?.id, 
       fullname: `${customer?.firstName} ${customer?.lastName}`, 
       update: '', 

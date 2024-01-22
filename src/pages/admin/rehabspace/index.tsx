@@ -1,7 +1,7 @@
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { CustomerType } from '@data/rehabspace/types';
-import {fetchAll, fetchRow} from "@utils/rehabspcetable"
+import {dashboardStats, fetchAll, fetchRow, } from "@utils/rehabspcetable"
 import { NextPage } from 'next';
 import RehabspaceAdmin from '@components/Rehabspace/Admin/RehabspaceAdmin'
 
@@ -12,6 +12,7 @@ type RehabspaceDataProps = {
 	bookingPrice: any,
 	activityHistory: any,
 	title: string;
+	stats: any
 };
 
 type Props = {
@@ -51,6 +52,7 @@ export const getServerSideProps = withPageAuthRequired({
 			staff: [],
 			bookingPrice: [],
 			activityHistory: [],
+			stats: {},
 			title: '',
 		};
 
@@ -59,11 +61,13 @@ export const getServerSideProps = withPageAuthRequired({
 		const location= await fetchAll('location', 'created_at')
 		const bookingPrice = await fetchAll('bookingPrice', 'created_at')
         const activityHistory = await fetchRow('activityHistory', 'customerEmail', session?.user?.email)
+		const stats = await dashboardStats()
 
-        console.log('rehabspace===', { staff:customer, location, bookingPrice, activityHistory })
+        console.log('rehabspace===', { staff:customer, stats, location, bookingPrice, activityHistory })
 
         rehabspaceData.location = location as any;
         rehabspaceData.holidays = holidays as any;
+        rehabspaceData.stats = stats as any;
         rehabspaceData.staff = customer as any;
         rehabspaceData.bookingPrice = bookingPrice as any;
         rehabspaceData.activityHistory = activityHistory as any;

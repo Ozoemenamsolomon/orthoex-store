@@ -15,22 +15,19 @@ import AccountHistory from '../Account/AccountHistory';
 import { fetchAll, fetchRow } from '@utils/rehabspcetable';
 import { useRouter } from 'next/navigation';
 
-const ColumnB = ({ type, toggle, setToggle }) => {
+const ColumnB = ({ type, customer, setCustomer, customerLog, setCustomerLog }) => {
 	const {push} = useRouter()
-	const {id, customerEmail, firstName, lastName, registrationDate, sessionBalance, gender, profession,  customerType, city, whatsappNumber, phoneNumber, email} = toggle || {};
+	const {id, customerEmail, firstName, lastName, registrationDate, sessionBalance, gender, profession,  customerType, city, whatsappNumber, phoneNumber, email} = customer || {};
 
 	const [loading, setLoading] = useState(0)
-	const [customerLog, setCustomerLog] = useState([])
 
 	useEffect(() => {
 		const fetchLog = async () => {
 			try {
 				setLoading(1)
-				const {data,error} = await fetchRow('activityHistory', 'customerEmail', email || customerEmail)
-				
-				console.log({data,error})
+				const {data,error} = await fetchRow('activityHistory', 'customerEmail', email || customerEmail, 'createdAt')
 				if(data) {
-					data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+					// data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 					setCustomerLog(data)
 				} else {
 					toast.error('Error fetching customer log')
@@ -47,7 +44,7 @@ const ColumnB = ({ type, toggle, setToggle }) => {
 	return (
 		<div className="px-4  overflow-hidden ">
 			{type && (
-				<button type="button" onClick={() => setToggle('')}>{`< Back`}</button>
+				<button type="button" onClick={() => setCustomer('')}>{`< Back`}</button>
 			)}
 
 			<div className="pb-6">
@@ -117,7 +114,7 @@ const ColumnB = ({ type, toggle, setToggle }) => {
 			<div className="max-h-[500px] overflow-auto ">
 				{
 					loading ? <p className='h-80 w-full flex justify-center items-center'>Loading...</p> :
-					customerLog.length ? <AccountHistory admin={true} log={customerLog} customer={toggle}/> :
+					customerLog?.length ? <AccountHistory admin={true} log={customerLog} customer={customer}/> :
 					<p className='h-80 w-full flex justify-center items-center'>No user log</p>
 				}
 			</div>

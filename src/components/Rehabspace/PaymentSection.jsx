@@ -25,7 +25,7 @@ const PaymentSection = () => {
 
 export default PaymentSection;
 
-export const PaymentGrid = ({setShowPaymentModal}) => {
+export const PaymentGrid = () => {
 	const [popup, setPopup] = useState(false);
 	
 	return (
@@ -56,7 +56,7 @@ export const PaymentGrid = ({setShowPaymentModal}) => {
 		)
 	}
 
-export const BookingGrid = ({setShowBookingPage,  location}) => {
+export const BookingGrid = () => {
 	const router = useRouter()
 
 	const scrollToSection = () => {

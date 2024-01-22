@@ -12,7 +12,6 @@ export const insertBooking = async bookingData => {
 			console.error('Error inserting data:', error.message);
 			return { success: false, error: error.message };
 		}
-		console.log('Data inserted successfully:', data);
 		return { success: true, data };
 	} catch (error) {
 		console.error('Unexpected error:', error.message);
@@ -28,10 +27,11 @@ export const fetchAll = async (table, orderBy) => await supabase
 
 
 // read a specific row, e.g fetch a user with user id.
-export const fetchRow = async (table, column, columnValue) => await supabase
+export const fetchRow = async (table, column, columnValue,orderBy) => await supabase
 .from(table)
 .select('*')
 .eq(column,columnValue)
+.order(orderBy, { ascending: false });
 
 
 // resd specific column like all categories, or all emails
@@ -162,3 +162,83 @@ export const updateHistoryAndSessionBalance = async (sessionPurchaseData) => {
 	console.log({updatedUserSessionBalance,activityHistory, customerAccountHistory})
 	return response
 } 
+
+export const updateAppointmentStatus = async (action, appointment) => {
+	let response = {};
+
+	const data = {
+		...appointment,
+		status:  {
+			...appointment?.status,
+			status: action==='checked-in' ?  'checked-in' :'cancelled'
+			}
+	} 
+	const result = await updateItem('appointment', data, 'id', appointment?.id)
+
+	if(result.data){
+		const activityHistory = await insert('activityHistory', {
+			createdAt: new Date(), 
+			customerEmail: appointment?.user?.email || appointment?.user?.customerEmail , 
+			activityType: action !== 'cancelled' ? 
+			  {
+				action: 'Session used',
+				sessions: 1,
+				amount: 5000,
+				details: `Session used at ${appointment?.locationName} `,
+			  } 
+				  : 
+				{
+				action: 'Session cancelled',
+				sessions: 1,
+				amount: 5000,
+				details: `Session cancelled by ${'staff'}`,
+				} ,
+			customerId: appointment?.user?.id
+		})
+		response = {...response, activityHistory: activityHistory.data?.[0]}
+
+		if (activityHistory?.data?.[0]) {
+			const customerAccountHistory = await insert(
+				'customerAccountHistory', 
+				{
+					created_at: new Date(),
+					userEmail: appointment?.user?.email || '' ,
+					customerEmail: appointment?.user?.customerEmail || '', 
+					activityId: activityHistory?.data[0]?.activityId,
+					Activity: action !== 'cancelled' ? 
+					`Session used at ${appointment?.locationName} ` : 
+					`Session cancelled by ${'staff'}`,
+					session: 1,
+					userId: appointment?.user?.id,
+					customerId:appointment?.user?.id,
+				}
+			)
+			response = {...response, customerAccountHistory: customerAccountHistory?.data?.[0]}
+			console.log({activityHistory, customerAccountHistory})
+		}
+		
+	}
+
+	
+
+	return result;
+}
+
+export const dashboardStats = async () => {
+	const appointmentCount = await supabase
+				.from('appointment')
+				.select('*', { count: 'exact', head: true })
+
+	const customersCount= await supabase
+				.from('customers')
+				.select('*', { count: 'exact', head: true })
+
+	const appointments = await fetchAll('appointment');
+    const customers = await fetchAll('customers');
+    if (appointments?.data) {
+
+     
+    }
+
+    return {appointmentCount,customersCount};
+}

@@ -11,24 +11,24 @@ import { useRouter } from 'next/router';
 const index = ({user, rehabspaceData, customer}) => {
 	const router = useRouter()
 	const [booking, setBooking] = useState(new Date().toLocaleString());
-	const [show, setShow] = useState(0);
+	const [customerState, setCustomerState] = useState(customer);
 
-	console.log({rehabspaceData, user, customer})
+	console.log({rehabspaceData, user, customerState})
 	
 	return (
 		<>
 		<div className="">
 			<div className="py-10 grid sm:grid-cols-2 gap-10">
-				<AccountHistory log={rehabspaceData?.activityHistory?.data} customer={customer}/>
+				<AccountHistory log={rehabspaceData?.activityHistory?.data} customer={customerState}/>
 				<div className="space-y-12">
-					<PaymentGrid customer={customer}/>
-					<BookingGrid customer={customer} location={rehabspaceData?.location} setShowBookingPage={()=>setShow('booking')}/>
+					<PaymentGrid />
+					<BookingGrid />
 				</div>
 			</div>
 		</div>
 		
 		{/* booking modal */}
-		{router.query?.action==='booking' ? <BookingModal customer={customer} location={rehabspaceData?.location} holidays={rehabspaceData?.holidays} booking={booking} setBooking={setBooking} setShow={setShow}/> : null}
+		{router.query?.action==='booking' ? <BookingModal customer={customerState} setCustomer={setCustomerState} location={rehabspaceData?.location} holidays={rehabspaceData?.holidays} booking={booking} setBooking={setBooking} /> : null}
 		</>
 
 	);
