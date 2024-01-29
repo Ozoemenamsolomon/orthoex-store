@@ -7,70 +7,86 @@ import {
 	SearchIcon,
 	UserIcon,
 } from '../../../data/rehabspace';
-import { fetchAll, fetchWithPagination } from '@utils/rehabspcetable';
+import { deleteItem, fetchAll, fetchWithPagination } from '@utils/rehabspcetable';
+import { convertDateToWAT } from '@utils/convertDateToWAT';
 import PageLoading from "@components/Loader/PageLoading"
 import BookingCountdown from './BookingCountdown';
 import SearchBar from './SearchBar'
 import {MdRefresh} from 'react-icons/md'
-import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import { FaAngleLeft, FaAngleRight, FaTimes } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { stringToJson } from '@utils/stringToJson';
 
-const ColumnA = ({ setToggle, customer, setCustomerLog }) => {
+const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, setCustomerLog, setCustomer,  appointmentTable, setAppointmentTable }) => {
 	const loadingRef = useRef();
-	const [appointments, setAppointments] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const [start, setStart] = useState(0);
-	const [end, setEnd] = useState(12);
 	const [refresh, setRefresh] = useState('');
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
 	const [counting, setCounting] = useState({});
 
-  
+	let pageSize = rehabspaceData?.pageSize;
+
+	const updatePagination = (counts,type,data) => {
+		if(!type) {
+			setTotalPages(Math.ceil(counts / pageSize));
+			setCounting({total: counts, result: data?.length})
+		} else {
+			setCounting({total: counts, result: data?.length})
+			setCurrentPage(1)
+			setTotalPages(1)
+		}
+	}
+
 	useEffect(() => {
-	  const fetchData = async () => {
-		const pageSize = 12; 
+		setTotalPages(Math.ceil(rehabspaceData?.appointments?.count?.count / pageSize));
+		setCounting({total: rehabspaceData?.appointments?.count?.count, result: appointmentTable?.length})
+	  }, [rehabspaceData])
+
+	const fetchAppointments = async (currentPage) => {
 		const offset = (currentPage - 1) * pageSize;
 		try {
-			setLoading(true)
+		  setError('')
+		  setLoading(true)
 		  const { data, error, count:{count, } } = await fetchWithPagination('appointment', offset, offset + pageSize - 1, 'id');
 
+		  console.log('count', count, offset, pageSize, currentPage, totalPages)
+		  
 		  if (data) {
-			setAppointments(data);
-			console.log('appointment', data)
+			setAppointmentTable(data)
 			if(!customer){
-				setToggle(data?.[0]?.user)
+				updateCustomer(stringToJson(data?.[0]?.user))
+				setToggle(data?.[0]?.id)
 			}
-			setTotalPages(Math.ceil(count / pageSize));
-			setCounting({total: count, result: data?.length})
-			
+			updatePagination(count, null, data)
 		  } else {
 			toast.error('Cannot access customer table');
 			setError(error?.message);
-		  }error
+		  }
 		} catch (error) {
 		  console.error(error);
 		} finally {
 		  setLoading(false); 
 		}
 	  };
-  
-	  fetchData();
-	
-	}, [currentPage, refresh]);
 
-	const handleNextPage = () => {
+	const handleNextPage = async() => {
 		if (currentPage < totalPages) {
-		  setCurrentPage((prevPage) => prevPage + 1);
+			fetchAppointments(currentPage + 1)
+			setCurrentPage((prevPage) => prevPage + 1);
+			
 		}
 	  };
 	
 	  const handlePrevPage = () => {
 		if (currentPage > 1) {
-		  setCurrentPage((prevPage) => prevPage - 1);
-		}
+			setCurrentPage((prevPage) => prevPage - 1);
+			fetchAppointments(currentPage -1)
+		} 
 	  };
+	  
+	  
 
 	return (
 		<div className="border border-[var(--oex-light-grey)]">
@@ -78,42 +94,56 @@ const ColumnA = ({ setToggle, customer, setCustomerLog }) => {
 				Appointments
 			</h5>
 
-			<SearchBar setResult={setAppointments} setLoading={setLoading} setCounting={setCounting}/>
+			<SearchBar setLoading={setLoading} setCounting={setCounting}
+			 setAppointmentTable={setAppointmentTable} pageSize={pageSize} updatePagination={updatePagination} 
+			/>
 
 			<div className="flex justify-between items-center gap-2 px-4 pb-3 pt-2">
 				<div className="flex items-center gap-2 ">
-					<UserIcon />
-					<div className="text-[14px]">{`${counting?.result || '' }/ ${counting?.total || ''}`} appointments listed in your view</div>
+					
+						<UserIcon />
+						<div className="text-[14px]">{`${counting?.result || 0 }/ ${counting?.total || ''}`} appointments listed in your view</div>
+					
 				</div>
 			</div>
 
 			<div className="flex px-4  pb-3 gap-8 justify-between">
 				<button className="shadow-md p-1 rounded-full hover:border duration-300 ">
-					<MdRefresh size={20} onClick={()=>setRefresh(new Date())}/>
+					<MdRefresh size={20} onClick={()=>fetchAppointments(currentPage)}/>
 				</button>
 				<div className=" flex gap-3 justify-end">
-					<button disabled={currentPage===1} onClick={handlePrevPage}
-					className={`${currentPage===1 ? 'disabled cursor-not-allowed' : ''}`}><FaAngleLeft/></button>
-					<span> Page {currentPage} of {totalPages} </span>
-					<button disabled={currentPage===totalPages} onClick={handleNextPage}
-					className={`${currentPage===totalPages ? 'disabled cursor-not-allowed' : ''}`}><FaAngleRight/></button>
+					{
+						totalPages && totalPages !== 0 ? 
+						<>
+							<button disabled={currentPage===1} onClick={handlePrevPage}
+							className={`${currentPage===1 ? 'disabled cursor-not-allowed text-gray-200' : ''}`}><FaAngleLeft/></button>
+							<span> Page {currentPage} of {totalPages} </span>
+
+							<button disabled={currentPage===totalPages} onClick={handleNextPage}
+							className={`${currentPage===totalPages ? 'disabled cursor-not-allowed text-gray-200' : ''}`}><FaAngleRight/></button>
+						</>
+						: null
+					}
 				</div>
 			</div>
 
-			<div ref={loadingRef} className="h-[740px]  overflow-auto">
+			<div ref={loadingRef} className="border-t border-gray-100 h-[740px]  overflow-auto">
 			{
 			loading ? 
 				<div  className="h-96 flex justify-center items-center">
 					<PageLoading size={'96'} color={'border-orange-600'}/>
 				</div>
 				: 
-				appointments?.length ?
-				appointments?.map(({id, user, customerName, customerSurname, appointmentDateTime, customerType, locationName, }, i) => (
-				<div
+				appointmentTable?.length ?
+				appointmentTable?.map(({id, user, customerName, customerSurname, AppointmentStartTime, 		appointmentDateTime, customerType, appointmentDate, locationName, }, i) => (
+				<div 
 					key={i}
-					onClick={()=>setToggle(user)}
+					onClick={()=>{
+						updateCustomer(user)
+						setToggle(id)
+					}}
 					className={`${
-						customer?.id === id ? 'bg-[var(--oex-light-grey)]' : ''
+						toggle === id ? 'bg-[var(--oex-light-grey)]' : ''
 					}  px-4 py-6 border-y border-[var(--oex-light-grey)] flex gap-2 justify-between items-center `}>
 
 					<div className="flex gap-4">
@@ -125,10 +155,10 @@ const ColumnA = ({ setToggle, customer, setCustomerLog }) => {
 							<h5 className="">{customerName} {customerSurname}</h5>
 							<div className="flex gap-4 items-center  text-sm">
 								<div className="text-[var(--oex-dark-grey)]">
-									{new Date(appointmentDateTime).toDateString()}
+									{new Date(appointmentDate).toDateString()}
 								</div>
 								<div className="p-1 bg-[var(--oex-orange-mute)] text-[var(--oex-orange)]">
-									{new Date(appointmentDateTime).toLocaleTimeString()}
+									{AppointmentStartTime}
 								</div>
 							</div>
 							<div className="flex gap-2 items-center text-[var(--oex-dark-grey)]">
@@ -141,7 +171,9 @@ const ColumnA = ({ setToggle, customer, setCustomerLog }) => {
 						</div>
 					</div>
 
-					<BookingCountdown bookingDate={appointmentDateTime} appointment={appointments[i]} setRefresh={setRefresh} setCustomerLog={setCustomerLog}/>
+					<FaTimes size={16} onClick={()=>deleteItem('appointment', 'id', appointmentTable[i]?.id)} />
+
+					<BookingCountdown bookingDate={appointmentDateTime} appointment={appointmentTable[i]} appointmentTable={appointmentTable} setAppointmentTable={setAppointmentTable}  index={i} fetchAppointments={()=>fetchAppointments(currentPage)} setCustomerLog={setCustomerLog}/>
 				</div>
 				
 			))
@@ -157,7 +189,7 @@ const ColumnA = ({ setToggle, customer, setCustomerLog }) => {
 			</div> : ''
 		}
 
-		</div>
+			</div>
 
 			
 		</div>

@@ -5,6 +5,7 @@ import { useCart } from '../../context/cartContext.tsx';
 import { usePaystackPayment } from 'react-paystack';
 import { updateHistoryAndSessionBalance } from '@utils/rehabspcetable.js';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import PageLoading from '@components/Loader/PageLoading.jsx';
 
 export function sumOrderList(orderList) {
 	// Initialize totals to avoid NaN issues
@@ -154,7 +155,7 @@ const OrderSummary = () => {
 			)}
 			{
 				loading ? <div className="inset-0 fixed flex  justify-center items-center z-50 bg-[var(--oex-lightest-grey)] px-2">
-					Loading...
+					<PageLoading/>
 				</div> : null
 			}
 			<div className="w-full relative sm:w-[450px] rounded-md bg-gray-100 shadow-lg  py-10 px-4  ">

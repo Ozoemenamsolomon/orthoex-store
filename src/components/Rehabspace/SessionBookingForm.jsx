@@ -3,7 +3,7 @@ import { useState , useEffect} from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import { sumOrderList } from './OrderSummary';
 import { useCart } from '../../context/cartContext.tsx';
-import { fetchAll, fetchCustomer, fetchRow, insertBooking } from '../../utils/rehabspcetable.js';
+import { fetchAll, fetchBookingPrices, fetchCustomer, fetchRow, insertBooking } from '../../utils/rehabspcetable.js';
 import { useRouter } from 'next/router';
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -36,8 +36,8 @@ const SessionBookingForm = ({ onSubmit }) => {
 		  try {
 			const { data: customerData, error: customerError } = await fetchCustomer(user?.email);
 	  
-			const { data: pricesData, error: pricesError } = await fetchAll('bookingPrice', 'id');
-	  
+			const { data: pricesData, error: pricesError } = await fetchBookingPrices('bookingPrice',);
+
 			if (pricesData) {
 			  setSessionPrices(pricesData);
 			  setFormData({ 

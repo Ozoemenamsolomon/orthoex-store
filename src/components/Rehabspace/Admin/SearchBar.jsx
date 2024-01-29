@@ -11,67 +11,15 @@ import {
 import {useClickOutside} from '@utils/useClickOutside'
 import { FaCalendarAlt, FaCalendarWeek, FaMapPin, FaRegClock, FaUserAlt } from 'react-icons/fa';
 import { MdCheckCircleOutline } from 'react-icons/md';
+import { tableLength } from '@utils/rehabspcetable';
 
-const SearchBar = ({ setResult, setLoading, setCounting }) => {
+const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offset, setAppointmentTable }) => {
   const dropdown = useRef(null)
   const dropdown1 = useRef(null)
   const dropdown2 = useRef(null)
   const dropdown3 = useRef(null)
   const [searchTerm, setSearchTerm] = useState('');
   const [column, setColumn] = useState('customerName');
-
-  // search status
-  const queryStatus = async (query) => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabaseClient
-        .from('appointment')
-        .select('*')
-        .eq('status.status', `%${query}%`);
-  
-      if (data && !error) {
-        setResult(data);
-        setCounting((prev) => ({ ...prev, result: data?.length }));
-      } else {
-        console.log(error);
-        setResult([]);
-        setCounting((prev) => ({ ...prev, result: 0 }));
-      }
-    } catch (error) {
-      setResult([]);
-      console.error('Error fetching data:', error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-  
-  // search bar
-  const handleSearch = async (e) => {
-    e.preventDefault()
-    setLoading(true);
-    try {
-      const { data, error } = await supabaseClient
-        .from('appointment') 
-        .select('*')
-        .ilike('customerName', `%${searchTerm}%`) 
-
-        if (data && !error) {
-            setResult(data);
-            setCounting(prev =>{ return {...prev, result: data?.length}})
-        } else {
-            console.log(error);
-            setResult([])
-            setCounting(prev =>{ return {...prev, result: 0}})
-
-        }
-
-    } catch (error) {
-        setResult([])
-      console.error('Error fetching data:', error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const [show, setShow] = useState('')
 
@@ -80,7 +28,7 @@ const SearchBar = ({ setResult, setLoading, setCounting }) => {
   useClickOutside(dropdown2, ()=>setShow(''))
   useClickOutside(dropdown3, ()=>setShow(''))
 
-  const handleModal = async (type, qeury) => {
+  const handleModal = async (type, query) => {
     if (type===show){
       setShow('')
     } else {
@@ -89,40 +37,55 @@ const SearchBar = ({ setResult, setLoading, setCounting }) => {
    
   };
 
-  const search = async (qeury, type) => {
+  const search = async (query, type, e) => {
+    if(e){
+      e.preventDefault()
+    }
     setLoading(true);
+    const {count} = await tableLength('appointment')
     try {
       let result;
       if (type==='location') {
         result = await supabaseClient
         .from('appointment') 
         .select('*')
-        .ilike('locationName', `%${qeury}%`) 
+        .ilike('locationName', `%${query}%`) 
       } else if (type==='customerType') {
         result = await supabaseClient
         .from('appointment') 
         .select('*')
-        .ilike('customerType', `%${qeury}%`) 
+        .ilike('customerType', `%${query}%`) 
       } else if (type==='date') {
         result = await supabaseClient
         .from('appointment') 
         .select('*')
-        .eq('appointmentDate', `%${new Date(qeury).toDateString()}%`) 
-        .eq('appointmentDateTime', `%${new Date(qeury).toTimeString()}%`) 
-      } 
+        .eq('appointmentDate', `%${new Date(query).toDateString()}%`) 
+        .eq('appointmentDateTime', `%${new Date(query).toTimeString()}%`) 
+      }  else if (type==='status') {
+        result = await supabaseClient
+        .from('appointment')
+        .select('*')
+        .eq('status->>status', query);
+      } else if (type === 'default') {
+        result= await supabaseClient
+        .from('appointment') 
+        .select('*')  
+        .ilike('customerName', `%${query}%`) 
+      }
         if (result?.data) {
-            setResult(result?.data);
-            setCounting(prev =>{ return {...prev, result: result?.data?.length}})
+          console.log(result)
+            setAppointmentTable(result?.data)
+            updatePagination(count, 'search', result?.data);
         } else {
             console.log(result?.error);
-            setResult([])
-            setCounting(prev =>{ return {...prev, result: 0}})
-
+            setAppointmentTable([])
+            updatePagination(count, 'search', []);
         }
 
     } catch (error) {
-        setResult([])
-      console.error('Error fetching data:', error.message);
+        console.log(error);
+        setAppointmentTable([])
+        updatePagination(count, 'search', []);
     } finally {
       setLoading(false);
       setShow('')
@@ -133,42 +96,30 @@ const SearchBar = ({ setResult, setLoading, setCounting }) => {
   return (
     <div>
         <div className="flex items-center justify-between w-full gap-4 pt-6 px-4">
-        <form className="w-full p-3 bg-[var(--oex-lightest-grey)] rounded-full flex items-center justify-between gap-2">
-          <div className="text-[var()]">
-            <button onClick={handleSearch}>
-              <SearchIcon />
-            </button>
+          <form className="w-full p-3 bg-[var(--oex-lightest-grey)] rounded-full flex items-center justify-between gap-2">
+            <div className="text-[var()]">
+              <button onClick={(e)=>search(searchTerm, 'default', e)}>
+                <SearchIcon />
+              </button>
+            </div>
+            <input
+              type="search"
+              name=""
+              id=""
+              className="w-full bg-transparent focus:outline-none"
+              placeholder="Search appointments"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <div className="shrink-0">
+              <ScanIcon />
+            </div>
+          </form>
+          
+          <div className="relative shrink-0 p">
+              <button onClick={()=>setShow(prev=>!prev)}><FilterIcon /></button>
+              <div className="text-[12px] text-[var(--oex-dark-grey)]">View</div>
           </div>
-          <input
-            type="search"
-            name=""
-            id=""
-            className="w-full bg-transparent focus:outline-none"
-            placeholder="Search appointments"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <div className="shrink-0">
-            <ScanIcon />
-          </div>
-        </form>
-
-        
-        <div className="relative shrink-0 p">
-            <button onClick={()=>setShow(prev=>!prev)}><FilterIcon /></button>
-            <div className="text-)[12px] text-[var(--oex-dark-grey)]">View</div>
-            {/* <div ref={dropdown} className={`${show ? 'block' : 'hidden'} absolute top-10 right-0 rounded-md w-40 p-2 border space-y- bg-[var(--oex-off-white)] `}>
-              {
-                ['check-in', 'checked-in', 'cancelled'].map((item,idx)=>(
-                  <button onClick={()=>queryStatus(item)} key={idx} className="p-2 hover:border rounded-md" >
-                    {item}
-                  </button>
-                ))
-              }
-            </div> */}
-        </div>
-
-
         </div>
 
         <div className="flex items-center py-3 px-4 justify-between div" >
@@ -180,7 +131,7 @@ const SearchBar = ({ setResult, setLoading, setCounting }) => {
               {show==='location'&&<div ref={dropdown} className="absolute border bg-white p-4 top-8 left-0">
                 {
                   ['Mafoluku', 'Ikorodu'].map((e,i)=>(
-                    <button  onClick={()=>search(e, 'location')}  className='p-1 hover:border duration-300'>{e}</button>
+                    <button key={i}  onClick={()=>search(e, 'location')}  className='p-1 hover:border duration-300'>{e}</button>
                   ))
                 }
               </div>}
@@ -194,7 +145,7 @@ const SearchBar = ({ setResult, setLoading, setCounting }) => {
               {show==='customerType'&&<div  ref={dropdown1} className="absolute border bg-white p-4 top-8 left-0">
                 {
                   ['Clinician', 'Patient'].map((e,i)=>(
-                    <button onClick={()=>search(e, 'customerType')} className='p-1 hover:border duration-300'>{e}</button>
+                    <button key={i}  onClick={()=>search(e, 'customerType')} className='p-1 hover:border duration-300'>{e}</button>
                   ))
                 }
               </div>
@@ -219,7 +170,7 @@ const SearchBar = ({ setResult, setLoading, setCounting }) => {
               {show==='time'&&<div ref={dropdown3} className="absolute border w-32 bg-white p-4 top-8 right-0">
                 {
                   ['check-in', 'checked-in', 'cancelled'].map((item,idx)=>(
-                    <button onClick={()=>queryStatus(item)} key={idx} className="p-1 hover:border " >
+                    <button onClick={()=>search(item, 'status')} key={idx} className="p-1 hover:border " >
                       {item}
                     </button>
                   ))

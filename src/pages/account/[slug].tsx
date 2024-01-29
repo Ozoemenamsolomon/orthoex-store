@@ -32,7 +32,7 @@ import styled from 'styled-components';
 import { format } from 'url';
 
 import RehabspaceAccount from "@components/Rehabspace/Account"
-import {fetchAll, fetchRow} from "@utils/rehabspcetable"
+import {fetchActivities, fetchAll, fetchCustomer, fetchRow} from "@utils/rehabspcetable"
 import { useCart } from 'context/cartContext';
 import { CustomerType } from '@data/rehabspace/types';
 
@@ -173,7 +173,7 @@ export const getServerSideProps = withPageAuthRequired({
 
 		const session = await getSession(req, res);
 
-		const {data: customer} = await fetchRow('customers', 'customerEmail', session?.user?.email)
+		const {data: customer} = await fetchCustomer( session?.user?.email)
 
 		const data = {
 			orders: [],
@@ -232,16 +232,12 @@ export const getServerSideProps = withPageAuthRequired({
 			const holidays = await fetchAll('holidays', 'created_at')
 			const location= await fetchAll('location', 'created_at')
 			const bookingPrice = await fetchAll('bookingPrice', 'created_at')
-			const activityHistory = await fetchRow('activityHistory', 'customerEmail', session?.user?.email)
+			const activityHistory = await fetchActivities(session?.user?.email)
 			console.log('rehabspace===', { holidays, location, bookingPrice, activityHistory })
 			rehabspaceData.location = location as any;
 			rehabspaceData.holidays = holidays as any;
 			rehabspaceData.bookingPrice = bookingPrice as any;
 			rehabspaceData.activityHistory = activityHistory as any;
-			// if (error) {
-			// 	console.log({type: 'rehabspace location:', error });
-			// 	rehabspaceData.location = [];
-			// }
 		}
 
 		return {

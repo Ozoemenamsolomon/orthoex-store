@@ -5,7 +5,6 @@ import Chart from 'chart.js/auto';
 
 const BookingStatusDoughnutChart = ({rehabspaceData}) => {
 	const chartRef = useRef(null);
-console.log(rehabspaceData?.stats)
 	useEffect(() => {
 		if (chartRef.current) {
 			const data = {
@@ -46,7 +45,7 @@ console.log(rehabspaceData?.stats)
 
 	return <div className="">
 		<div className="relative">
-			<canvas ref={chartRef} style={{ height: '200px' }} />
+			<canvas ref={chartRef} style={{ height: '100px' }} />
 			<div className="absolute inset-0 flex flex-col justify-center items-center">
 				<h4> {rehabspaceData?.stats?.appointmentCount?.count}</h4>
 				<p>Bookings</p>

@@ -21,7 +21,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
 }
 
-export default function Calender({location, setCustomer,chosenLocation, setChosenLocation, setBooking,booking, customer, holidays }) {
+export default function Calender({location,updateCustomer, setCustomer,chosenLocation, setChosenLocation, setBooking,booking, customer, holidays }) {
 
 	let today = startOfToday();
 	let [selectedDay, setSelectedDay] = useState(today);
@@ -64,7 +64,7 @@ export default function Calender({location, setCustomer,chosenLocation, setChose
 	useEffect(() => {
 		const handleInactiveSlots = async () => {
 			try {
-				const { data, error } = await fetchRow('appointment', 'appointmentDate', format(selectedDay, 'EEE dd MMM yyyy'));
+				const { data, error } = await fetchRow('appointment', 'appointmentDate', format(selectedDay, 'EEE dd MMM yyyy', 'id'));
 	
 				if (data) {
 					const bookingList = data.map(item => new Date(new Date(item?.appointmentDateTime).getTime() + 60 * 60 * 1000));
@@ -242,7 +242,7 @@ export default function Calender({location, setCustomer,chosenLocation, setChose
 
 					<TimeSlots chosenLocation={chosenLocation} date={selectedDay} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} setBooking={setBooking} inactiveSlots={inactiveSlots} />
 
-					<SessionBookingBtn setCustomer={setCustomer} setInactiveSlots={setInactiveSlots} booking={booking} chosenLocation={chosenLocation} customer={customer}/>
+					<SessionBookingBtn updateCustomer={updateCustomer} setCustomer={setCustomer} setInactiveSlots={setInactiveSlots} booking={booking} chosenLocation={chosenLocation} customer={customer}/>
 				</ol>
 			</div>
 

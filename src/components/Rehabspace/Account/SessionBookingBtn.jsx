@@ -5,7 +5,7 @@ import { fetchAll, fetchCustomer, fetchRow } from "@utils/rehabspcetable";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 
-const SessionBookingBtn = ({ booking, chosenLocation, setCustomer, customer, setInactiveSlots}) => {
+const SessionBookingBtn = ({ booking, chosenLocation, updateCustomer, setCustomer, customer, setInactiveSlots}) => {
   const router = useRouter()
   const [loading, setLoading] = useState(0);
 	const [apiError, setApiError] = useState('')
@@ -52,7 +52,6 @@ const SessionBookingBtn = ({ booking, chosenLocation, setCustomer, customer, set
   }
 
   const handleClick = async () => {
-    console.log(customer?.sessionBalance < 1 , customer?.sessionBalance)
     if (customer?.sessionBalance < 1 ) {
       toast.warning('Your session balance is empty. Purchase a new session.') 
       return
@@ -85,6 +84,8 @@ const SessionBookingBtn = ({ booking, chosenLocation, setCustomer, customer, set
               // add to the inactive slots
               setInactiveSlots(prev=>[...prev, booking])
               setRefresh(prev=>!prev)
+              // update customer log
+              updateCustomer(customer)
           }
         }
       } catch (error) {

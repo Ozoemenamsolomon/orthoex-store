@@ -12,55 +12,44 @@ import {
 } from '../../../data/rehabspace';
 import { toast } from 'react-toastify';
 import AccountHistory from '../Account/AccountHistory';
-import { fetchAll, fetchRow } from '@utils/rehabspcetable';
+import { fetchActivities, fetchAll, fetchRow } from '@utils/rehabspcetable';
 import { useRouter } from 'next/navigation';
+import PageLoading from '@components/Loader/PageLoading';
+import { stringToJson } from '@utils/stringToJson';
 
-const ColumnB = ({ type, customer, setCustomer, customerLog, setCustomerLog }) => {
+const ColumnB = ({setToggle, loading, type, customer, setCustomer, customerLog, setCustomerLog }) => {
 	const {push} = useRouter()
-	const {id, customerEmail, firstName, lastName, registrationDate, sessionBalance, gender, profession,  customerType, city, whatsappNumber, phoneNumber, email} = customer || {};
+	const {id, customerEmail, firstName, lastName, registrationDate, sessionBalance, gender, profession,  customerType, city, whatsappNumber, phoneNumber, email} = stringToJson(customer) || {};
 
-	const [loading, setLoading] = useState(0)
-
-	useEffect(() => {
-		const fetchLog = async () => {
-			try {
-				setLoading(1)
-				const {data,error} = await fetchRow('activityHistory', 'customerEmail', email || customerEmail, 'createdAt')
-				if(data) {
-					// data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-					setCustomerLog(data)
-				} else {
-					toast.error('Error fetching customer log')
-				}
-			} catch (error) {
-				console.log(error)
-			} finally {
-				setLoading(0)
-			}
-		}
-		fetchLog()
-	}, [id])
 	
 	return (
 		<div className="px-4  overflow-hidden ">
 			{type && (
-				<button type="button" onClick={() => setCustomer('')}>{`< Back`}</button>
+				<button type="button" onClick={() => setToggle('')}>{`< Back`}</button>
 			)}
 
 			<div className="pb-6">
 				<div className="flex flex-col gap-4 justify-center items-center text-center">
-						<div className="shrink-0 rounded-full h-14 w-14 flex justify-center items-center bg-[var(--oex-grey)] text-[var(--oex-off-white)]">
-							{firstName?.[0]}{lastName?.[0] || firstName?.[1]}
+						<div className={`${ firstName ? '' : 'animate-pulse' } shrink-0 rounded-full h-14 w-14 flex justify-center items-center bg-[var(--oex-grey)] text-[var(--oex-off-white)] `}>
+							{firstName?.[0]}
+							{lastName?.[0] || firstName?.[1] }
 						</div>
 
-					<div className="">
-						<h5>{`${firstName} ${lastName} `}</h5>
+					<div className="w-full">
+						<h5>{firstName ? `${firstName} ${lastName} ` : (<div className='animate-pulse mx-auto h-3 w-48 bg-gray-100'></div>) }
+						</h5>
 						<div className="text-sm">
-							{customerEmail}
+							{customerEmail || (<div className='animate-pulse h-3 w-40 mx-auto bg-gray-100'></div>)}
 							<br />
-							 {phoneNumber}
+							 {phoneNumber || (<div className='animate-pulse h-3 w-28 mx-auto bg-gray-100'></div>)}
 							<br />
-							<div className="text-[var(--text-colour-grey)]">Added {new Date(registrationDate).toDateString()}</div>
+							<div className="text-[var(--text-colour-grey)]">
+								{ registrationDate ? 
+									`Added ${new Date(registrationDate).toDateString() }`
+								 : 
+									null
+								}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -113,7 +102,7 @@ const ColumnB = ({ type, customer, setCustomer, customerLog, setCustomerLog }) =
 
 			<div className="max-h-[500px] overflow-auto ">
 				{
-					loading ? <p className='h-80 w-full flex justify-center items-center'>Loading...</p> :
+					loading ? <p className='h-80 w-full flex justify-center items-center'><PageLoading/></p> :
 					customerLog?.length ? <AccountHistory admin={true} log={customerLog} customer={customer}/> :
 					<p className='h-80 w-full flex justify-center items-center'>No user log</p>
 				}

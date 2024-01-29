@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { stringToJson } from './stringToJson';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -27,11 +28,10 @@ export const fetchAll = async (table, orderBy) => await supabase
 
 
 // read a specific row, e.g fetch a user with user id.
-export const fetchRow = async (table, column, columnValue,orderBy) => await supabase
+export const fetchRow = async (table, column, columnValue,) => await supabase
 .from(table)
 .select('*')
 .eq(column,columnValue)
-.order(orderBy, { ascending: false });
 
 
 // resd specific column like all categories, or all emails
@@ -49,11 +49,15 @@ export const fetchReferencedTable = async (table, column, other_table, foreign_k
     )
   `)
 
+
 // with pagination
+export const tableLength = async(table,) => 
+	await supabase
+	.from(table)
+	.select('*', { count: 'exact', head: true })
+	
 export const fetchWithPagination = async (table, start, end, orderBy ) => {
-	const {count, error} = await supabase
-				.from(table)
-				.select('*', { count: 'exact', head: true })
+	const {count, error} = await tableLength(table)
 
 	const res = await supabase
 		.from(table)
@@ -95,6 +99,19 @@ export const addActivity = async (list) => {
 		return {data: null, error: error}
 	}
 }
+
+// fetch customers activity history
+export const fetchBookingPrices = async () => await supabase
+.from('bookingPrice')
+.select('*')
+.order('price', { ascending: true })
+
+// fetch customers activity history
+export const fetchActivities = async (email) => await supabase
+.from('activityHistory')
+.select('*')
+.eq('customerEmail', email)
+.order('createdAt', { ascending: false });
 
 
 // fetch specific customer
@@ -159,12 +176,13 @@ export const updateHistoryAndSessionBalance = async (sessionPurchaseData) => {
 		)
 		response = {...response, customerAccountHistory: customerAccountHistory?.data?.[0]}
 	}
-	console.log({updatedUserSessionBalance,activityHistory, customerAccountHistory})
+	console.log(response)
 	return response
 } 
 
 export const updateAppointmentStatus = async (action, appointment) => {
 	let response = {};
+	let customer = stringToJson(appointment?.user)
 
 	const data = {
 		...appointment,
@@ -174,11 +192,11 @@ export const updateAppointmentStatus = async (action, appointment) => {
 			}
 	} 
 	const result = await updateItem('appointment', data, 'id', appointment?.id)
-
+console.log('result', result)
 	if(result.data){
 		const activityHistory = await insert('activityHistory', {
 			createdAt: new Date(), 
-			customerEmail: appointment?.user?.email || appointment?.user?.customerEmail , 
+			customerEmail: customer?.email || customer?.customerEmail , 
 			activityType: action !== 'cancelled' ? 
 			  {
 				action: 'Session used',
@@ -193,7 +211,7 @@ export const updateAppointmentStatus = async (action, appointment) => {
 				amount: 5000,
 				details: `Session cancelled by ${'staff'}`,
 				} ,
-			customerId: appointment?.user?.id
+			customerId: customer?.id
 		})
 		response = {...response, activityHistory: activityHistory.data?.[0]}
 
@@ -202,24 +220,24 @@ export const updateAppointmentStatus = async (action, appointment) => {
 				'customerAccountHistory', 
 				{
 					created_at: new Date(),
-					userEmail: appointment?.user?.email || '' ,
-					customerEmail: appointment?.user?.customerEmail || '', 
+					userEmail: customer?.email || '' ,
+					customerEmail: customer?.customerEmail || '', 
 					activityId: activityHistory?.data[0]?.activityId,
 					Activity: action !== 'cancelled' ? 
 					`Session used at ${appointment?.locationName} ` : 
 					`Session cancelled by ${'staff'}`,
 					session: 1,
-					userId: appointment?.user?.id,
-					customerId:appointment?.user?.id,
+					userId: customer?.id,
+					customerId: customer?.id,
 				}
 			)
 			response = {...response, customerAccountHistory: customerAccountHistory?.data?.[0]}
-			console.log({activityHistory, customerAccountHistory})
+			console.log('action', {activityHistory, customerAccountHistory})
 		}
 		
 	}
 
-	
+	// console.log('update:', response)
 
 	return result;
 }
