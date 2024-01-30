@@ -22,7 +22,7 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
   const dropdown3 = useRef(null)
   const [searchTerm, setSearchTerm] = useState('');
   const [queryParams, setQueryParams] = useState({
-    date: '', customerName: '', customerType: '', status: '', location: ''
+    date: '', customerName: '', customerType: '', status: '', location: '', search: ''
   });
 
   const [show, setShow] = useState('')
@@ -45,11 +45,13 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
     if(e){
       e.preventDefault()
     }
+    setLoading((true))
 
-    handleModal(query)
+    handleModal('')
     setQueryParams((prevParams) => ({
       ...prevParams,
       [query]: value,
+      
     }));
   
     router.replace({
@@ -57,11 +59,21 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
       query: {
         ...queryParams,
         [query]: value,
+        search: '1'
       },
     });
   };
-  
 
+  const clear = () => {
+    router.replace({
+      pathname: router.pathname,
+      query: ''
+    });
+    setQueryParams({date: '', customerName: '', customerType: '', status: '', location: '', search: ''})     
+    setDrop(prev=>!prev)
+    setShow('')
+  }
+  
   const search = async (query, type, e) => {
     if(e){
       e.preventDefault()
@@ -117,9 +129,56 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
     }
   }
   
-  // useEffect(() => {
-  //   if(router.query.)
-  // }, [router.query])
+  useEffect(() => {
+    const searchTable = async () => {
+      if (router.query.search) {
+        const { location, customerName, date, status, customerType } = router.query;
+        const { count } = await tableLength('appointment');
+  
+        try {
+          setLoading(true);
+  
+          let query = supabaseClient.from('appointment').select('*');
+  
+          if (location) {
+            query = query.ilike('locationName', `%${location}%`);
+          }
+  
+          if (customerName) {
+            query = query.ilike('customerName', `%${customerName}%`);
+          }
+  
+          if (customerType) {
+            query = query.ilike('customerType', `%${customerType}%`);
+          }
+  
+          if (status) {
+            query = query.eq('status->>status', status);
+          }
+  
+          const result = await query;
+          console.log(result);
+  
+          if (result?.data) {
+            setAppointmentTable(result?.data);
+            updatePagination(count, 'search', result?.data);
+          } else {
+            console.error(result?.error);
+            setAppointmentTable([]);
+            updatePagination(count, 'search', []);
+          }
+        } catch (error) {
+          console.error(error);
+          setAppointmentTable([]);
+          updatePagination(count, 'search', []);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+  
+    searchTable();
+  }, [router.query]);
   
 
   return (
@@ -149,10 +208,7 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
           </form>
           
           <div className="relative shrink-0 p">
-              <button onClick={()=>{
-                setDrop(prev=>!prev)
-                setShow('')
-                }}>
+              <button onClick={()=>clear()}>
                   <FilterIcon />
               </button>
               <div className="text-[12px] text-[var(--oex-dark-grey)]">View</div>
