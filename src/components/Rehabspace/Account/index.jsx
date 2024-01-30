@@ -7,19 +7,46 @@ import AccountHistory from "../Account/AccountHistory"
 import {PaymentGrid, BookingGrid} from "../PaymentSection"
 import BookingModal from "./BookingModal"
 import { useRouter } from 'next/router';
+import { fetchActivities, fetchCustomer } from '@utils/rehabspcetable';
+import { stringToJson } from '@utils/stringToJson';
 
 const index = ({user, rehabspaceData, customer}) => {
 	const router = useRouter()
 	const [booking, setBooking] = useState(new Date().toLocaleString());
 	const [customerState, setCustomerState] = useState(customer);
+	const [customerLog, setCustomerLog] = useState(rehabspaceData?.activityHistory?.data || [])
 
-	console.log({rehabspaceData, user, customerState})
+	const updateCustomerLog = async () => {
+		try {
+			const {data,error} = await fetchCustomer(stringToJson(user)?.email || stringToJson(customer)?.customerEmail)
+			setCustomerState(data?.[0])
+			if(data?.[0]) {
+				const log = await fetchActivities( data?.[0]?.email || data?.[0]?.customerEmail)
+					if(log?.data) {
+						setCustomerLog(log?.data)
+					} else {
+						toast.error('Error fetching customer log')
+					}
+			} else {
+				toast.error('Error fetching customer')
+			}
+		} catch (error) {
+			console.log(error)
+		} finally {
+		}
+	}
+
+	useEffect(() => {
+		if(router.query.date){
+			updateCustomerLog()
+		}
+	}, [router.query.date])
 	
 	return (
 		<>
 		<div className="">
 			<div className="py-10 grid sm:grid-cols-2 gap-10">
-				<AccountHistory log={rehabspaceData?.activityHistory?.data} customer={customerState}/>
+				<AccountHistory log={customerLog} customer={customerState}/>
 				<div className="space-y-12">
 					<PaymentGrid />
 					<BookingGrid />

@@ -21,7 +21,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
 }
 
-export default function Calender({location,updateCustomer, setCustomer,chosenLocation, setChosenLocation, setBooking,booking, customer, holidays }) {
+export default function Calender({location, setCustomer,chosenLocation, setChosenLocation, setBooking,booking, customer, holidays }) {
 
 	let today = startOfToday();
 	let [selectedDay, setSelectedDay] = useState(today);
@@ -242,7 +242,7 @@ export default function Calender({location,updateCustomer, setCustomer,chosenLoc
 
 					<TimeSlots chosenLocation={chosenLocation} date={selectedDay} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} setBooking={setBooking} inactiveSlots={inactiveSlots} />
 
-					<SessionBookingBtn updateCustomer={updateCustomer} setCustomer={setCustomer} setInactiveSlots={setInactiveSlots} booking={booking} chosenLocation={chosenLocation} customer={customer}/>
+					<SessionBookingBtn setCustomer={setCustomer} setInactiveSlots={setInactiveSlots} booking={booking} chosenLocation={chosenLocation} customer={customer}/>
 				</ol>
 			</div>
 

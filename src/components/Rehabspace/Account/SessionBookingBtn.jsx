@@ -5,7 +5,7 @@ import { fetchAll, fetchCustomer, fetchRow } from "@utils/rehabspcetable";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 
-const SessionBookingBtn = ({ booking, chosenLocation, updateCustomer, setCustomer, customer, setInactiveSlots}) => {
+const SessionBookingBtn = ({ booking, chosenLocation, setCustomer, customer, setInactiveSlots}) => {
   const router = useRouter()
   const [loading, setLoading] = useState(0);
 	const [apiError, setApiError] = useState('')
@@ -20,7 +20,6 @@ const SessionBookingBtn = ({ booking, chosenLocation, updateCustomer, setCustome
       const {data, error} = await fetchCustomer(customer?.email || customer?.customerEmail)
       if (data) {
         setCustomer(data?.[0])
-        console.log({data, error})
       } else {
         console.log({data,error})
       }
@@ -42,14 +41,16 @@ const SessionBookingBtn = ({ booking, chosenLocation, updateCustomer, setCustome
 		AppointmentStartTime: new Date(booking).toLocaleTimeString(),
     appointmentDateTime: new Date(booking),
 		status: {
-      status: 'booked', 
+      status: 'check-in', 
       userID: customer?.id, 
       fullname: `${customer?.firstName} ${customer?.lastName}`, 
       update: '', 
-      date:  new Date(booking).toLocaleDateString(),
+      date:  new Date(booking).toTimeString(),
       time: booking
     }
   }
+
+  let queryParams = router.query
 
   const handleClick = async () => {
     if (customer?.sessionBalance < 1 ) {
@@ -85,7 +86,10 @@ const SessionBookingBtn = ({ booking, chosenLocation, updateCustomer, setCustome
               setInactiveSlots(prev=>[...prev, booking])
               setRefresh(prev=>!prev)
               // update customer log
-              updateCustomer(customer)
+              router.replace({
+                pathname: router.pathname,
+                query: {...queryParams, date: new Date(booking).toTimeString()}
+              })
           }
         }
       } catch (error) {

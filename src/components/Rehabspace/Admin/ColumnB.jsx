@@ -16,6 +16,7 @@ import { fetchActivities, fetchAll, fetchRow } from '@utils/rehabspcetable';
 import { useRouter } from 'next/navigation';
 import PageLoading from '@components/Loader/PageLoading';
 import { stringToJson } from '@utils/stringToJson';
+import Link from 'next/link';
 
 const ColumnB = ({setToggle, loading, type, customer, setCustomer, customerLog, setCustomerLog }) => {
 	const {push} = useRouter()
@@ -56,23 +57,23 @@ const ColumnB = ({setToggle, loading, type, customer, setCustomer, customerLog, 
 
 				<div className="flex justify-center pt-4 gap-4 text-sm items-start">
 					<div className="text-center flex flex-col justify-center">
-						<a href={phoneNumber ? `tel:+${phoneNumber}` : ()=>toast.warning('Phonenumber is missing')} className="flex justify-center">
+						<Link onClick={()=>!phoneNumber && toast.warning('Phonenumber is missing')} href={phoneNumber ? `tel:+${phoneNumber}` : '#'} className="flex justify-center">
 							<PhoneIcon />
-						</a>
+						</Link>
 						<div className="">Call</div>
 					</div>
 					<div className="text-center flex flex-col justify-center">
-						<a href={whatsappNumber ? `tel:+${phoneNumber}` : ()=>toast.warning('Whatsapp number is missing')} 
+						<Link onClick={()=>!whatsappNumber && toast.warning('Whatsapp number is missing')}  href={whatsappNumber ? `tel:+${whatsappNumber}` : '#'} 
 						className="flex justify-center">
 							<WhatsAppIcon />
-						</a>
+						</Link>
 						<div className="">Whatsapp</div>
 					</div>
 					<div className="text-center flex flex-col justify-center">
-						<a href={customerEmail ? `mailto:${customerEmail}` : ()=>toast.warning('email is missing')}
+						<Link onClick={()=>!whatsappNumber && toast.warning('email is missing')} href={customerEmail ? `mailto:${customerEmail}` : '#'}
 						className="flex justify-center">
 							<EmailIcon />
-						</a>
+						</Link>
 						<div className="">Email</div>
 					</div>
 					<div className="text-center flex flex-col justify-center">
@@ -102,7 +103,7 @@ const ColumnB = ({setToggle, loading, type, customer, setCustomer, customerLog, 
 
 			<div className="max-h-[500px] overflow-auto ">
 				{
-					loading ? <p className='h-80 w-full flex justify-center items-center'><PageLoading/></p> :
+					loading ? <div className='h-80 w-full flex justify-center items-center'><PageLoading/></div> :
 					customerLog?.length ? <AccountHistory admin={true} log={customerLog} customer={customer}/> :
 					<p className='h-80 w-full flex justify-center items-center'>No user log</p>
 				}

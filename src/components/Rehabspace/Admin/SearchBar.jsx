@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {supabaseClient} from '../../../utils/supabase'
 import {
 	DoubleTick,
@@ -9,33 +9,58 @@ import {
 	UserIcon,
 } from '../../../data/rehabspace';
 import {useClickOutside} from '@utils/useClickOutside'
-import { FaCalendarAlt, FaCalendarWeek, FaMapPin, FaRegClock, FaUserAlt } from 'react-icons/fa';
+import { FaCalendarAlt, FaCalendarWeek, FaMapPin, FaRegClock, FaTimes, FaUserAlt } from 'react-icons/fa';
 import { MdCheckCircleOutline } from 'react-icons/md';
 import { tableLength } from '@utils/rehabspcetable';
+import { useRouter } from 'next/router';
 
 const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offset, setAppointmentTable }) => {
+  const router = useRouter()
   const dropdown = useRef(null)
   const dropdown1 = useRef(null)
   const dropdown2 = useRef(null)
   const dropdown3 = useRef(null)
   const [searchTerm, setSearchTerm] = useState('');
-  const [column, setColumn] = useState('customerName');
+  const [queryParams, setQueryParams] = useState({
+    date: '', customerName: '', customerType: '', status: '', location: ''
+  });
 
   const [show, setShow] = useState('')
+  const [drop, setDrop] = useState('')
 
-  useClickOutside(dropdown, ()=>setShow(''))
-  useClickOutside(dropdown1, ()=>setShow(''))
-  useClickOutside(dropdown2, ()=>setShow(''))
-  useClickOutside(dropdown3, ()=>setShow(''))
-
-  const handleModal = async (type, query) => {
+  const handleModal = async (type,) => {
     if (type===show){
       setShow('')
     } else {
       setShow(type)
     }
-   
   };
+
+  useClickOutside(dropdown, ()=>handleModal('status'))
+  useClickOutside(dropdown1, ()=>handleModal('status'))
+  useClickOutside(dropdown2, ()=>handleModal('status'))
+  useClickOutside(dropdown3, ()=>handleModal('status'))
+
+  const updateQuery = (query, value, e) => {
+    if(e){
+      e.preventDefault()
+    }
+
+    handleModal(query)
+    setQueryParams((prevParams) => ({
+      ...prevParams,
+      [query]: value,
+    }));
+  
+    router.replace({
+      pathname: router.pathname,
+      query: {
+        ...queryParams,
+        [query]: value,
+      },
+    });
+  };
+  
 
   const search = async (query, type, e) => {
     if(e){
@@ -66,7 +91,7 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
         .from('appointment')
         .select('*')
         .eq('status->>status', query);
-      } else if (type === 'default') {
+      } else if (type === 'customerName') {
         result= await supabaseClient
         .from('appointment') 
         .select('*')  
@@ -92,15 +117,22 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
     }
   }
   
+  // useEffect(() => {
+  //   if(router.query.)
+  // }, [router.query])
+  
 
   return (
     <div>
         <div className="flex items-center justify-between w-full gap-4 pt-6 px-4">
           <form className="w-full p-3 bg-[var(--oex-lightest-grey)] rounded-full flex items-center justify-between gap-2">
             <div className="text-[var()]">
-              <button onClick={(e)=>search(searchTerm, 'default', e)}>
+              <button onClick={(e)=>updateQuery( 'customerName', searchTerm, e)}>
                 <SearchIcon />
               </button>
+              {/* <button onClick={(e)=>search(searchTerm, 'customerName', e)}>
+                <SearchIcon />
+              </button> */}
             </div>
             <input
               type="search"
@@ -117,66 +149,87 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
           </form>
           
           <div className="relative shrink-0 p">
-              <button onClick={()=>setShow(prev=>!prev)}><FilterIcon /></button>
+              <button onClick={()=>{
+                setDrop(prev=>!prev)
+                setShow('')
+                }}>
+                  <FilterIcon />
+              </button>
               <div className="text-[12px] text-[var(--oex-dark-grey)]">View</div>
           </div>
         </div>
 
-        <div className="flex items-center py-3 px-4 justify-between div" >
-            <div className="relative  border-r pr-3">
-              <button onClick={()=>handleModal('location', )} className='flex gap-1 items-center'>
-                <MapIcon/> <span>Location</span>
-              </button>
+        <div className={` ${drop || show==='customerName' ? 'scale-y-100 py-3 px-4' : 'hidden'}   transform transition-all duration-500 space-y-2`}>
+          <div className={`flex items-center justify-between`}>
+              <div className="relative  border-r pr-3">
+                <button onClick={()=>handleModal('location', )} className='flex gap-1 items-center'>
+                  <MapIcon/> <span>Location</span>
+                </button>
 
-              {show==='location'&&<div ref={dropdown} className="absolute border bg-white p-4 top-8 left-0">
-                {
-                  ['Mafoluku', 'Ikorodu'].map((e,i)=>(
-                    <button key={i}  onClick={()=>search(e, 'location')}  className='p-1 hover:border duration-300'>{e}</button>
-                  ))
-                }
-              </div>}
-            </div>
+                {show==='location'&&<div ref={dropdown} className="absolute border bg-white p-4 top-8 left-0">
+                  {
+                    ['Mafoluku', 'Ikorodu'].map((e,i)=>(
+                      <button key={i}  onClick={()=>updateQuery( 'location', e)}  className='p-1 hover:border duration-300'>{e}</button>
+                      // <button key={i}  onClick={()=>search(e, 'location')}  className='p-1 hover:border duration-300'>{e}</button>
+                    ))
+                  }
+                </div>}
+              </div>
 
-            <div className="relative border-r pr-3">
-              <button onClick={()=>handleModal('customerType')} className='flex gap-1 items-center'>
-                <UserIcon/> <span>Customer type</span>
-              </button>
+              <div className="relative border-r pr-3">
+                <button onClick={()=>handleModal('customerType')} className='flex gap-1 items-center'>
+                  <UserIcon/> <span>Customer type</span>
+                </button>
 
-              {show==='customerType'&&<div  ref={dropdown1} className="absolute border bg-white p-4 top-8 left-0">
-                {
-                  ['Clinician', 'Patient'].map((e,i)=>(
-                    <button key={i}  onClick={()=>search(e, 'customerType')} className='p-1 hover:border duration-300'>{e}</button>
-                  ))
+                {show==='customerType'&&<div  ref={dropdown1} className="absolute border bg-white p-4 top-8 left-0">
+                  {
+                    ['Clinician', 'Patient'].map((e,i)=>(
+                      <button key={i}  onClick={()=>updateQuery( 'customerType',e)} className='p-1 hover:border duration-300'>{e}</button>
+                      // <button key={i}  onClick={()=>search(e, 'customerType')} className='p-1 hover:border duration-300'>{e}</button>
+                    ))
+                  }
+                </div>
                 }
               </div>
-              }
-            </div>
 
-            <div className="relative  border-r pr-3">
-              <button  onClick={()=>handleModal('date')} className='flex gap-1 items-center'>
-                <FaCalendarAlt/> <span>Date</span>
-              </button >
+              <div className="relative  border-r pr-3">
+                <button  onClick={()=>handleModal('date')} className='flex gap-1 items-center'>
+                  <FaCalendarAlt/> <span>Date</span>
+                </button >
 
-              {show==='date'&&<div ref={dropdown2}  className="absolute border bg-white p-4 top-8 -left-20">
-                <input onChange={(e=>search(e.target.value, 'date'))} type="datetime-local" name="" id=""  className=''/>
-              </div>}
-            </div>
+                {show==='date'&&<div ref={dropdown2}  className="absolute border bg-white p-4 top-8 -left-20">
+                  <input onChange={(e=>updateQuery('date',e.target.value, ))} type="datetime-local" name="" id=""  className=''/>
+                  {/* <input onChange={(e=>search(e.target.value, 'date'))} type="datetime-local" name="" id=""  className=''/> */}
+                </div>}
+              </div>
 
-            <div  className="relative  ">
-              <button onClick={()=>handleModal('time')} className='flex gap-1 items-center'>
-                <MdCheckCircleOutline/> <span>Status</span>
-              </button >
+              <div  className="relative  ">
+                <button onClick={()=>handleModal('time')} className='flex gap-1 items-center'>
+                  <MdCheckCircleOutline/> <span>Status</span>
+                </button >
 
-              {show==='time'&&<div ref={dropdown3} className="absolute border w-32 bg-white p-4 top-8 right-0">
-                {
-                  ['check-in', 'checked-in', 'cancelled'].map((item,idx)=>(
-                    <button onClick={()=>search(item, 'status')} key={idx} className="p-1 hover:border " >
-                      {item}
-                    </button>
-                  ))
-                }
-              </div>}
-            </div>
+                {show==='time'&&<div ref={dropdown3} className="absolute border w-32 bg-white p-4 top-8 right-0">
+                  {
+                    ['check-in', 'checked-in', 'cancelled'].map((e,i)=>(
+                      <button onClick={()=>updateQuery('status',e)} key={i} className="p-1 hover:border " >{e}</button>
+                      // <button onClick={()=>search(e, 'status')} key={i} className="p-1 hover:border " >{e}</button>
+                    ))
+                  }
+                </div>}
+              </div>
+          </div>
+
+          <div className=" flex gap-2 items-center">
+              {Object.entries(queryParams).map(([key, value]) => (
+                value && (
+                  <div key={key} className="px-2 py-1 flex gap-2 items-center bg-red-100 rounded text-orange-500">
+                    {value}
+                    <FaTimes onClick={()=>updateQuery(key,'')}/>
+                  </div>
+                )
+              ))}
+          </div>
+
         </div>
     </div>
 

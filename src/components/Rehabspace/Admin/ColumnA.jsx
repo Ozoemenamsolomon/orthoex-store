@@ -16,9 +16,11 @@ import {MdRefresh} from 'react-icons/md'
 import { FaAngleLeft, FaAngleRight, FaTimes } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { stringToJson } from '@utils/stringToJson';
+import { useRouter } from 'next/router';
 
 const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, setCustomerLog, setCustomer,  appointmentTable, setAppointmentTable }) => {
 	const loadingRef = useRef();
+	const router = useRouter()
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [refresh, setRefresh] = useState('');
@@ -51,13 +53,16 @@ const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, s
 		  setLoading(true)
 		  const { data, error, count:{count, } } = await fetchWithPagination('appointment', offset, offset + pageSize - 1, 'id');
 
-		  console.log('count', count, offset, pageSize, currentPage, totalPages)
+		  console.log({ data, error, count:{count, } }, 'count', count, offset, pageSize, currentPage, totalPages)
 		  
 		  if (data) {
 			setAppointmentTable(data)
 			if(!customer){
 				updateCustomer(stringToJson(data?.[0]?.user))
 				setToggle(data?.[0]?.id)
+			} else {
+				updateCustomer(stringToJson(customer))
+				if(!toggle){setToggle(data?.[0]?.id)}
 			}
 			updatePagination(count, null, data)
 		  } else {
@@ -86,6 +91,11 @@ const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, s
 		} 
 	  };
 	  
+	  useEffect(() => {
+		if(router.query.date) {
+			fetchAppointments(currentPage)
+		}
+	  }, [router.query.date])
 	  
 
 	return (
