@@ -53,7 +53,7 @@ const RehabspaceAdmin = ({rehabspaceData}) => {
 		<main className="mx-auto  max-w-[1500px] max-md:px-[1rem] px-[4rem] py-12 ">
 			{query?.action==='booking' ? 
 
-			<BookingModal customer={customer} updateCustomer={updateCustomer} setCustomer={setCustomer} location={rehabspaceData?.location} holidays={rehabspaceData?.holidays} booking={booking} setBooking={setBooking} setShow={setShow}/> : ''}
+			<BookingModal customer={customer} setCustomer={setCustomer} location={rehabspaceData?.location} holidays={rehabspaceData?.holidays} booking={booking} setBooking={setBooking} setShow={setShow}/> : ''}
 
 			<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 				<div className="md:grid hidden">

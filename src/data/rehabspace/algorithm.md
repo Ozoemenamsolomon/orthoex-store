@@ -40,3 +40,35 @@ if (isDayDisabled(selectedDate)) {
 } else {
   console.log('This day is available.');
 }
+```
+============
+
+# Appointment check-in algorithmn.
+
+On page mount:
+
+Calculate the countdown time by subtracting 48 hours from the appointment's start time.
+Determine the updated status based on the current status:
+If the current status is 'check-in':
+If the countdown time is greater than 0, start countdown.
+If the countdown time is less than or equal to 0, set the status to 'checked-in'.
+If the current status is 'cancelled' or 'checked-in', keep it as is.
+
+Countdown Timer:
+Start a countdown timer that updates every second.
+If the countdown time reaches 0 or if the appointment status changes to 'cancelled' or 'checked-in, stop the timer.
+Otherwise, continue updating the countdown timer.
+
+Component Rendering:
+
+Display the current status ('check-in', 'cancelled', or 'checked-in').
+If the countdown time is greater than 0 and the status is 'check-in', display the countdown timer.
+Show a 'Check-in' button that is:
+Enabled only if the status is 'check-in'.
+Disabled if the status is not 'check-in'.
+Clickable to change the status to 'checked-in' when enabled.
+Show a 'Cancel' button that is:
+Hidden if the countdown time reaches 0 or the status is not 'check-in'.
+Clickable to change the status to 'cancelled' when displayed.
+
+

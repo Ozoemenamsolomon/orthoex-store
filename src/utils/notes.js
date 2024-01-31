@@ -69,21 +69,17 @@ const appointment = {
   created_at: new Date(),
   locationId: 123,
   locationName: 'Example Location',
-  user: {
-    userId: 456,
-    userName: 'John Doe',
-  },
+  user: "",
   customerId: 'customer123',
   customerName: 'CustomerFirstName',
   customerSurname: 'CustomerLastName',
   customerType: 'Regular',
   appointmentDate: '2023-01-01',
   AppointmentStartTime: '2023-01-01T10:00:00',
-  status: {
-    statusCode: 'confirmed',
-    statusDetails: 'Appointment confirmed',
-  },
+  status: 'check-in'
 };
+// status can be: check-in, checked-in or cancelled.
+
 
 // booking price
 
