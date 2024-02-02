@@ -242,21 +242,113 @@ console.log('result', result)
 	return result;
 }
 
-export const dashboardStats = async () => {
-	const appointmentCount = await supabase
-				.from('appointment')
-				.select('*', { count: 'exact', head: true })
 
-	const customersCount= await supabase
-				.from('customers')
-				.select('*', { count: 'exact', head: true })
+export const dashboardStats = async ( appointmentList) => {
+	try {
+	  let appointmentCount,
+		customersCount,
+		openBookingRatio,
+		cancelledBookingRatio,
+		usedBookingRatio;
+  
+	  const calculateStats = (list) => {
+		const openBooking = list?.filter((item) => item?.status?.status === 'check-in') || [];
+		const usedBooking = list?.filter((item) => item?.status?.status === 'checked-in') || [];
+		const cancelledBooking = list?.filter((item) => item?.status?.status === 'cancelled') || [];
+  
+		const totalAppointments = list?.length || 1;
 
-	const appointments = await fetchAll('appointment');
-    const customers = await fetchAll('customers');
-    if (appointments?.data) {
+		openBookingRatio = Math.round((openBooking.length / totalAppointments) * 100);
+		cancelledBookingRatio = Math.round((cancelledBooking.length / totalAppointments) * 100);
+		usedBookingRatio = Math.round((usedBooking.length / totalAppointments) * 100);
+	  };
+  
+	  if (appointmentList) {
+		appointmentCount = appointmentList?.length;
 
-     
-    }
+		const uniqueCustomerIds = new Set();
+		appointmentList.forEach((appointment) => {
+		  if (appointment.customerId && !uniqueCustomerIds.has(appointment.customerId)) {
+			uniqueCustomerIds.add(appointment.customerId);
+		  }
+		});
+		customersCount = uniqueCustomerIds.size;
+		calculateStats(appointmentList);
+	  } else {
+		const appointments = await fetchAll('appointment', 'id');
+		const appointmentQuery = await supabase.from('appointment').select('*', { count: 'exact', head: true });
+		const customerQuery = await supabase.from('customers').select('*', { count: 'exact', head: true });
+  
+		if (appointmentQuery.error || customerQuery.error) {
+		  throw new Error('Error fetching counts from the database');
+		}
+  
+		appointmentCount = appointmentQuery?.count || 0;
+		customersCount = customerQuery?.count || 0;
+		calculateStats(appointments?.data);
+	  }
 
-    return {appointmentCount,customersCount};
+	//   console.log({
+	// 	appointmentCount,
+	// 	customersCount,
+	// 	openBookingRatio,
+	// 	cancelledBookingRatio,
+	// 	usedBookingRatio,
+	//   })
+  
+	  return {
+		appointmentCount,
+		customersCount,
+		openBookingRatio,
+		cancelledBookingRatio,
+		usedBookingRatio,
+	  };
+	} catch (error) {
+	  console.error('Error in stats:', error.message);
+	  return null; // or handle the error in a way that makes sense for your application
+	}
+  };
+  
+export const filterWeeklyData = async (selectedWeek) => {
+	const { data, error } = await supabase
+		.from('appointment')
+		.select()
+		.gte('appointmentDate', new Date(selectedWeek?.start).toDateString())
+		.lte('appointmentDate',  new Date(selectedWeek?.end).toDateString())
+
+		function countAppointmentsByDay(appointments) {
+			const dayCount = {
+				"Mon": 0,
+				"Tue": 0,
+				"Wed": 0,
+				"Thu": 0,
+				"Fri": 0,
+				"Sat": 0,
+				"Sun": 0
+			};
+		
+			appointments.forEach(appointment => {
+				// Extract the date from the appointmentDateTime
+				const appointmentDate = new Date(appointment.appointmentDateTime);
+				
+				// Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+				const dayOfWeek = appointmentDate.getUTCDay();
+		
+				// Convert dayOfWeek to day name
+				const dayName = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][dayOfWeek];
+		
+				// Update the count for the corresponding day
+				dayCount[dayName]++;
+			});
+		
+			// Convert the object to the desired array format
+			const resultList = Object.entries(dayCount).map(([day, value]) => ({ day, value }));
+		
+			return resultList;
+		}
+		
+		const result = countAppointmentsByDay(data);
+		console.log(result);
+		
+	return { data, error, result } 
 }

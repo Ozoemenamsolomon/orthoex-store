@@ -82,7 +82,7 @@ const RehabspaceAdmin = ({rehabspaceData}) => {
 					<ColumnB  loading={loadingLog} customer={customer} setCustomer={setCustomer} customerLog={customerLog} setCustomerLog={setCustomerLog}/>
 				</div>
 
-				<ColumnC rehabspaceData={rehabspaceData}/>
+				<ColumnC rehabspaceData={rehabspaceData} appointmentTable={appointmentTable}/>
 			</div>
 		</main>
 	);

@@ -57,6 +57,11 @@ const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, s
 		  
 		  if (data) {
 			setAppointmentTable(data)
+			router?.replace({
+				pathname: router?.pathname,
+				query: { ...router?.query, fetchAllStats: '' },
+			  });
+			  
 			if(!customer){
 				updateCustomer(stringToJson(data?.[0]?.user))
 				setToggle(data?.[0]?.id)

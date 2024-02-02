@@ -254,8 +254,7 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
                 </button >
 
                 {show==='date'&&<div ref={dropdown2}  className="absolute border bg-white p-4 top-8 -left-20">
-                  <input onChange={(e=>updateQuery('date',e.target.value, ))} type="datetime-local" name="" id=""  className=''/>
-                  {/* <input onChange={(e=>search(e.target.value, 'date'))} type="datetime-local" name="" id=""  className=''/> */}
+                  <input onChange={(e=>updateQuery('date',e.target.value, ))} type="date" name="datepicker" id="datepicker"          className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"/>
                 </div>}
               </div>
 

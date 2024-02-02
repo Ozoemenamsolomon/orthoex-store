@@ -59,7 +59,7 @@ export const getServerSideProps = withPageAuthRequired({
         const appointments = await fetchWithPagination('appointment', 0, rehabspaceData.pageSize - 1, 'id');
 		const location= await fetchAll('location', 'created_at')
 		const bookingPrice = await fetchAll('bookingPrice', 'created_at')
-		const stats = await dashboardStats()
+		const stats = await dashboardStats(appointments?.data)
 
         console.log('rehabspace===', { staff:session?.user, stats, location, bookingPrice,  })
 
