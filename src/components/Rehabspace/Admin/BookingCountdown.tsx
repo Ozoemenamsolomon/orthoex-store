@@ -24,37 +24,46 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
   setAppointmentTable,
   index
 }) => {
-  const [timeRemaining, setTimeRemaining] = useState<number>(0);
+  const [timeRemaining, setTimeRemaining] = useState<string>();
   const [status, setStatus] = useState<string>(appointmentTable[index]?.status?.status || '');
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       const appointmentTime = new Date(bookingDate);
-      const startTime = new Date(appointmentTime.getTime() - 48 * 60 * 60 * 1000); 
       const currentTime = new Date();
+      const startTime = new Date(appointmentTime.getTime() - 24 * 60 * 60 * 1000);
       const remaining = startTime.getTime() - currentTime.getTime();
-
+  
       if (remaining <= 0 || status !== 'check-in') {
         clearInterval(intervalId);
+        setTimeRemaining('')
         if (status === 'check-in') {
           setStatus('checked-in');
+          handleBooking('checked-in');
         }
       } else {
-        setTimeRemaining(remaining);
+        const { days, hours, minutes, seconds } = convertMillisecondsToDHMS(remaining);
+        const formattedSeconds = Math.floor(seconds); 
+        const formattedTime = `${days ? days+'days' : ''}, ${hours ? hours+'hrs' : ''}, ${minutes ? minutes+'mins' : ''}, ${formattedSeconds ? formattedSeconds+'secs' : 0}`;
+        setTimeRemaining(formattedTime);
       }
     }, 1000);
-
+  
     return () => clearInterval(intervalId);
-  }, [bookingDate, status]);
+  }, [bookingDate, status,]);
 
-  const formatTime = (milliseconds:number) => {
-    const seconds = Math.floor((milliseconds / 1000) % 60).toString().padStart(2, '0');
-    const minutes = Math.floor((milliseconds / (1000 * 60)) % 60).toString().padStart(2, '0');
-    const hours = Math.floor((milliseconds / (1000 * 60 * 60)) % 24).toString().padStart(2, '0');
-
-    return `${hours}:${minutes}:${seconds}`;
-  };
-
+  function convertMillisecondsToDHMS(milliseconds:number) {
+    let seconds = Math.floor(milliseconds / 1000);
+    const days = Math.floor(seconds / 86400); // 86,400 seconds in a day
+    seconds %= 86400;
+    const hours = Math.floor(seconds / 3600); // 3,600 seconds in an hour
+    seconds %= 3600;
+    const minutes = Math.floor(seconds / 60); // 60 seconds in a minute
+    seconds %= 60;
+  
+    return { days, hours, minutes, seconds };
+  }
+  
   const handleBooking = async (action:string) => {
     try {
       const { data,  } = await updateAppointmentStatus(action, appointment);
@@ -64,13 +73,9 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
         setAppointmentTable(newList);
         toast.success(`Session ${action}`);
         setStatus(action);
-        setTimeRemaining(0);
+        setTimeRemaining('');
+        return stringToJson(data[0]?.user)?.customerEmail
 
-        const result = await fetchActivities(stringToJson(appointment?.user)?.email || stringToJson(appointment?.user)?.customerEmail);
-        if (result?.data) {
-          setCustomerLog(result?.data);
-          toast.success(`Log refetched`);
-        }
       } else {
         toast.error('Action failed');
       }
@@ -80,11 +85,20 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
     }
   };
 
+  const handleClicked = async (action:string) => {
+    const customerEmail = await handleBooking(action)
+    const result = await fetchActivities(customerEmail);
+        if (result?.data) {
+          setCustomerLog(result?.data);
+          toast.success(`Log refetched`);
+        }
+    }
+
   return (
     <div className='flex gap-2'>
       {
-        status === 'check-in' && timeRemaining > 0 ? 
-          <button onClick={() => handleBooking('cancelled')} className="flex flex-col items-center p-1 hover:shadow duration-300 gap-1">
+        status === 'check-in' && Number(timeRemaining) > 0 ? 
+          <button onClick={() => handleClicked('cancelled')} className="flex flex-col items-center p-1 hover:shadow duration-300 gap-1">
             <FaRegTimesCircle size={16} color='red'/>
             <div className='text-[12px] text-[var(--oex-dark-grey)]'>Cancel</div>
           </button> : 
@@ -93,9 +107,9 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
 
       <div className='flex flex-col justify-between h-full items-center'>
         <button onClick={() => handleBooking('checked-in')}
-          disabled={status !== 'check-in' || timeRemaining <= 0}
-          className={`p-1 shrink-0 flex flex-col items-center ${status !== 'check-in' || timeRemaining <= 0 ? 'cursor-not-allowed ' : 'hover:shadow-md duration-300'}`}>
-            <div className={status !== 'check-in' || timeRemaining <= 0 ? 'text-[var(--oex-dark-grey)]' : 'text-orange-500'}>
+          disabled={status !== 'check-in' || Number(timeRemaining) <= 0}
+          className={`p-1 shrink-0 flex flex-col items-center ${status !== 'check-in' || Number(timeRemaining) <= 0 ? 'cursor-not-allowed ' : 'hover:shadow-md duration-300'}`}>
+            <div className={status !== 'check-in' || Number(timeRemaining) <= 0 ? 'text-[var(--oex-dark-grey)]' : 'text-orange-500'}>
               <TbChecks size={20}/>
             </div>
             <div className="text-[12px] text-[var(--oex-dark-grey)]">
@@ -104,7 +118,7 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
         </button>
 
         <p className='text-[10px] text-orange-500'>
-          {status !== 'check-in' || timeRemaining <= 0 ? '00:00:00' : formatTime(timeRemaining)}
+          {status !== 'check-in' || Number(timeRemaining) <= 0 ? '00:00:00' : timeRemaining}
         </p>
       </div>
     </div>
