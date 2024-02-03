@@ -53,7 +53,7 @@ const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, s
 		  setLoading(true)
 		  const { data, error, count:{count, } } = await fetchWithPagination('appointment', offset, offset + pageSize - 1, 'id');
 
-		  console.log({ data, error, count:{count, } }, 'count', count, offset, pageSize, currentPage, totalPages)
+		//   console.log({ data, error, count:{count, } }, 'count', count, offset, pageSize, currentPage, totalPages)
 		  
 		  if (data) {
 			setAppointmentTable(data)

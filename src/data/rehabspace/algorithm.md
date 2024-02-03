@@ -47,7 +47,7 @@ if (isDayDisabled(selectedDate)) {
 
 On page mount:
 
-Calculate the countdown time by subtracting 48 hours from the appointment's start time.
+Calculate the countdown time by subtracting 24 hours from the appointment's start time.
 Determine the updated status based on the current status:
 If the current status is 'check-in':
 If the countdown time is greater than 0, start countdown.

@@ -22,7 +22,7 @@ const BookingsChart = () => {
 	return (
 		<div className="w-full max-w-xl mx-auto mt-8 space-y-4">
 			<div className="flex justify-end"><WeekDatePicker setData={setList} /></div>
-			<Line data={data} width={800} height={800} />
+			<Line data={data} width={800} height={600} />
 		</div>
 	);
 };
