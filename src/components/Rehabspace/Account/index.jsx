@@ -16,7 +16,7 @@ const index = ({user, rehabspaceData, customer}) => {
 	const [booking, setBooking] = useState(new Date().toLocaleString());
 	const [customerState, setCustomerState] = useState(customer);
 	const [customerLog, setCustomerLog] = useState(rehabspaceData?.activityHistory?.data || [])
-// console.log(rehabspaceData, user)
+console.log(rehabspaceData, user)
 	const updateCustomerLog = async () => {
 		try {
 			const {data,error} = await fetchCustomer(stringToJson(user)?.email || stringToJson(customer)?.customerEmail)
