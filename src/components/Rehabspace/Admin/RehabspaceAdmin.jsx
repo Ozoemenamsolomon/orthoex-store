@@ -25,6 +25,7 @@ const RehabspaceAdmin = ({rehabspaceData}) => {
 		try {
 			const {data,error} = await fetchCustomer(stringToJson(customer)?.email || stringToJson(customer)?.customerEmail)
 			setCustomer(data?.[0])
+			console.log( {data,error})
 			if(data?.[0]) {
 				setLoadingLog(true)
 				const log = await fetchActivities( data?.[0]?.email || data?.[0]?.customerEmail)

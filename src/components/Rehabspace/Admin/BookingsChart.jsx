@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import WeekDatePicker from './WeekDatePicker';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend
+);
 
 const BookingsChart = () => {
 	const [list, setList] = useState([])
@@ -17,7 +27,10 @@ const BookingsChart = () => {
 				outerHeight: 24,
 			},
 		],
+		
 	};
+
+
 
 	return (
 		<div className="w-full max-w-xl mx-auto mt-8 space-y-4">

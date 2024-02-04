@@ -9,17 +9,20 @@ import BookingModal from "./BookingModal"
 import { useRouter } from 'next/router';
 import { fetchActivities, fetchCustomer } from '@utils/rehabspcetable';
 import { stringToJson } from '@utils/stringToJson';
+import { toast } from 'react-toastify';
 
 const index = ({user, rehabspaceData, customer}) => {
 	const router = useRouter()
 	const [booking, setBooking] = useState(new Date().toLocaleString());
 	const [customerState, setCustomerState] = useState(customer);
 	const [customerLog, setCustomerLog] = useState(rehabspaceData?.activityHistory?.data || [])
-
+// console.log(rehabspaceData, user)
 	const updateCustomerLog = async () => {
 		try {
 			const {data,error} = await fetchCustomer(stringToJson(user)?.email || stringToJson(customer)?.customerEmail)
 			setCustomerState(data?.[0])
+			// console.log({data,error})
+
 			if(data?.[0]) {
 				const log = await fetchActivities( data?.[0]?.email || data?.[0]?.customerEmail)
 					if(log?.data) {

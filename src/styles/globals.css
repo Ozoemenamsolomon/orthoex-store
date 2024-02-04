@@ -43,6 +43,10 @@ a {
 	box-sizing: border-box;
 }
 
+.react-datepicker__day--selected {
+    background-color: orange !important; /* Use !important to override default styles */
+}
+
 h6,
 h5,
 h4,

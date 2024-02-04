@@ -16,6 +16,7 @@ import {
 } from 'date-fns';
 import { Fragment, useEffect, useState } from 'react';
 import { fetchRow } from '@utils/rehabspcetable';
+import { supabaseClient } from '@utils/supabase';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
@@ -57,6 +58,7 @@ export default function Calender({location, setCustomer,chosenLocation, setChose
 		if (newHolidayList?.includes(formattedDay)) {
 		  return true;
 		}
+
 		return false;
 	  };
 
@@ -64,13 +66,21 @@ export default function Calender({location, setCustomer,chosenLocation, setChose
 	useEffect(() => {
 		const handleInactiveSlots = async () => {
 			try {
-				const { data, error } = await fetchRow('appointment', 'appointmentDate', format(selectedDay, 'EEE dd MMM yyyy', 'id'));
+				// const { data, error } = await fetchRow('appointment', 'appointmentDate', format(selectedDay, 'EEE dd MMM yyyy', 'id'));
+	
+				// TODO: filter based on appointmentDate and location
+				const { data, error } = await supabaseClient
+					.from('appointment') 
+					.select('*')  
+					.ilike('locationName', `%${chosenLocation?.locationName}%`)
+					.eq('appointmentDate', format(selectedDay, 'EEE dd MMM yyyy', 'id')) 
+					// console.log({ data, error });
 	
 				if (data) {
 					const bookingList = data.map(item => new Date(new Date(item?.appointmentDateTime).getTime() + 60 * 60 * 1000));
 	
 					setInactiveSlots(bookingList);
-					// console.log('inactive slots', bookingList);
+					console.log('inactive slots', bookingList);
 				} else {
 					console.log({ data, error });
 				}
@@ -80,10 +90,8 @@ export default function Calender({location, setCustomer,chosenLocation, setChose
 		};
 	
 		handleInactiveSlots();
-	}, [selectedDay]);
+	}, [selectedDay, chosenLocation?.locationName]);
 	
-
-
 	let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
 	let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
 
@@ -290,13 +298,19 @@ const TimeSlotPicker = ({ timeSlots, setBooking, selectedSlot, setSelectedSlot, 
 			);
 			// check if the slot appeared 'maxBookingPerSlot' times in the inactiveSlot list.
 		  }).length >= chosenLocation?.maxBookingPerSlot;
+
+		  const isPastCurrentTime = () => {
+			return new Date().getTime() > new Date(slot?.date).getTime() - 86400000 // 24hrs before bookdate (allowable cancellation)
+		  }
+
+		//   console.log(new Date(new Date().getTime() ), new Date(new Date(slot?.date).getTime() - 86400000), new Date().getTime() > new Date(slot?.date).getTime() - 86400000 )
   
 		  return (
 			<button
 			  key={index}
-			  disabled={isSlotInactive}
+			  disabled={isSlotInactive || isPastCurrentTime()}
 			  className={`w-full text-center p-4 border rounded-md 
-				${isSlotInactive ? 'border-gray-300 hover:border-gray-300 text-gray-400 cursor-not-allowed' : selectedSlot === index ? 'border-orange-500 bg-orange-50' : 'border-gray-700 hover:border-orange-500'}
+				${isSlotInactive || isPastCurrentTime() ? 'border-gray-300 hover:border-gray-300 text-gray-400 cursor-not-allowed' : selectedSlot === index ? 'border-orange-500 bg-orange-50' : 'border-gray-700 hover:border-orange-500'}
 				`}
 			  onClick={() => {
 				setSelectedSlot(index);

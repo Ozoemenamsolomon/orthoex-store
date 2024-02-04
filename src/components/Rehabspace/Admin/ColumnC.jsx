@@ -35,8 +35,8 @@ const ColumnC = ({ rehabspaceData, appointmentTable }) => {
 
   return (
     <div>
-      <div className="border md:w-[80vw] lg:w-full px-4 border-[var(--oex-light-grey)] rounded py-6 grid sm:grid-cols-2 gap-8 lg:grid-cols-1 md:col-span-2 lg:col-span-1">
-        <div className="space-y-4">
+      <div className="border md:w-[80vw] lg:w-full px-4 border-[var(--oex-light-grey)] rounded py-6 grid sm:grid-cols-2 gap-4 lg:grid-cols-1 md:col-span-2 lg:col-span-1">
+        <div className="space-y-4 pb-4 border-b">
           <h5 className="font-medium">Bookings overview</h5>
           <div className="flex justify-end">
             <button

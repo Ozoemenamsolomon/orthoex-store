@@ -6,12 +6,11 @@ import { fetchActivities, updateAppointmentStatus } from '@utils/rehabspcetable'
 import { stringToJson } from '@utils/stringToJson';
 import { Appointment, Activity } from '@data/rehabspace/types';
 
-
 interface BookingComponentProps {
   bookingDate: string;
-  appointment: Appointment; 
-  setCustomerLog: React.Dispatch<React.SetStateAction<Activity[]>>; 
-  appointmentTable: Appointment[]; 
+  appointment: Appointment;
+  setCustomerLog: React.Dispatch<React.SetStateAction<Activity[]>>;
+  appointmentTable: Appointment[];
   setAppointmentTable: React.Dispatch<React.SetStateAction<Appointment[]>>;
   index: number;
 }
@@ -22,9 +21,9 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
   setCustomerLog,
   appointmentTable,
   setAppointmentTable,
-  index
+  index,
 }) => {
-  const [timeRemaining, setTimeRemaining] = useState<string>();
+  const [timeRemaining, setTimeRemaining] = useState<number | undefined>(undefined);
   const [status, setStatus] = useState<string>(appointmentTable[index]?.status?.status || '');
 
   useEffect(() => {
@@ -36,16 +35,13 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
   
       if (remaining <= 0 || status !== 'check-in') {
         clearInterval(intervalId);
-        setTimeRemaining('')
+        setTimeRemaining(0)
         if (status === 'check-in') {
           setStatus('checked-in');
           handleBooking('checked-in');
         }
       } else {
-        const { days, hours, minutes, seconds } = convertMillisecondsToDHMS(remaining);
-        const formattedSeconds = Math.floor(seconds); 
-        const formattedTime = `${days ? days+'days' : ''}, ${hours ? hours+'hrs' : ''}, ${minutes ? minutes+'mins' : ''}, ${formattedSeconds ? formattedSeconds+'secs' : 0}`;
-        setTimeRemaining(formattedTime);
+        setTimeRemaining(remaining);
       }
     }, 1000);
   
@@ -54,51 +50,60 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
 
   function convertMillisecondsToDHMS(milliseconds:number) {
     let seconds = Math.floor(milliseconds / 1000);
-    const days = Math.floor(seconds / 86400); // 86,400 seconds in a day
+    const days = Math.floor(seconds / 86400); 
     seconds %= 86400;
-    const hours = Math.floor(seconds / 3600); // 3,600 seconds in an hour
+    const hours = Math.floor(seconds / 3600); 
     seconds %= 3600;
-    const minutes = Math.floor(seconds / 60); // 60 seconds in a minute
+    const minutes = Math.floor(seconds / 60); 
     seconds %= 60;
+
+    const formattedSeconds = Math.floor(seconds); 
+    const formattedTime = `${days ? days+'days,' : ''}${hours ? hours+'hrs,' : ''}${minutes ? minutes+'mins,' : ''}${formattedSeconds ? formattedSeconds+'secs' : 0}`;
   
-    return { days, hours, minutes, seconds };
+    return formattedTime;
   }
   
-  const handleBooking = async (action:string) => {
+  const handleBooking = async (action: string): Promise<string | void> => {
     try {
-      const { data,  } = await updateAppointmentStatus(action, appointment);
+      const { data } = await updateAppointmentStatus(action, appointment);
       if (data) {
         const newList = [...appointmentTable];
         newList.splice(index, 1, data[0]);
         setAppointmentTable(newList);
         toast.success(`Session ${action}`);
         setStatus(action);
-        setTimeRemaining('');
-        return stringToJson(data[0]?.user)?.customerEmail
-
+        setTimeRemaining(0);
+        return stringToJson(data[0]?.user)?.customerEmail;
       } else {
         toast.error('Action failed');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       toast.error('An error occurred');
     }
   };
 
-  const handleClicked = async (action:string) => {
-    const customerEmail = await handleBooking(action)
-    const result = await fetchActivities(customerEmail);
+  const handleClicked = async (action: string) => {
+    try {
+      const customerEmail = await handleBooking(action);
+      if (customerEmail) {
+        const result = await fetchActivities(customerEmail);
+        console.log(result);
         if (result?.data) {
-          setCustomerLog(result?.data);
-          toast.success(`Log refetched`);
+          setTimeout(() => {
+            setCustomerLog(result.data);
+          }, 500);
         }
+      }
+    } catch (error) {
+      console.error(error);
     }
-
+  };
   return (
     <div className='flex gap-2'>
       {
         status === 'check-in' && Number(timeRemaining) > 0 ? 
-          <button onClick={() => handleClicked('cancelled')} className="flex flex-col items-center p-1 hover:shadow duration-300 gap-1">
+          <button onClick={() => handleClicked('cancelled')} className="flex flex-col items-center p-1  duration-300 gap-1">
             <FaRegTimesCircle size={16} color='red'/>
             <div className='text-[12px] text-[var(--oex-dark-grey)]'>Cancel</div>
           </button> : 
@@ -108,7 +113,7 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
       <div className='flex flex-col justify-between h-full items-center'>
         <button onClick={() => handleBooking('checked-in')}
           disabled={status !== 'check-in' || Number(timeRemaining) <= 0}
-          className={`p-1 shrink-0 flex flex-col items-center ${status !== 'check-in' || Number(timeRemaining) <= 0 ? 'cursor-not-allowed ' : 'hover:shadow-md duration-300'}`}>
+          className={`p-1 shrink-0 flex flex-col items-center ${status !== 'check-in' || Number(timeRemaining) <= 0 ? 'cursor-not-allowed ' : ' duration-300'}`}>
             <div className={status !== 'check-in' || Number(timeRemaining) <= 0 ? 'text-[var(--oex-dark-grey)]' : 'text-orange-500'}>
               <TbChecks size={20}/>
             </div>
@@ -118,8 +123,9 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
         </button>
 
         <p className='text-[10px] text-orange-500'>
-          {status !== 'check-in' || Number(timeRemaining) <= 0 ? '00:00:00' : timeRemaining}
+          {status !== 'check-in' || Number(timeRemaining) <= 0 ? '00:00:00' : (timeRemaining !== undefined ? convertMillisecondsToDHMS(timeRemaining) : '')}
         </p>
+
       </div>
     </div>
   );

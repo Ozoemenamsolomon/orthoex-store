@@ -173,14 +173,13 @@ export const getServerSideProps = withPageAuthRequired({
 
 		const session = await getSession(req, res);
 
-		const {data: customer} = await fetchCustomer( session?.user?.email)
+		const {data:customer, error} = await fetchCustomer( session?.user?.email)
 
 		const data = {
 			orders: [],
 			title:
 				accountSubLinks.find(({ slug }) => slug === query.slug)?.name || '',
 		};
-
 		if (query.slug === 'orders') {
 			const { data: orders, error } = await supabaseClient
 				.from('orders')
@@ -194,12 +193,12 @@ export const getServerSideProps = withPageAuthRequired({
 				data.orders = [];
 			}
 		}
+
 		const trainingData: TrainingOrderDataProps = {
 			trainings: [],
 			title:
 				accountSubLinks.find(({ slug }) => slug === query.slug)?.name || '',
 		};
-
 		if (query.slug === 'trainings') {
 			const { data: trainingOrderData, error } = await supabaseTrainingClient
 				.from('training_orders')
@@ -233,7 +232,7 @@ export const getServerSideProps = withPageAuthRequired({
 			const location= await fetchAll('location', 'created_at')
 			const bookingPrice = await fetchAll('bookingPrice', 'created_at')
 			const activityHistory = await fetchActivities(session?.user?.email)
-			console.log('rehabspace===', { holidays, location, bookingPrice, activityHistory })
+			console.log('rehabspace===', {customer:{customer, error, }, holidays, location, bookingPrice, activityHistory })
 			rehabspaceData.location = location as any;
 			rehabspaceData.holidays = holidays as any;
 			rehabspaceData.bookingPrice = bookingPrice as any;

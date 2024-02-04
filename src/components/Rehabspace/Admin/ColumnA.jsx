@@ -186,7 +186,7 @@ const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, s
 						</div>
 					</div>
 
-					<FaTimes size={16} onClick={()=>deleteItem('appointment', 'id', appointmentTable[i]?.id)} />
+					{/* <FaTimes size={16} onClick={()=>deleteItem('appointment', 'id', appointmentTable[i]?.id)} /> */}
 
 					<BookingCountdown bookingDate={appointmentDateTime} appointment={appointmentTable[i]} appointmentTable={appointmentTable} setAppointmentTable={setAppointmentTable}  index={i} fetchAppointments={()=>fetchAppointments(currentPage)} setCustomerLog={setCustomerLog}/>
 				</div>

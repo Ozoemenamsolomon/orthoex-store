@@ -75,14 +75,17 @@ const SessionBookingBtn = ({ booking, chosenLocation, setCustomer, customer, set
         if (!response.ok) {
           const errorResponse = await response.json();
           console.error(errorResponse);
+          
           toast.error('Booking was unsuccessful');
         } else {
           const {data, error} = await response.json();
           if(error){
               toast.error('Booking was unsuccessful');
+           
           } else {
               toast.success('Booking was successful');
               // add to the inactive slots
+              console.log(response)
               setInactiveSlots(prev=>[...prev, booking])
               setRefresh(prev=>!prev)
               // update customer log

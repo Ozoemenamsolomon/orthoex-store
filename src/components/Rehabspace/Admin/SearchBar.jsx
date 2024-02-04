@@ -13,6 +13,8 @@ import { FaCalendarAlt, FaCalendarWeek, FaMapPin, FaRegClock, FaTimes, FaUserAlt
 import { MdCheckCircleOutline } from 'react-icons/md';
 import { tableLength } from '@utils/rehabspcetable';
 import { useRouter } from 'next/router';
+import CustomDatePicker from '../CustomDatePicker';
+import {format,} from 'date-fns';
 
 const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offset, setAppointmentTable }) => {
   const router = useRouter()
@@ -36,9 +38,9 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
     }
   };
 
-  useClickOutside(dropdown, ()=>handleModal('status'))
-  useClickOutside(dropdown1, ()=>handleModal('status'))
-  useClickOutside(dropdown2, ()=>handleModal('status'))
+  useClickOutside(dropdown, ()=>handleModal('location'))
+  useClickOutside(dropdown1, ()=>handleModal('customerType'))
+  useClickOutside(dropdown2, ()=>handleModal('date'))
   useClickOutside(dropdown3, ()=>handleModal('status'))
 
   const updateQuery = (query, value, e) => {
@@ -74,61 +76,6 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
     setShow('')
   }
   
-  const search = async (query, type, e) => {
-    if(e){
-      e.preventDefault()
-    }
-    setLoading(true);
-    const {count} = await tableLength('appointment')
-    try {
-      let result;
-      if (type==='location') {
-        result = await supabaseClient
-        .from('appointment') 
-        .select('*')
-        .ilike('locationName', `%${query}%`) 
-      } else if (type==='customerType') {
-        result = await supabaseClient
-        .from('appointment') 
-        .select('*')
-        .ilike('customerType', `%${query}%`) 
-      } else if (type==='date') {
-        result = await supabaseClient
-        .from('appointment') 
-        .select('*')
-        .eq('appointmentDate', `%${new Date(query).toDateString()}%`) 
-        .eq('appointmentDateTime', `%${new Date(query).toTimeString()}%`) 
-      }  else if (type==='status') {
-        result = await supabaseClient
-        .from('appointment')
-        .select('*')
-        .eq('status->>status', query);
-      } else if (type === 'customerName') {
-        result= await supabaseClient
-        .from('appointment') 
-        .select('*')  
-        .ilike('customerName', `%${query}%`) 
-      }
-        if (result?.data) {
-          console.log(result)
-            setAppointmentTable(result?.data)
-            updatePagination(count, 'search', result?.data);
-        } else {
-            console.log(result?.error);
-            setAppointmentTable([])
-            updatePagination(count, 'search', []);
-        }
-
-    } catch (error) {
-        console.log(error);
-        setAppointmentTable([])
-        updatePagination(count, 'search', []);
-    } finally {
-      setLoading(false);
-      setShow('')
-    }
-  }
-  
   useEffect(() => {
     const searchTable = async () => {
       if (router.query.search) {
@@ -150,6 +97,10 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
   
           if (customerType) {
             query = query.ilike('customerType', `%${customerType}%`);
+          }
+
+          if (date) {
+            query = query.eq('appointmentDate', new Date(date).toISOString())
           }
   
           if (status) {
@@ -189,9 +140,6 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
               <button onClick={(e)=>updateQuery( 'customerName', searchTerm, e)}>
                 <SearchIcon />
               </button>
-              {/* <button onClick={(e)=>search(searchTerm, 'customerName', e)}>
-                <SearchIcon />
-              </button> */}
             </div>
             <input
               type="search"
@@ -226,7 +174,6 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
                   {
                     ['Mafoluku', 'Ikorodu'].map((e,i)=>(
                       <button key={i}  onClick={()=>updateQuery( 'location', e)}  className='p-1 hover:border duration-300'>{e}</button>
-                      // <button key={i}  onClick={()=>search(e, 'location')}  className='p-1 hover:border duration-300'>{e}</button>
                     ))
                   }
                 </div>}
@@ -241,7 +188,6 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
                   {
                     ['Clinician', 'Patient'].map((e,i)=>(
                       <button key={i}  onClick={()=>updateQuery( 'customerType',e)} className='p-1 hover:border duration-300'>{e}</button>
-                      // <button key={i}  onClick={()=>search(e, 'customerType')} className='p-1 hover:border duration-300'>{e}</button>
                     ))
                   }
                 </div>
@@ -253,21 +199,24 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
                   <FaCalendarAlt/> <span>Date</span>
                 </button >
 
-                {show==='date'&&<div ref={dropdown2}  className="absolute border bg-white p-4 top-8 -left-20">
-                  <input onChange={(e=>updateQuery('date',e.target.value, ))} type="date" name="datepicker" id="datepicker"          className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"/>
+                {show==='date'&&
+                <div ref={dropdown2}  className="absolute border bg-white top-8 -left-20">
+
+                    {/* <CustomDatePicker onChange={(date) => updateQuery('date', date)} /> */}
+
+                  <input onChange={(e=>updateQuery('date',e.target.value, e))} type="date" name="datepicker" id="datepicker"/>
                 </div>}
               </div>
 
               <div  className="relative  ">
-                <button onClick={()=>handleModal('time')} className='flex gap-1 items-center'>
+                <button onClick={()=>handleModal('status')} className='flex gap-1 items-center'>
                   <MdCheckCircleOutline/> <span>Status</span>
                 </button >
 
-                {show==='time'&&<div ref={dropdown3} className="absolute border w-32 bg-white p-4 top-8 right-0">
+                {show==='status'&&<div ref={dropdown3} className="absolute border w-32 bg-white p-4 top-8 right-0">
                   {
                     ['check-in', 'checked-in', 'cancelled'].map((e,i)=>(
                       <button onClick={()=>updateQuery('status',e)} key={i} className="p-1 hover:border " >{e}</button>
-                      // <button onClick={()=>search(e, 'status')} key={i} className="p-1 hover:border " >{e}</button>
                     ))
                   }
                 </div>}
@@ -278,7 +227,8 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
               {Object.entries(queryParams).map(([key, value]) => (
                 value && (
                   <div key={key} className="px-2 py-1 flex gap-2 items-center bg-red-100 rounded text-orange-500">
-                    {value}
+                    { 
+                      key==='date' ? new Date(value).toDateString() : value}
                     <FaTimes onClick={()=>updateQuery(key,'')}/>
                   </div>
                 )
