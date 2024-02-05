@@ -7,7 +7,7 @@ const BookingConfirmed = () => {
 			<div className="w-full md:w-[600px] bg-white rounded-md py-14 px-6 md:px-10  space-y-10">
 				<div className="flex items-center justify-between">
 					<div className="flex gap-2 items-center">
-						<div className="bg-green-500 w-full mx-auto rounded-full h-10 w-10 flex justify-center items-center text-xl font-bold text-white">
+						<div className="bg-green-500 w-full mx-auto rounded-full h-10 flex justify-center items-center text-xl font-bold text-white">
 							<FaCheck size={24} />
 						</div>
 						<div className="text-2xl font-semibold">Booking confirmed</div>

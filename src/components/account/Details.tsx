@@ -7,7 +7,9 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { CustomerType } from '@data/rehabspace/types';
 
-
+interface FormErrors {
+	[key: string]: string;
+  }
 const Details: FC<{
 	user: UserProfile;
 	customer: CustomerType;
@@ -25,13 +27,13 @@ const Details: FC<{
 			phoneNumber: "",
 			whatsappNumber: "",
 			customerType: "Clinician", //TODO
-			sessionBalance: 10,
+			// sessionBalance: 0,
 			birthDay: "",
 			gender: "",
 			email: user?.email,
 		  }
 	);
-	const [errors, setErrors] = useState({});
+	const [errors, setErrors] = useState<FormErrors>({});
 	const [loading, setLoading] = useState(false);
 
 	const handleChange = (
@@ -49,7 +51,7 @@ const Details: FC<{
 		setLoading(true);
 	  
 		try {
-		  const { data, error } = await updateItem('customers',formData, 'id', customer?.id);
+		  const { data, error } = await updateItem('customers',{...formData, email: user?.email,}, 'id', customer?.id);
 		  if (data) {
 			setFormData(data[0])
 			setErrors({});

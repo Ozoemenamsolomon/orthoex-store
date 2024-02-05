@@ -101,6 +101,14 @@ const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, s
 			fetchAppointments(currentPage)
 		}
 	  }, [router.query.date])
+
+	  const handleRefresh = async () => {
+		await router.replace({
+			pathname: router.pathname,
+			query: {date: '', customerName: '', customerType: '', status: '', location: '', search: ''}, // Setting query to an empty object clears the parameters
+		  });
+		fetchAppointments(currentPage)
+	  }
 	  
 
 	return (
@@ -124,7 +132,7 @@ const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, s
 
 			<div className="flex px-4  pb-3 gap-8 justify-between">
 				<button className="shadow-md p-1 rounded-full hover:border duration-300 ">
-					<MdRefresh size={20} onClick={()=>fetchAppointments(currentPage)}/>
+					<MdRefresh size={20} onClick={handleRefresh}/>
 				</button>
 				<div className=" flex gap-3 justify-end">
 					{

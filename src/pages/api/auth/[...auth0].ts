@@ -1,5 +1,6 @@
 import { AfterCallback, handleAuth, handleCallback } from '@auth0/nextjs-auth0';
 import { insert } from '../../../utils/rehabspcetable';
+import { supabaseClient } from '@utils/supabase';
 
 export default handleAuth({
 	async callback(req, res) {
@@ -32,7 +33,24 @@ const afterCallback: AfterCallback = async (req, res, session, state) => {
 		  } catch (error) {
 			console.error(error);
 		  }
-	}
+	} else {
+		try {
+			const { data: customer, error } = await supabaseClient
+				.from('customers')
+				.select('*')
+				.eq('customerEmail', session.user.email)
+				.single();
 
+			if (error && error.code == 'PGRST116') {
+				res.setHeader('Location', '/onboarding');
+			}
+
+			if (customer) {
+				session.user.customer = customer;
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
 	return session;
 };

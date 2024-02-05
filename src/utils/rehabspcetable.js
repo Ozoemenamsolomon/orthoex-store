@@ -335,7 +335,7 @@ export const filterWeeklyData = async (selectedWeek) => {
 				const dayOfWeek = appointmentDate.getUTCDay();
 		
 				// Convert dayOfWeek to day name
-				const dayName = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][dayOfWeek];
+				const dayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dayOfWeek];
 		
 				// Update the count for the corresponding day
 				dayCount[dayName]++;

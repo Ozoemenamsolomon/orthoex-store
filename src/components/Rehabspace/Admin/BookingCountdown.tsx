@@ -92,6 +92,7 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
         if (result?.data) {
           setTimeout(() => {
             setCustomerLog(result.data);
+        toast.success(`log=======updated`);
           }, 500);
         }
       }
@@ -111,7 +112,7 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
       }
 
       <div className='flex flex-col justify-between h-full items-center'>
-        <button onClick={() => handleBooking('checked-in')}
+        <button onClick={() => handleClicked('checked-in')}
           disabled={status !== 'check-in' || Number(timeRemaining) <= 0}
           className={`p-1 shrink-0 flex flex-col items-center ${status !== 'check-in' || Number(timeRemaining) <= 0 ? 'cursor-not-allowed ' : ' duration-300'}`}>
             <div className={status !== 'check-in' || Number(timeRemaining) <= 0 ? 'text-[var(--oex-dark-grey)]' : 'text-orange-500'}>

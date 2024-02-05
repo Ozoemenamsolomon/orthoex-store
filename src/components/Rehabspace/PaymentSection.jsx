@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCart } from 'context/cartContext';
 import { toast } from 'react-toastify';
+import CTA from '@components/CTA';
 
 const PaymentSection = () => {
 	const [popup, setPopup] = useState(false);
@@ -46,7 +47,7 @@ export const PaymentGrid = () => {
 
 				<button
 					onClick={()=>setPopup(true)}
-					className="px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)] ">
+					className="px-8 py-4 font-light text-xl rounded text-white bg-[var(--oex-orange)]  hover:bg-white hover:text-[var(--oex-orange)]">
 					{paymentCard?.btnText}
 				</button>
 			</div>
@@ -74,14 +75,15 @@ return (
 	<h3 className="">{bookingCard?.heading}</h3>
 	<p className="sm:pb-6 max-lg:pr-6">{bookingCard?.description}</p>
 
-	<div className="flex">
+	<div className="">
 		<button
 			onClick={()=>{
 				customerDetails?.sessionBalance < 1 ? toast.warning('Your session balance is empty. Purshcase a new session.') : router.push(`/account/rehabspace?action=booking`)}
 			}
-			className={` ${customerDetails?.sessionBalance < 1 ? 'bg-orange-300' : 'bg-[var(--oex-orange)]'} px-8 py-4 font- rounded-md text-white   duration-300`}>
+			className={` ${customerDetails?.sessionBalance < 1 ? 'cursor-not-allowed ' : ' hover:bg-white hover:text-[var(--oex-orange)]'} font-light px-8 py-4 text-xl  rounded text-white bg-[var(--oex-orange)]  duration-300`}>
 			Book session
 		</button>
+
 	</div>
 </div>
 <div  className="translate-y-[10px] flex justify-end ">

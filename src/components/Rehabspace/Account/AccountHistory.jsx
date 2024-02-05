@@ -14,7 +14,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { fetchRow } from '@utils/rehabspcetable';
 
 const AccountHistory = ({log, customer, admin}) => {
-	const [activities, setActivities] = useState(log || [])
+	// const [activities, setActivities] = useState(log || [])
 
 	return (
 		<div className={admin ? '' : "overflow-auto h-screen"}>
@@ -35,7 +35,14 @@ const AccountHistory = ({log, customer, admin}) => {
 				</>
 			}
 
-			{activities?.map(
+			{
+				log && !log.length ? 
+				(
+					<div className='h-96 w-full flex justify-center items-center border rounded'>
+						No log found
+					</div>
+				) :
+				log?.map(
 				(item, i) => (
 					<div className="flex  gap-4 border-b  py-4" key={i}>
 						<div className="flex gap-4 w-3/4">

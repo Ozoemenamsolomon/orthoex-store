@@ -1,25 +1,41 @@
-import React, { useState } from 'react';
-import {updateItem} from "../../utils/rehabspcetable"
+import React, {FC, useState, FormEvent, ChangeEvent } from 'react';
+import {insert, updateItem} from "../../utils/rehabspcetable"
 import { useRouter } from 'next/router';
 import {toast} from "react-toastify"
+import { CustomerType } from '@data/rehabspace/types';
+import { UserProfile , } from '@auth0/nextjs-auth0/client';
 
-const OnboardingForm = ({user}) => {
-    const {push}=useRouter()
-  const initialFormData = {
-    registrationDate: user?.registrationDate,
-    userEmail: user?.userEmail,
-    firstName: user?.firstName,
-    lastName: user?.lastName,
-    profession: user?.profession,
-    city: user?.city,
-    phoneNumber: user?.phoneNumber,
-    whatsappNumber: user?.whatsappNumber,
-    userType: user?.userType,
+interface OnboardingFormProps {
+  user: UserProfile;
+}
+
+interface FormErrors {
+  customerEmail?: string;
+  phoneNumber?: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+interface FormErrors {
+  [key: string]: string;
+}
+const OnboardingForm: FC<OnboardingFormProps> = ({user}) => {
+  const {push}=useRouter()
+
+  const initialFormData: Partial<CustomerType> = {
+    registrationDate: new Date(),
+    customerEmail: user?.email || '', 
+    firstName: user?.name || '', 
+    lastName: '',
+    profession: '',
+    city: '',
+    phoneNumber:  '', 
+    whatsappNumber: '',
+    customerType: 'Clinician',
+    email: user?.email || '', 
   };
-
   const clearForm = () => {
     setFormData({
-        registrationDate: '',
         customerEmail: '',
         firstName: '',
         lastName: '',
@@ -27,43 +43,44 @@ const OnboardingForm = ({user}) => {
         city: '',
         phoneNumber: '',
         whatsappNumber: '',
-        userType: '',
+        customerType: '',
     })
   };
 
-  const [formData, setFormData] = useState(initialFormData);
-  const [errors, setErrors] = useState({});
+  const [formData, setFormData] = useState<Partial<CustomerType>>(initialFormData);
+
+  const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(false);
 
-  const validateForm = () => {
-    let isValid = true;
-    const newErrors = {};
+const validateForm = () => {
+  let isValid = true;
+  const newErrors: FormErrors = {};
 
-    if (!formData.userEmail.trim()) {
-      newErrors.userEmail = 'Email is required';
-      isValid = false;
-    }
+  if (!formData?.customerEmail?.trim()) {
+    newErrors.customerEmail = 'Email is required';
+    isValid = false;
+  }
 
-    if (!formData.phoneNumber.trim()) {
-      newErrors.phoneNumber = 'Phone Number is required';
-      isValid = false;
-    }
+  if (!formData?.phoneNumber?.trim()) {
+    newErrors.phoneNumber = 'Phone Number is required';
+    isValid = false;
+  }
 
-    if (!formData.firstName.trim()) {
-        newErrors.firstName = 'First name is required';
-        isValid = false;
-      }
+  if (!formData?.firstName?.trim()) {
+    newErrors.firstName = 'First name is required';
+    isValid = false;
+  }
 
-    if (!formData.lastName.trim()) {
+  if (!formData?.lastName?.trim()) {
     newErrors.lastName = 'Last name is required';
     isValid = false;
-    }
+  }
 
-    setErrors(newErrors);
-    return isValid;
-  };
+  setErrors(newErrors);
+  return isValid;
+};
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -73,7 +90,9 @@ const OnboardingForm = ({user}) => {
     setLoading(true);
 
     try {
-      const {data,error} = await updateItem('customers', formData, 'id', user?.id, );
+      // const {data,error} = await insert('customers', [formData],  );
+      const {data,error} = await updateItem('customers', formData, 'email', user?.email, );
+      // console.log( {data,error})
       if (data) {
         clearForm();
         setErrors({});
@@ -91,7 +110,7 @@ const OnboardingForm = ({user}) => {
     }
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -118,11 +137,11 @@ const OnboardingForm = ({user}) => {
             type="text"
             id="userEmail"
             name="userEmail"
-            value={formData.userEmail || ''}
+            value={formData.customerEmail || ''}
             onChange={handleInputChange}
             className={`mt-1 p-2 border rounded-md w-full ${errors.userEmail ? 'border-red-500' : ''}`}
           />
-          {errors.userEmail && <p className="text-red-500 text-xs mt-1">{errors.userEmail}</p>}
+          {errors.customerEmail && <p className="text-red-500 text-xs mt-1">{errors.customerEmail}</p>}
         </div>
         {/* FirstName */}
         <div className="mb-4">

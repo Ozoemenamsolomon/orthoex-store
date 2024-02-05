@@ -1,6 +1,6 @@
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import OnboardingForm from '../components/account/OnboardingForm';
-import { fetchOneRow } from '../utils/rehabspcetable';
+import { fetchCustomer, fetchOneRow } from '../utils/rehabspcetable';
 
 const Onboarding = ({ user }) => {
   return <OnboardingForm user={user} />;
@@ -22,23 +22,9 @@ export const getServerSideProps = withPageAuthRequired({
         };
       }
 
-      const userEmail = session.user.email;
-      const user = await fetchOneRow('customers', 'customerEmail', userEmail);
-
-      console.log('user ==', user);
-
-      if (!user || !user.data || user.data.length === 0) {
-        return {
-          redirect: {
-            destination: '/',
-            permanent: false,
-          },
-        };
-      }
-
       return {
         props: {
-          user: user.data[0],
+          user:session?.user,
         },
       };
     } catch (error) {
