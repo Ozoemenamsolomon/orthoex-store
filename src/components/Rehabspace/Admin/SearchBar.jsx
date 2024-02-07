@@ -16,16 +16,14 @@ import { useRouter } from 'next/router';
 import CustomDatePicker from '../CustomDatePicker';
 import {format,} from 'date-fns';
 
-const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offset, setAppointmentTable }) => {
+const SearchBar = ({ handleRefresh, queryParams, setQueryParams, setLoading, setCounting, pageSize,  updatePagination, offset, setAppointmentTable }) => {
   const router = useRouter()
   const dropdown = useRef(null)
   const dropdown1 = useRef(null)
   const dropdown2 = useRef(null)
   const dropdown3 = useRef(null)
   const [searchTerm, setSearchTerm] = useState('');
-  const [queryParams, setQueryParams] = useState({
-    date: '', customerName: '', customerType: '', status: '', location: '', search: ''
-  });
+  
 
   const [show, setShow] = useState('')
   const [drop, setDrop] = useState('')
@@ -67,11 +65,11 @@ const SearchBar = ({  setLoading, setCounting, pageSize,  updatePagination, offs
   };
 
   const clear = () => {
+    setQueryParams({})
     router.replace({
       pathname: router.pathname,
       query: ''
     });
-    setQueryParams({date: '', customerName: '', customerType: '', status: '', location: '', search: ''})     
     setDrop(prev=>!prev)
     setShow('')
   }

@@ -16,7 +16,7 @@ const RehabspaceAdmin = ({rehabspaceData}) => {
 	const {query}=useRouter()
 	const [booking, setBooking] = useState(new Date().toLocaleString());
 	const [show, setShow] = useState(0);
-
+	
 	const [loadingLog, setLoadingLog] = useState(0)
 
 	const [appointmentTable, setAppointmentTable] = useState(appointments)

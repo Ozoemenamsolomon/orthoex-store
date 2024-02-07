@@ -47,17 +47,17 @@ const BookingStatusDoughnutChart = ({ stats }) => {
   };
 
   return (
-    <div className="">
-      <div className="relative">
+    
+      <div className="relative pb-4">
 
         <Doughnut data={data} width={300} height={300}/>
         <div className="absolute inset-0 flex flex-col justify-center items-center">
-          <h4> {appointmentCount}</h4>
-          <div>Bookings</div>
+          <div className='text-2xl font-semibold'> {appointmentCount}</div>
+          <div className='font-semibold'>Bookings</div>
           <div> {customersCount} Customers</div>
         </div>
       </div>
-    </div>
+
   )
 };
 

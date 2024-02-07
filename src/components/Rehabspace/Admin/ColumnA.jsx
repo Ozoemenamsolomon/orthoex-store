@@ -27,6 +27,9 @@ const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, s
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
 	const [counting, setCounting] = useState({});
+	const [queryParams, setQueryParams] = useState({
+		date: '', customerName: '', customerType: '', status: '', location: '', search: ''
+	  });
 
 	let pageSize = rehabspaceData?.pageSize;
 
@@ -52,15 +55,9 @@ const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, s
 		  setError('')
 		  setLoading(true)
 		  const { data, error, count:{count, } } = await fetchWithPagination('appointment', offset, offset + pageSize - 1, 'id');
-
-		//   console.log({ data, error, count:{count, } }, 'count', count, offset, pageSize, currentPage, totalPages)
 		  
 		  if (data) {
 			setAppointmentTable(data)
-			router?.replace({
-				pathname: router?.pathname,
-				query: { ...router?.query, fetchAllStats: '' },
-			  });
 			  
 			if(!customer){
 				updateCustomer(stringToJson(data?.[0]?.user))
@@ -102,13 +99,18 @@ const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, s
 		}
 	  }, [router.query.date])
 
-	  const handleRefresh = async () => {
+	  const handleRefresh = async (clearSearch) => {
+		await setQueryParams({})
 		await router.replace({
 			pathname: router.pathname,
-			query: {date: '', customerName: '', customerType: '', status: '', location: '', search: ''}, // Setting query to an empty object clears the parameters
-		  });
-		fetchAppointments(currentPage)
-	  }
+			query: ''
+			});
+		if (typeof clearSearch === 'function') {
+			clearSearch();
+		}
+			fetchAppointments(currentPage);
+		};
+	
 	  
 
 	return (
@@ -117,7 +119,7 @@ const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, s
 				Appointments
 			</h5>
 
-			<SearchBar setLoading={setLoading} setCounting={setCounting}
+			<SearchBar handleRefresh={handleRefresh} queryParams={queryParams} setQueryParams={setQueryParams} setLoading={setLoading} setCounting={setCounting}
 			 setAppointmentTable={setAppointmentTable} pageSize={pageSize} updatePagination={updatePagination} 
 			/>
 
@@ -131,7 +133,7 @@ const ColumnA = ({rehabspaceData, updateCustomer, setToggle, toggle, customer, s
 			</div>
 
 			<div className="flex px-4  pb-3 gap-8 justify-between">
-				<button className="shadow-md p-1 rounded-full hover:border duration-300 ">
+				<button className="shadow-md p-1 rounded-full hover:shadow-lg duration-300 ">
 					<MdRefresh size={20} onClick={handleRefresh}/>
 				</button>
 				<div className=" flex gap-3 justify-end">
