@@ -12,14 +12,14 @@ import { FaAngleLeft, FaAngleRight, FaTimes,  } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { stringToJson } from '@utils/stringToJson';
 import { useRouter } from 'next/router';
-import { Appointment,  } from '@data/rehabspace/types'; 
+import { Appointment, CustomerType,  } from '@data/rehabspace/types'; 
 
 type ColumnAProps = {
   rehabspaceData: any;
   updateCustomer: (customer: string) => void;
   setToggle: React.Dispatch<React.SetStateAction<any>>;
   toggle: any;
-  customer: string | null;
+  customer: CustomerType | string | null;
   setCustomerLog: React.Dispatch<React.SetStateAction<any>>;
   appointmentTable: Appointment[];
   setAppointmentTable: React.Dispatch<React.SetStateAction<Appointment[]>>;
@@ -212,7 +212,7 @@ const ColumnA: React.FC<ColumnAProps> = ({
 						</div>
 					</div>
 
-					<FaTimes size={16} onClick={()=>deleteItem('appointment', 'id', appointmentTable[i]?.id)} />
+					{/* <FaTimes size={16} onClick={()=>deleteItem('appointment', 'id', appointmentTable[i]?.id)} /> */}
 
 					<BookingCountdown bookingDate={appointmentDateTime} appointment={appointmentTable[i]} appointmentTable={appointmentTable} setAppointmentTable={setAppointmentTable}  index={i} setCustomerLog={setCustomerLog}/>
 				</div>

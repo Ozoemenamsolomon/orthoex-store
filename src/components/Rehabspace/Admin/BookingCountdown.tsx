@@ -92,7 +92,7 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
         if (result?.data) {
           setTimeout(() => {
             setCustomerLog(result.data);
-        toast.success(`log=======updated`);
+            toast.success(`log updated`);
           }, 500);
         }
       }
@@ -102,17 +102,15 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
   };
   return (
     <div className='flex gap-2'>
+      <div className='flex flex-col justify-between h-full items-center'>
       {
         status === 'check-in' && Number(timeRemaining) > 0 ? 
           <button onClick={() => handleClicked('cancelled')} className="flex flex-col items-center p-1  duration-300 gap-1">
             <FaRegTimesCircle size={16} color='red'/>
             <div className='text-[12px] text-[var(--oex-dark-grey)]'>Cancel</div>
-          </button> : 
-          null
-      }
-
-      <div className='flex flex-col justify-between h-full items-center'>
-        <button onClick={() => handleClicked('checked-in')}
+          </button> 
+          : 
+          <button onClick={() => handleClicked('checked-in')}
           disabled={status !== 'check-in' || Number(timeRemaining) <= 0}
           className={`p-1 shrink-0 flex flex-col items-center ${status !== 'check-in' || Number(timeRemaining) <= 0 ? 'cursor-not-allowed ' : ' duration-300'}`}>
             <div className={status !== 'check-in' || Number(timeRemaining) <= 0 ? 'text-[var(--oex-dark-grey)]' : 'text-orange-500'}>
@@ -122,12 +120,13 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
               {status}
             </div>
         </button>
-
-        <p className='text-[10px] text-orange-500'>
+      }
+      <p className='text-[10px] text-orange-500'>
           {status !== 'check-in' || Number(timeRemaining) <= 0 ? '00:00:00' : (timeRemaining !== undefined ? convertMillisecondsToDHMS(timeRemaining) : '')}
         </p>
 
-      </div>
+  </div>
+        
     </div>
   );
 };

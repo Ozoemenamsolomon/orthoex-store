@@ -22,7 +22,7 @@ const RehabspaceAdmin: React.FC<RehabspaceAdminProps> = ({ rehabspaceData }) => 
   const [booking, setBooking] = useState<string | null>(new Date().toLocaleString());
 //   const [show, setShow] = useState<number>(0);
   const [loadingLog, setLoadingLog] = useState<number>(0);
-  const [appointmentTable, setAppointmentTable] = useState<Appointment>(appointments);
+  const [appointmentTable, setAppointmentTable] = useState<Appointment[]>(appointments);
 
   const updateCustomer = async (customer: string) => {
     try {
