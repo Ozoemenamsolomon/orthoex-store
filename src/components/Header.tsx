@@ -8,13 +8,14 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { useCart } from 'context/cartContext';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { CTALink } from './CTA';
 import NavLink from './NavLink';
 import { Container } from './styled';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import { useClickOutside } from '@utils/useClickOutside';
 
 type HeaderProp = { pathname: string };
 
@@ -158,17 +159,18 @@ const RightNav: FC<{
 		const [drop, setDrop] = useState(0)
 		const { user } = useUser();
 		const {push}=useRouter()
+		const dropref = useRef(null)
+		useClickOutside(dropref, ()=>setDrop(0))
 		return (
-			<>
+			<div className='relative'>
 			<FaRegUserCircle size={24} onClick={()=>user ? setDrop(1) : push('/account/overview')}/>
-			<div onClick={()=>setDrop(0)} className={`${drop && user ? 'translate-y-0 opacity-100':'-translate-y-full opacity-0'} z-50 transform transition-transform duration-500 fixed inset-0 `}>
-				<div onClick={e=>e.stopPropagation()} className="bg-[var(--oex-off-white)] shadow border text-[var(--text-colour-dark)] absolute right-8 top-20 rounded-md w-60 p-8 space-y-4 ">
+			<div ref={dropref} onClick={()=>setDrop(0)} className={`${drop && user ? 'visible opacity-100':'invisible opacity-0'} z-50 transform transition-all duration-300 absolute inset-0 `}>
+				<div onClick={e=>e.stopPropagation()} className="bg-[var(--oex-off-white)] shadow border text-[var(--text-colour-dark)] absolute right-0 top-8 rounded-md w-60 p-8 space-y-4 ">
 					<Link href={'/account/overview'} onClick={()=>setDrop(0)} className='block'>{user ? 'My Account' : 'Signin'}</Link>
-					{user ? <div className=""><a className='block w-full border-t pt-4' href="/api/auth/logout" onClick={()=>setDrop(0)}>Logout</a></div> : ''}
-					
+					{user ? <div className=""><Link className='block w-full border-t pt-4' href="/api/auth/logout" onClick={()=>setDrop(0)}>Logout</Link></div> : ''}
 				</div>
 			</div>
-			</>
+			</div>
 		)
 	}
 
