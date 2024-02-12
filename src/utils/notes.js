@@ -47,7 +47,7 @@ const activityHistory = {
 //     created_at timestamp with time zone NOT NULL DEFAULT now(),
 //     "locationId" bigint,
 //     "locationName" text COLLATE pg_catalog."default",
-//     "user" json,
+//     "user" text,
 //     "customerId" text COLLATE pg_catalog."default",
 //     "customerName" text COLLATE pg_catalog."default",
 //     "customerSurname" text COLLATE pg_catalog."default",

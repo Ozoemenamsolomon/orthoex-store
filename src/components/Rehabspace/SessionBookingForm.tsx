@@ -1,22 +1,39 @@
 'use client';
-import { useState , useEffect} from 'react';
-import { FaLongArrowAltRight } from 'react-icons/fa';
-import { sumOrderList } from './OrderSummary';
-import { useCart } from '../../context/cartContext.tsx';
-import { fetchAll, fetchBookingPrices, fetchCustomer, fetchRow, insertBooking } from '../../utils/rehabspcetable.js';
-import { useRouter } from 'next/router';
-import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
-import { useUser } from '@auth0/nextjs-auth0/client';
 
-const SessionBookingForm = ({ onSubmit }) => {
-	const { rehabspacePayment, setRehabspacePayment } = useCart();
+import React, { useState , useEffect} from 'react';
+import { sumOrderList } from './OrderSummary';
+import { useCart } from '../../context/cartContext';
+import { fetchBookingPrices, fetchCustomer, } from '../../utils/rehabspcetable';
+import { useRouter } from 'next/router';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { BookingPrice } from '../../data/rehabspace/types';
+import { FaLongArrowAltRight } from 'react-icons/fa';
+
+interface FormErrors {	
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  email?: string;
+  selectedSessions?: string;
+}
+
+interface FormData {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+  selectedSessions: BookingPrice[];
+}
+
+
+const SessionBookingForm: React.FC = () => {
+	const { setRehabspacePayment } = useCart();
 	const router = useRouter();
 	const {user}=useUser()
-	const [customer, setCustomer] = useState({})
 
 	const [isLoading, setIsLoading] = useState(false);
-	const [sessionPrices, setSessionPrices] = useState([]);
-	const [formData, setFormData] = useState({
+	const [sessionPrices, setSessionPrices] = useState<BookingPrice[]>([]);
+	const [formData, setFormData] = useState<FormData>({
 		firstName: '',
 		lastName: '',
 		phoneNumber: '',
@@ -24,7 +41,7 @@ const SessionBookingForm = ({ onSubmit }) => {
 		selectedSessions: [sessionPrices[0]],
 	});
 
-	const [formErrors, setFormErrors] = useState({
+	const [formErrors, setFormErrors] = useState<FormErrors>({
 		firstName: '',
 		lastName: '',
 		phoneNumber: '',
@@ -36,17 +53,17 @@ const SessionBookingForm = ({ onSubmit }) => {
 		  try {
 			const { data: customerData, error: customerError } = await fetchCustomer(user?.email);
 	  
-			const { data: pricesData, error: pricesError } = await fetchBookingPrices('bookingPrice',);
+			const { data: pricesData, error: pricesError } = await fetchBookingPrices();
 
 			if (pricesData) {
 			  setSessionPrices(pricesData);
 			  setFormData({ 
 					...formData, 
-					firstName: customerData[0]?.firstName || '',
-					lastName: customerData[0]?.lastName || '',
-					phoneNumber: customerData[0]?.phoneNumber || '',
+					firstName: customerData && customerData[0]?.firstName || '',
+					lastName: customerData && customerData[0]?.lastName || '',
+					phoneNumber: customerData && customerData[0]?.phoneNumber || '',
 					selectedSessions: [pricesData[0]], 
-					email: user?.email 
+					email: user?.email || ''
 				});
 			} else {
 			  console.log({pricesError});
@@ -59,14 +76,13 @@ const SessionBookingForm = ({ onSubmit }) => {
 		fetchData();
 	  }, [user]);
 
-	const handleInputChange = e => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>)  => {
 		const { name, value } = e.target;
 		setFormData({ ...formData, [name]: value });
-		// Clear the error message when the user starts typing in the field
 		setFormErrors({ ...formErrors, [name]: '' });
 	};
 
-	const handleSessionSelection = session => {
+	const handleSessionSelection = (session: BookingPrice) => {
 		// Check if the session is already selected
 		if (
 			formData?.selectedSessions?.some(selected => selected?.plan === session?.plan)
@@ -88,7 +104,7 @@ const SessionBookingForm = ({ onSubmit }) => {
 	};
 
 	const validateForm = () => {
-		const errors = {};
+		const errors: any = {};
 		let isValid = true;
 
 		if (!formData.firstName) {
@@ -120,9 +136,9 @@ const SessionBookingForm = ({ onSubmit }) => {
 		return isValid;
 	};
 
-	const { total, totalSessions } = sumOrderList(formData?.selectedSessions);
+	const { total,} = sumOrderList(formData?.selectedSessions);
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>)=> {
 		e.preventDefault();
 		
 		if (validateForm()) {
@@ -137,7 +153,7 @@ const SessionBookingForm = ({ onSubmit }) => {
 			} catch (error) {
 				console.log(error);
 			}finally{
-				setIsLoading(0)
+				setIsLoading(false)
 			}
 		}
 	};
@@ -149,8 +165,6 @@ const SessionBookingForm = ({ onSubmit }) => {
 			{formErrors.selectedSessions ? (
 				<p className="text-red-500 text-sm ">{formErrors.selectedSessions}</p> 
 			) : null}
-		<div>
-      </div>
 
 			<div className="w-full grid sm:grid-cols-2 gap-4">
 				<div className="mb-">
@@ -169,7 +183,8 @@ const SessionBookingForm = ({ onSubmit }) => {
 					<p className="text-red-500 text-sm mt-2">{formErrors.firstName}</p>
 				</div>
 
-				<div className="mb-">
+				<div className="mb-">	
+
 					<label
 						className="block text-gray-700 text-sm font-bold mb-2"
 						htmlFor="lastName">
@@ -227,7 +242,7 @@ const SessionBookingForm = ({ onSubmit }) => {
 				<div className="flex flex-wrap gap-2">
 					{sessionPrices?.map(session => (
 						<button
-							key={session?.id}
+							key={session?.id?.toString()}
 							type="button"
 							onClick={() => handleSessionSelection(session)}
 							className={`py-3 px-6 rounded-full focus:outline-none focus:shadow-outline ${
@@ -286,7 +301,8 @@ const SessionBookingForm = ({ onSubmit }) => {
 					: 
 						<div className="">
 							<p>You are not signed in.</p>
-							<button
+							<button	
+
 								type="submit"
 								className={`px-8 py-4 font- rounded-md text-white bg-[var(--oex-orange)]  ${
 									isLoading ? 'opacity-50 cursor-not-allowed' : ''

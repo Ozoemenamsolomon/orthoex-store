@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import BtnBasic from "../Buttons";
 import { toast } from "react-toastify";
-import { fetchAll, fetchCustomer, fetchRow } from "@utils/rehabspcetable";
+import {  fetchCustomer,  } from "@utils/rehabspcetable";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
+import { CustomerType, Location } from "@data/rehabspace/types";
 
-const SessionBookingBtn = ({ booking, chosenLocation, setCustomer, customer, setInactiveSlots}) => {
+type SessionBookingBtnProps = {
+  booking: any; 
+  chosenLocation: Location; 
+  setCustomer: React.Dispatch<React.SetStateAction<CustomerType | null>>; 
+  customer: CustomerType | null; 
+  setInactiveSlots: React.Dispatch<React.SetStateAction<Date[]>>;
+}
+
+const SessionBookingBtn: React.FC<SessionBookingBtnProps> = ({ booking, chosenLocation, setCustomer, customer, setInactiveSlots}) => {
   const router = useRouter()
   const [loading, setLoading] = useState(0);
-	const [apiError, setApiError] = useState('')
   const {user} = useUser()
 
-  const [refresh, setRefresh] = useState(0)
+  const [refresh, setRefresh] = useState(false)
 
   const bookedDate = new Date(booking)
 
@@ -53,7 +61,7 @@ const SessionBookingBtn = ({ booking, chosenLocation, setCustomer, customer, set
   let queryParams = router.query
 
   const handleClick = async () => {
-    if (customer?.sessionBalance < 1 ) {
+    if (customer && customer?.sessionBalance  && customer?.sessionBalance < 1 ) {
       toast.warning('Your session balance is empty. Purchase a new session.') 
       return
     } else { 
@@ -108,7 +116,7 @@ const SessionBookingBtn = ({ booking, chosenLocation, setCustomer, customer, set
 
   return (
     <div>
-      <BtnBasic onClick={handleClick} text={loading ? 'Booking...' : 'Book session'} className={` w-full ${customer?.sessionBalance < 1 ? 'bg-orange-300' : 'bg-[var(--oex-orange)]'}`} />
+      <BtnBasic onClick={handleClick} text={loading ? 'Booking...' : 'Book session'} className={` w-full ${customer?.sessionBalance && customer?.sessionBalance < 1 ? 'bg-orange-300' : 'bg-[var(--oex-orange)]'}`} />
     </div>
   );
 };

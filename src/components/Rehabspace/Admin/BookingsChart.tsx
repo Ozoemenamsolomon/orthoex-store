@@ -12,15 +12,15 @@ ChartJS.register(
   Legend
 );
 
-const BookingsChart = () => {
-	const [list, setList] = useState([])
+const BookingsChart: React.FC = () => {
+	const [list, setList] = useState<{ day: string; value: number }[]>([])
 
 	const data = {
-		labels: list?.map((item=>item?.day)),
+		labels: list?.map((item) => item?.day),
 		datasets: [
 			{
 				label: 'Bookings per Day',
-				data: list?.map((item=>item?.value)),
+				data: list?.map((item) => item?.value),
 				backgroundColor: 'rgba(255, 165, 0, 0.7)',
 				borderColor: 'rgba(255, 165, 0, 1)',
 				borderWidth: 1,
@@ -29,8 +29,6 @@ const BookingsChart = () => {
 		],
 		
 	};
-
-
 
 	return (
 		<div className="w-full max-w-xl mx-auto mt-8 space-y-4">

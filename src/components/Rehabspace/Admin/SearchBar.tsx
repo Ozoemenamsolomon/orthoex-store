@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {supabaseClient} from '../../../utils/supabase'
 import {
-	DoubleTick,
 	FilterIcon,
 	MapIcon,
 	ScanIcon,
@@ -9,26 +8,24 @@ import {
 	UserIcon,
 } from '../../../data/rehabspace';
 import {useClickOutside} from '@utils/useClickOutside'
-import { FaCalendarAlt, FaCalendarWeek, FaMapPin, FaRegClock, FaTimes, FaUserAlt } from 'react-icons/fa';
+import { FaCalendarAlt, FaTimes,  } from 'react-icons/fa';
 import { MdCheckCircleOutline } from 'react-icons/md';
 import { tableLength } from '@utils/rehabspcetable';
 import { useRouter } from 'next/router';
 import CustomDatePicker from '../CustomDatePicker';
-import {format,} from 'date-fns';
 
-const SearchBar = ({ handleRefresh, queryParams, setQueryParams, setLoading, setCounting, pageSize,  updatePagination, offset, setAppointmentTable }) => {
+const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,  setAppointmentTable }:any) => {
   const router = useRouter()
   const dropdown = useRef(null)
   const dropdown1 = useRef(null)
   const dropdown2 = useRef(null)
   const dropdown3 = useRef(null)
   const [searchTerm, setSearchTerm] = useState('');
-  
 
   const [show, setShow] = useState('')
-  const [drop, setDrop] = useState('')
+  const [drop, setDrop] = useState(false)
 
-  const handleModal = async (type,) => {
+  const handleModal = async (type:any) => {
     if (type===show){
       setShow('')
     } else {
@@ -41,14 +38,14 @@ const SearchBar = ({ handleRefresh, queryParams, setQueryParams, setLoading, set
   useClickOutside(dropdown2, ()=>handleModal('date'))
   useClickOutside(dropdown3, ()=>handleModal('status'))
 
-  const updateQuery = (query, value, e) => {
+  const updateQuery = (query:any, value:any, e:any) => {
     if(e){
       e.preventDefault()
     }
     setLoading((true))
 
     handleModal('')
-    setQueryParams((prevParams) => ({
+    setQueryParams((prevParams:any) => ({
       ...prevParams,
       [query]: value,
       
@@ -117,7 +114,7 @@ const SearchBar = ({ handleRefresh, queryParams, setQueryParams, setLoading, set
             updatePagination(count, 'search', []);
           }
         } catch (error) {
-          console.error(error);
+          console.error(error);undefined
           setAppointmentTable([]);
           updatePagination(count, 'search', []);
         } finally {
@@ -132,7 +129,7 @@ const SearchBar = ({ handleRefresh, queryParams, setQueryParams, setLoading, set
 
   return (
     <div>
-        <div className="flex items-center justify-between w-full gap-4 pt-6 px-4">
+        <div className="flex items-center justify-undefinedetween w-full gap-4 pt-6 px-4">
           <form className="w-full p-3 bg-[var(--oex-lightest-grey)] rounded-full flex items-center justify-between gap-2">
             <div className="text-[var()]">
               <button onClick={(e)=>updateQuery( 'customerName', searchTerm, e)}>
@@ -171,7 +168,7 @@ const SearchBar = ({ handleRefresh, queryParams, setQueryParams, setLoading, set
                 {show==='location'&&<div ref={dropdown} className="absolute border bg-white p-4 top-8 left-0">
                   {
                     ['Mafoluku', 'Ikorodu'].map((e,i)=>(
-                      <button key={i}  onClick={()=>updateQuery( 'location', e)}  className='p-1 hover:border duration-300'>{e}</button>
+                      <button key={i}  onClick={()=>updateQuery( 'location', '', e)}  className='p-1 hover:border duration-300'>{e}</button>
                     ))
                   }
                 </div>}
@@ -185,7 +182,7 @@ const SearchBar = ({ handleRefresh, queryParams, setQueryParams, setLoading, set
                 {show==='customerType'&&<div  ref={dropdown1} className="absolute border bg-white p-4 top-8 left-0">
                   {
                     ['Clinician', 'Patient'].map((e,i)=>(
-                      <button key={i}  onClick={()=>updateQuery( 'customerType',e)} className='p-1 hover:border duration-300'>{e}</button>
+                      <button key={i}  onClick={()=>updateQuery( 'customerType', '',e)} className='p-1 hover:border duration-300'>{e}</button>
                     ))
                   }
                 </div>
@@ -200,7 +197,7 @@ const SearchBar = ({ handleRefresh, queryParams, setQueryParams, setLoading, set
                 {show==='date'&&
                 <div ref={dropdown2}  className="absolute  bg-white top-8 -left-20">
 
-                    <CustomDatePicker onChange={(date) => updateQuery('date', date)} />
+                    <CustomDatePicker onChange={(date) => updateQuery('date', '', date)} />
 
                   {/* <input onChange={(e=>updateQuery('date',e.target.value, e))} type="date" name="datepicker" id="datepicker"/> */}
                 </div>}
@@ -214,7 +211,7 @@ const SearchBar = ({ handleRefresh, queryParams, setQueryParams, setLoading, set
                 {show==='status'&&<div ref={dropdown3} className="absolute border w-32 bg-white p-4 top-8 right-0">
                   {
                     ['check-in', 'checked-in', 'cancelled'].map((e,i)=>(
-                      <button onClick={()=>updateQuery('status',e)} key={i} className="p-1 hover:border " >{e}</button>
+                      <button onClick={()=>updateQuery('status', '',e)} key={i} className="p-1 hover:border " >{e}</button>
                     ))
                   }
                 </div>}
@@ -227,7 +224,7 @@ const SearchBar = ({ handleRefresh, queryParams, setQueryParams, setLoading, set
                   <div key={key} className="px-2 py-1 flex gap-2 items-center bg-red-100 rounded text-orange-500">
                     { 
                       key==='date' ? new Date(value).toDateString() : value}
-                    <FaTimes onClick={()=>updateQuery(key,'')}/>
+                    <FaTimes onClick={()=>updateQuery(key, '','')}/>
                   </div>
                 )
               ))}

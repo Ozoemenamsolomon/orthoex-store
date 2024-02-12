@@ -7,32 +7,51 @@ import {
 	format,
 	getDay,
 	isEqual,
-	isSameDay,
 	isSameMonth,
 	isToday,
 	parse,
-	parseISO,isBefore,
+	isBefore,
 	startOfToday,
 } from 'date-fns';
-import { Fragment, useEffect, useState } from 'react';
-import { fetchRow } from '@utils/rehabspcetable';
+import React, { useEffect, useState } from 'react';
 import { supabaseClient } from '@utils/supabase';
+import { CustomerType, Holiday, Location } from '@data/rehabspace/types';
 
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ');
+function classNames(...classes: (string | false)[]): string {
+    return classes.filter(Boolean).join(' ');
 }
 
-export default function Calender({location, setCustomer,chosenLocation, setChosenLocation, setBooking,booking, customer, holidays }) {
+interface CalendarProps {
+    location: Location;
+    setCustomer: React.Dispatch<React.SetStateAction<CustomerType | null>>;
+    chosenLocation: Location;
+    setChosenLocation: React.Dispatch<React.SetStateAction<Location>>;
+    setBooking: React.Dispatch<React.SetStateAction<string | null>>;
+    booking: string | null;
+    customer: CustomerType | null;
+    holidays: Holiday[];
+}
+
+const Calendar: React.FC<CalendarProps> = ({
+    location,
+    setCustomer,
+    chosenLocation,
+    setChosenLocation,
+    setBooking,
+    booking,
+    customer,
+    holidays,
+}) => {
 
 	let today = startOfToday();
-	let [selectedDay, setSelectedDay] = useState(today);
+	let [selectedDay, setSelectedDay] = useState<Date>(today);
 
-	const [inactiveSlots, setInactiveSlots] = useState([])
+	const [inactiveSlots, setInactiveSlots] = useState<Date[]>([])
 	
-	const [selectedSlot, setSelectedSlot] = useState(null);
-	const [active, setActive] = useState(chosenLocation?.locationId)
+	const [activeSlot, setActiveSlot] = useState<any>(null);
+	const [active, setActive] = useState<number | null>(chosenLocation?.locationId || null)
 
-	const isDayDisabled = (day) => {
+	const isDayDisabled = (day: Date): boolean => {
 		let newHolidayList = [];
 		const dayOfWeek = new Date(day).getDay();
 		// Disable Sunday if isSunday is not available
@@ -129,7 +148,7 @@ export default function Calender({location, setCustomer,chosenLocation, setChose
 					<h5 className="pb-8">Select location</h5>
 					<div className="flex flex-wrap gap-6">
 						{
-							location?.data?.map((item,i)=>
+							location?.data?.map((item:any,i:any)=>
 							<div key={i} className="">
 								<button onClick={()=>{
 									setActive(item?.locationId)
@@ -188,8 +207,8 @@ export default function Calender({location, setCustomer,chosenLocation, setChose
 								disabled={isDayDisabled(day)}
 								onClick={() => {
 									setSelectedDay(day)
-									setBooking('')
-									setSelectedSlot('')
+									setBooking(null)
+									setActiveSlot(null)
 								}}
 								className={classNames(
 									isEqual(day, selectedDay) && 'text-white',
@@ -248,7 +267,7 @@ export default function Calender({location, setCustomer,chosenLocation, setChose
 				</div>
 				<ol className="mt-4 space-y-4 text- leading-6 text-gray-500 ">
 
-					<TimeSlots chosenLocation={chosenLocation} date={selectedDay} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} setBooking={setBooking} inactiveSlots={inactiveSlots} />
+					<TimeSlots chosenLocation={chosenLocation} date={selectedDay} activeSlot={activeSlot} setActiveSlot={setActiveSlot} setBooking={setBooking} inactiveSlots={inactiveSlots} />
 
 					<SessionBookingBtn setCustomer={setCustomer} setInactiveSlots={setInactiveSlots} booking={booking} chosenLocation={chosenLocation} customer={customer}/>
 				</ol>
@@ -257,8 +276,9 @@ export default function Calender({location, setCustomer,chosenLocation, setChose
 		</div>
 	);
 }
+export default Calendar;
 
-function generateTimeSlots(date, numSlots, intervalMinutes, chosenLocation) {
+function generateTimeSlots(date:Date, numSlots:number, intervalMinutes:number, chosenLocation:Location) {
 	const timeSlots = [];
 	let currentDate = new Date(date); // Use the provided date
 
@@ -287,10 +307,19 @@ function generateTimeSlots(date, numSlots, intervalMinutes, chosenLocation) {
 	return timeSlots;
 }
 
-const TimeSlotPicker = ({ timeSlots, setBooking, selectedSlot, setSelectedSlot, inactiveSlots, chosenLocation }) => {
+type TimeSlotpicker = {
+	timeSlotsArray: {slot: string, date: Date}[]
+	chosenLocation: Location;
+	inactiveSlots: Date[]
+	setBooking: React.Dispatch<React.SetStateAction<string | null>>; 
+	activeSlot: any;
+	setActiveSlot: React.Dispatch<React.SetStateAction<any>>;
+  }
+
+const TimeSlotPicker = ({ timeSlotsArray, setBooking, activeSlot, setActiveSlot, inactiveSlots, chosenLocation }: TimeSlotpicker) => {
 	return (
 	  <div className="flex flex-col gap-4 items-center">
-		{timeSlots.map((slot, index) => {
+		{timeSlotsArray.map((slot, index) => {
 		  const isSlotInactive = inactiveSlots?.filter(inactiveSlot => {
 			return (
 			  inactiveSlot !== null &&
@@ -310,14 +339,14 @@ const TimeSlotPicker = ({ timeSlots, setBooking, selectedSlot, setSelectedSlot, 
 			  key={index}
 			  disabled={isSlotInactive || isPastCurrentTime()}
 			  className={`w-full text-center p-4 border rounded-md 
-				${isSlotInactive || isPastCurrentTime() ? 'border-gray-300 hover:border-gray-300 text-gray-400 cursor-not-allowed' : selectedSlot === index ? 'border-orange-500 bg-orange-50' : 'border-gray-700 hover:border-orange-500'}
+				${isSlotInactive || isPastCurrentTime() ? 'border-gray-300 hover:border-gray-300 text-gray-400 cursor-not-allowed' : activeSlot === index ? 'border-orange-500 bg-orange-50' : 'border-gray-700 hover:border-orange-500'}
 				`}
 			  onClick={() => {
-				setSelectedSlot(index);
+				setActiveSlot(index);
 				setBooking(new Date(slot?.date).toISOString());
 			  }}
 			>
-			  {slot.slot}{isSlotInactive ? <span className='pl-2'>Slot booked</span>:''}
+			  {slot?.slot ? slot.slot : '...loading'}{isSlotInactive ? <span className='pl-2'>Slot booked</span>:''}
 			</button>
 		  );
 		})}
@@ -325,9 +354,18 @@ const TimeSlotPicker = ({ timeSlots, setBooking, selectedSlot, setSelectedSlot, 
 	);
   };
 
-const TimeSlots = ({chosenLocation, inactiveSlots, date, setBooking, selectedSlot, setSelectedSlot }) => {
 
-	console.log({chosenLocation})
+ type Timeslots = {
+	chosenLocation: Location;
+	inactiveSlots: Date[]
+	date: Date;
+	setBooking: React.Dispatch<React.SetStateAction<string | null>>; 
+	activeSlot: any;
+	setActiveSlot: React.Dispatch<React.SetStateAction<any>>;
+  }
+
+const TimeSlots = ({chosenLocation, inactiveSlots, date, setBooking, activeSlot, setActiveSlot }:Timeslots) => {
+
 	const [startTime, setstartTime] = useState(new Date(chosenLocation?.startTime));
 	
 	useEffect(() => {
@@ -349,9 +387,10 @@ const TimeSlots = ({chosenLocation, inactiveSlots, date, setBooking, selectedSlo
 	const numSlots = chosenLocation?.totalSlotsPerDay; // Number of slots
 	const interval = chosenLocation?.bookingDuration; // Interval in minutes
 	const timeSlotsArray = generateTimeSlots(startTime, numSlots, interval, chosenLocation);
+
 	return (
-		<div className="container mx-auto mt-8 pr-">
-			<TimeSlotPicker timeSlots={timeSlotsArray} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} setBooking={setBooking} inactiveSlots={inactiveSlots} chosenLocation={chosenLocation}/>
+		<div className="container mx-auto mt-8 ">
+			<TimeSlotPicker timeSlotsArray={timeSlotsArray} activeSlot={activeSlot} setActiveSlot={setActiveSlot} setBooking={setBooking} inactiveSlots={inactiveSlots} chosenLocation={chosenLocation}/>
 		</div>
 	);
 };

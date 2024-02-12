@@ -24,6 +24,6 @@
 		},
 		"incremental": true
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/Rehabspace/SessionBookingForm.tsx"],
 	"exclude": ["node_modules"]
 }

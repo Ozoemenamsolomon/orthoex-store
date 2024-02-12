@@ -1,32 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
 	EmailIcon,
 	PhoneIcon,
 	ScheduleIcon,
-	SessionBooked,
-	SessionCancelled,
-	SessionPurchsed,
-	SessionUsed,
 	SessionsIcon,
 	WhatsAppIcon,
 } from '../../../data/rehabspace';
 import { toast } from 'react-toastify';
 import AccountHistory from '../Account/AccountHistory';
-import { fetchActivities, fetchAll, fetchRow } from '@utils/rehabspcetable';
 import { useRouter } from 'next/navigation';
-import PageLoading from '@components/Loader/PageLoading';
 import { stringToJson } from '@utils/stringToJson';
 import Link from 'next/link';
+import { Activity, CustomerType } from '@data/rehabspace/types'; 
+import PageLoading from '@components/Loader/PageLoading'
 
-const ColumnB = ({setToggle, loading, type, customer, setCustomer, customerLog, setCustomerLog }) => {
-	const {push} = useRouter()
-	const {id, customerEmail, firstName, lastName, registrationDate, sessionBalance, gender, profession,  customerType, city, whatsappNumber, phoneNumber, email} = stringToJson(customer) || {};
+type ColumnBProps = {
+	setToggle: React.Dispatch<React.SetStateAction<any>>;
+	loading: number;
+	type: any;
+	customer: CustomerType | any; 
+	customerLog: Activity[]; 
+};
 
+const ColumnB: React.FC<ColumnBProps> = ({ setToggle, loading, type, customer, customerLog }) => {
+	const { push } = useRouter();
+	const {
+		customerEmail,
+		firstName,
+		lastName,
+		registrationDate,
+		sessionBalance,
+		whatsappNumber,
+		phoneNumber,
+	} = stringToJson(customer) || {};
 	
+
 	return (
-		<div className="px-4  overflow-hidden ">
+		<div className="px-4 overflow-hidden ">
 			{type && (
-				<button type="button" onClick={() => setToggle('')}>{`< Back`}</button>
+				<button type="button" onClick={() => setToggle('')}>
+					{`< Back`}
+				</button>
 			)}
 
 			<div className="pb-6">
@@ -43,6 +57,7 @@ const ColumnB = ({setToggle, loading, type, customer, setCustomer, customerLog, 
 							{customerEmail || (<div className='animate-pulse h-3 w-40 mx-auto bg-gray-100'></div>)}
 							<br />
 							 {phoneNumber || (<div className='animate-pulse h-3 w-28 mx-auto bg-gray-100'></div>)}
+
 							<br />
 							<div className="text-[var(--text-colour-grey)]">
 								{ registrationDate ? 
@@ -103,7 +118,10 @@ const ColumnB = ({setToggle, loading, type, customer, setCustomer, customerLog, 
 
 			<div className="max-h-[500px] overflow-auto ">
 				{
-					loading ? <div className='h-80 w-full flex justify-center items-center'><PageLoading/></div> :
+					loading ? 
+					<div className='h-80 w-full flex justify-center items-center'>
+						<PageLoading />
+					</div> :
 					customerLog?.length ? <AccountHistory admin={true} log={customerLog} customer={customer}/> :
 					<p className='h-80 w-full flex justify-center items-center'>No user log</p>
 				}

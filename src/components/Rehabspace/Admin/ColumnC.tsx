@@ -5,16 +5,21 @@ import { dashboardStats } from '@utils/rehabspcetable';
 import { FaFilter } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 
-const ColumnC = ({ rehabspaceData, appointmentTable }) => {
+type ColumnCProps = {
+  rehabspaceData: any;
+  appointmentTable: any;
+};
+
+const ColumnC: React.FC<ColumnCProps> = ({ rehabspaceData, appointmentTable }) => {
   const [stats, setStats] = useState(rehabspaceData?.stats);
   const { query, replace, pathname } = useRouter();
 
-  const fetchAllStats = async (list) => {
+  const fetchAllStats = async (list?: any) => {
     try {
-      const results = await dashboardStats( list); 
+      const results = await dashboardStats(list);
       setStats(results);
-    } catch (error) {
-      console.error('Error fetching stats:', error.message);
+    } catch (error:any) {
+      console.error('Error fetching stats:', error?.message);
     }
   };
 
@@ -27,16 +32,16 @@ const ColumnC = ({ rehabspaceData, appointmentTable }) => {
   }, [query?.fetchAllStats, appointmentTable]);
 
   const handleFilterButtonClick = () => {
-    if (query?.fetchAllStats){
+    if (query?.fetchAllStats) {
       replace({
         pathname: pathname,
         query: '',
-        });
+      });
     } else {
-        replace({
+      replace({
         pathname: pathname,
         query: { ...query, fetchAllStats: 'fetchAll' },
-        });
+      });
     }
   };
 
@@ -50,7 +55,7 @@ const ColumnC = ({ rehabspaceData, appointmentTable }) => {
               onClick={handleFilterButtonClick}
               className={`${query?.fetchAllStats ? 'text-orange-500 ' : ''}  flex gap-2 items-center hover:text-orange-600 duration-300 text-gray-700`}
             >
-              <FaFilter />{query?.fetchAllStats ? 'Reset' : 'View All'}  
+              <FaFilter />{query?.fetchAllStats ? 'Reset' : 'View All'}
             </button>
           </div>
           <BookingStatusDoughnutChart stats={stats} />

@@ -1,10 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 import { stringToJson } from './stringToJson';
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export const insertBooking = async bookingData => {
+export const insertBooking = async (bookingData:any) => {
 	try {
 		const { data, error } = await supabase
 			.from('rehabspace_booking')
@@ -14,33 +14,33 @@ export const insertBooking = async bookingData => {
 			return { success: false, error: error.message };
 		}
 		return { success: true, data };
-	} catch (error) {
+	} catch (error:any) {
 		console.error('Unexpected error:', error.message);
 		return { success: false, error: error.message };
 	}
 };
 
 // read all rows
-export const fetchAll = async (table, orderBy) => await supabase
+export const fetchAll = async (table:string, orderBy:any) => await supabase
   .from(table)
   .select('*')
   .order(orderBy, { ascending: false });
 
 
 // read a specific row, e.g fetch a user with user id.
-export const fetchRow = async (table, column, columnValue,) => await supabase
+export const fetchRow = async (table:any, column:any, columnValue:any,) => await supabase
 .from(table)
 .select('*')
 .eq(column,columnValue)
 
 
 // resd specific column like all categories, or all emails
-export const fetchSpecificColumn = async (table,column ) =>  await supabase
+export const fetchSpecificColumn = async (table:any,column:any ) =>  await supabase
   .from(table)
   .select(column)
 
 // read reference table
-export const fetchReferencedTable = async (table, column, other_table, foreign_key  ) => await supabase
+export const fetchReferencedTable = async (table:any, column:any, other_table:any, foreign_key:any  ) => await supabase
   .from(table)
   .select(`
     ${column},
@@ -51,12 +51,12 @@ export const fetchReferencedTable = async (table, column, other_table, foreign_k
 
 
 // with pagination
-export const tableLength = async(table,) => 
+export const tableLength = async(table:any,) => 
 	await supabase
 	.from(table)
 	.select('*', { count: 'exact', head: true })
 	
-export const fetchWithPagination = async (table, start, end, orderBy ) => {
+export const fetchWithPagination = async (table:any, start:any, end:any, orderBy:any ) => {
 	const {count, error} = await tableLength(table)
 
 	const res = await supabase
@@ -72,26 +72,26 @@ export const fetchWithPagination = async (table, start, end, orderBy ) => {
 }
 
 // insert a row
-export const insert = async (table, list ) => await supabase
+export const insert = async (table:any, list:any ) => await supabase
   .from(table)
   .insert(list)
   .select()
 
 //  Update matching rows
-export const updateItem = async (table, data, column, columnValue, ) => await supabase
+export const updateItem = async (table:any, data:any, column:any, columnValue:any, ) => await supabase
 	.from(table)
 	.update(data)
 	.eq(column, columnValue)
 	.select()
 
 // Delete matching rows
-export const deleteItem = async (table,  column, columnValue, ) => await supabase
+export const deleteItem = async (table:any,  column:any, columnValue:any, ) => await supabase
 	.from(table)
 	.delete()
 	.eq( column, columnValue)
 
 // api
-export const addActivity = async (list) => {
+export const addActivity = async (list:any) => {
 	try {
 		return await insert('activityHistory', list)
 	} catch (error) {
@@ -107,7 +107,7 @@ export const fetchBookingPrices = async () => await supabase
 .order('price', { ascending: true })
 
 // fetch customers activity history
-export const fetchActivities = async (email) => await supabase
+export const fetchActivities = async (email:any) => await supabase
 .from('activityHistory')
 .select('*')
 .eq('customerEmail', email)
@@ -115,12 +115,12 @@ export const fetchActivities = async (email) => await supabase
 
 
 // fetch specific customer
-export const fetchCustomer = async (email) => await supabase
+export const fetchCustomer = async (email:any) => await supabase
 .from('customers')
 .select('*')
 .eq('customerEmail', email)
 
-export const updateHistoryAndSessionBalance = async (sessionPurchaseData) => {
+export const updateHistoryAndSessionBalance = async (sessionPurchaseData:any) => {
 	let response = {};
 
 	const updatedUserSessionBalance = await updateItem(
@@ -180,7 +180,7 @@ export const updateHistoryAndSessionBalance = async (sessionPurchaseData) => {
 	return response
 } 
 
-export const updateAppointmentStatus = async (action, appointment) => {
+export const updateAppointmentStatus = async (action:any, appointment:any) => {
 	let response = {};
 	let customer = stringToJson(appointment?.user)
 
@@ -192,7 +192,6 @@ export const updateAppointmentStatus = async (action, appointment) => {
 			}
 	} 
 	const result = await updateItem('appointment', data, 'id', appointment?.id)
-console.log('result', result)
 	if(result.data){
 		const activityHistory = await insert('activityHistory', {
 			createdAt: new Date(), 
@@ -237,13 +236,11 @@ console.log('result', result)
 		
 	}
 
-	// console.log('update:', response)
-
 	return result;
 }
 
 
-export const dashboardStats = async ( appointmentList) => {
+export const dashboardStats = async ( appointmentList:any[] | null ) => {
 	try {
 	  let appointmentCount,
 		customersCount,
@@ -251,7 +248,7 @@ export const dashboardStats = async ( appointmentList) => {
 		cancelledBookingRatio,
 		usedBookingRatio;
   
-	  const calculateStats = (list) => {
+	  const calculateStats = (list:any[] | null) => {
 		const openBooking = list?.filter((item) => item?.status?.status === 'check-in') || [];
 		const usedBooking = list?.filter((item) => item?.status?.status === 'checked-in') || [];
 		const cancelledBooking = list?.filter((item) => item?.status?.status === 'cancelled') || [];
@@ -267,7 +264,7 @@ export const dashboardStats = async ( appointmentList) => {
 		appointmentCount = appointmentList?.length;
 
 		const uniqueCustomerIds = new Set();
-		appointmentList.forEach((appointment) => {
+		appointmentList.forEach((appointment:any) => {
 		  if (appointment.customerId && !uniqueCustomerIds.has(appointment.customerId)) {
 			uniqueCustomerIds.add(appointment.customerId);
 		  }
@@ -275,7 +272,7 @@ export const dashboardStats = async ( appointmentList) => {
 		customersCount = uniqueCustomerIds.size;
 		calculateStats(appointmentList);
 	  } else {
-		const appointments = await fetchAll('appointment', 'id');
+		const {data} = await fetchAll('appointment', 'id');
 		const appointmentQuery = await supabase.from('appointment').select('*', { count: 'exact', head: true });
 		const customerQuery = await supabase.from('customers').select('*', { count: 'exact', head: true });
   
@@ -285,16 +282,8 @@ export const dashboardStats = async ( appointmentList) => {
   
 		appointmentCount = appointmentQuery?.count || 0;
 		customersCount = customerQuery?.count || 0;
-		calculateStats(appointments?.data);
+		calculateStats(data);
 	  }
-
-	//   console.log({
-	// 	appointmentCount,
-	// 	customersCount,
-	// 	openBookingRatio,
-	// 	cancelledBookingRatio,
-	// 	usedBookingRatio,
-	//   })
   
 	  return {
 		appointmentCount,
@@ -303,21 +292,21 @@ export const dashboardStats = async ( appointmentList) => {
 		cancelledBookingRatio,
 		usedBookingRatio,
 	  };
-	} catch (error) {
+	} catch (error:any) {
 	  console.error('Error in stats:', error.message);
-	  return null; // or handle the error in a way that makes sense for your application
+	  return null; 
 	}
   };
   
-export const filterWeeklyData = async (selectedWeek) => {
+export const filterWeeklyData = async (selectedWeek:any) => {
 	const { data, error } = await supabase
 		.from('appointment')
 		.select()
 		.gte('appointmentDate', new Date(selectedWeek?.start).toDateString())
 		.lte('appointmentDate',  new Date(selectedWeek?.end).toDateString())
 
-		function countAppointmentsByDay(appointments) {
-			const dayCount = {
+		function countAppointmentsByDay(appointments:any) {
+			const dayCount:any = {
 				"Mon": 0,
 				"Tue": 0,
 				"Wed": 0,
@@ -327,7 +316,7 @@ export const filterWeeklyData = async (selectedWeek) => {
 				"Sun": 0
 			};
 		
-			appointments.forEach(appointment => {
+			appointments.forEach((appointment:any) => {
 				// Extract the date from the appointmentDateTime
 				const appointmentDate = new Date(appointment.appointmentDateTime);
 				
@@ -348,7 +337,5 @@ export const filterWeeklyData = async (selectedWeek) => {
 		}
 		
 		const result = countAppointmentsByDay(data);
-		console.log(result);
-		
 	return { data, error, result } 
 }

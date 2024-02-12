@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,  } from 'react';
 import { ClockIcon, MapIcon } from '../../../data/rehabspace';
 import Calender from '../Calender';
 import { FaTimes } from 'react-icons/fa';
-import BtnBasic from "../Buttons"
-import { updateItem } from '@utils/rehabspcetable';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { CustomerType, Location } from '@data/rehabspace/types';
 
-const BookingModal = ({location,  holidays, customer, booking, setBooking,setCustomer, }) => {
+interface BookingModalType {
+    location: any;
+    setCustomer: React.Dispatch<React.SetStateAction<CustomerType | null>>;
+    setBooking: React.Dispatch<React.SetStateAction<string | null>>;
+    booking: string | null;
+    customer: CustomerType | null;
+    holidays: any;
+}
+
+
+const BookingModal: React.FC<BookingModalType> = ({location,  holidays, customer, booking, setBooking,setCustomer, }) => {
 	const { back} = useRouter()
 
-    const [chosenLocation, setChosenLocation] = useState(location?.data && location?.data?.length && location?.data[0])
+    const [chosenLocation, setChosenLocation] = useState<Location>(location?.data?.[0])
 
   return (
     <div className="fixed inset-0 z-50 bg-white overflow-auto">
@@ -31,7 +39,7 @@ const BookingModal = ({location,  holidays, customer, booking, setBooking,setCus
 							<div className="pb-1">{chosenLocation?.bookingDuration} minutes appointments</div>
 						</div>
 						<div className="flex gap-4 items-center">
-							<MapIcon size={20} />
+							<MapIcon/>
 							<div className="sm:w-80">
 								{chosenLocation?.locationAddress}
 							</div>

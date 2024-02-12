@@ -5,16 +5,16 @@ import PaymentSection from './PaymentSection';
 import BookingTypes from './BookingTypes';
 import SchedulSession from './SchedulSession';
 
-const index = () => {
-	return (
-		<>
-			<Hero />
-			<Benefits />
-			<PaymentSection />
-			<BookingTypes />
-			<SchedulSession />
-		</>
-	);
+const Index: React.FC = () => {
+  return (
+    <>
+      <Hero />
+      <Benefits />
+      <PaymentSection />
+      <BookingTypes />
+      <SchedulSession />
+    </>
+  );
 };
 
-export default index;
+export default Index;

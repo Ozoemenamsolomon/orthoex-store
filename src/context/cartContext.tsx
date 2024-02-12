@@ -1,6 +1,8 @@
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { getProductsByMultipleIDs } from '@data/client';
 import { ProductType } from '@data/products';
 import { CustomerType } from '@data/rehabspace/types';
+import { fetchCustomer } from '@utils/rehabspcetable';
 import { useRouter } from 'next/router';
 import {
 	ChangeEventHandler,
@@ -34,6 +36,8 @@ type CartContextType = {
 	deliveryFee: number;
 	customerDetails: CustomerType | null;
 	setCustomerDetails: React.Dispatch<React.SetStateAction<CustomerType | null>>;
+	rehabspacePayment: any;
+	setRehabspacePayment: React.Dispatch<React.SetStateAction<any>>;
 	handleAddressChange: ChangeEventHandler<
 		HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 	>;
@@ -206,6 +210,18 @@ export const CartProvider: React.FC = ({ children }) => {
 
 	const [rehabspacePayment, setRehabspacePayment] = useState([]);
 	const [customerDetails, setCustomerDetails] = useState<CustomerType | null>(null);
+
+	const {user} = useUser()
+	useEffect(() => {
+		const getCustomer = async ()=>{
+		if (user) {
+			const {data, } = await fetchCustomer(user.email)
+			setCustomerDetails(data ? data[0] : null)
+		}
+		}
+		getCustomer()
+	}, [user])
+	
 
 	return (
 		<CartContext.Provider

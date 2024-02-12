@@ -1,19 +1,24 @@
 import { FaStar, FaCheck } from 'react-icons/fa';
+import React from 'react';
 
-
-export const ClockIcon = () => (
+export const ClockIcon: React.FC = () => {
+	return (
 	<svg
-		width="18"
-		height="18"
-		viewBox="0 0 18 18"
-		fill="none"
-		xmlns="http://www.w3.org/2000/svg">
-		<path
-			d="M8.58318 1.97363C4.75934 1.97363 1.65918 5.07379 1.65918 8.89764C1.65918 12.7215 4.75934 15.8216 8.58318 15.8216C12.407 15.8216 15.5072 12.7215 15.5072 8.89764C15.5072 5.07379 12.407 1.97363 8.58318 1.97363ZM11.7789 9.96287H8.58318C8.44193 9.96287 8.30645 9.90675 8.20657 9.80687C8.10668 9.70698 8.05057 9.57151 8.05057 9.43025V4.63671C8.05057 4.49545 8.10668 4.35998 8.20657 4.2601C8.30645 4.16021 8.44193 4.1041 8.58318 4.1041C8.72444 4.1041 8.85992 4.16021 8.9598 4.2601C9.05968 4.35998 9.1158 4.49545 9.1158 4.63671V8.89764H11.7789C11.9201 8.89764 12.0556 8.95375 12.1555 9.05364C12.2554 9.15352 12.3115 9.28899 12.3115 9.43025C12.3115 9.57151 12.2554 9.70698 12.1555 9.80687C12.0556 9.90675 11.9201 9.96287 11.7789 9.96287Z"
-			fill="black"
-		/>
+	  width={18}
+	  height={18}
+	  viewBox="0 0 18 18"
+	  fill="none"
+	  xmlns="http://www.w3.org/2000/svg"
+	>
+	  <path
+		d="M8.58318 1.97363C4.75934 1.97363 1.65918 5.07379 1.65918 8.89764C1.65918 12.7215 4.75934 15.8216 8.58318 15.8216C12.407 15.8216 15.5072 12.7215 15.5072 8.89764C15.5072 5.07379 12.407 1.97363 8.58318 1.97363ZM11.7789 9.96287H8.58318C8.44193 9.96287 8.30645 9.90675 8.20657 9.80687C8.10668 9.70698 8.05057 9.57151 8.05057 9.43025V4.63671C8.05057 4.49545 8.10668 4.35998 8.20657 4.2601C8.30645 4.16021 8.44193 4.1041 8.58318 4.1041C8.72444 4.1041 8.85992 4.16021 8.9598 4.2601C9.05968 4.35998 9.1158 4.49545 9.1158 4.63671V8.89764H11.7789C11.9201 8.89764 12.0556 8.95375 12.1555 9.05364C12.2554 9.15352 12.3115 9.28899 12.3115 9.43025C12.3115 9.57151 12.2554 9.70698 12.1555 9.80687C12.0556 9.90675 11.9201 9.96287 11.7789 9.96287Z"
+		fill="black"
+	  />
 	</svg>
-);
+  )
+};
+  
+
 
 export const SessionUsed = () => (
 	<svg
@@ -45,7 +50,7 @@ export const SessionUsed = () => (
 	</svg>
 );
 
-export const SessionPurchsed = () => (
+export const SessionPurchased: React.FC = () => (
 	<svg
 		width="32"
 		height="32"
@@ -81,7 +86,7 @@ export const SessionPurchsed = () => (
 	</svg>
 );
 
-export const SessionBooked = () => (
+export const SessionBooked: React.FC = () => (
 	<svg
 		width="32"
 		height="33"
@@ -117,7 +122,7 @@ export const SessionBooked = () => (
 	</svg>
 );
 
-export const SessionCancelled = () => (
+export const SessionCancelled: React.FC = () => (
 	<svg
 		width="32"
 		height="33"
@@ -152,7 +157,7 @@ export const SessionCancelled = () => (
 		</defs>
 	</svg>
 );
-export const SessionsIcon = () => (
+export const SessionsIcon: React.FC = () => (
 	<svg
 		width="48"
 		height="48"
@@ -173,7 +178,7 @@ export const SessionsIcon = () => (
 	</svg>
 );
 
-export const PhoneIcon = () => (
+export const PhoneIcon: React.FC = () => (
 	<svg
 		width="48"
 		height="48"
@@ -200,7 +205,7 @@ export const PhoneIcon = () => (
 	</svg>
 );
 
-export const WhatsAppIcon = () => (
+export const WhatsAppIcon: React.FC = () => (
 	<svg
 		width="49"
 		height="48"
@@ -215,7 +220,7 @@ export const WhatsAppIcon = () => (
 	</svg>
 );
 
-export const EmailIcon = () => (
+export const EmailIcon: React.FC = () => (
 	<svg
 		width="48"
 		height="48"
@@ -232,7 +237,7 @@ export const EmailIcon = () => (
 	</svg>
 );
 
-export const ScheduleIcon = () => (
+export const ScheduleIcon: React.FC = () => (
 	<svg
 		width="48"
 		height="48"
@@ -267,7 +272,7 @@ export const ScheduleIcon = () => (
 	</svg>
 );
 
-export const DoubleTick = () => (
+export const DoubleTick: React.FC = () => (
 	<svg
 		width="20"
 		height="20"
@@ -284,7 +289,7 @@ export const DoubleTick = () => (
 	</svg>
 );
 
-export const MapIcon = () => (
+export const MapIcon: React.FC = () => (
 	<svg
 		width="16"
 		height="16"
@@ -298,7 +303,7 @@ export const MapIcon = () => (
 	</svg>
 );
 
-export const UserIcon = () => (
+export const UserIcon: React.FC = () => (
 	<svg
 		width="14"
 		height="13"
@@ -311,7 +316,7 @@ export const UserIcon = () => (
 		/>
 	</svg>
 );
-export const SearchIcon = () => (
+export const SearchIcon: React.FC = () => (
 	<svg
 		width="20"
 		height="20"
@@ -328,7 +333,7 @@ export const SearchIcon = () => (
 	</svg>
 );
 
-export const ScanIcon = () => (
+export const ScanIcon: React.FC = () => (
 	<svg
 		width="24"
 		height="24"
@@ -342,7 +347,7 @@ export const ScanIcon = () => (
 	</svg>
 );
 
-export const FilterIcon = () => (
+export const FilterIcon: React.FC = () => (
 	<svg
 		width="24"
 		height="24"
@@ -359,7 +364,7 @@ export const FilterIcon = () => (
 	</svg>
 );
 
-export const StarIcon = () => (
+export const StarIcon: React.FC = () => (
 	<svg
 		width="38"
 		height="38"
@@ -380,7 +385,7 @@ export const StarIcon = () => (
 	</svg>
 );
 
-export const playIcon = () => (
+export const playIcon: React.FC = () => (
 	<svg
 		width="186"
 		height="186"
@@ -423,7 +428,7 @@ export const playIcon = () => (
 	</svg>
 );
 
-export const PlayBtn = () => (
+export const PlayBtn: React.FC = () => (
 	<svg
 		width="186"
 		height="185"
@@ -466,7 +471,7 @@ export const PlayBtn = () => (
 	</svg>
 );
 
-export const CreditCardSvg = () => (
+export const CreditCardSvg: React.FC= () => (
 	<svg
 		width="220"
 		height="201"
@@ -588,7 +593,7 @@ export const CreditCardSvg = () => (
 	</svg>
 );
 
-export const OfficeLadySvg = () => (
+export const OfficeLadySvg: React.FC = () => (
 	<svg
 		width="257"
 		height="304"
@@ -730,7 +735,7 @@ export const OfficeLadySvg = () => (
 	</svg>
 );
 
-export const RehabSvg = () => (
+export const RehabSvg: React.FC = () => (
 	<svg
 		width="710"
 		height="501"
@@ -1750,21 +1755,35 @@ export const RehabSvg = () => (
 	</svg>
 );
 
-export const StarWithTickIcon = () => (
+export const StarWithTickIcon: React.FC = () => (
 	<div className="inline-block relative">
 		<FaStar className="text-[--oex-orange] text-3xl" />
 		<FaCheck className="absolute inset-0 text-white font-bold" />
 	</div>
 );
 
-export const rehabspaceHero = {
+export const rehabspaceHero: {
+    heading: string;
+    description: string;
+    btnText: string;
+} = {
 	heading: 'RehabSpace',
 	description:
 		'A dynamic shared workspace that gives you control over the area you need without the costly investment in an entire office. This space is ideal for licenced healthcare professionals seeking a facility to see their patients without the additional overhead cost of maintaining an office. Our spacious treatment rooms and well-equipped facility provide the perfect backdrop for delivering personalized care to your patients.',
 	btnText: 'Book a Session',
 };
 
-export const benefits = {
+export const benefits: {
+    heading: string;
+    benefitsList: {
+        id: number;
+        icon: any;
+        title: string;
+        description: string;
+    }[];
+    clipUrl: string;
+    playBtn: any;
+}= {
 	heading: 'Your Benefits',
 	benefitsList: [
 		{
@@ -1813,7 +1832,13 @@ export const benefits = {
 	playBtn: <PlayBtn />,
 };
 
-export const paymentCard = {
+export const paymentCard: {
+    heading: string;
+    description: string;
+    btnText: string;
+    phoneNumber: string;
+    CreditCardSvg: any;
+} = {
 	heading: 'RehabSpace Payment',
 	description: 'Easy, secure and automated payment process',
 	btnText: 'Pay now!',
@@ -1821,7 +1846,13 @@ export const paymentCard = {
 	CreditCardSvg: <CreditCardSvg />,
 };
 
-export const bookingCard = {
+export const bookingCard: {
+    heading: string;
+    description: string;
+    phoneNumber: string;
+    btnText: string;
+    CreditCardSvg: any;
+}= {
 	heading: 'Book an Appointment',
 	description:
 		'Schedule an appointment to use the space according to your preferred time.',
@@ -1830,7 +1861,18 @@ export const bookingCard = {
 	CreditCardSvg: <OfficeLadySvg />,
 };
 
-export const bookingDetails = {
+export const bookingDetails: {
+    svg: any;
+    title: string;
+    typesIcon: any;
+    types: {
+        id: number;
+        type: string;
+        value: string;
+        session: number;
+    }[];
+    footerText: string;
+}= {
 	svg: <RehabSvg />,
 	title: 'Booking budget and schedule fit for you.',
 	typesIcon: <FaCheck />,
@@ -1863,7 +1905,14 @@ export const bookingDetails = {
 	footerText: 'A session duration is 1hr 20mins.',
 };
 
-export const schedulSession = {
+export const schedulSession: {
+    heading: string;
+    description: string;
+    placeholder: string;
+    errorMessage: string;
+    btnText: string;
+    imgUrl: string;
+} = {
 	heading: 'Schedule a session',
 	description: 'Enter your email address to schedule a session',
 	placeholder: 'Idrisrash2017@gmail.com ',

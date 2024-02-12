@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaCheck } from 'react-icons/fa';
 
-const BookingConfirmed = () => {
+const BookingConfirmed: React.FC = () => {
 	return (
 		<div className="bg-[var(--oex-light-grey)] z-30 max-md:bg-white  md:pt-20 fixed inset-0 flex justify-center items-center">
 			<div className="w-full md:w-[600px] bg-white rounded-md py-14 px-6 md:px-10  space-y-10">

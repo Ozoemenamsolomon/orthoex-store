@@ -1,30 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { FaCheck, FaLock, FaMarker, FaRegTimesCircle, FaTimes } from 'react-icons/fa';
+import { FaCheck, FaLock, FaTimes } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import { useCart } from '../../context/cartContext.tsx';
+import { useCart } from '../../context/cartContext';
 import { usePaystackPayment } from 'react-paystack';
-import { updateHistoryAndSessionBalance } from '@utils/rehabspcetable.js';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import PageLoading from '@components/Loader/PageLoading.jsx';
+import PageLoading from '@components/Loader/PageLoading';
 
-export function sumOrderList(orderList) {
-	// Initialize totals to avoid NaN issues
+export function sumOrderList(orderList:any) {
 	let total = 0,
 	  totalSessions = 0;
   
-	// Check if orderList is defined and not empty
 	if (orderList && orderList.length !== 0) {
-	  // Iterate through each order in the list
 	  for (const order of orderList) {
-		// Ensure that the 'price' property is a valid number
 		const numericValue = parseFloat(order?.price);
 		if (!isNaN(numericValue)) {
-		  total += numericValue; // Add the price to the total
-  
-		  // Ensure that the 'sessionValue' property is a valid number
+		  total += numericValue; 
 		  const sessionValue = parseInt(order?.sessionValue, 10);
 		  if (!isNaN(sessionValue)) {
-			totalSessions += sessionValue; // Add the sessionValue to the totalSessions
+			totalSessions += sessionValue;
 		  } else {
 			console.warn(`Invalid sessionValue for order with id ${order?.id}`);
 		  }
@@ -33,31 +26,25 @@ export function sumOrderList(orderList) {
 		}
 	  }
   
-	  // Return the calculated totals
 	  return { total, totalSessions };
 	}
-  
-	// Log totals and orderList if orderList is empty or undefined
-	console.log({ total, totalSessions, orderList });
-  
-	// Return an object with zeros if orderList is empty or undefined
 	return { total: 0, totalSessions: 0 };
   }
   
 
-const OrderSummary = () => {
-	const { rehabspacePayment, setRehabspacePayment } = useCart();
-	const [summary, setSummary] = useState(sumOrderList(rehabspacePayment?.selectedSessions))
+const OrderSummary: React.FC = () => {
+	const { rehabspacePayment, } = useCart();
+	const [summary, setSummary] = useState<any>(sumOrderList(rehabspacePayment?.selectedSessions))
 
 	const {user} = useUser()
 
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-	const [success, setSuccess] = useState('');
+	const [success, setSuccess] = useState(false);
 	const [date, setDate] = useState('');
 	const {customerDetails} = useCart()
 
-	const config = {
+	const config:any = {
 		email: rehabspacePayment?.email,
 		sessions: summary?.totalSessions,
 		amount: summary?.total * 100,
@@ -67,22 +54,16 @@ const OrderSummary = () => {
 		phone: rehabspacePayment?.phoneNumber,
 	};
 
-	const onSuccess = reference => {
-		console.log(reference);
+	const onSuccess = (reference:any|undefined) => {
 		setSummary({...summary, reference: reference?.reference})
-		// use this to mount api actions
 		setDate(new Date().toISOString())
-	};
-
-	const onClose = reference => {
-		console.log(reference);
 	};
 
 	useEffect(() => {
 		const insertData = async () => {
 			if (date) {
 				try {
-					setLoading(1)
+					setLoading(true)
 					const response = await fetch('/api/rehabspace/insert-data', {
 						method: 'POST',
 						headers: {
@@ -107,8 +88,7 @@ const OrderSummary = () => {
 						});
 						if (response.ok) {
 							const res = await response.json();
-							setSuccess(1);
-							console.log('==', res)
+							setSuccess(true);
 						} else {
 							console.log(response.json());
 							throw new Error("session booking was not completed");
@@ -118,14 +98,14 @@ const OrderSummary = () => {
 				}
 				finally{
 					setDate('')
-					setLoading(0)
+					setLoading(false)
 				}
 			}
 		}
 
 	insertData()
 	}, [date])
-	
+	success
 
 	useEffect(() => {
 		if (!rehabspacePayment?.email) {
@@ -137,7 +117,7 @@ const OrderSummary = () => {
 
 	const handleClick = async () => {
 		try {
-			initializePayment(onSuccess, onClose);
+			initializePayment(onSuccess, );
 		} catch (error) {
 			console.error('catch error==', error);
 		}
@@ -164,7 +144,7 @@ const OrderSummary = () => {
 				<h5 className="font-semibold pb-4">Order Summary</h5>
 				<div className="mb-8 border rounded-md bg-[var(--oex-lightest-gre)] px-4 pt-6 pb-2 border-gray-300">
 					<h5 className="font-semibold pb-2">Order</h5>
-					{rehabspacePayment?.selectedSessions?.map(({ id, plan, price }) => (
+					{rehabspacePayment?.selectedSessions?.map(({ id, plan, price }:any) => (
 						<div key={id} className="flex justify-between items-center ">
 							<p>{plan}</p>
 							<p className="font-semibold">{price}</p>
@@ -186,12 +166,7 @@ const OrderSummary = () => {
 						</div>
 						{loading ? <p>Submiting...</p> : <div>Pay ₦{summary?.total}</div>}
 					</button>
-					{/* <button
-						onClick={() => router.push(`/rehabspace`)}
-						type="button"
-						className="mt-4 rounded-md w-full bg-gray-400 text-center py-4 px-8 hover:bg-gray-500 duration-300">
-						Cancel
-					</button> */}
+				
 				</div>
 			</div>
 		</div>
@@ -200,7 +175,7 @@ const OrderSummary = () => {
 
 export default OrderSummary;
 
-export const SuccessFulPayment = ({ setSuccess, setLoading, success, summary }) => {
+export const SuccessFulPayment = ({ setSuccess, setLoading,  summary }:any) => {
 	const router = useRouter();
 
 	return (
