@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useCart } from 'context/cartContext';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 
 const PaymentSection: React.FC = () => {
@@ -31,7 +32,7 @@ export default PaymentSection;
 				<div className="">
 					<h3>{paymentCard?.heading}</h3>
 					<p>{paymentCard?.description}</p>
-					<a
+					<Link
 						href={`tel:+${paymentCard?.phoneNumber}`}
 						className=" py-6 flex gap-2 items-cente">
 						<div className="text-[var(--oex-orange)] hover:text-[var(--oex-orange-dark)] duration-300">
@@ -40,7 +41,7 @@ export default PaymentSection;
 						<p className="hover:scale-105 duration-300">
 							{paymentCard?.phoneNumber}
 						</p>
-					</a>
+					</Link>
 
 					<button
 						onClick={()=>setPopup(true)}

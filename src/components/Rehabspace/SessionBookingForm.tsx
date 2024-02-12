@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { BookingPrice } from '../../data/rehabspace/types';
 import { FaLongArrowAltRight } from 'react-icons/fa';
+import Link from 'next/link';
 
 interface FormErrors {	
   firstName?: string;
@@ -311,9 +312,9 @@ const SessionBookingForm: React.FC = () => {
 								{isLoading ? (
 									'Submitting...'
 								) : (
-									<a className="flex gap-2" href='/api/auth/login?returnTo=/rehabspace?pay=1'>
+									<Link  className="flex gap-2" href='/api/auth/login?returnTo=/rehabspace?pay=1'>
 										Proceed to signin
-									</a>
+									</Link>
 								)}
 							</button>
 						</div>

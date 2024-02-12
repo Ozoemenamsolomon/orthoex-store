@@ -21,7 +21,7 @@ const NavLink: FC<{
 			</a>
 		</Link>
 	) : (
-		<a href={to}>{name}</a>
+		<Link href={to}>{name}</Link>
 	);
 };
 
