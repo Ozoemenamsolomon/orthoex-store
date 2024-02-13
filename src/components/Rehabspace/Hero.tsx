@@ -12,7 +12,7 @@ const Hero = () => {
 					<Image
 						width={600}
 						height={400}
-						src="/rehabspace/o.jpeg"
+						src="/rehabspace/1.webp"
 						alt="hero-img"
 						className="w-full h-full object-cover"
 					/>

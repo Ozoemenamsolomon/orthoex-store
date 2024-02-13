@@ -26,7 +26,7 @@ const Benefits: React.FC = () => {
 
         {/* video */}
         <div className="w-full h-96 lg:h-full rounded-3xl overflow-hidden bg-gray-300 relative inset-0">
-          <Image src={'/rehabspace/oo.jpg'} alt="benefits" layout="fill" objectFit="cover" />
+          <Image src={'/rehabspace/1.webp'} alt="benefits" layout="fill" objectFit="cover" />
           <div className="absolute inset-0 flex justify-center items-center font-bold text-6xl">
             <div className="bg-orange-500 p-6 rounded-full text-white">
               <FaPlayCircle />
