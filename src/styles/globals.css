@@ -110,3 +110,20 @@ img[object-fit='contain'] {
 .imgcover {
 	@apply w-full h-full object-cover
 }
+
+
+/* Target WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+	width: 6px;
+  }
+  
+  /* Handle portion of the scrollbar */
+  ::-webkit-scrollbar-thumb {
+	background-color: #bebebe; /* Set the color of the thumb */
+	border-radius: 6px; 
+  }
+  
+  /* Track portion of the scrollbar */
+  ::-webkit-scrollbar-track {
+	background-color: transparent; 
+  }
