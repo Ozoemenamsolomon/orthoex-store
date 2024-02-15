@@ -3,6 +3,8 @@ import deliveryVan from '@assets/new/icons/delivery-van.svg';
 import headphone from '@assets/new/icons/headphone.svg';
 import { ServiceCardType } from '@components/ServiceCard';
 
+
+
 const orderBenefits: ServiceCardType[] = [
 	{
 		title: 'Order by 12PM',
