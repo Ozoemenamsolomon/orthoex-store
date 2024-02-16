@@ -26,13 +26,11 @@ export const fetchAll = async (table:string, orderBy:any) => await supabase
   .select('*')
   .order(orderBy, { ascending: false });
 
-
 // read a specific row, e.g fetch a user with user id.
 export const fetchRow = async (table:any, column:any, columnValue:any,) => await supabase
 .from(table)
 .select('*')
 .eq(column,columnValue)
-
 
 // resd specific column like all categories, or all emails
 export const fetchSpecificColumn = async (table:any,column:any ) =>  await supabase
@@ -48,7 +46,6 @@ export const fetchReferencedTable = async (table:any, column:any, other_table:an
       ${foreign_key}
     )
   `)
-
 
 // with pagination
 export const tableLength = async(table:any,) => 
