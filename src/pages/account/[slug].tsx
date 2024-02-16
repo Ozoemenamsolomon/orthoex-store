@@ -232,7 +232,7 @@ export const getServerSideProps = withPageAuthRequired({
 			const location= await fetchAll('location', 'created_at')
 			const bookingPrice = await fetchAll('bookingPrice', 'created_at')
 			const activityHistory = await fetchActivities(session?.user?.email)
-			// console.log('rehabspace===', {customer:{customer, error, }, holidays, location, bookingPrice, activityHistory })
+			console.log('rehabspace===', {customer:{customer, error, }, holidays, location, bookingPrice, activityHistory })
 			rehabspaceData.location = location as any;
 			rehabspaceData.holidays = holidays as any;
 			rehabspaceData.bookingPrice = bookingPrice as any;

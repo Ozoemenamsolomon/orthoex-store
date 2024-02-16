@@ -110,7 +110,6 @@ export const fetchActivities = async (email:any) => await supabase
 .eq('customerEmail', email)
 .order('createdAt', { ascending: false });
 
-
 // fetch specific customer
 export const fetchCustomer = async (email:any) => await supabase
 .from('customers')
@@ -235,7 +234,6 @@ export const updateAppointmentStatus = async (action:any, appointment:any) => {
 
 	return result;
 }
-
 
 export const dashboardStats = async ( appointmentList:any[] | null ) => {
 	try {

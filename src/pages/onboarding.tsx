@@ -1,8 +1,13 @@
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import OnboardingForm from '../components/account/OnboardingForm';
-import { fetchCustomer, fetchOneRow } from '../utils/rehabspcetable';
+import React from 'react';
+import { UserProfile } from '@auth0/nextjs-auth0/client';
 
-const Onboarding = ({ user }) => {
+interface OnboardingProps {
+  user: UserProfile;
+}
+
+const Onboarding = ({ user }: OnboardingProps) => {
   return <OnboardingForm user={user} />;
 };
 

@@ -19,16 +19,19 @@ const afterCallback: AfterCallback = async (req, res, session, state) => {
 			const data = [{
 				registrationDate: new Date().toISOString(),
 				customerEmail: session?.user?.email,
-				firstName: session?.user?.given_name || session?.user?.email?.split('@')[0],
-				lastName: session?.user?.family_name || session?.user?.email?.split('@')[0],
+				email: session?.user?.email,
+				firstName: session?.user?.name || session?.user?.email?.split('@')[0] || '',
+				lastName: session?.user?.nickname || '',
 				profession: '',
 				city: '',
 				phoneNumber: '',
+				sessionBalance: 0,
 				whatsappNumber: '',
-				userType: '',
+				customerType: 'Clinician',
 			}]
 			const insertionResult = await insert('customers', data);
-			console.log('user', insertionResult);
+			
+			// console.log('user', insertionResult);
 			res.setHeader('Location', '/onboarding');
 		  } catch (error) {
 			console.error(error);

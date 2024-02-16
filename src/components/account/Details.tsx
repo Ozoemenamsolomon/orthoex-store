@@ -20,14 +20,13 @@ const Details: FC<{
 		customer || {
 			registrationDate: new Date(),
 			customerEmail: user?.email || '',
-			firstName: "",
-			lastName: "",
+			firstName: user?.name || "",
+			lastName: user?.nickname || "",
 			profession: "",
 			city: "",
 			phoneNumber: "",
 			whatsappNumber: "",
-			customerType: "Clinician", //TODO
-			// sessionBalance: 0,
+			customerType: "Clinician", 
 			birthDay: "",
 			gender: "",
 			email: user?.email,
@@ -60,7 +59,7 @@ const Details: FC<{
 			console.log(error);
 			toast.error('Unsuccessful');
 		  }
-		  console.log({ data, error });
+		//   console.log({ data, error });
 		} catch (error) {
 		  console.error('Error submitting the form:', error);
 		} finally {

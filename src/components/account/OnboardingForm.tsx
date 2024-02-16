@@ -1,5 +1,5 @@
 import React, {FC, useState, FormEvent, ChangeEvent } from 'react';
-import {insert, updateItem} from "../../utils/rehabspcetable"
+import {  updateItem} from "../../utils/rehabspcetable"
 import { useRouter } from 'next/router';
 import {toast} from "react-toastify"
 import { CustomerType } from '@data/rehabspace/types';
@@ -16,9 +16,6 @@ interface FormErrors {
   lastName?: string;
 }
 
-interface FormErrors {
-  [key: string]: string;
-}
 const OnboardingForm: FC<OnboardingFormProps> = ({user}) => {
   const {push}=useRouter()
 
@@ -26,13 +23,13 @@ const OnboardingForm: FC<OnboardingFormProps> = ({user}) => {
     registrationDate: new Date(),
     customerEmail: user?.email || '', 
     firstName: user?.name || '', 
-    lastName: '',
+    lastName: user?.nickname || '',
     profession: '',
     city: '',
     phoneNumber:  '', 
     whatsappNumber: '',
     customerType: 'Clinician',
-    email: user?.email || '', 
+    email: user?.email, 
   };
   const clearForm = () => {
     setFormData({
@@ -46,7 +43,7 @@ const OnboardingForm: FC<OnboardingFormProps> = ({user}) => {
         customerType: '',
     })
   };
-
+  
   const [formData, setFormData] = useState<Partial<CustomerType>>(initialFormData);
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -90,9 +87,7 @@ const validateForm = () => {
     setLoading(true);
 
     try {
-      // const {data,error} = await insert('customers', [formData],  );
       const {data,error} = await updateItem('customers', formData, 'email', user?.email, );
-      // console.log( {data,error})
       if (data) {
         clearForm();
         setErrors({});
@@ -102,7 +97,7 @@ const validateForm = () => {
         console.log(error)
         toast.error('Unsuccessfull')
       }
-      console.log({data,error})
+      // console.log({data,error})
     } catch (error) {
       console.error('Error submitting the form:', error);
     } finally {
@@ -130,16 +125,16 @@ const validateForm = () => {
 
         {/* User Email */}
         <div className="mb-4">
-          <label htmlFor="userEmail" className="block text-sm font-medium text-gray-600">
+          <label htmlFor="customerEmail" className="block text-sm font-medium text-gray-600">
             Email
           </label>
           <input
             type="text"
-            id="userEmail"
-            name="userEmail"
+            id="customerEmail"
+            name="customerEmail"
             value={formData.customerEmail || ''}
             onChange={handleInputChange}
-            className={`mt-1 p-2 border rounded-md w-full ${errors.userEmail ? 'border-red-500' : ''}`}
+            className={`mt-1 p-2 border rounded-md w-full ${errors.customerEmail ? 'border-red-500' : ''}`}
           />
           {errors.customerEmail && <p className="text-red-500 text-xs mt-1">{errors.customerEmail}</p>}
         </div>
@@ -239,7 +234,7 @@ const validateForm = () => {
         <div className="mt-6">
           <button
             type="submit"
-            className="bg-orange-600 text-white w-full px-4 py-2 rounded-md"
+            className="bg-orange-600 text-white w-full px-4 py-3 rounded-md"
             disabled={loading}
           >
             {loading ? 'Submitting...' : 'Submit'}
