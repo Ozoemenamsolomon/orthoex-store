@@ -11,7 +11,7 @@ import {
 	isToday,
 	parse,
 	isBefore,
-	startOfToday,
+	startOfToday,startOfDay,
 } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { supabaseClient } from '@utils/supabase';
@@ -62,7 +62,9 @@ const Calendar: React.FC<CalendarProps> = ({
 		if (dayOfWeek === 6 && !chosenLocation?.availableSaturday) {
 		  return true;
 		}
-		if (isBefore(day, new Date())) {
+		// Disable days before today
+		const startOfDayToCheck = startOfDay(day);
+		if (isBefore(startOfDayToCheck, startOfToday())) {
 			return true
 		}
 		// Disable the day if it exists in the holidays list
@@ -99,7 +101,7 @@ const Calendar: React.FC<CalendarProps> = ({
 					const bookingList = data.map(item => new Date(new Date(item?.appointmentDateTime).getTime() + 60 * 60 * 1000));
 	
 					setInactiveSlots(bookingList);
-					console.log('inactive slots', bookingList);
+					// console.log('inactive slots', bookingList);
 				} else {
 					console.log({ data, error });
 				}
@@ -329,7 +331,8 @@ const TimeSlotPicker = ({ timeSlotsArray, setBooking, activeSlot, setActiveSlot,
 		  }).length >= chosenLocation?.maxBookingPerSlot;
 
 		  const isPastCurrentTime = () => {
-			return new Date().getTime() > new Date(slot?.date).getTime() - 86400000 // 24hrs before bookdate (allowable cancellation)
+			console.log(new Date().getTime() > new Date(slot?.date).getTime(), new Date().getTime(),  new Date(slot?.date).getTime())
+			return new Date().getTime() > new Date(slot?.date).getTime()  // booking time is past current time
 		  }
 
 		//   console.log(new Date(new Date().getTime() ), new Date(new Date(slot?.date).getTime() - 86400000), new Date().getTime() > new Date(slot?.date).getTime() - 86400000 )

@@ -45,10 +45,10 @@ const BookingModal: React.FC<BookingModalType> = ({location,  holidays, customer
 							</div>
 						</div>
 					</div>
-					<div className="text-lg space-y-2">
+					{/* <div className="text-lg space-y-2">
 						<p>Selected Schedule:</p>
 						<p className="text-orange-600">{booking}</p>
-					</div>
+					</div> */}
 				</div>
 			</section>
 

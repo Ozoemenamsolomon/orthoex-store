@@ -38,9 +38,9 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
   useClickOutside(dropdown2, ()=>handleModal('date'))
   useClickOutside(dropdown3, ()=>handleModal('status'))
 
-  const updateQuery = (query:any, value:any, e:any) => {
-    if(e){
-      e.preventDefault()
+  const updateQuery = (query: any, value: any, e?: React.MouseEvent | React.FormEvent) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
     }
     setLoading((true))
 
@@ -48,7 +48,6 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
     setQueryParams((prevParams:any) => ({
       ...prevParams,
       [query]: value,
-      
     }));
   
     router.replace({
@@ -103,7 +102,7 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
           }
   
           const result = await query;
-          console.log(result);
+          // console.log(result);
   
           if (result?.data) {
             setAppointmentTable(result?.data);
@@ -126,7 +125,6 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
     searchTable();
   }, [router.query]);
   
-
   return (
     <div>
         <div className="flex items-center justify-undefinedetween w-full gap-4 pt-6 px-4">
@@ -137,7 +135,7 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
               </button>
             </div>
             <input
-              type="search"
+              type=""
               name=""
               id=""
               className="w-full bg-transparent focus:outline-none"
@@ -145,6 +143,7 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+            {searchTerm ? <FaTimes onClick={()=>setSearchTerm('')} className='text-sm text-gray-500'/> : null}
             <div className="shrink-0">
               <ScanIcon />
             </div>
@@ -158,7 +157,7 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
           </div>
         </div>
 
-        <div className={` ${drop || show==='customerName' ? 'scale-y-100 py-3 px-4' : 'hidden'}   transform transition-all duration-500 space-y-2`}>
+        <div className={` ${drop || show==='customerName' ? 'scale-y-100 py-3 px-4' : 'hidden'}  text-[12px]  transform transition-all duration-500 space-y-2`}>
           <div className={`flex items-center justify-between`}>
               <div className="relative  border-r pr-3">
                 <button onClick={()=>handleModal('location', )} className='flex gap-1 items-center'>
@@ -168,7 +167,7 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
                 {show==='location'&&<div ref={dropdown} className="absolute border bg-white p-4 top-8 left-0">
                   {
                     ['Mafoluku', 'Ikorodu'].map((e,i)=>(
-                      <button key={i}  onClick={()=>updateQuery( 'location', '', e)}  className='p-1 hover:border duration-300'>{e}</button>
+                      <button key={i}  onClick={()=>updateQuery( 'location', e, )}  className='p-1 hover:border duration-300'>{e}</button>
                     ))
                   }
                 </div>}
@@ -182,7 +181,7 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
                 {show==='customerType'&&<div  ref={dropdown1} className="absolute border bg-white p-4 top-8 left-0">
                   {
                     ['Clinician', 'Patient'].map((e,i)=>(
-                      <button key={i}  onClick={()=>updateQuery( 'customerType', '',e)} className='p-1 hover:border duration-300'>{e}</button>
+                      <button key={i}  onClick={()=>updateQuery( 'customerType', e,)} className='p-1 hover:border duration-300'>{e}</button>
                     ))
                   }
                 </div>
@@ -197,7 +196,7 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
                 {show==='date'&&
                 <div ref={dropdown2}  className="absolute  bg-white top-8 -left-20">
 
-                    <CustomDatePicker onChange={(date) => updateQuery('date', '', date)} />
+                    <CustomDatePicker onChange={(date) => updateQuery('date', date, )} />
 
                   {/* <input onChange={(e=>updateQuery('date',e.target.value, e))} type="date" name="datepicker" id="datepicker"/> */}
                 </div>}
@@ -211,20 +210,20 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
                 {show==='status'&&<div ref={dropdown3} className="absolute border w-32 bg-white p-4 top-8 right-0">
                   {
                     ['check-in', 'checked-in', 'cancelled'].map((e,i)=>(
-                      <button onClick={()=>updateQuery('status', '',e)} key={i} className="p-1 hover:border " >{e}</button>
+                      <button onClick={()=>updateQuery('status', e,)} key={i} className="p-1 hover:border " >{e}</button>
                     ))
                   }
                 </div>}
               </div>
           </div>
 
-          <div className=" flex gap-2 items-center">
+          <div className=" flex gap-2  w-full items-center">
               {Object.entries(queryParams).map(([key, value]) => (
                 value && (
                   <div key={key} className="px-2 py-1 flex gap-2 items-center bg-red-100 rounded text-orange-500">
                     { 
-                      key==='date' ? new Date(value).toDateString() : value}
-                    <FaTimes onClick={()=>updateQuery(key, '','')}/>
+                      key==='date' ? new Date(value).toLocaleDateString() : value}
+                    <FaTimes onClick={()=>updateQuery(key, '',)}/>
                   </div>
                 )
               ))}

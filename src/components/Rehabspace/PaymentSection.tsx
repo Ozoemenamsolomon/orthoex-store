@@ -45,7 +45,7 @@ export default PaymentSection;
 
 					<button
 						onClick={()=>setPopup(true)}
-						className="px-8 py-4 font-light text-xl rounded text-white bg-[var(--oex-orange)]  hover:bg-white hover:text-[var(--oex-orange)]">
+						className="px-8 py-4 font-light text-lg rounded text-white bg-[var(--oex-orange)]  hover:bg-white hover:text-[var(--oex-orange)]">
 						{paymentCard?.btnText}
 					</button>
 				</div>
@@ -78,7 +78,7 @@ export default PaymentSection;
 					toast.warning('Sign in to continue');
 					}
 				}}
-				className={`${!customerDetails || customerDetails.sessionBalance === null || customerDetails.sessionBalance === undefined || customerDetails.sessionBalance < 1 ? 'cursor-not-allowed' : 'hover:bg-white hover:text-[var(--oex-orange)]'} font-light px-8 py-4 text-xl rounded text-white bg-[var(--oex-orange)] duration-300`}
+				className={`${!customerDetails || customerDetails.sessionBalance === null || customerDetails.sessionBalance === undefined || customerDetails.sessionBalance < 1 ? 'cursor-not-allowed' : 'hover:bg-white hover:text-[var(--oex-orange)]'} font-light px-4 py-4 text-lg rounded text-white bg-[var(--oex-orange)] duration-300`}
 				>
 				Book session
 				</button>

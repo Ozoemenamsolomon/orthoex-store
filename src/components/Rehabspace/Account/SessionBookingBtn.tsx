@@ -5,6 +5,7 @@ import {  fetchCustomer,  } from "@utils/rehabspcetable";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import { CustomerType, Location } from "@data/rehabspace/types";
+import {isPastCurrentTime} from "@utils/isPastCurrentTime"
 
 type SessionBookingBtnProps = {
   booking: any; 
@@ -34,7 +35,6 @@ const SessionBookingBtn: React.FC<SessionBookingBtnProps> = ({ booking, chosenLo
     }
     fetch()
   }, [refresh])
-  
 
 // status: (check-in, cancelled, checked-in)
   const appointment = {
@@ -64,6 +64,8 @@ const SessionBookingBtn: React.FC<SessionBookingBtnProps> = ({ booking, chosenLo
     if (customer && customer?.sessionBalance  && customer?.sessionBalance < 1 ) {
       toast.warning('Your session balance is empty. Purchase a new session.') 
       return
+    } else if (isPastCurrentTime(booking)) {
+      toast.warning('You cannot book a past session.') 
     } else { 
       try {
         setLoading(1);

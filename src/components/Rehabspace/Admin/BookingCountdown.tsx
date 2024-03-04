@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { fetchActivities, updateAppointmentStatus } from '@utils/rehabspcetable';
 import { stringToJson } from '@utils/stringToJson';
 import { Appointment, Activity } from '@data/rehabspace/types';
+import { isPastCurrentTime } from '@utils/isPastCurrentTime';
 
 interface BookingComponentProps {
   bookingDate: string;
@@ -26,19 +27,29 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
   const [timeRemaining, setTimeRemaining] = useState<number | undefined>(undefined);
   const [status, setStatus] = useState<string>(appointmentTable[index]?.status?.status || '');
 
+  // TODO: Review countier and status update - show cancel if time (24hrs before booked time) is not elapsed.
+  //       show check-in if elapsesd
+  //       show expired if booked time is less than current time. it's past
+  //       checked-in if checked in, canceled if cancelled
+  //       countdown should not check-in sessions when expired, rather change the status to check-in.
   useEffect(() => {
     const intervalId = setInterval(() => {
       const appointmentTime = new Date(bookingDate);
       const currentTime = new Date();
       const startTime = new Date(appointmentTime.getTime() - 24 * 60 * 60 * 1000);
       const remaining = startTime.getTime() - currentTime.getTime();
+
+      // if (isPastCurrentTime(bookingDate) && status !== 'check-in') {
+      //   setStatus('expired')
+      //   handleBooking('expired')
+      // }
   
       if (remaining <= 0 || status !== 'check-in') {
         clearInterval(intervalId);
         setTimeRemaining(0)
         if (status === 'check-in') {
-          setStatus('checked-in');
-          handleBooking('checked-in');
+          setStatus('check-in');
+          // handleBooking('checked-in');
         }
       } else {
         setTimeRemaining(remaining);
@@ -58,7 +69,7 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
     seconds %= 60;
 
     const formattedSeconds = Math.floor(seconds); 
-    const formattedTime = `${days ? days+'D,' : ''}${hours ? hours+'H,' : ''}${minutes ? minutes+'M,' : ''}${formattedSeconds ? formattedSeconds+'s' : 0}`;
+    const formattedTime = `${days ? days+'D ' : ''}${hours ? hours+'H ' : ''}${minutes ? minutes+'m ' : ''}${formattedSeconds ? formattedSeconds+'s' : 0}`;
   
     return formattedTime;
   }
@@ -100,6 +111,7 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
       console.error(error);
     }
   };
+
   return (
     <div className='flex gap-2'>
       <div className='flex flex-col justify-between h-full items-center'>

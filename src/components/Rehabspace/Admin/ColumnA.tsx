@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import { stringToJson } from '@utils/stringToJson';
 import { useRouter } from 'next/router';
 import { Appointment, CustomerType,  } from '@data/rehabspace/types'; 
+import { formatAMPM } from '@utils/fromatTime';
 
 type ColumnAProps = {
   rehabspaceData: any;
@@ -42,7 +43,7 @@ const ColumnA: React.FC<ColumnAProps> = ({
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [counting, setCounting] = useState<{ total: number; result: number }>({ total: 0, result: 0 });
-  const [queryParams, setQueryParams] = useState<{ date: Date | string | number| any; customerName: string; customerType: string; status: string; location: string; search: string } | {}>({
+  const [queryParams, setQueryParams] = useState<{ date: any; customerName: string; customerType: string; status: string; location: string; search: string } | {}>({
     date: '',
     customerName: '',
     customerType: '',
@@ -131,44 +132,45 @@ const ColumnA: React.FC<ColumnAProps> = ({
     }
     fetchAppointments(currentPage);
   };
-
   return (
-    <div className="border-x border-[var(--oex-light-grey)] py-8 h-screen grid">
-      <h5 className="border-b border-[var(--oex-light-grey)]  px-4 pb-6  ">Appointments</h5>
+    <div className="border-x border-[var(--oex-light-grey)] py-8 h-screen overflow-auto">
+      <div>
+          <h5 className="border-b border-[var(--oex-light-grey)]  px-4 pb-6  ">Appointments</h5>
 
-			<SearchBar queryParams={queryParams} setQueryParams={setQueryParams} setLoading={setLoading} setAppointmentTable={setAppointmentTable} updatePagination={updatePagination} 
-			/>
+          <SearchBar queryParams={queryParams} setQueryParams={setQueryParams} setLoading={setLoading} setAppointmentTable={setAppointmentTable} updatePagination={updatePagination} 
+          />
 
-			<div className="flex justify-between items-center gap-2 px-4 pb-3 pt-2">
-				<div className="flex items-center gap-2 ">
-					
-						<UserIcon />
-						<div className="text-[14px]">{`${counting?.result || 0 }/ ${counting?.total || ''}`} appointments listed in your view</div>
-					
-				</div>
-			</div>
+          <div className="flex justify-between items-center gap-2 px-4 pb-3 pt-2">
+            <div className="flex items-center gap-2 ">
+              
+                <UserIcon />
+                <div className="text-[14px]">{`${counting?.result || 0 }/ ${counting?.total || ''}`} appointments listed in your view</div>
+              
+            </div>
+          </div>
 
-			<div className="flex px-4  pb-3 gap-8 justify-between">
-				<button className="shadow-md p-1 rounded-full hover:shadow-lg duration-300 ">
-					<MdRefresh size={20} onClick={handleRefresh}/>
-				</button>
-				<div className=" flex gap-3 justify-end">
-					{
-						totalPages && totalPages !== 0 ? 
-						<>
-							<button disabled={currentPage===1} onClick={handlePrevPage}
-							className={`${currentPage===1 ? 'disabled cursor-not-allowed text-gray-200' : ''}`}><FaAngleLeft/></button>
-							<span> Page {currentPage} of {totalPages} </span>
+          <div className="flex px-4  pb-3 gap-8 justify-between">
+            <button className="shadow-md p-1 rounded-full hover:shadow-lg duration-300 ">
+              <MdRefresh size={20} onClick={handleRefresh}/>
+            </button>
+            <div className=" flex gap-3 justify-end">
+              {
+                totalPages && totalPages !== 0 ? 
+                <>
+                  <button disabled={currentPage===1} onClick={handlePrevPage}
+                  className={`${currentPage===1 ? 'disabled cursor-not-allowed text-gray-200' : ''}`}><FaAngleLeft/></button>
+                  <span> Page {currentPage} of {totalPages} </span>
 
-							<button disabled={currentPage===totalPages} onClick={handleNextPage}
-							className={`${currentPage===totalPages ? 'disabled cursor-not-allowed text-gray-200' : ''}`}><FaAngleRight/></button>
-						</>
-						: null
-					}
-				</div>
-			</div>
+                  <button disabled={currentPage===totalPages} onClick={handleNextPage}
+                  className={`${currentPage===totalPages ? 'disabled cursor-not-allowed text-gray-200' : ''}`}><FaAngleRight/></button>
+                </>
+                : null
+              }
+            </div>
+          </div>
+      </div>
 
-			<div ref={loadingRef} className="border-t border-gray-100 h-full  overflow-auto">
+			<div ref={loadingRef} className="border-t border-gray-100 ">
 			{
 			loading ? 
 				<div  className="h-96 flex justify-center items-center">
@@ -199,7 +201,7 @@ const ColumnA: React.FC<ColumnAProps> = ({
 									{new Date(appointmentDate).toDateString()}
 								</div>
 								<div className="p-1 ">
-									{AppointmentStartTime}
+									{formatAMPM(AppointmentStartTime)}
 								</div>
 							</div>
 							<div className="flex gap-2 items-center text-[var(--oex-dark-grey)]">
