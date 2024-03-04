@@ -33,14 +33,14 @@ const AccountHistory: React.FC<AccountHistoryProps> = ({ log, customer, admin })
           <h4 className="font-medium pt-6">Recent History</h4>
         </>
       )}
-
+      <div className='pr-2'>
       {log && !log.length ? (
         <div className="h-96 w-full flex justify-center items-center border rounded">
           No log found
         </div>
       ) : (
         log?.map((item, i) => (
-          <div className="flex gap-4 border-b py-4" key={i}>
+          <div  key={i} className={`flex gap-4 py-4 ${i===log?.length-1 ? '' : ' border-b'} `}>
             <div className="flex gap-4 w-3/4">
               {item?.activityType?.action === 'Session cancelled' && <SessionCancelled />}
               {item?.activityType?.action === 'Session booked' && <SessionBooked />}
@@ -58,6 +58,7 @@ const AccountHistory: React.FC<AccountHistoryProps> = ({ log, customer, admin })
           </div>
         ))
       )}
+      </div>
     </div>
   );
 };

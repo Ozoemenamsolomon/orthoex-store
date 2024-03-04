@@ -58,7 +58,7 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
     seconds %= 60;
 
     const formattedSeconds = Math.floor(seconds); 
-    const formattedTime = `${days ? days+'days,' : ''}${hours ? hours+'hrs,' : ''}${minutes ? minutes+'mins,' : ''}${formattedSeconds ? formattedSeconds+'secs' : 0}`;
+    const formattedTime = `${days ? days+'D,' : ''}${hours ? hours+'H,' : ''}${minutes ? minutes+'M,' : ''}${formattedSeconds ? formattedSeconds+'s' : 0}`;
   
     return formattedTime;
   }
@@ -122,7 +122,7 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
         </button>
       }
       <p className='text-[10px] text-orange-500'>
-          {status !== 'check-in' || Number(timeRemaining) <= 0 ? '00:00:00' : (timeRemaining !== undefined ? convertMillisecondsToDHMS(timeRemaining) : '')}
+          { status !== 'check-in' || Number(timeRemaining) <= 0 ? '' : (timeRemaining !== undefined ? convertMillisecondsToDHMS(timeRemaining) : '')}
         </p>
 
   </div>

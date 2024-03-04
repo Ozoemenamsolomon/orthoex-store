@@ -47,7 +47,7 @@ const BookingStatusDoughnutChart: React.FC<BookingStatusDoughnutChartProps> = ({
           'rgba(255, 159, 64, 1)',
         ],
         borderWidth: 1,
-        weight: 20,
+        weight: 16,
         hoverOffset: 4,
       },
     ],
@@ -55,7 +55,7 @@ const BookingStatusDoughnutChart: React.FC<BookingStatusDoughnutChartProps> = ({
 
   return (
     <div className="relative pb-4">
-      <Doughnut data={data} width={300} height={300} />
+      <Doughnut data={data} width={220} height={220} />
       <div className="absolute inset-0 flex flex-col justify-center items-center">
         <div className="text-2xl font-semibold"> {appointmentCount}</div>
         <div className="font-semibold">Bookings</div>

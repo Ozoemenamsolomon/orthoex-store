@@ -52,7 +52,7 @@ const RehabspaceAdmin: React.FC<RehabspaceAdminProps> = ({ rehabspaceData }) => 
   }, []);
 
   return (
-    <main className="mx-auto  max-w-[1500px] max-md:px-[1rem] px-[4rem] py-12 ">
+    <main className="mx-auto  max-w-[1500px] max-md:px-[1rem] px-[4rem] h-screen ">
       {query?.action === 'booking' ? (
         <BookingModal
           customer={customer}

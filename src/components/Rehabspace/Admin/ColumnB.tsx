@@ -36,7 +36,7 @@ const ColumnB: React.FC<ColumnBProps> = ({ setToggle, loading, type, customer, c
 	
 
 	return (
-		<div className="px-4 overflow-hidden ">
+		<div className="px-4 overflow-hidden h-screen grid py-8">
 			{type && (
 				<button type="button" onClick={() => setToggle('')}>
 					{`< Back`}
@@ -116,7 +116,7 @@ const ColumnB: React.FC<ColumnBProps> = ({ setToggle, loading, type, customer, c
 
 			<h4 className="font-medium pt-6">Recent History</h4>
 
-			<div className="max-h-[500px] overflow-auto ">
+			<div className="h-full overflow-auto ">
 				{
 					loading ? 
 					<div className='h-80 w-full flex justify-center items-center'>

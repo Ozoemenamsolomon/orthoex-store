@@ -133,8 +133,8 @@ const ColumnA: React.FC<ColumnAProps> = ({
   };
 
   return (
-    <div className="border border-[var(--oex-light-grey)]">
-      <h5 className="border-b border-[var(--oex-light-grey)]  px-4 py-6  ">Appointments</h5>
+    <div className="border-x border-[var(--oex-light-grey)] py-8 h-screen grid">
+      <h5 className="border-b border-[var(--oex-light-grey)]  px-4 pb-6  ">Appointments</h5>
 
 			<SearchBar queryParams={queryParams} setQueryParams={setQueryParams} setLoading={setLoading} setAppointmentTable={setAppointmentTable} updatePagination={updatePagination} 
 			/>
@@ -168,7 +168,7 @@ const ColumnA: React.FC<ColumnAProps> = ({
 				</div>
 			</div>
 
-			<div ref={loadingRef} className="border-t border-gray-100 h-[740px]  overflow-auto">
+			<div ref={loadingRef} className="border-t border-gray-100 h-full  overflow-auto">
 			{
 			loading ? 
 				<div  className="h-96 flex justify-center items-center">
@@ -185,7 +185,7 @@ const ColumnA: React.FC<ColumnAProps> = ({
 					}}
 					className={`${
 						toggle === id ? 'bg-[var(--oex-light-grey)]' : ''
-					}  px-4 py-6 border-y border-[var(--oex-light-grey)] flex gap-2 justify-between items-center `}>
+					} ${i===appointmentTable?.length-1 ? '' : 'border-[var(--oex-light-grey)]  border-b'}  px-4 py-6 flex gap-2 justify-between items-center `}>
 
 					<div className="flex gap-4">
 						<div className="shrink-0 rounded-full h-10 w-10 flex justify-center items-center bg-[var(--oex-grey)] text-[var(--oex-off-white)] uppercase">
@@ -198,7 +198,7 @@ const ColumnA: React.FC<ColumnAProps> = ({
 								<div className="text-[var(--oex-dark-grey)]">
 									{new Date(appointmentDate).toDateString()}
 								</div>
-								<div className="p-1 bg-[var(--oex-orange-mute)] text-[var(--oex-orange)]">
+								<div className="p-1 ">
 									{AppointmentStartTime}
 								</div>
 							</div>

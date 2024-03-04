@@ -114,13 +114,13 @@ img[object-fit='contain'] {
 
 /* Target WebKit browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
-	width: 6px;
+	width: 3px;
   }
   
   /* Handle portion of the scrollbar */
   ::-webkit-scrollbar-thumb {
-	background-color: #bebebe; /* Set the color of the thumb */
-	border-radius: 6px; 
+	background-color: #dbdbdb; /* Set the color of the thumb */
+	border-radius: 3px; 
   }
   
   /* Track portion of the scrollbar */
