@@ -124,16 +124,50 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
   
     searchTable();
   }, [router.query]);
+
+  
+  // update the query search bar Change and search the db
+  const handleChange = (e:any) => {
+    handleModal('')
+    
+    if (e) {
+      setLoading((true))
+      setSearchTerm(e.target.value)
+      setQueryParams((prevParams:any) => ({
+        ...prevParams,
+        customerName: e.target.value,
+      }));
+
+      router.replace({
+        pathname: router.pathname,
+        query: {
+          ...queryParams,
+          customerName: e.target.value,
+          search: '1'
+        },
+      });
+    } else {
+      setSearchTerm('')
+      setQueryParams((prevParams:any) => ({
+        ...prevParams,
+        customerName: '',
+      }));
+      router.replace({
+        pathname: router.pathname,
+        query: {
+          ...queryParams,
+          customerName: '',
+          search: '1'
+        },
+      });
+
+    }
+  }
   
   return (
     <div>
         <div className="flex items-center justify-undefinedetween w-full gap-4 pt-6 px-4">
-          <form className="w-full p-3 bg-[var(--oex-lightest-grey)] rounded-full flex items-center justify-between gap-2">
-            <div className="text-[var()]">
-              <button onClick={(e)=>updateQuery( 'customerName', searchTerm, e)}>
-                <SearchIcon />
-              </button>
-            </div>
+          <form className="w-full py-3 px-4 bg-[var(--oex-lightest-grey)] rounded-full flex items-center justify-between gap-2">
             <input
               type=""
               name=""
@@ -141,15 +175,19 @@ const SearchBar = ({ queryParams, setQueryParams, setLoading,  updatePagination,
               className="w-full bg-transparent focus:outline-none"
               placeholder="Search appointments"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={handleChange}
+              // onChange={(e) => setSearchTerm(e.target.value)}
             />
-            {searchTerm ? <FaTimes onClick={()=>setSearchTerm('')} className='text-sm text-gray-500'/> : null}
-            <div className="shrink-0">
+            {searchTerm ? <FaTimes onClick={()=>handleChange('')} className='text-sm text-gray-500 flex-shrink-0'/> : null}
+            <button className='text-[var()] flex-shrink-0 border-l pl-2' onClick={(e)=>updateQuery( 'customerName', searchTerm, e)}>
+              <SearchIcon />
+            </button>
+            {/* <div className="shrink-0">
               <ScanIcon />
-            </div>
+            </div> */}
           </form>
           
-          <div className="relative shrink-0 p">
+          <div className="relative  shrink-0 p">
               <button onClick={()=>clear()}>
                   <FilterIcon />
               </button>
