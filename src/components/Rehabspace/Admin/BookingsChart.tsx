@@ -14,7 +14,7 @@ ChartJS.register(
 
 const BookingsChart: React.FC = () => {
 	const [list, setList] = useState<{ day: string; value: number }[]>([])
-
+// console.log({list: list})
 	const data = {
 		labels: list?.map((item) => item?.day),
 		datasets: [

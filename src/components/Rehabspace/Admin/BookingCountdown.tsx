@@ -14,6 +14,7 @@ interface BookingComponentProps {
   appointmentTable: Appointment[];
   setAppointmentTable: React.Dispatch<React.SetStateAction<Appointment[]>>;
   index: number;
+  updateCustomerSessionBalance: any
 }
 
 const BookingCountdown: React.FC<BookingComponentProps> = ({
@@ -22,6 +23,7 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
   setCustomerLog,
   appointmentTable,
   setAppointmentTable,
+  updateCustomerSessionBalance,
   index,
 }) => {
   const [timeRemaining, setTimeRemaining] = useState<number | undefined>(undefined);
@@ -84,6 +86,7 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
         toast.success(`Session ${action}`);
         setStatus(action);
         setTimeRemaining(0);
+        
         return stringToJson(data[0]?.user)?.customerEmail;
       } else {
         toast.error('Action failed');
@@ -99,12 +102,15 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
       const customerEmail = await handleBooking(action);
       if (customerEmail) {
         const result = await fetchActivities(customerEmail);
-        console.log(result);
+        // console.log(result);
         if (result?.data) {
           setTimeout(() => {
             setCustomerLog(result.data);
             toast.success(`log updated`);
           }, 500);
+        }
+        if(action==='cancelled') {
+          await updateCustomerSessionBalance(customerEmail)
         }
       }
     } catch (error) {
@@ -122,16 +128,17 @@ const BookingCountdown: React.FC<BookingComponentProps> = ({
             <div className='text-[12px] text-[var(--oex-dark-grey)]'>Cancel</div>
           </button> 
           : 
+          // || Number(timeRemaining) <= 0 
           <button onClick={() => handleClicked('checked-in')}
-          disabled={status !== 'check-in' || Number(timeRemaining) <= 0}
-          className={`p-1 shrink-0 flex flex-col items-center ${status !== 'check-in' || Number(timeRemaining) <= 0 ? 'cursor-not-allowed ' : ' duration-300'}`}>
-            <div className={status !== 'check-in' || Number(timeRemaining) <= 0 ? 'text-[var(--oex-dark-grey)]' : 'text-orange-500'}>
-              <TbChecks size={20}/>
-            </div>
-            <div className="text-[12px] text-[var(--oex-dark-grey)]">
-              {status}
-            </div>
-        </button>
+            disabled={status !== 'check-in' }
+            className={`p-1 shrink-0 flex flex-col items-center ${status !== 'check-in' ? 'cursor-not-allowed ' : ' duration-300'}`}>
+              <div className={status !== 'check-in'  ? 'text-[var(--oex-dark-grey)]' : 'text-orange-500'}>
+                <TbChecks size={20}/>
+              </div>
+              <div className="text-[12px] text-[var(--oex-dark-grey)]">
+                {status}
+              </div>
+          </button>
       }
       <p className='text-[10px] text-orange-500'>
           { status !== 'check-in' || Number(timeRemaining) <= 0 ? '' : (timeRemaining !== undefined ? convertMillisecondsToDHMS(timeRemaining) : '')}

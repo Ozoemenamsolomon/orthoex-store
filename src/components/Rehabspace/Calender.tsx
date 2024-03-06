@@ -331,7 +331,7 @@ const TimeSlotPicker = ({ timeSlotsArray, setBooking, activeSlot, setActiveSlot,
 		  }).length >= chosenLocation?.maxBookingPerSlot;
 
 		  const isPastCurrentTime = () => {
-			console.log(new Date().getTime() > new Date(slot?.date).getTime(), new Date().getTime(),  new Date(slot?.date).getTime())
+			// console.log(new Date().getTime() > new Date(slot?.date).getTime(), new Date().getTime(),  new Date(slot?.date).getTime())
 			return new Date().getTime() > new Date(slot?.date).getTime()  // booking time is past current time
 		  }
 

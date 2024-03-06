@@ -3,7 +3,7 @@ import {
   MapIcon,
   UserIcon,
 } from '../../../data/rehabspace';
-import { deleteItem, fetchWithPagination } from '@utils/rehabspcetable';
+import { deleteItem, fetchWithPagination, updateItem } from '@utils/rehabspcetable';
 import PageLoading from '../../Loader/PageLoading'
 import BookingCountdown from './BookingCountdown';
 import SearchBar from './SearchBar';
@@ -24,6 +24,7 @@ type ColumnAProps = {
   setCustomerLog: React.Dispatch<React.SetStateAction<any>>;
   appointmentTable: Appointment[];
   setAppointmentTable: React.Dispatch<React.SetStateAction<Appointment[]>>;
+  updateCustomerSessionBalance: any
 };
 
 const ColumnA: React.FC<ColumnAProps> = ({
@@ -35,6 +36,7 @@ const ColumnA: React.FC<ColumnAProps> = ({
   setCustomerLog,
   appointmentTable,
   setAppointmentTable,
+  updateCustomerSessionBalance,
 }) => {
   const loadingRef = useRef<HTMLDivElement>(null); // Ref type specified
   const router = useRouter();
@@ -122,6 +124,7 @@ const ColumnA: React.FC<ColumnAProps> = ({
   }, [router.query.date]);
 
   const handleRefresh = async (clearSearch: () => void) => {
+    setLoading(true)
     await setQueryParams({});
     await router.replace({
       pathname: router.pathname,
@@ -132,6 +135,7 @@ const ColumnA: React.FC<ColumnAProps> = ({
     }
     fetchAppointments(currentPage);
   };
+
   return (
     <div className="border-x border-[var(--oex-light-grey)] py-8 h-screen overflow-auto">
       <div>
@@ -216,7 +220,8 @@ const ColumnA: React.FC<ColumnAProps> = ({
 
 					{/* <FaTimes size={16} onClick={()=>deleteItem('appointment', 'id', appointmentTable[i]?.id)} /> */}
 
-					<BookingCountdown bookingDate={appointmentDateTime} appointment={appointmentTable[i]} appointmentTable={appointmentTable} setAppointmentTable={setAppointmentTable}  index={i} setCustomerLog={setCustomerLog}/>
+					<BookingCountdown bookingDate={appointmentDateTime} appointment={appointmentTable[i]} appointmentTable={appointmentTable} setAppointmentTable={setAppointmentTable}  index={i} setCustomerLog={setCustomerLog}
+          updateCustomerSessionBalance={updateCustomerSessionBalance}/>
 				</div>
 				
 			))

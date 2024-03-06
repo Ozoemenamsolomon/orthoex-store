@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ColumnA from './ColumnA';
 import ColumnB from './ColumnB';
 import ColumnC from './ColumnC';
-import { fetchActivities, fetchCustomer } from '@utils/rehabspcetable';
+import { fetchActivities, fetchCustomer, updateItem } from '@utils/rehabspcetable';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import BookingModal from '../Account/BookingModal';
@@ -28,7 +28,7 @@ const RehabspaceAdmin: React.FC<RehabspaceAdminProps> = ({ rehabspaceData }) => 
     try {
       const { data, error } = await fetchCustomer(stringToJson(customer)?.email || stringToJson(customer)?.customerEmail);
       setCustomer(data?.[0]);
-      console.log({ data, error });
+      // console.log({ data, error });
       if (data?.[0]) {
         setLoadingLog(1);
         const log = await fetchActivities(data?.[0]?.email || data?.[0]?.customerEmail);
@@ -50,6 +50,17 @@ const RehabspaceAdmin: React.FC<RehabspaceAdminProps> = ({ rehabspaceData }) => 
   useEffect(() => {
     updateCustomer(stringToJson(appointments?.[0]?.user));
   }, []);
+
+    
+  const updateCustomerSessionBalance =async (customerEmail: string) => {
+    try {
+      const {data, error} = await updateItem('customers', {...customer, sessionBalance: customer?.sessionBalance + 1 }, 'customerEmail', customerEmail)
+      setCustomer(data?.[0])
+      console.log({data, error})
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <main className="mx-auto  max-w-[1500px] max-md:px-[1rem] px-[4rem] h-screen ">
@@ -78,6 +89,7 @@ const RehabspaceAdmin: React.FC<RehabspaceAdminProps> = ({ rehabspaceData }) => 
             appointmentTable={appointmentTable}
             setAppointmentTable={setAppointmentTable}
             updateCustomer={updateCustomer}
+            updateCustomerSessionBalance={updateCustomerSessionBalance}
           />
         </div>
         <div className="md:hidden">
@@ -91,6 +103,7 @@ const RehabspaceAdmin: React.FC<RehabspaceAdminProps> = ({ rehabspaceData }) => 
               appointmentTable={appointmentTable}
               setAppointmentTable={setAppointmentTable}
               updateCustomer={updateCustomer}
+              updateCustomerSessionBalance={updateCustomerSessionBalance}
             />
           ) : (
             <div className="md:hidden">
