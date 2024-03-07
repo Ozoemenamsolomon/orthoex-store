@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
 	padding: 0;
@@ -12,13 +16,15 @@ body {
 	--oex-off-white: #fafafa;
 	--oex-dark-grey: #707070;
 	--oex-light-grey: #f3f3f3;
-	--oex-lighter-grey: #e5e5e5;
-	--oex-lightest-grey: #f2f0f0;
+	--oex-lighter-grey: #e9e9e9;
+	--oex-lightest-grey: #f1f1f1;
 	--oex-orange: #fe7624;
+	--oex-orange-light: #fdd2b8;
 	--oex-danger: #ea4237;
 	--oex-success: #3f845f;
-	--oex-orange-mute: #fff9f5;
+	--oex-orange-mute: #fff1e7;
 	--oex-yellow: #edbf37;
+	--oex-yellow-lighter: #FFF8F3;
 	--oex-orange-dark: #e74803;
 	--oex-bg-grey: #2e2e2e;
 	--text-colour-light: white;
@@ -27,6 +33,7 @@ body {
 	--text-colour-light-grey: #cfcfcf;
 }
 
+
 a {
 	color: inherit;
 	text-decoration: none;
@@ -34,6 +41,10 @@ a {
 
 * {
 	box-sizing: border-box;
+}
+
+.react-datepicker__day--selected {
+    background-color: orange !important; /* Use !important to override default styles */
 }
 
 h6,
@@ -80,3 +91,39 @@ p {
 img[object-fit='contain'] {
 	object-fit: contain;
 }
+
+/* ==== Rehabspace ==== */
+.section-padding { 
+	@apply mx-auto mb-40 max-w-[1500px] max-md:px-[1rem] px-[4rem]  
+}
+
+.section-padding-x { 
+	@apply mx-auto max-w-[1500px] max-md:px-[1rem] px-[4rem]  
+}
+
+.hover-grey {
+	@apply hover:bg-[var(--oex-light-grey)] duration-300
+}
+
+/* md:min-w-[980px] */
+
+.imgcover {
+	@apply w-full h-full object-cover
+}
+
+
+/* Target WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+	width: 3px;
+  }
+  
+  /* Handle portion of the scrollbar */
+  ::-webkit-scrollbar-thumb {
+	background-color: #dbdbdb; /* Set the color of the thumb */
+	border-radius: 3px; 
+  }
+  
+  /* Track portion of the scrollbar */
+  ::-webkit-scrollbar-track {
+	background-color: transparent; 
+  }

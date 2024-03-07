@@ -16,6 +16,10 @@ export const accountSubLinks = [
 		slug: 'orders',
 	},
 	{
+		name: 'Rehabspace',
+		slug: 'rehabspace',
+	},
+	{
 		name: 'Edit Password',
 		slug: 'password',
 	},

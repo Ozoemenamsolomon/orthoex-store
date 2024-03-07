@@ -1,5 +1,6 @@
 import { AfterCallback, handleAuth, handleCallback } from '@auth0/nextjs-auth0';
-import { supabaseTrainingClient } from '@utils/supabase';
+import { insert } from '../../../utils/rehabspcetable';
+import { supabaseClient } from '@utils/supabase';
 
 export default handleAuth({
 	async callback(req, res) {
@@ -12,11 +13,32 @@ export default handleAuth({
 });
 
 const afterCallback: AfterCallback = async (req, res, session, state) => {
-	if (session.user.isFirstLogin) {
-		res.setHeader('Location', '/onboarding');
+	// insert available data from auth0
+		if (session.user.isFirstLogin) {
+		try {
+			const data = [{
+				registrationDate: new Date().toISOString(),
+				customerEmail: session?.user?.email,
+				email: session?.user?.email,
+				firstName: session?.user?.name || session?.user?.email?.split('@')[0] || '',
+				lastName: session?.user?.nickname || '',
+				profession: '',
+				city: '',
+				phoneNumber: '',
+				sessionBalance: 0,
+				whatsappNumber: '',
+				customerType: 'Clinician',
+			}]
+			const insertionResult = await insert('customers', data);
+			
+			// console.log('user', insertionResult);
+			res.setHeader('Location', '/onboarding');
+		  } catch (error) {
+			console.error(error);
+		  }
 	} else {
 		try {
-			const { data: customer, error } = await supabaseTrainingClient
+			const { data: customer, error } = await supabaseClient
 				.from('customers')
 				.select('*')
 				.eq('customerEmail', session.user.email)

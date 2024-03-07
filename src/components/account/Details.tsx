@@ -1,48 +1,74 @@
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import CTA from '@components/CTA';
 import { FormControl } from '@components/styled/Forms';
+import { updateItem } from '@utils/rehabspcetable';
 import { FC, useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
+import { CustomerType } from '@data/rehabspace/types';
 
-type UserFromDB = {
-	id: string;
-	email: string;
-	firstName: string;
-	lastName: string;
-	phone: string;
-	profession: string;
-	gender: string;
-	birthday: string;
-};
-
+interface FormErrors {
+	[key: string]: string;
+  }
 const Details: FC<{
 	user: UserProfile;
-	savedUserData: Partial<UserFromDB>;
-}> = ({ user, savedUserData }) => {
-	const [localUserData, setLocalUserData] = useState<Partial<UserFromDB>>(
-		savedUserData || {},
+	customer: CustomerType;
+	}> = ({ user,  customer }) => {
+
+
+	const [formData, setFormData] = useState<Partial<CustomerType>>(
+		customer || {
+			registrationDate: new Date(),
+			customerEmail: user?.email || '',
+			firstName: user?.name || "",
+			lastName: user?.nickname || "",
+			profession: "",
+			city: "",
+			phoneNumber: "",
+			whatsappNumber: "",
+			customerType: "Clinician", 
+			birthDay: "",
+			gender: "",
+			email: user?.email,
+		  }
 	);
+	const [errors, setErrors] = useState<FormErrors>({});
+	const [loading, setLoading] = useState(false);
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
 	) => {
-		setLocalUserData({
-			...localUserData,
+		setFormData({
+			...formData,
 			[e.target.name]: e.target.value,
 		});
 	};
 
-	const isLocalUserDataSameAsSavedUserData =
-		JSON.stringify(localUserData) === JSON.stringify(savedUserData);
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setLoading(true);
+	  
+		try {
+		  const { data, error } = await updateItem('customers',{...formData, email: user?.email,}, 'id', customer?.id);
+		  if (data) {
+			setFormData(data[0])
+			setErrors({});
+			toast.success('Updated successfully.');
+		  } else {
+			console.log(error);
+			toast.error('Unsuccessful');
+		  }
+		//   console.log({ data, error });
+		} catch (error) {
+		  console.error('Error submitting the form:', error);
+		} finally {
+		  setLoading(false);
+		}
+	  };
 	return (
 		<AccountDetailsForm
-			onSubmit={e => {
-				e.preventDefault();
-				console.log({
-					changeabbleUserData: localUserData,
-					savedUserData,
-				});
-			}}>
+			onSubmit={handleSubmit}>
 			<FormControl>
 				<label htmlFor="firstName">First Name</label>
 				<input
@@ -50,7 +76,7 @@ const Details: FC<{
 					id="firstName"
 					placeholder="John"
 					name="firstName"
-					value={localUserData?.firstName || ''}
+					value={formData?.firstName || ''}
 					onChange={handleChange}
 				/>
 			</FormControl>
@@ -61,30 +87,44 @@ const Details: FC<{
 					id="lastName"
 					placeholder="Doe"
 					name="lastName"
-					value={localUserData?.lastName || ''}
+					value={formData?.lastName || ''}
 					onChange={handleChange}
 				/>
 			</FormControl>
 			<FormControl>
-				<label htmlFor="email">Email</label>
+				<label htmlFor="customerEmail">Email</label>
 				<input
 					type="email"
-					id="email"
-					defaultValue={user.email || ''}
-					readOnly
-				/>
-			</FormControl>
-			<FormControl>
-				<label htmlFor="phone">Phone</label>
-				<input
-					type="tel"
-					id="phone"
-					placeholder="+2347000000000"
-					name="phone"
-					value={localUserData?.phone || ''}
+					id="customerEmail"
+					name="customerEmail"
+					placeholder="name@email.com"
+					value={formData?.customerEmail || ''}
 					onChange={handleChange}
 				/>
 			</FormControl>
+			<FormControl>
+				<label htmlFor="phoneNumber">Phone number</label>
+				<input
+					type="tel"
+					id="phoneNumber"
+					placeholder="+2347000000000"
+					name="phoneNumber"
+					value={formData?.phoneNumber || ''}
+					onChange={handleChange}
+				/>
+			</FormControl>
+			<FormControl>
+				<label htmlFor="whatsappNumber">Whatsapp number</label>
+				<input
+					type="tel"
+					id="whatsappNumber"
+					placeholder="+2347000000000"
+					name="whatsappNumber"
+					value={formData?.whatsappNumber || ''}
+					onChange={handleChange}
+				/>
+			</FormControl>
+			
 			<FormControl>
 				<label htmlFor="profession">Profession</label>
 				<input
@@ -93,16 +133,30 @@ const Details: FC<{
 					placeholder="Enter your profession"
 					autoComplete="organization-title"
 					name="profession"
-					value={localUserData?.profession || ''}
+					value={formData?.profession || ''}
 					onChange={handleChange}
 				/>
 			</FormControl>
+
+			<FormControl>
+				<label htmlFor="city">City</label>
+				<input
+					type="text"
+					id="city"
+					placeholder="Enter your city"
+					autoComplete="organization-title"
+					name="city"
+					value={formData?.city || ''}
+					onChange={handleChange}
+				/>
+			</FormControl>
+
 			<FormControl>
 				<label htmlFor="gender">Gender</label>
 				<select
 					name="gender"
 					id="gender"
-					value={localUserData.gender || ''}
+					value={formData.gender || ''}
 					onChange={handleChange}>
 					<option value="male">Male</option>
 					<option value="female">Female</option>
@@ -110,18 +164,19 @@ const Details: FC<{
 				</select>
 			</FormControl>
 			<FormControl>
-				<label htmlFor="birthday">Birthday</label>
+				<label htmlFor="birthDay">Birthday</label>
 				<input
 					type="date"
-					id="birthday"
-					name="birthday"
-					value={localUserData?.birthday || ''}
+					id="birthDay"
+					name="birthDay"
+					value={formData?.birthDay || ''}
 					onChange={handleChange}
 				/>
 			</FormControl>
-			{!isLocalUserDataSameAsSavedUserData && (
-				<CTA disabled={isLocalUserDataSameAsSavedUserData}>Save</CTA>
-			)}
+			
+			
+			<CTA disabled={false}>{loading ? 'Submiting...' : 'Save'}</CTA>
+		
 		</AccountDetailsForm>
 	);
 };

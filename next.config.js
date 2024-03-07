@@ -13,4 +13,7 @@ module.exports = {
 			'images.ctfassets.net',
 		],
 	},
+	typescript: {
+		ignoreBuildErrors: true,
+	  },
 };

@@ -26,10 +26,15 @@ import { TrainingOrderType } from '@data/types/trainingTypes/TypeOrthoexTraining
 import { supabaseClient, supabaseTrainingClient } from '@utils/supabase';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { format } from 'url';
+
+import RehabspaceAccount from "@components/Rehabspace/Account"
+import {fetchActivities, fetchAll, fetchCustomer, fetchRow} from "@utils/rehabspcetable"
+import { useCart } from 'context/cartContext';
+import { CustomerType } from '@data/rehabspace/types';
 
 const accountOverviewLinks: ServiceCardType[] = [
 	{
@@ -74,19 +79,35 @@ type TrainingOrderDataProps = {
 	title: string;
 };
 
+type RehabspaceDataProps = {
+	location: any,
+	holidays: any,
+	bookingPrice: any,
+	activityHistory: any,
+	title: string;
+};
+
 type Props = {
 	user: UserProfile;
+	customerData: CustomerType;
 	data: {
 		orders: any[];
 		title: string;
 	};
 	trainingData: TrainingOrderDataProps;
+	rehabspaceData: RehabspaceDataProps;
 };
 
-const Account: NextPage<Props> = ({ user, data, trainingData }) => {
+const Account: NextPage<Props> = ({ user,customerData, data, trainingData, rehabspaceData }) => {
 	const router = useRouter();
 	const slug = router.query.slug as TypeOfSlug;
+	const { setCustomerDetails} = useCart()
 
+	useEffect(() => {
+		setCustomerDetails(customerData)
+	}, [customerData?.id])
+	
+	setCustomerDetails(customerData)
 	return (
 		<Container
 			verticalPaddingInREM={2}
@@ -120,17 +141,12 @@ const Account: NextPage<Props> = ({ user, data, trainingData }) => {
 						<Orders orders={data.orders} />
 					) : slug === 'trainings' ? (
 						<TrainingOrders trainingOrders={trainingData.trainings} />
+					) : slug === 'rehabspace' ? (
+						<RehabspaceAccount user={user} customer={customerData} rehabspaceData={rehabspaceData}/>
 					) : slug === 'details' ? (
 						<Details
 							user={user}
-							savedUserData={{
-								phone: '08012345678',
-								profession: 'Software Engineer',
-								firstName: 'John',
-								lastName: 'Doe',
-								birthday: '1990-01-01',
-								gender: 'male',
-							}}
+							customer={customerData}
 						/>
 					) : slug === 'password' ? (
 						<ResetPassword />
@@ -157,12 +173,13 @@ export const getServerSideProps = withPageAuthRequired({
 
 		const session = await getSession(req, res);
 
+		const {data:customer, error} = await fetchCustomer( session?.user?.email)
+
 		const data = {
 			orders: [],
 			title:
 				accountSubLinks.find(({ slug }) => slug === query.slug)?.name || '',
 		};
-
 		if (query.slug === 'orders') {
 			const { data: orders, error } = await supabaseClient
 				.from('orders')
@@ -172,16 +189,16 @@ export const getServerSideProps = withPageAuthRequired({
 
 			data.orders = orders as any;
 			if (error) {
-				console.log({ error });
+				console.log({type: 'orders', error });
 				data.orders = [];
 			}
 		}
+
 		const trainingData: TrainingOrderDataProps = {
 			trainings: [],
 			title:
 				accountSubLinks.find(({ slug }) => slug === query.slug)?.name || '',
 		};
-
 		if (query.slug === 'trainings') {
 			const { data: trainingOrderData, error } = await supabaseTrainingClient
 				.from('training_orders')
@@ -190,7 +207,7 @@ export const getServerSideProps = withPageAuthRequired({
 				.order('createdAt', { ascending: false });
 
 			if (error) {
-				console.log({ error });
+				console.log({type: 'trainings', error });
 				trainingData.trainings = [];
 			}
 
@@ -201,10 +218,34 @@ export const getServerSideProps = withPageAuthRequired({
 			}
 		}
 
+		const rehabspaceData: RehabspaceDataProps = {
+			location: [],
+			holidays: [],
+			bookingPrice: [],
+			activityHistory: [],
+			title:
+				accountSubLinks.find(({ slug }) => slug === query.slug)?.name || '',
+		};
+
+		if (query.slug === 'rehabspace') {
+			const holidays = await fetchAll('holidays', 'created_at')
+			const location= await fetchAll('location', 'created_at')
+			const bookingPrice = await fetchAll('bookingPrice', 'created_at')
+			const activityHistory = await fetchActivities(session?.user?.email)
+			console.log('rehabspace===', {customer:{customer, error, }, holidays, location, bookingPrice, activityHistory })
+			rehabspaceData.location = location as any;
+			rehabspaceData.holidays = holidays as any;
+			rehabspaceData.bookingPrice = bookingPrice as any;
+			rehabspaceData.activityHistory = activityHistory as any;
+		}
+
 		return {
 			props: {
 				data,
 				trainingData,
+				rehabspaceData,
+				user: session?.user,
+				customerData: customer?.[0] || {},
 			},
 		};
 	},
