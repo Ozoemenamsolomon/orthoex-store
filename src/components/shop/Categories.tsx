@@ -5,6 +5,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { CheckCircle, Star, StarHalf, Heart, ShoppingCart, Eye } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const products = new Array(8).fill({
   name: 'Epoxy Polyester Resin',
@@ -45,11 +46,11 @@ const Section = styled.section`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 1rem;
 
   @media(min-width: 640px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media(min-width: 1280px) {
@@ -63,6 +64,7 @@ const ProductCard = styled.div`
   overflow: hidden;
   position: relative;
   transition: box-shadow 0.3s;
+  cusor:pointer;
 
   &:hover {
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
@@ -120,8 +122,8 @@ const Pagination = styled.div`
 
 export default function Categories() {
   const [priceRange, setPriceRange] = useState([200, 30000]);
-const [selectedRating, setSelectedRating] = useState<number | null>(null);
-
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const router = useRouter();
   const filterProducts = [...products, ...cheapProducts];
 
   return (
@@ -189,7 +191,7 @@ const [selectedRating, setSelectedRating] = useState<number | null>(null);
 
         <Grid>
           {filterProducts.map((product, i) => (
-            <ProductCard key={i}>
+            <ProductCard key={i} onClick={() => router.push(`/shop/details/`)}>
               <Image src={product.image} alt={product.name} width={300} height={200} style={{ objectFit: 'contain', padding: '1rem' }} />
               <Actions>
                 <button style={{ background: '#fff', padding: '0.25rem', borderRadius: '9999px' }}><Eye size={18} /></button>
