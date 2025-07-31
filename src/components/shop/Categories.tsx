@@ -38,6 +38,8 @@ const Sidebar = styled.aside`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  background-color: #ffffff;
+  padding: 40px 16px;
 `;
 
 const Section = styled.section`
@@ -120,6 +122,36 @@ const Pagination = styled.div`
   margin-top: 2rem;
 `;
 
+const HeaderText = styled.p`
+ font-size: 18px;
+ color: #0A0E2E;
+ font-weight: 600;
+`;
+
+const BreadcrumbContainer = styled.nav`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1rem 0;
+  font-size: 14px;
+  color: #888;
+`;
+
+const Crumb = styled.span<{ active?: boolean }>`
+  color: ${({ active }) => (active ? '#f97316' : '#555')};
+  font-weight: ${({ active }) => (active ? '600' : 'normal')};
+  white-space: nowrap;
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
+`;
+
+const Divider = styled.span`
+  margin: 0 0.5rem;
+  color: #ccc;
+`;
+
 export default function Categories() {
   const [priceRange, setPriceRange] = useState([200, 30000]);
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
@@ -127,98 +159,109 @@ export default function Categories() {
   const filterProducts = [...products, ...cheapProducts];
 
   return (
-    <Container>
-      <Sidebar>
-        <div>
-          <h4>BRAND</h4>
-          <FilterGroup>
-            <FilterLabel>
-              <input type="checkbox" /> OEX Composite
-            </FilterLabel>
-            <FilterLabel>
-              <input type="checkbox" /> Shangxix
-            </FilterLabel>
-          </FilterGroup>
-        </div>
-
-        <div>
-          <h4>PRICE (₦)</h4>
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <input
-              type="number"
-              value={priceRange[0]}
-              onChange={(e) => setPriceRange([+e.target.value, priceRange[1]])}
-              style={{ maxWidth: '80px' }}
-            />
-            <span>-</span>
-            <input
-              type="number"
-              value={priceRange[1]}
-              onChange={(e) => setPriceRange([priceRange[0], +e.target.value])}
-              style={{ maxWidth: '80px' }}
-            />
-            <button style={{ marginLeft: 'auto', background: '#ea580c', color: '#fff', padding: '0.25rem 0.75rem', borderRadius: '4px' }}>Apply</button>
-          </div>
-        </div>
-
-        <div>
-          <h4>PRODUCT RATING</h4>
-          <FilterGroup>
-            {[5, 4, 3, 2].map((rating) => (
-              <FilterLabel key={rating} onClick={() => setSelectedRating(rating)}>
-                <input
-                  type="radio"
-                  name="rating"
-                  checked={selectedRating === rating}
-                  onChange={() => setSelectedRating(rating)}
-                />
-                {rating} ★ & above
+    <div>
+      <BreadcrumbContainer aria-label="breadcrumb">
+        <Crumb>Composites</Crumb>
+        <Divider>&gt;&gt;</Divider>
+        <Crumb>All Categories</Crumb>
+        <Divider>&gt;&gt;</Divider>
+        <Crumb active>Polyester Resin & Components</Crumb>
+      </BreadcrumbContainer>
+      
+      <Container>
+        <Sidebar>
+          <div>
+            <HeaderText className='HeaderText'>BRAND</HeaderText>
+            <FilterGroup>
+              <FilterLabel>
+                <input type="checkbox" /> OEX Composite
               </FilterLabel>
+              <FilterLabel>
+                <input type="checkbox" /> Shangxix
+              </FilterLabel>
+            </FilterGroup>
+          </div>
+
+          <div>
+            <h4>PRICE (₦)</h4>
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <input
+                type="number"
+                value={priceRange[0]}
+                onChange={(e) => setPriceRange([+e.target.value, priceRange[1]])}
+                style={{ maxWidth: '80px' }}
+              />
+              <span>-</span>
+              <input
+                type="number"
+                value={priceRange[1]}
+                onChange={(e) => setPriceRange([priceRange[0], +e.target.value])}
+                style={{ maxWidth: '80px' }}
+              />
+              <button style={{ marginLeft: 'auto', background: '#ea580c', color: '#fff', padding: '0.25rem 0.75rem', borderRadius: '4px' }}>Apply</button>
+            </div>
+          </div>
+
+          <div>
+            <h4>PRODUCT RATING</h4>
+            <FilterGroup>
+              {[5, 4, 3, 2].map((rating) => (
+                <FilterLabel key={rating} onClick={() => setSelectedRating(rating)}>
+                  <input
+                    type="radio"
+                    name="rating"
+                    checked={selectedRating === rating}
+                    onChange={() => setSelectedRating(rating)}
+                  />
+                  {rating} ★ & above
+                </FilterLabel>
+              ))}
+            </FilterGroup>
+          </div>
+        </Sidebar>
+
+        <Section>
+          <TitleRow>
+            <p className=''>Polyester Resin & Components</p>
+            <select>
+              <option>Popularity</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+            </select>
+          </TitleRow>
+
+          <Grid>
+            {filterProducts.map((product, i) => (
+              <ProductCard key={i} onClick={() => router.push(`/shop/details/`)}>
+                <Image src={product.image} alt={product.name} width={300} height={200} style={{ objectFit: 'contain', padding: '1rem' }} />
+                <Actions>
+                  <button style={{ background: '#fff', padding: '0.25rem', borderRadius: '9999px' }}><Eye size={18} /></button>
+                  <button style={{ background: '#fff', padding: '0.25rem', borderRadius: '9999px' }}><ShoppingCart size={18} /></button>
+                  <button style={{ background: '#fff', padding: '0.25rem', borderRadius: '9999px' }}><Heart size={18} /></button>
+                </Actions>
+                <div style={{ padding: '0.5rem' }}>
+                  <h3 style={{ fontSize: '0.875rem', fontWeight: 500, color: '#1f2937', marginBottom: '0.25rem' }}>{product.name}</h3>
+                  <p style={{ color: '#ea580c', fontWeight: 600, fontSize: '0.875rem' }}>₦{product.price.toLocaleString()}</p>
+                  <Rating>
+                    {[...Array(5)].map((_, idx) => (
+                      <Star key={idx} size={14} strokeWidth={1} />
+                    ))}
+                    <span style={{ color: '#6b7280', marginLeft: '0.25rem' }}>(0)</span>
+                  </Rating>
+                </div>
+              </ProductCard>
             ))}
-          </FilterGroup>
-        </div>
-      </Sidebar>
+          </Grid>
 
-      <Section>
-        <TitleRow>
-          <h2>Polyester Resin & Components</h2>
-          <select>
-            <option>Popularity</option>
-            <option>Price: Low to High</option>
-            <option>Price: High to Low</option>
-          </select>
-        </TitleRow>
+          <Pagination>
+            <button>⟨</button>
+            <button style={{ background: '#ea580c', color: '#fff', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>1</button>
+            <button>2</button>
+            <button>⟩</button>
+          </Pagination>
+        </Section>
+      </Container>
+    </div>
 
-        <Grid>
-          {filterProducts.map((product, i) => (
-            <ProductCard key={i} onClick={() => router.push(`/shop/details/`)}>
-              <Image src={product.image} alt={product.name} width={300} height={200} style={{ objectFit: 'contain', padding: '1rem' }} />
-              <Actions>
-                <button style={{ background: '#fff', padding: '0.25rem', borderRadius: '9999px' }}><Eye size={18} /></button>
-                <button style={{ background: '#fff', padding: '0.25rem', borderRadius: '9999px' }}><ShoppingCart size={18} /></button>
-                <button style={{ background: '#fff', padding: '0.25rem', borderRadius: '9999px' }}><Heart size={18} /></button>
-              </Actions>
-              <div style={{ padding: '0.5rem' }}>
-                <h3 style={{ fontSize: '0.875rem', fontWeight: 500, color: '#1f2937', marginBottom: '0.25rem' }}>{product.name}</h3>
-                <p style={{ color: '#ea580c', fontWeight: 600, fontSize: '0.875rem' }}>₦{product.price.toLocaleString()}</p>
-                <Rating>
-                  {[...Array(5)].map((_, idx) => (
-                    <Star key={idx} size={14} strokeWidth={1} />
-                  ))}
-                  <span style={{ color: '#6b7280', marginLeft: '0.25rem' }}>(0)</span>
-                </Rating>
-              </div>
-            </ProductCard>
-          ))}
-        </Grid>
-
-        <Pagination>
-          <button>⟨</button>
-          <button style={{ background: '#ea580c', color: '#fff', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>1</button>
-          <button>2</button>
-          <button>⟩</button>
-        </Pagination>
-      </Section>
-    </Container>
   );
 }
