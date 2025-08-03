@@ -1,99 +1,149 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import ProductCalculator from "./calculator";
+import { FacebookIcon, InstaIcon, SheetIcon, TwitterIcon, WhatsappIcon } from "constant/icon";
+import DeliveryInfo from "./DeliveryInfo";
+import HelpSection from "./Help";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedTab, setSelectedTab] = useState("details");
 
   return (
-    <Container>
-      <MainContent>
-        <ImageSection>
-          <MainImage src="/product.png" alt="Polyester Resin" />
-          <ThumbnailList>
-            {[1, 2, 3].map((i) => (
-              <Thumbnail key={i} src="/product.png" alt={`Thumbnail ${i}`} />
-            ))}
-          </ThumbnailList>
-          <SocialShare>
-            <h4>SHARE THIS PRODUCT</h4>
-            <Icons>
-              {["twitter", "facebook", "instagram", "whatsapp"].map((icon) => (
-                <Icon key={icon} src={`/${icon}.svg`} alt={icon} />
-              ))}
-            </Icons>
-          </SocialShare>
-          <DataSheet>
-            <h4>DATA SHEET</h4>
-            <a href="#">Product Data Sheet</a>
-            <a href="#">Safety Data Sheet</a>
-          </DataSheet>
-        </ImageSection>
+    <MainContainer>
+      <Breadcrumb>Composites &gt; Polyester Resin & Components &gt; Polyester Resin</Breadcrumb>
+      <Container>
+        <div>
+          <MainContent>
+            <ImageSection>
+              <MainImage src="/shop/sample.png" alt="Polyester Resin" />
+              <ThumbnailList>
+                {[1, 2, 3].map((i) => (
+                  <Thumbnail key={i} src="/shop/sample.png" alt={`Thumbnail ${i}`} />
+                ))}
+              </ThumbnailList>
+              <SocialShare>
+                <Share>SHARE THIS PRODUCT</Share>
+                <Icons>
+                  <FacebookIcon />
+                  <TwitterIcon />
+                  <InstaIcon />
+                  <WhatsappIcon />
+                </Icons>
+              </SocialShare>
+              <DataSheet>
+                <SheetContainer>
+                  <SheetIcon />
+                  <SheetTitle>Data Sheet</SheetTitle>
+                </SheetContainer>
+                <Link >Product Data Sheet</Link>
+                <Link >Safety Data Sheet</Link>
+              </DataSheet>
+            </ImageSection>
 
-        <ProductSection>
-          <Breadcrumb>Composites &gt; Polyester Resin & Components &gt; Polyester Resin</Breadcrumb>
-          <Title>Polyester Resin</Title>
-          <Brand>Brand: <span>OEX</span></Brand>
-          <Price>₦50.00 <SmallText>(No Reviews)</SmallText>
-          </Price>
-          <Description>
-            FLAG Resin is a part our Medium-Viscosity 2:1 Non-Bl Resin. FLAG stands for
-            filling, laminating and gluing. It is compatible with LV Resin and the Slow.
-          </Description>
-          <SecurePayment>
-            <h5>Safe and secure payment</h5>
-            <Icons>
-              {["mastercard", "visa", "bank"].map((icon) => (
-                <Icon key={icon} src={`/${icon}.svg`} alt={icon} />
-              ))}
-            </Icons>
-          </SecurePayment>
+            <ProductSection>
 
-          <OrderControls>
-            <select>
-              <option>Select size</option>
-            </select>
-            <QuantityControls>
-              <button onClick={() => setQuantity(quantity - 1)} disabled={quantity === 1}>-</button>
-              <span>{quantity}</span>
-              <button onClick={() => setQuantity(quantity + 1)}>+</button>
-            </QuantityControls>
-          </OrderControls>
+              <Title>Polyester Resin</Title>
+              <Brand>Brand: <span>OEX</span></Brand>
+              <Price>₦50.00 <SmallText>(No Reviews)</SmallText>
+              </Price>
+              <Description>
+                FLAG Resin is a part our Medium-Viscosity 2:1 Non-Bl Resin. FLAG stands for
+                filling, laminating and gluing. It is compatible with LV Resin and the Slow.
+              </Description>
+              <SecurePayment>
+                <h5>Safe and secure payment</h5>
+                <Icons>
+                  {["mastercard", "visa", "bank"].map((icon) => (
+                    <Icon key={icon} src={`/${icon}.svg`} alt={icon} />
+                  ))}
+                </Icons>
+              </SecurePayment>
 
-          <ActionButtons>
-            <AddToCart>Add to cart</AddToCart>
-            <SaveLater>Save for later</SaveLater>
-          </ActionButtons>
-        </ProductSection>
-      </MainContent>
+              <OrderControls>
+                <select>
+                  <option>Select size</option>
+                </select>
+                <QuantityControls>
+                  <button onClick={() => setQuantity(quantity - 1)} disabled={quantity === 1}>-</button>
+                  <span>{quantity}</span>
+                  <button onClick={() => setQuantity(quantity + 1)}>+</button>
+                </QuantityControls>
+              </OrderControls>
 
-      <Tabs>
-        <Tab active={selectedTab === "details"} onClick={() => setSelectedTab("details")}>Product details</Tab>
-        <Tab active={selectedTab === "calculator"} onClick={() => setSelectedTab("calculator")}>Resin Calculator</Tab>
-        <Tab active={selectedTab === "feedback"} onClick={() => setSelectedTab("feedback")}>Product Feedbacks</Tab>
-      </Tabs>
+              <ActionButtons>
+                <AddToCart>Add to cart</AddToCart>
+                <SaveLater>Save for later</SaveLater>
+              </ActionButtons>
+            </ProductSection>
+          </MainContent>
 
-      <TabContent>
-        {selectedTab === "details" && <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>}
-        {selectedTab === "calculator" && <p>Resin calculator tool coming soon.</p>}
-        {selectedTab === "feedback" && <p>No feedbacks available yet.</p>}
-      </TabContent>
-    </Container>
+        </div>
+
+        <MainContent2>
+          <DeliveryInfo />
+        </MainContent2>
+      </Container>
+
+      <Container>
+        <MainContent>
+          <div style={{width:"750px"}}>
+            <Tabs>
+              <Tab active={selectedTab === "details"} onClick={() => setSelectedTab("details")}>Product details</Tab>
+              <Tab active={selectedTab === "calculator"} onClick={() => setSelectedTab("calculator")}>Resin Calculator</Tab>
+              <Tab active={selectedTab === "feedback"} onClick={() => setSelectedTab("feedback")}>Product Feedbacks</Tab>
+            </Tabs>
+
+            <TabContent>
+              {selectedTab === "details" && <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>}
+              {selectedTab === "calculator" &&
+
+                <ProductCalculator />}
+              {selectedTab === "feedback" && <p>No feedbacks available yet.</p>}
+            </TabContent>
+          </div>
+        </MainContent>
+
+        <MainContent2>
+          <HelpSection/>
+        </MainContent2>
+
+      </Container>
+    </MainContainer>
   );
 };
 
 export default ProductDetails;
 
 // Styled-components below
-const Container = styled.div`
+
+const MainContainer = styled.div`
+  padding: 39px 155px;
   font-family: sans-serif;
-  padding: 2rem;
-  background: #fafafa;
+
+   @media (max-width: 779px) {
+       padding: 39px 12px;
+    }
 `;
+
+const Container = styled.div`
+    display: flex;
+    gap:16px;
+`;
+
 
 const MainContent = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 32px;
+   @media (max-width: 779px) {
+      flex-direction: column;
+    }
+`;
+
+const MainContent2 = styled.div`
+   @media (max-width: 779px) {
+
+   }
 `;
 
 const ImageSection = styled.div`
@@ -107,12 +157,13 @@ const MainImage = styled.img`
 
 const ThumbnailList = styled.div`
   display: flex;
-  gap: 0.5rem;
+  gap: 16px;
   margin-top: 1rem;
 `;
 
 const Thumbnail = styled.img`
-  width: 60px;
+  width: 84px;
+  height:65px;
   border: 1px solid #ccc;
   cursor: pointer;
 `;
@@ -127,7 +178,8 @@ const DataSheet = styled.div`
 
 const Icons = styled.div`
   display: flex;
-  gap: 0.5rem;
+  gap: 16px;
+  align-items :center;
   margin-top: 0.5rem;
 `;
 
@@ -143,11 +195,12 @@ const ProductSection = styled.div`
 const Breadcrumb = styled.div`
   color: #999;
   font-size: 0.875rem;
-  margin-bottom: 1rem;
+  margin-top: 38px;
+  margin-bottom: 38px;
 `;
 
 const Title = styled.h1`
-  font-size: 2rem;
+  font-size: 32px;
   margin: 0;
 `;
 
@@ -245,3 +298,25 @@ const TabContent = styled.div`
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 `;
+
+const Share = styled.div`
+  font-size:16px;
+  font-weight:600; 
+`
+
+const SheetContainer = styled.div`
+  display: flex;
+  gap:8px;
+  margin-top:16px;
+`;
+
+const SheetTitle = styled.p`
+  font-size:20px;
+  font-size:600;
+`;
+
+const Link = styled.p`
+  font-size:16px;
+  margin-top:8px;
+  color:#FE7624;
+`

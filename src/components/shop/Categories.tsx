@@ -241,8 +241,8 @@ const HeaderTopRow = styled.div`
 `;
 
 const HeaderTitle = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 500;
   color: #0d1136;
 `;
 
@@ -250,11 +250,12 @@ const SortContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 1rem;
+   font-size: 20px;
+  font-weight: 500;
   color: #0d1136;
 
   span {
-    font-weight: 500;
+    font-weight: 400;
   }
 
   select {
@@ -332,6 +333,30 @@ const AdBanner = styled.div`
   }
 `;
 
+const PriceTitle = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #0A0E2E;
+`;
+
+const PriceImage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+   Image {
+    max-width: 100%;
+    height: auto;
+  }
+`;
+
+const PriceValue = styled.p`
+ font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 6px;
+  color: #0A0E2E;
+`;
 
 export default function Categories() {
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
@@ -472,11 +497,13 @@ export default function Categories() {
           <ProductGrid>
             {filterProducts.map((product, i) => (
               <ProductCard key={i} onClick={() => router.push(`/shop/details/`)}>
-                <Image src={product.image} alt={product.name} width={300} height={200} style={{ objectFit: 'contain', padding: '1rem' }} />
+                <PriceImage>
+                  <Image src={product.image} alt={product.name} width={210} height={164} style={{ objectFit: 'contain' }} />
+                </PriceImage>
 
                 <div style={{ padding: '0.5rem' }}>
-                  <h3 style={{ fontSize: '0.875rem', fontWeight: 500, color: '#1f2937', marginBottom: '0.25rem' }}>{product.name}</h3>
-                  <p style={{ color: '#ea580c', fontWeight: 600, fontSize: '0.875rem' }}>₦{product.price.toLocaleString()}</p>
+                  <PriceTitle>{product.name}</PriceTitle>
+                  <PriceValue>₦{product.price.toLocaleString()}</PriceValue>
                   <Rating>
                     {[...Array(5)].map((_, idx) => (
                       <Star key={idx} size={14} strokeWidth={1} />
