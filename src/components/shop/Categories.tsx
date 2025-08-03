@@ -279,39 +279,59 @@ const BottomRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0px;
+  padding: 10px 0;
   border-bottom: 1px solid #cfcfcf;
   border-top: 1px solid #cfcfcf;
+  gap: 0.5rem;
+  flex-wrap: wrap; /* Optional: prevents squishing on small screens */
 `;
 
 const ProductCount = styled.p`
   font-size: 0.875rem;
   color: #c0c0c0;
+  margin: 0; /* ✅ remove default paragraph margin */
+  line-height: 1; /* ✅ for tighter alignment */
 `;
+
 
 const ViewIcons = styled.div`
   display: flex;
   gap: 4px;
+  align-items: center; /* ✅ make sure icons are aligned too */
 `;
+
 
 const ViewButton = styled.button<{ active?: boolean }>`
   background: none;
   border: none;
   cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   svg {
+    width: 20px;
+    height: 20px;
     stroke: ${({ active }) => (active ? "#f57224" : "#666")};
   }
 `;
 
+
 const AdBanner = styled.div`
   display: flex;
-  margin-top: 50px;
-  margin-bottom: 50px;
   justify-content: center;
   align-items: center;
- 
+  margin: 50px 0;
+  width: 100%;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
 `;
+
 
 export default function Categories() {
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
@@ -478,8 +498,15 @@ export default function Categories() {
       </Container>
 
       <AdBanner>
-        <Image src='/shop/ads.png' alt="Banner" width={1130} height={360} />
+        <Image
+          src="/shop/ads.png"
+          alt="Banner"
+          width={1130}
+          height={360}
+          style={{ width: '100%', height: 'auto' }} // ✅ Key to make it responsive
+        />
       </AdBanner>
+
     </MainContainer>
   );
 }
