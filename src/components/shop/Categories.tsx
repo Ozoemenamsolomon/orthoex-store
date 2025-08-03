@@ -1,25 +1,19 @@
-
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Star } from 'lucide-react';
+import { Star, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { GridForm, ListForm } from 'constant/icon';
 
-const products = new Array(8).fill({
+const products = new Array(9).fill({
   name: 'Epoxy Polyester Resin',
   price: 170000,
-  rating: 0,
+  rating: 4,
   image: '/shop/sample.png',
 });
 
-const cheapProducts = new Array(3).fill({
-  name: 'Polyester Resin',
-  price: 70000,
-  rating: 0,
-  image: '/shop/sample.png',
-});
 
 const MainContainer = styled.div`
   padding: 39px 155px;
@@ -60,31 +54,26 @@ const Section = styled.section`
   background-color: #ffffff;
 `;
 
-const Grid = styled.div`
+const ProductGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 1rem;
+  padding-top:27px;
+
 
   @media(min-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
   @media(min-width: 1280px) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 `;
 
 const ProductCard = styled.div`
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  position: relative;
-  transition: box-shadow 0.3s;
-  cusor:pointer;
-
-  &:hover {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  }
+  cursor: pointer;
 `;
 
 const Rating = styled.div`
@@ -108,13 +97,6 @@ const FilterLabel = styled.label`
   gap: 0.5rem;
   font-size: 0.875rem;
   color: #4b5563;
-`;
-
-const TitleRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
 `;
 
 const Pagination = styled.div`
@@ -146,7 +128,7 @@ const BreadcrumbContainer = styled.nav`
 `;
 
 const Crumb = styled.span<{ active?: boolean }>`
-  color: ${({ active }) => (active ? '#f97316' : '#555')};
+  color: ${({ active }) => (active ? '#FE7624' : '#555')};
   font-weight: ${({ active }) => (active ? '600' : 'normal')};
   white-space: nowrap;
 
@@ -160,11 +142,207 @@ const Divider = styled.span`
   color: #ccc;
 `;
 
+const PriceWrapper = styled.div`
+  max-width: 400px;
+  padding: 1rem;
+`;
+
+const LabelRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+
+  span {
+    color: #FE7624;
+    cursor: pointer;
+  }
+`;
+
+const SliderContainer = styled.div`
+  position: relative;
+  height: 2px;
+  background: #FE7624;
+  margin-bottom: 1rem;
+`;
+
+const RangeInput = styled.input.attrs({ type: "range" })`
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: transparent;
+  pointer-events: none;
+  appearance: none;
+
+  &::-webkit-slider-thumb {
+    pointer-events: auto;
+    appearance: none;
+    height: 14px;
+    width: 14px;
+    background: #FE7624;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+  }
+
+  &::-moz-range-thumb {
+    pointer-events: auto;
+    appearance: none;
+    height: 14px;
+    width: 14px;
+    background: #FE7624;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+  }
+`;
+
+const InputRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1.5px solid #FE7624;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .separator {
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #bbb;
+  }
+`;
+
+const HeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const HeaderTopRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+   @media (max-width: 480px) {
+    flex-direction: column;
+  }
+`;
+
+const HeaderTitle = styled.h2`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0d1136;
+`;
+
+const SortContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  color: #0d1136;
+
+  span {
+    font-weight: 500;
+  }
+
+  select {
+    border: none;
+    font-size: 1rem;
+    color: #666;
+    background: transparent;
+    appearance: none;
+    padding-right: 1.5rem;
+    position: relative;
+  }
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+    margin-left: -1.25rem;
+    pointer-events: none;
+  }
+`;
+
+const BottomRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0px;
+  border-bottom: 1px solid #cfcfcf;
+  border-top: 1px solid #cfcfcf;
+`;
+
+const ProductCount = styled.p`
+  font-size: 0.875rem;
+  color: #c0c0c0;
+`;
+
+const ViewIcons = styled.div`
+  display: flex;
+  gap: 4px;
+`;
+
+const ViewButton = styled.button<{ active?: boolean }>`
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  svg {
+    stroke: ${({ active }) => (active ? "#f57224" : "#666")};
+  }
+`;
+
+const AdBanner = styled.div`
+  display: flex;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  justify-content: center;
+  align-items: center;
+ 
+`;
+
 export default function Categories() {
-  const [priceRange, setPriceRange] = useState([200, 30000]);
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const router = useRouter();
-  const filterProducts = [...products, ...cheapProducts];
+  const filterProducts = [...products];
+  const [min, setMin] = useState<number>(200);
+  const [max, setMax] = useState<number>(30000);
+  const [view, setView] = useState<"list" | "grid">("grid");
+  const isDesktop = () => typeof window !== 'undefined' && window.innerWidth >= 1024;
+
+  const MIN_LIMIT = 0;
+  const MAX_LIMIT = 50000;
+
+  const handleMinChange = (value: number) => {
+    setMin(Math.min(value, max - 1000));
+  };
+
+  const handleMaxChange = (value: number) => {
+    setMax(Math.max(value, min + 1000));
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024) {
+        setView("grid"); // default view for mobile
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <MainContainer>
@@ -190,38 +368,53 @@ export default function Categories() {
             </FilterGroup>
           </div>
 
-          <div>
-            <h4>PRICE (₦)</h4>
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <PriceWrapper>
+            <LabelRow>
+              <div>PRICE (₦)</div>
+              <span>Apply</span>
+            </LabelRow>
+
+            <SliderContainer>
+              <RangeInput
+                min={MIN_LIMIT}
+                max={MAX_LIMIT}
+                value={min}
+                onChange={(e) => handleMinChange(Number(e.target.value))}
+              />
+              <RangeInput
+                min={MIN_LIMIT}
+                max={MAX_LIMIT}
+                value={max}
+                onChange={(e) => handleMaxChange(Number(e.target.value))}
+              />
+            </SliderContainer>
+
+            <InputRow>
               <input
                 type="number"
-                value={priceRange[0]}
-                onChange={(e) => setPriceRange([+e.target.value, priceRange[1]])}
-                style={{ maxWidth: '80px' }}
+                value={min}
+                onChange={(e) => handleMinChange(Number(e.target.value))}
               />
-              <span>-</span>
+              <span className="separator">–</span>
               <input
                 type="number"
-                value={priceRange[1]}
-                onChange={(e) => setPriceRange([priceRange[0], +e.target.value])}
-                style={{ maxWidth: '80px' }}
+                value={max}
+                onChange={(e) => handleMaxChange(Number(e.target.value))}
               />
-              <button style={{ marginLeft: 'auto', background: '#ea580c', color: '#fff', padding: '0.25rem 0.75rem', borderRadius: '4px' }}>Apply</button>
-            </div>
-          </div>
+            </InputRow>
+          </PriceWrapper>
 
           <div>
             <h4>PRODUCT RATING</h4>
             <FilterGroup>
               {[5, 4, 3, 2].map((rating) => (
                 <FilterLabel key={rating} onClick={() => setSelectedRating(rating)}>
-                  <input
-                    type="radio"
-                    name="rating"
-                    checked={selectedRating === rating}
-                    onChange={() => setSelectedRating(rating)}
-                  />
-                  {rating} ★ & above
+                  <Rating>
+                    {[...Array(5)].map((_, idx) => (
+                      <Star key={idx} size={14} strokeWidth={1} />
+                    ))}
+                  </Rating>
+                  & above
                 </FilterLabel>
               ))}
             </FilterGroup>
@@ -229,16 +422,34 @@ export default function Categories() {
         </Sidebar>
 
         <Section>
-          <TitleRow>
-            <p className=''>Polyester Resin & Components</p>
-            <select>
-              <option>Popularity</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-            </select>
-          </TitleRow>
+          <HeaderWrapper>
+            <HeaderTopRow>
+              <HeaderTitle>Polyester Resin & Components</HeaderTitle>
+              <SortContainer>
+                <span>Sort by:</span>
+                <select defaultValue="popularity" style={{ outline: 'none' }}>
+                  <option value="popularity">Popularity</option>
+                  <option value="priceLowHigh">Price: Low to High</option>
+                  <option value="priceHighLow">Price: High to Low</option>
+                </select>
+                <ChevronDown />
+              </SortContainer>
+            </HeaderTopRow>
+            <BottomRow>
+              <ProductCount>Showing 8 Products</ProductCount>
+              <ViewIcons>
+                <ViewButton active={view === "list"} onClick={() => isDesktop() && setView("list")}>
+                  <GridForm />
+                </ViewButton>
+                <ViewButton active={view === "grid"} onClick={() => isDesktop() && setView("grid")}>
+                  <ListForm />
+                </ViewButton>
 
-          <Grid>
+              </ViewIcons>
+            </BottomRow>
+          </HeaderWrapper>
+
+          <ProductGrid>
             {filterProducts.map((product, i) => (
               <ProductCard key={i} onClick={() => router.push(`/shop/details/`)}>
                 <Image src={product.image} alt={product.name} width={300} height={200} style={{ objectFit: 'contain', padding: '1rem' }} />
@@ -255,7 +466,7 @@ export default function Categories() {
                 </div>
               </ProductCard>
             ))}
-          </Grid>
+          </ProductGrid>
 
           <Pagination>
             <button>⟨</button>
@@ -265,6 +476,10 @@ export default function Categories() {
           </Pagination>
         </Section>
       </Container>
+
+      <AdBanner>
+        <Image src='/shop/ads.png' alt="Banner" width={1130} height={360} />
+      </AdBanner>
     </MainContainer>
   );
 }
