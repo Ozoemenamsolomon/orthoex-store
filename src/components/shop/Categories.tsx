@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import styled from 'styled-components';
-import { CheckCircle, Star, StarHalf, Heart, ShoppingCart, Eye } from 'lucide-react';
+import { Star } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -11,21 +11,29 @@ const products = new Array(8).fill({
   name: 'Epoxy Polyester Resin',
   price: 170000,
   rating: 0,
-  image: '/epoxy-resin.png',
+  image: '/shop/sample.png',
 });
 
 const cheapProducts = new Array(3).fill({
   name: 'Polyester Resin',
   price: 70000,
   rating: 0,
-  image: '/epoxy-resin.png',
+  image: '/shop/sample.png',
 });
 
+const MainContainer = styled.div`
+  padding: 39px 155px;
+
+   @media (max-width: 779px) {
+       padding: 39px 12px;
+    }
+`;
+
 const Container = styled.div`
+  margin-top: 39px;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding: 2rem 3rem;
+  gap: 22px;
 
   @media(min-width: 1024px) {
     flex-direction: row;
@@ -34,16 +42,22 @@ const Container = styled.div`
 
 const Sidebar = styled.aside`
   width: 100%;
-  max-width: 260px;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   background-color: #ffffff;
   padding: 40px 16px;
+
+  @media(min-width: 780px) {
+     max-width: 290px;
+  }
 `;
 
 const Section = styled.section`
   flex: 1;
+  padding: 32px;
+  background-color: #ffffff;
 `;
 
 const Grid = styled.div`
@@ -70,18 +84,6 @@ const ProductCard = styled.div`
 
   &:hover {
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  }
-`;
-
-const Actions = styled.div`
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  display: none;
-  gap: 0.5rem;
-
-  ${ProductCard}:hover & {
-    display: flex;
   }
 `;
 
@@ -130,11 +132,17 @@ const HeaderText = styled.p`
 
 const BreadcrumbContainer = styled.nav`
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  padding: 1rem 0;
   font-size: 14px;
   color: #888;
+
+    @media (max-width: 480px) {
+      font-size: 10px;
+      display: flex;
+      flex-direction: row;
+    }
 `;
 
 const Crumb = styled.span<{ active?: boolean }>`
@@ -143,7 +151,7 @@ const Crumb = styled.span<{ active?: boolean }>`
   white-space: nowrap;
 
   @media (max-width: 480px) {
-    font-size: 12px;
+    font-size: 9px;
   }
 `;
 
@@ -159,7 +167,7 @@ export default function Categories() {
   const filterProducts = [...products, ...cheapProducts];
 
   return (
-    <div>
+    <MainContainer>
       <BreadcrumbContainer aria-label="breadcrumb">
         <Crumb>Composites</Crumb>
         <Divider>&gt;&gt;</Divider>
@@ -167,7 +175,7 @@ export default function Categories() {
         <Divider>&gt;&gt;</Divider>
         <Crumb active>Polyester Resin & Components</Crumb>
       </BreadcrumbContainer>
-      
+
       <Container>
         <Sidebar>
           <div>
@@ -234,11 +242,7 @@ export default function Categories() {
             {filterProducts.map((product, i) => (
               <ProductCard key={i} onClick={() => router.push(`/shop/details/`)}>
                 <Image src={product.image} alt={product.name} width={300} height={200} style={{ objectFit: 'contain', padding: '1rem' }} />
-                <Actions>
-                  <button style={{ background: '#fff', padding: '0.25rem', borderRadius: '9999px' }}><Eye size={18} /></button>
-                  <button style={{ background: '#fff', padding: '0.25rem', borderRadius: '9999px' }}><ShoppingCart size={18} /></button>
-                  <button style={{ background: '#fff', padding: '0.25rem', borderRadius: '9999px' }}><Heart size={18} /></button>
-                </Actions>
+
                 <div style={{ padding: '0.5rem' }}>
                   <h3 style={{ fontSize: '0.875rem', fontWeight: 500, color: '#1f2937', marginBottom: '0.25rem' }}>{product.name}</h3>
                   <p style={{ color: '#ea580c', fontWeight: 600, fontSize: '0.875rem' }}>₦{product.price.toLocaleString()}</p>
@@ -261,7 +265,6 @@ export default function Categories() {
           </Pagination>
         </Section>
       </Container>
-    </div>
-
+    </MainContainer>
   );
 }
