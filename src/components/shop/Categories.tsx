@@ -361,8 +361,9 @@ const PriceValue = styled.p`
 export default function Categories() {
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const router = useRouter();
-  const filterProducts = [...products];
-  const [min, setMin] = useState<number>(200);
+  const filterProducts = selectedRating
+    ? products.filter((p) => p.rating >= selectedRating)
+    : products; const [min, setMin] = useState<number>(200);
   const [max, setMax] = useState<number>(30000);
   const [view, setView] = useState<"list" | "grid">("grid");
   const isDesktop = () => typeof window !== 'undefined' && window.innerWidth >= 1024;

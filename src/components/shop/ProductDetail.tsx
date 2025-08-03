@@ -87,7 +87,7 @@ const ProductDetails = () => {
 
       <Container>
         <MainContent>
-          <div style={{width:"750px"}}>
+          <div>
             <Tabs>
               <Tab active={selectedTab === "details"} onClick={() => setSelectedTab("details")}>Product details</Tab>
               <Tab active={selectedTab === "calculator"} onClick={() => setSelectedTab("calculator")}>Resin Calculator</Tab>
@@ -105,7 +105,7 @@ const ProductDetails = () => {
         </MainContent>
 
         <MainContent2>
-          <HelpSection/>
+          <HelpSection />
         </MainContent2>
 
       </Container>
@@ -141,9 +141,7 @@ const MainContent = styled.div`
 `;
 
 const MainContent2 = styled.div`
-   @media (max-width: 779px) {
-
-   }
+  
 `;
 
 const ImageSection = styled.div`
@@ -282,6 +280,11 @@ const Tabs = styled.div`
   display: flex;
   gap: 2rem;
   margin-top: 3rem;
+  min-width: 52vw;
+
+   @media (max-width: 779px) {
+      min-width: fit-content;
+    }
 `;
 
 const Tab = styled.div<{ active: boolean }>`
