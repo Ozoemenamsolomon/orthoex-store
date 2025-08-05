@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ProductCalculator from "./calculator";
 import { FacebookIcon, InstaIcon, SheetIcon, TwitterIcon, WhatsappIcon } from "constant/icon";
+import { Star } from 'lucide-react';
 import DeliveryInfo from "./DeliveryInfo";
 import HelpSection from "./Help";
 
@@ -45,19 +46,23 @@ const ProductDetails = () => {
 
               <Title>Polyester Resin</Title>
               <Brand>Brand: <span>OEX</span></Brand>
-              <Price>₦50.00 <SmallText>(No Reviews)</SmallText>
+              <Rating>
+                {[...Array(5)].map((_, idx) => (
+                  <Star key={idx} size={14} strokeWidth={1} />
+                ))}
+                <span style={{ color: '#6b7280', marginLeft: '0.25rem' }}>(No Reviews)</span>
+              </Rating>
+              <Price>₦50.00
               </Price>
               <Description>
                 FLAG Resin is a part our Medium-Viscosity 2:1 Non-Bl Resin. FLAG stands for
                 filling, laminating and gluing. It is compatible with LV Resin and the Slow.
               </Description>
               <SecurePayment>
-                <h5>Safe and secure payment</h5>
-                <Icons>
-                  {["mastercard", "visa", "bank"].map((icon) => (
-                    <Icon key={icon} src={`/${icon}.svg`} alt={icon} />
-                  ))}
-                </Icons>
+                <Safe>Safe and secure payment</Safe>
+                <div>
+
+                </div>
               </SecurePayment>
 
               <OrderControls>
@@ -65,9 +70,9 @@ const ProductDetails = () => {
                   <option>Select size</option>
                 </select>
                 <QuantityControls>
-                  <button onClick={() => setQuantity(quantity - 1)} disabled={quantity === 1}>-</button>
+                  <button style={{borderRadius: "50%", border: "none", padding: "8px 14px"}}  onClick={() => setQuantity(quantity - 1)} disabled={quantity === 1}>-</button>
                   <span>{quantity}</span>
-                  <button onClick={() => setQuantity(quantity + 1)}>+</button>
+                  <button style={{borderRadius: "50%", border: "none", padding: "8px 14px"}}  onClick={() => setQuantity(quantity + 1)}>+</button>
                 </QuantityControls>
               </OrderControls>
 
@@ -128,7 +133,8 @@ const MainContainer = styled.div`
 
 const Container = styled.div`
     display: flex;
-    gap:16px;
+    gap : 16px;
+    margin-top : 35px;
 `;
 
 
@@ -162,7 +168,6 @@ const ThumbnailList = styled.div`
 const Thumbnail = styled.img`
   width: 84px;
   height:65px;
-  border: 1px solid #ccc;
   cursor: pointer;
 `;
 
@@ -181,11 +186,6 @@ const Icons = styled.div`
   margin-top: 0.5rem;
 `;
 
-const Icon = styled.img`
-  width: 24px;
-  height: 24px;
-`;
-
 const ProductSection = styled.div`
   flex: 2;
 `;
@@ -200,30 +200,27 @@ const Breadcrumb = styled.div`
 const Title = styled.h1`
   font-size: 32px;
   margin: 0;
+  color: #111111;
 `;
 
 const Brand = styled.div`
-  margin-top: 0.5rem;
+  margin-top: 22px;
+
   span {
     color: orange;
   }
 `;
 
 const Price = styled.h2`
-  margin-top: 1rem;
-  font-size: 1.5rem;
-`;
-
-const SmallText = styled.span`
-  font-size: 0.875rem;
-  color: #888;
-  margin-left: 1rem;
+  margin-top: 22px;
+  font-size: 16px;
 `;
 
 const Description = styled.p`
   margin-top: 1rem;
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 14px;
+  font-weight: 100;
+  color: ##575757;
 `;
 
 const SecurePayment = styled.div`
@@ -247,11 +244,7 @@ const QuantityControls = styled.div`
   gap: 0.5rem;
   align-items: center;
 
-  button {
-    padding: 0.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-  }
+
 `;
 
 const ActionButtons = styled.div`
@@ -261,19 +254,21 @@ const ActionButtons = styled.div`
 `;
 
 const AddToCart = styled.button`
-  padding: 0.75rem 1.5rem;
+  padding: 19px 56px;
   background: #f78002;
-  color: white;
+  color: #fff;
   border: none;
   cursor: pointer;
+  border-radius: 4px;
 `;
 
 const SaveLater = styled.button`
-  padding: 0.75rem 1.5rem;
-  background: #fff6e9;
-  border: 1px solid #f78002;
-  color: #f78002;
+  padding: 19px 56px;
+  background: #FFC107;
+  border: none;
+  color: #fff;
   cursor: pointer;
+  border-radius: 4px;
 `;
 
 const Tabs = styled.div`
@@ -281,7 +276,6 @@ const Tabs = styled.div`
   gap: 2rem;
   margin-top: 3rem;
   min-width: 52vw;
-
    @media (max-width: 779px) {
       min-width: fit-content;
     }
@@ -322,4 +316,19 @@ const Link = styled.p`
   font-size:16px;
   margin-top:8px;
   color:#FE7624;
+`
+
+const Rating = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #C7C7CD;
+  margin-top: 22px;
+`;
+
+const Safe = styled.p`
+  font-size:18px;
+  font-weight: 600;
+  color:#0A0E2E;
 `

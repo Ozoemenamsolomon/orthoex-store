@@ -1,16 +1,17 @@
 import React from "react";
-import Categories from "@components/shop/Categories";
+import Login from "@components/shop/ManagerLogin";
 import styled from 'styled-components';
 
-export default function Shop() {
+
+export default function ManagerLogin() {
 
   const BgBody = styled.div`
-    background: #fafafa;
+    background: #fafafa; 
   `;
 
   return (
     <BgBody >
-      <Categories />
+      <Login />
     </BgBody>
   );
 }
