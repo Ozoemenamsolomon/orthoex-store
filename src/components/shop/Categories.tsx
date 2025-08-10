@@ -247,6 +247,10 @@ const HeaderTitle = styled.h2`
   font-size: 20px;
   font-weight: 500;
   color: #0d1136;
+
+   @media (max-width: 480px) {
+    font-size: 16px;
+    }
 `;
 
 const SortContainer = styled.div`
@@ -276,6 +280,11 @@ const SortContainer = styled.div`
     height: 1rem;
     margin-left: -1.25rem;
     pointer-events: none;
+  }
+
+
+   @media (max-width: 480px) {
+        font-size: 16px;
   }
 `;
 

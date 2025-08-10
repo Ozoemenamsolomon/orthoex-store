@@ -136,20 +136,53 @@ const Header: React.FC<HeaderProp> = ({ pathname }) => {
 
 export default Header;
 
+// const RightNav: FC<{
+// 	light: boolean;
+// 	forMobile?: boolean;
+// }> = ({ light, forMobile = false }) => {
+// 	const { user } = useUser();
+
+// 	const { cart } = useCart();
+
+// 	const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+// 	const rightNavLinks = [
+// 		{ name: 'Search', to: '/search', Icon: SearchIcon },
+// 		{ name: 'Account', to: '/account/overview', Icon: AccountIcon },
+// 		...(user ? [{ name: 'Cart', to: '/cart', Icon: CartIcon }] : []),
+// 	];
+
+// 	return (
+// 		<RightNavWrapper>
+// 			{rightNavLinks.map((navLink, index) => (
+// 				<NavLink
+// 					key={`nav-link-2-${navLink.name}-${index}`}
+// 					isRight={true}
+// 					{...navLink}
+// 					icon={() => (
+// 						<navLink.Icon
+// 							colour={forMobile ? 'black' : light ? 'black' : 'white'}
+// 							{...(navLink.name === 'Cart' ? { totalItems } : {})}
+// 						/>
+// 					)}
+// 				/>
+// 			))}
+// 		</RightNavWrapper>
+// 	);
+// };
+
+
 const RightNav: FC<{
 	light: boolean;
 	forMobile?: boolean;
 }> = ({ light, forMobile = false }) => {
 	const { user } = useUser();
 
-	const { cart } = useCart();
-
-	const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
-
 	const rightNavLinks = [
 		{ name: 'Search', to: '/search', Icon: SearchIcon },
 		{ name: 'Account', to: '/account/overview', Icon: AccountIcon },
-		...(user ? [{ name: 'Cart', to: '/cart', Icon: CartIcon }] : []),
+		// Only show cart here if NOT mobile
+		...(!forMobile ? [{ name: 'Cart', to: '/cart', Icon: CartIcon }] : []),
 	];
 
 	return (
@@ -162,7 +195,6 @@ const RightNav: FC<{
 					icon={() => (
 						<navLink.Icon
 							colour={forMobile ? 'black' : light ? 'black' : 'white'}
-							{...(navLink.name === 'Cart' ? { totalItems } : {})}
 						/>
 					)}
 				/>
