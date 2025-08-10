@@ -36,15 +36,18 @@ const Container = styled.div`
 
 const Sidebar = styled.aside`
   width: 100%;
-  height: fit-content;
+  height: 557px;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   background-color: #ffffff;
   padding: 40px 16px;
+  max-width: 290px;
 
-  @media(min-width: 780px) {
-     max-width: 290px;
+
+  @media(max-width: 780px) {
+       height: fit-content;
+       max-width: fit-content;
   }
 `;
 
@@ -363,13 +366,13 @@ export default function Categories() {
   const router = useRouter();
   const filterProducts = selectedRating
     ? products.filter((p) => p.rating >= selectedRating)
-    : products; const [min, setMin] = useState<number>(200);
-  const [max, setMax] = useState<number>(30000);
+    : products; const [min, setMin] = useState<number>(50);
+  const [max, setMax] = useState<number>(2000000);
   const [view, setView] = useState<"list" | "grid">("grid");
   const isDesktop = () => typeof window !== 'undefined' && window.innerWidth >= 1024;
 
   const MIN_LIMIT = 0;
-  const MAX_LIMIT = 50000;
+  const MAX_LIMIT = 25000000;
 
   const handleMinChange = (value: number) => {
     setMin(Math.min(value, max - 1000));
@@ -450,7 +453,7 @@ export default function Categories() {
             </InputRow>
           </PriceWrapper>
 
-          <div>
+          {/* <div>
             <h4>PRODUCT RATING</h4>
             <FilterGroup>
               {[5, 4, 3, 2].map((rating) => (
@@ -464,7 +467,7 @@ export default function Categories() {
                 </FilterLabel>
               ))}
             </FilterGroup>
-          </div>
+          </div> */}
         </Sidebar>
 
         <Section>
