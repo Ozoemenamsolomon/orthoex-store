@@ -165,7 +165,9 @@ const MainContent = styled.div`
   gap: 32px;
   max-width: 769px;
   width: 100%;
-  margin: 0 auto;  /* center on larger screens */
+  margin: 0 auto;  
+  background: #fff;
+  padding: 24px 20px;
 
   @media (max-width: 779px) {
     flex-direction: column;
@@ -354,8 +356,8 @@ const SaveLater = styled.button`
 const Tabs = styled.div`
   display: flex;
   gap: 2rem;
-  margin-top: 3rem;
   min-width: 52vw;
+  margin-top: 6px;
 
   @media (max-width: 779px) {
     min-width: 100%;
@@ -368,6 +370,9 @@ const Tab = styled.div<{ active: boolean }>`
   cursor: pointer;
   border-bottom: 2px solid ${(props) => (props.active ? "#f78002" : "transparent")};
   color: ${(props) => (props.active ? "#f78002" : "#888")};
+    height: fit-content;
+  font-weight: normal;
+  font-size: 16px;
 
   @media (max-width: 779px) {
     border-bottom: none;
@@ -379,9 +384,9 @@ const Tab = styled.div<{ active: boolean }>`
 const TabContent = styled.div`
   margin-top: 2rem;
   background: white;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  width: 95%;
+  height: fit-content;
 `;
 
 const Share = styled.div`
