@@ -24,28 +24,28 @@ const products: Product[] = [
     name: 'Polyester Resin',
     price: '₦70,000.00',
     rating: 4,
-    image: '/resin.png', // Use actual image path or imported image
+    image: '/shop/sample.png', // Use actual image path or imported image
   },
   {
     id: 2,
     name: 'Polyester Resin',
     price: '₦70,000.00',
     rating: 4,
-    image: '/resin.png',
+    image: '/shop/sample.png',
   },
   {
     id: 3,
     name: 'Polyester Resin',
     price: '₦70,000.00',
     rating: 4,
-    image: '/resin.png',
+    image: '/shop/sample.png',
   },
   {
     id: 4,
     name: 'Polyester Resin',
     price: '₦70,000.00',
     rating: 4,
-    image: '/resin.png',
+    image: '/shop/sample.png',
   },
 ];
 
@@ -54,6 +54,8 @@ const Section = styled.section`
   padding: 2rem 1rem;
   max-width: 1200px;
   margin: auto;
+  background: #fff;
+  margin-top: 55px;
 `;
 
 const Header = styled.div`
@@ -87,15 +89,10 @@ const ProductsGrid = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
 `;
 
 const ProductCard = styled.div`
-  flex: 1 1 calc(25% - 1rem);
-  min-width: 200px;
+  flex: 0 0 calc((100% - 3 * 1.5rem) / 4); /* 4 cards per row minus gaps */
   text-align: center;
 
   @media (max-width: 768px) {

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Truck, ShieldCheck, Headphones, Globe2 } from "lucide-react";
 import { CardIcon, SupportIcon, VanIcon } from "constant/icon";
 
 const Container = styled.div`

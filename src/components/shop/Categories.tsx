@@ -371,7 +371,7 @@ const PriceValue = styled.p`
 `;
 
 export default function Categories() {
-  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const [selectedRating] = useState<number | null>(null);
   const router = useRouter();
   const filterProducts = selectedRating
     ? products.filter((p) => p.rating >= selectedRating)

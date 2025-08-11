@@ -5,6 +5,7 @@ import { FacebookIcon, InstaIcon, SheetIcon, TwitterIcon, WhatsappIcon } from "c
 import { Star } from 'lucide-react';
 import DeliveryInfo from "./DeliveryInfo";
 import HelpSection from "./Help";
+import RecentlyViewed from "./Recent";
 
 const ProductDetails = () => {
   const [selectedTab, setSelectedTab] = useState("details");
@@ -81,11 +82,6 @@ const ProductDetails = () => {
                   <option>Large</option>
                 </select>
 
-                {/* <QuantityControls>
-                  <button style={{ borderRadius: "50%", border: "none", padding: "8px 14px" }} onClick={() => setQuantity(quantity - 1)} disabled={quantity === 1}>-</button>
-                  <span>{quantity}</span>
-                  <button style={{ borderRadius: "50%", border: "none", padding: "8px 14px" }} onClick={() => setQuantity(quantity + 1)}>+</button>
-                </QuantityControls> */}
 
                 <QuantityControls>
                   <button onClick={decrease} disabled={quantity === 1}>-</button>
@@ -119,9 +115,9 @@ const ProductDetails = () => {
 
             <TabContent>
               {selectedTab === "details" && <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum morbi ac egestas sed mattis vitae. Phasellus risus, quam eu gravida etiam aliquam pharetra felis. , tellus congue proin amet nunc. Et sagittis, vitae dolor adipiscing dolor enim. Nisl mi congue ipsum mauris risus a, mauris.
-              Nibh elementum in viverra eu pellentesque quis. Semper nibh tellus enim porta. Eu lorem viverra interdum ac ac scelerisque ipsum enim auctor. Nunc urnaque sed enim eleifend volutpat gravida. Cursus habitant scelerisque suspendisse ornare lectus.Adipiscing lectus faucibus condimentum nibh nisl ultricies. </p>}
+                Nibh elementum in viverra eu pellentesque quis. Semper nibh tellus enim porta. Eu lorem viverra interdum ac ac scelerisque ipsum enim auctor. Nunc urnaque sed enim eleifend volutpat gravida. Cursus habitant scelerisque suspendisse ornare lectus.Adipiscing lectus faucibus condimentum nibh nisl ultricies. </p>}
               {selectedTab === "calculator" &&
-                
+
                 <ProductCalculator />}
               {selectedTab === "feedback" && <p>No feedbacks available yet.</p>}
             </TabContent>
@@ -133,6 +129,9 @@ const ProductDetails = () => {
         </MainContent2>
 
       </Container>
+
+      <RecentlyViewed />
+
     </MainContainer>
   );
 };
@@ -274,9 +273,9 @@ const OrderControls = styled.div`
   select {
     flex: 1;
     height: ${controlHeight};
-    padding: 0 16px;
     font-size: 1rem;
     font-weight: 600;
+    border-radius: 4px;
     border: 1px solid #F3F3F3;
     outline: none;
   }
@@ -387,6 +386,11 @@ const TabContent = styled.div`
   padding: 1rem;
   width: 95%;
   height: fit-content;
+
+
+  @media (max-width: 450px) {
+    padding: 4px;
+  }
 `;
 
 const Share = styled.div`
