@@ -7,8 +7,14 @@ import DeliveryInfo from "./DeliveryInfo";
 import HelpSection from "./Help";
 
 const ProductDetails = () => {
-  const [quantity, setQuantity] = useState(1);
   const [selectedTab, setSelectedTab] = useState("details");
+  const [quantity, setQuantity] = useState<number>(1);
+  const decrease = () => {
+    if (quantity > 1) setQuantity(quantity - 1);
+  };
+  const increase = () => {
+    setQuantity(quantity + 1);
+  };
 
   return (
     <MainContainer>
@@ -60,19 +66,31 @@ const ProductDetails = () => {
               </Description>
               <SecurePayment>
                 <Safe>Safe and secure payment</Safe>
-                <div>
-
-                </div>
+                <Cards>
+                  <img src="/shop/master.png" alt="master" width={63} height={56} />
+                  <img src="/shop/visa.png" alt="Visa" width={86} height={56} />
+                  <img src="/shop/bankTf.png" alt="BankTransfer" width={61} height={56} />
+                </Cards>
               </SecurePayment>
 
               <OrderControls>
                 <select>
                   <option>Select size</option>
+                  <option>Small</option>
+                  <option>Medium</option>
+                  <option>Large</option>
                 </select>
-                <QuantityControls>
-                  <button style={{borderRadius: "50%", border: "none", padding: "8px 14px"}}  onClick={() => setQuantity(quantity - 1)} disabled={quantity === 1}>-</button>
+
+                {/* <QuantityControls>
+                  <button style={{ borderRadius: "50%", border: "none", padding: "8px 14px" }} onClick={() => setQuantity(quantity - 1)} disabled={quantity === 1}>-</button>
                   <span>{quantity}</span>
-                  <button style={{borderRadius: "50%", border: "none", padding: "8px 14px"}}  onClick={() => setQuantity(quantity + 1)}>+</button>
+                  <button style={{ borderRadius: "50%", border: "none", padding: "8px 14px" }} onClick={() => setQuantity(quantity + 1)}>+</button>
+                </QuantityControls> */}
+
+                <QuantityControls>
+                  <button onClick={decrease} disabled={quantity === 1}>-</button>
+                  <span>{quantity}</span>
+                  <button onClick={increase}>+</button>
                 </QuantityControls>
               </OrderControls>
 
@@ -82,12 +100,12 @@ const ProductDetails = () => {
               </ActionButtons>
             </ProductSection>
           </MainContent>
-
         </div>
 
         <MainContent2>
           <DeliveryInfo />
         </MainContent2>
+
       </Container>
 
       <Container>
@@ -100,9 +118,10 @@ const ProductDetails = () => {
             </Tabs>
 
             <TabContent>
-              {selectedTab === "details" && <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>}
+              {selectedTab === "details" && <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum morbi ac egestas sed mattis vitae. Phasellus risus, quam eu gravida etiam aliquam pharetra felis. , tellus congue proin amet nunc. Et sagittis, vitae dolor adipiscing dolor enim. Nisl mi congue ipsum mauris risus a, mauris.
+              Nibh elementum in viverra eu pellentesque quis. Semper nibh tellus enim porta. Eu lorem viverra interdum ac ac scelerisque ipsum enim auctor. Nunc urnaque sed enim eleifend volutpat gravida. Cursus habitant scelerisque suspendisse ornare lectus.Adipiscing lectus faucibus condimentum nibh nisl ultricies. </p>}
               {selectedTab === "calculator" &&
-
+                
                 <ProductCalculator />}
               {selectedTab === "feedback" && <p>No feedbacks available yet.</p>}
             </TabContent>
@@ -121,7 +140,6 @@ const ProductDetails = () => {
 export default ProductDetails;
 
 // Styled-components below
-
 const MainContainer = styled.div`
   padding: 39px 155px;
   font-family: sans-serif;
@@ -132,22 +150,37 @@ const MainContainer = styled.div`
 `;
 
 const Container = styled.div`
-    display: flex;
-    gap : 16px;
-    margin-top : 35px;
+  display: flex;
+  gap: 16px;
+  margin-top: 35px;
+
+  @media (max-width: 779px) {
+    flex-direction: column;  /* stack children vertically */
+  }
 `;
 
 
 const MainContent = styled.div`
   display: flex;
   gap: 32px;
-   @media (max-width: 779px) {
-      flex-direction: column;
-    }
+  max-width: 769px;
+  width: 100%;
+  margin: 0 auto;  /* center on larger screens */
+
+  @media (max-width: 779px) {
+    flex-direction: column;
+    max-width: 100%;  /* full width on mobile */
+    margin: 0; /* remove horizontal centering on mobile */
+  }
 `;
 
+
 const MainContent2 = styled.div`
-  
+  flex: 1; /* make sure it grows nicely next to MainContent on desktop */
+
+  @media (max-width: 779px) {
+    margin-top: 2rem; /* spacing when stacked vertically */
+  }
 `;
 
 const ImageSection = styled.div`
@@ -227,58 +260,107 @@ const SecurePayment = styled.div`
   margin-top: 2rem;
 `;
 
+const controlHeight = "54px"; // shared height for all controls
+
 const OrderControls = styled.div`
   margin-top: 1rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 16px;
+  width: 100%;
 
   select {
-    padding: 0.5rem;
+    flex: 1;
+    height: ${controlHeight};
+    padding: 0 16px;
     font-size: 1rem;
+    font-weight: 600;
+    border: 1px solid #F3F3F3;
+    outline: none;
   }
 `;
 
 const QuantityControls = styled.div`
+  flex: 1;
   display: flex;
-  gap: 0.5rem;
   align-items: center;
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
 
+  button {
+    height: 100%;
+    width: fit-content;
+    padding: 11px 17px;
+    flex: 0 0 40px;
+    font-size: 1.2rem;
+    border: none;
+    background: #f4f4f4;
+    cursor: pointer;
+    border-radius: 50%;
 
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+  }
 `;
 
 const ActionButtons = styled.div`
   margin-top: 1rem;
   display: flex;
   gap: 1rem;
+  width: 100%;
 `;
 
 const AddToCart = styled.button`
-  padding: 19px 56px;
+  flex: 1;
+  height: ${controlHeight};
   background: #f78002;
   color: #fff;
   border: none;
   cursor: pointer;
   border-radius: 4px;
+  font-weight: bold;
+
+  @media (max-width: 779px) {
+    font-size: 10px;
+  }
 `;
 
 const SaveLater = styled.button`
-  padding: 19px 56px;
+  flex: 1;
+  height: ${controlHeight};
   background: #FFC107;
   border: none;
   color: #fff;
   cursor: pointer;
   border-radius: 4px;
+  font-weight: bold;
+
+  @media (max-width: 779px) {
+    font-size: 10px;
+  }
 `;
+
+
 
 const Tabs = styled.div`
   display: flex;
   gap: 2rem;
   margin-top: 3rem;
   min-width: 52vw;
-   @media (max-width: 779px) {
-      min-width: fit-content;
-    }
+
+  @media (max-width: 779px) {
+    min-width: 100%;
+    gap: 1rem;
+  }
 `;
 
 const Tab = styled.div<{ active: boolean }>`
@@ -286,7 +368,13 @@ const Tab = styled.div<{ active: boolean }>`
   cursor: pointer;
   border-bottom: 2px solid ${(props) => (props.active ? "#f78002" : "transparent")};
   color: ${(props) => (props.active ? "#f78002" : "#888")};
+
+  @media (max-width: 779px) {
+    border-bottom: none;
+    border-left: 4px solid ${(props) => (props.active ? "#f78002" : "transparent")};
+  }
 `;
+
 
 const TabContent = styled.div`
   margin-top: 2rem;
@@ -332,3 +420,9 @@ const Safe = styled.p`
   font-weight: 600;
   color:#0A0E2E;
 `
+
+const Cards = styled.div`
+  display:flex;
+  gap:16px;
+`
+
