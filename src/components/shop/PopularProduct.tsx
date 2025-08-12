@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import styled from 'styled-components';
 import { Star, ChevronRight } from 'lucide-react';
@@ -21,31 +20,31 @@ type StarRatingProps = {
 const products: Product[] = [
   {
     id: 1,
-    name: 'Polyester Resin',
+    name: 'Epoxy Resin',
     price: '₦70,000.00',
-    rating: 2,
-    image: '/shop/sample.png', // Use actual image path or imported image
+    rating: 5,
+    image: '/shop/sample2.png', // Use actual image path or imported image
   },
   {
     id: 2,
-    name: 'Polyester Resin',
+    name: 'Epoxy Resin',
     price: '₦70,000.00',
-    rating: 4,
-    image: '/shop/sample.png',
+    rating: 3,
+    image: '/shop/sample2.png',
   },
   {
     id: 3,
-    name: 'Polyester Resin',
+    name: 'Epoxy Resin',
     price: '₦70,000.00',
-    rating: 1,
-    image: '/shop/sample.png',
+    rating: 5,
+    image: '/shop/sample2.png',
   },
   {
     id: 4,
-    name: 'Polyester Resin',
+    name: 'Epoxy Resin',
     price: '₦70,000.00',
-    rating: 5,
-    image: '/shop/sample.png',
+    rating: 4,
+    image: '/shop/sample2.png',
   },
 ];
 
@@ -104,10 +103,10 @@ const ProductCard = styled.div`
   flex: 0 0 calc((100% - 3 * 1.5rem) / 4);
   display: flex;
   flex-direction: column;
-  justify-content: center; /* centers vertically within fixed height */
-  align-items: flex-start; /* align everything to the left */
+  align-items: flex-start; /* left align horizontally */
+  justify-content: flex-start; /* top align vertically */
   text-align: left;
-  height: 350px; /* fixed height so vertical centering is possible */
+  height: 350px;
 
   @media (max-width: 768px) {
     flex: 1 1 100%;
@@ -118,9 +117,13 @@ const ProductCard = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* left alignment */
-  gap: 0.5rem; /* space between image, name, price, rating */
+  align-items: flex-start; /* keep all left aligned */
+  gap: 0.5rem;
+  height: 100%;
+  justify-content: flex-start; /* stack from the top */
 `;
+
+
 
 const ProductImage = styled.img`
   width: 100%;
@@ -166,11 +169,11 @@ const StarRating: React.FC<StarRatingProps> = ({ rating }) => (
 );
 
 // Main Component
-const RecentlyViewed: React.FC = () => {
+const PopularProduct: React.FC = () => {
   return (
     <Section>
       <Header>
-        <Title>Recently View</Title>
+        <Title>Popular Products</Title>
         <SeeAll href="#">
           See all <ChevronRight size={16} style={{ marginLeft: '4px' }} />
         </SeeAll>
@@ -194,4 +197,4 @@ const RecentlyViewed: React.FC = () => {
   );
 };
 
-export default RecentlyViewed;
+export default PopularProduct;

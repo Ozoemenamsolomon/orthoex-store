@@ -6,6 +6,7 @@ import { Star } from 'lucide-react';
 import DeliveryInfo from "./DeliveryInfo";
 import HelpSection from "./Help";
 import RecentlyViewed from "./Recent";
+import PopularProduct from "./PopularProduct";
 
 const ProductDetails = () => {
   const [selectedTab, setSelectedTab] = useState("details");
@@ -131,6 +132,7 @@ const ProductDetails = () => {
       </Container>
 
       <RecentlyViewed />
+      <PopularProduct />
 
     </MainContainer>
   );
